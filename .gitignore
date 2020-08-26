@@ -3,5 +3,5 @@
 *.log
 *.out
 *.snm
-*.tz
+*.gz
 *.toc
