@@ -95,18 +95,26 @@
 \begin{frame}[t]{Common Uses: Unsupervised Learning}
 	\begin{columns}
 		\column{0.5\textwidth}
-		\only<1> Unlabeled Data
-		\only<2> Unknown Features
-		\only<3> Discovers New Patterns
+		\includegraphics<1>[width=\linewidth]{UnsupClustering}
+		\includegraphics<2>[width=\linewidth]{UnsupAssociation}
+		\includegraphics<3>[width=\linewidth]{UnsupAnomaly}
 		
 		\column{0.5\textwidth}
 		Unsupervised Learning
 		\begin{itemize}
-			\item<1-> Labeled Data
-			\item<2-> Known Features
-			\item<3-> Leverages Experience
+			\item<1-> Clustering
+			\item<2-> Association
+			\item<3-> Anomaly Detection
 		\end{itemize}
 	\end{columns}
+	\begin{block}{Remark}
+		\only<1>{Breaking data points into groups on the basis of similar features}
+		\only<2>{Determining possible associations between data points}
+		\only<3>{text}
+	\end{block}
+	\begin{exampleblock}<2>{Example: Market Basket Analysis}
+		Determining items frequently purchased together; for customer recommendations, item placement, or supply management
+	\end{exampleblock}
 \end{frame}
 
 \begin{frame}{Adversarial Networks: The Happy Medium?}
