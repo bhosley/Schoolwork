@@ -66,9 +66,10 @@
 	\onslide<4>{\centering \includegraphics[width=0.95\linewidth]{SupVsUnsup} }
 \end{frame}
 
-\begin{frame}{Common Uses: Supervised Learning}
-	\begin{columns}
-		\column{0.5\textwidth}
+\begin{frame}[t]{Common Uses: Supervised Learning}
+\begin{overlayarea}{\linewidth}{\textheight}
+	\begin{columns}[c]
+		\column{0.5\linewidth}
 		Supervised Learning
 		\begin{itemize}
 			\item<1-> Predictive Modeling
@@ -76,19 +77,22 @@
 			\item<3-> Regression
 		\end{itemize}
 		
-		\column{0.5\textwidth}
-		\only<1>{\begin{block}{Remark} Using known data to predict results \end{block}}
-		\only<2>{\includegraphics[width=0.75\linewidth]{SupClassification}}
-		\only<3>{\includegraphics[width=0.75\linewidth]{SupRegression}}
+		\column{0.5\linewidth}
+		\begin{minipage}[c][.4\textheight][c]{\linewidth}
+			\begin{block}<only@1>{Remark} Using known data to predict results \end{block}
+			\includegraphics<2>[width=0.75\linewidth]{SupClassification}
+			\includegraphics<3>[width=0.75\linewidth]{SupRegression}
+		\end{minipage}
 	\end{columns}
 	\includegraphics<1>[width=\linewidth]{SupPredictiveModeling}
 	\begin{block}<2->{Remark}
-			\only<2>{Classification into known group types based on the features provided to the model}
-			\only<3>{Regression analysis based on the provided data}
-		\end{block}
+		\only<2>{Classification into known group types based on the features provided to the model}
+		\only<3>{Regression analysis based on the provided data}
+	\end{block}
+\end{overlayarea}
 \end{frame}
 
-\begin{frame}{Common Uses: Unsupervised Learning}
+\begin{frame}[t]{Common Uses: Unsupervised Learning}
 	\begin{columns}
 		\column{0.5\textwidth}
 		\only<1> Unlabeled Data
