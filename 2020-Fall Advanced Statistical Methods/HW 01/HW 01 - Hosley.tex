@@ -2,6 +2,7 @@
 \usetheme{Darmstadt}
 \usecolortheme{beaver}
 \usepackage{booktabs}
+\usepackage{hyperref}
 
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -166,12 +167,16 @@
 
 Statistical Learning (Machine Learning)
 
-Statistics as a career
-	sexy new career
-	tech companys
-	politics
-Statistics -> Machine Learning
-Statistician -> Data Scientist
+Statistics as a career:\\
+\begin{itemize}
+	\item The Sexy New Career
+	\item Working for big Tech
+	\item Political and Economic Analysis
+\end{itemize}
+\onslide<2->{Statistics}	
+\only<3->{$\rightarrow$ Machine Learning} \\
+\onslide<2->{Statistician}
+\only<4->{$\rightarrow$ Data Scientist}
 
 \end{frame}
 
@@ -182,7 +187,7 @@ Statistician -> Data Scientist
 		\begin{itemize}[<+>]
 			\item Health risk factors
 			\item Classify Phonemes
-			\item Cardiac Infarction Prediction
+			\item Myocardial Infarction Prediction
 			\item Email Spam Detection
 			\item Handwritten Number Recognition
 			\item Tissue Oncology Class
@@ -190,8 +195,36 @@ Statistician -> Data Scientist
 			\item Classify Satellite imagery
 		\end{itemize}
 		\column{0.5\textwidth}
+		\begin{minipage}[c][0.75\textheight][c]{\linewidth}
+			\raggedright
+			\only<1>{\includegraphics[width=0.75\linewidth]{ScatterPlotMatrix}
+				\\ \small \emph{Scatter Plot Matrix of Dr. Stamey's Prostate Cancer Research.}}
+			\only<2>{\includegraphics[width=0.75\linewidth]{Phonemes}
+				\\ \small \emph{AA vs AO Phoneme Log-periodogram.}}
+			\only<3>{\includegraphics[width=0.75\linewidth]{MCI}
+				\\ \small \emph{Heart attack risk study in South Africa.}}
+			\only<4>{$$\scriptstyle \Pr(A|B)=\frac{\Pr(B|A)\Pr(A)}
+				{\Pr(B|A)\Pr(A)+\Pr(B|\neg A)\Pr(\neg A)}$$
+				\\ \small \emph{Spam detection is often done using some form of Bayesian analysis.}}
+			\only<5>{\includegraphics[width=0.75\linewidth]{MNIST}
+				\\ \small \emph{The MNIST data set is often used as a practice problem for students to develop a model capable of reading hand-written numbers.}}
+			\only<6>{\includegraphics[width=0.75\linewidth]{TissueStudy}
+				\\ \small \emph{Gene expression data used to classify oncological class of histological samples.}}
+			\only<7>{\includegraphics[width=0.75\linewidth]{Demographics}
+				\\ \small \emph{Examining factors contributing to income levels in the central Atlantic demographic region.}}
+			\only<8>{\includegraphics[width=0.75\linewidth]{SATINT}
+				\\ \small \emph{Classification of geographic features shown in satellite imagery (Taken in Southern Australia).}}
+		\end{minipage}
 	\end{columns}
 \end{frame}
 
+\begin{frame}{Image Credits}
+	\href{https://www.guru99.com/supervised-vs-unsupervised-learning.html}
+	{Guru99.com} \\
+	\href{https://blogs.nvidia.com/blog/2018/08/02/supervised-unsupervised-learning/}
+	{nvidia.com} \\
+	\href{https://www.dataschool.io/15-hours-of-expert-machine-learning-videos/}
+	{Introduction Lecture by Hastie and Tibshirani}
+\end{frame}
 
 \end{document}
