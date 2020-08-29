@@ -63,12 +63,50 @@
 			$\cdot$ Training a model to classify pictures of animals \\
 			$\cdot$ Training a model for handwriting recognition
 		\end{exampleblock}}
-	\only<3>{ }
-	\only<4>{\centering \includegraphics[width=0.75\linewidth]{SupVsUnsup} }
+	\onslide<4>{\centering \includegraphics[width=0.95\linewidth]{SupVsUnsup} }
 \end{frame}
 
-\begin{frame}{}
-	
+\begin{frame}{Common Uses: Supervised Learning}
+	\begin{columns}
+		\column{0.5\textwidth}
+		Supervised Learning
+		\begin{itemize}
+			\item<1-> Predictive Modeling
+			\item<2-> Classification
+			\item<3-> Regression
+		\end{itemize}
+		
+		\column{0.5\textwidth}
+		\only<1>{\begin{block}{Remark} Using known data to predict results \end{block}}
+		\only<2>{\includegraphics[width=0.75\linewidth]{SupClassification}}
+		\only<3>{\includegraphics[width=0.75\linewidth]{SupRegression}}
+	\end{columns}
+	\includegraphics<1>[width=\linewidth]{SupPredictiveModeling}
+	\begin{block}<2->{Remark}
+			\only<2>{Classification into known group types based on the features provided to the model}
+			\only<3>{Regression analysis based on the provided data}
+		\end{block}
+\end{frame}
+
+\begin{frame}{Common Uses: Unsupervised Learning}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\only<1> Unlabeled Data
+		\only<2> Unknown Features
+		\only<3> Discovers New Patterns
+		
+		\column{0.5\textwidth}
+		Unsupervised Learning
+		\begin{itemize}
+			\item<1-> Labeled Data
+			\item<2-> Known Features
+			\item<3-> Leverages Experience
+		\end{itemize}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Adversarial Networks: The Happy Medium?}
+
 \end{frame}
 
 %%----------------------------------------------------------------------------------%%
