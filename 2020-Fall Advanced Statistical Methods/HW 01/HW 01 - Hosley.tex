@@ -93,32 +93,70 @@
 \end{frame}
 
 \begin{frame}[t]{Common Uses: Unsupervised Learning}
-	\begin{columns}
-		\column{0.5\textwidth}
-		\includegraphics<1>[width=\linewidth]{UnsupClustering}
-		\includegraphics<2>[width=\linewidth]{UnsupAssociation}
-		\includegraphics<3>[width=\linewidth]{UnsupAnomaly}
-		
-		\column{0.5\textwidth}
-		Unsupervised Learning
-		\begin{itemize}
-			\item<1-> Clustering
-			\item<2-> Association
-			\item<3-> Anomaly Detection
-		\end{itemize}
-	\end{columns}
+	\begin{minipage}[c][8em][c]{\linewidth}
+		\begin{columns}
+			\column{0.5\textwidth}
+			\includegraphics<1>[width=0.8\linewidth]{UnsupCluster}
+			\includegraphics<2>[width=0.8\linewidth]{UnsupAssociation}
+			\includegraphics<3>[width=0.8\linewidth]{UnsupAnomaly}
+			
+			\column{0.5\textwidth}
+			Unsupervised Learning
+			\begin{itemize}
+				\item<1-> Clustering
+				\item<2-> Association
+				\item<3-> Anomaly Detection
+			\end{itemize}
+		\end{columns}
+	\end{minipage}
 	\begin{block}{Remark}
 		\only<1>{Breaking data points into groups on the basis of similar features}
 		\only<2>{Determining possible associations between data points}
-		\only<3>{text}
+		\only<3>{Detecting anomalous, unusual, or novel data}
 	\end{block}
-	\begin{exampleblock}<2>{Example: Market Basket Analysis}
-		Determining items frequently purchased together; for customer recommendations, item placement, or supply management
+	\begin{exampleblock}<2-3>{Example: 
+			\only<2>{Market Basket Analysis}
+			\only<3>{Bank Fraud}}
+		\only<2>{Determining items frequently purchased together; for customer recommendations, item placement, or supply management}
+		\only<3>{Using known purchasing patterns (values, locations, times, weather, etc.) to determine probability of a new transaction being fraudulent}
 	\end{exampleblock}
 \end{frame}
 
-\begin{frame}{Adversarial Networks: The Happy Medium?}
-
+\begin{frame}{Summary}
+	\begin{columns}
+		\column{0.5\textwidth}
+		Supervised Learning
+		\begin{itemize}
+			\item[] Distinctions:
+			\begin{itemize}
+				\item Labeled Data
+				\item Known Features
+				\item Leverages Experience
+			\end{itemize}
+			\item[] Common Uses:
+			\begin{itemize}
+				\item Predictive Modeling
+				\item Classification
+				\item Regression
+			\end{itemize}
+		\end{itemize}
+		\column{0.5\textwidth}
+		Unsupervised Learning
+		\begin{itemize}
+			\item[] Distinctions:
+			\begin{itemize}
+				\item Unlabeled Data
+				\item Unknown Features
+				\item Discovers New Patterns
+			\end{itemize}
+			\item[] Common Uses:
+			\begin{itemize}
+				\item Clustering
+				\item Association
+				\item Anomaly Detection
+			\end{itemize}
+		\end{itemize}
+	\end{columns}
 \end{frame}
 
 %%----------------------------------------------------------------------------------%%
@@ -126,6 +164,34 @@
 
 \begin{frame}{Hastie and Tibshirani}
 
+Statistical Learning (Machine Learning)
+
+Statistics as a career
+	sexy new career
+	tech companys
+	politics
+Statistics -> Machine Learning
+Statistician -> Data Scientist
+
 \end{frame}
+
+\begin{frame}[t]{Hastie and Tibshirani - Applications of Statistical Learning}
+	\begin{columns}
+		\column{0.5\textwidth}
+		\setbeamercovered{transparent}
+		\begin{itemize}[<+>]
+			\item Health risk factors
+			\item Classify Phonemes
+			\item Cardiac Infarction Prediction
+			\item Email Spam Detection
+			\item Handwritten Number Recognition
+			\item Tissue Oncology Class
+			\item Salary and Demographic relations
+			\item Classify Satellite imagery
+		\end{itemize}
+		\column{0.5\textwidth}
+	\end{columns}
+\end{frame}
+
 
 \end{document}
