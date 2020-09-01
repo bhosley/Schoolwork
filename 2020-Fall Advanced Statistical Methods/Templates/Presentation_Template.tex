@@ -1,8 +1,12 @@
 \documentclass{beamer}
-\usepackage[utf8]{inputenc}
-
 \usetheme{Darmstadt}
 \usecolortheme{beaver}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
 
 %Information to be included in the title page:
 \title{Sample title}
@@ -13,8 +17,13 @@
 \begin{document}
 \frame{\titlepage}
 
-\begin{frame}
-\frametitle{Sample frame title}
+\begin{frame}{Overview}
+\tableofcontents
+\end{frame}
+
+\section[Q1]{Q1: Question}
+
+\begin{frame}{Sample frame title}
 \begin{block}{Remark}
 	Sample text
 \end{block}
