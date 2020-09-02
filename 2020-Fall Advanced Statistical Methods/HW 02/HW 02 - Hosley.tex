@@ -44,17 +44,50 @@
 \end{frame}
 
 \begin{frame}{Bias-Variance Trade-Off}
-	Aiming for the lowest possible error typically means finding a "middle-ground" \\
-	A common technique for this is determining the minimum \emph{mean squared error.} \\
-	\begin{align}
-		\text{MSE} &= \left( E\left[\hat{f}(x)\right]-f(x)\right) + E\left[\left(\hat{f}(x) - E\left[\hat{f}(x)\right]\right)^2\right] +
+	\begin{itemize}%[<+->]
+		\item Aiming for the lowest total error typically means finding a "middle-ground"
+		\item A common technique for this is determining the minimum \emph{mean squared error.} 
+	\end{itemize}
+	\begin{align*}
+		\text{MSE} &= \left( E\left[\hat{f}(x)\right]-f(x)\right)^2 + E\left[\left(\hat{f}(x) - E\left[\hat{f}(x)\right]\right)^2\right] +
 		\sigma^2_e \\
-		&= \text{Bias}
-	\end{align}
+		&= \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}
+	\end{align*}
+	\centering
 	\includegraphics[width=0.5\linewidth]{MinError}
 \end{frame}
 
 \section[Q2]{Q2: Hastie and Tibshirani}
+
+\begin{frame}{Hastie Lectures}
+	\begin{itemize}
+		\item Statistical Learning and Regression
+		\item Dimensionality and Parametric Models
+		\item Assessing Model Accuracy and Bias-Variance Trade-Off
+		\item Classification Problems and K-Nearest Neighbors
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Statistical Learning and Regression}
+	Predicting values through various means \\
+	The simplest method of regression may be to use 
+	$\hat{f}(x_n) = \bar{x}_n $ \\
+	A model may be improved by extending the values contributing to the average	
+	
+\end{frame}
+
+\begin{frame}{Dimensionality and Parametric Models}
+
+\end{frame}
+
+\begin{frame}{Assessing Model Accuracy and Bias-Variance Trade-Off}
+
+\end{frame}
+
+\begin{frame}{Classification Problems and K-Nearest Neighbors}
+
+\end{frame}
+
 \section[Q3]{Q3: ISL Section 2.3}
 \section[Q4]{Q4: ISL Section 2.4}
 %Exercises. No. 10 (p. 56)
