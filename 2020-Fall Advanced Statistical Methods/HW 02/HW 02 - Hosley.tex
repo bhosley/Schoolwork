@@ -45,6 +45,12 @@
 
 \begin{frame}{Bias-Variance Trade-Off}
 	Aiming for the lowest possible error typically means finding a "middle-ground" \\
+	A common technique for this is determining the minimum \emph{mean squared error.} \\
+	\begin{align}
+		\text{MSE} &= \left( E\left[\hat{f}(x)\right]-f(x)\right) + E\left[\left(\hat{f}(x) - E\left[\hat{f}(x)\right]\right)^2\right] +
+		\sigma^2_e \\
+		&= \text{Bias}
+	\end{align}
 	\includegraphics[width=0.5\linewidth]{MinError}
 \end{frame}
 
