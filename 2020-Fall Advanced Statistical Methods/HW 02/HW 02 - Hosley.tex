@@ -94,10 +94,18 @@
 \end{frame}
 
 \begin{frame}{Assessing Model Accuracy and Bias-Variance Trade-Off}
-	\begin{itemize}[<+->]
-	
+	\begin{itemize}
+		\item<1-> Mean-squared error is a good method for testing accuracy
+		\item<3-> But testing against \emph{training} data will bias toward over-fit models
+		\item<4-> Measuring against a separate batch of \emph{test} data will likely provide a more accurate model 
+		\item[]<1->
+		\item[]<only@2-3> \hspace{3em}
+			$\text{MSE}_{\text{\textbf{Tr}}}=\text{AVE}_{i\in\text{\textbf{Tr}}}\left[y_i-\hat{f}(x_i)\right]^2$
+		\item[]<only@4-> \hspace{3em}
+			$\text{MSE}_{\text{\textbf{Te}}}=\text{AVE}_{i\in\text{\textbf{Te}}}\left[y_i-\hat{f}(x_i)\right]^2$
 	\end{itemize}
 \end{frame}
+
 
 \begin{frame}{Classification Problems and K-Nearest Neighbors}
 	\begin{itemize}[<+->]
