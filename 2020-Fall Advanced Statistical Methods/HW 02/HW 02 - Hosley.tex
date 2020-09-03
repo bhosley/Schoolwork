@@ -96,25 +96,33 @@
 \begin{frame}{Assessing Model Accuracy and Bias-Variance Trade-Off}
 	\begin{itemize}
 		\item<1-> Mean-squared error is a good method for testing accuracy
-		\item<3-> But testing against \emph{training} data will bias toward over-fit models
-		\item<4-> Measuring against a separate batch of \emph{test} data will likely provide a more accurate model 
+		\item<2-> But testing against \emph{training} data will bias toward over-fit models
+		\item<3-> Measuring against a separate batch of \emph{test} data will likely provide a more accurate model 
 		\item[]<1->
-		\item[]<only@2-3> \hspace{3em}
+		\item[]<only@1-2> \hspace{3em}
 			$\text{MSE}_{\text{\textbf{Tr}}}=\text{AVE}_{i\in\text{\textbf{Tr}}}\left[y_i-\hat{f}(x_i)\right]^2$
-		\item[]<only@4-> \hspace{3em}
+		\item[]<only@3-> \hspace{3em}
 			$\text{MSE}_{\text{\textbf{Te}}}=\text{AVE}_{i\in\text{\textbf{Te}}}\left[y_i-\hat{f}(x_i)\right]^2$
 	\end{itemize}
 \end{frame}
 
 
 \begin{frame}{Classification Problems and K-Nearest Neighbors}
-	\begin{itemize}[<+->]
-		\item Goals:
-		\begin{itemize}[<+->]
+	\begin{itemize}%[<+->]
+		\item Goals of classification:
+		\begin{itemize}%[<+->]
 			\item Build classifier model $\mathcal{C}(X)$
 			\item Assess uncertainty of prediction
 			\item Understand roles of factors in prediction $X =\left\lbrace X_1, X_2, \ldots, X_n \right\rbrace $
 		\end{itemize}
+	\pause
+		\item $k$-Nearest Neighbor works well for low dimension classifiers
+		\item For individual classes a conditional class probability can be determined:
+			\\ \vspace{0.5em} \hspace{4em}$p_k = \text{Pr}(Y=k|X=x), k=1,2,\ldots,K$
+	\pause
+		\item For any model the Baye's optimal classifier will be the result of combining conditional class probabilities:
+			\\ \vspace{0.5em} \hspace{4em}$\mathcal{C}(x)=j $
+			if $p_j(x) = $ max $\left\lbrace p_1(x), p_2(x),\ldots, p_K(x)\right\rbrace$
 	\end{itemize}
 \end{frame}
 
