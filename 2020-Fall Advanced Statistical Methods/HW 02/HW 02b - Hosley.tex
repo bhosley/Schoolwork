@@ -1,0 +1,52 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+
+\usepackage[cache=false]{minted}
+\usemintedstyle{vs}
+\usepackage{xcolor}
+\definecolor{bg}{rgb}{.95,.95,.95}
+
+\graphicspath{ {./images/} }
+\usepackage{graphicx}
+\usepackage{caption}
+
+\usepackage{setspace}
+% End Packages %
+
+\title{Advanced Statistical Methods Homework 2}
+\shorttitle{DAT 530 HW2}
+\author{Brandon Hosley \\ UIN: 676399238}
+\date{\today}
+\affiliation{University of Illinois - Springfield}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\singlespacing
+
+\section{Problem 10}
+This exercise involves the \emph{Boston} housing data set.
+
+\subsection{(a)}
+\emph{How many rows are in this data set?} \\
+\begin{minted}[bgcolor=bg]{r}
+nrow(Boston)
+> 506
+\end{minted}
+\emph{How many columns?}  \\
+\begin{minted}{r}
+ncol(Boston)
+> 14
+\end{minted}
+\emph{What do the rows and columns represent?} \\
+The rows represent variables in the dataset. \\
+The columns represent the attributes of the variables. \\
+
+\subsection{(b)}
+
+\subsection{(c)}
+
+\subsection{(d)}
+
+
+\end{document}
