@@ -54,15 +54,47 @@ Median value of owner occupied home is proportional to number of rooms but not p
 
 \subsection{(c)}
 \emph{Are any of the predictors associated with per capita crime rate?
-If so, explain the relationship.}
+If so, explain the relationship.} \\
+Crime rate appears to be associated with:
+\begin{itemize}
+	\item low percentage of houses zoned over 25,000 square feet
+	\item between 15\% and 20\% non-retail business acres
+	\item older owner-occupied houses
+	\item higher access to radial highways
+	\item higher full-value property tax
+	\item higher pupil to teacher ratio
+	\item (Dummy variable) homes bound by the Charles river 
+\end{itemize}
 
 \subsection{(d)}
 \emph{Do any of the suburbs of Boston appear to have particularly
 high crime rates? Tax rates? Pupil-teacher ratios? Comment on
 the range of each predictor.}
+\begin{minted}[bgcolor=bg]{r}
+library(ggplot2)
+require(reshape2)
+
+b <- Boston
+# Scale data to be relative
+b[,-1] = apply(b[,-1],2,function(x){x/max(x)})
+b$crim <- b$crim/max(b$crim)
+
+ggplot(melt(b, id.vars = "id"), aes(x = variable, y = value)) +
+	geom_boxplot(aes(fill= variable)) +
+	theme(legend.position = "none") 
+\end{minted}
+
+\includegraphics[width=\linewidth]{FactorOutliers}
 
 \subsection{(e)}
 \emph{How many of the suburbs in this data set bound the Charles
 river?}
+\begin{minted}[bgcolor=bg]{r}
+library(plyr)
+count(Boston$chas, vars = 1)
+>   x freq
+> 1 0  471
+> 2 1   35
+\end{minted}
 
 \end{document}
