@@ -16,7 +16,7 @@ b <- Boston
 b[,-1] = apply(b[,-1],2,function(x){x/max(x)})
 b$crim <- b$crim/max(b$crim)
 
-# b$id <- rownames(b) ## Part of Attempt to offer labels to outlier data
+b$id <- rownames(b) ## Part of Attempt to offer labels to outlier data
 
 ggplot(melt(b, id.vars = "id"), aes(x = variable, y = value)) +
      geom_boxplot(aes(fill= variable)) +
@@ -25,6 +25,3 @@ ggplot(melt(b, id.vars = "id"), aes(x = variable, y = value)) +
 # How many of the suburbs in this data set bound the Charles river?
 library(plyr)
 count(Boston$chas, vars = 1)
-
-
-
