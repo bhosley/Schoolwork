@@ -103,6 +103,88 @@ WHERE user_id = 1 and status_id = 2;
 
 --LAB1B
 
+/***************************** TRANSACTION SIMULATING FUNCTIONS
+ * CREATE OR REPLACE FUNCTION checkout (
+ *     @user_id int, 
+ *     @inventory_id int, 
+ *     @checkout_time timestamp DEFAULT current_timestamp, 
+ *     @scheduled_checkin_time timestamp DEFAULT current_timestamp + (30 ||' days')::interval, 
+ *     @actual_checkin_time timestamp DEFAULT NULL, 
+ *     @created_at timestamp DEFAULT current_timestamp, 
+ *     @updated_at timestamp DEFAULT current_timestamp)
+ * RETURNS text AS $$
+ * DECLARE
+ *     asset_status int;
+ *     transaction_status text;
+ * BEGIN
+ *     SELECT status_id 
+ *     FROM inventory
+ *     INTO asset_status
+ *     WHERE id = @inventory_id;
+ * 
+ *     CASE 
+ *     WHEN asset_status = 1 THEN
+ *         INSERT INTO transactions (user_id, inventory_id, checkout_time, scheduled_checkin_time, actual_checkin_time, created_at, updated_at)
+ *             VALUES (@user_id, @inventory_id, @checkout_time, @scheduled_checkin_time, @actual_checkin_time, @created_at, @updated_at);
+ *         UPDATE inventory
+ *             SET status_id = 2
+ *             WHERE id = @inventory_id ;
+ *         transaction_status = "Asset successfully checked out."
+ *     WHEN asset_status = 2 || asset_status = 3 THEN
+ *         transaction_status = "Error! Asset already checked out."
+ *     WHEN asset_status = 4 THEN
+ *         transaction_status = "Error! Asset is currently unavailable."
+ *     WHEN asset_status = 5 THEN
+ *         transaction_status = "Error! Asset is currently under repair."
+ *     ELSE
+ *         transaction_status = "Error! Something went wrong."
+ *     END -- END CASE
+ *     RETURN asset_status;
+ * END;
+ * $$ LANGUAGE plpgsql;
+ * 
+ * CREATE OR REPLACE FUNCTION return (
+ *     @transaction_id int,
+ *     @return_time timestamp DEFAULT current_timestamp)
+ * RETURNS text AS $$
+ * DECLARE
+ *     asset_status int;
+ *     transaction_status text;
+ * BEGIN
+ *     -- Query for Order's Asset's Status
+ *     SELECT status_id
+ *     FROM inventory
+ *     INNER JOIN transactions
+ *     ON inventory.id = transactions.inventory_id
+ *     INTO asset_status 
+ *     WHERE transactions.id = @transaction_id
+ *     
+ *     -- If asset was checked out, set to returned and update transaction information
+ *     CASE 
+ *         WHEN asset_status = 1 THEN
+ *             transaction_status = "Error! Asset already returned."
+ *         WHEN asset_status = 2 || asset_status = 3 THEN
+ *             UPDATE transactions 
+ *                 SET 
+ *                     actual_checkin_time = @return_time, 
+ *                     updated_at = current_timestamp;
+ *                 WHERE id = @transaction_id ;
+ *             UPDATE inventory
+ *                 SET status_id = 1
+ *                 WHERE id = @inventory_id ;
+ *             transaction_status = "Asset has been successfully returned."
+ *         WHEN asset_status = 4 THEN
+ *             transaction_status = "Error! Asset is currently unavailable."
+ *         WHEN asset_status = 5 THEN
+ *             transaction_status = "Error! Asset is currently under repair."
+ *         ELSE
+ *             transaction_status = "Error! Something went wrong."
+ *     END -- END CASE
+ *     RETURN asset_status;
+ * END;
+ * $$ LANGUAGE plpgsql;
+ ***************************************************/
+
 /* 1.A
  * Using the tables created in Lab 1 Part 1, insert 20 transactions. 
  * Three of these transactions need to have the actual_checkin_time after the scheduled_checkin_time. 
@@ -110,85 +192,34 @@ WHERE user_id = 1 and status_id = 2;
  * For example, a transaction where the scheduled_checkin_time is 2018-08-01 14:39:53 and the actual_checkin_time is 2018-08-02 14:39:53. 
  * Additionally, five of the transactions need to have a checkout_time after September 3 2018.
  */
-CREATE OR REPLACE FUNCTION checkout (
-    @user_id int, 
-    @inventory_id int, 
-    @checkout_time timestamp DEFAULT current_timestamp, 
-    @scheduled_checkin_time timestamp DEFAULT current_timestamp + (30 ||' days')::interval, 
-    @actual_checkin_time timestamp DEFAULT NULL, 
-    @created_at timestamp DEFAULT current_timestamp, 
-    @updated_at timestamp DEFAULT current_timestamp)
-RETURNS text AS $$
-DECLARE
-    asset_status int;
-    transaction_status text;
-BEGIN
-    SELECT status_id 
-    FROM inventory
-    INTO asset_status
-    WHERE id = @inventory_id;
 
-    CASE 
-    WHEN asset_status = 1 THEN
-        INSERT INTO transactions (user_id, inventory_id, checkout_time, scheduled_checkin_time, actual_checkin_time, created_at, updated_at)
-            VALUES (@user_id, @inventory_id, @checkout_time, @scheduled_checkin_time, @actual_checkin_time, @created_at, @updated_at);
-        UPDATE inventory
-            SET status_id = 2
-            WHERE id = @inventory_id ;
-        transaction_status = "Asset successfully checked out."
-    WHEN asset_status = 2 || asset_status = 3 THEN
-        transaction_status = "Error! Asset already checked out."
-    WHEN asset_status = 4 THEN
-        transaction_status = "Error! Asset is currently unavailable."
-    WHEN asset_status = 5 THEN
-        transaction_status = "Error! Asset is currently under repair."
-    ELSE
-        transaction_status = "Error! Something went wrong."
-    END -- END CASE
-    RETURN asset_status;
-END;
-$$ LANGUAGE plpgsql;
 
-CREATE OR REPLACE FUNCTION return (
-    @transaction_id int,
-    @return_time timestamp DEFAULT current_timestamp)
-RETURNS text AS $$
-DECLARE
-    asset_status int;
-    transaction_status text;
-BEGIN
-    -- Query for Order's Asset's Status
-    SELECT status_id
-    FROM inventory
-    INNER JOIN transactions
-    ON inventory.id = transactions.inventory_id
-    INTO asset_status 
-    WHERE transactions.id = @transaction_id
-    
-    -- If asset was checked out, set to returned and update transaction information
-    CASE 
-        WHEN asset_status = 1 THEN
-            transaction_status = "Error! Asset already returned."
-        WHEN asset_status = 2 || asset_status = 3 THEN
-            UPDATE transactions 
-                SET 
-                    actual_checkin_time = @return_time, 
-                    updated_at = current_timestamp;
-                WHERE id = @transaction_id ;
-            UPDATE inventory
-                SET status_id = 1
-                WHERE id = @inventory_id ;
-            transaction_status = "Asset has been successfully returned."
-        WHEN asset_status = 4 THEN
-            transaction_status = "Error! Asset is currently unavailable."
-        WHEN asset_status = 5 THEN
-            transaction_status = "Error! Asset is currently under repair."
-        ELSE
-            transaction_status = "Error! Something went wrong."
-    END -- END CASE
-    RETURN asset_status;
-END;
-$$ LANGUAGE plpgsql;
+-- Dummy Data replicates a records transfer
+INSERT INTO transactions (user_id, inventory_id, checkout_time, scheduled_checkin_time, actual_checkin_time, created_at, updated_at)
+VALUES --  Checkout             Due Date                                        Actual Return       Creation Time       Last Edit
+    (1, 1, 2011-08-01 14:39:53, 2011-08-01 14:39:53 + (30 ||' days')::interval, 2011-08-01 14:39:53 + (10 ||' days')::interval, 2011-08-01 14:39:53, current_timestamp),  
+    (2, 2, 2011-03-01 14:39:53, 2011-03-01 14:39:53 + (30 ||' days')::interval, 2011-03-01 14:39:53 + (10 ||' days')::interval, 2011-03-01 14:39:53, current_timestamp),
+    (3, 3, 2011-03-13 14:39:53, 2011-03-13 14:39:53 + (30 ||' days')::interval, 2011-03-13 14:39:53 + (02 ||' days')::interval, 2011-03-13 14:39:53, current_timestamp),
+    (1, 4, 2012-06-21 14:39:53, 2012-06-21 14:39:53 + (30 ||' days')::interval, 2012-06-21 14:39:53 + (14 ||' days')::interval, 2012-06-21 14:39:53, current_timestamp),
+    (2, 1, 2012-08-01 14:39:53, 2012-08-01 14:39:53 + (30 ||' days')::interval, 2012-08-01 14:39:53 + (10 ||' days')::interval, 2012-08-01 14:39:53, current_timestamp), -- Transaction 5
+    (1, 1, 2013-04-15 14:39:53, 2013-04-15 14:39:53 + (30 ||' days')::interval, 2013-04-15 14:39:53 + (31 ||' days')::interval, 2013-04-15 14:39:53, current_timestamp), -- 1/3 Late Transaction
+    (1, 3, 2013-08-01 14:39:53, 2013-08-01 14:39:53 + (30 ||' days')::interval, 2013-08-01 14:39:53 + (300 ||' days')::interval, 2013-08-01 14:39:53, current_timestamp), -- 2/3 Late Transaction
+    (2, 1, 2014-09-01 14:39:53, 2014-09-01 14:39:53 + (30 ||' days')::interval, 2014-09-01 14:39:53 + (1500 ||' days')::interval, 2014-09-01 14:39:53, current_timestamp), -- 3/3 Late Transaction
+    (5, 2, 2015-08-01 14:39:53, 2015-08-01 14:39:53 + (30 ||' days')::interval, 2015-08-01 14:39:53 + (12 ||' days')::interval, 2015-08-01 14:39:53, current_timestamp),
+    (5, 3, 2015-09-15 14:39:53, 2015-09-15 14:39:53 + (30 ||' days')::interval, 2015-09-15 14:39:53 + (12 ||' days')::interval, 2015-09-15 14:39:53, current_timestamp), -- Transaction 10
+    (5, 5, 2015-11-01 14:39:53, 2015-11-01 14:39:53 + (30 ||' days')::interval, 2015-11-01 14:39:53 + (12 ||' days')::interval, 2015-11-01 14:39:53, current_timestamp),
+    (3, 4, 2016-04-05 14:39:53, 2016-04-05 14:39:53 + (30 ||' days')::interval, 2016-04-05 14:39:53 + (15 ||' days')::interval, 2016-04-05 14:39:53, current_timestamp),
+    (1, 2, 2017-08-02 14:39:53, 2017-08-02 14:39:53 + (30 ||' days')::interval, 2017-08-02 14:39:53 + (14 ||' days')::interval, 2017-08-02 14:39:53, current_timestamp),
+    (1, 3, 2018-08-02 14:39:53, 2018-08-02 14:39:53 + (30 ||' days')::interval, 2018-08-02 14:39:53 + (14 ||' days')::interval, 2018-08-02 14:39:53, current_timestamp),
+    (1, 5, 2018-08-02 14:39:53, 2018-08-02 14:39:53 + (30 ||' days')::interval, 2018-08-02 14:39:53 + (14 ||' days')::interval, 2018-08-02 14:39:53, current_timestamp), -- Transaction 15
+    (4, 4, 2018-08-05 14:39:53, 2018-08-05 14:39:53 + (30 ||' days')::interval, 2018-08-05 14:39:50 + (30 ||' days')::interval, 2018-08-05 14:39:53, current_timestamp), -- Transaction 16-20 have a checkout_time after September 3 2018.
+    (3, 4, 2019-08-01 14:39:53, 2019-08-01 14:39:53 + (30 ||' days')::interval, 2019-08-01 14:39:52 + (30 ||' days')::interval, 2019-08-01 14:39:53, current_timestamp),
+    (4, 2, 2020-06-01 14:39:53, 2020-06-01 14:39:53 + (30 ||' days')::interval, 2020-06-01 14:39:53 + (29 ||' days')::interval, 2020-06-01 14:39:53, current_timestamp),
+    (5, 4, 2020-06-11 14:39:53, 2020-06-11 14:39:53 + (30 ||' days')::interval, 2020-06-11 14:39:53 + (15 ||' days')::interval, 2020-06-11 14:39:53, current_timestamp),
+    (1, 2, current_timestamp, current_timestamp + (30 ||' days')::interval, NULL, current_timestamp, current_timestamp); -- Transaction 20
+UPDATE inventory
+SET status_id = 2
+WHERE id = 2 ;
 
 /* 1.B
  * Create a late checkins view of distinct items that were checked in late grouped by user_id, inventory_id, and description. 
