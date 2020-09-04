@@ -11,6 +11,13 @@
 \usepackage{caption}
 
 \usepackage{setspace}
+\usepackage{titlesec}
+\titleformat{\subsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
 % End Packages %
 
 \title{Advanced Statistical Methods Homework 2}
@@ -24,10 +31,10 @@
 \maketitle
 \singlespacing
 
-\section{Problem 10}
+\section{Introduction to Statistical Learning \\ Chapter 4: Problem 10}
 This exercise involves the \emph{Boston} housing data set.
 
-\subsection{(a)}
+\subsection{(a)} 
 \emph{How many rows are in this data set?} \\
 \begin{minted}[bgcolor=bg]{r}
 nrow(Boston)
