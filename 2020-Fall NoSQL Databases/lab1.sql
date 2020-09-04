@@ -102,3 +102,29 @@ INNER JOIN inventory
 WHERE user_id = 1 and status_id = 2;
 
 --LAB1B
+
+/* 1.A
+ * Using the tables created in Lab 1 Part 1, insert 20 transactions. 
+ * Three of these transactions need to have the actual_checkin_time after the scheduled_checkin_time. 
+ * This will allow you to test the view you will be creating in the next steps. 
+ * For example, a transaction where the scheduled_checkin_time is 2018-08-01 14:39:53 and the actual_checkin_time is 2018-08-02 14:39:53. 
+ * Additionally, five of the transactions need to have a checkout_time after September 3 2018.
+ */
+
+/* 1.B
+ * Create a late checkins view of distinct items that were checked in late grouped by user_id, inventory_id, and description. 
+ * This view should display the total number of late checkins per device per user. 
+ * For example, if user1 checked in two items late, there should be two rows displayed for user1 and 
+ * each row should include the total number of times that user returned that particular item late. 
+ */
+
+-- 1.C  Test the late checkins view by selecting and displaying all records from the view.
+
+-- 2.A On our PostgreSQL VM, run the lab1.sql file from Step 1 to create the tables and data. 
+
+-- 2.B Access our PostgreSQL databases from a Laravel PHP app.  Laravel is a PHP framework.
+
+-- 2.C Execute a query from Laravel using Laravel’s Eloquent Object-Relational Mapping (ORM).
+
+-- 2.D Display our query results on a webpage.
+
