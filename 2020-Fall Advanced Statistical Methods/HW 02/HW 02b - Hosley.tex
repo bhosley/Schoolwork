@@ -69,7 +69,10 @@ Crime rate appears to be associated with:
 \subsection{(d)}
 \emph{Do any of the suburbs of Boston appear to have particularly
 high crime rates? Tax rates? Pupil-teacher ratios? Comment on
-the range of each predictor.}
+the range of each predictor.} \vspace{2em}
+
+A simple box-plot may demonstrate outliers for each of the factors. Although this method does not correlate individual variables as outliers across factors it does give us the opportunity to observe distribution of factors and in a manner somewhat more clearly than the matrix of scatter-plots was able to. Relationship between outlier data would likely be a worthy next step in investigation. \\
+
 \begin{minted}[bgcolor=bg]{r}
 library(ggplot2)
 require(reshape2)
@@ -79,12 +82,14 @@ b <- Boston
 b[,-1] = apply(b[,-1],2,function(x){x/max(x)})
 b$crim <- b$crim/max(b$crim)
 
-ggplot(melt(b, id.vars = "id"), aes(x = variable, y = value)) +
-	geom_boxplot(aes(fill= variable)) +
+ggplot(stack(b), aes(x = ind, y = values)) +
+	geom_boxplot(aes(fill= ind)) +
 	theme(legend.position = "none") 
 \end{minted}
 
-\includegraphics[width=\linewidth]{FactorOutliers}
+
+\centerline{\includegraphics[width=0.75\linewidth]{FactorOutliers}}
+
 
 \subsection{(e)}
 \emph{How many of the suburbs in this data set bound the Charles
