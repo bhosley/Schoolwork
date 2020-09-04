@@ -196,26 +196,26 @@ WHERE user_id = 1 and status_id = 2;
 
 -- Dummy Data replicates a records transfer
 INSERT INTO transactions (user_id, inventory_id, checkout_time, scheduled_checkin_time, actual_checkin_time, created_at, updated_at)
-VALUES --  Checkout             Due Date                                        Actual Return       Creation Time       Last Edit
-    (1, 1, 2011-08-01 14:39:53, 2011-08-01 14:39:53 + (30 ||' days')::interval, 2011-08-01 14:39:53 + (10 ||' days')::interval, 2011-08-01 14:39:53, current_timestamp),  
-    (2, 2, 2011-03-01 14:39:53, 2011-03-01 14:39:53 + (30 ||' days')::interval, 2011-03-01 14:39:53 + (10 ||' days')::interval, 2011-03-01 14:39:53, current_timestamp),
-    (3, 3, 2011-03-13 14:39:53, 2011-03-13 14:39:53 + (30 ||' days')::interval, 2011-03-13 14:39:53 + (02 ||' days')::interval, 2011-03-13 14:39:53, current_timestamp),
-    (1, 4, 2012-06-21 14:39:53, 2012-06-21 14:39:53 + (30 ||' days')::interval, 2012-06-21 14:39:53 + (14 ||' days')::interval, 2012-06-21 14:39:53, current_timestamp),
-    (2, 1, 2012-08-01 14:39:53, 2012-08-01 14:39:53 + (30 ||' days')::interval, 2012-08-01 14:39:53 + (10 ||' days')::interval, 2012-08-01 14:39:53, current_timestamp), -- Transaction 5
-    (1, 1, 2013-04-15 14:39:53, 2013-04-15 14:39:53 + (30 ||' days')::interval, 2013-04-15 14:39:53 + (31 ||' days')::interval, 2013-04-15 14:39:53, current_timestamp), -- 1/3 Late Transaction
-    (1, 3, 2013-08-01 14:39:53, 2013-08-01 14:39:53 + (30 ||' days')::interval, 2013-08-01 14:39:53 + (300 ||' days')::interval, 2013-08-01 14:39:53, current_timestamp), -- 2/3 Late Transaction
-    (2, 1, 2014-09-01 14:39:53, 2014-09-01 14:39:53 + (30 ||' days')::interval, 2014-09-01 14:39:53 + (1500 ||' days')::interval, 2014-09-01 14:39:53, current_timestamp), -- 3/3 Late Transaction
-    (5, 2, 2015-08-01 14:39:53, 2015-08-01 14:39:53 + (30 ||' days')::interval, 2015-08-01 14:39:53 + (12 ||' days')::interval, 2015-08-01 14:39:53, current_timestamp),
-    (5, 3, 2015-09-15 14:39:53, 2015-09-15 14:39:53 + (30 ||' days')::interval, 2015-09-15 14:39:53 + (12 ||' days')::interval, 2015-09-15 14:39:53, current_timestamp), -- Transaction 10
-    (5, 5, 2015-11-01 14:39:53, 2015-11-01 14:39:53 + (30 ||' days')::interval, 2015-11-01 14:39:53 + (12 ||' days')::interval, 2015-11-01 14:39:53, current_timestamp),
-    (3, 4, 2016-04-05 14:39:53, 2016-04-05 14:39:53 + (30 ||' days')::interval, 2016-04-05 14:39:53 + (15 ||' days')::interval, 2016-04-05 14:39:53, current_timestamp),
-    (1, 2, 2017-08-02 14:39:53, 2017-08-02 14:39:53 + (30 ||' days')::interval, 2017-08-02 14:39:53 + (14 ||' days')::interval, 2017-08-02 14:39:53, current_timestamp),
-    (1, 3, 2018-08-02 14:39:53, 2018-08-02 14:39:53 + (30 ||' days')::interval, 2018-08-02 14:39:53 + (14 ||' days')::interval, 2018-08-02 14:39:53, current_timestamp),
-    (1, 5, 2018-08-02 14:39:53, 2018-08-02 14:39:53 + (30 ||' days')::interval, 2018-08-02 14:39:53 + (14 ||' days')::interval, 2018-08-02 14:39:53, current_timestamp), -- Transaction 15
-    (4, 4, 2018-08-05 14:39:53, 2018-08-05 14:39:53 + (30 ||' days')::interval, 2018-08-05 14:39:50 + (30 ||' days')::interval, 2018-08-05 14:39:53, current_timestamp), -- Transaction 16-20 have a checkout_time after September 3 2018.
-    (3, 4, 2019-08-01 14:39:53, 2019-08-01 14:39:53 + (30 ||' days')::interval, 2019-08-01 14:39:52 + (30 ||' days')::interval, 2019-08-01 14:39:53, current_timestamp),
-    (4, 2, 2020-06-01 14:39:53, 2020-06-01 14:39:53 + (30 ||' days')::interval, 2020-06-01 14:39:53 + (29 ||' days')::interval, 2020-06-01 14:39:53, current_timestamp),
-    (5, 4, 2020-06-11 14:39:53, 2020-06-11 14:39:53 + (30 ||' days')::interval, 2020-06-11 14:39:53 + (15 ||' days')::interval, 2020-06-11 14:39:53, current_timestamp),
+VALUES --  Checkout             Due Date                                        Actual Return                                   Creation Time       Last Edit
+    (1, 1, '2011-08-01 14:39:53', '2011-09-01 14:39:53', '2011-08-11 14:39:53', '2011-08-01 14:39:53', current_timestamp),  
+    (2, 2, '2011-03-01 14:39:53', '2011-04-01 14:39:53', '2011-03-11 14:39:53', '2011-03-01 14:39:53', current_timestamp),
+    (3, 3, '2011-03-13 14:39:53', '2011-04-13 14:39:53', '2011-03-15 14:39:53', '2011-03-13 14:39:53', current_timestamp),
+    (1, 4, '2012-06-21 14:39:53', '2012-07-21 14:39:53', '2012-07-05 14:39:53', '2012-06-21 14:39:53', current_timestamp),
+    (2, 1, '2012-08-01 14:39:53', '2012-09-01 14:39:53', '2012-08-11 14:39:53', '2012-08-01 14:39:53', current_timestamp), -- Transaction 5
+    (1, 1, '2013-04-15 14:39:53', '2013-05-15 14:39:53', '2013-05-16 14:39:53', '2013-04-15 14:39:53', current_timestamp), -- 1/3 Late Transaction
+    (1, 3, '2013-08-01 14:39:53', '2013-09-01 14:39:53', '2014-08-01 14:39:53', '2013-08-01 14:39:53', current_timestamp), -- 2/3 Late Transaction
+    (2, 1, '2014-09-01 14:39:53', '2014-10-01 14:39:53', '2020-09-01 14:39:53', '2014-09-01 14:39:53', current_timestamp), -- 3/3 Late Transaction
+    (5, 2, '2015-08-01 14:39:53', '2015-09-01 14:39:53', '2015-08-13 14:39:53', '2015-08-01 14:39:53', current_timestamp),
+    (5, 3, '2015-09-15 14:39:53', '2015-10-15 14:39:53', '2015-09-27 14:39:53', '2015-09-15 14:39:53', current_timestamp), -- Transaction 10
+    (5, 5, '2015-11-01 14:39:53', '2015-12-01 14:39:53', '2015-11-13 14:39:53', '2015-11-01 14:39:53', current_timestamp),
+    (3, 4, '2016-04-05 14:39:53', '2016-05-05 14:39:53', '2016-04-20 14:39:53', '2016-04-05 14:39:53', current_timestamp),
+    (1, 2, '2017-08-02 14:39:53', '2017-09-02 14:39:53', '2017-08-16 14:39:53', '2017-08-02 14:39:53', current_timestamp),
+    (1, 3, '2018-08-02 14:39:53', '2018-09-02 14:39:53', '2018-08-16 14:39:53', '2018-08-02 14:39:53', current_timestamp),
+    (1, 5, '2018-08-02 14:39:53', '2018-09-02 14:39:53', '2018-08-16 14:39:53', '2018-08-02 14:39:53', current_timestamp), -- Transaction 15
+    (4, 4, '2018-08-05 14:39:53', '2018-09-05 14:39:53', '2018-09-04 14:39:50', '2018-08-05 14:39:53', current_timestamp), -- Transaction 16-20 have a checkout_time after September 3 2018.
+    (3, 4, '2019-08-01 14:39:53', '2019-09-01 14:39:53', '2019-08-01 14:39:52', '2019-08-01 14:39:53', current_timestamp),
+    (4, 2, '2020-06-01 14:39:53', '2020-07-01 14:39:53', '2020-06-30 14:39:53', '2020-06-01 14:39:53', current_timestamp),
+    (5, 4, '2020-06-11 14:39:53', '2020-07-11 14:39:53', '2020-06-26 14:39:53', '2020-06-11 14:39:53', current_timestamp),
     (1, 2, current_timestamp, current_timestamp + (30 ||' days')::interval, NULL, current_timestamp, current_timestamp); -- Transaction 20
 UPDATE inventory
 SET status_id = 2
@@ -228,13 +228,22 @@ WHERE id = 2 ;
  * each row should include the total number of times that user returned that particular item late. 
  */
 
+CREATE VIEW late AS
+SELECT transactions.user_id, transactions.inventory_id, count(transactions.id)
+FROM transactions
+INNER JOIN inventory
+    ON transactions.inventory_id = inventory.id
+INNER JOIN users
+    ON transactions.user_id = users.id
+WHERE transactions.actual_checkin_time > transactions.scheduled_checkin_time
+GROUP BY transactions.user_id, transactions.inventory_id;
+ 
 -- 1.C  Test the late checkins view by selecting and displaying all records from the view.
 
+SELECT * FROM late;
+
 -- 2.A On our PostgreSQL VM, run the lab1.sql file from Step 1 to create the tables and data. 
-
 -- 2.B Access our PostgreSQL databases from a Laravel PHP app.  Laravel is a PHP framework.
-
 -- 2.C Execute a query from Laravel using Laravel’s Eloquent Object-Relational Mapping (ORM).
-
 -- 2.D Display our query results on a webpage.
 
