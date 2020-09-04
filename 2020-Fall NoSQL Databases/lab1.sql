@@ -110,6 +110,50 @@ WHERE user_id = 1 and status_id = 2;
  * For example, a transaction where the scheduled_checkin_time is 2018-08-01 14:39:53 and the actual_checkin_time is 2018-08-02 14:39:53. 
  * Additionally, five of the transactions need to have a checkout_time after September 3 2018.
  */
+CREATE OR REPLACE FUNCTION checkout (
+    @user_id int, 
+    @inventory_id int, 
+    @checkout_time timestamp DEFAULT current_timestamp, 
+    @scheduled_checkin_time timestamp DEFAULT current_timestamp + (30 ||' days')::interval, 
+    @actual_checkin_time timestamp DEFAULT NULL, 
+    @created_at timestamp DEFAULT current_timestamp, 
+    @updated_at timestamp DEFAULT current_timestamp)
+RETURNS text AS $$
+DECLARE
+asset_status int;
+transaction_status text;
+BEGIN
+    SELECT status_id FROM inventory
+    into asset_status
+    where id = @inventory_id;
+
+    CASE 
+    WHEN asset_status = 1 THEN
+        INSERT INTO transactions (user_id, inventory_id, checkout_time, scheduled_checkin_time, actual_checkin_time, created_at, updated_at)
+            VALUES (@user_id, @inventory_id, @checkout_time, @scheduled_checkin_time, @actual_checkin_time, @created_at, @updated_at);
+        UPDATE inventory
+            SET status_id = 2
+            WHERE id = @inventory_id ;
+        transaction_status = "Asset successfully checked out."
+    WHEN asset_status = 2 || asset_status = 3 THEN
+        transaction_status = "Error! Asset already checked out."
+    WHEN asset_status = 4 THEN
+        transaction_status = "Error! Asset is currently unavailable."
+    WHEN asset_status = 5 THEN
+        transaction_status = "Error! Asset is currently under repair."
+    ELSE
+    END -- END CASE
+    RETURN asset_status;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION return (
+    @inventory_id int,
+    return_time timestamp DEFAULT current_timestamp)
+RETURNS text AS $$
+BEGIN
+END;
+$$ LANGUAGE plpgsql;
 
 /* 1.B
  * Create a late checkins view of distinct items that were checked in late grouped by user_id, inventory_id, and description. 
