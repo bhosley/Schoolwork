@@ -120,12 +120,13 @@ CREATE OR REPLACE FUNCTION checkout (
     @updated_at timestamp DEFAULT current_timestamp)
 RETURNS text AS $$
 DECLARE
-asset_status int;
-transaction_status text;
+    asset_status int;
+    transaction_status text;
 BEGIN
-    SELECT status_id FROM inventory
-    into asset_status
-    where id = @inventory_id;
+    SELECT status_id 
+    FROM inventory
+    INTO asset_status
+    WHERE id = @inventory_id;
 
     CASE 
     WHEN asset_status = 1 THEN
@@ -142,16 +143,50 @@ BEGIN
     WHEN asset_status = 5 THEN
         transaction_status = "Error! Asset is currently under repair."
     ELSE
+        transaction_status = "Error! Something went wrong."
     END -- END CASE
     RETURN asset_status;
 END;
 $$ LANGUAGE plpgsql;
 
 CREATE OR REPLACE FUNCTION return (
-    @inventory_id int,
-    return_time timestamp DEFAULT current_timestamp)
+    @transaction_id int,
+    @return_time timestamp DEFAULT current_timestamp)
 RETURNS text AS $$
+DECLARE
+    asset_status int;
+    transaction_status text;
 BEGIN
+    -- Query for Order's Asset's Status
+    SELECT status_id
+    FROM inventory
+    INNER JOIN transactions
+    ON inventory.id = transactions.inventory_id
+    INTO asset_status 
+    WHERE transactions.id = @transaction_id
+    
+    -- If asset was checked out, set to returned and update transaction information
+    CASE 
+        WHEN asset_status = 1 THEN
+            transaction_status = "Error! Asset already returned."
+        WHEN asset_status = 2 || asset_status = 3 THEN
+            UPDATE transactions 
+                SET 
+                    actual_checkin_time = @return_time, 
+                    updated_at = current_timestamp;
+                WHERE id = @transaction_id ;
+            UPDATE inventory
+                SET status_id = 1
+                WHERE id = @inventory_id ;
+            transaction_status = "Asset has been successfully returned."
+        WHEN asset_status = 4 THEN
+            transaction_status = "Error! Asset is currently unavailable."
+        WHEN asset_status = 5 THEN
+            transaction_status = "Error! Asset is currently under repair."
+        ELSE
+            transaction_status = "Error! Something went wrong."
+    END -- END CASE
+    RETURN asset_status;
 END;
 $$ LANGUAGE plpgsql;
 
