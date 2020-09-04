@@ -11,13 +11,15 @@ ncol(Boston)
 pairs(Boston)
 
 # Do any of the suburbs of Boston appear to have particularly high crime rates? Tax rates? Pupil-teacher ratios? Comment on the range of each predictor.
-library(dplyr)
 b <- Boston
+# Scale data to be relative
 b[,-1] = apply(b[,-1],2,function(x){x/max(x)})
 b$crim <- b$crim/max(b$crim)
 
-ggplot(stack(b), aes(x = ind, y = values)) +
-     geom_boxplot(aes(fill= ind)) +
+# b$id <- rownames(b) ## Part of Attempt to offer labels to outlier data
+
+ggplot(melt(b, id.vars = "id"), aes(x = variable, y = value)) +
+     geom_boxplot(aes(fill= variable)) +
      theme(legend.position = "none") 
 
 # How many of the suburbs in this data set bound the Charles river?
@@ -25,10 +27,4 @@ library(plyr)
 count(Boston$chas, vars = 1)
 
 
-geom_text(
-  aes(group = ind, 
-      label = ifelse(!between(values,-1.3*IQR(values), 1.3*IQR(values)),
-                     paste(round(values, 1)),
-                     '')), 
-      position = position_dodge(width=0.75),
-      hjust = "left", size = 3)
+
