@@ -54,7 +54,7 @@ VALUES
 INSERT INTO status (description, created_at, updated_at)
 VALUES
     ('Available', current_timestamp, current_timestamp),
-    ('Checked out',current_timestamp, current_timestamp), 
+    ('Checked Out',current_timestamp, current_timestamp), 
     ('Overdue', current_timestamp, current_timestamp),
     ('Unavailable', current_timestamp, current_timestamp),
     ('Under Repair', current_timestamp, current_timestamp);
