@@ -35,20 +35,25 @@ This author looks to apply data science principles to approach real estate in a 
 
 \subsection*{Machine Learning (ML) Algorithm(s) used:}
 \begin{itemize}
-	\item Mean and Median Imputation
+	\item Mode and Median Imputations
 	\item Correlation Matrix
-	\item Lasso and Ridge regressions
-	\item Random Forest
+	\item Lasso and Ridge Regressions
+	\item \textbf{Random Forest}
 \end{itemize}
 
 \subsection*{A Brief Description of One of the ML Algorithms used:}
-% Random Forest Model
+A \textbf{Random Forest Model} is a type of decision tree designed to compensate for the standard decision tree's tendency to overfit on training data.
+Importance of features is determined by measuring changes in accuracy of the model when certain weights are perturbed.
+Larger changes in accuracy are evaluated as more important.
+The forest is an ensemble of constituent decision trees that each classify the data, 
+a 'vote' of the outputs gives the final classification. 
+Overfitting is reduced by having low correlation between the constituent decision trees.
 
 \subsection*{Metrics Used to Evaluate the ML Algorithms:}
-Root Mean Square Error is used to evaluate the author's model. 
-The author was not explicit about which value the RMSE was compared against. 
+\textbf{Root Mean Square Error} is used to evaluate the author's model. 
+The author was not explicit about which values the RMSE was compared against. 
 It appears that it may have been on the same scale as the log-value of the homes.
-If this is the case, the model has a very good score.
-If the model was intended to predict the absolute home value, the RMSE is so that it suggests some sort of mistake.
+If this is the case, the model has very good results.
+If the model was intended to predict the absolute home value the RMSE is so low that it suggests some sort of mistake.
 
 \end{document}
