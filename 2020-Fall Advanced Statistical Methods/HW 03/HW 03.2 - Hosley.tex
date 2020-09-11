@@ -1,0 +1,112 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+
+\usepackage[cache=false]{minted}
+\usemintedstyle{vs}
+\usepackage{xcolor}
+\definecolor{bg}{rgb}{.95,.95,.95}
+
+\graphicspath{ {./images/} }
+\usepackage{graphicx}
+\usepackage{caption}
+
+\usepackage{setspace}
+\usepackage{titlesec}
+\titleformat{\subsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+% End Packages %
+
+\title{Advanced Statistical Methods Homework 2}
+\shorttitle{DAT 530 HW2}
+\author{Brandon Hosley}
+\date{\today}
+\affiliation{University of Illinois - Springfield}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\singlespacing
+
+\section{Introduction to Statistical Learning \\ Chapter 4: Problem 10}
+This exercise involves the \emph{Boston} housing data set.
+
+\subsection{(a)} 
+\emph{How many rows are in this data set?} \\
+\begin{minted}[bgcolor=bg]{r}
+nrow(Boston)
+> 506
+\end{minted}
+\emph{How many columns?}  \\
+\begin{minted}[bgcolor=bg]{r}
+ncol(Boston)
+> 14
+\end{minted}
+\emph{What do the rows and columns represent?} \\
+The rows represent variables in the dataset. \\
+The columns represent the attributes of the variables. \\
+
+\subsection{(b)}
+\emph{Make some pairwise scatterplots of the predictors (columns) in
+this data set. Describe your findings.}
+\begin{minted}[bgcolor=bg]{r}
+pairs(Boston)
+\end{minted}
+\includegraphics[width=\linewidth]{scatterMatrix} \\
+Distance from business center is inversely proportional to Nitrous Oxide concentration.
+Median value of owner occupied home is proportional to number of rooms but not proportional to the property tax rate.
+
+\subsection{(c)}
+\emph{Are any of the predictors associated with per capita crime rate?
+If so, explain the relationship.} \\
+Crime rate appears to be associated with:
+\begin{itemize}
+	\item low percentage of houses zoned over 25,000 square feet
+	\item between 15\% and 20\% non-retail business acres
+	\item older owner-occupied houses
+	\item higher access to radial highways
+	\item higher full-value property tax
+	\item higher pupil to teacher ratio
+	\item (Dummy variable) homes bound by the Charles river 
+\end{itemize}
+
+\subsection{(d)}
+\emph{Do any of the suburbs of Boston appear to have particularly
+high crime rates? Tax rates? Pupil-teacher ratios? Comment on
+the range of each predictor.} \vspace{2em}
+
+A simple box-plot may demonstrate outliers for each of the factors. Although this method does not correlate individual variables as outliers across factors it does give us the opportunity to observe distribution of factors and in a manner somewhat more clearly than the matrix of scatter-plots was able to. Relationship between outlier data would likely be a worthy next step in investigation. \\
+
+\begin{minted}[bgcolor=bg]{r}
+library(ggplot2)
+require(reshape2)
+
+b <- Boston
+# Scale data to be relative
+b[,-1] = apply(b[,-1],2,function(x){x/max(x)})
+b$crim <- b$crim/max(b$crim)
+
+ggplot(stack(b), aes(x = ind, y = values)) +
+	geom_boxplot(aes(fill= ind)) +
+	theme(legend.position = "none") 
+\end{minted}
+
+\begin{center}
+	\includegraphics[width=0.75\linewidth]{FactorOutliers}
+\end{center}
+
+\subsection{(e)}
+\emph{How many of the suburbs in this data set bound the Charles
+river?}
+\begin{minted}[bgcolor=bg]{r}
+library(plyr)
+count(Boston$chas, vars = 1)
+>   x freq
+> 1 0  471
+> 2 1   35
+\end{minted}
+
+\end{document}
