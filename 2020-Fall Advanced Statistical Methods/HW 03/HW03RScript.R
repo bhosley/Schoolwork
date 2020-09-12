@@ -1,28 +1,21 @@
 # Load Boston data set
 library(MASS)
-
 mount(Boston)
+
 par(mfrow=c(2,7))
 plot(crim,  crim); abline(lm(crim~crim)) 
-plot(zn,    crim); abline(lm(zn~crim)) 
-plot(indus, crim); abline(lm(indus~crim)) 
-plot(chas,  crim); abline(lm(chas~crim))
-plot(nox,   crim); abline(lm(nox~crim)) 
-plot(rm,    crim); abline(lm(rm~crim))  
-plot(age,   crim); abline(lm(age~crim))  
-plot(dis,   crim); abline(lm(dis~crim))  
-plot(rad,   crim); abline(lm(rad~crim))  
-plot(tax,   crim); abline(lm(tax~crim))    
-plot(ptratio, crim); abline(lm(ptratio~crim))
-plot(black, crim); abline(lm(black~crim))
-plot(lstat, crim); abline(lm(lstat~crim))
-plot(medv,  crim); abline(lm(medv~crim))
+plot(zn,    crim); abline(lm(crim~zn)) 
+plot(indus, crim); abline(lm(crim~indus)) 
+plot(chas,  crim); abline(lm(crim~chas))
+plot(nox,   crim); abline(lm(crim~nox)) 
+plot(rm,    crim); abline(lm(crim~rm))  
+plot(age,   crim); abline(lm(crim~age))  
+plot(dis,   crim); abline(lm(crim~dis))  
+plot(rad,   crim); abline(lm(crim~rad))  
+plot(tax,   crim); abline(lm(crim~tax))    
+plot(ptratio, crim); abline(lm(crim~ptratio))
+plot(black, crim); abline(lm(crim~black))
+plot(lstat, crim); abline(lm(crim~lstat))
+plot(medv,  crim); abline(lm(crim~medv))
 
-
-
-
-library(reshape2)
-
-b <- melt(Boston, "crim")
-
-ggplot(b,aes(crim,value)) + facet_grid(.~variable) 
+summary(lm(crim~zn+indus+nox+rm+age+dis+rad+ptratio+black+lstat+medv))
