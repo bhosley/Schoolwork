@@ -11,13 +11,13 @@
 \usepackage{caption}
 
 \usepackage{setspace}
-\usepackage{titlesec}
-\titleformat{\subsection}[runin]% runin puts it in the same paragraph
-	{\normalfont\bfseries}% formatting commands to apply to the whole heading
-	{\thesubsection}% the label and number
-	{0.5em}% space between label/number and subsection title
-	{}% formatting commands applied just to subsection title
-	[]% punctuation or other commands following subsection title
+%\usepackage{titlesec}
+%\titleformat{\subsection}[runin]% runin puts it in the same paragraph
+%	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+%	{\thesubsection}% the label and number
+%	{0.5em}% space between label/number and subsection title
+%	{}% formatting commands applied just to subsection title
+%	[]% punctuation or other commands following subsection title
 % End Packages %
 
 \title{Advanced Statistical Methods Homework 3}
@@ -51,7 +51,7 @@ mount(Boston)
 	Describe your results. 
 	In which of the models is there a statistically significant association
 	between the predictor and the response? 
-	Create some plots to back up your assertions.} \\
+	Create some plots to back up your assertions.}
 \begin{minted}[bgcolor=bg]{r}
 par(mfrow=c(2,7))
 plot(crim,  crim); abline(lm(crim~crim)) 
@@ -69,23 +69,35 @@ plot(black, crim); abline(lm(black~crim))
 plot(lstat, crim); abline(lm(lstat~crim))
 plot(medv,  crim); abline(lm(medv~crim))
 \end{minted}
-\includegraphics[width=\linewidth]{LinearMatrix} \\
+\includegraphics[width=\linewidth]{LinearMatrix}
 It appears that only certain predictors have slopes not near-zero or near-infinite:
 zn, indus, age, rad, lstat, medv.
 
 \subsection{(b)}
-\emph{Fit a multiple regression model to predict the response using
-	all of the predictors. Describe your results. For which predictors
-	can we reject the null hypothesis $H_0 : \beta_j = 0$?}
+\emph{
+	Fit a multiple regression model to predict the 
+	response using all of the predictors. 
+	Describe your results. 
+	For which predictors can we reject the null hypothesis 
+	$H_0 : \beta_j = 0$?}
 \begin{minted}[bgcolor=bg]{r}
 pairs(Boston)
 \end{minted}
 
 \subsection{(c)}
-\emph{} \\
+\emph{
+	How do your results from (a) compare to your results from (b)?
+	Create a plot displaying the univariate regression coefficients
+	from (a) on the x-axis, and the multiple regression coefficients
+	from (b) on the y-axis. That is, each predictor is displayed as a
+	single point in the plot. Its coefficient in a simple linear regression model is shown on the x-axis, and its coefficient estimate
+	in the multiple linear regression model is shown on the y-axis.}
 
 \subsection{(d)}
-\emph{} \\
-
-
+\emph{
+	Is there evidence of non-linear association between any of the
+	predictors and the response? To answer this question, for each
+	predictor $X$, fit a model of the form} \\
+	$Y = \beta_0 + \beta_1X + \beta_2X_2 + \beta_3X_3 + \in$.
+	
 \end{document}
