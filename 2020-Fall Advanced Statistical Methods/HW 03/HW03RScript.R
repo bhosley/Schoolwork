@@ -2,6 +2,7 @@
 library(MASS)
 mount(Boston)
 
+# part A
 par(mfrow=c(2,7))
 plot(crim,  crim); abline(lm(crim~crim)) 
 plot(zn,    crim); abline(lm(crim~zn)) 
@@ -18,6 +19,7 @@ plot(black, crim); abline(lm(crim~black))
 plot(lstat, crim); abline(lm(crim~lstat))
 plot(medv,  crim); abline(lm(crim~medv))
 
+# Part B
 summary(lm(crim~., data=Boston))
 
 predictors <- names(Boston)
@@ -37,6 +39,7 @@ x <- append(x,coefficients(lm(crim~black))[[2]])
 x <- append(x,coefficients(lm(crim~lstat))[[2]])
 x <- append(x,coefficients(lm(crim~medv))[[2]])
 
+# Part C
 df <- data.frame(predictors,x,y)
 
 library(ggplot2)
@@ -44,5 +47,22 @@ library(ggrepel)
 p <- ggplot(df, aes(x,y)) 
 p <- p + geom_point() 
 p <- p + geom_text_repel(aes(x,y,label=predictors)) 
-p <- p + coord_cartesian(xlim=c(-5,5),ylim=c(-5,5))
+p <- p + coord_cartesian(xlim=c(-3,2),ylim=c(-1,0.75))
 p <- p + geom_abline(intercept=0,slope=1)
+
+# Part D
+par(mfrow=c(2,7))
+
+lm(crim~poly( zn,    3, raw=TRUE))
+lm(crim~poly( chas,  3, raw=TRUE))
+lm(crim~poly( indus, 3, raw=TRUE))
+lm(crim~poly( nox,   3, raw=TRUE))
+lm(crim~poly( rm,    3, raw=TRUE))
+lm(crim~poly( age,   3, raw=TRUE))
+lm(crim~poly( dis,   3, raw=TRUE))
+lm(crim~poly( rad,   3, raw=TRUE))
+lm(crim~poly( tax,   3, raw=TRUE))
+lm(crim~poly(ptratio,3, raw=TRUE))
+lm(crim~poly( black, 3, raw=TRUE))
+lm(crim~poly( lstat, 3, raw=TRUE))
+lm(crim~poly( medv,  3, raw=TRUE))
