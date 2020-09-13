@@ -55,19 +55,19 @@ mount(Boston)
 \begin{minted}[bgcolor=bg]{r}
 par(mfrow=c(2,7))
 plot(crim,  crim); abline(lm(crim~crim)) 
-plot(zn,    crim); abline(lm(zn~crim)) 
-plot(indus, crim); abline(lm(indus~crim)) 
-plot(chas,  crim); abline(lm(chas~crim))
-plot(nox,   crim); abline(lm(nox~crim)) 
-plot(rm,    crim); abline(lm(rm~crim))  
-plot(age,   crim); abline(lm(age~crim))  
-plot(dis,   crim); abline(lm(dis~crim))  
-plot(rad,   crim); abline(lm(rad~crim))  
-plot(tax,   crim); abline(lm(tax~crim))    
-plot(ptratio, crim); abline(lm(ptratio~crim))
-plot(black, crim); abline(lm(black~crim))
-plot(lstat, crim); abline(lm(lstat~crim))
-plot(medv,  crim); abline(lm(medv~crim))
+plot(zn,    crim); abline(lm(crim~zn)) 
+plot(indus, crim); abline(lm(crim~indus)) 
+plot(chas,  crim); abline(lm(crim~chas))
+plot(nox,   crim); abline(lm(crim~nox)) 
+plot(rm,    crim); abline(lm(crim~rm))  
+plot(age,   crim); abline(lm(crim~age))  
+plot(dis,   crim); abline(lm(crim~dis))  
+plot(rad,   crim); abline(lm(crim~rad))  
+plot(tax,   crim); abline(lm(crim~tax))    
+plot(ptratio, crim); abline(lm(crim~ptratio))
+plot(black, crim); abline(lm(crim~black))
+plot(lstat, crim); abline(lm(crim~lstat))
+plot(medv,  crim); abline(lm(crim~medv))
 \end{minted}
 \includegraphics[width=\linewidth]{LinearMatrix}
 It appears that only certain predictors have slopes not near-zero or near-infinite:
@@ -81,8 +81,9 @@ zn, indus, age, rad, lstat, medv.
 	For which predictors can we reject the null hypothesis 
 	$H_0 : \beta_j = 0$?}
 \begin{minted}[bgcolor=bg]{r}
-pairs(Boston)
+summary(lm(crim~., data=Boston))
 \end{minted}
+Zn, dis, rad, black, and medv are the predictors that allow rejection of null hypothesis with a fairly high confidence.
 
 \subsection{(c)}
 \emph{
@@ -91,7 +92,35 @@ pairs(Boston)
 	from (a) on the x-axis, and the multiple regression coefficients
 	from (b) on the y-axis. That is, each predictor is displayed as a
 	single point in the plot. Its coefficient in a simple linear regression model is shown on the x-axis, and its coefficient estimate
-	in the multiple linear regression model is shown on the y-axis.}
+	in the multiple linear regression model is shown on the y-axis.} \\
+\begin{minted}[bgcolor=bg]{r}
+predictors <- names(Boston)
+y <- coefficients(lm(crim~., data=Boston))
+x <- vector(mode="numeric", length=1)
+x <- append(x,coefficients(lm(crim~zn))[[2]])
+x <- append(x,coefficients(lm(crim~indus))[[2]])
+x <- append(x,coefficients(lm(crim~chas))[[2]])
+x <- append(x,coefficients(lm(crim~nox))[[2]])
+x <- append(x,coefficients(lm(crim~rm))[[2]])
+x <- append(x,coefficients(lm(crim~age))[[2]])
+x <- append(x,coefficients(lm(crim~dis))[[2]])
+x <- append(x,coefficients(lm(crim~rad))[[2]])
+x <- append(x,coefficients(lm(crim~tax))[[2]])
+x <- append(x,coefficients(lm(crim~ptratio))[[2]])
+x <- append(x,coefficients(lm(crim~black))[[2]])
+x <- append(x,coefficients(lm(crim~lstat))[[2]])
+x <- append(x,coefficients(lm(crim~medv))[[2]])
+
+df <- data.frame(predictors,x,y)
+
+library(ggplot2)
+library(ggrepel)
+p <- ggplot(df, aes(x,y)) 
+p <- p + geom_point() 
+p <- p + geom_text_repel(aes(x,y,label=predictors)) 
+p <- p + coord_cartesian(xlim=c(-5,5),ylim=c(-5,5))
+p
+\end{minted}
 
 \subsection{(d)}
 \emph{
