@@ -63,7 +63,7 @@
 
 \section[Q2]{Q2: Hastie and Tibshirani Summary}
 
-\begin{frame}{Hastie Lectures Summary}
+\begin{frame}{Tibshirani Lecture: Linear Regression}
 	\begin{itemize}
 		\item<1-> Linear Regression
 		\begin{itemize}
@@ -74,15 +74,27 @@
 		\item<2> Hypothesis Testing
 		\begin{itemize}
 			\item<2> Testing against a null hypothesis
-			\item<2>[] $H_0$ represents the probability of the relationship being random 
+			\item<2>[] $H_0$ : No relationship between $X$ and $Y$.
+			\item<2> Testing for the probability of independent variable distribution 
 		\end{itemize}
 	\end{itemize}
-	\only<1>{\includegraphics[width=0.75\linewidth]{ConfidenceInterval}}
-	\only<2>{\includegraphics[width=0.75\linewidth]{}}
+	\only<1>{\includegraphics[width=0.75\linewidth]{ConfidenceIntervals}}
+	\only<2>{\includegraphics[width=0.75\linewidth]{nullHypothesis}}
 \end{frame}
 
-\begin{frame}{Hastie Lectures Summary}
-	
+\begin{frame}{Tibshirani Lectures: Multiple Linear Regression}
+\begin{columns}
+	\column{0.5\textwidth}
+	\begin{itemize}
+		\item<1-> Multiple Linear Regression
+		\begin{itemize}
+			\item<1-> Fitting data to a hyperplane instead of line
+			\item<1-> Works best when variables are independent
+		\end{itemize}
+	\end{itemize}
+	\column{0.5\textwidth}
+	\only<1>{\includegraphics[width=0.75\linewidth]{hyperplane}}
+\end{columns}	
 \end{frame}
 
 %\section[Q3]{Q3: ISL Section 3.6}
