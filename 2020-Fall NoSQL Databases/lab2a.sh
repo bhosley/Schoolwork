@@ -16,6 +16,7 @@ curl -v -X PUT http://riak:8098/riak/movies/Inception -H "Content-Type: applicat
 curl -v -X PUT http://riak:8098/riak/movies/Primer -H "Content-Type: application/json" -d '{"genre" : "thriller", "releasedate" : "2004", "runningtime" : "1:17"}'
 
 # 2. Delete one of the movie records
+curl -i -X DELETE http://riak:8098/riak/movies/TheDarkKnight
 
 # 3. Create 3 branches (East, West, South).
 # 3. Bucket should be 'branches'
@@ -25,11 +26,15 @@ curl -v -X PUT http://riak:8098/riak/movies/Primer -H "Content-Type: application
 # 3. Come up with an intuitive riaktag (ex. 'holds')
 
 # 4. Download a picture for one of the movies and 
+wget --output-document=InceptionCover.jpg https://i.imgur.com/acUbMd5.jpg
 #    add to a bucket names images with the key being image name
 # 4. Then link to the corresponding movie
+curl -X PUT http://riak:8098/riak/photos/InceptionCover.jpg -H "Content-type: image/jpeg" -H "Link: </riak/movies/Inception>; riaktag=\"photo\""  --data-binary @InceptionCover.jpg
 
 # 5. Run Querries Listing:
 # 5. All of the buckets
+curl -X GET http://riak:8099/riak?buckets=true
+
 # 5. All of the movies in a branch
 # 5. The movie with the picture and its branch
 
