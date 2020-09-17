@@ -19,11 +19,25 @@ curl -v -X PUT http://riak:8098/riak/movies/Primer -H "Content-Type: application
 curl -i -X DELETE http://riak:8098/riak/movies/TheDarkKnight
 
 # 3. Create 3 branches (East, West, South).
-# 3. Bucket should be 'branches'
-# 3. Value should be json with name of branch
-# 3. Link each of the remaining five movies to at least one branch
-# 3. At least one should link two branches
-# 3. Come up with an intuitive riaktag (ex. 'holds')
+#    Bucket should be 'branches'
+#    Value should be json with name of branch
+#    Link each of the remaining five movies to at least one branch
+#    At least one should link two branches
+#    Come up with an intuitive riaktag (ex. 'holds')
+curl -X PUT http://riak:8098/riak/branches/East -H "Content-Type: application/json" -H "Link: \
+</riak/movies/OceansEleven>;riaktag=\"holds\", \
+</riak/movies/SavingPrivateRyan>;riaktag=\"holds\"" \ 
+-d '{"branch" : "East"}'
+#
+curl -X PUT http://riak:8098/riak/branches/West -H "Content-Type: application/json" -H "Link: \
+</riak/movies/HacksawRidge>;riaktag=\"holds\", \
+</riak/movies/Inception>;riaktag=\"holds\"" \ 
+-d '{"branch" : "West"}'
+#
+curl -X PUT http://riak:8098/riak/branches/South -H "Content-Type: application/json" -H "Link: \
+</riak/movies/Primer>;riaktag=\"holds\", \
+</riak/movies/Inception>;riaktag=\"holds\"" \ 
+-d '{"branch" : "South"}'
 
 # 4. Download a picture for one of the movies and 
 wget --output-document=InceptionCover.jpg https://i.imgur.com/acUbMd5.jpg
@@ -36,6 +50,8 @@ curl -X PUT http://riak:8098/riak/photos/InceptionCover.jpg -H "Content-type: im
 curl -X GET http://riak:8099/riak?buckets=true
 
 # 5. All of the movies in a branch
+curl http://riak:8098/riak/branches/East/movies,_,_ 
+
 # 5. The movie with the picture and its branch
 
 # 6. Hostname in the file should be changed to 'http://riak:8098/riak/'
