@@ -2,6 +2,11 @@
 # Script for Lab 2 part a
 # Brandon Hosley 17/Sep/2020
 
+# Create a movie rental Riak key-alue store
+# Bucket - 'movies'
+# json - releasedate, runningtime, and genres
+# key - NameOfMovieInPascalCase
+
 # 1. Add six movies from at least 2 genres
 
 # 2. Delete one of the movie records
