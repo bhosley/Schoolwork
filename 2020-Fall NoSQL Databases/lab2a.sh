@@ -49,9 +49,12 @@ curl -X PUT http://riak:8098/riak/photos/InceptionCover.jpg -H "Content-type: im
 # 5. All of the buckets
 curl -X GET http://riak:8099/riak?buckets=true
 
-# 5. All of the movies in a branch
-curl http://riak:8098/riak/branches/East/movies,_,_ 
+# 5. All of the movies in each branch
+curl http://riak:8098/riak/branches/East/movies,_,_
+curl http://riak:8098/riak/branches/West/movies,_,_
+curl http://riak:8098/riak/branches/South/movies,_,_
 
 # 5. The movie with the picture and its branch
+curl http://riak:8098/riak/movies/Inception/_,holds,0/branches,_,_
 
 # 6. Hostname in the file should be changed to 'http://riak:8098/riak/'
