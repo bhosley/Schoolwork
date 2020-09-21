@@ -51,8 +51,6 @@ p <- p + coord_cartesian(xlim=c(-3,2),ylim=c(-1,0.75))
 p <- p + geom_abline(intercept=0,slope=1)
 
 # Part D
-par(mfrow=c(2,7))
-
 lm(crim~poly( zn,    3, raw=TRUE))
 lm(crim~poly( chas,  3, raw=TRUE))
 lm(crim~poly( indus, 3, raw=TRUE))
