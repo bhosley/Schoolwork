@@ -1,0 +1,41 @@
+\documentclass{beamer}
+\usetheme{Darmstadt}
+\usecolortheme{beaver}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+%Information to be included in the title page:
+\title{Sample title}
+\author{Brandon Hosley}
+\institute{University of Illinois - Springfield}
+\date{\today}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Overview}
+\tableofcontents
+\end{frame}
+
+\section[Q1]{Q1: Question}
+
+\begin{frame}{Sample frame title}
+\begin{block}{Remark}
+	Sample text
+\end{block}
+
+\begin{alertblock}{Important theorem}
+	Sample text in red box
+\end{alertblock}
+
+\begin{examples}
+	Sample text in green box. The title of the block is ``Examples".
+\end{examples}
+
+\end{frame}
+
+\end{document}
