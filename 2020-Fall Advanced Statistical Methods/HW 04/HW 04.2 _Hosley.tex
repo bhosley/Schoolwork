@@ -43,6 +43,7 @@ Prepare the data set:
 \begin{minted}[bgcolor=bg]{r}
 library(MASS)
 attach(Boston)
+library(Metrics)
 
 dim(Boston)
 cor(Boston[,-14])
@@ -51,43 +52,40 @@ summary(crim)
 b <- Boston
 b$crim = b$crim/max(b$crim)
 summary(b$crim)
+
+set.seed(123)
+train_ind <- sample(seq_len(nrow(b)), size = floor(0.8 * nrow(b)))
+train <- b[train_ind, ]
+test <- b[-train_ind, ]
 \end{minted}
 
 \subsection{(a)} 
 \emph{Logistic Regression}
 %\includegraphics[width=\linewidth]{}
 \begin{minted}[bgcolor=bg]{r}
-glm.fits=glm(crim~rad+tax+lstat, data=b, family=binomial)
+glm.fits=glm(crim~rad+tax+lstat, data=train, family=binomial)
 summary(glm.fits)
 \end{minted}
 
+Train the model on the training data. Then we will test it against the test data.
+
 \begin{minted}[bgcolor=bg]{r}
-Deviance Residuals: 
-Min        1Q    Median        3Q       Max  
--0.38107  -0.06578  -0.04532   0.00305   2.02780  
-
-Coefficients:
-Estimate Std. Error z value Pr(>|z|)    
-(Intercept) -7.546943   2.215077  -3.407 0.000657 ***
-rad          0.121906   0.121641   1.002 0.316256    
-tax          0.002598   0.007140   0.364 0.715925    
-lstat        0.056465   0.033871   1.667 0.095507 .  
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-(Dispersion parameter for binomial family taken to be 1)
-
-Null deviance: 62.565  on 505  degrees of freedom
-Residual deviance: 16.928  on 502  degrees of freedom
-AIC: 69.318
-
-Number of Fisher Scoring iterations: 8
+glm.probs=predict(glm.fits, test, type="response")
+mse(test$crim,glm.probs)
+[1] 0.006966051
 \end{minted}
+
+
 
 \subsection{(b)}
 \emph{LDA}
 %\includegraphics[width=\linewidth]{}
 \begin{minted}[bgcolor=bg]{r}
+\end{minted}
+
+\begin{minted}[bgcolor=bg]{r}
+glm.fits=glm(crim~rad+tax+lstat, data=b, family=binomial)
+summary(glm.fits)
 \end{minted}
 
 \subsection{(c)}
