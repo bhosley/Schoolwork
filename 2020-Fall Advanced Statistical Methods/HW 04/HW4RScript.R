@@ -25,3 +25,5 @@ summary(glm.fits)
 glm.probs=predict(glm.fits, test, type="response")
 mse(test$crim,glm.probs)
 
+# Linear Discriminant Analysis
+lda.fit = lda(crim~rad+tax+lstat, data=train)
