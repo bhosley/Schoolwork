@@ -38,23 +38,35 @@ fit classification models in order to predict
 whether a given suburb has a crime rate above or below the median.
 Explore logistic regression, LDA, and KNN models using various sub-sets of the predictors. Describe your findings.}
 
+Prepare the data set:
+
 \begin{minted}[bgcolor=bg]{r}
+library(MASS)
+attach(Boston)
+
+dim(Boston)
+cor(Boston[,-14])
+
+summary(crim)
+b <- Boston
+b$crim = b$crim/max(b$crim)
+summary(b$crim)
 \end{minted}
 
 \subsection{(a)} 
-\emph{ }
+\emph{Logistic Regression}
 %\includegraphics[width=\linewidth]{}
 \begin{minted}[bgcolor=bg]{r}
 \end{minted}
 
 \subsection{(b)}
-\emph{ }
+\emph{LDA}
 %\includegraphics[width=\linewidth]{}
 \begin{minted}[bgcolor=bg]{r}
 \end{minted}
 
 \subsection{(c)}
-\emph{ }
+\emph{KNN}
 %\includegraphics[width=\linewidth]{}
 \begin{minted}[bgcolor=bg]{r}
 \end{minted}
