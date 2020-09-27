@@ -78,6 +78,7 @@ mse(test$highCrim,glm.pred)
 
 The mean-squared error result from the model applied to test data is fairly low. It suggests a model substantially better than random guessing; though it is likely that there is room for improvement.
 
+\clearpage
 \subsection{(b)}
 \emph{LDA}
 %\includegraphics[width=\linewidth]{}
@@ -92,8 +93,8 @@ table(lda.class, test$highCrim)
 
 \begin{minted}[bgcolor=bg]{r}
 lda.class  0  1
-		0 49 20
-		1  3 30
+	0 49 20
+	1  3 30
 \end{minted}
 
 Based on the same predictors as the Logistic regression, the LDA produces far less accurate results. Where the addition of predictors caused overfit on the logistic regression, adding predictors for LDA improved the results.
@@ -109,16 +110,42 @@ table(lda.class, test$highCrim)
 
 \begin{minted}[bgcolor=bg]{r}
 lda.class  0  1
-		0 50 12
-		1  2 38
+	0 50 12
+	1  2 38
 \end{minted}
 
 The addition of the next two highest correlated predictors reduces the error to just below that given by the logistic regression. Adding one or more predictors after this begins to increase the error rate, suggesting over fitting. Current results are slightly better than the previous method.
 
+\clearpage
 \subsection{(c)}
 \emph{KNN}
 %\includegraphics[width=\linewidth]{}
 \begin{minted}[bgcolor=bg]{r}
+library(class)
+
+knn.pred=knn(train,test,train$highCrim ,k=1)
+table(knn.pred, test$highCrim)
 \end{minted}
+
+\begin{minted}[bgcolor=bg]{r}
+knn.pred  0  1
+	0 51  6
+	1  1 44
+\end{minted}
+
+Even with just a single nearest neighbor the results are far better than what has been achieved by the regression or discriminator. 
+
+\begin{minted}[bgcolor=bg]{r}
+knn.pred=knn(train,test,train$highCrim ,k=2)
+table(knn.pred, test$highCrim)
+\end{minted}
+
+\begin{minted}[bgcolor=bg]{r}
+knn.pred  0  1
+	0 48  4
+	1  4 46
+\end{minted}
+
+Somewhat surprisingly, increasing the number of neighbors above one only decreases the accuracy of the model on the test data.  
 	
 \end{document}
