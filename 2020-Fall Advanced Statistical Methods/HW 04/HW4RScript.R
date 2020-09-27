@@ -11,7 +11,7 @@ cor(Boston[,-14])
 summary(crim)
 b <- Boston
 medCrim = median(b$crim)
-b$highCrim = if(b$crim < medCrim) 0 else 1
+b$highCrim <- ifelse(b$crim < medCrim, 0, 1)
 summary(b$highCrim)
 
 set.seed(123)
@@ -20,13 +20,27 @@ train <- b[train_ind, ]
 test <- b[-train_ind, ]
 
 # Logistic Regression
-glm.fits=glm(crim~rad+tax+lstat, data=train, family=binomial)
+glm.fits=glm(highCrim~rad+tax+lstat, data=train, family=binomial)
 summary(glm.fits)
 
 glm.pred=predict(glm.fits, test, type="response")
-mse(test$crim,glm.pred)
+mse(test$highCrim,glm.pred)
 
 # Linear Discriminant Analysis
-lda.fit = lda(crim~rad+tax+lstat, data=train)
-lda.pred=predict(lda.fit, test, type="response")
-mse(test$crim,lda.pred)
+lda.fit = lda(highCrim~rad+tax+lstat, data=train)
+lda.fit
+lda.pred=predict(lda.fit, test)
+names(lda.pred)
+lda.class=lda.pred$class
+table(lda.class, test$highCrim)
+
+# Take 2
+lda.fit = lda(highCrim~rad+tax+lstat+nox+dis, data=train)
+lda.fit
+lda.pred=predict(lda.fit, test)
+names(lda.pred)
+lda.class=lda.pred$class
+table(lda.class, test$highCrim)
+
+# KNN
+
