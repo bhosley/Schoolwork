@@ -96,22 +96,47 @@
 \section[Q2]{Q2: Hastie and Tibshirani Summary}
 
 \begin{frame}{Tibshirani Lecture: Classification}
-\begin{itemize}
-	\item<1-> Linear Regression
+	Using available data to predict a future or current qualitative feature on a variable. \\
+	\begin{block}{Example:}
+		Predicting if an account will go into credit card default \\
+		\vspace{1em}
+		\centering 
+		\includegraphics[width=0.35\linewidth]{CCDefault}
+		\vspace{1em}
+	\end{block}
+\end{frame}
+
+\begin{frame}{Tibshirani Lecture: Classification}
 	\begin{itemize}
-		\item<1-> Simple approximation method
-		\item<1-> Great for estimating slope of data
-		\item<1-> From this one may generate confidence interval
+		\item<1-> Linear Regression
+		\begin{itemize}
+			\item<1-> Qualitative nature of classification limits usefulness
+			\item<1-> Capable of being used as linear discriminant analysis
+		\end{itemize}
+		\item<2-> Logistic Regression
+		\begin{itemize}
+			\item<2-> Typically better than Linear as it favors bimodal bias
+			\item<2-> Multiple Logical Regression is capable of identifying underlying relationships
+		\end{itemize}
 	\end{itemize}
-	\item<2> Hypothesis Testing
+	\only<1>{\vspace{10em}}
+	\only<2>{\includegraphics[width=0.45\linewidth]{MultiLogReg}}
+\end{frame}
+
+\begin{frame}{Tibshirani Lecture: Classification}
+\begin{itemize}
+	\item<1-> Bayes' Theorem
 	\begin{itemize}
-		\item<2> Testing against a null hypothesis
-		\item<2>[] $H_0$ : No relationship between $X$ and $Y$.
-		\item<2> Testing for the probability of independent variable distribution 
+		\item<1-> Covered in earlier slides
+	\end{itemize}
+	\item<2-> Classifying to the highest density
+	\begin{itemize}
+		\item<2-> Calculating decision boundaries based on their density
+		\item<2-> Predictions made by which side of boundaries new data falls on
 	\end{itemize}
 \end{itemize}
-%\only<1>{\includegraphics[width=0.75\linewidth]{ConfidenceIntervals}}
-%\only<2>{\includegraphics[width=0.75\linewidth]{nullHypothesis}}
+\only<1>{\vspace{10em}}
+\only<2>{\includegraphics[width=0.45\linewidth]{HighestDensity}}
 \end{frame}
 
 \end{document}
