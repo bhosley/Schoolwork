@@ -43,4 +43,10 @@ lda.class=lda.pred$class
 table(lda.class, test$highCrim)
 
 # KNN
+library(class)
 
+knn.pred=knn(train,test,train$highCrim ,k=1)
+table(knn.pred, test$highCrim)
+
+knn.pred=knn(train,test,train$highCrim ,k=2)
+table(knn.pred, test$highCrim)
