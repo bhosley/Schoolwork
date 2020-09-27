@@ -50,8 +50,9 @@ cor(Boston[,-14])
 
 summary(crim)
 b <- Boston
-b$crim = b$crim/max(b$crim)
-summary(b$crim)
+medCrim = median(b$crim)
+b$highCrim <- ifelse(b$crim < medCrim, 0, 1)
+summary(b$highCrim)
 
 set.seed(123)
 train_ind <- sample(seq_len(nrow(b)), size = floor(0.8 * nrow(b)))
@@ -70,8 +71,8 @@ summary(glm.fits)
 Train the model on the training data. Then we will test it against the test data.
 
 \begin{minted}[bgcolor=bg]{r}
-glm.probs=predict(glm.fits, test, type="response")
-mse(test$crim,glm.probs)
+glm.pred=predict(glm.fits, test, type="response")
+mse(test$crim,glm.pred)
 [1] 0.006966051
 \end{minted}
 
