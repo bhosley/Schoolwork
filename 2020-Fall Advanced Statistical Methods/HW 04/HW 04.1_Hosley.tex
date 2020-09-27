@@ -3,6 +3,7 @@
 \usecolortheme{beaver}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\usepackage{multirow}
 
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -21,7 +22,7 @@
 \tableofcontents
 \end{frame}
 
-\section[Q1.1]{Q1A: What is a Na\"{i}ve-Bayes classifier?}
+\section[Q1A]{Q1A: What is a Na\"{i}ve-Bayes classifier?}
 
 \begin{frame}{Na\"{i}ve-Bayes}
 	\begin{itemize}[<+->]
@@ -52,7 +53,45 @@
 	\end{exampleblock}
 \end{frame}
 
-\section[Q1.2]{Q1B: What are the evaluation metrics for classification in machine learning?}
+\section[Q1B]{Q1B: What are the evaluation metrics for classification in machine learning?}
+\begin{frame}{Common Evaluation Metrics}
+	\begin{itemize}[<+->]
+		\item Confusion Matrix 			
+		\item F1 Score
+		\item Binary Cross Entropy
+	\end{itemize}
+	\only<1>{
+		\begin{block}{Example:}
+			\begin{tabular}{l|l|c|c|c}
+				\multicolumn{2}{c}{}&\multicolumn{2}{c}{True diagnosis}&\\
+				\cline{3-4}
+				\multicolumn{2}{c|}{}&Positive&Negative&\multicolumn{1}{c}{Total}\\
+				\cline{2-4}
+				\multirow{2}{*}{Screening test}& Positive & $a$ & $b$ & $a+b$\\
+				\cline{2-4}
+				& Negative & $c$ & $d$ & $c+d$\\
+				\cline{2-4}
+				\multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{$a+c$} & \multicolumn{    1}{c}{$b+d$} & \multicolumn{1}{c}{$N$}\\
+			\end{tabular}
+		\end{block}
+	}
+	\only<2>{
+		\begin{block}{Example:}
+			$ F1 = 2 \cdot \frac{precision \cdot recall}{precision + recall} $
+		\end{block}
+		\begin{exampleblock}{Note:}
+			This is the Harmonic mean of Precision and Recall
+		\end{exampleblock}
+	}
+	\only<3>{
+		\begin{block}{Example:}
+			$ BCE = -(y\log(p) + (1-y) \log(1-p))  $
+		\end{block}
+		\begin{exampleblock}{Note:}
+			This method works well examining results given as probabilities of each classification
+		\end{exampleblock}
+	}
+\end{frame}
 
 \section[Q2]{Q2: Hastie and Tibshirani Summary}
 
