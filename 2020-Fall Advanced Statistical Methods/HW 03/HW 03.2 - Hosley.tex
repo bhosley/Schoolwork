@@ -21,7 +21,7 @@
 % End Packages %
 
 \title{Advanced Statistical Methods Homework 3}
-\shorttitle{DAT 530 HW2}
+\shorttitle{DAT 530 HW3}
 \author{Brandon Hosley}
 \date{\today}
 \affiliation{University of Illinois - Springfield}
@@ -37,7 +37,8 @@ which we saw in the lab for this chapter.
 We will now try to predict per capita crime rate
 using the other variables in this data set. 
 In other words, per capita crime rate is the response, 
-and the other variables are the predictors.
+and the other variables are the predictors.
+
 \begin{minted}[bgcolor=bg]{r}
 # Load Boston data set
 library(MASS)
@@ -80,7 +81,8 @@ zn, indus, age, rad, lstat, medv.
 	response using all of the predictors. 
 	Describe your results. 
 	For which predictors can we reject the null hypothesis 
-	$H_0 : \beta_j = 0$?}
+	$H_0 : \beta_j = 0$?
+}
 \begin{minted}[bgcolor=bg]{r}
 summary(lm(crim~., data=Boston))
 \end{minted}
@@ -93,7 +95,8 @@ Zn, dis, rad, black, and medv are the predictors that allow rejection of null hy
 	from (a) on the x-axis, and the multiple regression coefficients
 	from (b) on the y-axis. That is, each predictor is displayed as a
 	single point in the plot. Its coefficient in a simple linear regression model is shown on the x-axis, and its coefficient estimate
-	in the multiple linear regression model is shown on the y-axis.} \\
+	in the multiple linear regression model is shown on the y-axis.
+} \\
 \begin{minted}[bgcolor=bg]{r}
 predictors <- names(Boston)
 y <- coefficients(lm(crim~., data=Boston))
@@ -147,7 +150,8 @@ lm(crim~poly(ptratio,3, raw=TRUE))
 lm(crim~poly( black, 3, raw=TRUE))
 lm(crim~poly( lstat, 3, raw=TRUE))
 lm(crim~poly( medv,  3, raw=TRUE))
-\end{minted}		
+\end{minted}
+		
 From this information we can determine that certain predictors bear a non-linear relationship to the crime statistic. \\
 dis, medv, nox, ptratio, rm all have significant coefficients associated with their $X^2$ and $X^3$ values.
 	
