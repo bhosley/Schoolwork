@@ -92,6 +92,9 @@ db.blogs.insert({
     ]
 })
 // 3.1 Get all comments by User 5bb26043708926e438db6caf across all posts displaying only the title and slug
-
+db.blogs.find({body:/Framwork/i},
+    {title:1,body:1,slug:0,author:0,comments:0,category:0})
+    
 // 4. Select a blog via a case-insensitive regular expression containing the word Framework in the body displaying only the title and body
-db.blogs.find()
+db.blogs.find({body:/Framwork/i},
+    {title:1,body:1,slug:0,author:0,comments:0,category:0})
