@@ -37,63 +37,63 @@ db.users.find({"_id":ObjectId("5bb26043708926e438db6cad")})
 //      and category (array with objects containing name)
 // The user_id and author fields should be one of the 3 users _id found above
 db.blogs.insert({
-    title:"",
-    body:"",
-    slug:"",
+    title:"How to Say a Lot Without Saying Anything; In Latin",
+    body:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    slug:"Lorem-Ipsum",
     author:ObjectId("5bb26043708926e438db6cad"),
     comments:[
         {
             user_id:ObjectId("5bb26043708926e438db6caf"),
-            comment:"",
+            comment:"Great post! I will be sure to use this in my daily life!",
             approved:true,
             created_at:ISODate("2020-09-10")
         }
     ],
     category:[
-        {name:""},
-        {name:""}
+        {name:"culture"},
+        {name:"linquistics"}
     ]
 })
 db.blogs.insert({
-    title:"",
-    body:"",
-    slug:"",
+    title:"Another Post with Pictures of my Cat",
+    body:"In this post I will present even more pictures of my cat....",
+    slug:"Cat-Pics-10",
     author:ObjectId("5bb26043708926e438db6cae"),
     comments:[
         {
             user_id:ObjectId("5bb26043708926e438db6cad"),
-            comment:"",
+            comment:"catterino doin me a heckin scur.",
             approved:true,
             created_at:ISODate("2020-09-21")
         }
     ],
     category:[
-        {name:""},
-        {name:""}
+        {name:"photojournalism"},
+        {name:"travel"}
     ]
 })
 // One of the posts should contain the word "framework" in the body
 db.blogs.insert({
     title:"Thoughts on HTML as a Programming Language",
-    body:"",
-    slug:"",
+    body:"I used to think HTML programmers inferior until a unique illness befell me...",
+    slug:"HTML-Programming",
     author:ObjectId("5bb26043708926e438db6caf"),
     comments:[
         {
             user_id:ObjectId("5bb26043708926e438db6cae"),
-            comment:"",
+            comment:"Interesting concept. I will have to do more research.",
             approved:true,
             created_at:ISODate("2020-10-01")
         },{
             user_id:ObjectId("5bb26043708926e438db6caf"),
-            comment:"",
+            comment:"WhAt A gReAt FrAmEwOrK",
             approved:false,
-            created_at:ISODate("2020-09-10")
+            created_at:ISODate("2020-10-03")
         }
     ],
     category:[
-        {name:""},
-        {name:""}
+        {name:"op-ed"},
+        {name:"controversial"}
     ]
 })
 // 3.1 Get all comments by User 5bb26043708926e438db6caf across all posts displaying only the title and slug
