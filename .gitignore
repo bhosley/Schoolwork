@@ -5,3 +5,10 @@
 *.snm
 *.gz
 *.toc
+
+
+
+*.png
+*.php
+*.json
+*.svg
