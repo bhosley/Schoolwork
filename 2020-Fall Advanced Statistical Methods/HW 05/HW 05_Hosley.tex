@@ -10,7 +10,7 @@
 \graphicspath{ {./images/} }
 
 %Information to be included in the title page:
-\title{Advanced Statistical Methods \\ Homework 4}
+\title{Advanced Statistical Methods \\ Homework 5}
 \author{Brandon Hosley}
 \institute{University of Illinois - Springfield}
 \date{\today}
@@ -22,13 +22,11 @@
 \tableofcontents
 \end{frame}
 
-\section[Q1A]{Q1A: What is a Na\"{i}ve-Bayes classifier?}
+\section[Q1A]{Q1A: Issues/mistakes with cross-validation}
 
-\begin{frame}{Na\"{i}ve-Bayes}
+\begin{frame}{Issues/mistakes with cross-validation}
 	\begin{itemize}[<+->]
-		\item Based on Bayes' Theorem
-		\item By comparing a series of known probabilities one may infer the probability of an associated outcome/event/attribute
-		\item Na\"{i}ve means that the known variables are being treated as independent
+		\item 
 	\end{itemize}
 	
 	\onslide<1->{
@@ -40,55 +38,18 @@
 		\end{exampleblock}
 	}
 \end{frame}
-\begin{frame}{Na\"{i}ve-Bayes classification}
-	\begin{itemize}[<+->]
-		\item From training data we can build our classifier
-		\item From the data set we can estimate $P(x)$ and $P(C_k)$
-			for all of our attributes \\
-			If these values are not similar in the test set it warns of a poor sample
-		\item $P(x_i|C_k)$ is determined from the sample data and is the resource intensive aspect of developing a classifier in this method.
-	\end{itemize}
-	\begin{exampleblock}{Bayes' Theorem Generalized} 
-		$P(C_k|x_1,\ldots,x_n)=P(C_k)\prod_{i=1}^{n} \frac{P(x_i|C_k)}{P(x_i)}$ 
-	\end{exampleblock}
-\end{frame}
 
-\section[Q1B]{Q1B: What are the evaluation metrics for classification in machine learning?}
+\section[Q1B]{Q1B: Issues/mistakes with bootstrap?}
 \begin{frame}{Common Evaluation Metrics}
 	\begin{itemize}[<+->]
-		\item Confusion Matrix 			
-		\item F1 Score
-		\item Binary Cross Entropy
+		\item 
 	\end{itemize}
-	\only<1>{
-		\begin{block}{Example:}
-			\begin{tabular}{l|l|c|c|c}
-				\multicolumn{2}{c}{}&\multicolumn{2}{c}{True diagnosis}&\\
-				\cline{3-4}
-				\multicolumn{2}{c|}{}&Positive&Negative&\multicolumn{1}{c}{Total}\\
-				\cline{2-4}
-				\multirow{2}{*}{Screening test}& Positive & $a$ & $b$ & $a+b$\\
-				\cline{2-4}
-				& Negative & $c$ & $d$ & $c+d$\\
-				\cline{2-4}
-				\multicolumn{1}{c}{} & \multicolumn{1}{c}{Total} & \multicolumn{1}{c}{$a+c$} & \multicolumn{    1}{c}{$b+d$} & \multicolumn{1}{c}{$N$}\\
-			\end{tabular}
-		\end{block}
-	}
 	\only<2>{
 		\begin{block}{Example:}
 			$ F1 = 2 \cdot \frac{precision \cdot recall}{precision + recall} $
 		\end{block}
 		\begin{exampleblock}{Note:}
 			This is the Harmonic mean of Precision and Recall
-		\end{exampleblock}
-	}
-	\only<3>{
-		\begin{block}{Example:}
-			$ BCE = -(y\log(p) + (1-y) \log(1-p))  $
-		\end{block}
-		\begin{exampleblock}{Note:}
-			This method works well examining results given as probabilities of each classification
 		\end{exampleblock}
 	}
 \end{frame}
@@ -104,39 +65,6 @@
 		\includegraphics[width=0.35\linewidth]{CCDefault}
 		\vspace{1em}
 	\end{block}
-\end{frame}
-
-\begin{frame}{Tibshirani Lecture: Classification}
-	\begin{itemize}
-		\item<1-> Linear Regression
-		\begin{itemize}
-			\item<1-> Qualitative nature of classification limits usefulness
-			\item<1-> Capable of being used as linear discriminant analysis
-		\end{itemize}
-		\item<2-> Logistic Regression
-		\begin{itemize}
-			\item<2-> Typically better than Linear as it favors bimodal bias
-			\item<2-> Multiple Logical Regression is capable of identifying underlying relationships
-		\end{itemize}
-	\end{itemize}
-	\only<1>{\vspace{10em}}
-	\only<2>{\centering \includegraphics[width=0.45\linewidth]{MultiLogReg}}
-\end{frame}
-
-\begin{frame}{Tibshirani Lecture: Classification}
-\begin{itemize}
-	\item<1-> Bayes' Theorem
-	\begin{itemize}
-		\item<1-> Covered in earlier slides
-	\end{itemize}
-	\item<2-> Classifying to the highest density
-	\begin{itemize}
-		\item<2-> Calculating decision boundaries based on their density
-		\item<2-> Predictions made by which side of boundaries new data falls on
-	\end{itemize}
-\end{itemize}
-\only<1>{\vspace{10em}}
-\only<2>{\centering \vspace{3em} \includegraphics[width=0.5\linewidth]{HighestDensity}}
 \end{frame}
 
 \end{document}
