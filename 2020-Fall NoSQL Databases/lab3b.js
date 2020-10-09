@@ -10,3 +10,12 @@
 // { "_id" : { "digits" : [ 0, 1, 2, 3, 4, 5, 6 ], "country" : 8 }, "value" : { "count" : 13 } }
 // to
 // { "_id" : { "digits" : [ 0, 1, 2, 3, 4, 5, 6 ], "country" : 8 }, "value" : { "total" : 13 } }
+
+
+db.phones.group({
+    initial: { count:0 },
+    reduce: function(phone, output) { output.count++; },
+    cond: { 'components.number': { $gt : 5599999 } },
+    key: { 'components.area' : true }
+    })
+    
