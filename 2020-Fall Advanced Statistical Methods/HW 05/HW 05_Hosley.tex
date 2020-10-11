@@ -26,32 +26,22 @@
 
 \begin{frame}{Issues/mistakes with cross-validation}
 	\begin{itemize}[<+->]
-		\item 
+		\item K-fold cross validation biases toward increased prediction error.
+		\item Filtering data before placing into validation groups can cause problems with fitting; \\ over-fitting to 0\% training error.
 	\end{itemize}
-	
-	\onslide<1->{
-		\begin{block}{Bayes' Theorem} $P(A|B)=\frac{P(B|A)P(A)}{P(B)}$ \end{block}
-	}
-	\onslide<2->{
-		\begin{exampleblock}{Bayes' Theorem Generalized} 
-			$P(C_k|x_1,\ldots,x_n)=P(C_k)\prod_{i=1}^{n} \frac{P(x_i|C_k)}{P(x_i)}$ 
-		\end{exampleblock}
-	}
+	\vspace{1em}
+	\centering 
+	\includegraphics[width=0.75\linewidth]{KfoldCV}
+	\vspace{1em}
 \end{frame}
 
 \section[Q1B]{Q1B: Issues/mistakes with bootstrap?}
 \begin{frame}{}
 	\begin{itemize}[<+->]
+		\item Datasets possess significant overlap.
+		\item Severely underestimates the prediction error.
 		\item 
 	\end{itemize}
-	\only<2>{
-		\begin{block}{Example:}
-			$ F1 = 2 \cdot \frac{precision \cdot recall}{precision + recall} $
-		\end{block}
-		\begin{exampleblock}{Note:}
-			This is the Harmonic mean of Precision and Recall
-		\end{exampleblock}
-	}
 \end{frame}
 
 \section[Q2]{Q2: Hastie and Tibshirani Summary}
@@ -61,8 +51,17 @@
 	The goal is to minimize testing error: \\
 	\vspace{1em}
 	\centering 
-	\includegraphics[width=0.35\linewidth]{TrainVsTest}
+	\includegraphics[width=0.75\linewidth]{TrainVsTest}
 	\vspace{1em}
+\end{frame}
+
+\begin{frame}{Tibshirani Lecture: Resampling Methods}
+	Possible approaches: \vspace{1em}
+	\begin{description}
+		\item[Validation Set] Random splitting of data to provide a set for testing error.
+		\item[K-fold Cross Validation] Splitting data into $K$ parts, using one as the validation set, and the other $K-1$ as training sets. Afterward select the model that provided the lowest test error.
+		\item[Bootstrap] Multiple data sets produced from the original by sampling from the original with some data replaced with random selections from the original data-set.
+	\end{description}
 \end{frame}
 
 \end{document}
