@@ -49,7 +49,7 @@
 
 \section[Q2]{Q2: Hastie and Tibshirani Summary}
 
-\begin{frame}{Tibshirani Lecture: Resampling Methods}
+\begin{frame}{Hastie and Tibshirani Lecture: Resampling Methods}
 	Testing the accuracy of our model. \\
 	The goal is to minimize testing error: \\
 	\vspace{1em}
@@ -58,7 +58,7 @@
 	\vspace{1em}
 \end{frame}
 
-\begin{frame}{Tibshirani Lecture: Resampling Methods}
+\begin{frame}{Hastie and Tibshirani Lecture: Resampling Methods}
 	Possible approaches: \vspace{1em}
 	\begin{description}
 		\item[Validation Set] Random splitting of data to provide a set for testing error.
@@ -67,22 +67,22 @@
 	\end{description}
 \end{frame}
 
-\begin{frame}{Tibshirani Lecture: Permutation v. Bootstrapping}
-	\begin{columns}
+\begin{frame}{Hastie and Tibshirani Lecture: Permutation v. Bootstrapping}
+	\begin{columns}	
+	\column{0.5\textwidth}
+	Bootstrap
+	\begin{itemize}
+		\item<1-> Sample from estimated population
+		\item<2-> Great for estimating population stats
+		\item<3-> Great for testing certain null hypotheses
+	\end{itemize}
+
 	\column{0.5\textwidth}
 	Permutation
 		\begin{itemize}
 			\item<1-> Sample from estimated \emph{null} distribution
-			\item<2-> 
-			\item<3->
-		\end{itemize}
-	
-	\column{0.5\textwidth}
-	Bootstrap
-		\begin{itemize}
-			\item<1-> Sample from estimated population
-			\item<2-> Great for estimating population stats
-			\item<3-> Great for testing certain null hypotheses
+			\item<2-> Is simpler and generally performs just as well as bootstrap
+			\item<3-> More practical with modern computing
 		\end{itemize}
 	\end{columns}
 \end{frame}
