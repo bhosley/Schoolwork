@@ -5,7 +5,20 @@
 *.snm
 *.gz
 *.toc
-
-
+*.bbl
+*.bib
+*.blg
+*.ttt
+*.fff
+*.pygtex
+*.pygstyle
 
 *.png
+*.jpg
+*.doc*
+
+*.pep
+*.c
+*.cpp
+*.ipynb
+*.rhistory
