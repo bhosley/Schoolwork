@@ -1,0 +1,22 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+
+\title{HW1: Machine Learning with Encrypted Data Annotated Bibliography}
+\author{Brandon Hosley}
+\date{\today}
+
+\usepackage{etoolbox}
+\patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+
+\begin{document}
+	\maketitle
+	\nocite{Barni2009,
+		Bost2015,	
+		Gentry2009,
+		Gao2018,
+		Lindell2000,
+		Paillier1999,
+		Yasumura2019}
+	\bibliographystyle{IEEEannot}
+	\bibliography{\jobname}
+\end{document}
