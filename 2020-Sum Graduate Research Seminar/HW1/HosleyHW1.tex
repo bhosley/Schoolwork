@@ -1,0 +1,73 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{enumitem}
+\usepackage{natbib,bibentry}
+\bibliographystyle{acm}
+%opening
+\title{HW1: Annotated Bibliography}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	% \nobibliography{HosleyHW1}	
+	\bibliography{\jobname}
+	\newcounter{CitationNumber}
+	\pagebreak
+	
+	
+%%Begin List
+	\stepcounter{CitationNumber}
+	\arabic{CitationNumber}.
+	\bibentry{Barni2009}
+	\vspace{1em}\\
+	This paper describes a method for employing branching programs for classification on encrypted data. They then propose how this method may be used in a way that allows a data-owning client (such as a health-care entity) to use the service of an analysis provider without either entity having to expose their sensitive or propriety data to the other.
+	\vspace{1em}\\
+
+	\stepcounter{CitationNumber}
+	\arabic{CitationNumber}.	
+	\bibentry{Bost2015}	
+	\vspace{1em}\\ 
+	The researchers create 3 different types of classifiers for training machine learning models with encrypted data. They produce a library with tools for constructing classifiers similar to the ones demonstrated in their work. Additionally, they provide information about the efficiency of their classifiers when applied to different Machine-Learning algorithms.
+	\vspace{1em}\\
+	
+	\stepcounter{CitationNumber}
+	\arabic{CitationNumber}.
+	\bibentry{Gentry2009}
+	\vspace{1em}\\
+	This is Dr. Craig Gentry's PhD dissertation in which he proposes what is regarded as the first fully homomorphic encryption model. He describes at length all of the constituent aspects of his model, which includes significant discourse about partial homomorphic schemas and the ideal lattices that his model leverages. Dr. Gentry also proposes potential applications of this model.
+	\vspace{1em}\\
+	
+	\stepcounter{CitationNumber}
+	\arabic{CitationNumber}.
+	\bibentry{Gao2018}
+	\vspace{1em}\\
+	In this article, researchers propose a method of employing machine learning using a Naive Bayes classifier and additively homomorphic encryption. The result is a model that can be trained on encrypted data, allowing privacy on both the training and database sides. A primary vulnerability that the researchers are concerned with addressing is the  Substitution-Then-Comparison type of attack. 
+	\vspace{1em}\\	
+	
+	\stepcounter{CitationNumber}
+	\arabic{CitationNumber}.
+	\bibentry{Lindell2000}
+	\vspace{1em}\\
+	Researchers provide a proposal for a method of Data Mining multiple sources while preserving privacy for those data sources. In their example, privacy is preserved by having data owners perform necessary calculations on their own data and the researcher effectively collating their results. The suggested use for this method is to data mine across multiple health care sources without compromising the confidentiality of the data.
+	\vspace{1em}\\
+
+	\stepcounter{CitationNumber}
+	\arabic{CitationNumber}.
+	\bibentry{Paillier1999}
+	\vspace{1em}\\
+	Dr. Paillier investigates Composite Residuosity and a new 'trapdoor mechanism'. He uses this mechanism to propose three new encryption schemes. Two of the proposed schemes are additively homomorphic, and referenced in numerous other works in this bibliography. 
+	\vspace{1em}\\
+	
+	\stepcounter{CitationNumber}
+	\arabic{CitationNumber}.
+	\bibentry{Yasumura2019}
+	\vspace{1em}\\
+	In this article the researchers examine training a machine learning model using a naive-Bayes classifier over data that has been encrypted with a fully homomorphic encryption algorithm. They additionally describe an optimization strategy that reduces the training time by 33\% under the time taken by their initial implementation.
+	\vspace{1em}\\
+	
+%% End List
+% Summaries must be 2 or 3 sentences long (NOT 1 or 4)
+
+% \bibliography{HosleyHW1}
+\end{document}
