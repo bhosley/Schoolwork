@@ -1,0 +1,62 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{enumitem}
+\usepackage{natbib}
+\usepackage{bibentry}
+\usepackage{tabularx}
+\usepackage{ltablex}
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+\title{HW0: Citation Graph Assignment}
+\author{Brandon Hosley}
+\date{2020 June 3}
+
+%\abstract{}
+
+\begin{document}
+	\maketitle
+	\nobibliography{HW0}
+	
+\section{Reference Graph}
+	\includegraphics[width=\linewidth]{HW0-Map.png}
+	%\caption{Reference Graph}
+	Figure 1: Reference Graph. \vspace{2em}
+	
+	The papers in Figure 1 are positioned along the horizontal axis in relative chronological order (not to scale). The labels are keyed on the following page in ACM format. Red items are papers referenced by the Paper of Interest (POI). Green items reference the POI. Arrows point from one paper to another that it references.
+	
+	\pagebreak
+	
+\section{References}
+
+\setlength{\extrarowheight}{6pt}
+	\begin{tabularx}{\textwidth}{c|X}
+	\caption{Documents used for Reference Graph}\\\toprule\endfirsthead
+   	\toprule\endhead
+	\midrule\multicolumn{2}{r}{\itshape continues on next page}\\\midrule\endfoot
+	\bottomrule\endlastfoot
+	\textbf{Label} & \textbf{Citation} \\\midrule
+
+		1 & \bibentry{Goldreich1987} \\
+		2 & \bibentry{Paillier1999} \\
+		3 & \bibentry{Lindell2000} \\
+		4 & \bibentry{Goldreich2004} \\
+		5 & \bibentry{Laur2006} \\
+		6 & \bibentry{Barni2009} \\
+		7 & \bibentry{Gentry2009} \\
+		8 & \bibentry{Graepel2012} \\
+		POI & \bibentry{Bost2015} \\
+		A & \bibentry{Hunt2016} \\
+		B & \bibentry{Khedr2016} \\
+		C & \bibentry{Liu2017} \\
+		D & \bibentry{Song2017} \\
+		E & \bibentry{Li2018} \\
+		F & \bibentry{Gao2018} \\
+		G & \bibentry{SadeghRiazi2018} \\
+		H & \bibentry{Yasumura2019} \\
+	\end{tabularx}
+
+% Post-Amble
+	%\bibliography{HW0}
+	\bibliographystyle{acm}
+\end{document}
