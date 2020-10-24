@@ -1,0 +1,66 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+
+\title{
+	CSC 540: Graduate Research Seminar \\ 
+	HW1.A: String Matching}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	\clearpage
+	
+	Purpose: To develop a string searching machine similar to the one proposed by Aho, et al.\cite{Aho1975} The pattern matching machine designed for this exercise operates for the keyword set \{outward, output, input\}. The keyword set could be expanded to include \{out,ward,put,in\} without any changes to the finite state machine or failure function by addition to the output function.
+	
+	\vspace{1em}
+	
+	\includegraphics[width=\linewidth]{StateDiagram} \\
+	\begin{center}
+		(a) Goto function
+	\end{center}
+	\vspace{1em}
+	
+	\begin{tabular}{c c c c c c c c c c c c c c c c}
+		$i$		&1&2&3&4&5&6&7&8&9&A&B&C&D&E&F \\
+		$f(i)$	&0&0&0&0&0&0&0&0&2&3&0&0&8&2&3 \\
+	\end{tabular}
+	\begin{center}
+		(b) Failure function
+	\end{center}
+	\vspace{1em}
+
+	\begin{center}
+		\begin{tabular}{c l}
+			$i$ & $output(i)$   \\
+			\rule{0pt}{3ex}
+			% 3 & \{out\} \\
+			7 & \{outward\}\\
+			A & \{output\} \\
+			F & \{input\} \\
+		\end{tabular} \\
+		\vspace{0.5em}
+		(c) Output function
+	\end{center}
+	\vspace{1em}
+	
+		\begin{center}
+		\begin{tabular}{c l}
+			$i$ & $output(i)$   \\
+			\rule{0pt}{3ex}
+			3 & \{out\} \\
+			7 & \{outward, ward\}\\
+			A & \{output, put\} \\
+			C & \{in\} \\
+			F & \{input, put\} \\
+		\end{tabular} \\
+		\vspace{0.5em}
+		(d) Expanded output function
+	\end{center}
+	\vspace{1em}
+	
+	\clearpage
+	\bibliographystyle{IEEEtran}
+	\bibliography{\jobname}
+\end{document}
