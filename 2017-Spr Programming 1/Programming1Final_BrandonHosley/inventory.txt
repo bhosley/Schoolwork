@@ -1,0 +1,3 @@
+The current inventory of Automobiles:
+
+1   Jeep   Rubicon   Green   2012   21
