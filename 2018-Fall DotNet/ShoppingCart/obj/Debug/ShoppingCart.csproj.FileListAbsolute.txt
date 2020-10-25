@@ -1,0 +1,11 @@
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\Debug\ShoppingCart.exe.config
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\Debug\ShoppingCart.exe
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\bin\Debug\ShoppingCart.pdb
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\obj\Debug\ShoppingCart.csprojResolveAssemblyReference.cache
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\obj\Debug\ShoppingCart.Form1.resources
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\obj\Debug\ShoppingCart.Properties.Resources.resources
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\obj\Debug\ShoppingCart.csproj.GenerateResource.Cache
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\obj\Debug\ShoppingCart.exe
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\obj\Debug\ShoppingCart.pdb
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\obj\Debug\ShoppingCart.NewItemForm.resources
+c:\users\administrator\documents\visual studio 2015\Projects\ShoppingCart\ShoppingCart\obj\Debug\ShoppingCart.UpdateInventoryForm.resources
