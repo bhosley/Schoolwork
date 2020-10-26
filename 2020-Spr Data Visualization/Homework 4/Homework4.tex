@@ -1,0 +1,140 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Data Visualization Homework 4}
+\shorttitle{DAT 332 HW4}
+\author{Brandon Hosley \\ UIN: 676399238}
+\date{}
+\affiliation{Yanhui Guo, Ph.D}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\singlespacing
+\raggedbottom
+	
+\section{Problem 1}
+Please write down two ways to set the range of an axis in a plot. (4 points)
+\begin{minted}{r}
+g + xlim(3,4) + ylim(5,6)
+%% or
+g + scale_x_continuous(limits = c(3,4)) + scale_y_discrete(limits= c(5,6))
+\end{minted}
+
+\section{Problem 2}
+Use the mtcars data frame to draw four graphs, respectively.  Write down the used functions in ggplot2 (30 points)
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+library(gcookbook)
+df <- mtcars
+g <- ggplot(df, aes(x=wt,y=mpg))
+g + geom_point() + annotate("text", label="Some text", x=4, y=25)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q2a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+g + geom_point() + annotate("text", label="Some text", x=c(2,3,4,5), y=25)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q2b}
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+g + geom_point() + annotate("rect", xmin=3, xmax=4.2, ymin=12 ,ymax=21, alpha=.3)
+\end{minted}
+\includegraphics[width=0.45\linewidth]{Q2c}
+
+\subsection{$($d$)$}
+\begin{minted}{r}
+g + geom_point() + annotate("segment", x=2.5, xend=4, y=15, yend=25, color="blue", size=1)
+\end{minted}
+\includegraphics[width=0.45\linewidth]{Q2d}
+
+\subsection{$($e$)$}
+\begin{minted}{r}
+g + geom_point() + annotate("text", label="My label", x=2, y=20) + annotate("text", label="label 2", x=3, y=22)
+\end{minted}
+\includegraphics[width=0.45\linewidth]{Q2e}
+
+\section{Problem 3}
+Use data frame PlantGrowth and write functions to draw graphs, respectively. (30 points)
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p <- ggplot(PlantGrowth, aes(x=group, y=weight)) + geom_boxplot()
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q3a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p + coord_flip()
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q3b}
+
+\pagebreak
+\subsection{$($c$)$}
+\begin{minted}{r}
+p + scale_x_discrete(limits= c("trt1", "trt2", "ctrl"))
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q3c}
+
+\subsection{$($d$)$}
+\begin{minted}{r}
+p + scale_x_discrete(limits= rev(levels(PlantGrowth$group)))
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q3d}
+
+\pagebreak
+\section{Problem 4}
+Following the same data frame PlantGrowth, and use and write functions to draw the following graphs, respectively. (18 points)
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p + scale_x_discrete(labels= c("Control", "Treat 1", "Treat 2"))
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p + scale_x_discrete(labels= NULL, breaks= NULL)
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4b}
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+p + theme(axis.text.x=element_blank(), axis.ticks.x=element_blank())
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4c}
+
+\section{Problem 5}
+Following the same data frame PlantGrowth, and use and write functions to draw the following graphs, respectively. (18 points)
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p + labs(y="Weight(Kg)", x=element_blank())
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q5a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p + ylab("Weight(Kg)") + xlab("")
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q5b}
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+p + theme(axis.title.x=element_text(face = "bold", color = "maroon", size = 20))
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q5c}
+
+\end{document}
