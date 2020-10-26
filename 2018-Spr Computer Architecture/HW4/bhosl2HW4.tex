@@ -1,0 +1,282 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+\usepackage{setspace}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{enumitem}
+\usepackage[cache=false]{minted}
+\usepackage{amsmath}
+\usepackage{caption}
+
+% Preamble
+\title{Homework 4}
+\shorttitle{HW4}
+\author{Brandon Hosley}
+\date{}
+\affiliation{Mike Davis}
+
+%\abstract{}
+\begin{document}
+\singlespacing
+\raggedbottom
+\maketitle
+\section{Problem 1}
+\emph{Run the mystery program from Fig 6.16 with the values supplied in the help solution of Pep8 and some of your own.}
+\subsection{1.a}
+\emph{Show 3 screen shots with different inputs, including the output using Batch I/O.} \\
+\includegraphics[width=0.75\linewidth]{MysteryTestRun1.png}
+\includegraphics[width=0.75\linewidth]{MysteryTestRun2.png}
+\includegraphics[width=0.75\linewidth]{MysteryTestRun3.png}
+\clearpage
+\subsection{1.b}
+\emph{State in one sentence, what does this program do?} \\
+This program takes a series of numbers and returns them in numeric order. \\
+\subsection{1.c}
+\emph{Modify the program to make the output clearer – Describe – Do not paste the code. Show the same 3 screen shots with the modification.} \\
+In order to make the output more clear I have decided to make better use of spacing on the output side. This was simply a matter of adding a reference to the $\backslash$n character and calling it after each output.
+\includegraphics[width=0.75\linewidth]{MysteryMod1.png}
+\includegraphics[width=0.75\linewidth]{MysteryMod2.png}
+\includegraphics[width=0.75\linewidth]{MysteryMod3.png}
+\clearpage
+\subsection{1.d}
+\emph{Is this spaghetti code or structured code? If it was the other type, would it be easier or harder to modify?}\\
+This is a bit of spaghetti code. If it had been written in a more structured manner it would have been much easier to modify. The modification in the previous part of the problem was doable by simply following each print command, which made the modification easier, but to restructure the code would have been a much more difficult task. However, once the code had been restructured further modification would have most likely been much easier.
+\clearpage
+\section{Problem 2}
+\emph{
+	Translate the program below into PEP/8 assembly language
+	\begin{itemize}[noitemsep]
+	\item Start with Assembly code for Fig 6.36 (Use Pep8 help)
+	\item Change to output array in same order as input
+	\item Add function twoVect
+	\item Pass array as parameter as shown in Fig 6.38
+	\item Use trace tags on all variables.
+	\end{itemize}
+}
+\subsection{2.a}
+\emph{Comment lines of the source code to trace the C++ code. Cut \& paste the Source Code Listing into your assignment document.}
+\vspace{20mm} \textcolor{white}{.}
+\begin{tabular}{l l l l}
+       & BR    & main &\\       
+; &&&\\
+;*******&twoVect && \\
+v:     &.EQUATE&  6   &       ;local variable \#2d4a \\
+n:     &.EQUATE& 2   &       ;local variable \#2d \\
+k:     &.EQUATE& 0   &       ;local variable \#2d \\
+twoVect:&SUBSP & 2,i      &  ;allocate k \\
+		&LDX   & 0,i      &  ;for(k = 0, \\
+		&STX   & k,s      &  ;|\\
+for0:   &CPX   & 4,i      &  ; k < n,\\
+		&BRGE  & endFor0  &  ; | \\
+&&&\\
+	&ASLX   &             & ; an integer is two bytes  \\
+	&LDA    & v,sxf      & ; k[v] \\
+	&ASLA   &            & ; * 2 \\
+	&STA    & v,sxf      & ; => k[v] \\ 
+&&&\\
+	&LDX    & k,s        & ; k++)  \\
+	&ADDX   & 1,i        & ; | \\
+	&STX    & k,s        & ; | \\
+	&BR     & for0       & ; End For0 \\
+endFor0:& RET2   &       & ; \\
+; &&&\\
+\end{tabular}
+\begin{tabular}{l l l l}
+;*******& main ()& & \\
+vector:	&.EQUATE &2       & ;local variable \#2d4a \\
+j:      &.EQUATE &0       & ;local variable \#2d \\
+main:   &SUBSP   &10,i    &  ;allocate \#vector \#j \\
+        &LDX     &0,i     &  ;for (j = 0 \\
+        &STX     &j,s     &   \\
+for1:   &CPX     &4,i     &  ;   j < 4 \\
+        &BRGE    &endFor1    &\\ 
+        &ASLX    &           & ;   an integer is two bytes  \\
+        &DECI    &vector,sx  & ;   cin >> vector[j] \\
+        &LDX     &j,s        & ;   j++) \\
+        &ADDX    &1,i        & \\ 
+        &STX     &j,s        & \\
+        &BR      &for1       & \\
+endFor1:&BR      &tvCall     & \\
+;*******&Call: &twoVect  &\\
+;&&&\\
+tvCall: &MOVSPA &           & ;push address of vector \\
+        &ADDA   &vector,i &\\
+        &STA    &-2,s &\\
+        &MOVSPA &          & ;push address of n \\
+        &ADDA   &4,i &\\
+        &STA    &-4,s &\\
+        &SUBSP  &4,i       & ;push n \\
+        &CALL   &twoVect,i & ;Call twoVect \\
+        &ADDSP  &4,i       & ; \\
+; &&&\\
+;;;&Print Loop &&\\
+        &LDX    &0,i       & ;for (j = 0 \\
+        &STX    &j,s  & \\
+for2:   &CPX    &4,i      &  ;   j > 4 \\
+        &BRGE   &endFor2   & \\  
+        &DECO   &j,s       & ;   cout << j \\
+        &CHARO  &' ',i     & ;      << ' ' \\
+        &ASLX   &          & ;   an integer is two bytes \\
+        &DECO   &vector,sx & ;      << vector[j] \\
+        &CHARO  &'$\slash$n',i    & ;      << endl \\
+        &LDX    &j,s       & ;   j--) \\
+        &ADDX   &1,i       &\\ 
+        &STX    &j,s       &\\
+        &BR     &for2      &\\
+endFor2:&ADDSP  &10,i      & ;deallocate \#j \#vector \\
+        &STOP &&\\               
+        &.END &&\\
+\end{tabular}
+\subsection{2.b}
+\emph{Run for a set of 4 inputs and paste a screen shot of the Output area of PEP/8.} \\
+\includegraphics[width=0.75\linewidth]{CPPDoubler.png}
+\subsection{2.c}
+\emph{Step thru \& Cut and paste the memory trace when in the twoVect function.} \\
+\includegraphics[width=0.75\linewidth]{CPPDoublerMemTrace.png} \\
+\section{Problem 3}
+\emph{
+	Translate the program below into PEP/8 assembly language. \\
+\begin{itemize}[noitemsep]
+	\item Use a jump table to implement the switch statement.
+	\item Use trace tags on all variables.
+	\item For invalid scores, output should be the same as the C++ program.
+	\item Add something to the output that makes this program uniquely yours.
+	\item The variable finish needs to be local.
+	\item This is similar to Fig 6.40
+\end{itemize}
+}
+\subsection{3.a}
+\emph{Comment lines of the source code to trace the C++ code. Cut \& paste the Source Code Listing into your assignment document.}
+
+	\begin{tabular}{l l l l}
+   &     BR    & main & \\ 
+; &&& \\
+;*******&main ()&&\\
+finish: &.EQUATE& 0         &;local variable \#2d \\
+main:   &SUBSP  & 2,i        &;allocate \#finish \\
+	& STRO  &msgIn,d     & ;cout << "Enter your score: 1, 2, 3, 4, or 5" \\
+	& CHARO  &'$\slash$n',i & ;cout << endl \\
+	& DECI   &finish,s    &;cin >> Guess \\
+	& LDX    &finish,s    &;switch (Guess) \\
+	& SUBX   &1,i         &;subtract 1 \\
+	& ASLX   &            &;addresses occupy two bytes \\
+	& BR     & finishJT,x   & \\
+finishJT:&.ADDRSS & case0 &\\      
+	&.ADDRSS &case1  &\\     
+	&.ADDRSS &case2  &\\  
+	&.ADDRSS &case3	 &\\
+	&.ADDRSS &case4  &\\   
+case0:&  STRO  &  msg0,d  &;cout << "You're the first!" \\
+	&BR     &endCase      &;break \\
+case1:&   STRO &  msg1,d  &;cout << "You're the first loser!" \\
+	&	BR     &endCase   &;break \\
+case2:&  STRO  & msg2,d   &;cout << "Try Harder!" \\
+	&	BR     &endCase   &;break\\
+case3:&  STRO  & msg2,d   &;cout << "Try Harder!" \\
+	&	BR     &endCase   &;break \\
+case4:&   STRO &  msg3,d   &;cout << "You weren't even Competing!" \\
+endCase:&CHARO & '$\slash$n',i &;count << endl \\
+	&	ADDSP  &2,i       &;deallocate \#finish \\
+	&	STOP   &&\\            
+msgIn:&  .ASCII&\multicolumn{2}{l}{"Enter your score: 1, 2, 3, 4, or 5 $\slash$x00"}\\
+msg0:&   .ASCII&\multicolumn{2}{l}{"You're the first! $\slash$x00"}\\
+msg1:&   .ASCII&\multicolumn{2}{l}{"You're the first loser! $\slash$x00"}\\
+msg2:&   .ASCII&\multicolumn{2}{l}{"Try Harder! $\slash$x00"}\\
+msg3:&   .ASCII&\multicolumn{2}{l}{"You weren't even Competing! $\slash$x00"}\\
+	& .END &&\\
+	\end{tabular}
+\subsection{3.b}
+\emph{Run for each score and paste a screen shot of each of the PEP/8 Output area.}\\
+\noindent
+\includegraphics[width=0.45\linewidth]{PEPRace1.png}
+\includegraphics[width=0.45\linewidth]{PEPRace2.png}
+\includegraphics[width=0.45\linewidth]{PEPRace3.png}
+\includegraphics[width=0.45\linewidth]{PEPRace4.png}
+\includegraphics[width=0.45\linewidth]{PEPRace5.png}
+\subsection{3.c}
+\emph{Step thru \& Cut and paste the memory trace at any point.}\\
+\includegraphics[width=0.75\linewidth]{PEPRaceTrace.png}
+\clearpage
+\section{Problem 4}
+\emph{
+	Write a C++ program that inputs a lower case character, converts it to an
+	upper case character using the function below and increments it to the next character (i.e. B
+	will be changed to C). If Z is entered it should be changed to A. If a non-letter character is
+	entered, it should not be changed.
+\begin{itemize}[noitemsep]
+	\item A character that is not a letter should be returned as is.
+	\item Character variables will need character trace tags.
+	\item Hint: characters only use one byte of storage and should be manipulated with byte instructions.
+	\item Add something to the output that makes this program uniquely yours.
+	\item Then translate it to Assembly language.
+\end{itemize}
+}
+\subsection{4.a}
+\emph{Cut and paste your C++ Source Code into your assignment document.} \\
+\inputminted{c++}{./SourceCode/ToUpperAndIncrement.cpp}
+\clearpage
+\subsection{4.b}
+\emph{Comment lines of the source code to trace the C++ code. Cut \& paste the Assembly Source Code Listing into your assignment document.} \\
+	\begin{tabular}{l l l l}
+        &br     &main & \\
+; &&& \\
+;*****  &\multicolumn{2}{l}{uppercase(char ch)}& \\
+upcase: &LDBYTEA &ch,d      & ;if ( \\
+	&CPA     &'a',i      &;ch >= 'a' \\
+	&BRLT   	&endUpper &\\
+	&LDBYTEA &ch,d   &\\
+	&CPA     &'z',i      &;ch <= 'z' \\
+	&BRGT    &endUpper   &; )\\
+	&LDBYTEA &ch,d	&\\
+	&SUBA    &32,i       &; ch = ch - 'a' + 'A' \\
+	&STBYTEA &ch,d &\\
+endUpper:&RET0 && \\
+; &&&\\
+;*****  &\multicolumn{2}{l}{increment(char ch)}& \\
+incr:&LDBYTEA&ch,d       &;if( \\
+	&CPA     &'Z',i       &; ch == 'Z' \\
+	&BREQ    &else	&\\
+	&LDBYTEA &ch,d	&\\
+	&CPA     &'z',i       &; ch == 'z' \\
+	&BREQ    &else	&\\
+	&ADDA    &1,i         &;++ch \\
+	&STBYTEA &ch,d	&\\
+	&br      &endIncr	&\\
+else:&LDBYTEA&'A',i      &; ch = 'A' \\
+	&STBYTEA &ch,d	&\\
+	&endIncr:&RET0	&\\
+; &&&\\
+;***** &main() &&\\
+ch: & .EQUATE&0          &;local variable \#1c \\
+main:& SUBSP &1,i        &;allocate \#ch \\
+	&STRO    &msg,d      &;cout << "Please input your character:" \\
+	&CHARO   &'$\slash$n',i &;cout << endl \\
+	&CHARI   &ch,d       &;cin >> ch \\
+	&CALL    &upcase,i   &;upcase(ch) \\
+	&CALL    &incr,i     &;increment(ch) \\
+	&CHARO   &ch,d       &;cout << ch \\
+; &&&\\
+	& ADDSP   &1,i         &;deallocate \#ch \\
+	& STOP &&\\
+;*****&\multicolumn{2}{l}{Constants}&\\
+msg:   &.ASCII&\multicolumn{2}{l}{"Please input your character: $\slash$x00"}\\
+	&.END	&& \\
+	\end{tabular}
+\subsection{4.c}
+\emph{Run for 3 inputs: one uppercase, one lowercase, \& one non-letter and paste a screen shot of each in the Output area of the PEP/8.} \\
+\noindent
+\includegraphics[width=0.45\linewidth]{PEPUpper.png}
+\includegraphics[width=0.45\linewidth]{PEPLower.png}
+\includegraphics[width=0.45\linewidth]{PEPNumber.png} 
+\includegraphics[width=0.45\linewidth]{PEPNaL.png}
+\subsection{4.d}
+\emph{Step thru \& Cut and paste the memory trace at a point when in \textbf{uppercase} subroutine.} \\
+\includegraphics[width=0.45\linewidth]{PEPLetterTrace.png}
+
+\nocite{warford10}
+\bibliographystyle{apacite}
+\bibliography{CS}
+
+\end{document}
