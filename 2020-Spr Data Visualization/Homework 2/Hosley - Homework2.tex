@@ -1,0 +1,166 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Data Visualization Homework 2}
+\shorttitle{DAT 332 HW2}
+\author{Brandon Hosley \\ UIN: 676399238}
+\date{}
+\affiliation{Yanhui Guo, Ph.D}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\singlespacing
+
+\section{Problem 1}
+Create a data frame with two column as:
+\begin{center}
+	\begin{tabular}{l l}
+		time	& total\_bill \\
+		Lunch	& 14.89	\\
+		Dinner	& 17.23	\\
+	\end{tabular}
+\end{center}
+Then use and write functions to draw four graphs, respectively. (30 points) \\
+\begin{minted}{r}
+library(ggplot2)
+spend <- data.frame("Time"= factor(c("Lunch","Dinner")),
+"Total Bill"= c(14.89, 17.23))
+\end{minted}
+
+\subsection{$($a$)$}
+\includegraphics[width=0.5\linewidth]{Q1a}
+\begin{minted}{r}
+ggplot(spend, aes(x= reorder(Time, Total.Bill), y= Total.Bill )) 
++ geom_bar(stat= "identity", fill= "black") 
++ xlab("time")
+\end{minted}
+
+\subsection{$($b$)$}
+\includegraphics[width=0.5\linewidth]{Q1b}
+\begin{minted}{r}
+ggplot(spend, aes(x= reorder(Time, Total.Bill), y= Total.Bill, fill= Time)) 
++ geom_bar(stat= "identity") 
++ xlab("time") 
++ guides(fill= guide_legend(reverse= TRUE)) 
++ theme(aspect.ratio = 3/1)
+\end{minted}
+
+\subsection{$($c$)$}
+\includegraphics[width=0.5\linewidth]{Q1c}
+\begin{minted}{r}
+ggplot(spend, aes(x= reorder(Time, Total.Bill), y= Total.Bill, fill= Time)) 
++ geom_bar(stat= "identity", color="black") 
++ guides(fill= guide_legend(reverse= TRUE)) 
++ theme(aspect.ratio = 3/1)
++ xlab("time") 
+\end{minted}
+
+\subsection{$($d$)$}
+\includegraphics[width=0.5\linewidth]{Q1d}
+\begin{minted}{r}
+ggplot(spend, aes(x= reorder(Time, Total.Bill), y= Total.Bill, fill= Time)) 
++ geom_bar(stat= "identity", color="black") 
++ xlab("time") 
++ guides(fill= FALSE) 
++ theme(aspect.ratio = 1/1)
+\end{minted}
+
+\newpage
+\section{Problem 2}
+Create a data frame with three column as: 
+\begin{center}
+	\begin{tabular}{l l l}
+		sex		& time		& total\_bill \\
+		Female	& Lunch		& 13.53	\\
+		Female	& Dinner	& 16.81 \\
+		Male	& Lunch		& 16.24 \\
+		Male	& Dinner	& 17.42 \\	
+	\end{tabular} 
+\end{center}
+Then use and write functions to draw four graphs, respectively. (30 points) \\
+\begin{minted}{r}
+prob2 <- data.frame(
+	"sex"= factor(c("Female", "Female", "Male", "Male")), 
+	"time"= factor(c("Lunch", "Dinner", "Lunch", "Dinner")), 
+	"total_bill"= c(13.53, 16.81, 16.24, 17.42))
+\end{minted}
+
+\subsection{$($a$)$}
+\includegraphics[width=0.5\linewidth]{Q2a}
+\begin{minted}{r}
+ggplot(prob2, aes(x = reorder(time, desc(time)), y= total_bill, group= sex)) 
++ geom_line() 
++ geom_point() 
++ xlab("time")
+\end{minted}
+
+\newpage
+\subsection{$($b$)$}
+\includegraphics[width=0.5\linewidth]{Q2b}
+\begin{minted}{r}
+ggplot(prob2, aes(x = reorder(time, desc(time)), y= total_bill, group= sex, color= sex)) 
++ geom_line() 
++ geom_point() 
++ xlab("time") 
++ theme(aspect.ratio = 2/1)
+\end{minted}
+
+\subsection{$($c$)$}
+\includegraphics[width=0.5\linewidth]{Q2c}
+\begin{minted}{r}
+ggplot(prob2, aes(x = reorder(time, desc(time)), 
+		y= total_bill, group= sex, shape= sex)) 
++ geom_line() 
++ geom_point() 
++ xlab("time") 
++ theme(aspect.ratio = 2/1)
+\end{minted}
+
+\newpage
+\section{Problem 3}
+Use the data frame ToothGrowth to draw three graphs, respectively. (40 points)
+\begin{minted}{r}
+tg <-ddply(ToothGrowth,c("supp", "dose"),summarise,length=mean(len))
+\end{minted}
+
+\subsection{$($a$)$}
+\includegraphics[width=0.5\linewidth]{Q3a}
+\begin{minted}{r}
+ggplot(tg,aes(x=dose,y=length,colour=supp)) 
++ geom_line() 
++ geom_point() 
++ theme(panel.grid.major = element_line(color= "white", size= 1), 
+	panel.grid.minor = element_line(colour= "white", size=0.5))
+\end{minted}
+
+\subsection{$($b$)$}
+\includegraphics[width=0.5\linewidth]{Q3b}
+\begin{minted}{r}
+ggplot(tg,aes(x=factor(dose),y=length,colour=supp,group=supp)) 
++ geom_line() 
++ geom_point() 
++ xlab("dose")
++ theme(panel.grid.major = element_line(color= "white", size= 1), 
+	panel.grid.minor = element_line(colour= "white", size=0.5)) 
+\end{minted}
+
+\subsection{$($c$)$}
+\includegraphics[width=0.5\linewidth]{Q3c}
+\begin{minted}{r}
+ggplot(tg,aes(x=factor(dose),y=length,colour=supp,group=supp)) 
++ geom_line() 
++ geom_point() 
++ theme(panel.grid.major = element_line(color= "white", size= 1), panel.grid.minor = element_line(colour= "white", size=0.5))
+\end{minted}
+
+\end{document}
