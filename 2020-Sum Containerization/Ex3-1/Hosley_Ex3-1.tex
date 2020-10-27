@@ -1,0 +1,48 @@
+\documentclass[]{article}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\definecolor{light-gray}{gray}{0.97}
+
+\usepackage{minted}
+\usemintedstyle{friendly}
+%\usemintedstyle{tango}
+\renewcommand{\fcolorbox}[4][]{#4}
+
+\title{Containerization and Big Data: Exercise 3-1}
+\author{Brandon Hosley}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+\setcounter{section}{2}
+\section{Multi-Container Apps with Docker Compose}
+\subsection{Install Docker Compose}
+	\includegraphics[width=0.9\linewidth]{image1} \\
+\subsection{Docker Compose File}
+	For PostgreSQL and pgAdmin \\
+	\includegraphics[width=0.9\linewidth]{image2} \\
+\subsection{Running PostgreSQL and pgAdmin}
+	\includegraphics[width=0.9\linewidth]{image3.1} \\
+	\includegraphics[width=0.9\linewidth]{image3.2} \\
+\subsection{Accessing PostgreSQL DB from pgAdmin}
+	\includegraphics[width=0.9\linewidth]{image4} \\
+	
+\clearpage
+
+\subsection{Add Portainer to the App}
+	\subsubsection{New compose file}
+		\inputminted[baselinestretch=1.2, bgcolor=light-gray, fontsize=\footnotesize]{qml}{docker-compose.yml}
+	\subsubsection{List of containers in Portainer}
+		\includegraphics[width=0.9\linewidth]{image5} \\	
+
+% PROJECT COMMANDS
+% docker stop multiconapp_pgadmin_1
+% docker-compose up -d
+% docker-compose ps
+% vi docker-compose.yml
+% docker-compose down
+
+\end{document}
