@@ -1,0 +1,35 @@
+\documentclass[]{article}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\definecolor{light-gray}{gray}{0.97}
+
+\usepackage{minted}
+\usemintedstyle{friendly}
+%\usemintedstyle{tango}
+\renewcommand{\fcolorbox}[4][]{#4}
+
+\title{Containerization and Big Data: Exercise 3-2}
+\author{Brandon Hosley}
+\date{\today}
+
+
+\begin{document}
+\maketitle
+
+\setcounter{section}{2}
+\section{Multi-Container Apps on multi-node with Swarm}
+\setcounter{subsection}{5}
+
+\subsection{Preparing virtual Nodes with Docker Machine}
+	\includegraphics[width=0.9\linewidth]{image1.1} \vspace{1em} \\ 
+	\includegraphics[width=0.9\linewidth]{image1.2} \\
+\subsection{Swarm Cluster with Docker Swarm}
+	\includegraphics[width=0.9\linewidth]{image2.1} \vspace{1em} \\
+	\includegraphics[width=0.9\linewidth]{image2.2} \\
+\subsection{Build Cassandra Cluster}
+	\inputminted[baselinestretch=1.2, bgcolor=light-gray, fontsize=\footnotesize]{qml}{docker-compose.yml}
+	\includegraphics[width=0.9\linewidth]{image3.1} \vspace{1em} \\
+	\includegraphics[width=0.9\linewidth]{image3.2} \\
+
+\end{document}
