@@ -1,0 +1,98 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+%%
+\usepackage{minted}
+\usepackage{enumitem}
+\setlist[enumerate]{label*=\arabic*.}
+%%
+
+\title{Containerization and Big Data: Exercise 2-2}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\setcounter{section}{1}
+\section{Dockerizing PostgreSQL Database}
+\setcounter{subsection}{4}
+
+\subsection{Custom Dockerfile for PostgreSQL}
+	\includegraphics[width=0.9\linewidth]{image1} \\
+	Dockerfile example taken from
+	\mint{bash}{https://docs.docker.com/engine/examples/postgresql_service/} 	
+\subsection{Building Custom PostgreSQL Docker Image}
+	\includegraphics[width=0.85\linewidth]{image2} \\
+	The Dockerfile instructs Docker to build the container:
+	\begin{enumerate}
+		\item Use Ubuntu as a base
+		\item Set PostgreSQL PGP public key to ensure connection to the correct source
+		\item Add address to the PostgreSQL repository
+		\item Apply updates to:
+		\begin{enumerate}
+			\item OS
+			\item Python software
+			\item PPA updates
+			\item PostgreSQL 
+			\item PostgreSQL Client
+			\item PostgreSQL Additional Features
+		\end{enumerate}
+		\item Change to a specific user
+		\item 
+		\begin{enumerate}
+			\item Start PostgreSQL
+			\item Create a Docker user with a password
+			\item Create a Database with Docker as the owner
+		\end{enumerate}
+		\item Set the authentication method to allow all connections
+		\item Set a listening address for the Docker
+		\item Expose port 5432 (Default for PostgreSQL)
+		\item Add volumes to persist data beyond single container
+		\item CMD runs to complete building the image
+	\end{enumerate}
+\subsection{Container Creation and Verification}
+	\includegraphics[width=\linewidth]{image3} \vspace{1em} \\
+	\includegraphics[width=\linewidth]{image4}
+	\pagebreak
+\subsection{Connection from ...}
+\subsubsection{Host System}
+	\includegraphics[width=\linewidth]{image5}
+	\begin{minted}[breaklines]{shell-session}
+bhosl2@us2004lts:~/myPostgreSQL$ sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'	
+
+bhosl2@us2004lts:~/myPostgreSQL$ sudo apt install -y postgresql-client
+
+bhosl2@us2004lts:~/myPostgreSQL$ docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' myPoC 172.17.0.3172.18.0.2
+bhosl2@us2004lts:~/myPostgreSQL$ psql -h 172.17.0.3 -p 5432 -U docker -W docker
+Password:
+psql (12.2 (Ubuntu 12.2-4), server 9.3.17)
+Type "help" for help.
+
+docker=# 
+	\end{minted}
+	\pagebreak
+\subsubsection{Another Container}	
+	\includegraphics[width=0.95\linewidth]{image6}
+	\begin{minted}[breaklines]{shell-session}
+bhosl2@us2004lts:~/myPostgreSQL$ docker container ls -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED
+02bb2f5e5698        mypostgresql        "/usr/lib/postgresql…"   12 minutes ago
+790d0f25a321        postgres:latest     "docker-entrypoint.s…"   5 days ago
+6e7d54b2c659        hello-world         "/hello"                 2 weeks ago
+
+bhosl2@us2004lts:~/myPostgreSQL$ docker network create myPostgresqlNet
+3a7aabb38c3c5dbe203eefae75ee7654e9657124796eee71451d4688e8227b81
+
+bhosl2@us2004lts:~/myPostgreSQL$ docker network connect myPostgresqlNet myPoC
+bhosl2@us2004lts:~/myPostgreSQL$ docker network connect myPostgresqlNet mypostgresq
+bhosl2@us2004lts:~/myPostgreSQL$ docker network inspect myPostgresqlNet
+
+root@790d0f25a321:/# psql -h myPoC -p 5432 -U docker -W docker
+Password:
+psql (12.3 (Debian 12.3-1.pgdg100+1), server 9.3.17)
+Type "help" for help.
+
+docker=# 
+	\end{minted}
+
+\end{document}
