@@ -20,8 +20,8 @@
 %	[]% punctuation or other commands following subsection title
 % End Packages %
 
-\title{Advanced Statistical Methods Homework 4}
-\shorttitle{DAT 530 HW4}
+\title{Advanced Statistical Methods Homework 6}
+\shorttitle{DAT 530 HW6}
 \author{Brandon Hosley}
 \date{\today}
 \affiliation{University of Illinois - Springfield}
@@ -31,121 +31,31 @@
 \maketitle
 \singlespacing
 
-\section{Introduction to Statistical Learning \\ Chapter 4.7 : Problem 13}
-\emph{
-Using the \textbf{\textcolor{red}{Boston}} data set, 
-fit classification models in order to predict
-whether a given suburb has a crime rate above or below the median.
-Explore logistic regression, LDA, and KNN models using various sub-sets of the predictors. Describe your findings.}
+\section{Introduction to Statistical Learning \\ Chapter 6.8 : Problem 11}
+\emph{We will now try to predict per capita crime rate in the
+	\textbf{\textcolor{red}{Boston}} data set.}
 
 Prepare the data set:
 
 \begin{minted}[bgcolor=bg]{r}
 library(MASS)
 attach(Boston)
-library(Metrics)
-
-dim(Boston)
-cor(Boston[,-14])
-
-summary(crim)
-b <- Boston
-medCrim = median(b$crim)
-b$highCrim <- ifelse(b$crim < medCrim, 0, 1)
-summary(b$highCrim)
-
-set.seed(123)
-train_ind <- sample(seq_len(nrow(b)), size = floor(0.8 * nrow(b)))
-train <- b[train_ind, ]
-test <- b[-train_ind, ]
 \end{minted}
 
 \subsection{(a)} 
-\emph{Logistic Regression}
-%\includegraphics[width=\linewidth]{}
-\begin{minted}[bgcolor=bg]{r}
-glm.fits=glm(highCrim~rad+tax+lstat, data=train, family=binomial)
-summary(glm.fits)
-\end{minted}
+\emph{Try out some of the regression methods explored in this chapter,
+	such as best subset selection, the lasso, ridge regression, and
+	PCR. Present and discuss results for the approaches that you
+	consider.}
 
-Train the model on the training data. Then we will test it against the test data.
+\subsection{(b)} 
+\emph{Propose a model (or set of models) that seem to perform well on
+	this data set, and justify your answer. Make sure that you are
+	evaluating model performance using validation set error, cross-validation, or some other reasonable alternative, as opposed to
+	using training error.}
 
-\begin{minted}[bgcolor=bg]{r}
-glm.pred=predict(glm.fits, test, type="response")
-mse(test$highCrim,glm.pred)
-[1] 0.1520493
-\end{minted}
+\subsection{(c)} 
+\emph{Does your chosen model involve all of the features in the data
+	set? Why or why not?}
 
-The mean-squared error result from the model applied to test data is fairly low. It suggests a model substantially better than random guessing; though it is likely that there is room for improvement.
-
-\clearpage
-\subsection{(b)}
-\emph{LDA}
-%\includegraphics[width=\linewidth]{}
-\begin{minted}[bgcolor=bg]{r}
-lda.fit = lda(highCrim~rad+tax+lstat, data=train)
-lda.fit
-lda.pred=predict(lda.fit, test)
-names(lda.pred)
-lda.class=lda.pred$class
-table(lda.class, test$highCrim)
-\end{minted}
-
-\begin{minted}[bgcolor=bg]{r}
-lda.class  0  1
-	0 49 20
-	1  3 30
-\end{minted}
-
-Based on the same predictors as the Logistic regression, the LDA produces far less accurate results. Where the addition of predictors caused overfit on the logistic regression, adding predictors for LDA improved the results.
-
-\begin{minted}[bgcolor=bg]{r}
-lda.fit = lda(highCrim~rad+tax+lstat+nox+dis, data=train)
-lda.fit
-lda.pred=predict(lda.fit, test)
-names(lda.pred)
-lda.class=lda.pred$class
-table(lda.class, test$highCrim)
-\end{minted}
-
-\begin{minted}[bgcolor=bg]{r}
-lda.class  0  1
-	0 50 12
-	1  2 38
-\end{minted}
-
-The addition of the next two highest correlated predictors reduces the error to just below that given by the logistic regression. Adding one or more predictors after this begins to increase the error rate, suggesting over fitting. Current results are slightly better than the previous method.
-
-\clearpage
-\subsection{(c)}
-\emph{KNN}
-%\includegraphics[width=\linewidth]{}
-\begin{minted}[bgcolor=bg]{r}
-library(class)
-
-knn.pred=knn(train,test,train$highCrim ,k=1)
-table(knn.pred, test$highCrim)
-\end{minted}
-
-\begin{minted}[bgcolor=bg]{r}
-knn.pred  0  1
-	0 51  6
-	1  1 44
-\end{minted}
-
-Even with just a single nearest neighbor the results are far better than what has been achieved by the regression or discriminator. 
-
-\begin{minted}[bgcolor=bg]{r}
-knn.pred=knn(train,test,train$highCrim ,k=2)
-table(knn.pred, test$highCrim)
-\end{minted}
-
-\begin{minted}[bgcolor=bg]{r}
-knn.pred  0  1
-	0 48  4
-	1  4 46
-\end{minted}
-
-Somewhat surprisingly, increasing the number of neighbors above one only decreases the accuracy of the model on the test data.  
-	
 \end{document}
