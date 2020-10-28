@@ -1,0 +1,244 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Data Visualization Homework 3}
+\shorttitle{DAT 332 HW3}
+\author{Brandon Hosley \\ UIN: 676399238}
+\date{}
+\affiliation{Yanhui Guo, Ph.D}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\singlespacing
+\raggedbottom
+	
+\section{Problem 1}
+The attached CSV data file consists of Human Development Index and Corruption Perception Index scores for several countries. Load the attached CSV file to finish the following steps and put the drawing result in the file one by one: (10 points) \\
+% file_path <- "C:/Users/Brando/OneDrive/Documents/SchoolWork/Data Visualization/Homework 3/EconomistData.csv"
+\begin{minted}{r}
+file_path <- #######/EconimistData.csv
+EconData <- read.csv(file_path)
+library(ggplot2)
+\end{minted}
+
+\subsection{$($a$)$}
+Create a scatter plot with CPI on the x axis and HDI on the y axis. \\
+\begin{minted}{r}
+p <- ggplot(EconData, aes(x= CPI, y= HDI))
+p + geom_point()
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q1a}
+
+\subsection{$($b$)$}
+Color the points in the previous plot blue. \\
+\begin{minted}{r}
+p + geom_point(color= "blue")
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q1b}
+
+\pagebreak
+\subsection{$($c$)$}
+Color the points in the previous plot according to Region. \\
+\begin{minted}{r}
+p + geom_point(aes(color= Region))
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q1c}
+
+\subsection{$($d$)$}
+Create boxplots of CPI by Region \\
+\begin{minted}{r}
+p + geom_boxplot()
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q1d}
+
+\subsection{$($d$)$}
+Overlay points on top of the box plots \\
+\begin{minted}{r}
+p + geom_boxplot() + geom_point(position= position_jitter(width= 0.1))
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q1e}
+
+\pagebreak
+\section{Problem 2}
+Re-create a scatter plot with CPI on the x axis and HDI on the y axis as previous question. Then finish the following steps and put the drawing result in the file one by one: (15 points) \\ 
+\begin{minted}{r}
+p <- ggplot(EconData, aes(x= CPI, y= HDI))
+\end{minted}
+
+\subsection{$($a$)$}
+Overlay a smoothing line on top of the scatter plot using the lm method. \\
+\begin{minted}{r}
+p + geom_point() + stat_smooth(method= lm)
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q2a}
+
+\subsection{$($b$)$}
+Overlay a smoothing line on top of the scatter plot using the default method. \\
+\begin{minted}{r}
+p + geom_point() + stat_smooth()
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q2b}
+
+\subsection{$($c$)$}
+Overlay a smoothing line on top of the scatter plot using the default loess method, but make it less smooth. \\
+\begin{minted}{r}
+p + geom_point() + stat_smooth(span= 0.25)
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q2c}
+
+\pagebreak
+\section{Problem 3}
+Create a data frame using the following functions: \\
+\begin{minted}{r}
+set.seed(955)
+dat <- data.frame(cond = rep(c("A", "B"), each=10),
+	xvar = 1:20 + rnorm(20,sd=3),
+	yvar = 1:20 + rnorm(20,sd=3))
+\end{minted}
+Then use and write functions to draw four graphs, respectively. (25 points) \\
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p <- ggplot(dat, aes(x= xvar, y= yvar))
+p + geom_point(aes(color= cond), shape= 21) 
+  + theme(panel.grid.major = element_line(color= "white", size= 1), 
+	  	panel.grid.minor = element_line(colour= "white", size=0.5))
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q3a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p + geom_point(aes(color= cond), shape= 21) 
+  + stat_smooth(aes(color= cond), method= lm, se= FALSE) 
+  + theme(panel.grid.major = element_line(color= "white", size= 1), 
+  		panel.grid.minor = element_line(colour= "white", size=0.5))
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q3b}
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+ p + geom_point(aes(color= cond), shape= 21) 
+   + stat_smooth(aes(color= cond), method= lm, se= FALSE, fullrange= TRUE) 
+   + theme(panel.grid.major = element_line(color= "white", size= 1), 
+   		panel.grid.minor = element_line(colour= "white", size=0.5)) 
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q3c}
+
+\subsection{$($d$)$}
+\begin{minted}{r}
+p + geom_point(aes(shape= cond)) 
+  + theme(panel.grid.major = element_line(color= "white", size= 1), 
+  		panel.grid.minor = element_line(colour= "white", size=0.5)) 
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q3d}
+
+\pagebreak
+\subsection{$($e$)$}
+\begin{minted}{r}
+p + geom_point(aes(shape= cond)) 
+  + scale_shape_discrete(solid=F) 
+  + theme(panel.grid.major = element_line(color= "white", size= 1), 
+  		panel.grid.minor = element_line(colour= "white", size=0.5)) 
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q3e}
+
+\pagebreak
+\section{Problem 4}
+Create a data frame using the following functions: \\
+\begin{minted}{r}
+set.seed(1234)
+dat <- data.frame(cond = factor(rep(c("A","B"), each=200)), 
+		rating = c(rnorm(200),rnorm(200, mean=.8)))
+\end{minted}
+Then use and write functions to draw graphs, respectively. (20 points) \\
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p <- ggplot(dat, aes(x= rating))
+p + geom_histogram(binwidth= 0.5)
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p + geom_histogram(binwidth= 0.5, color= "black", fill= "white") 
+  + theme(panel.grid.major = element_line(color= "white", size= 1), 
+  		panel.grid.minor = element_line(colour= "white", size=0.5))
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4b}
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+p + geom_density() 
+  + theme(panel.grid.major = element_line(color= "white", size= 1), 
+  		panel.grid.minor = element_line(colour= "white", size=0.5))
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4c}
+
+\subsection{$($d$)$}
+\begin{minted}{r}
+p + geom_histogram(aes(y=..density..),binwidth= 0.5,color="black",fill="white") 
+  + geom_density(alpha= 0.1, fill= "red") 
+  + theme(panel.grid.major = element_line(color= "white", size= 1), 
+  		panel.grid.minor = element_line(colour= "white", size=0.5))
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4d}
+
+\pagebreak
+\section{Problem 5}
+Following the same data frame in question 4, and use and write functions to draw the following graphs, respectively. (15 points) \\
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p + geom_histogram(aes(fill= cond),binwidth= 0.5,position="identity",alpha=0.4)
+\end{minted}
+\includegraphics[width=0.25\linewidth]{Q5a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p + geom_density(aes(color= cond))
+\end{minted}
+\includegraphics[width=0.25\linewidth]{Q5b}
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+p + geom_density(aes(fill= cond), color= "black", alpha= 0.4)
+\end{minted}
+\includegraphics[width=0.25\linewidth]{Q5c}
+
+\pagebreak
+\section{Problem 6}
+Following the same data frame in question 4, and use and write functions to draw the following graphs, respectively. (15 points) \\
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p <- ggplot(dat, aes(x= cond, y= rating))
+p + geom_boxplot()
+\end{minted}
+\includegraphics[width=0.25\linewidth]{Q6a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p + geom_boxplot(aes(fill= cond))
+\end{minted}
+\includegraphics[width=0.25\linewidth]{Q6b}
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+p + geom_boxplot() 
+  + stat_summary(fun.y="mean", geom="point", shape=23,size=3) 
+  + guides(fill=FALSE)
+\end{minted}
+\includegraphics[width=0.25\linewidth]{Q6c}
+
+\end{document}

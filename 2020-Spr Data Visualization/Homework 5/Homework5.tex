@@ -1,0 +1,171 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Data Visualization Homework 5}
+\shorttitle{DAT 332 HW5}
+\author{Brandon Hosley \\ UIN: 676399238}
+\date{}
+\affiliation{Yanhui Guo, Ph.D}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\singlespacing
+\raggedbottom
+	
+\section{Problem 1}
+Please run the following two commands and observe the differences of two graphs. Write the difference and the reasons. (10 points)
+\begin{minted}{r}
+p <-ggplot(heightweight,aes(x=ageYear,y=heightIn)) +geom_point()
+# a.
+p + theme(axis.title.x =element_text(colour="red")) + theme_bw()
+# b.
+p + theme_bw() + theme(axis.title.x =element_text(colour="red",size=12))
+\end{minted}
+\includegraphics[width=0.45\linewidth]{Q1a}
+\includegraphics[width=0.45\linewidth]{Q1b} \\
+GGPlot draws in a manner similar to plain CSS; More recent commands (commands later in the code) overwrite older commands. In this example the Black and White theme overwrites the red color command in A. In B the second command overrides the BW theme for the targeted element, the X-axis Title.
+
+\pagebreak
+
+\section{Problem 2}
+Use the PlantGrowth data frame to draw following graphs, respectively.  Write down the used functions in ggplot2 (25 points) 
+
+\begin{minted}{r}
+library(gcookbook)
+g <- ggplot(PlantGrowth, aes(x=group, y=weight)) + geom_boxplot()
+\end{minted}
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+g + theme(panel.grid.minor=element_blank(), panel.grid.major=element_blank())
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q2a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+g
+\end{minted}
+\includegraphics[width=0.5\linewidth]{Q2b}
+
+\pagebreak
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+g + theme(
+	panel.grid.minor.x=element_blank(), 
+	panel.grid.major.x=element_blank(), 
+	panel.grid.minor.y=element_line(size=0.5), 
+	panel.grid.major.y=element_line(size=1))
+\end{minted}
+\includegraphics[width=0.45\linewidth]{Q2c}
+
+\subsection{$($d$)$}
+\begin{minted}{r}
+g + theme(panel.grid.minor.y=element_blank(), panel.grid.major.y=element_blank())
+\end{minted}
+\includegraphics[width=0.45\linewidth]{Q2d}
+
+\pagebreak
+
+\section{Problem 3}
+Please use the DF1 data frame to draw following graphs, respectively.  Write down the used functions in ggplot2 (40 points)
+\begin{minted}{r}
+DF1 <- data.frame(x = 1:10, y = 1:10, gp = factor(rep(1:2, each = 5)))
+p0 <- ggplot(DF1, aes(x = x, y = y, colour = gp)) + geom_point()
+# Formatting Asthetics
+p0 <- p0 + theme_light() + theme(
+	panel.grid.major=element_blank(), 
+	panel.grid.minor=element_blank(), 
+	panel.border=element_blank(), 
+	legend.key=element_blank())
+\end{minted}
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p0 + ggtitle("Top") + theme(legend.position="top")
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q3a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p0 + ggtitle("Bottom") + theme(legend.position="bottom")
+\end{minted}
+\includegraphics[width=0.35\linewidth]{Q3b}
+
+\pagebreak 
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+p0 + ggtitle("Left") + theme(legend.position="left")
+\end{minted}
+\includegraphics[width=0.3\linewidth]{Q3c}
+
+\subsection{$($d$)$}
+\begin{minted}{r}
+p0 + ggtitle("None") + theme(legend.position="none")
+\end{minted}
+\includegraphics[width=0.3\linewidth]{Q3d}
+
+\subsection{$($e$)$}
+\begin{minted}{r}
+p0 + ggtitle("Inside") + theme(legend.position=c(0.1,0.8))
+\end{minted}
+\includegraphics[width=0.3\linewidth]{Q3e}
+
+\subsection{$($f$)$}
+\begin{minted}{r}
+p0 + ggtitle("Default")
+\end{minted}
+\includegraphics[width=0.3\linewidth]{Q3f}
+
+\pagebreak
+
+\section{Problem 4}
+Please use the DF1 data frame to draw following graphs, respectively.  Write down the used functions in ggplot2 (25 points)
+\begin{minted}{r}
+DF1 <- data.frame(x = 1:10, y = 1:10, gp = factor(rep(1:2, each = 5)))
+p0 <- ggplot(DF1, aes(x = x, y = y, colour = gp)) + geom_point()
+# Aesthetic Formatting
+p0 <- p0 + theme_light() + theme(
+    panel.grid.major=element_blank(), 
+    panel.grid.minor=element_blank(), 
+    panel.border=element_blank(), 
+    legend.key=element_blank(), 
+    legend.position=c(0.5,0.5))
+\end{minted}
+
+\subsection{$($a$)$}
+\begin{minted}{r}
+p0 + ggtitle("Left Justified") + theme(legend.justification="left")
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4a}
+
+\subsection{$($b$)$}
+\begin{minted}{r}
+p0 + ggtitle("Right Justified") + theme(legend.justification="right")
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4b}
+
+\subsection{$($c$)$}
+\begin{minted}{r}
+p0 + ggtitle("Center Top Justified") + theme(legend.justification=c(0.5,1))
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4c}
+
+\subsection{$($d$)$}
+\begin{minted}{r}
+p0 + ggtitle("Bottom Left Justified") + theme(legend.justification=c(0,0))
+\end{minted}
+\includegraphics[width=0.4\linewidth]{Q4d}
+
+\end{document}
