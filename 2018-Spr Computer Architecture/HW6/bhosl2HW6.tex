@@ -1,0 +1,137 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+\input{kvmacros}
+% End Packages %
+
+\title{Homework 6}
+\shorttitle{HW6}
+\author{Brandon Hosley}
+\date{2018 11 13}
+\affiliation{Mike Davis}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\raggedbottom
+\singlespacing
+\subsection{Problem 1}
+\emph{Draw the Design Table, the K-maps and the circuit for:}
+\subsubsection{a.}
+\emph{Construct an SR flip-flop from a D flip-flop}
+\includegraphics[width=0.7\linewidth]{HW6p1a.png}
+\subsubsection{b.}
+\emph{Construct a T flip-flop from a JK flip-flop}
+\includegraphics[width=0.7\linewidth]{HW6p1b.png}
+\subsection{Problem 2}
+\includegraphics[width=0.7\linewidth]{HW6p2.png}
+\begin{tabular}{ c c c c | c | c c c c | c c }
+	A$(t)$ & B$(t)$ & X$_1 (t)$ & X$_2 (t)$ & Z$(t)$ & JA$(t)$ & KA$(t)$ & JB$(t)$ & KB$(t)$ & A$(t+1)$ & B$(t+1)$ \\
+	\hline
+	  0    &   0    &     0     &     0     &   0    &    0    &    0    &    0    &    1    &    0     &  0 \\
+	  0    &   0    &     0     &     1     &   1    &    1    &    0    &    0    &    1    &    1     &  0 \\
+	  0    &   0    &     1     &     0     &   1    &    0    &    1    &    0    &    1    &    0     &  0 \\
+	  0    &   0    &     1     &     1     &   1    &    1    &    1    &    0    &    0    &    1     &  0 \\
+	&&&&&&&&&&\\	      
+	  0    &   1    &     0     &     0     &   0    &    0    &    0    &    0    &    1    &    0     &  0 \\
+	  0    &   1    &     0     &     1     &   0    &    1    &    0    &    0    &    1    &    1     &  0 \\
+	  0    &   1    &     1     &     0     &   1    &    0    &    0    &    0    &    1    &    0     &  0 \\
+	  0    &   1    &     1     &     1     &   1    &    1    &    0    &    0    &    0    &    1     &  1 \\
+	&&&&&&&&&&\\     
+	  1    &   0    &     0     &     0     &   0    &    0    &    0    &    0    &    1    &    1     &  0 \\
+	  1    &   0    &     0     &     1     &   1    &    1    &    0    &    0    &    1    &    1     &  0 \\
+	  1    &   0    &     1     &     0     &   0    &    0    &    1    &    0    &    1    &    0     &  0 \\
+	  1    &   0    &     1     &     1     &   1    &    1    &    1    &    1    &    0    &    0     &  1 \\
+	&&&&&&&&&&\\
+	  1    &   1    &     0     &     0     &   0    &    0    &    0    &    0    &    1    &    1     &  0 \\
+	  1	   &   1    &     0     &     1     &   0    &    1    &    0    &    0    &    1    &    1     &  0 \\
+	  1	   &   1    &     1     &     0     &   0    &    0    &    0    &    0    &    1    &    1     &  0 \\
+	  1    &   1    &     1     &     1     &   0    &    1    &    0    &    1    &    0    &    1     &  1 \\
+\end{tabular}
+\clearpage
+\subsection{Problem 3}
+\emph{ Textbook page 593, \#16 (d) Show the Truth Table, the K-maps (There will be two – one for each Flip-Flop) and then finally draw the circuit.}
+\singlespacing
+\begin{center}
+\begin{tabular}{ c c c c | c c }
+	A$(t)$ & B$(t)$ & X$_1$ & X$_2$ & A$(t+1)$ & B$(t+1)$ \\
+	\hline
+       0   &    0   &   0   &   0   &     0    &  0 \\
+       0   &    0   &   0   &   1   &     0    &  1 \\
+       0   &    0   &   1   &   0   &     1    &  1 \\
+       0   &    0   &   1   &   1   &     0    &  0 \\
+&&&&&\\
+       0   &    1   &   0   &   0   &     0    &  1 \\
+       0   &    1   &   0   &   1   &     1    &  0 \\
+       0   &    1   &   1   &   0   &     0    &  0 \\
+       0   &    1   &   1   &   1   &     0    &  1 \\
+&&&&&\\
+       1   &    0   &   0   &   0   &     1    &  0 \\
+       1   &    0   &   0   &   1   &     1    &  1 \\
+       1   &    0   &   1   &   0   &     0    &  1 \\
+       1   &    0   &   1   &   1   &     1    &  0 \\
+&&&&&\\
+       1   &    1   &   0   &   0   &     1    &  1 \\
+       1   &    1   &   0   &   1   &     0    &  0 \\
+       1   &    1   &   1   &   0   &     1    &  0 \\
+       1   &    1   &   1   &   1   &     1    &  1 \\
+\end{tabular}
+
+\kvnoindex
+\begin{minipage}{2.5in}
+	\karnaughmap{4}{A$(t+1)$}{A{X$_1$}B{X$_2$}}{01011x1x10100x0x}{}
+\end{minipage}
+\begin{minipage}{2.5in}
+	\karnaughmap{4}{B$(t+1)$}{A{X$_1$}B{X$_2$}}{01101x0x01101x0x}{}
+\end{minipage}
+
+\includegraphics[width=0.6\linewidth]{HW6p3.png}
+\end{center}
+\doublespacing
+\clearpage
+\subsection{Problem 4}
+\emph{A sequential circuit has three state registers (or flip-flops) and 3 inputs}
+\\
+\subsubsection{(a) How many states does it have?}~\\
+$2^3=8$ Possible Flip-Flop states;
+\subsubsection{(b) How many transitions from each state does it have?}~\\
+$2^3=8$ Possible switch states;
+\subsubsection{(c) How many total transitions does it have?}~\\
+$8\times8=64$ \\
+Number of Switch States $\times$ Number of Flip-Flop States. \\
+
+\clearpage
+
+\subsection{Problem 5}
+\emph{Textbook page 594, \#21(a)}~\\
+\subsubsection{(a) Draw the Full Address decoding – Similar to Fig 11.48 }~\\
+\includegraphics[width=0.8\linewidth]{HW6p5a.png}
+\subsubsection{(b) Include a table similar to Fig 11.47 }~\\
+~\\
+\singlespacing
+\begin{tabular}{l l l l l}
+	\hline
+	Device      &  64 x 8 PROM &  32 x 8 RAM  &  4-Port I/O  & 4-Port I/O   \\
+Minimum Address & 00 0000 0000 & 00 0100 0000 & 00 0110 0000 & 00 0110 0100 \\
+Maximum Address & 00 0011 1111 & 00 0101 1111 & 00 0110 0011 & 00 0110 0111 \\
+General Address & 00 00xx xxxx & 00 010x xxxx & 00 0110 00xx & 00 0110 01xx \\
+	\hline
+\end{tabular}
+~\\
+\doublespacing
+\subsubsection{(c) Draw a Memory Map like in Fig 11.50 and show which addresses each chip is enabled }~\\
+\includegraphics[width=0.8\linewidth]{HW6p5d.png}
+\subsubsection{(d) Can you add additional chips on this bus? Explain }~\\
+Yes, this bus has plenty of seating left. This chipset arrangement would be able to fit into an 7-bit addressed bus, this 10-bit has 8-times the capacity currently used. 920 addresses remain available.
+
+\nocite{warford10}
+\bibliographystyle{apacite}
+\bibliography{CS} %link to relevant .bib file
+\end{document}
