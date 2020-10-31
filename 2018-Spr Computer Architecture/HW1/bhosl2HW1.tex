@@ -1,0 +1,60 @@
+\documentclass[a4paper,man,natbib]{apa6}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{setspace}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+\usepackage{caption}
+
+\title{Homework 1}
+\shorttitle{Homework 1}
+\author{Brandon Hosley}
+\affiliation{Mike Davis}
+
+%\abstract{}
+
+\begin{document}
+	\maketitle
+		
+	\subsection{1}
+	\singlespacing
+	\inputminted{c++}{./SourceCode/problem1.cpp}
+	\includegraphics[width=\textwidth]{hw1problem1pic}
+	\doublespacing
+	
+	\subsection{2 a)}
+	\singlespacing
+	\inputminted{c++}{./SourceCode/problem2.cpp}
+	\includegraphics[width=\textwidth]{hw1problem2pic}
+	\doublespacing
+	\subsection{2 b)}
+	\includegraphics[]{hw1problem2diagram} \\
+	Heap and stack when rectArea() is called.
+	Nearly everything is placed in the stack due to my decision to declare variables within the main() method.
+	
+	\subsection{3 a)}
+	\singlespacing
+	\inputminted{c++}{./SourceCode/problem3.cpp}
+	\doublespacing
+	\includegraphics[width=\textwidth]{hw1problem3pic}
+	\subsection{3 b)}
+	\includegraphics[]{hw1problem3diagram} \\
+	Heap and stack when calculate() is called.
+	Solid lines represent call by reference (Pointers).
+	Dotted lines represent call by value.
+	
+	\subsection{4 a)}
+	\singlespacing
+	\inputminted{c++}{./SourceCode/problem4.cpp}
+	\includegraphics[width=0.7\textwidth]{hw1problem4pic}
+	\doublespacing
+	\subsection{4 b)}
+	\includegraphics[width=0.7\textwidth]{hw1problem4diagram} \\
+	
+	\newpage
+	\nocite{warford10}
+	\bibliographystyle{apacite}
+	\bibliography{ComputerArchitecture}
+\end{document}
