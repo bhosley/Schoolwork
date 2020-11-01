@@ -1,0 +1,29 @@
+2) Which suburbs have low crime rates?
+
+All Values below the median appear to be signicantly lower than what would be expected if only considering the mean.
+There were no low-side outliers, as it would imply a negative Crime rate.
+For this reason I consider all neighborhoods in the first quartile to be low crime. The second quartile is fairly low as well.
+
+4) Explore Data and determine which variables may be useful for predicting crim1
+
+The variables that appear to differ signicantly in relation to crim1 appear to be:
+indus, rad, and tax    with a higher level of significance, and
+nox, age, and dis      with a lower level of significance.
+
+9) Perform kNN. Which value k seems to perform best on this dataset?
+
+k 10 -> 7 false negatives, 3 false positives
+k 15 -> 10 and 6 
+k 5 -> 1 and 4 
+k 2 -> 3 and 4
+k 4 -> 3 and 6
+k 3 -> 1 and 5
+
+k = 5 gave the best results.
+
+11) Compare kNN and Naive Bayes.
+
+16 false positives, 6 false negatives out of 100 tests.
+Laplace correction did not improve the quality of the results.
+The innacuracy here is not too surprising given the general weaknesses associate with NBC, specifically datasets with numeric features and the assumption of independent and equally important features.
+Initially I had a surprising perfect prediction before realizing that column 2 was still being included in the analysis.
