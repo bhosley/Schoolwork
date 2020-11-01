@@ -1,0 +1,27 @@
+4) Which predictors appear to have a statistically significant relationship to MPG?
+Cylinders, Acceleration, Year, and Origin all appear to be statistically significant predictors of MPG. 
+
+5) What does the coefficient for the year variable suggest?
+The coefficient means the two variables correlate, higher years yeild higher MPG, suggesting that cars become more fuel efficient over time.
+
+6) Write down the linear regression equation for this model. 
+MPG = -18.711572 - 0.445205*cylinders + 0.018913*displacement - 0.009394*horsepower - 0.006732*weight + 0.117888*acceleration + 0.762458*year + 1.396799*origin  
+
+7) Find the predicted MPG for a vehicle with specific features.
+    cylinders: 4
+    displacement: 100
+    horsepower: 50
+    weight: 3000
+    acceleration: 15
+    year: 75
+    origin: 1
+Predicted MPG: 21.08
+
+9) What is the tree size of the C5.0 model?
+Tree size: 21
+
+10) Calculate the error rate
+Error rate: 17.5%
+
+11) Predict origin based on provided attributes.
+My model predicts an origin of 2 for the car with those attributes.
