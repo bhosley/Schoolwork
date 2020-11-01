@@ -1,0 +1,693 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+\usepackage{multirow}
+\usepackage{framed}
+\usepackage{cancel, xcolor}
+%
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows}
+\newcommand{\tikzmark}[1]{%
+	\tikz[overlay,remember picture]\node(#1){};}
+%
+\newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
+	\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2} 
+%
+\begin{document}
+\section{Properties and Operations}
+\subsection{Special Matrices}
+	\begin{align*}
+		O_{mn} &=
+			\begin{bmatrix}
+				0_{11} & \cdots & 0_{1n} \\
+				\vdots & \ddots & \vdots \\
+				0_{m1 }& \cdots & 0_{mn} \\
+			\end{bmatrix}
+		\\
+		I &=
+			\begin{bmatrix}
+				1      & 0      & \cdots & 0      \\
+				0      & 1      & \ddots & \vdots \\
+				\vdots & \ddots & 1      & 0      \\
+				0      & \cdots & 0      & 1      \\
+			\end{bmatrix}
+	\end{align*}
+\subsection{List of Basic Property Theorems}
+\subsubsection{Properties of Matrix Addition and Scalar Multiplication}
+	\begin{align}
+		A + B &= B + A \\
+		A + (B + C) &= (A + B) + C \\
+		(cd)A &= c(dA) \\
+		1A &= A \\
+		c(A + B) &= cA + cB \\
+		(c + d)A &= cA + dA
+	\end{align}
+\subsubsection{Properties of Zero Matrices}
+	\begin{align}
+		A + O_{mn} &= A \\
+		A + (-A) &= O_{mn} \\ 
+		\text{If } cA &= O_{mn} \text{ then } c = 0 \text{ or } A = O_{mn}
+	\end{align}
+\subsubsection{Properties of Matrix Multiplication}
+	\begin{align}
+		A ( BC ) &= ( AB ) C \\
+		A ( B + C ) &= AB + AC \\
+		( A + B ) C &= AC + BC \\
+		c ( AB ) = ( &cA ) B = A ( cB )
+	\end{align}
+\subsubsection{Properties of Identity Matrix}
+	\begin{align}
+		AI_{n} &= A \\
+		I_{m}A &= A
+	\end{align}
+\subsection{Transposition}
+	\begin{align*}
+	A &= 
+		\begin{bmatrix}
+			a & b & c \\
+			d & e & f \\
+			g & h & i \\
+		\end{bmatrix}
+	\\
+	A^T &= 
+		\begin{bmatrix}
+			a & d & g \\
+			b & e & h \\
+			c & f & i \\
+		\end{bmatrix}
+	\end{align*}
+\subsubsection{Properties of Transposed Matrix}
+	\begin{align}
+		( A^T )^T &= A \\
+		( A + B )^T &= A^T + B^T \\
+		( cA )^T &= c ( A^T ) \\
+		( AB )^T &= B^T A^T
+	\end{align}
+\subsection{Inverse Matrices}
+\subsubsection{Properties of Inverse Matrices}
+	\begin{align}
+		( A^{−1} )^{−1} &= A  \\
+		( A^k )^{−1} = A^{−1} A^{−1}  &\cdots A^{−1}  = ( A^{−1})^k \\
+		( cA )^{−1} &= \frac{1}{c}A^{−1} \\
+		( A^T )^{−1} &= ( A^{−1} )^T \\
+		(AB)^{−1} &= B^{−1}A^{−1} \\
+		AC = BC &\rightarrow A = B \text{  if C is inversible} \\
+		CA = CB &\rightarrow A = B \text{  if C is inversible} 
+	\end{align}
+Systems of Equations 
+$Ax = y$ 
+have a unique solution 
+$x = A^{-1}b$.
+	\begin{framed}
+		Example: \\
+		\begin{align*}
+			a_{11}x_1 + a_{12}x_2 + a_{13}x_3 &= y_1 \\
+			a_{21}x_1 + a_{22}x_2 + a_{23}x_3 &= y_2 \\
+			a_{31}x_1 + a_{32}x_2 + a_{33}x_3 &= y_3
+		\end{align*}
+		\begin{center}
+		$ 
+			A^{-1} 
+			\begin{bmatrix} y_1 \\ y_2 \\ y_3 \end{bmatrix} = 
+			\begin{bmatrix} x_1 & x_2 & x_3 \end{bmatrix} 
+		$
+		\end{center}
+	\end{framed}	
+	
+\subsubsection{Using Gauss-Jordan Elimination}
+	\begin{align*}
+	A &= 
+		\begin{bmatrix}
+			a_{11} & a_{12} & a_{13} \\
+			a_{21} & a_{22} & a_{23} \\
+			a_{31} & a_{32} & a_{33} \\
+		\end{bmatrix}
+	\\
+		\begin{bmatrix}
+			a & b & c &1&0&0 \\
+			d & e & f &0&1&0 \\
+			g & h & i &0&0&1 \\
+		\end{bmatrix}
+	&\rightarrow
+		\begin{bmatrix}
+			1&0&0& a\prime & b\prime & c\prime  \\
+			0&1&0& d\prime & e\prime & f\prime  \\
+			0&0&1& g\prime & h\prime & i\prime  \\
+		\end{bmatrix}
+	\\
+	\begin{bmatrix} A & I \end{bmatrix} 
+	&=
+	\begin{bmatrix} I & A^{-1} \end{bmatrix}
+	\\
+	A^{-1} &=
+		\begin{bmatrix}
+			a\prime & b\prime & c\prime  \\
+			d\prime & e\prime & f\prime  \\
+			g\prime & h\prime & i\prime  \\
+		\end{bmatrix}
+	\end{align*}
+
+\subsubsection{2x2 Quick Solution}
+First is a square matrix which can be inverted using a simple rearrangement and multiplication by the inverse of the \textbf{Determinant}.
+	\begin{align*}
+		A &= 
+			\begin{bmatrix}
+				a & b \\
+				c & d \\
+			\end{bmatrix}
+		\\
+		A^{-1} &= 
+			\frac{1}{ad - bc}
+			\begin{bmatrix}
+				 d &-b \\
+				-c & a \\
+			\end{bmatrix}
+	\end{align*}
+\section{Elementary Matrices}
+Are one single operation away from the I matrix: \\
+$$
+\begin{bmatrix}
+	1      & 0      & \cdots & 0      \\
+	0      & 1      & \ddots & \vdots \\
+	\vdots & \ddots & 1      & 0      \\
+	0      & \cdots & 0      & 1      \\
+\end{bmatrix}
+$$\\
+Every elementary matrix $E$ is invertible and $E^{-1}$ is also an elementary matrix.
+\subsection{Matrices as Products of Elementary Matrices}
+
+\subsection{LU Factorization}
+$ A = LU $ \\
+Matrix $A$ is equal to the product of a Lower corner and Upper corner factor. \\
+$$ A =
+\begin{bmatrix}
+	1 & -3 & 0 \\
+	0 &  1 & 3 \\
+	2 & -10 & 2 \\
+\end{bmatrix}
+$$
+	$$
+	\begin{bmatrix}
+		1 & -3 & 0 \\
+		0 &  1 & 3 \\
+		0 & -4 & 2 \\
+	\end{bmatrix}
+	\hspace{1.5em}
+	R_3+(-2)R_1 \rightarrow R_3
+	\hspace{2em} E_1 =
+	\begin{bmatrix}
+		 1 & 0 & 0 \\
+		 0 & 1 & 0 \\
+		-2 & 0 & 0 \\
+	\end{bmatrix}
+	$$\\
+	$$
+	\begin{bmatrix}
+		1 & -3 & 0 \\
+		0 &  1 & 3 \\
+		0 &  0 & 14 \\
+	\end{bmatrix}
+	\hspace{1.5em}
+	R_3+(4)R_2 \rightarrow R_3 
+	\hspace{2em} E_2 =
+	\begin{bmatrix}
+		1 & 0 & 0 \\
+		0 & 1 & 0 \\
+		0 & 4 & 0 \\
+	\end{bmatrix}
+	$$\\
+The final matrix on the left is $L$.\\
+$ L = E_n \cdots E_2E_1A $ \\
+$ U = E_1^{-1} E_2^{-1} \cdots E_n^{-1} $
+\section{Determinants}
+
+\subsection{Minors}
+Minors are the determinant of entries in a matrix that do not share a column or row with the current position. \\
+$$
+\begin{bmatrix}
+	a_{11} & \hcancel[red]{a_{12}} & a_{13} \\
+	\hcancel[red]{a_{21}} & \textcolor{red}{a_{22}} & \hcancel[red]{a_{23}} \\
+	a_{31} & \hcancel[red]{a_{32}} & a_{33} \\
+\end{bmatrix}
+\rightarrow
+M_{22} = 
+\begin{vmatrix}
+	a_{11} & a_{13} \\
+	a_{31} & a_{33} \\
+\end{vmatrix}
+$$
+$$
+\begin{bmatrix}
+	\textcolor{red}{a_{11}} & \hcancel[red]{a_{12}} & \hcancel[red]{a_{13}} \\
+	\hcancel[red]{a_{21}} & a_{22} & a_{23} \\
+	\hcancel[red]{a_{31}} & a_{32} & a_{33} \\
+\end{bmatrix}
+\rightarrow
+M_{11} = 
+\begin{vmatrix}
+	a_{22} & a_{23} \\
+	a_{32} & a_{33} \\
+\end{vmatrix}
+$$
+\subsection{Cofactors}
+$ C_{ij} = (-1)^{i+j} M_{ij} $ \\
+This follows the following sign pattern: \\
+$$
+	\begin{bmatrix}
+		+&-&+&-&+&-&\cdots\\
+		-&+&-&+&-&+&\cdots\\
+		+&-&+&-&+&-&\cdots\\
+		-&+&-&+&-&+&\cdots\\
+		+&-&+&-&+&-&\cdots\\
+		\vdots&\vdots&\vdots&\vdots&\vdots&\vdots&\ddots\\
+	\end{bmatrix}
+$$
+\subsection{Determinants of Larger Matrices}
+The generalized Equation: \\
+$$
+det(A) = |A| =
+\sum_{j=1}^{n}a_{1j}C_{1j} = 
+a_{11}C_{11} + a_{12}C_{12} + \cdots + a_{1n}C_{1n}
+$$ \\
+This can be applied to any single row or column. \emph{Choose wisely.}
+\subsubsection{Alternate Method}
+$$
+det(A) =
+\left|A\right| =
+	\begin{vmatrix}
+		\tikzmark{s1}a_{11} & a_{12}\tikzmark{n2} \\
+		\tikzmark{s2}a_{21} & a_{22}\tikzmark{n1} \\
+	\end{vmatrix}
+= a_{11}\tikzmark{e1}a_{22} - a_{12}\tikzmark{e2}a_{21} $$
+	\begin{tikzpicture}[overlay,remember picture]
+		\draw[->,blue]
+			($(s1.north west)+(0.1,0.1)$) -- 
+			($(n1.south east)+(0.1,-0.1)$) -| 
+			($(e1.south)+(-0.1,0)$) ;
+		\draw[->,red]
+			($(s2.south east)+(-0.1,0.1)$) -- 
+			($(n2.north west)+(0.1,0.2)$) -| 
+			($(e2.north)+(0,0.1)$) ;
+	\end{tikzpicture}
+
+\hspace{5em} Subtract these products
+$$
+	\begin{bmatrix}
+		\tikzmark{downS}a_{11} & a_{12} & \tikzmark{upE}a_{13} & a_{11} & a_{12} \\
+		a_{21} & a_{22} & a_{23} & a_{21} & a_{22} \\
+		\tikzmark{upS}a_{31} & a_{32} & \tikzmark{downE}a_{33} & a_{31} & a_{32} \\
+	\end{bmatrix}
+$$
+\begin{tikzpicture}[overlay,remember picture]
+	\draw[->,blue]($(upS.south west)+(0,0)$) -> ($(upE.north east)+(0.2,0.1)$);
+	\draw[->,blue]($(upS.south west)+(1,0)$) -> ($(upE.north east)+(1.2,0.1)$);
+	\draw[->,blue]($(upS.south west)+(2,0)$) -> ($(upE.north east)+(2.2,0.1)$);
+	\draw[->,red]($(downS.north west)+(0,0.1)$) -> ($(downE.south east)+(0.1,0)$);
+	\draw[->,red]($(downS.north west)+(1,0.1)$) -> ($(downE.south east)+(1.1,0)$);
+	\draw[->,red]($(downS.north west)+(2,0.1)$) -> ($(downE.south east)+(2.1,0)$);
+\end{tikzpicture}
+\hspace{5em} Add these products \\
+$ ∣A∣= 
+a_{11}a_{22}a_{33} + 
+a_{12}a_{23}a_{31} + 
+a_{13}a_{21}a_{32} − 
+a_{31}a_{22}a_{13} − 
+a_{32}a_{23}a_{11} − 
+a_{33}a_{21}a_{12} $
+
+\subsection{Adjoint Matrices}
+Adjoint matrices are the transpose of a matrix of Cofactors: \\
+$ adj(A) =
+\begin{bmatrix}
+	C_{11} & C_{21} & C_{n1} \\
+	C_{12} & C_{22} & C_{n2} \\
+	C_{1n} & C_{2n} & C_{nn} \\
+\end{bmatrix} $
+
+\subsection{Properties of Determinants}
+\begin{align}
+	|A||B| &= |AB| \\
+	|cA| &= c^n|A| \\
+	|A| &= |A^T| \\
+	|A^{-1}| &= \frac{1}{|A|} \\
+	A^{-1} &= \frac{1}{|A|}adj(A) \\	
+\end{align}
+
+\subsection{Cramer's Rule}
+For a system of equations: \\
+\begin{align*}
+	a_{11}x_1 + a_{12}x_2 + a_{13}x_3 &= b_1 \\
+	a_{21}x_1 + a_{22}x_2 + a_{23}x_3 &= b_2 \\
+	a_{31}x_1 + a_{32}x_2 + a_{33}x_3 &= b_3 \\
+\end{align*}
+\begin{align*}
+	x_1 &= \frac{|A_1|}{|A|} \\
+	x_2 &= \frac{|A_2|}{|A|} \\
+		&\cdots \\
+	A_1 &=
+		\begin{bmatrix}
+			\color{red}{b_1} & a_{12} & a_{13} \\
+			\color{red}{b_{2}} & a_{22} & a_{23} \\
+			\color{red}{b_{3}} & a_{32} & a_{33} \\
+		\end{bmatrix} \\
+	A_2 &=
+		\begin{bmatrix}
+			a_{11} & \color{red}{b_{1}} & a_{13} \\
+			a_{21} & \color{red}{b_{2}} & a_{23} \\
+			a_{31} & \color{red}{b_{3}} & a_{33} \\
+		\end{bmatrix} 
+\end{align*}
+
+\subsection{Applications of Determinants}
+\subsubsection{Area of a Triangle}
+For a triangle with points $(x_1,y_1)$,$(x_2,y_2)$, and $(x_3,y_3)$ \\
+\begin{align*}
+	\text{Area} = \pm\frac{1}{2}
+		\begin{vmatrix}
+			x_{1} & y_{1} & 1 \\
+			x_{2} & y_{2} & 1 \\
+			x_{3} & y_{3} & 1 \\
+		\end{vmatrix} 
+\end{align*} \\
+This can likewise be used to solve for the volume of a 
+tetrahedron in 3-dimensional space. \\
+\begin{align*}
+	\text{Area} = \pm\frac{1}{6}
+		\begin{vmatrix}
+			x_{1} & y_{1} & z_1 & 1 \\
+			x_{2} & y_{2} & z_2 & 1 \\
+			x_{3} & y_{3} & z_3 & 1 \\
+			x_4 & y_4 & z_4 & 1
+		\end{vmatrix} 
+\end{align*} \\
+
+\subsubsection{Colinearity}
+If \\
+\begin{align*}
+	\begin{vmatrix}
+		x_{1} & y_{1} & 1 \\
+		x_{2} & y_{2} & 1 \\
+		x_{3} & y_{3} & 1 \\
+	\end{vmatrix}
+	= 0 
+\end{align*} \\
+Then the 3 points are on the same line. 
+Likewise solving the following for $x$ and $y$ 
+will give the equation of the line that passes through the other two points. \\
+\begin{align*}
+	\begin{vmatrix}
+		x_{1} & y_{1} & 1 \\
+		x_{2} & y_{2} & 1 \\
+		x & y & 1 \\
+	\end{vmatrix}
+	= 0 
+\end{align*} \\
+This can also be used to test for Coplanar points in 3D space
+using the same expansion to 4x4 as seen above.
+
+
+\section{Vector Space}
+
+\subsection{Properties of Vector Addition and Scalar Multiplication in a Plane}
+
+Let $v$, $u$, and $w$  be vectors and $c$ and $d$ be scalars. \\
+\begin{align}
+	v + u &= u + v \\
+	( u + v ) + w &= u + ( v + w ) \\
+	v + u &= (v_1 + u_1),(v_2 + u_2) \\
+	u + 0 &= u \\
+	u + (-u) &= 0 \\
+	c ( u + v ) &= cu + cv \\
+	( c + d ) u &= cu + du \\
+	c ( du ) &= ( cd ) u \\ 
+\end{align} \\
+\textbf{Summary of important Vector Spaces} \\
+\begin{align*}
+R &= \text{set of all real numbers}\\
+R^2 &= \text{set of all ordered pairs}\\
+R^3 &= \text{set of all ordered triples}\\
+R^n &= \text{set of all n-tuples}\\
+C ( − \inf , \inf ) &= 
+		\text{set of all continuous functions defined on the real number line} \\
+C [ a, b ] &= 
+		\text{set of all continuous functions defined on a closed interval }[ a, b ] , \\
+		& \text{where } a \neq b \\
+P &= \text{set of all polynomials}\\
+P_n &= \text{set of all polynomials of degree} ≤ n 
+		\text{(together with the zero polynomial)} \\
+M_{m,n} &= \text{set of all } m × n \text{matrices} \\
+M_{n,n} &= \text{set of all } n × n \text{square matrices} \\
+\end{align*} \\
+
+\subsection{Subspaces}
+
+\textbf{The Test for Subspace} \\
+\begin{enumerate}
+	\item If Subspace is non-empty. (Includes the 0 vector)
+	\item If $u$ and $v$ are in $W$, then $u+v$ is in $W$. (Closed by Addition)
+	\item If $u$ is in $W$ and $c$ is any scalar, then $cu$ is in $W$ (Closed by Multiplication)
+\end{enumerate}
+
+\subsection{Linear Combinations of Vectors}
+Vector v in vector space V is a linear combination of vectors if
+it can be written in the following form: \\
+$v = c_1 u_1 + c_2 u_2 + \ldots + c_k u_k$ \\
+Solvable by matrix method: \\
+$$ u_1 = ( u_{11}, u_{12}, u_{13}) \\
+\begin{bmatrix}
+	u_{11} & u_{21} & u_{31} & v_1 \\
+	u_{12} & u_{22} & u_{32} & v_2 \\
+	u_{13} & u_{23} & u_{33} & v_3 \\
+\end{bmatrix} $$
+** Note that the matrix is built transposed from the way in
+which most matrices have been built in this course. \\
+Once built, solve for row-echelon form. If the bottom row is
+0s then the remainder has infinitely many solutions with a form
+of $c_it + \ldots$ from the rest of the matrix solution.
+
+\subsection{Spanning Sets}
+
+A set spans $R^2$ if its coefficient matrix has a non-zero determinant. \\
+Same is true of $R^3$.
+
+\subsection{Linear Dependence and Independence}
+
+For a set $S = {v_1, v_2, \ldots, v_n}$ \\
+where there exists a non-trivial solution to: \\
+$ c_1v_1 + c_2v_2 + \ldots + c_nv_n = 0 $ \\
+(The trivial solution is for $c_{1 \cdots n}=0$ )\\
+Is Linearly Dependant. \\
+If only the trivial solution exists it is linearly-independent. \\
+\textbf{Testing for Dependence} \\
+If the coefficient matrix can reduced to identity matrix: \\
+$$\begin{bmatrix}
+	u_{11} & u_{21} & u_{31} & v_1 \\
+	u_{12} & u_{22} & u_{32} & v_2 \\
+	u_{13} & u_{23} & u_{33} & v_3 \\
+\end{bmatrix} 
+\rightarrow
+\begin{bmatrix}
+	1 & 0 & 0 & 0 \\
+	0 & 1 & 0 & 0 \\
+	0 & 0 & 1 & 0 \\
+\end{bmatrix}$$ \\
+There will only be the trivial solution. \\
+If the Gaussian reduction yields a all zero row there are infinitely many solutions, therefor a non-trivial solution, and the set is linearly-dependent.
+
+\subsection{Basis for Vector Space}
+The standard basis for $R^n \text{is } M_{n,n} $ in the identity matrix form.
+The standard basis for $P_n \text{is } S={1,x,x^2,\ldots,x^n} $.
+
+\textbf{Testing for Alternative Bases} \\
+And alternative basis will be Linearly-Independent
+and will be a spanning set. \\
+
+\section{Inner Product Spaces}
+
+\subsection{Length and Dot Product}
+Vector Length is the result of a Pythagorean-like series. \\
+$\left\|V_n\right\| =\sqrt{v_1^2 + v_2^2 + v_3^2 \cdots v_n^2}$ \\
+
+Inner Product: \\
+$\left\langle X,Y\right\rangle = x_1y_1 + x_2y_2 + \cdots x_ny_n$ \\
+
+Unit Vectors have the same direction as the source vector but a length of 1. \\
+$ u = \frac{v}{\left\|v\right\| } $ \\
+Shown by: \\
+\begin{align*}	
+	\left\| u\right\| &= \left\|\frac{v}{\left\|v\right\|}\right\|  \\
+		&= \frac{1}{\left\|v\right\|}\left\|v\right\| \\
+		&= 1 \\
+	\text{*Note that: } \\
+	\left\|cv\right\| &= |c|\left\|v\right\|  \\
+\end{align*} \\
+
+The distance between two vectors in $R^n$ space is:
+$ d(u,v) = 
+\left\| u-v \right\| = 
+\sqrt{(u_1-v_1)^2 + (u_2-v_2)^2 \cdots (u_n-v_n)^2} $\\
+
+\subsection{Properties of Dot Products}
+\begin{align*}
+	u \cdot v &= u_1v_1 + u_2v_2 + \ldots + u_nv_n \\
+	u \cdot v &= v \cdot u \\
+	u \cdot (v + w) &= u \cdot v + u \cdot w \\
+	c(u \cdot v) = (cu) &\cdot v = u \cdot (cv) \\
+	v \cdot v &= \left\|v\right\|^2 \\
+	v \cdot v \geq 0 \text{, and } v \cdot v &= 0 \text{ if and only if } v = 0
+\end{align*}
+
+\subsection{Cauchy-Schwarz Inequality}
+If $u$ and $v$ are vectors in $R^n$, then \\
+$\left|u \cdot v\right| \leq \left\|u\right\| \left\|v\right\|$ \\
+where $\left|u \cdot v\right|$ 
+denotes the \emph{absolute value} of $u \cdot v$.
+\\
+
+\subsection{Angle Between Vectors}
+The Cauchy-Schwarz inequality must be verified in order to use the following method to find the angle between two vectors. \\
+$ \cos\theta = \frac{u \cdot v}{\left\| u \right\| \left\| v \right\|} $,
+$ 0 < \theta < \pi$\\
+
+\includegraphics[width=\linewidth]{AngleRef}
+\includegraphics[width=0.5\linewidth]{UnitCircle} 
+%\includegraphics[width=0.5\linewidth]{TrigFuncRef} 
+*Remember $(cos\theta,sin\theta)$ \\
+
+\textbf{Orthogonal Unit Vectors:} \\
+In $R^2$, $v = (v_1, v_2)$, the Orthogonal vector is: $(v_2, −v_1)$ \\
+Therefor the Orthogonal Unit vectors are:
+$ \left\langle 
+	\frac{v_1}{\left\| v\right\| },
+  - \frac{v_2}{\left\| v\right\| }
+  \right\rangle $ and
+$ \left\langle 
+  - \frac{v_1}{\left\| v\right\| },
+	\frac{v_2}{\left\| v\right\| }
+\right\rangle $
+
+\subsection{Inner Products}
+Axioms of Inner Products:
+\begin{align*}
+	\left\langle u,v \right\rangle &= 
+	\left\langle v,u \right\rangle \\
+	\left\langle u,v+w \right\rangle &= 
+	\left\langle u,v \right\rangle + \left\langle u,w \right\rangle \\
+	c\left\langle u,v \right\rangle &= 
+	\left\langle cu,v \right\rangle \\
+	\left\langle v,v \right\rangle \geq 0 \text{, and }
+	\left\langle v,v \right\rangle &= 0 
+	\text{ if and only if } v=0 \\
+\end{align*}
+
+\subsection{Definitions in Inner Product Space}
+\begin{align*}
+	\text{\textbf{Length} of $u$: } \left\| u\right\| &= 
+		\sqrt{\left\langle u,u \right\rangle} \\
+	\text{\textbf{Distance} between $u$ and $v$: } d(u,v) &=
+		\left\| u-v \right\|  \\ &= 
+		\sqrt{\left\langle u-v,u-v \right\rangle} \\
+	\text{\textbf{Angle} between $u$ and $v$: } \cos\theta &= 
+		\frac{\left\langle u,v \right\rangle}
+			{\left\| u\right\| \left\| v\right\|} \\
+	\text{$u$ and $v$ are orthogonal when }\left\langle u,v\right\rangle &=0 \\
+	\text{Cauchy-Schwarz Inequality: } 
+		\left| \left\langle u,v \right\rangle \right| &\leq
+		\left\| u\right\| \left\| v\right\| \\
+	\text{Triangle inequality: } \left\| u + v\right\| &\leq
+		\left\| u\right\| + \left\| v\right\| \\
+	\text{Pythagorean Theorem: $u$ and }&
+	\text{$v$ are orthogonal if and only if} \\
+		\left\| u + v\right\|^2 &= \left\| u\right\|^2 \left\| v\right\|^2 \\
+\end{align*}
+
+\subsubsection{Orthogonal Projection}
+Let $u$ and $v$ be vectors in an inner product space $V$, such that $v \neq 0$.
+Then the orthogonal projection of $u$ onto $v$ is \\
+$\text{proj}_vu = \frac
+	{\left\langle u,v \right\rangle}
+	{\left\langle v,v \right\rangle}
+v $
+
+\subsection{Gram-Schmitz Orthonormalization Process}
+\begin{enumerate}
+	\item Let $B = \left\lbrace  v_1,v_2, \ldots, v_n\right\rbrace $ 
+		be a basis for product space $V$.
+	\item Let $B' = \left\lbrace w_1,w_2, \ldots, w_n\right\rbrace $, where \\
+		$w_1 = v_1$ \\
+		$w_2 = v_2 - \frac{v_2 \cdot w_1}{w_1 \cdot w_1}w_1 $ \\
+		$w_3 = v_3 - \frac{v_3 \cdot w_1}{w_1 \cdot w_1}w_1 
+				   - \frac{v_3 \cdot w_2}{w_2 \cdot w_2}w_2 $ \\
+		$w_n = v_n - \frac{v_n \cdot w_1}{w_1 \cdot w_1}w_1 
+		           - \frac{v_n \cdot w_2}{w_2 \cdot w_2}w_2 - \cdots
+		           - \frac{v_n \cdot w_n}{w_n \cdot w_n}w_n $ \\
+		$B'$ is the \emph{orthoganal basis} for $V$.
+	\item Let $u_i = \frac{w_i}{\left\| w_i\right\| } $ and \\
+		$B" = \left\lbrace  u_1,u_2, \ldots, u_n\right\rbrace $ \\
+		$B"$ is the \emph{orthonormal basis} for $V$.
+\end{enumerate}
+
+\section{Eigenvectors and Eigenvalues}
+\subsection{Definitions}
+$ Ax = \lambda x $ \\
+Where $A$ is an $n \times n$ matrix, \\
+$\lambda$ is the Eigenvalue, and \\
+$x$ is the non-zero Eigenvector.
+
+\begin{align*}
+	\left| \lambda I - A \right| &= 0 \\
+	( \lambda I - A )x &= 0 \\
+\end{align*}
+
+The \textbf{characteristic equation} is $\left| \lambda I - A = 0 \right| $ solving this from polynomial form will give Eigenvalues. 
+
+\subsubsection{Examples}
+\textbf{Eigenvalues:}\\
+$$ A =
+	\begin{bmatrix}
+		a & b \\ c & d \\
+	\end{bmatrix} $$ \\
+The characteristic polynomial is: \\
+$$ \left| \lambda I - A \right| = 
+	\begin{vmatrix}
+		\lambda -a & -b \\ -c & \lambda -d \\
+	\end{vmatrix} =
+	\lambda^2 -a\lambda -d\lambda + (-b)(-c) =
+	(\lambda + i)(\lambda + j) = 0 $$ \\
+The result is that Matrix $A$ has the Eigenvalues $\lambda_1 = -i$ 
+and $\lambda_2 = -j$. \\
+\textbf{Eigenvectors:}\\
+$$ (\lambda_1)I-A = 
+	\begin{bmatrix}
+		\lambda_1 -a & -b \\ -c & \lambda_1 -d \\
+	\end{bmatrix} $$
+Reduce this matrix into Row-Echelon form, or as near as possible.
+$$ 	\begin{bmatrix}
+		\lambda_1 -a & -b \\ -c & \lambda_1 -d \\
+	\end{bmatrix}
+		\rightarrow
+	\begin{bmatrix}
+		i & j \\ 0 & 0 \\
+	\end{bmatrix} $$
+Each row is set equal to zero and a variable will be assigned. \\
+In this case $x_2 = t $ \\
+$$ x_1 - 4x_2 = 0 \\
+	x = 
+	\begin{bmatrix} x_1 \\ x_2 \end{bmatrix} =
+	\begin{bmatrix} 4t \\ t \end{bmatrix} =
+	t\begin{bmatrix} 4 \\ 1 \end{bmatrix}, 
+	t \neq 0 $$ \\
+This must be done for each Eigenvalue.
+
+\section{Linear Programming}
+
+\subsection{Systems of Linear Equations}
+\textbf{Linear Equation between two points:} \\
+$ (y_1-y_2)x + (x_2-x_1)y + x_1y_2-x_2y_1 = 0 $
+
+\end{document}
