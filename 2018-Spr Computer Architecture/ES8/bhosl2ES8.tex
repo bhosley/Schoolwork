@@ -1,0 +1,166 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[linguistics]{forest}
+
+\graphicspath{ {./images/} }
+
+\usepackage[export]{adjustbox}
+
+\usepackage[cache=false]{minted}
+
+\usepackage{caption}
+
+% End Packages %
+
+\title{Exercise 8}
+\shorttitle{ES8}
+\author{Brandon Hosley}
+\date{2018 10 24}
+\affiliation{Mike Davis}
+%\abstract{}
+\begin{document}
+\maketitle
+\raggedbottom
+
+\subsection{7.3}
+\singlespacing
+\emph{Derive the following strings with the grammar of Figure 7.1 and draw the corresponding syntax tree:}
+\begin{center} \includegraphics[width=0.8\linewidth]{7_1grammar.png} \\ \end{center}
+\doublespacing
+\subsubsection{b.}
+\textbf{a1b2c3} \\
+\begin{forest}
+	[<identifier> 
+		[<identifier> 
+			[<identifier> 
+				[<identifier> 
+					[<identifier> 
+						[<identifier> 
+							[<letter> [a ]]
+						]
+						[<digit> [1 ]]
+					]
+					[<letter> [b ]]
+				]
+				[<digit> [2 ]]
+			]
+			[<letter> [c ]]
+		] 
+		[<digit> [3 ]] 
+	]
+\end{forest}
+\subsubsection{c.}
+\textbf{a321bc} \\
+\begin{forest}
+[<identifier> 
+	[<identifier> 
+		[<identifier> 
+			[<identifier> 
+				[<identifier> 
+					[<identifier> 
+						[<letter> [a ]]
+					]
+					[<digit> [3 ]]
+				]
+				[<digit> [2 ]]
+			]
+			[<digit> [1 ]]
+		]
+		[<letter> [b ]]
+	] 
+	[<letter> [c ]] 
+]
+\end{forest}
+\clearpage
+\subsection{7.4}
+\singlespacing
+\emph{Derive the following strings with the grammar of Figure 7.2 and draw the corresponding syntax tree:}
+\begin{center} \includegraphics[width=0.45\linewidth]{7_2grammar.png} \\ \end{center}
+\doublespacing
+\subsubsection{b.}
+\textbf{+ddd} \\
+\begin{center}\begin{forest}
+[<I> 
+	[F [+ ]]
+	[M 
+		[d ]
+		[M 
+			[d ]
+			[M [d ]]
+		]
+	]
+]
+\end{forest}\end{center}
+\subsubsection{c.}
+\textbf{d} \\
+\begin{center}\begin{forest}
+[<I> 
+	[F [$\epsilon$ ]]
+	[M [d ]]
+]
+\end{forest}\end{center}
+\clearpage
+
+\subsection{7.11}
+\emph{For each of the machines shown in Figure 7.48, \textbf{(a)} state whether the FSM is deterministic or nondeterministic and \textbf{(b)} identify any states that are inaccessible.}
+
+\subsubsection{b.}
+\begin{center} \includegraphics[]{7_11_b.png} \\ \end{center}
+\noindent
+\textbf{(a)} 
+This FSM is deterministic. \\
+\noindent
+\textbf{(b)} 
+All states are accessible in this FSM. \\
+\subsubsection{d.}
+\begin{center} \includegraphics[]{7_11_d.png} \\ \end{center}
+\noindent
+\textbf{(a)} 
+This FSM is deterministic. \\
+\noindent
+\textbf{(b)} 
+State (Y) is inaccessible in this FSM.\\
+\clearpage
+
+\subsection{7.12}
+\emph{Remove the empty transitions to produce the equivalent machine for each of the finite state machines in Figure 7.49.}
+
+\subsubsection{a.}
+
+\begin{minipage}[c]{\linewidth}
+	\centering
+	\includegraphics[valign=c, width=0.34\linewidth ]{7_12_a.png}
+	$\rightarrow$
+	\includegraphics[valign=c, width=0.34\linewidth]{7_12_a_solution.png}
+\end{minipage}
+	
+\subsubsection{b.}
+\begin{minipage}[c]{\linewidth}
+	\centering
+	\includegraphics[valign=c, width=0.34\linewidth]{7_12_b.png}
+	$\rightarrow$
+	\includegraphics[valign=c, width=0.34\linewidth]{7_12_b_solution.png}
+\end{minipage}
+\clearpage
+
+\subsection{7.13}
+\emph{Draw a deterministic FSM that recognizes strings of 1's and 0's specified by each of the following criteria. Each FSM should reject any characters that are not 0 or 1.}
+
+\subsubsection{a.}
+\emph{The string of three characters, 101.} \\
+\begin{center} \includegraphics[width=0.5\linewidth]{7_13_a_solution.png} \\ \end{center}
+
+\subsubsection{d.}
+\emph{All strings of arbitrary length that contain a 101 at least once anywhere. For example, the FSM should accept all the strings mentioned in parts (a), (b), and (c) as well as strings such as 11100001011111100111.} \\
+\begin{center} \includegraphics[width=0.5\linewidth]{7_13_d_solution.png} \\ \end{center}
+
+\nocite{warford10}
+\bibliographystyle{apacite}
+\bibliography{CS}
+\end{document}
