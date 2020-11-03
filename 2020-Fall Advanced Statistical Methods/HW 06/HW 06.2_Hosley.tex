@@ -40,6 +40,7 @@ Prepare the data set:
 \begin{minted}[bgcolor=bg]{r}
 library(MASS)
 attach(Boston)
+library(leaps)
 \end{minted}
 
 \subsection{(a)} 
@@ -47,6 +48,115 @@ attach(Boston)
 	such as best subset selection, the lasso, ridge regression, and
 	PCR. Present and discuss results for the approaches that you
 	consider.}
+
+\subsubsection{Best Subset Selection} \vspace{2em}
+
+Determine the order of subset values: \\
+
+\begin{minted}[bgcolor=bg]{r}
+regfit.full=regsubsets(crim~.,Boston)
+summary(regfit.full)
+\end{minted}
+
+Providing the following results: \\
+
+\begin{minted}{r}
+Subset selection object
+Call: regsubsets.formula(crim ~ ., Boston)
+13 Variables  (and intercept)
+Forced in Forced out
+zn          FALSE      FALSE
+indus       FALSE      FALSE
+chas        FALSE      FALSE
+nox         FALSE      FALSE
+rm          FALSE      FALSE
+age         FALSE      FALSE
+dis         FALSE      FALSE
+rad         FALSE      FALSE
+tax         FALSE      FALSE
+ptratio     FALSE      FALSE
+black       FALSE      FALSE
+lstat       FALSE      FALSE
+medv        FALSE      FALSE
+1 subsets of each size up to 8
+Selection Algorithm: exhaustive
+zn  indus chas nox rm  age dis rad tax ptratio black lstat medv
+1  ( 1 ) " " " "   " "  " " " " " " " " "*" " " " "     " "   " "   " " 
+2  ( 1 ) " " " "   " "  " " " " " " " " "*" " " " "     " "   "*"   " " 
+3  ( 1 ) " " " "   " "  " " " " " " " " "*" " " " "     "*"   "*"   " " 
+4  ( 1 ) "*" " "   " "  " " " " " " "*" "*" " " " "     " "   " "   "*" 
+5  ( 1 ) "*" " "   " "  " " " " " " "*" "*" " " " "     "*"   " "   "*" 
+6  ( 1 ) "*" " "   " "  "*" " " " " "*" "*" " " " "     "*"   " "   "*" 
+7  ( 1 ) "*" " "   " "  "*" " " " " "*" "*" " " "*"     "*"   " "   "*" 
+8  ( 1 ) "*" " "   " "  "*" " " " " "*" "*" " " "*"     "*"   "*"   "*" 
+\end{minted}
+
+\begin{minted}[bgcolor=bg]{r}
+regfit.full=regsubsets (crim~.,data=Boston ,nvmax=13)
+reg.summary =summary (regfit.full)
+
+par(mfrow=c(2,2))
+plot(reg.summary$rss ,xlab="Number of Variables ",ylab="RSS", type="l")
+plot(reg.summary$adjr2 ,xlab="Number of Variables ", ylab="Adjusted RSq",
+	type="l")
+which.max(reg.summary$adjr2)
+points (8,reg.summary$adjr2[8], col="red",cex=2,pch =20)
+plot(reg.summary$cp ,xlab="Number of Variables ",ylab="Cp", type='l')
+which.min(reg.summary$cp)
+points (8,reg.summary$cp [8], col ="red",cex=2,pch =20)
+plot(reg.summary$bic ,xlab="Number of Variables ",ylab="BIC", type='l')
+which.min(reg.summary$bic )
+points (3,reg.summary$bic [3],col="red",cex=2,pch =20)
+\end{minted}
+
+\includegraphics[width=\linewidth]{subset}
+
+Determine the best subset using Cross-validation as the evaluation metric. \\
+
+\begin{minted}[bgcolor=bg]{r}
+set.seed(1)
+train=sample(c(TRUE ,FALSE), nrow(Boston),rep=TRUE)
+test=(!train)
+regfit.best=regsubsets(crim~.,data=Boston[train ,], nvmax=13)
+test.mat=model.matrix(crim~.,data=Boston[test ,])
+val.errors =rep(NA ,13)
+for(i in 1:13){coefi=coef(regfit.best ,id=i)
+pred=test.mat[,names(coefi)]%*%coefi
+val.errors[i]=mean((Boston$crim[test]-pred)^2)
+}
+## Cross-Validation
+predict.regsubsets = function(object , newdata ,id ,...){
+form=as.formula (object$call [[2]])
+mat=model.matrix(form ,newdata )
+coefi=coef(object ,id=id)
+xvars=names(coefi)
+mat[,xvars]%*%coefi
+}
+k <- 10
+folds=sample (1:k,nrow(Boston),replace=TRUE)
+cv.errors=matrix (NA,k,13, dimnames=list(NULL, paste (1:13)))
+for(j in 1:k){
+best.fit <- regsubsets(crim~., data=Boston[folds!=j,],nvmax=13)
+for(i in 1:13){
+pred <- predict(best.fit ,Boston[folds ==j,], id=i)
+cv.errors[j,i] <- mean(( Boston$crim[folds==j]-pred)^2)
+}
+}
+mean.cv.errors=apply(cv.errors ,2, mean)
+mean.cv.errors
+par(mfrow=c(1,1))
+plot(mean.cv.errors ,type='b')
+reg.best=regsubsets (crim~.,data=Boston , nvmax=13)
+coef(reg.best ,12)
+\end{minted}
+
+\includegraphics[width=\linewidth]{crossValSubset}
+
+\subsubsection{The Lasso}
+
+\subsubsection{Ridge Regression}
+
+\subsubsection{PCR}
 
 \subsection{(b)} 
 \emph{Propose a model (or set of models) that seem to perform well on
