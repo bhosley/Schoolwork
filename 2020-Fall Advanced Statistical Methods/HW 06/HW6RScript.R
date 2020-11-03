@@ -93,6 +93,12 @@ lasso.coef
 
 # 1.4 PCR
 library(pls)
+set.seed(1)
+pcr.fit=pcr(crim~., data=Boston, scale=TRUE, validation ="CV")
+validationplot(pcr.fit ,val.type="MSEP")
+
+pcr.pred=predict (pcr.fit ,x[test ,],ncomp =7)
+mean((pcr.pred -y.test)^2)
 
 
 # 2.1 Validation Set Error
