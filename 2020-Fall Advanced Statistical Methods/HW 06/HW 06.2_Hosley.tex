@@ -152,11 +152,57 @@ coef(reg.best ,12)
 
 \includegraphics[width=\linewidth]{crossValSubset}
 
-\subsubsection{The Lasso}
+\clearpage
+\subsubsection{Ridge Regression}.\\
 
-\subsubsection{Ridge Regression}
+\begin{minted}[bgcolor=bg]{r}
+library(glmnet)
 
-\subsubsection{PCR}
+x=model.matrix(crim~.,Boston )[,-1]
+y=Boston$crim
+
+grid=10^seq(10,-2, length =100)
+ridge.mod=glmnet (x,y,alpha=0, lambda=grid)
+dim(coef(ridge.mod))
+
+train=sample (1: nrow(x), nrow(x)/2)
+test=(-train)
+y.test=y[test]
+## Cross-validation
+cv.out=cv.glmnet(x[train ,],y[ train],alpha=0)
+plot(cv.out)
+bestlam =cv.out$lambda.min
+bestlam
+ridge.pred=predict (ridge.mod ,s=bestlam ,newx=x[test ,])
+mean((ridge.pred -y.test)^2)
+\end{minted}
+
+This provides an $MSE$ of $40.62748$
+
+\includegraphics[width=\linewidth]{CVRidge}
+
+\subsubsection{The Lasso}.\\
+
+\begin{minted}[bgcolor=bg]{r}
+lasso.mod=glmnet(x[train ,],y[ train],alpha=1, lambda =grid)
+plot(lasso.mod)
+cv.out=cv.glmnet(x[train ,],y[ train],alpha=1)
+
+plot(cv.out)
+bestlam =cv.out$lambda.min
+lasso.pred=predict (lasso.mod ,s=bestlam ,newx=x[test ,])
+mean((lasso.pred -y.test)^2)
+
+out=glmnet (x,y,alpha=1, lambda=grid)
+lasso.coef=predict (out ,type="coefficients",s= bestlam) [1:14,]
+lasso.coef
+\end{minted}
+
+The Lasso provided an $MSE$ of $42.21187$ and eliminated $2$ of the $13$ variables.
+
+\subsubsection{PCR} \emph{Principle Components Regression}.\\
+
+
 
 \subsection{(b)} 
 \emph{Propose a model (or set of models) that seem to perform well on
@@ -169,3 +215,7 @@ coef(reg.best ,12)
 	set? Why or why not?}
 
 \end{document}
+
+\begin{minted}[bgcolor=bg]{r}
+
+\end{minted}
