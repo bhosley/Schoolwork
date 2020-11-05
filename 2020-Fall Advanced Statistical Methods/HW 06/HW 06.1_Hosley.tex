@@ -9,7 +9,7 @@
 \graphicspath{ {./images/} }
 
 %Information to be included in the title page:
-\title{Advanced Statistical Methods \\ Homework 5}
+\title{Advanced Statistical Methods \\ Homework 6}
 \author{Brandon Hosley}
 \institute{University of Illinois - Springfield}
 \date{\today}
@@ -21,70 +21,76 @@
 \tableofcontents
 \end{frame}
 
-\section[Q1A]{Q1A: Issues/mistakes with cross-validation}
-
-\begin{frame}{Issues/mistakes with cross-validation}
-	\begin{itemize}[<+->]
-		\item K-fold cross validation biases toward increased prediction error.
-		\item Filtering data before placing into validation groups can cause problems with fitting; \\ over-fitting to 0\% training error.
-	\end{itemize}
-	\vspace{1em}
+\section[Q1A]{Q1A: Mallow's $C_P$}
+\begin{frame}{Mallow's $C_P$}
 	\centering 
-	\includegraphics[width=0.75\linewidth]{KfoldCV}
-	\vspace{1em}
+	$ C_p = \frac{1}{n}(\text{RSS} + 2d\hat{\sigma}^2) $
+	\vspace{3em}
+	\begin{itemize}
+		\item Error is multiplied by number of predictors
+		\item Biasing against models with larger numbers of predictors
+		\item This method seeks to address over-fitting.
+	\end{itemize}
 \end{frame}
 
-\section[Q1B]{Q1B: Issues/mistakes with bootstrap?}
-\begin{frame}{Issues/mistakes with bootstrap}
-	\begin{itemize}[<+->]
-		\item Datasets possess significant overlap.
-		\item Severely underestimates the prediction error.
-		\item May be improved if validated with samples that did not end up in any of the bootstrap samples.
-	\end{itemize}
-	\vspace{1em}
+\section[Q1A]{Q1A: Akaike Information Criterion}
+\begin{frame}{Akaike Information Criterion}
 	\centering 
-	\includegraphics[width=0.75\linewidth]{Bootstrap}
-	\vspace{1em}
+	$ \text{AIC} = -2 \log L + 2 \cdot d $
+	\vspace{3em}
+	\begin{itemize}
+		\item This method emphasizes maximum likelihood
+		\item Also biases against increased numbers of parameters; \\
+			but in this case the bias increases strictly linearly
+	\end{itemize}
+\end{frame}
+
+\section[Q1A]{Q1A: Bayesian Information Criterion}
+\begin{frame}{Bayesian Information Criterion}
+	\centering 
+	$ \text{BIC} = \frac{1}{n}(\text{RSS} + \log(n) d\hat{\sigma}^2) $
+	\vspace{3em}
+	\begin{itemize}
+		\item Similar to Mallows $C_P$
+		\item Bias is higher for models using more than 7 predictors
+	\end{itemize}
+\end{frame}
+
+\section[Q1A]{Q1A: Adjusted $R^2$}
+\begin{frame}{Adjusted $R^2$}
+	\centering 
+	$ \text{Adjusted}R^2 = 1 - \frac{\text{RSS}/(n-d-1)}{\text{TSS}/(n-1)} $
+	\vspace{3em}
+	\begin{itemize}
+		\item Unlike previous metrics, higher is better
+		\item Similarly biases against models with more predictors
+		\item Linear increase in denominator
+	\end{itemize}
+\end{frame}
+
+\section[Q1B]{Q1B: Elastic Net Regularization}
+\begin{frame}{Elastic Net Regularization}
+	\centering 
+	$ \hat{\beta} \equiv \text{argmin}_\beta(\|y-X\beta\|^2+\lambda_2\|\beta\|^2 + \lambda_1\|\beta\|_1) $
+	\vspace{3em}
+	\begin{itemize}
+		\item Improvement on LASSO and Ridge regression methods
+		\item Adds a quadratic penalty, creating a unique minimum
+		\item Biases towards the fewest number of good predictors
+	\end{itemize}
 \end{frame}
 
 \section[Q2]{Q2: Hastie and Tibshirani Summary}
 
-\begin{frame}{Hastie and Tibshirani Lecture: Resampling Methods}
-	Testing the accuracy of our model. \\
-	The goal is to minimize testing error: \\
-	\vspace{1em}
-	\centering 
-	\includegraphics[width=0.75\linewidth]{TrainVsTest}
-	\vspace{1em}
-\end{frame}
-
-\begin{frame}{Hastie and Tibshirani Lecture: Resampling Methods}
+\begin{frame}{Hastie and Tibshirani Lecture: Model Selection}
 	Possible approaches: \vspace{1em}
 	\begin{description}
-		\item[Validation Set] Random splitting of data to provide a set for testing error.
-		\item[K-fold Cross Validation] Splitting data into $K$ parts, using one as the validation set, and the other $K-1$ as training sets. Afterward select the model that provided the lowest test error.
-		\item[Bootstrap] Multiple data sets produced from the original by sampling from the original with some data replaced with random selections from the original data-set.
+		\item[Subset Selection] Perform regression on each subset of predictors; 
+		select model with best performance.
+		\item[] Forward/Backward stepwise selection builds the model one predictor at a time; using single step optimization.
+		\item[Shrinkage] Fitting a model containing all predictors; reducing coefficients to fit (Some to zero)
+		\item[Dimension Reduction] Combining original predictors together to reduce the total number of predictors that the model will fit to
 	\end{description}
-\end{frame}
-
-\begin{frame}{Hastie and Tibshirani Lecture: Permutation v. Bootstrapping}
-	\begin{columns}	
-	\column{0.5\textwidth}
-	Bootstrap
-	\begin{itemize}
-		\item<1-> Sample from estimated population
-		\item<2-> Great for estimating population stats
-		\item<3-> Great for testing certain null hypotheses
-	\end{itemize}
-
-	\column{0.5\textwidth}
-	Permutation
-		\begin{itemize}
-			\item<1-> Sample from estimated \emph{null} distribution
-			\item<2-> Is simpler and generally performs just as well as bootstrap
-			\item<3-> More practical with modern computing
-		\end{itemize}
-	\end{columns}
 \end{frame}
 
 \end{document}
