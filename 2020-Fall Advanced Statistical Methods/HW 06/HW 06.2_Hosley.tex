@@ -202,7 +202,19 @@ The Lasso provided an $MSE$ of $42.21187$ and eliminated $2$ of the $13$ variabl
 
 \subsubsection{PCR} \emph{Principle Components Regression}.\\
 
+\begin{minted}[bgcolor=bg]{r}
+library(pls)
+set.seed(1)
+pcr.fit=pcr(crim~., data=Boston, scale=TRUE, validation ="CV")
+validationplot(pcr.fit ,val.type="MSEP")
 
+pcr.pred=predict (pcr.fit ,x[test ,],ncomp =7)
+mean((pcr.pred -y.test)^2)
+\end{minted}
+
+PCR provides an $MSE$ of $43.6911$.
+
+\includegraphics[width=\linewidth]{CVPCR}
 
 \subsection{(b)} 
 \emph{Propose a model (or set of models) that seem to perform well on
@@ -210,9 +222,15 @@ The Lasso provided an $MSE$ of $42.21187$ and eliminated $2$ of the $13$ variabl
 	evaluating model performance using validation set error, cross-validation, or some other reasonable alternative, as opposed to
 	using training error.}
 
+Of the above models the subset selection provided option with the lowest $MSE$. 
+
 \subsection{(c)} 
 \emph{Does your chosen model involve all of the features in the data
 	set? Why or why not?}
+
+The two lowest $MSE$ subsets were the 12 feature and the 9 feature subsets. 
+The while the 12 feature set provides marginal improvement over the 9 feature set, if there is an issue with over-fitting the 12 feature set is more likely to be over-fit.
+For this model the efficiency is not really a concern, but if it needed to be applied on a large scale, the 9 feature set will be significantly more efficient in calculating predictions.
 
 \end{document}
 
