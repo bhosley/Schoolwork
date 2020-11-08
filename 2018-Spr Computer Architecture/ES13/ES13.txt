@@ -1,0 +1,32 @@
+9.1
+
+Suppose a disk rotates at 5,400 revolutions per minute and has each surface divided into 16 sectors. *(a) What is the maximum possible latency time? Under
+what circumstance will that occur? (b) What is the minimum possible latency time? Under what circumstance will that occur? (c) From (a) and (b), what will be
+the average latency time? (d) What is the transmission time for one block?
+
+a
+	11.11ms
+b	
+	0ms
+c
+	6ms
+	5.555ms
+	
+d
+	0.6875ms
+or 	0.6944ms
+
+
+
+12.24
+
+ The CPU requests the byte at address 4675 (dec) with the cache of Figure 12.32. (a) What are the nine bits of the tag field? (b) What are the four bits of the
+byte field? (c) Which cell of the cache stored the data?
+	0001 0010 0100 0011
+	(a)000100100 (b)100 (c)0011
+a
+	
+b
+	
+c
+	
