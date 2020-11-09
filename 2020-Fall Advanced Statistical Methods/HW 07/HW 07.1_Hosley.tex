@@ -1,0 +1,96 @@
+\documentclass{beamer}
+\usetheme{Darmstadt}
+\usecolortheme{beaver}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+%Information to be included in the title page:
+\title{Advanced Statistical Methods \\ Homework 6}
+\author{Brandon Hosley}
+\institute{University of Illinois - Springfield}
+\date{\today}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Overview}
+\tableofcontents
+\end{frame}
+
+\section[Q1A]{Q1A: Mallow's $C_P$}
+\begin{frame}{Mallow's $C_P$}
+	\centering 
+	$ C_p = \frac{1}{n}(\text{RSS} + 2d\hat{\sigma}^2) $
+	\vspace{3em}
+	\begin{itemize}
+		\item Error is multiplied by number of predictors
+		\item Biasing against models with larger numbers of predictors
+		\item This method seeks to address over-fitting.
+	\end{itemize}
+\end{frame}
+
+\section[Q1A]{Q1A: Akaike Information Criterion}
+\begin{frame}{Akaike Information Criterion}
+	\centering 
+	$ \text{AIC} = -2 \log L + 2 \cdot d $
+	\vspace{3em}
+	\begin{itemize}
+		\item This method emphasizes maximum likelihood
+		\item Also biases against increased numbers of parameters; \\
+			but in this case the bias increases strictly linearly
+	\end{itemize}
+\end{frame}
+
+\section[Q1A]{Q1A: Bayesian Information Criterion}
+\begin{frame}{Bayesian Information Criterion}
+	\centering 
+	$ \text{BIC} = \frac{1}{n}(\text{RSS} + \log(n) d\hat{\sigma}^2) $
+	\vspace{3em}
+	\begin{itemize}
+		\item Similar to Mallows $C_P$
+		\item Bias is higher for models using more than 7 predictors
+	\end{itemize}
+\end{frame}
+
+\section[Q1A]{Q1A: Adjusted $R^2$}
+\begin{frame}{Adjusted $R^2$}
+	\centering 
+	$ \text{Adjusted}R^2 = 1 - \frac{\text{RSS}/(n-d-1)}{\text{TSS}/(n-1)} $
+	\vspace{3em}
+	\begin{itemize}
+		\item Unlike previous metrics, higher is better
+		\item Similarly biases against models with more predictors
+		\item Linear increase in denominator
+	\end{itemize}
+\end{frame}
+
+\section[Q1B]{Q1B: Elastic Net Regularization}
+\begin{frame}{Elastic Net Regularization}
+	\centering 
+	$ \hat{\beta} \equiv \text{argmin}_\beta(\|y-X\beta\|^2+\lambda_2\|\beta\|^2 + \lambda_1\|\beta\|_1) $
+	\vspace{3em}
+	\begin{itemize}
+		\item Improvement on LASSO and Ridge regression methods
+		\item Adds a quadratic penalty, creating a unique minimum
+		\item Biases towards the fewest number of good predictors
+	\end{itemize}
+\end{frame}
+
+\section[Q2]{Q2: Hastie and Tibshirani Summary}
+
+\begin{frame}{Hastie and Tibshirani Lecture: Model Selection}
+	Possible approaches: \vspace{1em}
+	\begin{description}
+		\item[Subset Selection] Perform regression on each subset of predictors; 
+		select model with best performance.
+		\item[] Forward/Backward stepwise selection builds the model one predictor at a time; using single step optimization.
+		\item[Shrinkage] Fitting a model containing all predictors; reducing coefficients to fit (Some to zero)
+		\item[Dimension Reduction] Combining original predictors together to reduce the total number of predictors that the model will fit to
+	\end{description}
+\end{frame}
+
+\end{document}
