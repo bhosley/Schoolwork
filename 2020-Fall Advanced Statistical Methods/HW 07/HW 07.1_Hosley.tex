@@ -9,7 +9,7 @@
 \graphicspath{ {./images/} }
 
 %Information to be included in the title page:
-\title{Advanced Statistical Methods \\ Homework 6}
+\title{Advanced Statistical Methods \\ Homework 7}
 \author{Brandon Hosley}
 \institute{University of Illinois - Springfield}
 \date{\today}
@@ -21,76 +21,77 @@
 \tableofcontents
 \end{frame}
 
-\section[Q1A]{Q1A: Mallow's $C_P$}
-\begin{frame}{Mallow's $C_P$}
-	\centering 
-	$ C_p = \frac{1}{n}(\text{RSS} + 2d\hat{\sigma}^2) $
-	\vspace{3em}
+\section[Q1A]{Q1A: Gini Index}
+\begin{frame}{Gini Index}
 	\begin{itemize}
-		\item Error is multiplied by number of predictors
-		\item Biasing against models with larger numbers of predictors
-		\item This method seeks to address over-fitting.
+		\item Measurement of a distribution's inequality \\
+		i.e. How far from a 1 to 1 ratio two normalized traits occur
+		\item Often used to measure income inequality
 	\end{itemize}
+	\begin{columns}
+		\column{0.5\textwidth}
+			\includegraphics[width=\linewidth]{LorenzCurve}
+		\column{0.5\textwidth}
+			\centering
+			$ \frac{ \sum_{i=1}^{n} \sum_{j=1}^{n} \| x_i - x_j \| }{ 2n^2 \bar{x} } $
+	\end{columns}
 \end{frame}
 
-\section[Q1A]{Q1A: Akaike Information Criterion}
-\begin{frame}{Akaike Information Criterion}
-	\centering 
-	$ \text{AIC} = -2 \log L + 2 \cdot d $
-	\vspace{3em}
+\section[Q1B]{Q1B: Information Gain}
+\begin{frame}{Information Gain}
 	\begin{itemize}
-		\item This method emphasizes maximum likelihood
-		\item Also biases against increased numbers of parameters; \\
-			but in this case the bias increases strictly linearly
+		\item Represents a reduction in entropy by including addition variables
+		\item How much the conditional distribution will decrease by including \\
+			the additional information
+		\item Actual value will be \emph{up to} the true value of mutual information
 	\end{itemize}
-\end{frame}
-
-\section[Q1A]{Q1A: Bayesian Information Criterion}
-\begin{frame}{Bayesian Information Criterion}
-	\centering 
-	$ \text{BIC} = \frac{1}{n}(\text{RSS} + \log(n) d\hat{\sigma}^2) $
-	\vspace{3em}
-	\begin{itemize}
-		\item Similar to Mallows $C_P$
-		\item Bias is higher for models using more than 7 predictors
-	\end{itemize}
-\end{frame}
-
-\section[Q1A]{Q1A: Adjusted $R^2$}
-\begin{frame}{Adjusted $R^2$}
-	\centering 
-	$ \text{Adjusted}R^2 = 1 - \frac{\text{RSS}/(n-d-1)}{\text{TSS}/(n-1)} $
-	\vspace{3em}
-	\begin{itemize}
-		\item Unlike previous metrics, higher is better
-		\item Similarly biases against models with more predictors
-		\item Linear increase in denominator
-	\end{itemize}
-\end{frame}
-
-\section[Q1B]{Q1B: Elastic Net Regularization}
-\begin{frame}{Elastic Net Regularization}
-	\centering 
-	$ \hat{\beta} \equiv \text{argmin}_\beta(\|y-X\beta\|^2+\lambda_2\|\beta\|^2 + \lambda_1\|\beta\|_1) $
-	\vspace{3em}
-	\begin{itemize}
-		\item Improvement on LASSO and Ridge regression methods
-		\item Adds a quadratic penalty, creating a unique minimum
-		\item Biases towards the fewest number of good predictors
-	\end{itemize}
+	\vspace{1.5em}
+	\centering
+	$ IG_{X,A}(X,a) = D_{KL}(P_X(x|a)||P_X(x|I)) $
 \end{frame}
 
 \section[Q2]{Q2: Hastie and Tibshirani Summary}
 
-\begin{frame}{Hastie and Tibshirani Lecture: Model Selection}
-	Possible approaches: \vspace{1em}
-	\begin{description}
-		\item[Subset Selection] Perform regression on each subset of predictors; 
-		select model with best performance.
-		\item[] Forward/Backward stepwise selection builds the model one predictor at a time; using single step optimization.
-		\item[Shrinkage] Fitting a model containing all predictors; reducing coefficients to fit (Some to zero)
-		\item[Dimension Reduction] Combining original predictors together to reduce the total number of predictors that the model will fit to
-	\end{description}
+\begin{frame}{Hastie and Tibshirani Lecture: Tree-Based Methods}
+		\begin{columns}
+		\column{0.5\textwidth}
+		Pros:
+		\begin{itemize}
+			\item Relatively Simple
+			\item Good for Classification
+			\item Work well in ensembles
+		\end{itemize}
+		
+		\column{0.5\textwidth}
+		Cons:
+		\begin{itemize}
+			\item Underperform when compared to modern techniques
+			\item[]
+		\end{itemize}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Hastie and Tibshirani Lecture: Bootstrap and Bagging}
+	\begin{itemize}
+		\item Using the Bootstrap discussed earlier
+		\item Ensemble the trees trained on each subset
+	\end{itemize}
+	\vspace{1em}
+	\begin{columns}
+		\column{0.5\textwidth}
+		Pros:
+		\begin{itemize}
+			\item Reduces Bias and Error
+			\item Adding more trees never hurts
+		\end{itemize}
+		
+		\column{0.5\textwidth}
+		Cons:
+		\begin{itemize}
+			\item Much more computationally intensive than single tree
+			\item[]
+		\end{itemize}
+	\end{columns}
 \end{frame}
 
 \end{document}
