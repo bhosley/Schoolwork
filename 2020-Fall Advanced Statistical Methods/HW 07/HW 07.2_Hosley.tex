@@ -9,6 +9,7 @@
 \graphicspath{ {./images/} }
 \usepackage{graphicx}
 \usepackage{caption}
+\usepackage{ulem}
 
 \usepackage{setspace}
 %\usepackage{titlesec}
@@ -32,34 +33,39 @@
 \singlespacing
 
 \section{Introduction to Statistical Learning \\ Chapter 8.4 : Problem 12}
-\emph{Apply boosting, bagging, and random forests to a data set of your
+\normalem
+\emph{Apply \sout{boosting, bagging,} and random forests to a data set of your
 	choice. Be sure to fit the models on a training set and to evaluate their
 	performance on a test set. How accurate are the results compared
 	to simple methods like linear or logistic regression? Which of these
-	approaches yields the best performance?}
+	approaches yields the best performance?} \vspace{1em}
 
 Prepare the data set:
 
 \begin{minted}[bgcolor=bg]{r}
 library(MASS)
 attach(Boston)
-library(leaps)
+library(randomForest)
+set.seed(1234)
 \end{minted}
 
-%\subsection{(a)} 
-%\subsubsection{} \vspace{2em}
+With the Boston dataset we will train a random forest.
 
 \begin{minted}[bgcolor=bg]{r}
-regfit.full=regsubsets(crim~.,Boston)
-summary(regfit.full)
+train = sample(1:nrow(Boston), nrow(Boston)/2)
+test=Boston[-train ,"crim"]
+rf.boston= randomForest(crim~.,data=Boston , subset=train, 
+	mtry=6, importance =TRUE)
+yhat.rf = predict(rf.boston ,newdata=Boston[-train ,])
+mean((yhat.rf-test)^2)
+\end{minted}
+\vspace{-1em}
+\begin{minted}[bgcolor=bg]{r}
+Out: 49.66785
 \end{minted}
 
-Providing the following results: \\
+The Mean-Squared error provided by the Random Forest model is comparable but slightly worse than the MSE given by the Lasso and Ridge Regression models in Module 6. \\
+While the performance is slightly behind those other methods it is still better than simple linear or logistic regression models, as seen in Module 3. \\
 
-%\includegraphics[width=\linewidth]{subset}
 
 \end{document}
-
-\begin{minted}[bgcolor=bg]{r}
-
-\end{minted}
