@@ -1,0 +1,8 @@
+#Your create foods table code goes here
+
+create 'foods', {NAME=> 'name', VERSIONS => org.apache.hadoop.hbase.HConstants::ALL_VERSIONS, COMPRESSION => 'GZ', BLOOMFILTER => 'ROW'}, 
+    {NAME=> 'fact', VERSIONS => org.apache.hadoop.hbase.HConstants::ALL_VERSIONS, COMPRESSION => 'GZ', BLOOMFILTER => 'ROW'}
+enable 'foods'
+
+#Do not remove the exit call below
+exit
