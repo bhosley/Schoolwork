@@ -68,23 +68,19 @@
 
 \section[K-Means]{K-Mean Clustering}
 
-\begin{frame}{Hastie and Tibshirani Lecture: Tree-Based Methods}
-		\begin{columns}
-		\column{0.5\textwidth}
-		Pros:
-		\begin{itemize}
-			\item Relatively Simple
-			\item Good for Classification
-			\item Work well in ensembles
-		\end{itemize}
-		
-		\column{0.5\textwidth}
-		Cons:
-		\begin{itemize}
-			\item Underperform when compared to modern techniques
-			\item[]
-		\end{itemize}
-	\end{columns}
+\begin{frame}{K-Means Clustering}
+	\begin{itemize}
+		\item A simple method of classification
+		\item[] With relatively good results
+		\item The mean of each cluster is calculated and new data is classified to the nearest mean
+		\item Divisions can be drawn as Voronoi cells
+	\end{itemize}
+	\begin{columns}
+		\column[]{0.5\linewidth}
+		\includegraphics[width=\linewidth]{clusters.jpg}
+		\column[]{0.5\linewidth}
+		\includegraphics[width=\linewidth]{Voronoi.png}
+	\end{columns}	
 \end{frame}
 
 \end{document}
