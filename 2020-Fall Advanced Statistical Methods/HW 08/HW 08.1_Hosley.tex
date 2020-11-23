@@ -21,24 +21,49 @@
 \tableofcontents
 \end{frame}
 
-\section[SVM]Support Vector Machines}
+\section[SVM]{Support Vector Machines}
 
-\begin{frame}{Gini Index}
+\begin{frame}{}
 
 \end{frame}
 
 \section[PCA]{Principal Component Analysis}
 
-\begin{frame}{Information Gain}
+\begin{frame}{Principal Component Analysis}
 	\begin{itemize}
-		\item Represents a reduction in entropy by including addition variables
-		\item How much the conditional distribution will decrease by including \\
-			the additional information
-		\item Actual value will be \emph{up to} the true value of mutual information
+		\item Exploratory Data Analysis
+		\item Aims to discover 'Principal' components 
+		\item[] Components with the highest capacity for prediction
 	\end{itemize}
 	\vspace{1.5em}
 	\centering
-	$ IG_{X,A}(X,a) = D_{KL}(P_X(x|a)||P_X(x|I)) $
+	\includegraphics[width=0.8\linewidth]{GaussianScatterPCA.png}
+\end{frame}
+
+\begin{frame}{Principal Component Analysis}
+	How is capacity for prediction determined?
+	\begin{itemize}
+		\item Two Orthogonal vectors are fit to the data
+		\item[] (Similar to axes of an ellipse wrapped around the data
+		\item The Two axes are orthonormalized
+		\item This will form the basis on which a covariance matrix will be plotted
+	\end{itemize}
+	\vspace{1.5em}
+	\centering
+	\includegraphics[width=0.8\linewidth]{PCA.jpg}
+\end{frame}
+
+\begin{frame}{Principal Component Analysis}
+	How is capacity for prediction determined?
+	\begin{itemize}
+		\item The Covariance matrix is transformed with the earlier determined basis
+		\item The resulting slope is the variance of that component
+		\item Each variance can be divided by the sum variance to provide a proportion
+		\item Principal components are those that make up the lowest proportions of variance
+	\end{itemize}
+	\vspace{1.5em}
+	\centering
+	\includegraphics[width=0.8\linewidth]{Covariance.png}
 \end{frame}
 
 \section[K-Means]{K-Mean Clustering}
