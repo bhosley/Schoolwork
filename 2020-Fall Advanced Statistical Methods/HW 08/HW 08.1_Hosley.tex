@@ -23,8 +23,15 @@
 
 \section[SVM]{Support Vector Machines}
 
-\begin{frame}{}
-
+\begin{frame}{Support Vector Machines}
+	\begin{itemize}
+		\item (Usually) Supervised Learning Method
+		\item Calculates an N-1 dimensional hyperplane to be used as a linear classifier
+		\item The hyperplane is calculated such that it has the largest possible margin from available data
+	\end{itemize}
+	\vspace{0.25em}
+	\centering
+	\includegraphics[width=0.35\linewidth]{SVM.png}
 \end{frame}
 
 \section[PCA]{Principal Component Analysis}
@@ -35,9 +42,8 @@
 		\item Aims to discover 'Principal' components 
 		\item[] Components with the highest capacity for prediction
 	\end{itemize}
-	\vspace{1.5em}
 	\centering
-	\includegraphics[width=0.8\linewidth]{GaussianScatterPCA.png}
+	\includegraphics[width=0.5\linewidth]{GaussianScatterPCA.png}
 \end{frame}
 
 \begin{frame}{Principal Component Analysis}
@@ -48,9 +54,8 @@
 		\item The Two axes are orthonormalized
 		\item This will form the basis on which a covariance matrix will be plotted
 	\end{itemize}
-	\vspace{1.5em}
 	\centering
-	\includegraphics[width=0.8\linewidth]{PCA.jpg}
+	\includegraphics[width=0.35\linewidth]{PCA.jpg}
 \end{frame}
 
 \begin{frame}{Principal Component Analysis}
@@ -61,25 +66,27 @@
 		\item Each variance can be divided by the sum variance to provide a proportion
 		\item Principal components are those that make up the lowest proportions of variance
 	\end{itemize}
-	\vspace{1.5em}
 	\centering
-	\includegraphics[width=0.8\linewidth]{Covariance.png}
+	\includegraphics[width=0.35\linewidth]{Covariance.png}
 \end{frame}
 
 \section[K-Means]{K-Mean Clustering}
 
 \begin{frame}{K-Means Clustering}
 	\begin{itemize}
-		\item A simple method of classification
+		\item A (comparatively) simple method of classification
 		\item[] With relatively good results
 		\item The mean of each cluster is calculated and new data is classified to the nearest mean
 		\item Divisions can be drawn as Voronoi cells
 	\end{itemize}
+	\vspace{0.25em}
 	\begin{columns}
 		\column[]{0.5\linewidth}
-		\includegraphics[width=\linewidth]{clusters.jpg}
+		\centering
+		\includegraphics[width=0.8\linewidth]{clusters.jpg}
 		\column[]{0.5\linewidth}
-		\includegraphics[width=\linewidth]{Voronoi.png}
+		\centering
+		\includegraphics[width=0.6\linewidth]{Voronoi.png}
 	\end{columns}	
 \end{frame}
 
