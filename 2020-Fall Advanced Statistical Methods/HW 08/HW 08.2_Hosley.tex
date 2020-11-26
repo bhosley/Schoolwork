@@ -11,14 +11,8 @@
 \usepackage{caption}
 
 \usepackage{setspace}
-%\usepackage{titlesec}
-%\titleformat{\subsection}[runin]% runin puts it in the same paragraph
-%	{\normalfont\bfseries}% formatting commands to apply to the whole heading
-%	{\thesubsection}% the label and number
-%	{0.5em}% space between label/number and subsection title
-%	{}% formatting commands applied just to subsection title
-%	[]% punctuation or other commands following subsection title
-% End Packages %
+\usepackage{amsmath}
+
 
 \title{Advanced Statistical Methods Homework 8 \\ Support Vector Machine}
 \shorttitle{DAT 530 HW7}
@@ -45,9 +39,23 @@ The maximum margin can be achieved by plotting the hyperplane in a way such that
 	\includegraphics[width=0.5\linewidth]{Margins}
 \end{center}
 
+In the case of a linear classifier of the classic $y=wx + b$ notation we get the following equation. $\lambda$ will represent the size of the margin.
 
-\section{Applying the Algorithm to }
+\vspace{1em}
+$ \left[ \frac{1}{n} \sum_{n}^{i=1} \text{max} (0,1-y_i(w \cdot x_i-b)) \right] + \lambda \|w\|^2 $
+\vspace{1em}
+
+\subsection{e1071}
+
+The library used for this project will be e1071, which includes an SVM module. The type of SVM trained by e1071 is one in which the final model is a voting ensemble of $k(k-1)/2$ binary classifiers rather than a $k-1$ dimensional hyperplane. The ensemble method likely generalizes better as a library and is likely more robust under a large variety of user abilities and knowledge levels.
+
+\clearpage
+
+\section{Applying the Algorithm to Boston}
 \subsection{Description of the Problem}
+
+The Boston data set has been a staple of this course. As we have gained a significant familiarity with the dataset it seems like a good option for exercising SVM use. A primary consideration when choosing a dataset for demonstrating SVMs is the limitation of input and output data. Input data should be quantitative and may be either continuous or discrete. The output is binary. 
+
 \subsection{Summary of the Dataset}
 \subsection{Summary of the Results}
 
