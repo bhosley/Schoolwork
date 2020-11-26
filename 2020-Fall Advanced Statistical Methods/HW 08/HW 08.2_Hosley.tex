@@ -60,14 +60,144 @@ A common use of the \textcolor{red}{Boston} dataset, and what we will use it for
 
 \subsection{Summary of the Dataset and Preliminaries}
 
+Boston contains data gathered from a Census of the city of Boston Massachusetts taken in 1978. First we will load it into memory, load the e1071 library, and set a seed for repeatability. 
 
+\begin{minted}[bgcolor=bg]{r}
+library(MASS)
+library(e1071)
+set.seed(1234)
+\end{minted}
 
 \subsection{Training an SVM Model}
 
+To begin we will make a copy of our data for preparation, remove the 'chas' variable, and normalize the data such that all variables will have a mean equal to zero and a standard deviation of one.
 
+\begin{minted}[bgcolor=bg]{r}
+b = Boston
+# Remove Chas variable
+b <- subset(b,select=-c(chas))
+# Normalize the Data (mean=0, SD = 1)
+b <- as.data.frame(scale(b))
+\end{minted}
+
+Next we will need to change the Crime statistic to be a factor, in this case we will only be predicting whether an area will be 'High Crime' or 'Low Crime' which specifically means whether the district will be in the upper 50\% of crime or in the lower.
+
+\begin{minted}[bgcolor=bg]{r}
+# Crim as a Factor(High = 1, Low = 0)
+b$crim <- ifelse(b$crim > 0, 1, 0)
+b$crim <- as.factor(b$crim)
+\end{minted}
+
+Now we will separate the data into a training set and a test set.
+
+\begin{minted}[bgcolor=bg]{r}
+# Separate a Training and Testing Set
+ind = sort(sample(nrow(b), nrow(b)*0.8))
+b_train <- b[ind,]
+b_test <- b[-ind,]
+\end{minted}
+
+For the sake of exploring options we will train both a linear SVM and a polynomial SVM.
+
+\begin{minted}[bgcolor=bg]{r}
+# Training both a Linear and Polynomial Model
+svm_lin=svm(crim~., data=b_train, kernel ="linear", cost=1, scale=FALSE)
+svm_poly=svm(crim~., data=b_train, kernel ="polynomial", cost=1, 
+				scale=FALSE)
+\end{minted}
+
+Let us take a look at the summaries of the models trained above.
+
+\begin{minted}[bgcolor=bg]{r}
+summary(svm_lin)
+\end{minted}
+
+\vspace{-0.5em}
+
+\begin{minted}{bash}
+Call:
+svm(formula = crim ~ ., data = b_train, kernel = "linear", 
+              cost = 1, scale = FALSE)
+
+Parameters:
+    SVM-Type:  C-classification 
+  SVM-Kernel:  linear 
+        cost:  1 
+       gamma:  0.08333333 
+
+Number of Support Vectors:  16
+( 9 7 )
+
+Number of Classes:  2 
+Levels: 
+0 1
+\end{minted}
+
+\begin{minted}[bgcolor=bg]{r}
+summary(svm_poly)
+\end{minted}
+
+\vspace{-0.5em}
+
+\begin{minted}{bash}
+Call:
+svm(formula = crim ~ ., data = b_train, kernel = "polynomial", 
+              cost = 1, scale = FALSE)
+
+Parameters:
+    SVM-Type:  C-classification 
+  SVM-Kernel:  polynomial 
+        cost:  1 
+      degree:  3 
+       gamma:  0.08333333 
+      coef.0:  0 
+
+Number of Support Vectors:  38
+( 24 14 )
+
+Number of Classes:  2 
+Levels: 
+0 1
+\end{minted}
 
 \subsection{Summary of the Results}
 
+The models both appear to have a reasonable number of support vectors.
+Now we will need some predictions to test how effective the models are.
 
+\begin{minted}[bgcolor=bg]{r}
+# Calculate Predictions
+pred_lin = predict(svm_lin, b_test)
+pred_poly = predict(svm_poly, b_test)
+\end{minted}
+
+We can then compare these predictions to the ground truth of the test set.
+
+\begin{minted}[bgcolor=bg]{r}
+table(predict=pred_lin, truth=b_test$crim)
+\end{minted}
+
+\begin{minted}{bash}
+       truth
+predict  0  1
+      0 77  0
+      1  1 24
+\end{minted}
+
+\begin{minted}[bgcolor=bg]{r}
+table(predict=pred_poly, truth=b_test$crim)
+\end{minted}
+
+\begin{minted}{bash}
+       truth
+predict  0  1
+      0 77  0
+      1  1 24
+\end{minted}
+
+The models performance is identical. In this case with all other hyper-parameters being equal the linear kernel SVM is a better choice. Linear models are simpler than Polynomials; in this case the linear model requires less than half as many support vectors; and in the end, the linear model and the polynomial model make the same mistake.
 
 \end{document}
+
+\begin{minted}[bgcolor=bg]{r}
+\end{minted}
