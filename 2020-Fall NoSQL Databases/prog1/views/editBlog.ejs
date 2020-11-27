@@ -1,0 +1,33 @@
+<% include partials/header %>
+
+<h1>Edit Blog:</h1>
+<% if(errors != undefined){ %>
+<ul>
+<% errors.forEach(function(error){ %>
+<li style="color:red"><%= error.msg %></li>
+<% }) %>
+</ul>
+<% } %>
+
+<form method="POST" action="/blogs/edit/<%= blog. _id %>">
+<input type="hidden" name="_method" value="PUT" />
+<label><b>Title</b></label><br>
+<input type="text" name="title" size=50 value="<%= blog.title %>"><br>
+<label><b>Slug</b></label><br>
+<input type="text" name="slug" size=50 value="<%= blog.slug %>"><br>
+<label><b>Author</b></label><br>
+<select name="author" id="authorlist">
+    <% users.forEach(function(user){ %>
+        <option value="<%= user._id %>" <%= (user._id == blog.author)?'selected':'' %> ><%= user.name %></option>
+    <% }) %>
+</select><br><br>
+<label><b>Body</b></label><br>
+<textarea name="body" style="width:400px;height:100px;"><%= blog.body %></textarea></br>
+<br>
+<input type="hidden" name="comments" value="<%= blog.comments[0].comment %>"><br>
+<input type="hidden" name="category" value="<%= blog.category[0].name %>"><br>
+<input type="submit" value="Edit">
+</form>
+
+<% include partials/footer %>
+
