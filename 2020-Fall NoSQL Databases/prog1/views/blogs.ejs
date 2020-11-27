@@ -1,0 +1,102 @@
+<% include partials/header %>
+
+<style> 
+    .indented {padding-left: 20pt; } 
+    td {
+        vertical-align: top;
+        padding-right: 15px;
+        text-align: left;
+    } 
+    h3 {
+        padding: 2px;
+        margin: 2px;
+    }
+    ul {
+        margin-top: 0;
+    }
+    .blog{
+        border: 2px solid grey;
+        border-radius: 8px;
+        margin: 5px;
+        background-color: grey; /* For browsers that do not support gradients */
+        background-image: linear-gradient(to right, lightgrey , white);
+    }
+</style>
+
+<h1>Add Blog</h1>
+    <% if(errors != undefined){ %>
+<ul>
+    <% errors.forEach(function(error){ %>
+    <li style="color:red"><%= error.msg %></li>
+    <% }) %>
+</ul>
+<% } %>
+
+<form method="POST" action="/blogs/add">
+    <label><b>Title</b></label><br>
+        <input type="text" name="title" size="50"><br>
+    <label><b>Slug</b></label><br>
+        <input type="text" name="slug" size="50"><br>
+    <label><b>Author</b></label><br>
+        <select name="author" id="author">
+            <% users.forEach(function(user){ %>
+                <option value="<%= user._id %>"><%= user.name %></option>
+            <% }) %>
+        </select><br>
+    <label><b>Body</b></label><br>
+        <textarea name="body" rows="6.75" cols="53"></textarea><br>
+    <label><b>Comment</b></label><br>
+        <textarea name="comment" rows="6.75" cols="53"></textarea><br>
+    <label><b>Category</b></label><br>
+        <input type="text" name="category" size="50"><br>
+<br>
+<input type="submit" value="Submit">
+</form>
+
+<h1>Blogs</h1>
+<% blogs.forEach(function(blog){ %>
+    <div class="blog">
+        <h3><%= blog.title %></h3>
+        <div class="indented">
+            <% u = users.find(user => user._id == blog.author) %>
+            <% if(typeof u === 'undefined'){ %>
+                <i>by anonymous</i> <br><br>
+            <% }else{ %>
+                <i>by <%= u.name %></i> <br><br>
+            <% } %>
+            <%= blog.body %> <br><br>
+            <div class="indented">
+                <b>Comments</b>
+                <ul>
+                    <% blog.comments.forEach(function(c){ %>
+                        <li><%= c.comment %> (<%= (new Date(c.created_at)).toDateString(); %>)</li>
+                    <% }) %>
+                </ul>
+            </div>
+            <div class="indented">
+                <b>Categories</b>
+                <ul>
+                    <% blog.category.forEach(function(category){ %>
+                        <li><%= category.name %></li>
+                    <% }) %>
+                </ul>
+            </div>
+            <table>
+                <tbody><tr>
+                    <td>
+                        <a href='/blogs/edit/<%= blog._id %>'>Edit</a>
+                    </td>
+                    <td>
+                        <form method="post" action="/blogs/delete/<%= blog._id %>">
+                            <input type="submit" name="delete" value='Delete' onClick="return confirm('Are you sure you want to delete?')" />
+                            <input type="hidden" name="_method" value="DELETE" /></form>
+                        </form>
+                    </td>
+                </tr>
+            </tbody></table> 
+        </div>
+    </div>
+<% }) %>
+<% include partials/footer %>
+
+<%= %>
