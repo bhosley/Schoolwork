@@ -1,0 +1,415 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{framed}
+\usepackage[hypcap=false]{caption}
+\usepackage{forest}
+\usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	hidelinks
+	}
+
+\title{Literature Review: \\ Cryptographic Methods in Machine Learning}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	\clearpage
+	
+\section{Introduction} 
+
+The public discovery of asymmetric encryption by Diffie and Hellman in 1976 \cite{Diffie1976} 
+laid the foundation for an entirely new segment of cryptography and enabled many types of transactions that may have been otherwise impossible. 
+Perhaps the most well-known application of this discovery is public key cryptography which uses properties of asymmetric algorithms to provide digital signature authentication, non-reputability, and the ability to generate shared secrets over public communications. 
+
+Common to the most widely adopted asymmetric encryption algorithms is the homomorphic property. 
+While this property garners some attention from the early pioneers of these algorithms, it would take some time before available hardware would catch up to the computational needs.
+However, this property would prove to be the foundation for much research on analysis of encrypted data. 
+
+In the following sections we will review advances, major and recent, in homomorphic cryptography and applications to data analytics with emphasis placed on providing secrecy and security to the machine learning family of algorithms.
+
+\section{Important Ideas}
+	\subsection{Homomorphic Cryptosystems}
+	
+% The first partially homomorphic cryptosystem
+Among the most prolific implementations of asymmetric encryption has been the RSA algorithm invented by Rivest, Shamir, and Adleman.\cite{Rivest1978}
+RSA expanded upon the principles of the Diffie-Hellman key exchange.
+Where Diffie-Hellman generates a shared secret from a prime modulus of the product of a series of integers
+RSA instead publishes the product of two primes and generates two keys based on the primes, publishing one and keeping the other secret.
+
+\begingroup
+\setlength{\FrameSep}{-0.5em}
+\begin{framed}	
+	\begin{align*}
+	\textbf{Keys : } & \\
+	& n = pq \text{ composite of two large primes } \\
+	& \left\langle sk, m \right\rangle \text{ Secret key and plaintext} \\
+	& \left\langle pk, c \right\rangle \text{ Public Key and Ciphertext} \\
+	\textbf{Encryption : } & \\
+	& m^{pk} \equiv c \mod n \\
+	\textbf{Decryption : } & \\
+	& c^{sk} \equiv (m^{pk})^{sk} \equiv m \mod n \\	
+	\end{align*}
+\end{framed}
+\vspace{-1.25em}
+\captionof{figure}{Generalized RSA Operation as described in \cite{Rivest1978}.}
+\vspace{1.5em}
+\endgroup
+
+Within the same year Rivest and Adleman, this time joined by Dertouzos published another paper in which they detail a use of RSA as a "privacy homomorphism." \cite{Rivest1978-2} 
+This would later be more specifically described as a multiplicatively homomorphic encryption scheme.
+
+% Paillier 1999
+Inspired by Benaloh's scheme based on prime residuosity \cite{Benaloh1994}, Pascal Paillier conceived a cryptographic scheme based on composite residuosity \cite{Paillier1999}. 
+He uses this same method to develop a new trapdoor function and a faster decrypting variant.
+ 
+\begingroup
+\setlength{\FrameSep}{-0.5em}
+\begin{framed}	
+	\begin{align*}
+		\textbf{Encryption : } & \\
+		& \text{plaintext  } m < n \\ 
+		& \text{select a random  } r < n \\
+		& \text{ciphertext  } c = g^m \cdot r^n \mod n^2 \\
+		\textbf{Decryption : } & \\
+		& \text{ciphertext  } c < n^2  \\
+		& \text{plaintext  } 
+		m = \frac{L(c^\lambda \mod n^2)}{L(g^\lambda \mod n^2)} \mod n \\
+	\end{align*}
+\end{framed}
+\vspace{-1.25em}
+\captionof{figure}{Paillier's composite residuosity based scheme. 
+	\cite[p. 7]{Paillier1999}}
+\vspace{1.5em}
+\endgroup
+
+% Other Partially homomorphic cryptosystem
+In the years that followed numerous other asymmetric cryptosystems were introduced that were similarly partially homomorphic. 
+Like RSA, some are multiplicatively homomorphic such as the scheme proposed by ElGamal \cite{Elgamal1985}.
+Others will be additively homomorphic, such as Benaloh's \cite{Benaloh1994}
+and Paillier's \cite{Paillier1999} cryptosystems.
+	
+% 2009 Craig Gentry Dissertation on Fully homomorphic 
+It wouldn't be until 2009 that the first fully homomorphic encryption scheme would be proposed. 
+For his dissertation \cite{Gentry2009} Craig Gentry used ideal lattices to implement a fully homomorphic scheme. 	
+With this discovery it is no longer necessary to choose addition or multiplication when modifying ciphertexts,
+algorithms that utilize both can now be applied effectively.
+	
+	\subsection{From Theory to Application}
+	
+% 1987 Goldreich - Mental games 
+In 1978 Rivest \emph{et al.} suggest that the "privacy homomorphism" may someday find use in banking transactions. \cite{Rivest1978-2} 
+In 1987 Goldreich \emph{et al.} proposed a method using oblivious transfer \cite{Rabin1981} generalized to play any of a certain class of game. \cite{Goldreich1987}
+Turing-machine games with incomplete information played over a distance rely on a trusted third party to record either the moves made by players or game state.
+By using oblivious transfer players are able to pass updates of the game state or move record without knowing the current state.
+This system works if greater than half of the players are honest-but-curious; 
+a term used to describe players that will try to learn any information possible, but will not lie about their move, or successfully break encryption.
+This cryptosystem did not gain much traction in the gaming industry as company servers made an effective trusted third party without the need for so much computational overhead.
+
+Despite never gaining much traction in gaming, this cryptosystem did provide a framework for computation between multiple parties with preservation of privacy.
+A problem that remains with this system is the requirement for a majority of non-malicious participants;
+not something that can be guaranteed in adversarial situations such as gaming. 
+However, this system does present a perfect utility for cooperative situations;
+such as when collaboration and honesty are mutual benefits but the parties do not wish to risk exposing protected data.
+	
+	\subsection{Collaborative Classification}	
+		
+% 2000 Lindell - Privacy preserving data-mining 
+One application of mutually beneficial computation is described by Lindell and Pinkas. \cite{Lindell2000} 
+They build upon the method generalized by Goldreich \emph{et al.} \cite{Goldreich1987}	
+but instead of using the method to convey moves in a game requiring secrecy, the method proposed allows two parties to train a decision tree model on two sets of data without the need to expose their data to each other, or relying on a trusted third party. 
+The classifier that they use to train their decision tree model is the ID3 algorithm invented by Ross Quinlan. \cite{Quinlan1986}
+The suggested application for this research is by financial institutions make lending more accurate decisions without exposing private customer financial information.
+
+\begingroup
+\begin{framed}	
+	\textbf{ID3}(R,C, T)
+	\begin{enumerate}
+		\item If $R$ is empty, return a leaf-node with the class value of the majority of the transactions in $T$.
+		\item If $T$ consists of transactions with all the same value $c$ for the class attribute, return a leaf-node with the value $c$ (finished classification path). 
+		\item Otherwise,
+		{\small
+		\begin{enumerate}
+			\item Find the attribute that \emph{best} classifies the transactions in $T$, let it be $A$.
+			\item Let $a_1,\ldots,a_m$ be the values of attribute $A$ and let $T(a_1),\ldots,T(a_m)$ be a partition of $T$ s.t. every transaction in $T(a_i)$ has the attribute value $a_i$.
+			\item Return a tree whose root is labeled $A$ (this is the test attribute) and has edges labeled $a_1,\ldots,a_m$ such that for every $i$, the edge $a_i$ goes to the tree ID3$(R-\{A\},C,T(ai))$.
+		\end{enumerate}}
+	\end{enumerate}
+\end{framed}
+\vspace{-1.25em}
+\captionof{figure}{The ID3 Algorithm for Decision Tree Learning. \cite[p. 4]{Lindell2000}}
+\vspace{1.5em}
+\endgroup	
+
+Collaborative training works well for situations in which both parties wish to make use of the same classifier, are both in possession of data they do not wish to disclose to the other, and both have the computational resources necessary to train the model. 
+Often these three factors are not the case and for those situations it is likely better to use a Client-Server method.
+
+	\subsection{Client-Server Classification}	
+
+% Barni 2009
+Barni \emph{et al.} \cite{Barni2009} develop a client-server style system for classification.
+They use the Paillier cryptosystem \cite{Paillier1999}.
+Additionally, they use an oblivious transfer method similar to Goldreich \emph{et al.} \cite{Goldreich1987},
+and Yao's garbled circuits. \cite{Yao1982}
+For classification their system builds linear branching programs, 
+a non-binary version of the decision tree algorithm used by Lindell and Pinkas. \cite{Lindell2000}
+
+\begingroup
+\setlength{\FrameSep}{-0.5em}
+\begin{framed}	
+	\begin{align*}
+	& abs(\textbf{a}^\ell_i \circ \textbf{x}^\ell) =
+	  abs(\sum_{j=i}^{n} a^\ell_{i,j}x^\ell_j) \leq
+	  \sum_{j=1}^{n}2^{2(\ell-1)} = n2^{2(\ell-1)} \\
+	\Rightarrow
+	& \ell^\prime = 1 + \lceil\log_2(n2^{2(\ell-1)})\rceil
+	  = 2\ell + \lceil\log_2n\rceil -1 \\
+	\end{align*}
+	\vspace{-2em}
+\end{framed}
+\vspace{-1.25em}
+\captionof{figure}{Using the
+	attribute vector $\textbf{x}^\ell$ and
+	linear combination vector $\textbf{a}^\ell_i$
+	to determine the
+	"bit-length $\ell^\prime$ of
+	threshold values $t^{\ell^\prime}_i$"
+	\cite[p. 6]{Barni2009} }
+\vspace{1.5em}
+\endgroup
+
+They propose the use of their algorithm to operate on medical data, 
+the representative example given is one concerning classification of ECG waveforms,
+and is a great example of how client-server classification may be used in general;
+
+\begin{quote}
+	A patient (client $\mathcal{C}$) owns an ECG signal and asks a service provider (server $\mathcal{S}$) to determine which class the ECG signal belongs to. $\mathcal{C}$ requires $\mathcal{S}$ to gain no knowledge about the ECG signal (as this is sensitive personal data of $\mathcal{C}$), whereas $\mathcal{S}$ requires no disclosure of details of the classification algorithm to $\mathcal{C}$ (as this represents valuable intellectual property of $\mathcal{S}$).
+	\cite[p. 13]{Barni2009}
+\end{quote} 
+
+% 2015 Bost - 3 classifiers over encrypted data
+With several proofs of concept and different approaches to secure classification Bost \emph{et al.} \cite{Bost2015}
+seek to construct a framework to provide tools helpful to future researchers and developers doing similar work.
+They build their framework with several options for cryptosystems.
+They include Paillier's cryptosystem \cite{Paillier1999},
+the quadratic residuosity cryptosystem developed by Goldwasser and Micali \cite{Goldwasser1982},
+and the open source fully homomorphic HELib framework \cite{Helib2013}. 
+The building blocks that they provide are 
+a secure method of comparison, 
+a secure method for determining an argument's maximum, 
+a method for changing the encryption scheme of the data (e.g. from Paillier to HELib), 
+a method for calculating dot-products, 
+and a method of dealing with floating point values used in classifiers.  % (here they simply multiply the floats by a large integer).
+To demonstrate the usability of these building blocks \cite{Bost2015} build three different classifiers. 
+
+\begingroup
+%\setlength{\FrameSep}{-0.5em}
+\begin{framed}	
+	\begin{align*}
+	  v_i = (p_2) \cdot 2^{\delta_i} \cdot 2^{\text{min}_ie_i - 52}
+	\end{align*}
+	Integer representation of probability
+	$v_i$ is determined from the double-precision floating point $p_2$,
+	precision $e_i$, and 
+	difference between current and minimum precision $\delta_i$ .
+\end{framed}
+\vspace{-1.25em}
+\captionof{figure}{ Refactorization of the float method from 
+	\cite[p. 8]{Bost2015}}
+\vspace{1.5em}
+\endgroup
+
+"Private hyperplane decision" is trained using the private argument maximum finder they name ARGMAX and the dot product method.
+It functions very similarly to a binary decision tree model.
+
+\begingroup
+\setlength{\FrameSep}{-0.5em}
+\begin{framed}	
+	\begin{align*}
+	p(C = c_i,X_1 = x_1,\cdots,X_d = x_d) = p(C = c_i)
+	\sum_{j=1}^{d}
+	p(X_j = x_j|C = c_i),
+	\end{align*}
+\end{framed}
+\vspace{-1.25em}
+\captionof{figure}{\cite[p. 4]{Bost2015} Na\"{\i}ve Bayes classifier refactorization (Assumes independent variables)}
+\vspace{1.5em}
+\endgroup
+
+"Secure na\"{\i}ve-Bayes" uses ARGMAX and the floating point method.
+The floating point method converts the value into a large integer; 
+this relies on Paillier's $2^{1024}$ bit message space.
+With these two functions the algorithm is able to generate probability tables usable for Bayesian classification.
+
+"Private decision tree" is a polynomial decision tree model.
+This algorithm uses HELib's fully homomorphic encryption set to a fixed-depth.
+Fixing the depth limits the iterative multiplicative depth homomorphism of the ciphertext and decreases the compute time.
+This algorithm also leverages single input, multiple data (SIMD) parallelism to further reduce compute time. 	
+When compared to the algorithm presenting in \cite{Barni2009}, 
+Bost \emph{et al.} are able to return classification results approximately three times faster.
+
+\begingroup
+%\setlength{\FrameSep}{-0.5em}
+\begin{framed}	
+	\centering
+	\begin{forest}
+for tree={circle,draw,align=center,fit=band, inner sep=2pt, l sep=20pt, edge={->}}
+[,s sep=15mm
+	[, edge label={node[midway,left] {$x_1 > w_1$}}
+		[$c_1$, edge label={node[midway,left] {$x_2 > w_2$ }} ]  
+		[$c_2$, edge label={node[midway,right] {$x_2 \leq w_2$ }}, calign with current ] 
+	]
+	[, edge label={node[midway,right] {$x_1 \leq w_1$}} 
+		[$c_3$, calign with current] 
+		[, edge label={node[midway,right] {$x_3 \leq w_3$}}
+			[$c_4$, edge label={node[midway,left] {$x_4 > w_4$}} ] 
+			[$c_5$, edge label={node[midway,right] {$x_4 \leq w_4$}} ]  
+		] 
+	] 
+]		
+	\end{forest}
+\end{framed}
+\vspace{-1.25em}
+\captionof{figure}{\cite[p. 4]{Bost2015} Binary Tree Example}
+\vspace{1.5em}
+\endgroup
+
+% 2018 Li Tong - Differentially private Naive Bayes over different data sources
+Li \emph{et al.} \cite{Li2018} continue work with this framework and expand it to process data from multiple sources.
+From the framework they use the Paillier cryptosystem \cite{Paillier1999} and the secure na\"{\i}ve-Bayes algorithm \cite{Bost2015}.
+In order to allow the system to train over multiple data sources they provide options for both horizontal and vertical partitioning of data.
+Additionally, they rely on a semi trusted third party for data aggregation. 
+Specifically, this is a third party in addition to the data providers (clients) and the party performing the analysis (server).
+Two public key pairs are generated, $<pk_1, sk_1>,<pk_2, sk_2>$. 
+Both public keys are given to the data owners, the data collector may apply $sk_1$ then performs classifier training utilizing the data still protected by $pk_2$.
+The model generated may then be passed to the data receiver, and finally decrypted with $sk_2$.	
+A major weakness in this scheme is shown here as it relies on the third party to provide the computational resources to actually train the model.
+
+\begingroup
+%\setlength{\FrameSep}{-0.5em}
+\begin{framed}
+	\vspace{-3em}	
+\begin{multicols}{2}%[widths={0.5,0.6}, sep=0cm, justify=left,rule=0pt,indent=0em]
+	\begin{align*}
+		& \tau_{1,0} \cdot c^{(1,1)}_i \cdot \ldots \cdot c^{(1,s)}_i \cdot c^{(Y)}_i \\
+	= 	& \tau_{1,0} \cdot \prod_{k=1}^{s} \left( \tau_{1,k} \cdot
+			\left[\left[ n^{(k)}_i \cdot l \right]\right]_1\right) \cdot
+			\left( \tau_{1,s+1} \cdot \left[\left[ y_i \cdot l \right]\right]_1\right) \\
+	= 	& \prod_{k=0}^{s+1} \tau_{1,k} \cdot \left[\left[ y_i \cdot l 
+			+ \sum_{ k=1}^{s}(n^{(k)}_i \cdot l) \right]\right]_1 \\
+	= 	& \left[\left[ y_i \cdot l + n_i \cdot l \right]\right]_1  \\
+	= 	& \left[\left[ n^{\prime}_i \cdot l \right]\right]_1 
+			\mod N^2_1 \\
+	\end{align*}
+	\vfill\eject 		
+	\vphantom{x} \\
+	\vspace{6em} \\
+	$\tau$ : Factor \\
+	$e$ : Encrypted Factor\\
+	$l$ : Integer Transforming Value\\
+	$y$ : Noise Value\\
+	$n$ : Number of Samples\\
+	$N$ : Paillier Modulus\\
+\end{multicols}
+\vspace{-2em}
+\end{framed}
+\vspace{-1.25em}
+\captionof{figure}{Horizontal aggregation method presented in \cite{Li2018}}
+\vspace{1.5em}
+\endgroup
+
+% 2018 Gao - Naive Bayes training on encrytped data, only additively homomorphic
+Goa \emph{et al.} \cite{Gao2018} also extend the \cite{Bost2015} framework but focus on increasing resistance to substitution-then comparison attacks after the model has been generated.
+They use the same na\"{\i}ve-Bayes classifier, and opt for Paillier's cryptosystem as 
+"[i]t does not use fully homomorphic encryptions and thus it is more efficient than [other]’s proposals which rely on FHE." \cite[p. 3]{Gao2018}
+To achieve the increased resistance to STC attacks they present a novel technique that they label "double-blinding".
+Double-blinding as they describe it is essentially Rabin's oblivious transfer technique \cite{Rabin1981}
+applied in a manner that aptly obscures both client and server.
+This is accomplished by sending keys to the user.
+The user encrypts with provided keys and an additive homomorphism factor.
+The server classifies both and returns to user.
+The user then uses a secure comparison protocol to determine which is the correct ciphertext.
+The user will then decrypt the correct ciphertext for their classification result.
+The overhead of this implementation scales linearly and is primarily borne on the server side.
+
+\clearpage
+% 2018 Riazi - machine learning framework for secure learning 
+Sadegh-Riazi \emph{et al.} \cite{SadeghRiazi2018} develop a framework similar to Bost \emph{et al.} in \cite{Bost2015} but remove the flexibility of the building blocks, optimizing for specifically the Na\"{\i}ve-Bayes classifier. 
+By limiting the scope they are able to propose an algorithm that is extremely similar and slightly better optimized.
+They also compare their implementation to commercial and open source options with favorable results.
+
+\begingroup
+\setlength{\FrameRule}{0pt}
+\begin{framed}
+	\centering
+	\def\arraystretch{1.5}
+\begin{tabular}{|l|l|}
+	\hline
+	\textbf{Layer Type} & \textbf{Functionality} \\
+	\hline
+	Fully Connected (FC) & $ x^{(L)}_i = 
+		\varSigma^{N_{L-1}-1}_{j=0} W^{L-1}_{ij} \times x^{L-1}_j$ \\
+	\hline
+	Activation Layer (Act) & $ x^{(L)}_i = f( x^{(L-1)}_i) $ \\
+	\hline
+	Convolution Layer (C) & $ x^{(L)}_{ij} = \varSigma^{s_q-1}_{a=0} \varSigma^{s_q-1}_{b=0} 
+		 W^{L-1}_{ab} \times x^{L-1}_{(i\cdot s_t+a)(j\cdot s_t+b)} $ \\
+	\hline
+	Mean-Pooling (MeP) & $ x^{(L)}_{ij} = 
+			$Mean$(x^{(L-1)}_{(i+a)(j+b)}),$ $a,b\in\{1,2,\ldots,s_q\} $ \\
+	\hline
+	Max-Pooling (MaP) & $ x^{(L)}_{ij} = 
+			$Max$(x^{(L-1)}_{(i+a)(j+b)}),$ $a,b\in\{1,2,\ldots,s_q\} $ \\
+	\hline
+\end{tabular}
+\end{framed}
+\vspace{-2.25em}
+\captionof{table}{Deep and Convolutional Deep Neural Network layer types 
+	\cite[p. 9]{SadeghRiazi2018}}
+\vspace{1.5em}
+\endgroup
+
+% 2019 Yasumura - presenting Models trained on anonymous data, (Also Naive Bayes) keeping own model away from data holding side.	
+Yasumura \emph{et al.} \cite{Yasumura2019} propose an algorithm that is nearly identical to the one proposed by Li \emph{et al.} \cite{Li2018} but without "double-blinding" and replacing the hybrid cryptosystem with a single fully homomorphic implementation. 
+They claim a higher efficiency than Li \emph{et al.} based on 
+"their proxy re-encryption is unnecessary as the clients can encrypt their data using the system’s common public key instead of using their own set of keys. Thus, while their proxy re-encryption lasts from a few seconds to a few minutes in addition to the actual classification of data, our classification protocol completes in approximately 3.3 s for a four-class classifier." \cite[p. 8]{Yasumura2019}
+Though it should be noted that they did not actually test an implementation of the Li \emph{et al.} algorithm.
+
+\begingroup
+	\vspace{1.5em}
+	\centering
+	\includegraphics[width=0.8\linewidth]{Yasumura2019-image1}
+	\captionof{figure}{Visual Overview of system by Yasumura \emph{et al.} \cite[p. 5]{Yasumura2019}}
+\endgroup
+
+	
+\section{Conclusion}
+
+With the surge of research into Machine Learning after 2015 \cite{Perrault2019} the desire for security is well met by homomorphic cryptosystems.
+Earlier major advances in cryptography provided researchers with a strong body of literature and many tools to work with.
+Improvements in encryption will likely improve the efficiency or security of future algorithms; 
+but are not likely to fundamentally change the interaction between cryptography and machine learning.
+Any major change in the interaction will likely be the result of novel changes in machine learning.
+Advances in hardware optimized for machine learning may not fare well with current cryptosystems.
+At the time of this writing we were unable to find any research addressing encryption of operations performed on tensor-processing units (TPUs).
+% Adversarial networks?
+
+The increasing sophistication of the schemes proposed by the researchers above have made introducing machine learning into secure contexts a more viable option.
+Of the literature reviewed here the use-cases proposed have been to the finance and medical industries,
+in both cases the value is increased through collaboration from different sources and security is required. 
+Here we suggest that there are many more use cases available.
+
+It may be beneficial to smaller entities to rent computation from cloud service providers to develop their own models without the necessity of exposing proprietary information. 
+Likewise, it may be beneficial for an organization to utilize secure methods in classification to improve their own cyber-defense posture.	
+Logically separating the data store and the processing resources gives the organization an opportunity for an additional layer to their defense in depth.
+In this manner an organization may also separate data into multiple classification levels and leverage still the same compute resources.
+This ability to compartmentalize data processing will allow an organization more flexibility in scaling their resources to meet their needs, 
+and to increase the efficiency of how they use the resources already in place.
+
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{\jobname}
+\end{document}
