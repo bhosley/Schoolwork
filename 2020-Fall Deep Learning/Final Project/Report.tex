@@ -26,6 +26,33 @@
 	
 \section{Introduction} 
 
+Whether they are weeds invading cultivated land or potentially harmful species growing in pasture, control of unwanted flora is a paramount issue within agriculture.
+Weeds are shown to be the greatest factor in decreased crop yield when compared to pests, and disease.
+\cite{Oerke2006}
+\cite{Rao2000}
+\cite{Gianessi2007}
+Weeds are credited with crop loss valued in the billions of dollars globally even
+ after the investment of additional billions of dollars in weed control measures.
+\cite{WeedAnatomy2013}
+Attempts at more specific estimates include 
+\$40 Billion in loss \cite{Monaco2002}
+and
+\$30 Billion in prevention \cite{Lawes2008}
+
+A multitude of mitigation methods are available; 
+the primary methods are manual removal and application of herbicides.
+The easier and more cost effective of the two is a general application of herbicide to cultivated land.
+However, general application of herbicides raises significant concerns regarding negative environmental or health effects. 
+\cite{Sopena2009}
+
+
+
+Interest in applying computer vision to the task of plant identification has led to the production of numerous datasets of plant images.
+\cite{Sudars2020}
+
+
+
+
 Dataset source:
 Available here: https://vision.eng.au.dk/plant-seedlings-dataset/
 \cite{Giselsson2017}
@@ -40,6 +67,8 @@ The database have been recorded at Aarhus University Flakkebjerg Research statio
 Problem: Uneven data-sets have a tendency to mis-classify minority sample type as majority types.
 Solutions: Undersampling or oversampling
 
+Original Solutions:
+
 imblearn library
 
 ADASYN: Adaptive Synthetic. sampling
@@ -50,6 +79,25 @@ the more difficult learning samples decreases the over-all bias, improves genera
 SMOTE: Synthetic Minority Over-sampling Technique.
 \cite{Bowyer2011} shows improved results over under-sampling (ROC)
 under numerous types of classification problems smote decreases classification errors.
+
+Actual solution:
+
+The original 5539 sample size was large enough to repeatedly crash the Google Colab Kernel during pre-processing for the models. Successive attempts to pre-process a smaller data set eventually led to the final volume of 3000 samples. This number pulls 250 samples from each category, less than the minimum present in any one category. This limitation in the working environment effectively forced under-sampling and solved the imbalance problem.
+
+
+
+MODELS:
+
+% https://www.kaggle.com/gaborfodor/seedlings-pretrained-keras-models/data
+Xception \cite{Chollet2016}
+was selected as the highest performing image classification model available in the Keras application library
+
+?? Using a logistic regression to fit outputs of Xception to the actual results 
+fit is solved using the L-BFGS-B – Software for Large-scale Bound-constrained Optimization \cite{Zhu1997}
+
+MobileNetV2 \cite{Howard2017} \cite{Sandler2019}
+was selected for testing purposes as a number of conceivable applications of this type of identification would benefit from deployment to edge computing devices or small mobile units; this would be easier/more accessible with a smaller/lighter model type.
+Mobilenet was designed with the small, efficient, low power deployment in mind 
 
 \section{Important Ideas}
 	\subsection{}
