@@ -3,6 +3,7 @@
 \usepackage{amsmath}
 \usepackage{framed}
 \usepackage[hypcap=false]{caption}
+\usepackage{subcaption}
 \usepackage{forest}
 \usepackage{multicol}
 \graphicspath{ {./images/} }
@@ -123,6 +124,13 @@ The background of the images was the growing medium which may work as an approxi
 
 \subsection{Related Work: Classification}
 
+The Kaggle notebooks of user
+\href{https://www.kaggle.com/gaborfodor/seedlings-pretrained-keras-models/data
+}{Gaborfodor} provided the methodology for employing the Xception model used in this project.
+The notebook did not cite any sources, but appeared to use an implementation of transductive transfer learning as described in Paul, Rottenseiner, and Heipke \cite{Paul2015}.
+
+Huixian\cite{Huixian2020} provides an effective method for classification of plants based on support vector machines. However, their method relies completely on leaf profile, as a preprocessing mask removes all other details. This may have a negative effect on identifying plants based on cotyledons.
+
 \section{Analysis}
 
 As stated above, the dataset chosen is one provided by Giselsson \emph{et al.}\cite{Giselsson2017} and is available from the Aarhus University 
@@ -131,17 +139,22 @@ The test environment was \href{https://colab.research.google.com/}{Google's Cola
 
 \subsection{Data Exploration}
 
+\begin{wrapfigure}{l}{0.5\textwidth}
+	\begin{center}
+		\includegraphics[width=0.45\textwidth]{DataDistribution}
+	\end{center}
+	\caption{Data distribution by species.}	
+	\begin{center}
+		\includegraphics[width=0.45\textwidth]{SampleDistribution}
+	\end{center}
+	\caption{Distribution of samples in each dataset.}
+\end{wrapfigure}
+
 The dataset contains images of over 960 unique plants belonging to 12 species at several growth stages. 
 The images are RBG with a resolution of approximatly 10 pixels per mm.
 The images are annotated by species.
 The database was recorded at Aarhus University's Flakkebjerg Research station in  collaboration with the University of Southern Denmark.
 
-\begin{wrapfigure}{l}{0.5\textwidth}
-	\begin{center}
-		\includegraphics[width=0.5\textwidth]{DataDistribution}
-	\end{center}
-	\caption{Data distribution by species.}
-\end{wrapfigure}
 Upon initial examination the distribution of data between different species is highly uneven.
 To resolve this problem SMOTE\cite{Bowyer2011} or ADASYN\cite{Bai2008}  was going to be applied to oversample the data.
 The additional data caused the kernel to run out of memory and repeatedly crash.
@@ -150,44 +163,95 @@ The 5539 sample size alone was large enough to repeatedly crash the environment.
 Successive attempts to pre-process a smaller data set eventually led to the final volume of 3000 samples. 
 This number pulls 250 samples from each category, less than the minimum present in any one category. 
 
+Variance was reintroduced via imbalance between the training, validation, and testing sets.
+
+Examination of a random selection of images from each classification does not show any immediately obvious differences. Background interference and measuring implements do not appear to be unique or consistent in any one class.
 \begin{figure}[H]
 	\includegraphics[width=\linewidth]{ImageGrid}
 	\caption{Example images pulled from each category.}
 \end{figure}
 
-
-
-Google Colab Kernel during pre-processing for the models
+\clearpage
 
 \subsection{Model Exploration}
 
-MODELS:
+All of the candidate models investigated for transfer learning here come with initial weights based on the 'Imagenet' dataset.
 
-% https://www.kaggle.com/gaborfodor/seedlings-pretrained-keras-models/data
-Xception \cite{Chollet2016}
-was selected as the highest performing image classification model available in the Keras application library
+\subsubsection{Xception}
 
-?? Using a logistic regression to fit outputs of Xception to the actual results 
-fit is solved using the L-BFGS-B – Software for Large-scale Bound-constrained Optimization \cite{Zhu1997}
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\vspace{-6em}
+	\begin{center}
+		\includegraphics[width=0.49\textwidth]{XceptionConfusionMatrixTest}
+	\end{center}
+	\caption{Xception model with logistic regression.}	
+\end{wrapfigure}
 
-MobileNetV2 \cite{Howard2017} \cite{Sandler2019}
-was selected for testing purposes as a number of conceivable applications of this type of identification would benefit from deployment to edge computing devices or small mobile units; this would be easier/more accessible with a smaller/lighter model type.
-Mobilenet was designed with the small, efficient, low power deployment in mind 
+The Xception model is currently the highest performing model available in the Keras application library\cite{Chollet2016}.
+A base model of the Xception network was used to classify the plant images. 
+The resulting classification to the original 1000 categories of ImageNet were used to fit a logistic regression model providing.
+The logistic model was fit using L-BFGS-B – Software for Large-scale Bound-constrained Optimization\cite{Zhu1997}.
 
+This model is achieved very fast with little training and it is quite effective.
+This will be the baseline by which we compare the next two models.
 
-NASNetMobile
+\subsubsection{MobileNetv2}
 
-	
+MobileNet\cite{Howard2017} and MobileNetv2\cite{Sandler2019} 
+are a set of models intended for mobile applications.
+They are designed to be efficient and light-weight.
+This makes MobileNetv2, as the more refined implementation,
+a perfect candidate for our application.  
 
+First the same logistic regression transductive learning technique is applied.
+This results in about a 40\% testing Accuracy.
 
-	
+After adding 4 densely connected layers, two with 50\% droupout and training for 30 epochs, the model performs much better. Providing around 85\% accuracy. Despite numerous adjustments we were not able to get much better performance without significant modification.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.49\textwidth}
+		\includegraphics[width=\textwidth]{MobileWithRegressionValidation}
+		\caption{MobileNetv2 with logistic regression.}	
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.49\textwidth}
+		\includegraphics[width=\textwidth]{MobileNetV2SlowConfusion}
+		\caption{MobileNetv2 with additional layers.}	
+	\end{subfigure}
+\end{figure}
+
+\subsubsection{NASNetMobile}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{NasNetMobileConfusionMatrix}
+	\end{center}
+	\caption{NASNetMobile with additional layers.}	
+\end{wrapfigure}
+
+NASNet is a family of pre-trained models that come trained on ImageNet but are intended for transfer learning.
+NAS (Neural Architecture Search) refers to the model's creators searching for the highest performing cell on one dataset and building a model based on reproductions of that cell\cite{Zoph2018}. 
+One implementation called NASNetMobile, is selected for its light weight.
+
+The implementation of NASNet presented here used two densely connected layers with 50\% dropout and was trained for 10 epochs. It gave a much better performance of 94\% accuracy on the test set. 
+
 \section{Conclusion}
 
-\subsection{Future Work}
+The NASNetMobile based model works fairly well, outperforming the MobileNet model significantly.
+The NASNetMobile model may provide a very effective base for transfer learning when developing a classifier for mobile agricultural solutions.
 
+The Giselsson \emph{et al.}\cite{Giselsson2017} dataset provides a good idea of what kind of images should be gathered when providing a locality specific dataset. 
 
 
 \clearpage
 \bibliographystyle{IEEEtran}
 \bibliography{\jobname}
 \end{document}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\begin{center}
+		\includegraphics[width=0.45\textwidth]{}
+	\end{center}
+	\caption{}	
+\end{wrapfigure}
