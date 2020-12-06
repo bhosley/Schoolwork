@@ -8,9 +8,13 @@
 \graphicspath{ {./images/} }
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{float}
 \usepackage{hyperref}
 \hypersetup{
-	hidelinks
+	hidelinks,
+	colorlinks = True,
+	urlcolor = blue,
+	citecolor = red
 	}
 
 \title{CSC 535: Deep Learning \\ Final Project: \\ }
@@ -98,7 +102,7 @@ Many of the pictures contain multiple plants and offer a great opportunity to te
 Although the authors specified which crop and weed species were examined in their write-up, the data presented only annotates each plant as a weed or crop. 
 Without the ability to distinguish between different types of crops the data as presented is insufficient to train monoculture specific models.
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{wrapfigure}{r}{0.4\textwidth}
 	\begin{center}
 		\includegraphics[width=0.48\textwidth]{Hughes2016Example}
 	\end{center}
@@ -110,6 +114,7 @@ The dataset also includes health status and disease diagnosis of the plants incl
 The intention of their work is to increase the availability of diagnostic tools to small scale or independent farmers.
 The disease focus of this dataset would contribute a good diversification of samples for classification purposes.
 The limitation of this dataset is that all images are single leaves placed upon a gray background.
+Conveniently this data is also packaged as an option in Tensorflow datasets as Plant Village.
 
 Giselsson et al. \cite{Giselsson2017}
 provide the data set used in this project.
@@ -118,56 +123,43 @@ The background of the images was the growing medium which may work as an approxi
 
 \subsection{Related Work: Classification}
 
-\section{Model Exploration}
+\section{Analysis}
+
+As stated above, the dataset chosen is one provided by Giselsson \emph{et al.}\cite{Giselsson2017} and is available from the Aarhus University 
+\href{https://vision.eng.au.dk/plant-seedlings-dataset/}{website}.
+The test environment was \href{https://colab.research.google.com/}{Google's Colab.}
+
+\subsection{Data Exploration}
+
+The dataset contains images of over 960 unique plants belonging to 12 species at several growth stages. 
+The images are RBG with a resolution of approximatly 10 pixels per mm.
+The images are annotated by species.
+The database was recorded at Aarhus University's Flakkebjerg Research station in  collaboration with the University of Southern Denmark.
+
+\begin{wrapfigure}{l}{0.5\textwidth}
+	\begin{center}
+		\includegraphics[width=0.5\textwidth]{DataDistribution}
+	\end{center}
+	\caption{Data distribution by species.}
+\end{wrapfigure}
+Upon initial examination the distribution of data between different species is highly uneven.
+To resolve this problem SMOTE\cite{Bowyer2011} or ADASYN\cite{Bai2008}  was going to be applied to oversample the data.
+The additional data caused the kernel to run out of memory and repeatedly crash.
+
+The 5539 sample size alone was large enough to repeatedly crash the environment.
+Successive attempts to pre-process a smaller data set eventually led to the final volume of 3000 samples. 
+This number pulls 250 samples from each category, less than the minimum present in any one category. 
+
+\begin{figure}[H]
+	\includegraphics[width=\linewidth]{ImageGrid}
+	\caption{Example images pulled from each category.}
+\end{figure}
 
 
 
+Google Colab Kernel during pre-processing for the models
 
-
-
-
-
-
-For this work, the goal is to examine the viability of a transfer model for plant identification
-
-
-Transfer is chosen because:
-
-Preferred lighter models
-
-
-Dataset source:
-Available here: https://vision.eng.au.dk/plant-seedlings-dataset/
-\cite{Giselsson2017}
-The Plant Seedlings Dataset contains images of approximately 960 unique plants belonging to 12 species at several growth stages.
-It comprises annotated RGB images with a physical resolution of roughly 10 pixels per mm.
-The database have been recorded at Aarhus University Flakkebjerg Research station in a collaboration between University of Southern Denmark and Aarhus University.
-
-
-\includegraphics[width=0.5\linewidth]{DataDistribution}
-\includegraphics[width=\linewidth]{ImageGrid}
-
-Problem: Uneven data-sets have a tendency to mis-classify minority sample type as majority types.
-Solutions: Undersampling or oversampling
-
-Original Solutions:
-
-imblearn library
-
-ADASYN: Adaptive Synthetic. sampling
-\cite{Bai2008} 
-A type of resampling in which the more difficult minority samples are duplicated,
-the more difficult learning samples decreases the over-all bias, improves generalization and decreases erroneous classification.
-
-SMOTE: Synthetic Minority Over-sampling Technique.
-\cite{Bowyer2011} shows improved results over under-sampling (ROC)
-under numerous types of classification problems smote decreases classification errors.
-
-Actual solution:
-
-The original 5539 sample size was large enough to repeatedly crash the Google Colab Kernel during pre-processing for the models. Successive attempts to pre-process a smaller data set eventually led to the final volume of 3000 samples. This number pulls 250 samples from each category, less than the minimum present in any one category. This limitation in the working environment effectively forced under-sampling and solved the imbalance problem.
-
-
+\subsection{Model Exploration}
 
 MODELS:
 
@@ -185,8 +177,6 @@ Mobilenet was designed with the small, efficient, low power deployment in mind
 
 NASNetMobile
 
-\section{Important Ideas}
-	\subsection{}
 	
 
 
