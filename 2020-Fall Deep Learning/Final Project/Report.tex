@@ -7,6 +7,7 @@
 \usepackage{multicol}
 \graphicspath{ {./images/} }
 \usepackage{graphicx}
+\usepackage{wrapfig}
 \usepackage{hyperref}
 \hypersetup{
 	hidelinks
@@ -26,11 +27,15 @@
 	
 \section{Introduction} 
 
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\begin{center}
+		\includegraphics[width=0.48\textwidth]{Oerke-fig1}
+	\end{center}
+	\caption{Oerke \emph{et al.}\cite{Oerke2006}}
+\end{wrapfigure}
 Whether they are weeds invading cultivated land or potentially harmful species growing in pasture, control of unwanted flora is a paramount issue within agriculture.
-Weeds are shown to be the greatest factor in decreased crop yield when compared to pests, and disease.
-\cite{Oerke2006}
-\cite{Rao2000}
-\cite{Gianessi2007}
+Weeds are shown to be the greatest factor in decreased crop yield when compared to pests, and disease
+\cite{Oerke2006}\cite{Rao2000}\cite{Gianessi2007}.
 Kraehmer and Baur \cite{WeedAnatomy2013}
 suggest that global crop loss and weed control measures each cost in the range of billions of dollars.
 Specifically, global costs are estimated at 
@@ -40,18 +45,95 @@ Specifically, global costs are estimated at
 A multitude of mitigation methods are available; 
 the primary methods are manual removal and application of herbicides.
 The easier and more cost effective of the two is a general application of herbicide to cultivated land.
-However, general application of herbicides raises significant concerns regarding negative environmental or health effects. 
-\cite{Sopena2009}
+The industrial scale preference for general application of herbicides raises significant concerns regarding negative environmental or health effects \cite{Sopena2009};
+at this time organic weed control is more costly and less effective \cite{Rood2002}.
+
+Computer vision offers a means to improve both of these solutions.
+Herbicides could be applied directly to the intended target rather than the entire field resulting in a dramatic decrease in the amount of herbicide used and introduced into the environment.
+Examples of current and proposed organic methods include:
+mechanical removal\cite{Chicouene2007}, 
+mulching\cite{Riley2004},
+solarization\cite{Sahile2005}\cite{Candido2011},
+selective watering, 
+hot water\cite{Pinel2000}, 
+and lenses\cite{Johnson1989}.
+Automated targeting applied to such methods would improve their effectiveness and 
+may make them cost effective for industrial scale use.
+
+\subsection{Problem}
+
+To effectively apply computer vision to this task several smaller tasks must be accomplished. Common to any of the aforementioned weed control methods, plants must be located and distinguished. Location of plants comprises a particular kind of object detection task. Distinguishing plants is essentially a standard classification task. 
+
+For many image classification tasks there are a substantial number of classes; for a plant classification model this may still be the case. However, a plant classifier applied to agricultural purposes may be given the advantage of merely distinguishing between desired and undesired plants. Within a monoculture application the model gets the potential further advantage of having to positively identify one type of plant. Additionally, within this application the effect of false negatives (crop labeled as weed) may act as a proxy for the seedling thinning process anyway.
+
+\begin{wrapfigure}{l}{0.5\textwidth}
+	\begin{center}
+		\includegraphics[width=0.48\textwidth]{Mimosa_pudica_cotyledon}
+	\end{center}
+	\caption{\emph{M. Pudica} showing both cotyledon and first true-leaf.\cite{MPudicaPic}}
+\end{wrapfigure}
+A particularly challenging variable in plant recognition is classification at various stages of growth. 
+The appearance of seedling features is often quite different from their mature appearances, especially when only cotyledon leaves are present before true leaves begin to sprout.
+A model's usability will be greatly extended if it can distinguish plants throughout a grow season.
+There is a significant advantage gained by earlier recognition of weeds.
+If recognized before reproductive maturity they can be prevented from local-source propagation, greatly reducing the population growth of the species within the area of interest.
+Further benefit is gained by identifying weeds even earlier as it prevents the competition for resources that they will otherwise provide.
+
+Any area of cultivation is one of interest. 
+Often the cultivated fields most threatened by unwanted species are those furthest from large scale human development, far from robust infrastructure. 
+With this potential limitation in mind and for the environmental benefit of reduced power consumption a smaller more efficient model will be preferred. 
+
+For this project we seek to determine if a transfer model may be trained such that 
+it has the flexibility to be applied to different types of fields and cultures, 
+has the ability to distinguish species as early in the growing process as possible, and the model is small and efficient enough to be deployed to edge or low-powered computing devices.
+
+\subsection{Related Work: Datasets}
+
+Numerous options for plant image datasets are available, most with a specific type of learning task in mind.
+
+Sudars et al. \cite{Sudars2020} 
+produced an image dataset of 8 weed species and 6 crop species. 
+The images in the dataset are taken from a wider angle and bear an appearance similar to what a camera would capture in an uncontrolled environment. 
+Many of the pictures contain multiple plants and offer a great opportunity to test object detection as well as recognition. 
+Although the authors specified which crop and weed species were examined in their write-up, the data presented only annotates each plant as a weed or crop. 
+Without the ability to distinguish between different types of crops the data as presented is insufficient to train monoculture specific models.
+
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\begin{center}
+		\includegraphics[width=0.48\textwidth]{Hughes2016Example}
+	\end{center}
+	\caption{Examples of images from Hughes \emph{et al.}\cite{Hughes2016}}
+\end{wrapfigure}
+Hughes et al. \cite{Hughes2016}
+provide a dataset of plant images in which the species is annotated, and a large variety is given to each species. 
+The dataset also includes health status and disease diagnosis of the plants included.
+The intention of their work is to increase the availability of diagnostic tools to small scale or independent farmers.
+The disease focus of this dataset would contribute a good diversification of samples for classification purposes.
+The limitation of this dataset is that all images are single leaves placed upon a gray background.
+
+Giselsson et al. \cite{Giselsson2017}
+provide the data set used in this project.
+The most important factors that went into choosing this dataset were the researchers labeling each example by species of plant and that the examples provided are plants in various stages of growth. 
+The background of the images was the growing medium which may work as an approximation of the in situ growing medium.
+
+\subsection{Related Work: Classification}
+
+\section{Model Exploration}
 
 
 
 
 
 
-Interest in applying computer vision to the task of plant identification has led to the production of numerous datasets of plant images.
-\cite{Sudars2020}
 
 
+
+For this work, the goal is to examine the viability of a transfer model for plant identification
+
+
+Transfer is chosen because:
+
+Preferred lighter models
 
 
 Dataset source:
@@ -62,7 +144,7 @@ It comprises annotated RGB images with a physical resolution of roughly 10 pixel
 The database have been recorded at Aarhus University Flakkebjerg Research station in a collaboration between University of Southern Denmark and Aarhus University.
 
 
-\includegraphics[width=\linewidth]{DataDistribution}
+\includegraphics[width=0.5\linewidth]{DataDistribution}
 \includegraphics[width=\linewidth]{ImageGrid}
 
 Problem: Uneven data-sets have a tendency to mis-classify minority sample type as majority types.
@@ -100,6 +182,9 @@ MobileNetV2 \cite{Howard2017} \cite{Sandler2019}
 was selected for testing purposes as a number of conceivable applications of this type of identification would benefit from deployment to edge computing devices or small mobile units; this would be easier/more accessible with a smaller/lighter model type.
 Mobilenet was designed with the small, efficient, low power deployment in mind 
 
+
+NASNetMobile
+
 \section{Important Ideas}
 	\subsection{}
 	
@@ -107,6 +192,10 @@ Mobilenet was designed with the small, efficient, low power deployment in mind
 
 	
 \section{Conclusion}
+
+\subsection{Future Work}
+
+
 
 \clearpage
 \bibliographystyle{IEEEtran}
