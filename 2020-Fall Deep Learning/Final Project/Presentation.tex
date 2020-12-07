@@ -22,32 +22,135 @@
 \end{frame}
 
 \section[Intro]{Introduction}
-\begin{frame}{Introduction}
 
+\begin{frame}{Introduction}
+	\begin{columns}
+		\column{0.5\textwidth}
+		Major Agricultural Threats:
+		\begin{itemize}
+			\item Animal Pests
+			\item Viral infection
+			\item Non-viral Pathogens
+			\item Weed competition
+		\end{itemize}
+
+		\column{0.5\textwidth}
+		\includegraphics[width=\textwidth]{Oerke-fig1}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Introduction}
+	\begin{columns}
+		\column{0.5\textwidth}
+		Pesticide Pros:
+		\begin{itemize}
+			\item Easy to Apply
+			\item More Effective
+			\item Lower Cost
+		\end{itemize}
+		\column{0.5\textwidth}
+		Organic Pros:
+		\begin{itemize}
+			\item Fewer Health Effects
+			\item Environmentally Friendly
+			\item[]
+		\end{itemize}
+	\end{columns}
+\end{frame}
+
+\begin{frame}{Introduction}
+	\begin{columns}
+		\column{0.5\textwidth}
+		Methods for Organic Weed Removal:
+		\begin{itemize}
+			\item Mechanical Removal
+			\item Mulching
+			\item Solarization
+			\item Hot Water
+			\item Burning Glass
+		\end{itemize}
+	
+		\column{0.5\textwidth}
+		\vspace{1em}
+		Application Space:
+		\begin{itemize}
+			\item Targeted
+			\item General
+			\item General
+			\item Targeted
+			\item Targeted
+		\end{itemize}
+	\end{columns}
 \end{frame}
 
 \section[Problem]{Problem}
-\begin{frame}{Problem}
 
+\begin{frame}{Problem}
+	Computer vision applied: \\
+	Make organic methods more cost effective. \\
+	Reduce the amount of pesticides applied. \\ \vspace{1em}
+	Financial and Environmental benefits \\
+	\centering
+	\includegraphics[width=0.8\linewidth]{ObjectDetection}
+\end{frame}
+
+\begin{frame}{Problem}
+	\begin{columns}
+		\column{0.5\textwidth}
+		Goal:
+		\begin{itemize}
+			\item Accurate ($>85\%$)
+			\begin{itemize}
+				\item Mature Plants
+				\item Immature Plants
+			\end{itemize}
+			\item Lightweight
+			\item Lower-Power
+		\end{itemize}
+		\column{0.5\textwidth}
+		\includegraphics[width=\linewidth]{Mimosa_pudica_cotyledon}
+	\end{columns}
 \end{frame}
 
 \section[RW]{Related Work}
-\begin{frame}{Related Work: Datasets}
 
+\begin{frame}{Related Work: Datasets}
+	\begin{columns}
+	\column{0.7\textwidth}
+		\begin{description}
+			\item[Sudars, \emph{et al.}] Plants in situ; labeled as crop or weed
+			\item[Hughes, \emph{et al.}] Plant leaves on gray background; 
+				labeled by species and disease
+			\item[Giselsson, \emph{et al.}] Whole plants over growth medium, 
+				during different stages of growth;
+				labeled by species
+		\end{description}
+	\column{0.3\textwidth}
+		\begin{figure}
+			\begin{center}
+				\includegraphics[width=\textwidth]{Hughes2016Example}
+			\end{center}
+			\caption{Examples of images from Hughes \emph{et al.}}
+		\end{figure}
+	\end{columns}
 \end{frame}
 
 \section[Data]{Data Exploration}
+
 \begin{frame}{Data Exploration}
 
 \end{frame}
 
 \section[Models]{Model Exploration}
+
 \begin{frame}{Models: Xception}
 
 \end{frame}
+
 \begin{frame}{Models: MobileNetv2}
 
 \end{frame}
+
 \begin{frame}{Models: NASNetMobile}
 
 \end{frame}
