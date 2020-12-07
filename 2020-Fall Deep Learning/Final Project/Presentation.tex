@@ -89,7 +89,7 @@
 	Computer vision applied: \\
 	Make organic methods more cost effective. \\
 	Reduce the amount of pesticides applied. \\ \vspace{1em}
-	Financial and Environmental benefits \\
+	Providing financial and environmental benefits \\
 	\centering
 	\includegraphics[width=0.8\linewidth]{ObjectDetection}
 \end{frame}
@@ -138,25 +138,84 @@
 \section[Data]{Data Exploration}
 
 \begin{frame}{Data Exploration}
+	Examples from the Dataset: \\
+	\centering
+	\includegraphics[width=0.65\linewidth]{ImageGrid}
+\end{frame}
 
+\begin{frame}{Data Exploration}
+	\begin{columns}
+	\column{0.5\textwidth}
+		Original Data Distribution:
+		\includegraphics[width=\textwidth]{DataDistribution}		
+	\column{0.5\textwidth}
+		Sample Distribution:
+		\includegraphics[width=\textwidth]{SampleDistribution}
+	\end{columns}
 \end{frame}
 
 \section[Models]{Model Exploration}
 
 \begin{frame}{Models: Xception}
-
+	\begin{columns}
+		\column{0.4\textwidth}
+		Xception:
+		\begin{tabular}{l l}
+			Accuracy & 86\% \\
+			Classification Time &  \\
+			Model Size &  \\
+		\end{tabular}
+		\column{0.6\textwidth}
+		\includegraphics[width=\linewidth]{XceptionConfusionMatrixTest}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Models: MobileNetv2}
-
+	\begin{columns}
+		\column{0.4\textwidth}
+		MobileNetv2:
+		\begin{tabular}{l l}
+			Accuracy & 85\% \\
+			Classification Time &  \\
+			Model Size &  \\
+		\end{tabular}
+		\column{0.6\textwidth}
+		\includegraphics[width=\linewidth]{MobileNetV2SlowConfusion}
+	\end{columns}
 \end{frame}
 
 \begin{frame}{Models: NASNetMobile}
-
+	\begin{columns}
+		\column{0.4\textwidth}
+		NASNetMobile:
+		\begin{tabular}{l l}
+			Accuracy & 94\% \\
+			Classification Time &  \\
+			Model Size &  \\
+		\end{tabular}
+		\column{0.6\textwidth}
+		\includegraphics[width=\linewidth]{NasNetMobileConfusionMatrix}
+	\end{columns}
 \end{frame}
 
 \section[Conclusion]{Conclusion}
 \begin{frame}{Conclusion}
+	NASNetMobile provides a promising basis for transfer learning 
+	for a mobile, self-propelled, weed mitigation platform. \\
+	
+	\vspace{2em}
+
+	\setlength{\tabcolsep}{0.5em} % for the horizontal padding
+	{\renewcommand{\arraystretch}{1.5}% for the vertical padding	
+	\begin{tabular}{l l l l}
+		& \rotatebox[origin=l]{45}{Xception}
+		& \rotatebox[origin=l]{45}{MobileNetv2}
+		& \rotatebox[origin=l]{45}{NASNetMobile}
+		\\ \hline
+		Accuracy & 86\% & 85\% & 94\% \\
+		Test Set Classification & 3.368 s & 1.037 s & 1.025 s \\
+		Model Size & 82 MB & 46 MB & 41 MB \\
+	\end{tabular} }
 
 \end{frame}
 
