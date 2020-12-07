@@ -151,7 +151,7 @@ The test environment was \href{https://colab.research.google.com/}{Google's Cola
 \end{wrapfigure}
 
 The dataset contains images of over 960 unique plants belonging to 12 species at several growth stages. 
-The images are RBG with a resolution of approximatly 10 pixels per mm.
+The images are RBG with a resolution of approximately 10 pixels per mm.
 The images are annotated by species.
 The database was recorded at Aarhus University's Flakkebjerg Research station in  collaboration with the University of Southern Denmark.
 
@@ -179,10 +179,10 @@ All of the candidate models investigated for transfer learning here come with in
 
 \subsubsection{Xception}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
+\begin{wrapfigure}{r}{0.45\textwidth}
 	\vspace{-6em}
 	\begin{center}
-		\includegraphics[width=0.49\textwidth]{XceptionConfusionMatrixTest}
+		\includegraphics[width=0.45\textwidth]{XceptionConfusionMatrixTest}
 	\end{center}
 	\caption{Xception model with logistic regression.}	
 \end{wrapfigure}
@@ -223,7 +223,8 @@ After adding 4 densely connected layers, two with 50\% droupout and training for
 
 \subsubsection{NASNetMobile}
 
-\begin{wrapfigure}{r}{0.4\textwidth}
+\begin{wrapfigure}{r}{0.45\textwidth}
+	\vspace{-4em}
 	\begin{center}
 		\includegraphics[width=0.5\textwidth]{NasNetMobileConfusionMatrix}
 	\end{center}
@@ -242,6 +243,20 @@ The NASNetMobile based model works fairly well, outperforming the MobileNet mode
 The NASNetMobile model may provide a very effective base for transfer learning when developing a classifier for mobile agricultural solutions.
 
 The Giselsson \emph{et al.}\cite{Giselsson2017} dataset provides a good idea of what kind of images should be gathered when providing a locality specific dataset. 
+
+%\scalebox{0.5}[0.5]{
+\setlength{\tabcolsep}{0.5em} % for the horizontal padding
+{\renewcommand{\arraystretch}{1.5}% for the vertical padding	
+	\begin{tabular}{l l l l}
+		& \rotatebox[origin=l]{0}{Xception}
+		& \rotatebox[origin=l]{0}{MobileNetv2}
+		& \rotatebox[origin=l]{0}{NASNetMobile}
+		\\ \hline
+		Accuracy & 86\% & 85\% & 94\% \\
+		Test Set Classification & 3.368 s & 1.037 s & 1.025 s \\
+		Model Size & 82 MB & 46 MB & 41 MB \\
+\end{tabular} }
+%}
 
 
 \clearpage
