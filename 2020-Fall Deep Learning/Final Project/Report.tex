@@ -244,9 +244,9 @@ The NASNetMobile model may provide a very effective base for transfer learning w
 
 The Giselsson \emph{et al.}\cite{Giselsson2017} dataset provides a good idea of what kind of images should be gathered when providing a locality specific dataset. 
 
-%\scalebox{0.5}[0.5]{
-\setlength{\tabcolsep}{0.5em} % for the horizontal padding
-{\renewcommand{\arraystretch}{1.5}% for the vertical padding	
+\begin{figure}[H]
+	\setlength{\tabcolsep}{0.5em} % for the horizontal padding
+	{\renewcommand{\arraystretch}{1.5}% for the vertical padding	
 	\begin{tabular}{l l l l}
 		& \rotatebox[origin=l]{0}{Xception}
 		& \rotatebox[origin=l]{0}{MobileNetv2}
@@ -255,8 +255,9 @@ The Giselsson \emph{et al.}\cite{Giselsson2017} dataset provides a good idea of 
 		Accuracy & 86\% & 85\% & 94\% \\
 		Test Set Classification & 3.368 s & 1.037 s & 1.025 s \\
 		Model Size & 82 MB & 46 MB & 41 MB \\
-\end{tabular} }
-%}
+	\end{tabular} }
+	\caption{Results of models tested.}
+\end{figure}
 
 
 \clearpage
