@@ -1,0 +1,70 @@
+version: "3.7"
+
+services:
+  # Node01 
+  cassandra01:
+    image: cassandra:3.11
+    environment:
+      CASSANDRA_BROADCAST_ADDRESS: "cassandra01"
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints:
+          - node.hostname == vm01
+    ports:
+      - 9042
+    volumes:
+      - cass-data:/var/lib/cassandra
+    networks:
+      - cass-net
+
+  # Node02 
+  cassandra02:
+    image: cassandra:3.11
+    environment:
+      CASSANDRA_BROADCAST_ADDRESS: "cassandra02"
+      CASSANDRA_SEEDS: "cassandra01"
+    depends_on:
+      - cassandra-1
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints:
+          - node.hostname == vm02
+    volumes:
+      - cass-data:/var/lib/cassandra
+    networks:
+      - cass-net
+
+  # Node03 
+  cassandra03:
+    image: cassandra:3.11
+    environment:
+      CASSANDRA_BROADCAST_ADDRESS: "cassandra03"
+      CASSANDRA_SEEDS: "cassandra01"
+    depends_on:
+      - cassandra-1
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+        window: 120s
+      placement:
+        constraints:
+          - node.hostname == vm03
+    volumes:
+      - cass-data:/var/lib/cassandra
+    networks:
+      - cass-net
+    
+networks:
+  cass-net:
+
+volumes:
+  cass-data:
