@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{n+nf}{Object}
+\PYG{n+nf}{Addr}  \PYG{n+no}{code}   \PYG{n+no}{Symbol}   \PYG{n+no}{Mnemon}  \PYG{n+no}{Operand}     \PYG{n+no}{Comment}
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{err}{0000}  \PYG{err}{500042}          \PYG{n+nf}{CHARO}   \PYG{l+m+mi}{0x0042}\PYG{p}{,}\PYG{n+no}{i}    \PYG{c}{;Print B}
+\PYG{l+m+mi}{0003}  \PYG{l+m+mi}{500052}          \PYG{n+no}{CHARO}   \PYG{l+m+mi}{0x0052}\PYG{p}{,}\PYG{n+no}{i}    \PYG{c}{;Print R}
+\PYG{l+m+mi}{0006}  \PYG{l+m+mi}{500041}          \PYG{n+no}{CHARO}   \PYG{l+m+mi}{0x0041}\PYG{p}{,}\PYG{n+no}{i}    \PYG{c}{;Print A}
+\PYG{l+m+mi}{0009}  \PYG{l+m+mi}{50004}\PYG{n+no}{E}          \PYG{n+no}{CHARO}   \PYG{l+m+mi}{0x004E}\PYG{p}{,}\PYG{n+no}{i}    \PYG{c}{;Print N}
+\PYG{l+m+mi}{000}\PYG{n+no}{C}  \PYG{l+m+mi}{500044}          \PYG{n+no}{CHARO}   \PYG{l+m+mi}{0x0044}\PYG{p}{,}\PYG{n+no}{i}    \PYG{c}{;Print D}
+\PYG{l+m+mi}{000}\PYG{n+no}{F}  \PYG{l+m+mi}{50004}\PYG{n+no}{F}          \PYG{n+no}{CHARO}   \PYG{l+m+mi}{0x004F}\PYG{p}{,}\PYG{n+no}{i}    \PYG{c}{;Print O}
+\PYG{l+m+mi}{0012}  \PYG{l+m+mi}{50004}\PYG{n+no}{E}          \PYG{n+no}{CHARO}   \PYG{l+m+mi}{0x004E}\PYG{p}{,}\PYG{n+no}{i}    \PYG{c}{;Print N}
+\PYG{l+m+mi}{0015}  \PYG{l+m+mi}{50000}\PYG{n+no}{A}          \PYG{n+no}{CHARO}   \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i}      \PYG{c}{;Newline}
+\PYG{l+m+mi}{0018}  \PYG{l+m+mi}{00}              \PYG{n+no}{STOP}
+\PYG{err}{0019}                  \PYG{n+na}{.END}
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\end{Verbatim}
