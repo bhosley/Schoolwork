@@ -1,0 +1,26 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Warford%
+}{%
+Warford%
+}{%
+{\protect \APACyear {2009}}%
+}]{%
+warford10}
+\APACinsertmetastar {%
+warford10}%
+\begin{APACrefauthors}%
+Warford, J.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYear{2009}.
+\newblock
+\APACrefbtitle {Computer Systems} {Computer systems}\ (\PrintOrdinal{4th}\
+  \BEd).
+\newblock
+\APACaddressPublisher{}{Jones and Bartlett}.
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}
