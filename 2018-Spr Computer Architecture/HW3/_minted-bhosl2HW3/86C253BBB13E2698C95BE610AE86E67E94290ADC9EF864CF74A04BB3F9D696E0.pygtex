@@ -1,0 +1,91 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{n+nf}{Object}
+\PYG{n+nf}{Addr}  \PYG{n+no}{code}   \PYG{n+no}{Symbol}   \PYG{n+no}{Mnemon}  \PYG{n+no}{Operand}     \PYG{n+no}{Comment}
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{err}{0000}  \PYG{err}{04004}\PYG{n+nf}{D}          \PYG{n+no}{BR}      \PYG{n+no}{main}
+\PYG{err}{0003}  \PYG{err}{0000}   \PYG{n+nl}{numA:}    \PYG{n+na}{.WORD}   \PYG{l+m+mi}{0}
+\PYG{err}{0005}  \PYG{err}{0000}   \PYG{n+nl}{numB:}    \PYG{n+na}{.WORD}   \PYG{l+m+mi}{0}
+\PYG{err}{0007}  \PYG{err}{0000}   \PYG{n+nl}{numC:}    \PYG{n+na}{.WORD}   \PYG{l+m+mi}{0}
+\PYG{err}{0009}  \PYG{err}{0000}   \PYG{n+nl}{numD:}    \PYG{n+na}{.WORD}   \PYG{l+m+mi}{0}
+\PYG{err}{000}\PYG{n+nf}{B}  \PYG{l+m+mi}{0000}   \PYG{n+no}{sum}\PYG{p}{:}     \PYG{n+no}{.WORD}   \PYG{l+m+mi}{0}
+\PYG{err}{000}\PYG{n+nf}{D}  \PYG{l+m+mi}{0000}   \PYG{n+no}{avg}\PYG{p}{:}     \PYG{n+no}{.WORD}   \PYG{l+m+mi}{0}
+\PYG{err}{000}\PYG{n+nf}{F}  \PYG{l+m+mi}{696}\PYG{n+no}{E70} \PYG{n+no}{labA}\PYG{p}{:}    \PYG{n+no}{.ASCII}  \PYG{err}{\PYGZdq{}}\PYG{n+no}{input} \PYG{n+no}{a} \PYG{err}{=} \PYG{err}{\PYGZbs{}}\PYG{n+no}{x00}\PYG{err}{\PYGZdq{}}
+\PYG{err}{757420}
+\PYG{err}{61203}\PYG{n+nf}{D}
+\PYG{err}{2000}
+\PYG{err}{001}\PYG{n+nf}{A}  \PYG{l+m+mi}{696}\PYG{n+no}{E70} \PYG{n+no}{labB}\PYG{p}{:}    \PYG{n+no}{.ASCII}  \PYG{err}{\PYGZdq{}}\PYG{n+no}{input} \PYG{n+no}{b} \PYG{err}{=} \PYG{err}{\PYGZbs{}}\PYG{n+no}{x00}\PYG{err}{\PYGZdq{}}
+\PYG{err}{757420}
+\PYG{err}{62203}\PYG{n+nf}{D}
+\PYG{err}{2000}
+\PYG{err}{0025}  \PYG{err}{696}\PYG{n+nf}{E70} \PYG{n+no}{labC}\PYG{p}{:}    \PYG{n+no}{.ASCII}  \PYG{err}{\PYGZdq{}}\PYG{n+no}{input} \PYG{n+no}{c} \PYG{err}{=} \PYG{err}{\PYGZbs{}}\PYG{n+no}{x00}\PYG{err}{\PYGZdq{}}
+\PYG{err}{757420}
+\PYG{err}{63203}\PYG{n+nf}{D}
+\PYG{err}{2000}
+\PYG{err}{0030}  \PYG{err}{696}\PYG{n+nf}{E70} \PYG{n+no}{labD}\PYG{p}{:}    \PYG{n+no}{.ASCII}  \PYG{err}{\PYGZdq{}}\PYG{n+no}{input} \PYG{n+no}{d} \PYG{err}{=} \PYG{err}{\PYGZbs{}}\PYG{n+no}{x00}\PYG{err}{\PYGZdq{}}
+\PYG{err}{757420}
+\PYG{err}{64203}\PYG{n+nf}{D}
+\PYG{err}{2000}
+\PYG{err}{003}\PYG{n+nf}{B}  \PYG{l+m+mi}{73756}\PYG{n+no}{D} \PYG{n+no}{labSum}\PYG{p}{:}  \PYG{n+no}{.ASCII}  \PYG{err}{\PYGZdq{}}\PYG{n+no}{sum} \PYG{err}{=} \PYG{err}{\PYGZbs{}}\PYG{n+no}{x00}\PYG{err}{\PYGZdq{}}
+\PYG{err}{203}\PYG{n+nf}{D20}
+\PYG{err}{00}
+\PYG{err}{0042}  \PYG{err}{617665} \PYG{n+nl}{labAvg:}  \PYG{n+na}{.ASCII}  \PYG{l+s}{\PYGZdq{}average = \PYGZbs{}x00\PYGZdq{}}
+\PYG{err}{726167}
+\PYG{err}{65203}\PYG{n+nf}{D}
+\PYG{err}{2000}
+\PYG{c}{;set the variables}
+\PYG{err}{004}\PYG{n+nf}{D}  \PYG{n+no}{C00002} \PYG{n+no}{main}\PYG{p}{:}    \PYG{n+no}{LDA}     \PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n+no}{i}
+\PYG{err}{0050}  \PYG{n+nf}{E10003}          \PYG{n+no}{STA}     \PYG{n+no}{numA}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;set a = 2}
+\PYG{l+m+mi}{0053}  \PYG{n+no}{C00004}          \PYG{n+no}{LDA}     \PYG{l+m+mi}{4}\PYG{p}{,}\PYG{n+no}{i}
+\PYG{err}{0056}  \PYG{n+nf}{E10005}          \PYG{n+no}{STA}     \PYG{n+no}{numB}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;set b = 4}
+\PYG{l+m+mi}{0059}  \PYG{n+no}{C00005}          \PYG{n+no}{LDA}     \PYG{l+m+mi}{5}\PYG{p}{,}\PYG{n+no}{i}
+\PYG{err}{005}\PYG{n+nf}{C}  \PYG{n+no}{E10007}          \PYG{n+no}{STA}     \PYG{n+no}{numC}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;set c = 5}
+\PYG{l+m+mi}{005}\PYG{n+no}{F}  \PYG{n+no}{C00001}          \PYG{n+no}{LDA}     \PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+no}{i}
+\PYG{err}{0062}  \PYG{n+nf}{E10009}          \PYG{n+no}{STA}     \PYG{n+no}{numD}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;set d = 1}
+\PYG{c}{;calculate results}
+\PYG{l+m+mi}{0065}  \PYG{n+no}{C10003}          \PYG{n+no}{LDA}     \PYG{n+no}{numA}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;load a}
+\PYG{l+m+mi}{0068}  \PYG{l+m+mi}{710005}          \PYG{n+no}{ADDA}    \PYG{n+no}{numB}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;add b}
+\PYG{l+m+mi}{006}\PYG{n+no}{B}  \PYG{l+m+mi}{710007}          \PYG{n+no}{ADDA}    \PYG{n+no}{numC}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;add c}
+\PYG{l+m+mi}{006}\PYG{n+no}{E}  \PYG{l+m+mi}{710009}          \PYG{n+no}{ADDA}    \PYG{n+no}{numD}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;add d}
+\PYG{l+m+mi}{0071}  \PYG{n+no}{E1000B}          \PYG{n+no}{STA}     \PYG{n+no}{sum}\PYG{p}{,}\PYG{n+no}{d}       \PYG{c}{;store sum}
+\PYG{c}{;calculate simple average}
+\PYG{l+m+mi}{0074}  \PYG{n+no}{C1000B}          \PYG{n+no}{LDA}     \PYG{n+no}{sum}\PYG{p}{,}\PYG{n+no}{d}       \PYG{c}{;load sum}
+\PYG{l+m+mi}{0077}  \PYG{l+m+mi}{1}\PYG{n+no}{E}              \PYG{n+no}{ASRA}                \PYG{c}{;Arithmetic left(proxy division by 2)}
+\PYG{l+m+mi}{0078}  \PYG{l+m+mi}{1}\PYG{n+no}{E}              \PYG{n+no}{ASRA}                \PYG{c}{;As above}
+\PYG{l+m+mi}{0079}  \PYG{n+no}{E1000D}          \PYG{n+no}{STA}     \PYG{n+no}{avg}\PYG{p}{,}\PYG{n+no}{d}       \PYG{c}{;store average}
+\PYG{c}{;tell the variables}
+\PYG{l+m+mi}{007}\PYG{n+no}{C}  \PYG{l+m+mi}{41000}\PYG{n+no}{F}          \PYG{n+no}{STRO}    \PYG{n+no}{labA}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;print a label}
+\PYG{l+m+mi}{007}\PYG{n+no}{F}  \PYG{l+m+mi}{390003}          \PYG{n+no}{DECO}    \PYG{n+no}{numA}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;Print a}
+\PYG{l+m+mi}{0082}  \PYG{l+m+mi}{50000}\PYG{n+no}{A}          \PYG{n+no}{CHARO}   \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i}      \PYG{c}{;newline}
+\PYG{l+m+mi}{0085}  \PYG{l+m+mi}{41001}\PYG{n+no}{A}          \PYG{n+no}{STRO}    \PYG{n+no}{labB}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;print b label}
+\PYG{l+m+mi}{0088}  \PYG{l+m+mi}{390005}          \PYG{n+no}{DECO}    \PYG{n+no}{numB}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;Print b}
+\PYG{l+m+mi}{008}\PYG{n+no}{B}  \PYG{l+m+mi}{50000}\PYG{n+no}{A}          \PYG{n+no}{CHARO}   \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i}      \PYG{c}{;newline}
+\PYG{l+m+mi}{008}\PYG{n+no}{E}  \PYG{l+m+mi}{410025}          \PYG{n+no}{STRO}    \PYG{n+no}{labC}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;print c label}
+\PYG{l+m+mi}{0091}  \PYG{l+m+mi}{390007}          \PYG{n+no}{DECO}    \PYG{n+no}{numC}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;Print c}
+\PYG{l+m+mi}{0094}  \PYG{l+m+mi}{50000}\PYG{n+no}{A}          \PYG{n+no}{CHARO}   \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i}      \PYG{c}{;newline}
+\PYG{l+m+mi}{0097}  \PYG{l+m+mi}{410030}          \PYG{n+no}{STRO}    \PYG{n+no}{labD}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;print d label}
+\PYG{l+m+mi}{009}\PYG{n+no}{A}  \PYG{l+m+mi}{390009}          \PYG{n+no}{DECO}    \PYG{n+no}{numD}\PYG{p}{,}\PYG{n+no}{d}      \PYG{c}{;Print d}
+\PYG{l+m+mi}{009}\PYG{n+no}{D}  \PYG{l+m+mi}{50000}\PYG{n+no}{A}          \PYG{n+no}{CHARO}   \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i}      \PYG{c}{;newline}
+\PYG{l+m+mi}{00}\PYG{n+no}{A0}  \PYG{l+m+mi}{41003}\PYG{n+no}{B}          \PYG{n+no}{STRO}    \PYG{n+no}{labSum}\PYG{p}{,}\PYG{n+no}{d}    \PYG{c}{;print sum label}
+\PYG{l+m+mi}{00}\PYG{n+no}{A3}  \PYG{l+m+mi}{39000}\PYG{n+no}{B}          \PYG{n+no}{DECO}    \PYG{n+no}{sum}\PYG{p}{,}\PYG{n+no}{d}       \PYG{c}{;Print sum}
+\PYG{l+m+mi}{00}\PYG{n+no}{A6}  \PYG{l+m+mi}{50000}\PYG{n+no}{A}          \PYG{n+no}{CHARO}   \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i}      \PYG{c}{;newline}
+\PYG{l+m+mi}{00}\PYG{n+no}{A9}  \PYG{l+m+mi}{410042}          \PYG{n+no}{STRO}    \PYG{n+no}{labAvg}\PYG{p}{,}\PYG{n+no}{d}    \PYG{c}{;print average label}
+\PYG{l+m+mi}{00}\PYG{n+no}{AC}  \PYG{l+m+mi}{39000}\PYG{n+no}{D}          \PYG{n+no}{DECO}    \PYG{n+no}{avg}\PYG{p}{,}\PYG{n+no}{d}       \PYG{c}{;Print average}
+\PYG{l+m+mi}{00}\PYG{n+no}{AF}  \PYG{l+m+mi}{00}              \PYG{n+no}{STOP}
+\PYG{err}{00}\PYG{n+nf}{B0}                  \PYG{n+no}{.END}
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+
+
+\PYG{n+nf}{Symbol} \PYG{n+no}{table}
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{n+nf}{Symbol}    \PYG{n+no}{Value}        \PYG{n+no}{Symbol}    \PYG{n+no}{Value}
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\PYG{n+nf}{avg}       \PYG{l+m+mi}{000}\PYG{n+no}{D}         \PYG{n+no}{labA}      \PYG{l+m+mi}{000}\PYG{n+no}{F}
+\PYG{n+nf}{labAvg}    \PYG{l+m+mi}{0042}         \PYG{n+no}{labB}      \PYG{l+m+mi}{001}\PYG{n+no}{A}
+\PYG{n+nf}{labC}      \PYG{l+m+mi}{0025}         \PYG{n+no}{labD}      \PYG{l+m+mi}{0030}
+\PYG{n+nf}{labSum}    \PYG{l+m+mi}{003}\PYG{n+no}{B}         \PYG{n+no}{main}      \PYG{l+m+mi}{004}\PYG{n+no}{D}
+\PYG{n+nf}{numA}      \PYG{l+m+mi}{0003}         \PYG{n+no}{numB}      \PYG{l+m+mi}{0005}
+\PYG{n+nf}{numC}      \PYG{l+m+mi}{0007}         \PYG{n+no}{numD}      \PYG{l+m+mi}{0009}
+\PYG{n+nf}{sum}       \PYG{l+m+mi}{000}\PYG{n+no}{B}
+\PYG{err}{\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}}
+\end{Verbatim}
