@@ -1,0 +1,55 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nf}{BR} \PYG{n+no}{main}
+\PYG{n+nl}{numA:} \PYG{n+na}{.WORD} \PYG{l+m+mi}{0}
+\PYG{n+nl}{numB:} \PYG{n+na}{.WORD} \PYG{l+m+mi}{0}
+\PYG{n+nl}{numC:} \PYG{n+na}{.WORD} \PYG{l+m+mi}{0}
+\PYG{n+nl}{numD:} \PYG{n+na}{.WORD} \PYG{l+m+mi}{0}
+\PYG{n+nl}{sum:} \PYG{n+na}{.WORD} \PYG{l+m+mi}{0}
+\PYG{n+nl}{avg:} \PYG{n+na}{.WORD} \PYG{l+m+mi}{0}
+\PYG{n+nl}{labA:} \PYG{n+na}{.ASCII} \PYG{l+s}{\PYGZdq{}input a = \PYGZbs{}x00\PYGZdq{}}
+\PYG{n+nl}{labB:} \PYG{n+na}{.ASCII} \PYG{l+s}{\PYGZdq{}input b = \PYGZbs{}x00\PYGZdq{}}
+\PYG{n+nl}{labC:} \PYG{n+na}{.ASCII} \PYG{l+s}{\PYGZdq{}input c = \PYGZbs{}x00\PYGZdq{}}
+\PYG{n+nl}{labD:} \PYG{n+na}{.ASCII} \PYG{l+s}{\PYGZdq{}input d = \PYGZbs{}x00\PYGZdq{}}
+\PYG{n+nl}{labSum:} \PYG{n+na}{.ASCII} \PYG{l+s}{\PYGZdq{}sum = \PYGZbs{}x00\PYGZdq{}}
+\PYG{n+nl}{labAvg:} \PYG{n+na}{.ASCII} \PYG{l+s}{\PYGZdq{}average = \PYGZbs{}x00\PYGZdq{}}
+\PYG{c}{;set the variables}
+\PYG{n+nl}{main:} \PYG{n+nf}{LDA} \PYG{l+m+mi}{2}\PYG{p}{,}\PYG{n+no}{i}
+\PYG{n+nf}{STA} \PYG{n+no}{numA}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;set a = 2}
+\PYG{n+no}{LDA} \PYG{l+m+mi}{4}\PYG{p}{,}\PYG{n+no}{i}
+\PYG{n+nf}{STA} \PYG{n+no}{numB}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;set b = 4}
+\PYG{n+no}{LDA} \PYG{l+m+mi}{5}\PYG{p}{,}\PYG{n+no}{i}
+\PYG{n+nf}{STA} \PYG{n+no}{numC}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;set c = 5}
+\PYG{n+no}{LDA} \PYG{l+m+mi}{1}\PYG{p}{,}\PYG{n+no}{i}
+\PYG{n+nf}{STA} \PYG{n+no}{numD}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;set d = 1}
+\PYG{c}{;calculate results}
+\PYG{n+no}{LDA} \PYG{n+no}{numA}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;load a}
+\PYG{n+no}{ADDA} \PYG{n+no}{numB}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;add b}
+\PYG{n+no}{ADDA} \PYG{n+no}{numC}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;add c}
+\PYG{n+no}{ADDA} \PYG{n+no}{numD}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;add d}
+\PYG{n+no}{STA} \PYG{n+no}{sum}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;store sum}
+\PYG{c}{;calculate simple average}
+\PYG{n+no}{LDA} \PYG{n+no}{sum}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;load sum}
+\PYG{n+no}{ASRA} \PYG{c}{;Arithmetic left(proxy division by 2)}
+\PYG{n+no}{ASRA} \PYG{c}{;As above}
+\PYG{n+no}{STA} \PYG{n+no}{avg}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;store average}
+\PYG{c}{;tell the variables}
+\PYG{n+no}{STRO} \PYG{n+no}{labA}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;print a label}
+\PYG{n+no}{DECO} \PYG{n+no}{numA}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;Print a}
+\PYG{n+no}{CHARO} \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i} \PYG{c}{;newline}
+\PYG{n+no}{STRO} \PYG{n+no}{labB}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;print b label}
+\PYG{n+no}{DECO} \PYG{n+no}{numB}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;Print b}
+\PYG{n+no}{CHARO} \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i} \PYG{c}{;newline}
+\PYG{n+no}{STRO} \PYG{n+no}{labC}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;print c label}
+\PYG{n+no}{DECO} \PYG{n+no}{numC}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;Print c}
+\PYG{n+no}{CHARO} \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i} \PYG{c}{;newline}
+\PYG{n+no}{STRO} \PYG{n+no}{labD}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;print d label}
+\PYG{n+no}{DECO} \PYG{n+no}{numD}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;Print d}
+\PYG{n+no}{CHARO} \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i} \PYG{c}{;newline}
+\PYG{n+no}{STRO} \PYG{n+no}{labSum}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;print sum label}
+\PYG{n+no}{DECO} \PYG{n+no}{sum}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;Print sum}
+\PYG{n+no}{CHARO} \PYG{err}{\PYGZsq{}\PYGZbs{}}\PYG{n+no}{n}\PYG{err}{\PYGZsq{}}\PYG{p}{,}\PYG{n+no}{i} \PYG{c}{;newline}
+\PYG{n+no}{STRO} \PYG{n+no}{labAvg}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;print average label}
+\PYG{n+no}{DECO} \PYG{n+no}{avg}\PYG{p}{,}\PYG{n+no}{d} \PYG{c}{;Print average}
+\PYG{n+no}{STOP}
+\PYG{n+na}{.END}	
+\end{Verbatim}
