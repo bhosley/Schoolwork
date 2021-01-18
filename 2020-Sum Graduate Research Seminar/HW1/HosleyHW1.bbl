@@ -1,0 +1,47 @@
+\begin{thebibliography}{1}
+
+\bibitem{Barni2009}
+{\sc Barni, M., Failla, P., Kolesnikov, V., Lazzeretti, R., Sadeghi, A.~R., and
+  Schneider, T.}
+\newblock {Secure evaluation of private linear branching programs with medical
+  applications}.
+\newblock {\em Lecture Notes in Computer Science (including subseries Lecture
+  Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) 5789
+  LNCS}, July 2015 (2009), 424--439.
+
+\bibitem{Bost2015}
+{\sc Bost, R., Popa, R.~A., Tu, S., and Goldwasser, S.}
+\newblock {Machine Learning Classification over Encrypted Data}.
+\newblock In {\em NDSS\/} (2015), vol.~4324, p.~14.
+
+\bibitem{Gao2018}
+{\sc Gao, C.~z., Cheng, Q., He, P., Susilo, W., and Li, J.}
+\newblock {Privacy-preserving Naive Bayes classifiers secure against the
+  substitution-then-comparison attack}.
+\newblock {\em Information Sciences 444\/} (2018), 72--88.
+
+\bibitem{Gentry2009}
+{\sc Gentry, C.}
+\newblock {A Fully Homomorphic Encryption Scheme}.
+\newblock {\em Dissertation}, September (2009), 169.
+
+\bibitem{Lindell2000}
+{\sc Lindell, Y., and Pinkas, B.}
+\newblock {Privacy preserving data mining}.
+\newblock In {\em Annual International Cryptology Conference\/} (2000),
+  Springer, pp.~36--54.
+
+\bibitem{Paillier1999}
+{\sc Paillier, P.}
+\newblock {Public-key cryptosystems based on composite degree residuosity
+  classes}.
+\newblock In {\em International conference on the theory and applications of
+  cryptographic techniques\/} (1999), Springer, pp.~223--238.
+
+\bibitem{Yasumura2019}
+{\sc Yasumura, Y., Ishimaki, Y., and Yamana, H.}
+\newblock {Secure na{\"{i}}ve bayes classification protocol over encrypted data
+  using fully homomorphic encryption}.
+\newblock {\em ACM International Conference Proceeding Series\/} (2019).
+
+\end{thebibliography}
