@@ -1,0 +1,104 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{#1}
+\csname url@rmstyle\endcsname
+\providecommand{\newblock}{\relax}
+\providecommand{\bibinfo}[2]{#2}
+\providecommand\BIBentrySTDinterwordspacing{\spaceskip=0pt\relax}
+\providecommand\BIBentryALTinterwordstretchfactor{4}
+\providecommand\BIBentryALTinterwordspacing{\spaceskip=\fontdimen2\font plus
+\BIBentryALTinterwordstretchfactor\fontdimen3\font minus
+  \fontdimen4\font\relax}
+\providecommand\BIBforeignlanguage[2]{{%
+\expandafter\ifx\csname l@#1\endcsname\relax
+\typeout{** WARNING: IEEEtran.bst: No hyphenation pattern has been}%
+\typeout{** loaded for the language `#1'. Using the pattern for}%
+\typeout{** the default language instead.}%
+\else
+\language=\csname l@#1\endcsname
+\fi
+#2}}
+
+\bibitem{Barni2009}
+M.~Barni, P.~Failla, V.~Kolesnikov, R.~Lazzeretti, A.~R. Sadeghi, and
+  T.~Schneider, ``{Secure evaluation of private linear branching programs with
+  medical applications},'' \emph{Lecture Notes in Computer Science (including
+  subseries Lecture Notes in Artificial Intelligence and Lecture Notes in
+  Bioinformatics)}, vol. 5789 LNCS, no. July 2015, pp. 424--439, 2009.
+ \begin{quotation}\noindent This paper describes a method for employing
+  branching programs for classification on encrypted data. They then propose
+  how this method may be used in a way that allows a data-owning client (such
+  as a health-care entity) to use the service of an analysis provider without
+  either entity having to expose their sensitive or propriety data to the
+  other. \end{quotation}
+
+\bibitem{Bost2015}
+R.~Bost, R.~A. Popa, S.~Tu, and S.~Goldwasser, ``{Machine Learning
+  Classification over Encrypted Data},'' in \emph{NDSS}, vol. 4324, 2015,
+  p.~14.
+ \begin{quotation}\noindent The researchers create 3 different types of
+  classifiers for training machine learning models with encrypted data. They
+  produce a library with tools for constructing classifiers similar to the ones
+  demonstrated in their work. Additionally, they provide information about the
+  efficiency of their classifiers when applied to different Machine-Learning
+  algorithms. \end{quotation}
+
+\bibitem{Gao2018}
+\BIBentryALTinterwordspacing
+C.~z. Gao, Q.~Cheng, P.~He, W.~Susilo, and J.~Li, ``{Privacy-preserving Naive
+  Bayes classifiers secure against the substitution-then-comparison attack},''
+  \emph{Information Sciences}, vol. 444, pp. 72--88, 2018. [Online]. Available:
+  \url{https://doi.org/10.1016/j.ins.2018.02.058}
+\BIBentrySTDinterwordspacing
+ \begin{quotation}\noindent In this article, researchers propose a method of
+  employing machine learning using a Naive Bayes classifier and additively
+  homomorphic encryption. The result is a model that can be trained on
+  encrypted data, allowing privacy on both the training and database sides. A
+  primary vulnerability that the researchers are concerned with addressing is
+  the Substitution-Then-Comparison type of attack. \end{quotation}
+
+\bibitem{Gentry2009}
+\BIBentryALTinterwordspacing
+C.~Gentry, ``{A Fully Homomorphic Encryption Scheme},'' \emph{Dissertation},
+  no. September, p. 169, 2009. [Online]. Available:
+  \url{http://cs.au.dk/{~}stm/local-cache/gentry-thesis.pdf}
+\BIBentrySTDinterwordspacing
+ \begin{quotation}\noindent This is Dr. Craig Gentry's PhD dissertation in
+  which he proposes what is regarded as the first fully homomorphic encryption
+  model. He describes at length all of the constituent aspects of his model,
+  which includes significant discourse about partial homomorphic schemas and
+  the ideal lattices that his model leverages. Dr. Gentry also proposes
+  potential applications of this model. \end{quotation}
+
+\bibitem{Lindell2000}
+Y.~Lindell and B.~Pinkas, ``{Privacy preserving data mining},'' in \emph{Annual
+  International Cryptology Conference}.\hskip 1em plus 0.5em minus 0.4em\relax
+  Springer, 2000, pp. 36--54.
+ \begin{quotation}\noindent Researchers provide a proposal for a method of Data
+  Mining multiple sources while preserving privacy for those data sources. In
+  their example, privacy is preserved by having data owners perform necessary
+  calculations on their own data and the researcher effectively collating their
+  results. The suggested use for this method is to data mine across multiple
+  health care sources without compromising the confidentiality of the data.
+  \end{quotation}
+
+\bibitem{Paillier1999}
+P.~Paillier, ``{Public-key cryptosystems based on composite degree residuosity
+  classes},'' in \emph{International conference on the theory and applications
+  of cryptographic techniques}.\hskip 1em plus 0.5em minus 0.4em\relax
+  Springer, 1999, pp. 223--238.
+ \begin{quotation}\noindent Dr. Paillier investigates Composite Residuosity and
+  a new 'trapdoor mechanism'. He uses this mechanism to propose three new
+  encryption schemes. Two of the proposed schemes are additively homomorphic,
+  and referenced in numerous other works in this bibliography. \end{quotation}
+
+\bibitem{Yasumura2019}
+Y.~Yasumura, Y.~Ishimaki, and H.~Yamana, ``{Secure na{\"{i}}ve bayes
+  classification protocol over encrypted data using fully homomorphic
+  encryption},'' \emph{ACM International Conference Proceeding Series}, 2019.
+ \begin{quotation}\noindent In this article the researchers examine training a
+  machine learning model using a naive-Bayes classifier over data that has been
+  encrypted with a fully homomorphic encryption algorithm. They additionally
+  describe an optimization strategy that reduces the training time by 33{\%}
+  under the time taken by their initial implementation. \end{quotation}
+
+\end{thebibliography}
