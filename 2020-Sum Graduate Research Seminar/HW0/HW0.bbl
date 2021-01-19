@@ -1,0 +1,108 @@
+\begin{thebibliography}{10}
+
+\bibitem{Barni2009}
+{\sc Barni, M., Failla, P., Kolesnikov, V., Lazzeretti, R., Sadeghi, A.~R., and
+  Schneider, T.}
+\newblock {Secure evaluation of private linear branching programs with medical
+  applications}.
+\newblock {\em Lecture Notes in Computer Science (including subseries Lecture
+  Notes in Artificial Intelligence and Lecture Notes in Bioinformatics) 5789
+  LNCS}, July 2015 (2009), 424--439.
+
+\bibitem{Bost2015}
+{\sc Bost, R., Popa, R.~A., Tu, S., and Goldwasser, S.}
+\newblock {Machine Learning Classification over Encrypted Data}.
+\newblock In {\em NDSS\/} (2015), vol.~4324, p.~14.
+
+\bibitem{Gentry2009}
+{\sc Gentry, C.}
+\newblock {A Fully Homomorphic Encryption Scheme}.
+\newblock {\em Dissertation}, September (2009), 169.
+
+\bibitem{Goldreich2004}
+{\sc Goldreich, O.}
+\newblock {\em {Foundations of Cryptography}}.
+\newblock No.~January 2004. 2004.
+
+\bibitem{Goldreich1987}
+{\sc Goldreich, O., Micali, S., and Wigderson, A.}
+\newblock {How to play ANY mental game}.
+\newblock 218--229.
+
+\bibitem{Graepel2012}
+{\sc Graepel, T., Lauter, K., and Naehrig, M.}
+\newblock {ML confidential: Machine learning on encrypted data}.
+\newblock In {\em International Conference on Information Security and
+  Cryptology\/} (2012), Springer, pp.~1--21.
+
+\bibitem{Hunt2016}
+{\sc Hunt, T., Zhu, Z., Xu, Y., Peter, S., and Witchel, E.}
+\newblock {Ryoan: A distributed sandbox for untrusted computation on secret
+  data}.
+\newblock {\em Proceedings of the 12th USENIX Symposium on Operating Systems
+  Design and Implementation, OSDI 2016 35}, 4 (2016), 533--549.
+
+\bibitem{Khedr2016}
+{\sc Khedr, A., Gulak, G., and Vaikuntanathan, V.}
+\newblock {SHIELD: Scalable Homomorphic Implementation of Encrypted
+  Data-Classifiers}.
+\newblock {\em IEEE Transactions on Computers 65}, 9 (2016), 2848--2858.
+
+\bibitem{Laur2006}
+{\sc Laur, S., Lipmaa, H., and Mielik{\"{a}}ihen, T.}
+\newblock {Cryptographically private support vector machines}.
+\newblock {\em Proceedings of the ACM SIGKDD International Conference on
+  Knowledge Discovery and Data Mining 2006\/} (2006), 618--624.
+
+\bibitem{Li2018}
+{\sc Li, T., Li, J., Liu, Z., Li, P., and Jia, C.}
+\newblock {Differentially private Naive Bayes learning over multiple data
+  sources}.
+\newblock {\em Information Sciences 444\/} (2018), 89--104.
+
+\bibitem{Lindell2000}
+{\sc Lindell, Y., and Pinkas, B.}
+\newblock {Privacy preserving data mining}.
+\newblock In {\em Annual International Cryptology Conference\/} (2000),
+  Springer, pp.~36--54.
+
+\bibitem{Liu2017}
+{\sc Liu, J., Juuti, M., Lu, Y., and Asokan, N.}
+\newblock {Oblivious neural network predictions via MiniONN transformations}.
+\newblock {\em Proceedings of the ACM Conference on Computer and Communications
+  Security\/} (2017), 619--631.
+
+\bibitem{Paillier1999}
+{\sc Paillier, P.}
+\newblock {Public-key cryptosystems based on composite degree residuosity
+  classes}.
+\newblock In {\em International conference on the theory and applications of
+  cryptographic techniques\/} (1999), Springer, pp.~223--238.
+
+\bibitem{SadeghRiazi2018}
+{\sc {Sadegh Riazi}, M., Songhori, E.~M., Weinert, C., Schneider, T.,
+  Tkachenko, O., and Koushanfar, F.}
+\newblock {Chameleon: A hybrid secure computation framework for machine
+  learning applications}.
+\newblock {\em ASIACCS 2018 - Proceedings of the 2018 ACM Asia Conference on
+  Computer and Communications Security\/} (2018), 707--721.
+
+\bibitem{Song2017}
+{\sc Song, C., Ristenpart, T., and Shmatikov, V.}
+\newblock {Machine learning models that remember too much}.
+\newblock {\em Proceedings of the ACM Conference on Computer and Communications
+  Security\/} (2017), 587--601.
+
+\bibitem{Yasumura2019}
+{\sc Yasumura, Y., Ishimaki, Y., and Yamana, H.}
+\newblock {Secure na{\"{i}}ve bayes classification protocol over encrypted data
+  using fully homomorphic encryption}.
+\newblock {\em ACM International Conference Proceeding Series\/} (2019).
+
+\bibitem{Gao2018}
+{\sc zhi Gao, C., Cheng, Q., He, P., Susilo, W., and Li, J.}
+\newblock {Privacy-preserving Naive Bayes classifiers secure against the
+  substitution-then-comparison attack}.
+\newblock {\em Information Sciences 444\/} (2018), 72--88.
+
+\end{thebibliography}
