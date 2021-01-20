@@ -1,0 +1,59 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{err}{version:} \PYG{l+s+s2}{\PYGZdq{}3.7\PYGZdq{}}
+\PYG{err}{services:}
+  \PYG{err}{postgres:}
+    \PYG{err}{container\PYGZus{}name:} \PYG{err}{postgres\PYGZus{}bhosl}\PYG{l+m+mi}{2}
+    \PYG{err}{image:} \PYG{err}{postgres:}\PYG{l+m+mf}{12.1}
+    \PYG{err}{restart:} \PYG{err}{always}
+    \PYG{err}{environment:}
+      \PYG{err}{POSTGRES\PYGZus{}DB:} \PYG{err}{myDB}
+      \PYG{err}{POSTGRES\PYGZus{}USER:} \PYG{err}{admin}
+      \PYG{err}{POSTGRES\PYGZus{}PASSWORD:} \PYG{err}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+      \PYG{err}{PGDATA:} \PYG{err}{/var/lib/postgresql/data}
+    \PYG{err}{volumes:}
+      \PYG{err}{\PYGZhy{}} \PYG{err}{postgres\PYGZhy{}data:/var/lib/postgresql/data}
+    \PYG{err}{ports:}
+      \PYG{err}{\PYGZhy{}} \PYG{l+s+s2}{\PYGZdq{}5432:5432\PYGZdq{}}
+    \PYG{err}{networks:}
+      \PYG{err}{\PYGZhy{}} \PYG{err}{pgnet}
+
+  \PYG{err}{pgadmin:}
+    \PYG{err}{container\PYGZus{}name:} \PYG{err}{pgAdmin\PYGZus{}bhosl}\PYG{l+m+mi}{2}
+    \PYG{err}{image:} \PYG{err}{dpage/pgadmin}\PYG{l+m+mi}{4}
+    \PYG{err}{restart:} \PYG{err}{always}
+    \PYG{err}{environment:}
+      \PYG{err}{PGADMIN\PYGZus{}DEFAULT\PYGZus{}EMAIL:} \PYG{err}{bhosl}\PYG{l+m+mi}{2}\PYG{err}{@uis.edu}
+      \PYG{err}{PGADMIN\PYGZus{}DEFAULT\PYGZus{}PASSWORD:} \PYG{err}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+      \PYG{err}{PGADMIN\PYGZus{}LISTEN\PYGZus{}ADDRESS:} \PYG{l+m+mf}{0.0}\PYG{err}{.}\PYG{l+m+mf}{0.0}
+      \PYG{err}{PGADMIN\PYGZus{}LISTEN\PYGZus{}PORT:} \PYG{l+m+mi}{5050}
+    \PYG{err}{volumes:}
+      \PYG{err}{\PYGZhy{}} \PYG{err}{pgadmin\PYGZhy{}data:/var/lib/pgadmin}
+    \PYG{err}{ports:}
+      \PYG{err}{\PYGZhy{}} \PYG{l+s+s2}{\PYGZdq{}5050:5050\PYGZdq{}}
+    \PYG{err}{networks:}
+      \PYG{err}{\PYGZhy{}} \PYG{err}{pgnet}
+    \PYG{err}{links:}
+      \PYG{err}{\PYGZhy{}} \PYG{l+s+s2}{\PYGZdq{}postgres:pgsql\PYGZhy{}server\PYGZdq{}}
+
+  \PYG{err}{portainer:}
+    \PYG{err}{container\PYGZus{}name:} \PYG{err}{portainer\PYGZus{}bhosl}\PYG{l+m+mi}{2}
+    \PYG{err}{image:} \PYG{err}{portainer/portainer}
+    \PYG{err}{command:} \PYG{err}{\PYGZhy{}H} \PYG{err}{unix:///var/run/docker.sock}
+    \PYG{err}{restart:} \PYG{err}{always}
+    \PYG{err}{volumes:}
+      \PYG{err}{\PYGZhy{}} \PYG{err}{/var/run/docker.sock:/var/run/docker.sock}
+      \PYG{err}{\PYGZhy{}} \PYG{err}{./portainer\PYGZhy{}data:/var/lib/data}
+    \PYG{err}{ports:}
+      \PYG{err}{\PYGZhy{}} \PYG{l+s+s2}{\PYGZdq{}9000:9000\PYGZdq{}}
+      \PYG{err}{\PYGZhy{}} \PYG{l+s+s2}{\PYGZdq{}8000:8000\PYGZdq{}}
+    \PYG{err}{networks:}
+      \PYG{err}{\PYGZhy{}} \PYG{err}{pgnet}
+
+\PYG{err}{networks:}
+  \PYG{err}{pgnet:}
+    \PYG{err}{driver:} \PYG{err}{bridge}
+
+\PYG{err}{volumes:}
+  \PYG{err}{postgres\PYGZhy{}data:}
+  \PYG{err}{pgadmin\PYGZhy{}data:}
+\end{Verbatim}
