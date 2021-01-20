@@ -1,0 +1,72 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{version:} \PYG{l+s+s2}{\PYGZdq{}3.7\PYGZdq{}}
+
+\PYG{k}{services:}
+  \PYG{err}{\PYGZsh{}} \PYG{n+nx}{Node01} 
+  \PYG{k}{cassandra01:}
+    \PYG{k}{image:} \PYG{k}{cassandra:}\PYG{l+m+mf}{3.11}
+    \PYG{k}{environment:}
+      \PYG{k}{CASSANDRA\PYGZus{}BROADCAST\PYGZus{}ADDRESS:} \PYG{l+s+s2}{\PYGZdq{}cassandra01\PYGZdq{}}
+    \PYG{k}{deploy:}
+      \PYG{k}{restart\PYGZus{}policy:}
+        \PYG{k}{condition:} \PYG{n+nx}{on}\PYG{o}{\PYGZhy{}}\PYG{n+nx}{failure}
+        \PYG{k}{max\PYGZus{}attempts:} \PYG{l+m+mi}{3}
+        \PYG{k}{window:} \PYG{l+m+mi}{120}\PYG{n+nx}{s}
+      \PYG{k}{placement:}
+        \PYG{k}{constraints:}
+          \PYG{o}{\PYGZhy{}} \PYG{n+nx}{node}\PYG{p}{.}\PYG{n+nx}{hostname} \PYG{o}{==} \PYG{n+nx}{vm01}
+    \PYG{k}{ports:}
+      \PYG{o}{\PYGZhy{}} \PYG{l+m+mi}{9042}
+    \PYG{k}{volumes:}
+      \PYG{o}{\PYGZhy{}} \PYG{n+nx}{cass}\PYG{o}{\PYGZhy{}}\PYG{k}{data:}\PYG{err}{/var/lib/cassandra}
+    \PYG{k}{networks:}
+      \PYG{o}{\PYGZhy{}} \PYG{n+nx}{cass}\PYG{o}{\PYGZhy{}}\PYG{n+nx}{net}
+
+  \PYG{err}{\PYGZsh{}} \PYG{n+nx}{Node02} 
+  \PYG{k}{cassandra02:}
+    \PYG{k}{image:} \PYG{k}{cassandra:}\PYG{l+m+mf}{3.11}
+    \PYG{k}{environment:}
+      \PYG{k}{CASSANDRA\PYGZus{}BROADCAST\PYGZus{}ADDRESS:} \PYG{l+s+s2}{\PYGZdq{}cassandra02\PYGZdq{}}
+      \PYG{k}{CASSANDRA\PYGZus{}SEEDS:} \PYG{l+s+s2}{\PYGZdq{}cassandra01\PYGZdq{}}
+    \PYG{k}{depends\PYGZus{}on:}
+      \PYG{o}{\PYGZhy{}} \PYG{n+nx}{cassandra}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+    \PYG{k}{deploy:}
+      \PYG{k}{restart\PYGZus{}policy:}
+        \PYG{k}{condition:} \PYG{n+nx}{on}\PYG{o}{\PYGZhy{}}\PYG{n+nx}{failure}
+        \PYG{k}{max\PYGZus{}attempts:} \PYG{l+m+mi}{3}
+        \PYG{k}{window:} \PYG{l+m+mi}{120}\PYG{n+nx}{s}
+      \PYG{k}{placement:}
+        \PYG{k}{constraints:}
+          \PYG{o}{\PYGZhy{}} \PYG{n+nx}{node}\PYG{p}{.}\PYG{n+nx}{hostname} \PYG{o}{==} \PYG{n+nx}{vm02}
+    \PYG{k}{volumes:}
+      \PYG{o}{\PYGZhy{}} \PYG{n+nx}{cass}\PYG{o}{\PYGZhy{}}\PYG{k}{data:}\PYG{err}{/var/lib/cassandra}
+    \PYG{k}{networks:}
+      \PYG{o}{\PYGZhy{}} \PYG{n+nx}{cass}\PYG{o}{\PYGZhy{}}\PYG{n+nx}{net}
+
+  \PYG{err}{\PYGZsh{}} \PYG{n+nx}{Node03} 
+  \PYG{k}{cassandra03:}
+    \PYG{k}{image:} \PYG{k}{cassandra:}\PYG{l+m+mf}{3.11}
+    \PYG{k}{environment:}
+      \PYG{k}{CASSANDRA\PYGZus{}BROADCAST\PYGZus{}ADDRESS:} \PYG{l+s+s2}{\PYGZdq{}cassandra03\PYGZdq{}}
+      \PYG{k}{CASSANDRA\PYGZus{}SEEDS:} \PYG{l+s+s2}{\PYGZdq{}cassandra01\PYGZdq{}}
+    \PYG{k}{depends\PYGZus{}on:}
+      \PYG{o}{\PYGZhy{}} \PYG{n+nx}{cassandra}\PYG{o}{\PYGZhy{}}\PYG{l+m+mi}{1}
+    \PYG{k}{deploy:}
+      \PYG{k}{restart\PYGZus{}policy:}
+        \PYG{k}{condition:} \PYG{n+nx}{on}\PYG{o}{\PYGZhy{}}\PYG{n+nx}{failure}
+        \PYG{k}{max\PYGZus{}attempts:} \PYG{l+m+mi}{3}
+        \PYG{k}{window:} \PYG{l+m+mi}{120}\PYG{n+nx}{s}
+      \PYG{k}{placement:}
+        \PYG{k}{constraints:}
+          \PYG{o}{\PYGZhy{}} \PYG{n+nx}{node}\PYG{p}{.}\PYG{n+nx}{hostname} \PYG{o}{==} \PYG{n+nx}{vm03}
+    \PYG{k}{volumes:}
+      \PYG{o}{\PYGZhy{}} \PYG{n+nx}{cass}\PYG{o}{\PYGZhy{}}\PYG{k}{data:}\PYG{err}{/var/lib/cassandra}
+    \PYG{k}{networks:}
+      \PYG{o}{\PYGZhy{}} \PYG{n+nx}{cass}\PYG{o}{\PYGZhy{}}\PYG{n+nx}{net}
+    
+\PYG{k}{networks:}
+  \PYG{n+nx}{cass}\PYG{o}{\PYGZhy{}}\PYG{k}{net:}
+
+\PYG{k}{volumes:}
+  \PYG{n+nx}{cass}\PYG{o}{\PYGZhy{}}\PYG{k}{data:}
+\end{Verbatim}
