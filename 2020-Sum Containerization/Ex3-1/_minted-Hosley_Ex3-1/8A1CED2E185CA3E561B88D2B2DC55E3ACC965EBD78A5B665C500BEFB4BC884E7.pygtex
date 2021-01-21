@@ -1,0 +1,59 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{l+lScalar+lScalarPlain}{version}\PYG{p+pIndicator}{:} \PYG{l+s}{\PYGZdq{}3.7\PYGZdq{}}\PYG{l+lScalar+lScalarPlain}{version}\PYG{p+pIndicator}{:} \PYG{l+s}{\PYGZdq{}3.7\PYGZdq{}}
+\PYG{l+lScalar+lScalarPlain}{services}\PYG{p+pIndicator}{:}
+  \PYG{l+lScalar+lScalarPlain}{postgres}\PYG{p+pIndicator}{:}
+    \PYG{l+lScalar+lScalarPlain}{container\PYGZus{}name}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{postgres\PYGZus{}bhosl2}
+    \PYG{l+lScalar+lScalarPlain}{image}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{postgres:12.1}
+    \PYG{l+lScalar+lScalarPlain}{restart}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{always}
+    \PYG{l+lScalar+lScalarPlain}{environment}\PYG{p+pIndicator}{:}
+      \PYG{l+lScalar+lScalarPlain}{POSTGRES\PYGZus{}DB}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{myDB}
+      \PYG{l+lScalar+lScalarPlain}{POSTGRES\PYGZus{}USER}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{admin}
+      \PYG{l+lScalar+lScalarPlain}{POSTGRES\PYGZus{}PASSWORD}\PYG{p+pIndicator}{:} \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+      \PYG{l+lScalar+lScalarPlain}{PGDATA}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{/var/lib/postgresql/data}
+    \PYG{l+lScalar+lScalarPlain}{volumes}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{postgres\PYGZhy{}data:/var/lib/postgresql/data}
+    \PYG{l+lScalar+lScalarPlain}{ports}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+s}{\PYGZdq{}5432:5432\PYGZdq{}}
+    \PYG{l+lScalar+lScalarPlain}{networks}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{pgnet}
+
+  \PYG{l+lScalar+lScalarPlain}{pgadmin}\PYG{p+pIndicator}{:}
+    \PYG{l+lScalar+lScalarPlain}{container\PYGZus{}name}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{pgAdmin\PYGZus{}bhosl2}
+    \PYG{l+lScalar+lScalarPlain}{image}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{dpage/pgadmin4}
+    \PYG{l+lScalar+lScalarPlain}{restart}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{always}
+    \PYG{l+lScalar+lScalarPlain}{environment}\PYG{p+pIndicator}{:}
+      \PYG{l+lScalar+lScalarPlain}{PGADMIN\PYGZus{}DEFAULT\PYGZus{}EMAIL}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{bhosl2@uis.edu}
+      \PYG{l+lScalar+lScalarPlain}{PGADMIN\PYGZus{}DEFAULT\PYGZus{}PASSWORD}\PYG{p+pIndicator}{:} \PYG{c+c1}{\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}}
+      \PYG{l+lScalar+lScalarPlain}{PGADMIN\PYGZus{}LISTEN\PYGZus{}ADDRESS}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{0.0.0.0}
+      \PYG{l+lScalar+lScalarPlain}{PGADMIN\PYGZus{}LISTEN\PYGZus{}PORT}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{5050}
+    \PYG{l+lScalar+lScalarPlain}{volumes}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{pgadmin\PYGZhy{}data:/var/lib/pgadmin}
+    \PYG{l+lScalar+lScalarPlain}{ports}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+s}{\PYGZdq{}5050:5050\PYGZdq{}}
+    \PYG{l+lScalar+lScalarPlain}{networks}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{pgnet}
+    \PYG{l+lScalar+lScalarPlain}{links}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+s}{\PYGZdq{}postgres:pgsql\PYGZhy{}server\PYGZdq{}}
+
+  \PYG{l+lScalar+lScalarPlain}{portainer}\PYG{p+pIndicator}{:}
+    \PYG{l+lScalar+lScalarPlain}{container\PYGZus{}name}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{portainer\PYGZus{}bhosl2}
+    \PYG{l+lScalar+lScalarPlain}{image}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{portainer/portainer}
+    \PYG{l+lScalar+lScalarPlain}{command}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{\PYGZhy{}H unix:///var/run/docker.sock}
+    \PYG{l+lScalar+lScalarPlain}{restart}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{always}
+    \PYG{l+lScalar+lScalarPlain}{volumes}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{/var/run/docker.sock:/var/run/docker.sock}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{./portainer\PYGZhy{}data:/var/lib/data}
+    \PYG{l+lScalar+lScalarPlain}{ports}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+s}{\PYGZdq{}9000:9000\PYGZdq{}}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+s}{\PYGZdq{}8000:8000\PYGZdq{}}
+    \PYG{l+lScalar+lScalarPlain}{networks}\PYG{p+pIndicator}{:}
+      \PYG{p+pIndicator}{\PYGZhy{}} \PYG{l+lScalar+lScalarPlain}{pgnet}
+
+\PYG{l+lScalar+lScalarPlain}{networks}\PYG{p+pIndicator}{:}
+  \PYG{l+lScalar+lScalarPlain}{pgnet}\PYG{p+pIndicator}{:}
+    \PYG{l+lScalar+lScalarPlain}{driver}\PYG{p+pIndicator}{:} \PYG{l+lScalar+lScalarPlain}{bridge}
+
+\PYG{l+lScalar+lScalarPlain}{volumes}\PYG{p+pIndicator}{:}
+  \PYG{l+lScalar+lScalarPlain}{postgres\PYGZhy{}data}\PYG{p+pIndicator}{:}
+  \PYG{l+lScalar+lScalarPlain}{pgadmin\PYGZhy{}data}\PYG{p+pIndicator}{:}
+\end{Verbatim}
