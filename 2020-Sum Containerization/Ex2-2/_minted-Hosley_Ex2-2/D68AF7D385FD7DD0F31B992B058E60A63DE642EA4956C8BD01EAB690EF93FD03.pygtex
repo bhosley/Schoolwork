@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} docker container ls \PYGZhy{}a
+\PYG{g+go}{CONTAINER ID        IMAGE               COMMAND                  CREATED}
+\PYG{g+go}{02bb2f5e5698        mypostgresql        \PYGZdq{}/usr/lib/postgresql…\PYGZdq{}   12 minutes ago}
+\PYG{g+go}{790d0f25a321        postgres:latest     \PYGZdq{}docker\PYGZhy{}entrypoint.s…\PYGZdq{}   5 days ago}
+\PYG{g+go}{6e7d54b2c659        hello\PYGZhy{}world         \PYGZdq{}/hello\PYGZdq{}                 2 weeks ago}
+
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} docker network create myPostgresqlNet
+\PYG{g+go}{3a7aabb38c3c5dbe203eefae75ee7654e9657124796eee71451d4688e8227b81}
+
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} docker network connect myPostgresqlNet myPoC
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} docker network connect myPostgresqlNet mypostgresq
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} docker network inspect myPostgresqlNet
+
+\PYG{g+gp}{root@790d0f25a321:/\PYGZsh{}} psql \PYGZhy{}h myPoC \PYGZhy{}p \PYG{l+m}{5432} \PYGZhy{}U docker \PYGZhy{}W docker
+\PYG{g+go}{Password:}
+\PYG{g+go}{psql (12.3 (Debian 12.3\PYGZhy{}1.pgdg100+1), server 9.3.17)}
+\PYG{g+go}{Type \PYGZdq{}help\PYGZdq{} for help.}
+
+\PYG{g+go}{docker=\PYGZsh{}}
+\end{Verbatim}
