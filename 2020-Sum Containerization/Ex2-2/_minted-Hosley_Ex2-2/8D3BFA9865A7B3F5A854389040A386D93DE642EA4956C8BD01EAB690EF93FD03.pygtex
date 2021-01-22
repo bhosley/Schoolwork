@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} sudo sh \PYGZhy{}c \PYG{l+s+s1}{\PYGZsq{}echo \PYGZdq{}deb http://apt.postgresql.org/pub/repos/apt \PYGZdl{}(lsb\PYGZus{}release \PYGZhy{}cs)\PYGZhy{}pgdg main\PYGZdq{} \PYGZgt{} /etc/apt/sources.list.d/pgdg.list\PYGZsq{}}	
+
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} sudo apt install \PYGZhy{}y postgresql\PYGZhy{}client
+
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} docker inspect \PYGZhy{}f \PYG{l+s+s1}{\PYGZsq{}\PYGZob{}\PYGZob{}range.NetworkSettings.Networks\PYGZcb{}\PYGZcb{}\PYGZob{}\PYGZob{}.IPAddress\PYGZcb{}\PYGZcb{}\PYGZob{}\PYGZob{}end\PYGZcb{}\PYGZcb{}\PYGZsq{}} myPoC \PYG{l+m}{172}.17.0.3172.18.0.2
+\PYG{g+gp}{bhosl2@us2004lts:\PYGZti{}/myPostgreSQL\PYGZdl{}} psql \PYGZhy{}h \PYG{l+m}{172}.17.0.3 \PYGZhy{}p \PYG{l+m}{5432} \PYGZhy{}U docker \PYGZhy{}W docker
+\PYG{g+go}{Password:}
+\PYG{g+go}{psql (12.2 (Ubuntu 12.2\PYGZhy{}4), server 9.3.17)}
+\PYG{g+go}{Type \PYGZdq{}help\PYGZdq{} for help.}
+
+\PYG{g+go}{docker=\PYGZsh{}}
+\end{Verbatim}
