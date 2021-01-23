@@ -1,13 +1,22 @@
 \documentclass[a4paper,man,natbib]{apa6}
-
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{setspace}
-\usepackage[cache=false]{minted}
-\usepackage{graphicx}
-\graphicspath{ {./images/} }
-\usepackage{caption}
 
+%% Images
+% \usepackage{graphicx}
+% \graphicspath{ {./images/} }
+% \usepackage{caption}
+
+% Minted
+\usepackage[cache=false]{minted}
+\usepackage{xcolor}
+\definecolor{light-gray}{gray}{0.97}
+\usepackage{minted}
+\usemintedstyle{vs}
+\renewcommand{\fcolorbox}[4][]{#4}
+
+% Title
 \title{Intro to Computational Statistics: Homework 1}
 \shorttitle{HW01}
 \author{Author: Brandon Hosley}
@@ -20,7 +29,7 @@
 	
 	\section{SAS Code:}
 	\singlespacing
-	\inputminted{sas}{./DAT502-HW1.sas}
+	\inputminted[bgcolor=light-gray]{sas}{./DAT502-HW1.sas}
 	\clearpage
 	
 	\section{SAS Dataset:}
