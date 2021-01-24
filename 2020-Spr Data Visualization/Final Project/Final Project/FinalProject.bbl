@@ -1,0 +1,147 @@
+\begin{thebibliography}{}
+
+\bibitem [\protect \citeauthoryear {%
+Hafen%
+}{%
+Hafen%
+}{%
+{\protect \APACyear {2018}}%
+}]{%
+hafen_2018}
+\APACinsertmetastar {%
+hafen_2018}%
+\begin{APACrefauthors}%
+Hafen, R.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2018}{Mar}{}.
+\newblock
+\APACrefbtitle {Ryan Hafen.} {Ryan hafen.}
+\newblock
+\begin{APACrefURL} \url{https://ryanhafen.com/blog/geofacet/} \end{APACrefURL}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Lin%
+, Yang%
+, Syu%
+, Lin%
+\BCBL {}\ \BBA {} Pai%
+}{%
+Lin%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2019}}%
+}]{%
+puzzleTiles}
+\APACinsertmetastar {%
+puzzleTiles}%
+\begin{APACrefauthors}%
+Lin, S\BHBI S.%
+, Yang, J\BHBI Y.%
+, Syu, H\BHBI S.%
+, Lin, C\BHBI H.%
+\BCBL {}\ \BBA {} Pai, T\BHBI W.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2019}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Automatic generation of puzzle tile maps for
+  spatial-temporal data visualization} {Automatic generation of puzzle tile
+  maps for spatial-temporal data visualization}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Computers and Graphics (Pergamon)}{}{}{}.
+\newblock
+\begin{APACrefDOI} \doi{10.1016/j.cag.2019.05.002} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Mancini%
+, Bengfort%
+\BCBL {}\ \BBA {} Shneiderman%
+}{%
+Mancini%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2016}}%
+}]{%
+interactiveData}
+\APACinsertmetastar {%
+interactiveData}%
+\begin{APACrefauthors}%
+Mancini, P.%
+, Bengfort, B.%
+\BCBL {}\ \BBA {} Shneiderman, B.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2016}{08}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Interactive Exploration of the Employment Situation
+  Report: From Fixed Tables to Dynamic Discovery} {Interactive exploration of
+  the employment situation report: From fixed tables to dynamic
+  discovery}.{\BBCQ}
+\newblock
+
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Thakur%
+\ \BBA {} Rhyne%
+}{%
+Thakur%
+\ \BBA {} Rhyne%
+}{%
+{\protect \APACyear {2009}}%
+}]{%
+dataVase}
+\APACinsertmetastar {%
+dataVase}%
+\begin{APACrefauthors}%
+Thakur, S.%
+\BCBT {}\ \BBA {} Rhyne, T\BPBI M.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2009}{}{}.
+\newblock
+{\BBOQ}\APACrefatitle {Data vases: 2d and 3d plots for visualizing multiple
+  time series} {Data vases: 2d and 3d plots for visualizing multiple time
+  series}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Proceedings of the fifth international symposium on
+  advances in visual computing: part II}{}{}{929-938}.
+\PrintBackRefs{\CurrentBib}
+
+\bibitem [\protect \citeauthoryear {%
+Torugsa%
+\ \protect \BOthers {.}}{%
+Torugsa%
+\ \protect \BOthers {.}}{%
+{\protect \APACyear {2003}}%
+}]{%
+thailandHIV}
+\APACinsertmetastar {%
+thailandHIV}%
+\begin{APACrefauthors}%
+Torugsa, K.%
+, Anderson, S.%
+, Thongsen, N.%
+, Sirisopana, N.%
+, Jugsudee, A.%
+, Junlananto, P.%
+\BDBL {}Brown, A.%
+\end{APACrefauthors}%
+\unskip\
+\newblock
+\APACrefYearMonthDay{2003}{08}{}.
+\newblock
+{\BBOQ}\APACrefatitle {HIV epidemic among young Thai Men, 1991-2000} {Hiv
+  epidemic among young thai men, 1991-2000}.{\BBCQ}
+\newblock
+\APACjournalVolNumPages{Emerging infectious diseases}{9}{}{881-3}.
+\newblock
+\begin{APACrefDOI} \doi{10.3201/eid0907.020653} \end{APACrefDOI}
+\PrintBackRefs{\CurrentBib}
+
+\end{thebibliography}
