@@ -1,0 +1,67 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+
+\title{Big Data Analytics: Exercise 1-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{Q1:}
+\emph{Exercise above Sections [in assignment]. 
+	Take screenshots of your exercises in below Sections and put
+	them with title and some explanation in your report. \\
+	Note: I want to see your login name, for example, 
+	[sslee777@node00 CSC534BDA] \$ in the screenshots.}
+
+\subsubsection*{a. Section 2.2.1}
+	%\includegraphics[width=0.8\linewidth]{image1}
+\subsubsection*{b. Section 2.2.2}
+
+\subsubsection*{c. Section 2.2.3.1}
+
+\subsubsection*{d. Section 3.2.3.2 – 3.2.3.5}
+
+\subsection*{Q2:}
+\emph{Run the word count program with real dataset. Take screenshots of running your 
+	code/program and its outputs/results with some titles/explanations}
+
+\subsubsection*{a. Coronavirus tweets dataset (sample).}
+\emph{ i. Dataset location (Linux filesystem): \\
+	/home/data/CSC534BDA/datasets/COVID19/ \\
+	ii. Dataset filename: coronavirus-text-only-1000.txt \\
+	iii. It contains 1000 tweets (text message only) that have a keyword 
+	‘coronavirus’ in their text message. }
+
+
+\subsubsection*{b. Load the dataset into your user directory in HDFS}
+\emph{i. Create a new directory, COVID19, in HDFS, 
+	e.g. /user/sslee777/COVID19	\\
+	ii. Note: you don’t need to copy the dataset into your local Linux filesystem.}
+
+
+
+\subsubsection*{c. Run the word count program with the dataset}
+\emph{i. You may see an error message if you reuse existing output directory. \\
+	ii. Show first 10 lines of the outputs/results. \\ 
+	e.g. using following command: }
+	\mint{bash}{\$ hadoop fs -cat COVID19/output-text/part-r-00000 | head}
+
+
+
+
+
+\end{document}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\end{minted}
