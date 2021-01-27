@@ -1,0 +1,45 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+
+\title{Data Mining: Exercise 1-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{Q1: Import Data}
+\emph{Import the data, trucks.csv and create a DataFrame, named df4. \\
+	Should be loaded using csv formatting and have headers, so that we can specify columns later}
+	%\includegraphics[scale=0.8]{image1}
+	
+	
+\subsection*{Q2: Show the Dataframe}
+\emph{Show the Dataframe, df4. \\
+	Should have 7 columns only: driverid, truckid, model, 
+	jun13\_miles, jun13\_gas, may13\_miles, and may13\_gas. \\
+	Should have 5 rows only.} \\
+
+\subsection*{Q3: Count the Number of Rows}
+\emph{Count the number of rows of specific models (truck models).} \\
+
+\subsection*{Q4: Compare Mileage}
+\emph{To compare mileage usages of June 2013 and May 2013, 
+	Show 'five number summary'. \\
+	Spark’s version: count, mean, stddev, min, and max. \\
+	Should have 2 columns only: June and May.} \\
+
+\subsection*{Q5: Compare Usage}
+\emph{To compare gas usages of June 2013 and May 2013, 
+	Show 'five number summary'. \\ Spark’s version: count, mean, stddev, min, and max. \\ Should have 2 columns only: June and May.} \\
+
+\end{document}
