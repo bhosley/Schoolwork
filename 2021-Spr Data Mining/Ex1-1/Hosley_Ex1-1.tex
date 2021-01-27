@@ -21,7 +21,9 @@
 \emph{Import the data, trucks.csv and create a DataFrame, named df4. \\
 	Should be loaded using csv formatting and have headers, so that we can specify columns later}
 	%\includegraphics[scale=0.8]{image1}
-	
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+>>> df4 = spark.read.format("csv").option("header", "true").load("/user/bhosl2/Geolocation/trucks.csv")
+\end{minted}
 	
 \subsection*{Q2: Show the Dataframe}
 \emph{Show the Dataframe, df4. \\
@@ -29,8 +31,43 @@
 	jun13\_miles, jun13\_gas, may13\_miles, and may13\_gas. \\
 	Should have 5 rows only.} \\
 
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+>>> df4.select("driverid", "truckid", "model", "jun13_miles", "jun13_gas", "may13_miles", "may13_gas").show(5)
++--------+-------+------------+-----------+---------+-----------+---------+
+|driverid|truckid|       model|jun13_miles|jun13_gas|may13_miles|may13_gas|
++--------+-------+------------+-----------+---------+-----------+---------+
+|      A1|     A1|Freightliner|       9217|     1914|       8769|     1892|
+|      A2|     A2|        Ford|      12058|     2335|      14314|     2648|
+|      A3|     A3|        Ford|      13652|     2899|      12075|     2603|
+|      A4|     A4|    Kenworth|      12687|     2439|      10680|     2083|
+|      A5|     A5|        Hino|      10233|     1825|      14634|     3450|
++--------+-------+------------+-----------+---------+-----------+---------+
+only showing top 5 rows
+\end{minted}
+
+\clearpage
+
 \subsection*{Q3: Count the Number of Rows}
 \emph{Count the number of rows of specific models (truck models).} \\
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+>>> df4.groupby("model").count().show()
++------------+-----+
+|       model|count|
++------------+-----+
+| Caterpillar|   19|
+|       Volvo|    9|
+|        Hino|    7|
+|   Peterbilt|   16|
+|     Oshkosh|    4|
+|    Kenworth|    6|
+|    Navistar|    9|
+|       Crane|    2|
+|Freightliner|    5|
+|Western Star|    3|
+|        Ford|   20|
++------------+-----+	
+\end{minted}
 
 \subsection*{Q4: Compare Mileage}
 \emph{To compare mileage usages of June 2013 and May 2013, 
@@ -38,8 +75,39 @@
 	Spark’s version: count, mean, stddev, min, and max. \\
 	Should have 2 columns only: June and May.} \\
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+>>> df4.describe("jun13_miles", "may13_miles").show()
++-------+------------------+-----------------+
+|summary|       jun13_miles|      may13_miles|
++-------+------------------+-----------------+
+|  count|               100|              100|
+|   mean|          12043.12|         12188.82|
+| stddev|1777.4446547237583|1931.169601013538|
+|    min|             10006|            10046|
+|    max|              9962|             9936|
++-------+------------------+-----------------+	
+\end{minted}
+
+\clearpage
+
 \subsection*{Q5: Compare Usage}
 \emph{To compare gas usages of June 2013 and May 2013, 
-	Show 'five number summary'. \\ Spark’s version: count, mean, stddev, min, and max. \\ Should have 2 columns only: June and May.} \\
+	Show 'five number summary'. \\ 
+	Spark’s version: count, mean, stddev, min, and max. \\ 
+	Should have 2 columns only: June and May.} \\
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+>>> df4.describe("jun13_gas", "may13_gas").show()
++-------+-----------------+------------------+
+|summary|        jun13_gas|         may13_gas|
++-------+-----------------+------------------+
+|  count|              100|               100|
+|   mean|          2456.32|           2422.14|
+| stddev|436.0520745474922|414.69984326015833|
+|    min|             1593|              1637|
+|    max|             3446|              3450|
++-------+-----------------+------------------+	
+\end{minted}
 
 \end{document}
+
