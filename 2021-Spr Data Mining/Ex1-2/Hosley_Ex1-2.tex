@@ -20,10 +20,10 @@
 
 \subsection*{Q1: Import Data}
 \emph{Import the data, trucks.csv and create a DataFrame, named df4. \\
-	Should be loaded using csv formatting and have headers, so that we can specify columns later}
-	\includegraphics[scale=0.8]{image1}
+	Should be loaded using csv formatting and have headers, so that we can specify columns later} \\
+	\includegraphics[width=\linewidth]{image1}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
->>> df4 = spark.read.format("csv").option("header", "true").load("/user/bhosl2/Geolocation/trucks.csv")
+>>> df4 = spark.read.format("csv").option("header", "true").load("/user/bhosl2/Geolocation/geolocation.csv")
 \end{minted}
 
 \subsection*{Q2: }
@@ -37,11 +37,21 @@
 		\item The column, ‘scaledFeatures’, should have a scaled feature vector. The feature vector should have rescaled values (float-type) to a specific range, [0, 1] with MinMaxScale from features column.
 	\end{itemize} 
 
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 >>> from pyspark.ml.feature import VectorAssembler
->>> assembler = VectorAssembler(inputCols=["jun13_miles", "jun13_gas"], outputCol="features")
 >>> from pyspark.ml.feature import MinMaxScaler
+>>> from pyspark.sql.types import IntegerType
+>>>
+>>> assembler = VectorAssembler(inputCols=["velocity"], outputCol="features")
+>>> df4 = df4.withColumn("velocity", df4["velocity"].cast("float"))
+>>> df4 = assembler.transform(df4)
+>>> scaler = MinMaxScaler(inputCol="features", outputCol="scaledFeatures")
+>>> scalerModel = scaler.fit(df4)
+>>> df5 = scalerModel.transform(df4)
+>>> df5.select("truckid", "driverid", "event", "velocity", "features", "scaledFeatures").show(10)
 \end{minted}
+
+\includegraphics[width=\linewidth]{image2}
 
 \subsection*{Q3: }
 \emph{Write scripts to create another DataFrame, df6, 
