@@ -9,8 +9,9 @@
 	\usepackage{xcolor}
 		\definecolor{light-gray}{gray}{0.97}
 
+\usepackage{enumitem}
 
-\title{Data Mining: Exercise 1-1}
+\title{Data Mining: Exercise 1-2}
 \author{Brandon Hosley}
 \date{\today}
 
@@ -28,39 +29,32 @@
 \subsection*{Q2: }
 \emph{Write scripts to create another DataFrame, df5, 
 	that has normalized/scaled feature vector and
-	show 10 rows of the DataFrame. \\
-	\begin{itemize}
+	show 10 rows of the DataFrame.}
+	\begin{itemize}[before=\itshape,font=\normalfont]
 		\item It should have 6 columns: truckid, driverid, event, velocity, features, and scaled Features Velocity column has numerical data.
-		\item The data of some columns (truckid, driverid, event, and velocity) should copied from the
-		DataFrame, df4
-		\item The column, ‘features’, should have a feature vector transformed from velocity column.
-		The feature vector should have float-type data. e.g. [0.123]
-		\item The column, ‘scaledFeatures’, should have a scaled feature vector. The feature vector
-		should have rescaled values (float-type) to a specific range, [0, 1] with MinMaxScale
-		from features column.
-	\end{itemize}
-} \\
+		\item The data of some columns (truckid, driverid, event, and velocity) should copied from the DataFrame, df4
+		\item The column, ‘features’, should have a feature vector transformed from velocity column. The feature vector should have float-type data. e.g. [0.123]
+		\item The column, ‘scaledFeatures’, should have a scaled feature vector. The feature vector should have rescaled values (float-type) to a specific range, [0, 1] with MinMaxScale from features column.
+	\end{itemize} 
 
-
-Q3. Write scripts to create another DataFrame, df6, that has a binary sparse vector transformed
-from categorical variable (column) and show 10 rows of the DataFrame.
-• It should have 6 columns: truckid, driverid, event, city, cityIndex, and cityVec
-• The data of some columns (truckid, driverid, event, and city) should copied from the
-DataFrame, df4
-• City column has categorical data.
-• The column, ‘cityIndex’, should have float-type index data, e.g. 0.0 transformed/encoded
-from city column.
-• The column, ‘cityVec’, should have a binary sparse vector, e.g. (10, [7], [1.0]),
-transformed from cityIndex column to be used in some data mining/machine learning
-algorithms
-
+\subsection*{Q3: }
+\emph{Write scripts to create another DataFrame, df6, 
+	that has a binary sparse vector transformed from 
+	categorical variable (column) and show 10 rows of the DataFrame.} \\
+	\begin{itemize}[before=\itshape,font=\normalfont]
+		\item It should have 6 columns: truckid, driverid, event, city, cityIndex, and cityVec
+		\item The data of some columns (truckid, driverid, event, and city) should copied from the DataFrame, df4
+		\item City column has categorical data.
+		\item The column, ‘cityIndex’, should have float-type index data, e.g. 0.0 transformed/encoded from city column.
+		\item The column, ‘cityVec’, should have a binary sparse vector, e.g. (10, [7], [1.0]), transformed from cityIndex column to be used in some data mining/machine learning algorithms
+`	\end{itemize} 
 
 
 \begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 \end{minted}
 
-\subsection*{Q3: Count the Number of Rows}
-\emph{Count the number of rows of specific models (truck models).} \\
+
+
 
 
 \end{document}
