@@ -18,6 +18,8 @@
 \begin{document}
 \maketitle
 
+\vspace{3em}
+
 \subsection*{Q1: Import Data}
 \emph{Import the data, trucks.csv and create a DataFrame, named df4. \\
 	Should be loaded using csv formatting and have headers, so that we can specify columns later} \\
@@ -26,6 +28,7 @@
 >>> df4 = spark.read.format("csv").option("header", "true").load("/user/bhosl2/Geolocation/geolocation.csv")
 \end{minted}
 
+\clearpage
 \subsection*{Q2: }
 \emph{Write scripts to create another DataFrame, df5, 
 	that has normalized/scaled feature vector and
@@ -53,6 +56,7 @@
 
 \includegraphics[width=\linewidth]{image2}
 
+\clearpage
 \subsection*{Q3: }
 \emph{Write scripts to create another DataFrame, df6, 
 	that has a binary sparse vector transformed from 
@@ -67,9 +71,16 @@
 
 
 \begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+from pyspark.ml.feature import StringIndexer, OneHotEncoderEstimator
+
+df6 = df4.select("truckid", "driverid", "event", "city")
+indexer = StringIndexer(inputCol="city", outputCol="cityIndex")
+df6 = indexer.fit(df6).transform(df6)
+encoder = OneHotEncoderEstimator(inputCols=["cityIndex"], outputCols=["cityVec"])
+df6 = encoder.fit(df6).transform(df6)
+df6.show(10)
 \end{minted}
+
+\includegraphics[width=\linewidth]{image3}
 
 \end{document}
-
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-\end{minted}
