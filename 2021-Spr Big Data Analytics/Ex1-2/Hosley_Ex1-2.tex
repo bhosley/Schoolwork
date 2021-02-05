@@ -10,7 +10,7 @@
 		\definecolor{light-gray}{gray}{0.97}
 
 
-\title{Big Data Analytics: Exercise 1-1}
+\title{Big Data Analytics: Exercise 1-2}
 \author{Brandon Hosley}
 \date{\today}
 
@@ -18,236 +18,38 @@
 \maketitle
 
 \subsection*{Q1:}
-\emph{Exercise above Sections [in assignment]. 
-	Take screenshots of your exercises in below Sections and put
-	them with title and some explanation in your report. \\
-	Note: I want to see your login name, for example, }
-	\mintinline[bgcolor=light-gray]{bash}{[sslee777@node00 CSC534BDA]\$ } 
-	\emph{ in the screenshots.}
+\emph{Check Hadoop Cluster}
 
 \subsubsection*{a. Section 2.2.1}
-Below is a screen capture and the text example of the first step, preparation of the working environment. \\
+
+1.
+a.
 \includegraphics[width=\linewidth]{image1} \vspace{-1.5em}
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-[bhosl2@node00 ~]$ mkdir CSC534BDA
-[bhosl2@node00 ~]$ hadoop fs -mkdir WordCount
-[bhosl2@node00 ~]$ hadoop fs -ls
-Found 3 items
-drwxr-xr-x  - bhosl2 hadoop     0 2021-01-27 06:00 .sparkStaging
-drwxr-xr-x  - bhosl2 hadoop     0 2021-01-27 05:22 Geolocation
-drwxr-xr-x  - bhosl2 hadoop     0 2021-01-27 10:08 WordCount
-[bhosl2@node00 ~]$
-\end{minted}
 
-\clearpage
+b
+\includegraphics[width=\linewidth]{image2} \vspace{-1.5em}
 
-\subsubsection*{b. Section 2.2.2}\vspace{-0.5em}
-In this section we use CRUD style operations to first 'put' a copy of a text file containing 'Mary Had a Little Lamb' from a folder shared by the entire class into this users HDFS WordCount directory. Next we pull a copy that file via a 'get' command from the local HDFS WordCount to the CSC534BDA directory. \\
-\includegraphics[width=\linewidth]{image2} \vspace{-2em}
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-[bhosl2@node00 ~]$ hadoop fs -put /home/data/CSC534BDA/MapReduce/MaryHadALittleLamb.txt WordCount
-[bhosl2@node00 ~]$ hadoop fs -ls
-Found 3 items
-drwxr-xr-x   - bhosl2 hadoop          0 2021-01-27 06:00 .sparkStaging
-drwxr-xr-x   - bhosl2 hadoop          0 2021-01-27 05:22 Geolocation
-drwxr-xr-x   - bhosl2 hadoop          0 2021-01-27 10:50 WordCount
-[bhosl2@node00 ~]$ hadoop fs -ls WordCount
-Found 1 items
--rw-r--r--   3 bhosl2 hadoop        109 2021-01-27 10:50 WordCount/MaryHadALittleLamb.txt
-[bhosl2@node00 ~]$ hadoop fs -get WordCount/MaryHadALittleLamb.txt CSC534BDA
-[bhosl2@node00 ~]$ ls CSC534BDA
-MaryHadALittleLamb.txt
-[bhosl2@node00 ~]$ 
-\end{minted}
+c
+\includegraphics[width=\linewidth]{image3} \vspace{-1.5em}
 
-\vspace{-1em}
-\subsubsection*{c. Section 2.2.3.1} \vspace{-0.5em}
-Next we use the 'cat' command to read the file further demonstrating the HDFS similarity to standard Unix commands.\\
-\includegraphics[width=\linewidth]{image3} \vspace{-2em}
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-[bhosl2@node00 ~]$ hadoop fs -cat WordCount/MaryHadALittleLamb.txt
-Mary had a little lamb
-its fleece was white as snow
-and everywhere that Mary went
-the lamb was sure to go.
-[bhosl2@node00 ~]$
-\end{minted}
-
-\subsubsection*{d. Section 3.2.3.2 – 3.2.3.5}
-To round out the demonstration of similarities we will copy the file, create a new directory, move the file to the directory, and then delete the file and directory.\\
+d
 \includegraphics[width=\linewidth]{image4} \vspace{-1.5em}
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-[bhosl2@node00 ~]$ hadoop fs -cp WordCount/MaryHadALittleLamb.txt WordCount/MHALL.txt
-[bhosl2@node00 ~]$ hadoop fs -mkdir Temp
-[bhosl2@node00 ~]$ hadoop fs -mv WordCount/MHALL.txt Temp/MHALL.txt
-[bhosl2@node00 ~]$ hadoop fs -ls Temp
-Found 1 items
--rw-r--r--   3 bhosl2 hadoop        109 2021-01-27 11:39 Temp/MHALL.txt
-[bhosl2@node00 ~]$ hadoop fs -ls WordCount
-Found 1 items
--rw-r--r--   3 bhosl2 hadoop        109 2021-01-27 10:50 WordCount/MaryHadALittleLamb.txt
-[bhosl2@node00 ~]$ hadoop fs -rm -r Temp
-21/01/27 11:42:34 INFO fs.TrashPolicyDefault: Moved: 'hdfs://node00.sun:8020/user/bhosl2/Temp' to trash at: hdfs://node00.sun:8020/user/bhosl2/.Trash/Current/user/bhosl2/Temp
-[bhosl2@node00 ~]$ hadoop fs -ls
-Found 4 items
-drwx------   - bhosl2 hadoop          0 2021-01-27 11:42 .Trash
-drwxr-xr-x   - bhosl2 hadoop          0 2021-01-27 06:00 .sparkStaging
-drwxr-xr-x   - bhosl2 hadoop          0 2021-01-27 05:22 Geolocation
-drwxr-xr-x   - bhosl2 hadoop          0 2021-01-27 11:41 WordCount
-[bhosl2@node00 ~]$
-\end{minted}
 
-\clearpage
+2.
+a.
+\includegraphics[width=\linewidth]{image5} \vspace{-1.5em}
 
-\subsection*{Q2:}
-\emph{Run the word count program with real dataset. Take screenshots of running your 
-	code/program and its outputs/results with some titles/explanations. }
+b.
+\includegraphics[width=\linewidth]{image6} \vspace{-1.5em}
 
-\subsubsection*{a. Coronavirus tweets dataset (sample).}
-\emph{ i. Dataset location (Linux filesystem): \\
-	/home/data/CSC534BDA/datasets/COVID19/ \\
-	ii. Dataset filename: coronavirus-text-only-1000.txt \\
-	iii. It contains 1000 tweets (text message only) that have a keyword 
-	‘coronavirus’ in their text message. }
+c.
+\includegraphics[width=\linewidth]{image7} \vspace{-1.5em}
 
-\includegraphics[width=\linewidth]{image6} \vspace{-1em}
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-[bhosl2@node00 CSC534BDA]$ ls /home/data/CSC534BDA/datasets/COVID19
-coronavirus-text-only-1000.txt  COVID19-worldwide.csv
-coronavirus-text-only.txt       tweets-coronavirus-100-only.txt
-COVID19-pandemic-wikipedia.txt  tweets-coronavirus.txt
-\end{minted}
-
-\subsubsection*{b. Load the dataset into your user directory in HDFS}
-\emph{i. Create a new directory, COVID19, in HDFS, 
-	e.g. /user/sslee777/COVID19	\\
-	ii. Note: you don’t need to copy the dataset into your local Linux filesystem.}
-
-\includegraphics[width=\linewidth]{image5} \vspace{-1em}
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-[bhosl2@node00 CSC534BDA]$ hadoop fs -mkdir COVID19
-[bhosl2@node00 CSC534BDA]$ hadoop fs -put /home/data/CSC534BDA/datasets/COVID19/coronavirus-text-only-1000.txt COVID19
-\end{minted}
-
-\clearpage
-
-\subsubsection*{c. Run the word count program with the dataset}
-\emph{i. You may see an error message if you reuse existing output directory. \\
-	ii. Show first 10 lines of the outputs/results. \\ 
-	e.g. using following command: }
-	\mint[bgcolor=light-gray]{bash}{\$ hadoop fs -cat COVID19/output-text/part-r-00000 | head}
-
-
-\includegraphics[width=\linewidth]{image5} \vspace{-1em}
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-[bhosl2@node00 CSC534BDA]$ hadoop jar wc.jar WordCount COVID19/coronavirus-text-only-1000.txt COVID19/output
-WARNING: Use "yarn jar" to launch YARN applications.
-21/01/27 12:24:47 INFO client.RMProxy: Connecting to ResourceManager at node00.sun/10.0.0.10:8032
-21/01/27 12:24:48 WARN mapreduce.JobResourceUploader: Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
-21/01/27 12:24:48 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /user/bhosl2/.staging/job_1610066019428_0008
-21/01/27 12:24:48 INFO input.FileInputFormat: Total input files to process : 1
-21/01/27 12:24:48 INFO mapreduce.JobSubmitter: number of splits:1
-21/01/27 12:24:48 INFO Configuration.deprecation: yarn.resourcemanager.system-metrics-publisher.enabled is deprecated. Instead, use yarn.system-metrics-publisher.enabled
-21/01/27 12:24:48 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1610066019428_0008
-21/01/27 12:24:48 INFO mapreduce.JobSubmitter: Executing with tokens: []
-21/01/27 12:24:48 INFO conf.Configuration: resource-types.xml not found
-21/01/27 12:24:48 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
-21/01/27 12:24:49 INFO impl.YarnClientImpl: Submitted application application_1610066019428_0008
-21/01/27 12:24:49 INFO mapreduce.Job: The url to track the job: http://node00.sun:8088/proxy/application_1610066019428_0008/
-21/01/27 12:24:49 INFO mapreduce.Job: Running job: job_1610066019428_0008
-21/01/27 12:24:56 INFO mapreduce.Job: Job job_1610066019428_0008 running in uber mode : false
-21/01/27 12:24:56 INFO mapreduce.Job:  map 0% reduce 0%
-21/01/27 12:25:01 INFO mapreduce.Job:  map 100% reduce 0%
-21/01/27 12:25:07 INFO mapreduce.Job:  map 100% reduce 14%
-21/01/27 12:25:08 INFO mapreduce.Job:  map 100% reduce 27%
-21/01/27 12:25:09 INFO mapreduce.Job:  map 100% reduce 36%
-21/01/27 12:25:10 INFO mapreduce.Job:  map 100% reduce 50%
-21/01/27 12:25:11 INFO mapreduce.Job:  map 100% reduce 66%
-21/01/27 12:25:12 INFO mapreduce.Job:  map 100% reduce 84%
-21/01/27 12:25:13 INFO mapreduce.Job:  map 100% reduce 95%
-21/01/27 12:25:14 INFO mapreduce.Job:  map 100% reduce 100%
-21/01/27 12:25:14 INFO mapreduce.Job: Job job_1610066019428_0008 completed successfully
-21/01/27 12:25:14 INFO mapreduce.Job: Counters: 54
-File System Counters
-FILE: Number of bytes read=74566
-FILE: Number of bytes written=10041216
-FILE: Number of read operations=0
-FILE: Number of large read operations=0
-FILE: Number of write operations=0
-HDFS: Number of bytes read=149707
-HDFS: Number of bytes written=70409
-HDFS: Number of read operations=223
-HDFS: Number of large read operations=0
-HDFS: Number of write operations=88
-HDFS: Number of bytes read erasure-coded=0
-Job Counters
-Launched map tasks=1
-Launched reduce tasks=44
-Data-local map tasks=1
-Total time spent by all maps in occupied slots (ms)=2932
-Total time spent by all reduces in occupied slots (ms)=167200
-Total time spent by all map tasks (ms)=2932
-Total time spent by all reduce tasks (ms)=167200
-Total vcore-milliseconds taken by all map tasks=2932
-Total vcore-milliseconds taken by all reduce tasks=167200
-Total megabyte-milliseconds taken by all map tasks=3002368
-Total megabyte-milliseconds taken by all reduce tasks=171212800
-Map-Reduce Framework
-Map input records=1000
-Map output records=20576
-Map output bytes=230426
-Map output materialized bytes=74390
-Input split bytes=138
-Combine input records=20576
-Combine output records=5720
-Reduce input groups=5720
-Reduce shuffle bytes=74390
-Reduce input records=5720
-Reduce output records=5720
-Spilled Records=11440
-Shuffled Maps =44
-Failed Shuffles=0
-Merged Map outputs=44
-GC time elapsed (ms)=3631
-CPU time spent (ms)=60460
-Physical memory (bytes) snapshot=12006330368
-Virtual memory (bytes) snapshot=118173433856
-Total committed heap usage (bytes)=14381744128
-Peak Map Physical memory (bytes)=484216832
-Peak Map Virtual memory (bytes)=2606821376
-Peak Reduce Physical memory (bytes)=351956992
-Peak Reduce Virtual memory (bytes)=2652577792
-Shuffle Errors
-BAD_ID=0
-CONNECTION=0
-IO_ERROR=0
-WRONG_LENGTH=0
-WRONG_MAP=0
-WRONG_REDUCE=0
-File Input Format Counters
-Bytes Read=149569
-File Output Format Counters
-Bytes Written=70409
-\end{minted}
-
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-[bhosl2@node00 CSC534BDA]$ hadoop fs -cat COVID19/output/part-r-00000 | head    
-"Eso    1
-#Covid_19,      1
-#ExclusivaLatinus.      4
-#sarandi        1
-10,000  1
-132k    1
-23rd,   1
-3031    1
-99%     3
-@FaceTheNation  1
-[bhosl2@node00 CSC534BDA]$
-\end{minted}
-
-
+d.
+\includegraphics[width=\linewidth]{image8} \vspace{-1.5em}
 
 \end{document}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 \end{minted}
+\mintinline[bgcolor=light-gray]{bash}{[sslee777@node00 CSC534BDA]\$ } 
