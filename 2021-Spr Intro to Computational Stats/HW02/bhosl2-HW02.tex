@@ -1,0 +1,33 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{setspace}
+
+%% Images
+% \usepackage{graphicx}
+% 	\graphicspath{ {./images/} }
+% 	\usepackage{caption}
+
+% Minted
+	\usepackage[cache=false]{minted}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+	\usemintedstyle{vs}
+
+% Title
+	\title{Intro to Computational Statistics: Homework 1}
+	\shorttitle{HW01}
+	\author{Author: Brandon Hosley}
+	\affiliation{Instructor: Liang Kong, Ph.D}
+
+%\abstract{}
+
+\begin{document}
+	\maketitle
+	
+	\section{SAS Code:}
+	\singlespacing
+	\inputminted[bgcolor=light-gray]{sas}{./DAT502-HW1.sas}
+	\clearpage
+	
+\end{document}
