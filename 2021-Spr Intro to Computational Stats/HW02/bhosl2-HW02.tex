@@ -15,7 +15,7 @@
 	\usemintedstyle{vs}
 
 % Title
-	\title{Intro to Computational Statistics: Homework 1}
+	\title{Intro to Computational Statistics: Homework 2}
 	\shorttitle{HW01}
 	\author{Author: Brandon Hosley}
 	\affiliation{Instructor: Liang Kong, Ph.D}
@@ -23,11 +23,34 @@
 %\abstract{}
 
 \begin{document}
-	\maketitle
+\maketitle
+\singlespacing
 	
-	\section{SAS Code:}
-	\singlespacing
-	\inputminted[bgcolor=light-gray]{sas}{./DAT502-HW1.sas}
-	\clearpage
+\subsection*{Q1:}
+\emph{Write a SAS program to list the data from SAS data set: students.sas7bdat to fulfill the following requirements:}
+\begin{itemize}
+	\itemsep-0.5em
+	\item Double space.
+	\item A separate listing for different major.
+	\item With the number of observations and the total teaching efficiency for each major at the end of each page. 
+\end{itemize}
+
+\subsection*{Q2:}
+\emph{Write a SAS program to describe the data from SAS data set: students.sas7bdat by:}
+\begin{itemize}
+	\itemsep-0.5em
+	\item A vertical histogram of Major and each bar is verified by the Gender.
+	\item A pie chart of Final Grade which show the relative frequency only
+	\item A horizontal histogram of final examination's score with midpoints as 45, 50, 55,....,95.
+	\item A block chart with the high of each block represent the average of IQ for each majorand gender.
+	\item A star chart of grade.
+\end{itemize}
+
+\subsection*{Q3:}
+\emph{Write a SAS program to draw a  simple linear regression line and 90\% predicted interval to fit teaching efficiency as dependent variable and the score of Math part of SAT as independent variable for the data from SAS data set: students.sas7bdat. }
+
+\subsection*{Q4:}
+\emph{Write a SAS program to draw a three-dimensional scatter graph of the score Math part of SAT (as y-variable), the score of IQ (as x-variable), and teaching efficiency (as z-variable).}
 	
 \end{document}
+	\inputminted[bgcolor=light-gray]{sas}{./DAT502-HW1.sas}
