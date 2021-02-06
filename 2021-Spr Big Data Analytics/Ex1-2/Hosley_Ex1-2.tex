@@ -9,6 +9,16 @@
 	\usepackage{xcolor}
 		\definecolor{light-gray}{gray}{0.97}
 
+% Subsubsection header run along with text.	
+\usepackage{titlesec}
+\titleformat{\subsubsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+
+\usepackage{hyperref}
 
 \title{Big Data Analytics: Exercise 1-2}
 \author{Brandon Hosley}
@@ -18,37 +28,59 @@
 \maketitle
 
 \subsection*{Q1:}
-\emph{Check Hadoop Cluster}
+\emph{Check Hadoop Cluster.} \\
+In this case the Hadoop cluster in my environment had not yet been started.
+I followed the instructions in the 
+\href{https://uispringfield.instructure.com/courses/3620/files/261572/download?wrap=1}{build guide} 
+to configure the cluster.
+The biggest difficulties encountered were that two of the machines switched IPs during one fo the reboot cycles, and some of the steps presented difficulties in their completion that would end up being addressed later in the guide (ex. Java path reference).
 
 \subsubsection*{a.}
 \emph{Change your host names of the three nodes:}
 \begin{enumerate}
-	\item Master: <your-NetID>-HM
-	\item Worker1: <your-NetID>-W1
-	\item Worker2: <your-NetID>-W2
+	\itemsep-0.5em 
+	\item Master: $\langle$your-NetID$\rangle$-HM
+	\item Worker1: $\langle$your-NetID$\rangle$-W1
+	\item Worker2: $\langle$your-NetID$\rangle$-W2
 \end{enumerate}
 \includegraphics[width=\linewidth]{image1} \vspace{-1.5em}
 
 \subsubsection*{b.}
+\emph{Create user directories:} \\
 \includegraphics[width=\linewidth]{image2} \vspace{-1.5em}
 
 \subsubsection*{c.}
+\emph{Upload/put any file from the local Linux filesystem to HDFS.} \\
 \includegraphics[width=\linewidth]{image3} \vspace{-1.5em}
 
 \subsubsection*{d.}
+\emph{Run fsck command checking the previous file. Explain the outputs.} \\
+The first section is the verbose output of the function locating the file using the namenode. From there some basic information about the file is provided, such as the number of blocks necessary to carry the file, their size, and a status check for each.\\
+In the next section the output begins with an overall status check for the whole file, then provide information similar to what was mentioned above, but for the whole file, size, block count. Additionally, in this section it compiles the health status of the block to give the holistic view of the health of the file, how many blocks are properly replicated across the cluster, how many are corrupted, how many errors in replication have occurred, how many nodes the file spans. The information concludes with a time stand and a report on the duration of the fsck script running time. \\
 \includegraphics[width=\linewidth]{image4} \vspace{-1.5em}
 
-2.
+\subsection*{Q2:}
+\emph{Explore the Hadoop user interfaces using a web browser.} \\
+
 \subsubsection*{a.}
+\emph{Namenode web UI: http://<nodename(s)>:50070} \\
 \includegraphics[width=\linewidth]{image5} \vspace{-1.5em}
 
 \subsubsection*{b.}
+\emph{Datanode web UI: http://<nodename(s)>:50075} \\
 \includegraphics[width=\linewidth]{image6} \vspace{-1.5em}
 
 \subsubsection*{c.}
+\emph{Resource Manager UI: http://<nodename>:8088} \\
+Requires Yarn to have started. \\
 \includegraphics[width=\linewidth]{image7} \vspace{-1.5em}
 
 \subsubsection*{d.}
+\emph{MapReduce JobHistory Server UI: http:// <nodename>:19888} \\
+Required that the following command be run: \\
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+mer-jobhistory-daemon.sh --config <hadoop scripts location> start historyserver
+\end{minted}
 \includegraphics[width=\linewidth]{image8} \vspace{-1.5em}
 
 \end{document}
