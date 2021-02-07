@@ -20,6 +20,16 @@
 	\author{Author: Brandon Hosley}
 	\affiliation{Instructor: Liang Kong, Ph.D}
 
+% Subsubsection header run along with text.	
+\usepackage{titlesec}
+\titleformat{\subsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+
+
 %\abstract{}
 
 \usepackage{pdfpages}
@@ -36,8 +46,9 @@
 	\item A separate listing for different major.
 	\item With the number of observations and the total teaching efficiency for each major at the end of each page. 
 \end{itemize}
-	\inputminted[bgcolor=light-gray]{sas}{./Snippets/DAT502-HW2-1.sas}
+	\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW2-1.sas}
 
+\vspace{-2em}
 \subsection*{Q2:}
 \emph{Write a SAS program to describe the data from SAS data set: students.sas7bdat by:}
 \begin{itemize}
@@ -48,15 +59,18 @@
 	\item A block chart with the high of each block represent the average of IQ for each major and gender.
 	\item A star chart of grade.
 \end{itemize}
-	\inputminted[bgcolor=light-gray]{sas}{./Snippets/DAT502-HW2-2.sas}
+	\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW2-2.sas}
 
 \subsection*{Q3:}
 \emph{Write a SAS program to draw a simple linear regression line and 90\% predicted interval to fit teaching efficiency as dependent variable and the score of Math part of SAT as independent variable for the data from SAS data set: students.sas7bdat. }
-	\inputminted[bgcolor=light-gray]{sas}{./Snippets/DAT502-HW2-3.sas}
+	\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW2-3.sas}
 
 \subsection*{Q4:}
 \emph{Write a SAS program to draw a three-dimensional scatter graph of the score Math part of SAT (as y-variable), the score of IQ (as x-variable), and teaching efficiency (as z-variable).}
-	\inputminted[bgcolor=light-gray]{sas}{./Snippets/DAT502-HW2-4.sas}
+	\inputminted[breaklines,bgcolor=light-gray] {sas}{./Snippets/DAT502-HW2-4.sas}
 
+\includepdf{./Snippets/SAS Output HW2-1.pdf}
+\includepdf{./Snippets/SAS Output HW2-2.pdf}
+\includepdf{./Snippets/SAS Output HW2-3.pdf}
 \includepdf{./Snippets/SAS Output HW2-4.pdf}
 \end{document}
