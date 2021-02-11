@@ -22,11 +22,11 @@
 \vspace{3em}
 
 \subsection*{Q1: Create a Hive Table}
-\emph{Create a Hive table, 
-	\mintinline{shell-session}{csc533.<your-login>_driver_mileage}
-	, to find top drivers.} \\
+\emph{Create a Hive table}
+\mintinline[bgcolor=light-gray]{shell-session}{csc533.<your-login>_driver_mileage}
+\emph{to find top drivers.} \\
 	\begin{itemize}[before=\itshape,font=\normalfont]
-		\item From \mintinline{shell-session}{csc533.<your-login>_truck_mileage} table
+		\item From \textnormal{\mintinline[bgcolor=light-gray]{shell-session}{csc533.<your-login>_truck_mileage}} table
 		\item Group the records by driverid and aggregate (summate) their miles
 		\item Sort the records by sums of miles (descending order)
 		\item Store the table as an ORC file format
