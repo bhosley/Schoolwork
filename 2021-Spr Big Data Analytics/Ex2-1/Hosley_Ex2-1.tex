@@ -1,0 +1,65 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+% Subsubsection header run along with text.	
+\usepackage{titlesec}
+\titleformat{\subsubsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{Big Data Analytics: Exercise 2-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{Q1: Do exercise Section 3.} 
+
+\includegraphics[width=\linewidth]{image1} \vspace{-1.5em}
+
+\subsection*{Q2: Write Pig scripts for finding truck drivers exceeded the speed limit, 'overspeed'}
+\subsubsection*{a. Dataset: Truck IoT dataset}
+\begin{itemize}[before=\itshape,font=\normalfont]
+	\item Dataset location (Linux filesystem): \\
+	\mintinline[bgcolor=light-gray]{bash}{/home/data/CSC534BDA/datasets/Truck-IoT/}
+	\item Filenames: 
+	\mintinline[bgcolor=light-gray]{bash}{truck_event_text_partition.csv}
+\end{itemize} 
+
+
+\subsubsection*{b. Write and run your Pig scripts}
+\begin{itemize}[before=\itshape,font=\normalfont]
+	\item Find all truck drivers who exceeded the speed limit, 'Overspeed'
+	\item Define schema when you load the data
+	\item If the drivers exceeded
+\end{itemize} 
+
+
+\subsubsection*{c. Output example }(showing one driver only)
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+(29,{(29,66,00:47.8,Overspeed,-94.57,35.37, 29|66|9223370572464728016,3660000000000000000, Teddy Choi,803014426,Wichita to Little Rock Route 2,2016-05-27-22)})
+\end{minted}
+
+\subsubsection*{d. Reference} \\
+\href{https://www.cloudera.com/tutorials/beginners-guide-to-apache-pig/.html}	{https://www.cloudera.com/tutorials/beginners-guide-to-apache-pig/.html}
+
+\end{document}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\end{minted}
+\mintinline[bgcolor=light-gray]{bash}{} 
