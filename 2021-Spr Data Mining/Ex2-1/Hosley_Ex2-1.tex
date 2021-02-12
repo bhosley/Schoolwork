@@ -32,16 +32,16 @@
 		\item Store the table as an ORC file format
 	\end{itemize} 
 
-%\includegraphics[width=\linewidth]{image1}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 hive> CREATE TABLE csc533.bhosl2_driver_mileage
 STORED AS ORC
 AS
-SELECT driverid, sum(sum_miles) miles
+SELECT driverid, sum(miles) sum_miles
 FROM csc533.bhosl2_truck_mileage
 GROUP BY driverid
 ORDER BY sum_miles DESC;
 \end{minted}
+\includegraphics[width=\linewidth]{image1}
 
 \subsection*{Q2: Show the detailed information of the table}
 \begin{itemize}[before=\itshape,font=\normalfont]
@@ -51,6 +51,11 @@ ORDER BY sum_miles DESC;
 	\item See, the \href{https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL#LanguageMan
 		ualDDL-DescribeTable/View/MaterializedView/Column}{DDL Language Documentation}
 \end{itemize} 
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+hive> SHOW TABLE EXTENDED LIKE 'bhosl2_driver_mileage';
+\end{minted}
+\includegraphics[width=\linewidth]{image2}
  
 \subsection*{Q3: Show top 10 drivers}
 \begin{itemize}[before=\itshape,font=\normalfont]
@@ -59,6 +64,10 @@ ORDER BY sum_miles DESC;
 	\item Show 10 rows only
 \end{itemize} 
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+hive> SELECT * FROM csc533.bhosl2_driver_mileage LIMIT 10;
+\end{minted}
+\includegraphics[width=\linewidth]{image3}
 
 
 \end{document}
