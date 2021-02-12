@@ -34,7 +34,13 @@
 
 %\includegraphics[width=\linewidth]{image1}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
->>> df4 = spark.read.format("csv").option("header", "true").load("/user/bhosl2/Geolocation/geolocation.csv")
+hive> CREATE TABLE csc533.bhosl2_driver_mileage
+STORED AS ORC
+AS
+SELECT driverid, sum(sum_miles) miles
+FROM csc533.bhosl2_truck_mileage
+GROUP BY driverid
+ORDER BY sum_miles DESC;
 \end{minted}
 
 \subsection*{Q2: Show the detailed information of the table}
@@ -52,5 +58,7 @@
 	\item Check the output values/numbers are correct
 	\item Show 10 rows only
 \end{itemize} 
+
+
 
 \end{document}
