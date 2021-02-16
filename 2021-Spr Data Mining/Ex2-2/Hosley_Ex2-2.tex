@@ -1,0 +1,73 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{Data Mining: Exercise 2-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\vspace{3em}
+
+\subsection*{Q1: Create a Hive Table}
+\emph{Create a Hive table}
+\mintinline[bgcolor=light-gray]{shell-session}{csc533.<your-login>_driver_mileage}
+\emph{to find top drivers.} \\
+	\begin{itemize}[before=\itshape,font=\normalfont]
+		\item From \textnormal{\mintinline[bgcolor=light-gray]{shell-session}{csc533.<your-login>_truck_mileage}} table
+		\item Group the records by driverid and aggregate (summate) their miles
+		\item Sort the records by sums of miles (descending order)
+		\item Store the table as an ORC file format
+	\end{itemize} 
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+hive> CREATE TABLE csc533.bhosl2_driver_mileage
+STORED AS ORC
+AS
+SELECT driverid, sum(miles) sum_miles
+FROM csc533.bhosl2_truck_mileage
+GROUP BY driverid
+ORDER BY sum_miles DESC;
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
+
+\subsection*{Q2: Show the detailed information of the table}
+\begin{itemize}[before=\itshape,font=\normalfont]
+	\item Should include Column names and data\_type
+	\item Should include Detailed Table Info (Owner, createTime, and so on)
+	\item Should include Storage Information if it’s stored as ORC file format
+	\item See, the \href{https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL#LanguageMan
+		ualDDL-DescribeTable/View/MaterializedView/Column}{DDL Language Documentation}
+\end{itemize} 
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+hive> SHOW TABLE EXTENDED LIKE 'bhosl2_driver_mileage';
+\end{minted}
+\includegraphics[width=\linewidth]{image2}
+ 
+\subsection*{Q3: Show top 10 drivers}
+\begin{itemize}[before=\itshape,font=\normalfont]
+	\item Using the driver\_mileage table
+	\item Check the output values/numbers are correct
+	\item Show 10 rows only
+\end{itemize} 
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+hive> SELECT * FROM csc533.bhosl2_driver_mileage LIMIT 10;
+\end{minted}
+\includegraphics[width=\linewidth]{image3}
+
+
+\end{document}
