@@ -12,62 +12,50 @@
 \usepackage{enumitem}
 \usepackage{hyperref}
 
-\title{Data Mining: Exercise 2-1}
+\title{Data Mining: Exercise 2-2}
 \author{Brandon Hosley}
 \date{\today}
 
 \begin{document}
 \maketitle
 
-\vspace{3em}
+%\vspace{3em}
 
-\subsection*{Q1: Create a Hive Table}
-\emph{Create a Hive table}
-\mintinline[bgcolor=light-gray]{shell-session}{csc533.<your-login>_driver_mileage}
-\emph{to find top drivers.} \\
-	\begin{itemize}[before=\itshape,font=\normalfont]
-		\item From \textnormal{\mintinline[bgcolor=light-gray]{shell-session}{csc533.<your-login>_truck_mileage}} table
-		\item Group the records by driverid and aggregate (summate) their miles
-		\item Sort the records by sums of miles (descending order)
-		\item Store the table as an ORC file format
-	\end{itemize} 
+\subsection*{Q1: Modify/rewrite the grouping-set-query in the example with ROLLUP (Let’s call it rollup￾query). Run it, check the results, and explain the differences.}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-hive> CREATE TABLE csc533.bhosl2_driver_mileage
-STORED AS ORC
-AS
-SELECT driverid, sum(miles) sum_miles
-FROM csc533.bhosl2_truck_mileage
-GROUP BY driverid
-ORDER BY sum_miles DESC;
-\end{minted}
-\includegraphics[width=\linewidth]{image1}
+\begin{itemize}
+	\item Replace GROUPING SETS part with ROLLUP:
+	\begin{itemize}
+		\item Delete GROUPING SETS line.
+		\item Add ‘WITH ROLLUP’ in GROUP BY line.
+		\item For syntax, see \href{https://cwiki.apache.org/confluence/display/Hive/Enhanced+Aggregation\%2C+Cube\%2C+Grouping+and+Rollup}{link}.
+	\end{itemize}
+	\item First line of the result should be like below
+	\begin{itemize}
+		\item NULL NULL NULL 8000
+	\end{itemize}
+	\item Explain the differences of the results between the grouping-set-query and the roll-up-query with your query results. 
+	\begin{itemize}
+		\item Not with general cases like A, B, C or a, b, c 
+	\end{itemize}
+	\item Regarding query results, please include first 10 lines or so only.
+\end{itemize}
 
-\subsection*{Q2: Show the detailed information of the table}
-\begin{itemize}[before=\itshape,font=\normalfont]
-	\item Should include Column names and data\_type
-	\item Should include Detailed Table Info (Owner, createTime, and so on)
-	\item Should include Storage Information if it’s stored as ORC file format
-	\item See, the \href{https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL#LanguageMan
-		ualDDL-DescribeTable/View/MaterializedView/Column}{DDL Language Documentation}
-\end{itemize} 
+\subsection*{Q2: Modify/rewrite the rollup-query (or grouping-set-query) with GROUPING SETS (Let’s call it rollup-like-query) to produce same results of rollup-query.}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-hive> SHOW TABLE EXTENDED LIKE 'bhosl2_driver_mileage';
-\end{minted}
-\includegraphics[width=\linewidth]{image2}
- 
-\subsection*{Q3: Show top 10 drivers}
-\begin{itemize}[before=\itshape,font=\normalfont]
-	\item Using the driver\_mileage table
-	\item Check the output values/numbers are correct
-	\item Show 10 rows only
-\end{itemize} 
+\begin{itemize}
+	\item Query result should be same.
+	\item Regarding query results, please include first 10 lines or so only.
+\end{itemize}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-hive> SELECT * FROM csc533.bhosl2_driver_mileage LIMIT 10;
-\end{minted}
-\includegraphics[width=\linewidth]{image3}
+\subsection*{Q3: Modify/rewrite the grouping-set-query with CUBE. Run it, check the results, and explain the differences and similarities.}
 
+\begin{itemize}
+	\item Explain the differences and similarities of the queries and query results among GROUPING SETS, ROLLUP and CUBE
+	\begin{itemize}
+		\item Explain with your query results. (not general cases like A, B, C or a, b, c)
+	\end{itemize}
+	\item Regarding query results, please include first 10 lines or so only.
+\end{itemize}
 
 \end{document}
