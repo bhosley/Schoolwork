@@ -44,8 +44,11 @@
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 SELECT driverid, event, count(*) as occurance
 FROM csc533.bhosl2_geolocation
-GROUP BY driverid, event WITH ROLLUP;
+GROUP BY driverid, event WITH ROLLUP
+LIMIT 10;
 \end{minted}
+
+\includegraphics[width=\linewidth]{image1}
 
 \subsection*{Q2: Modify/rewrite the rollup-query (or grouping-set-query) with GROUPING SETS (Let’s call it rollup-like-query) to produce same results of rollup-query.}
 
@@ -55,8 +58,14 @@ GROUP BY driverid, event WITH ROLLUP;
 \end{itemize}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+SELECT driverid, event, count(*) as occurance
+FROM csc533.bhosl2_geolocation
+GROUP BY driverid, event
+GROUPING SETS ((driverid, event), driverid)
+LIMIT 10;
 \end{minted}
+
+\includegraphics[width=\linewidth]{image2}
 
 \subsection*{Q3: Modify/rewrite the grouping-set-query with CUBE. Run it, check the results, and explain the differences and similarities.}
 
@@ -67,5 +76,14 @@ GROUP BY driverid, event WITH ROLLUP;
 	\end{itemize}
 	\item Regarding query results, please include first 10 lines or so only.
 \end{itemize}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+SELECT driverid, event, count(*) as occurance
+FROM csc533.bhosl2_geolocation
+GROUP BY driverid, event WITH CUBE
+LIMIT 10;
+\end{minted}
+
+\includegraphics[width=\linewidth]{image3}
 
 \end{document}
