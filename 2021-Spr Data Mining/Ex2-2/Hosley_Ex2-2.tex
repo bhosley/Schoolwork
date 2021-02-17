@@ -21,7 +21,7 @@
 
 %\vspace{3em}
 
-\subsection*{Q1: Modify/rewrite the grouping-set-query in the example with ROLLUP (Let’s call it rollup￾query). Run it, check the results, and explain the differences.}
+\subsection*{Q1: Modify/rewrite the grouping-set-query in the example with ROLLUP (Let’s call it rollup-query). Run it, check the results, and explain the differences.}
 
 \begin{itemize}
 	\item Replace GROUPING SETS part with ROLLUP:
@@ -41,12 +41,22 @@
 	\item Regarding query results, please include first 10 lines or so only.
 \end{itemize}
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+SELECT driverid, event, count(*) as occurance
+FROM csc533.bhosl2_geolocation
+GROUP BY driverid, event WITH ROLLUP;
+\end{minted}
+
 \subsection*{Q2: Modify/rewrite the rollup-query (or grouping-set-query) with GROUPING SETS (Let’s call it rollup-like-query) to produce same results of rollup-query.}
 
 \begin{itemize}
 	\item Query result should be same.
 	\item Regarding query results, please include first 10 lines or so only.
 \end{itemize}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
 
 \subsection*{Q3: Modify/rewrite the grouping-set-query with CUBE. Run it, check the results, and explain the differences and similarities.}
 
