@@ -30,76 +30,76 @@
 \maketitle
 
 \subsection*{Q1: Write and run 11 HBase commands to insert a new row into the table.} 
-\begin{enumerate}[before=\itshape,font=\normalfont,label=(\alph*)]
-	\item Table name: <your-namespace>:truck\_event
+\begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
+	\item Table name: $<$your-namespace$>$:truck\_event
 	\item Rowkey: 20000
 	\item Column family name: events
 	\item Columns: values
-	\begin{enumerate}[label=(\roman*)]
-		\item driverId: <your-login or UIS NetID>
+	\begin{enumerate}[label=\roman*.]
+		\item driverId: $<$your-login or UIS NetID$>$
 		\item truckId: 999
 		\item eventTime
-		\item eventType: <Pick one from Normal, Overspeed, and Lane Departure>
+		\item eventType: $<$Pick one from Normal, Overspeed, and Lane Departure$>$
 		\item longitude: -94.58
 		\item latitude: 37.03
-		\sout{ \item eventKey (This is a RowKey) }
+		\item \sout{ eventKey (This is a RowKey) }
 		\item CorrelationId: 1000
-		\item driverName: <Your name>
+		\item driverName: $<$Your name$>$
 		\item routeId: 888
 		\item routeName: UIS to Chicago
-		\item eventDate: <current date> e.g. 2030-01-01-01, year-month-day-hour (24)
+		\item eventDate: $<$current date$>$ e.g. 2030-01-01-01, year-month-day-hour (24)
 	\end{enumerate}
 \end{enumerate}
 
 \subsection*{Q2: Write and run a HBase command to retrieve the row only you just inserted.} 
-\begin{enumerate}[before=\itshape,font=\normalfont,label=(\alph*)]
-	\item Table name: <your-namespace>:truck\_event
+\begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
+	\item Table name: $<$your-namespace$>$:truck\_event
 	\item Rowkey: 20000
 	\item Column family name: events
 	\item Note: the row only. No other rows.
-	\item You may want to check the help page ‘help <command>’
+	\item You may want to check the help page ‘help $<$command$>$’
 \end{enumerate}
 
 \subsection*{Q3: Write and run two HBase commands to update the value of the row you inserted/retrieved and show the changes.} 
-\begin{enumerate}[before=\itshape,font=\normalfont,label=(\alph*)]
-	\item Table name: <your-namespace>:truck\_event
+\begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
+	\item Table name: $<$your-namespace$>$:truck\_event
 	\item Rowkey: 20000
 	\item Column family name: events
 	\item Column name(qualifier): routeName
 	\item NEW value: Chicago to UIS
 	\item Write and run your second command to show the changes
-	\begin{enumerate}[label=(\roman*)]
+	\begin{enumerate}[label=\roman*.]
 		\item Expected changes: ‘UIS to Chicago’ -> ‘Chicago to UIS’
 	\end{enumerate}
 \end{enumerate}
 
 \subsection*{Q4: Write and run a HBase command to retrieve two columns of the row you inserted/retrieved.} 
-\begin{enumerate}[before=\itshape,font=\normalfont,label=(\alph*)]
-	\item Table name: <your-namespace>:truck\_event
+\begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
+	\item Table name: $<$your-namespace$>$:truck\_event
 	\item Rowkey: 20000
 	\item Column family name: events
 	\item Two columns we want to see: driverName and routeName ONLY
 	\item Note: Two columns (qualifiers) only. No other columns.
-	\item You may want to check the help page ‘help <command>’
+	\item You may want to check the help page ‘help $<$command$>$’
 \end{enumerate}
 
 \subsection*{Q5: Write and run a HBase command in non-interactive mode.} 
-\begin{enumerate}[before=\itshape,font=\normalfont,label=(\alph*)]
+\begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
 	\item Retrieve meta-data of your table in Linux shell.
-	\item Table name: <your-namespace>:truck\_event
+	\item Table name: $<$your-namespace$>$:truck\_event
 	\item Use Both Linux commands and HBase shell commands
-	\begin{enumerate}[label=(\roman*)]
+	\begin{enumerate}[label=\roman*.]
 		\item Linux command: echo
 		\item HBase shell command: describe (retrieve meta-data of a table)
 	\end{enumerate}
 	\item This code should run outside of the HBase shell.
-	\begin{enumerate}[label=(\roman*)]
+	\begin{enumerate}[label=\roman*.]
 		\item Don’t login to the HBase shell.
 		\item Should be run in Linux shell
-		\item e.g. \mintinline[bgcolor=light-gray]{bash}{[sslee777@node00 ~]\$ <your command here....>}
+		\item e.g. \mintinline[bgcolor=light-gray]{bash}{[sslee777@node00 ~]\$ $<$your command here....$>$}
 	\end{enumerate}
 	\item This scripting is quite useful in some cases, e.g. You want to run HBase commands outside HBase shell. 
-	\begin{enumerate}[label=(\roman*)]
+	\begin{enumerate}[label=\roman*.]
 		\item Batch processing
 		\item Administration
 		\item Automation – Cron jobs
