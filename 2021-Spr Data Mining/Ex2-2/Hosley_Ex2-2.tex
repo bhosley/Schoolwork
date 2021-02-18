@@ -24,9 +24,9 @@
 \subsection*{Q1: Modify/rewrite the grouping-set-query in the example with ROLLUP (Let’s call it rollup-query). Run it, check the results, and explain the differences.}
 
 \begin{itemize}[before=\itshape,font=\normalfont]
-	\setlength\itemsep{0.5em}
 	\item Replace GROUPING SETS part with ROLLUP:
 	\begin{itemize}
+		\setlength\itemsep{0em}
 		\item Delete GROUPING SETS line.
 		\item Add ‘WITH ROLLUP’ in GROUP BY line.
 		\item For syntax, see \href{https://cwiki.apache.org/confluence/display/Hive/Enhanced+Aggregation\%2C+Cube\%2C+Grouping+and+Rollup}{link}.
