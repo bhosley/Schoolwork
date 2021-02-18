@@ -23,7 +23,7 @@
 
 \subsection*{Q1: Modify/rewrite the grouping-set-query in the example with ROLLUP (Let’s call it rollup-query). Run it, check the results, and explain the differences.}
 
-\begin{itemize}
+\begin{itemize}[before=\itshape,font=\normalfont]
 	\item Replace GROUPING SETS part with ROLLUP:
 	\begin{itemize}
 		\item Delete GROUPING SETS line.
@@ -42,34 +42,38 @@
 \end{itemize}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-SELECT driverid, event, count(*) as occurance
+SELECT driverid, event, city, count(*) as occurance
 FROM csc533.bhosl2_geolocation
-GROUP BY driverid, event WITH ROLLUP
+GROUP BY driverid, event, city WITH ROLLUP
 LIMIT 10;
 \end{minted}
 
 \includegraphics[width=\linewidth]{image1}
 
+The Rollup function differentiates from the group by implicitly grouping by a series of sets in which the the last item is dropped by each subsequent set until no items remain.
+
 \subsection*{Q2: Modify/rewrite the rollup-query (or grouping-set-query) with GROUPING SETS (Let’s call it rollup-like-query) to produce same results of rollup-query.}
 
-\begin{itemize}
+\begin{itemize}[before=\itshape,font=\normalfont]
 	\item Query result should be same.
 	\item Regarding query results, please include first 10 lines or so only.
 \end{itemize}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-SELECT driverid, event, count(*) as occurance
+SELECT driverid, event, city, count(*) as occurance
 FROM csc533.bhosl2_geolocation
-GROUP BY driverid, event
-GROUPING SETS ((driverid, event), driverid)
+GROUP BY driverid, event, city
+GROUPING SETS ((driverid, event, city), (driverid, event), driverid, ())
 LIMIT 10;
 \end{minted}
 
 \includegraphics[width=\linewidth]{image2}
 
+The above query replicates a rollup by specifying the sets that would be derived in a rollup.
+
 \subsection*{Q3: Modify/rewrite the grouping-set-query with CUBE. Run it, check the results, and explain the differences and similarities.}
 
-\begin{itemize}
+\begin{itemize}[before=\itshape,font=\normalfont]
 	\item Explain the differences and similarities of the queries and query results among GROUPING SETS, ROLLUP and CUBE
 	\begin{itemize}
 		\item Explain with your query results. (not general cases like A, B, C or a, b, c)
@@ -78,12 +82,14 @@ LIMIT 10;
 \end{itemize}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-SELECT driverid, event, count(*) as occurance
+SELECT driverid, event, city, count(*) as occurance
 FROM csc533.bhosl2_geolocation
-GROUP BY driverid, event WITH CUBE
+GROUP BY driverid, event, city WITH CUBE
 LIMIT 10;
 \end{minted}
 
 \includegraphics[width=\linewidth]{image3}
+
+When compared to a rollup, a cube produces a series of subsets, but instead of a decreasing subset, the cube produces each possible combination, to include an empty set.
 
 \end{document}
