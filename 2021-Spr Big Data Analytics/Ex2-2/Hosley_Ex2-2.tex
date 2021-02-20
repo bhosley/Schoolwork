@@ -20,7 +20,9 @@
 
 \usepackage{enumitem}
 \usepackage{hyperref}
+
 \usepackage[normalem]{ulem}
+\usepackage[T1]{fontenc}
 
 \title{Big Data Analytics: Exercise 2-2}
 \author{Brandon Hosley}
@@ -51,8 +53,18 @@
 	\end{enumerate}
 \end{enumerate}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+put 'bhosl2:truck_event', '20000', 'events:driverId', 'bhosl2'
+put 'bhosl2:truck_event', '20000', 'events:truckId', '999'
+put 'bhosl2:truck_event', '20000', 'events:eventTime', '1200'
+put 'bhosl2:truck_event', '20000', 'events:eventType', 'Overspeed'
+put 'bhosl2:truck_event', '20000', 'events:longitude', '-94.58'
+put 'bhosl2:truck_event', '20000', 'events:latitude', '37.03'
+put 'bhosl2:truck_event', '20000', 'events:CorrelationId', '1000'
+put 'bhosl2:truck_event', '20000', 'events:driverName', 'Brandon Hosley'
+put 'bhosl2:truck_event', '20000', 'events:routeId', '888'
+put 'bhosl2:truck_event', '20000', 'events:routeName', 'UIS to Chicago'
+put 'bhosl2:truck_event', '20000', 'events:eventDate', '2021-02-19-12'
 \end{minted}
 
 \subsection*{Q2: Write and run a HBase command to retrieve the row only you just inserted.} 
@@ -63,6 +75,10 @@
 	\item Note: the row only. No other rows.
 	\item You may want to check the help page ‘help $<$command$>$’
 \end{enumerate}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+get 'bhosl2:truck_event', '20000'
+\end{minted}
 
 \subsection*{Q3: Write and run two HBase commands to update the value of the row you inserted/retrieved and show the changes.} 
 \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
@@ -77,6 +93,11 @@
 	\end{enumerate}
 \end{enumerate}
 
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+put 'bhosl2:truck_event', '20000', 'events:routeName', 'Chicago to UIS'
+get 'bhosl2:truck_event', '20000', 'events:routeName'
+\end{minted}
+
 \subsection*{Q4: Write and run a HBase command to retrieve two columns of the row you inserted/retrieved.} 
 \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
 	\item Table name: $<$your-namespace$>$:truck\_event
@@ -86,6 +107,10 @@
 	\item Note: Two columns (qualifiers) only. No other columns.
 	\item You may want to check the help page ‘help $<$command$>$’
 \end{enumerate}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+get 'bhosl2:truck_event', '20000', ['driverName','routeName']
+\end{minted}
 
 \subsection*{Q5: Write and run a HBase command in non-interactive mode.} 
 \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
@@ -100,7 +125,12 @@
 	\begin{enumerate}[label=\roman*.]
 		\item Don’t login to the HBase shell.
 		\item Should be run in Linux shell
-		\item e.g. \mintinline[bgcolor=light-gray]{bash}{[sslee777@node00 ~]\$ $<$your command here....$>$}
+		\item e.g.%
+		{\normalfont 
+			\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+[sslee777@node00 ~]$ <your command here....>
+			\end{minted} 
+		}
 	\end{enumerate}
 	\item This scripting is quite useful in some cases, e.g. You want to run HBase commands outside HBase shell. 
 	\begin{enumerate}[label=\roman*.]
@@ -113,11 +143,13 @@
 	\href{https://hbase.apache.org/book.html#hbase.shell.noninteractive}{link.}
 \end{enumerate}
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+$ echo "describe 'bhosl2:truck_event'" | ./hbase shell -n
+\end{minted}
+
 \end{document}
 
-
 \includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
-
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 \end{minted}
 \mintinline[bgcolor=light-gray]{bash}{} 
