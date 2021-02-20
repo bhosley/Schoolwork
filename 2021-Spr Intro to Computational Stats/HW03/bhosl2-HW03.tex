@@ -1,0 +1,52 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{setspace}
+
+%% Images
+% \usepackage{graphicx}
+% 	\graphicspath{ {./images/} }
+% 	\usepackage{caption}
+
+% Minted
+	\usepackage[cache=false]{minted}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+	\usemintedstyle{vs}
+
+% Title
+	\title{Intro to Computational Statistics: Homework 3}
+	\shorttitle{HW03}
+	\author{Author: Brandon Hosley}
+	\affiliation{Instructor: Liang Kong, Ph.D}
+
+% Subsubsection header run along with text.	
+\usepackage{titlesec}
+\titleformat{\subsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+
+
+%\abstract{}
+
+%\usepackage{pdfpages}
+%\includepdf{./Snippets/SAS Output HW2-4.pdf}
+
+\begin{document}
+\maketitle
+\singlespacing
+	
+\subsection*{Q1: Write a SAS program to produce Mean, Minimum, Maximum, Standard Deviation, Skewness, and Kurtosis of the teaching efficiency for each classification.}
+
+\subsection*{Q2: Write a SAS program to produce a table which contains the mean and standard of the teaching efficiency and the value of test statistic and P-value for testing hypotheses that the mean of teaching efficiency is significant different from 14 for each major.}
+
+\subsection*{Q3: Write a SAS program to produce a test of Normality and a plot of Normal probability plot for IQ.}
+
+\subsection*{Q4: Write a SAS program to produce correlation coefficient for Math Score of SAT, IQ, Score of Pilot exam, and Score of Final exam with Teaching efficiency.}
+
+\subsection*{Q5: Write a SAS program to produce  a 95\% confidence interval for the mean of teaching efficiency for each major.}
+
+\end{document}
