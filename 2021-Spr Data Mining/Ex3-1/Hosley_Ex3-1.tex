@@ -1,0 +1,52 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{Data Mining: Exercise 3-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Finding Frequent Itemsets}
+
+\subsection*{Q1: List 3 most frequent itemsets of any size \\ Note: you may need to adjust ‘min\_support’ to find frequent itemsets}
+
+\subsection*{Q2: Calculate support for the 3 itemsets above \\ Note: Round down to the nearest hundredth, e.g., 0.12.}
+
+\subsection*{Q3: Given min\_support = 0.06 (=6\%), show the counts, e.g., [beer, diaper]: 100, for candidate itemsets of size 2. }
+
+\subsection*{Q4: Given min\_support = 0.05 (=5\%), show their counts, e.g., [beer, diaper]: 100, for candidate itemsets of size 2. Do we get more itemsets or less itemsets with lower min\_support (0.06 -> 0.05)? \\ Note: two questions}
+
+\subsection*{Q5: 'rolls/buns' is purchased most frequently with what other product? \\	Note: you may need to adjust 'min\_support' to find frequent itemsets.}
+
+\subsection*{Q6: 'root vegetables' is purchased most frequently with what other product? Note: you may need to adjust 'min\_support' to find frequent itemsets}
+
+\section*{Finding Association Rules}
+
+\subsection*{Q7: What is the confidence for the rule: 'other vegetables' $\rightarrow$ 'whole milk' \\ Note: Round down to the nearest hundredth, e.g., 0.12. You may need to adjust 'min\_support' and 'min\_confidence' to find rules.}
+
+\subsection*{Q8: What is the confidence for the rule: 'yogurt' $\rightarrow$ 'whole milk' \\	Note: Round down to the nearest hundredth, e.g., 0.12. You may need to adjust 'min\_support' and 'min\_confidence' to find rules.}
+
+\section*{Predicting with Found Association Rules}
+
+\subsection*{Q9: Given min\_support = 0.04 and min\_confidence = 0.2, what products might be purchased	with 'whole milk'?}
+
+\subsection*{Q10: Given min\_support = 0.04 and min\_confidence = 0.1, what products might be purchased	with 'whole milk'?}
+
+\end{document}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
