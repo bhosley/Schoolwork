@@ -73,10 +73,45 @@ TBLPROPERTIES('skip.header.line.count'='1');
 
 \subsection*{Q2: Assignment #2 in Section 2.1.5.1} 
 
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+DESCRIBE csc534.bhosl2_timesheet;
+\end{minted}
+\includegraphics[width=\linewidth]{image3} %\vspace{-1.5em}
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+DESCRIBE csc534.bhosl2_truck_event;
+\end{minted}
+\includegraphics[width=\linewidth]{image4} %\vspace{-1.5em}
+
 \subsection*{Q3: Assignment #3 in Section 2.2.1.1} 
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+LOAD DATA LOCAL INPATH '/home/data/CSC534BDA/datasets/Truck-IoT/timesheet.csv'
+INTO TABLE csc534.bhosl2_timesheet;
+\end{minted}
+\includegraphics[width=\linewidth]{image5} %\vspace{-1.5em}
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+LOAD DATA LOCAL INPATH '/home/data/CSC534BDA/datasets/Truck-IoT/truck_event_text_partition.csv'
+INTO TABLE csc534.bhosl2_truck_event;
+\end{minted}
+\includegraphics[width=\linewidth]{image6} %\vspace{-1.5em}
 
 \subsection*{Q4: Assignment #4 in Section 2.2.2.1} 
 
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+SELECT * FROM csc534.bhosl2_timesheet LIMIT 5;
+SELECT COUNT(*) FROM csc534.bhosl2_timesheet;
+\end{minted}
+\includegraphics[width=\linewidth]{image7} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image9} %\vspace{-1.5em}
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+SELECT * FROM csc534.bhosl2_truck_event LIMIT 5;
+SELECT COUNT(*) FROM csc534.bhosl2_truck_event;
+\end{minted}
+\includegraphics[width=\linewidth]{image8} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image10} %\vspace{-1.5em}
 
 \end{document}
 
