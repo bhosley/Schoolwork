@@ -1,0 +1,53 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+% Subsubsection header run along with text.	
+\usepackage{titlesec}
+\titleformat{\subsubsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\usepackage[normalem]{ulem}
+\usepackage[T1]{fontenc}
+
+\title{Big Data Analytics: Exercise 3-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\subsection*{Q1: Assignment #1 in Section 2.1.3.3} 
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+\end{minted}
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
+
+\subsection*{Q2: Assignment #2 in Section 2.1.5.1} 
+
+\subsection*{Q3: Assignment #3 in Section 2.2.1.1} 
+
+\subsection*{Q4: Assignment #4 in Section 2.2.2.1} 
+
+
+\end{document}
+
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\end{minted}
+\mintinline[bgcolor=light-gray]{bash}{} \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
+\end{enumerate}
