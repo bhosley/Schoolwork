@@ -21,7 +21,7 @@
 
 \section*{Finding Frequent Itemsets}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 from pyspark.ml.fpm import FPGrowth
 from pyspark.sql.functions import col, split
 
@@ -31,7 +31,7 @@ df = df0.withColumn("items", split(col("csv"), ",").cast("array<string>"))
 
 \subsection*{Q1: List 3 most frequent itemsets of any size \\ Note: you may need to adjust ‘min\_support’ to find frequent itemsets}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 fpGrowth = FPGrowth(itemsCol="items", minSupport=0.175, minConfidence=0.5)
 model = fpGrowth.fit(df)
 model.freqItemsets.show()
@@ -41,10 +41,10 @@ model.freqItemsets.show()
 
 \subsection*{Q2: Calculate support for the 3 itemsets above \\ Note: Round down to the nearest hundredth, e.g., 0.12.}
 
-\begin{tabular}
-	rolls/buns:		& $ 1809 / 9835 = 0.18 $
-	other vegetables: & $ 1903 / 9835 = 0.19 $
-	whole milk:		& $ 2513 / 9835 = 0.26 $
+\begin{tabular}{r | l}
+	rolls/buns:		& $ 1809 / 9835 = 0.18 $ \\
+	other vegetables: & $ 1903 / 9835 = 0.19 $ \\
+	whole milk:		& $ 2513 / 9835 = 0.26 $ \\
 \end{tabular}
 
 \subsection*{Q3: Given min\_support = 0.06 (=6\%), show the counts, e.g., [beer, diaper]: 100, for candidate itemsets of size 2. }
