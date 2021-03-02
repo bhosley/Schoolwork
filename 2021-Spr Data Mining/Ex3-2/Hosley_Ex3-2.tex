@@ -31,7 +31,7 @@ df = df0.withColumn("items", split(col("csv"), ",").cast("array<string>"))
 
 \subsection*{Q1: Reading data}
 \begin{enumerate}[before=\itshape,label=\arabic*.]
-	\item Write spark odes to read above data.
+	\item Write spark codes to read above data.
 	\begin{enumerate}[before=\itshape,label=\alph*.]
 		\item Read four tables only for this exercise
 		\begin{enumerate}[before=\itshape,label=\roman*.]
@@ -49,12 +49,76 @@ df = df0.withColumn("items", split(col("csv"), ",").cast("array<string>"))
 \end{enumerate} 
 
 \subsection*{Q2: Training a model using FPGrowth}
+\begin{enumerate}[before=\itshape,label=\arabic*.]
+	\item Write spark codes to train the data to calculate frequent itemsets
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item Review Ex3-1
+		\item Pyspark use different library to use FPGrowth
+		\item Read data from baskets view
+		\begin{enumerate}[before=\itshape,label=\roman*.]
+			\item Using this query: select items from baskets
+			\item Should understand how the data will be organized or stored in DataFrame
+		\end{enumerate}
+		\item Use MinSupport = 0.001, MinConfidence = 0
+		\item Create temporary view
+	\end{enumerate}
+	\item Take screenshot(s) of running your codes in your pyspark shell in your terminal.
+	\item Take a screen shot of output of frequentItemsets
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item Using this command: model.freqItemsets.show(15, truncate=False)
+		\item Show 15 rows, not 10 rows. (below output shows 10 rows)
+	\end{enumerate}
+\end{enumerate} 
 
 \subsection*{Q3: Finding frequent itemsets}
+\begin{enumerate}[before=\itshape,label=\arabic*.]
+	\item Take a screenshot of running above codes in your pyspark shell in your terminal.
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item SQL query: select items, freq from mostPopularItemInABasket where size(items) \\ $>$ 2 order by freq desc limit 20
+	\end{enumerate}
+	\item Take a screen shot of output of frequentItemsets
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item Using this command: mostPopularItemInABasket\_2.show(15, truncate=False)
+		\item Show 15 rows, not 10 rows. (above output shows 10 rows)
+	\end{enumerate}
+\end{enumerate} 
+
 
 \subsection*{Q4: Generating association rules}
+\begin{enumerate}[before=\itshape,label=\arabic*.]
+	\item Write spark codes
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item Review Ex3-1
+		\item Store generated association rule in a DataFrame (name: ifThen)
+		\item Create a temporary view (name: ifThen)
+	\end{enumerate}
+	\item Take screenshot(s) of running your codes in your pyspark shell in your terminal.
+	\item Take a screenshot of output of frequentItemsets
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item Show three columns only (search ‘.select’ command)
+		\begin{enumerate}[before=\itshape,label=\roman*.]
+			\item Antecedent
+			\item Consequent
+			\item Confidence
+		\end{enumerate}
+		\item Show 10 rows, not 5 rows. (below output shows 5 rows with all columns)
+	\end{enumerate}
+\end{enumerate} 
+
 
 \subsection*{Q5: Identifying items frequently purchased together (association rules)}
+
+\begin{enumerate}[before=\itshape,label=\arabic*.]
+	\item Write spark codes to find items frequently purchased together using above SQL query
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item Store the results of the query as a DataFrame, named ‘assocRules’
+	\end{enumerate}
+	\item Take screenshot(s) of running your codes in your pyspark shell in your terminal.
+	\item Take a screenshot of output of frequentItemsets
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item Show 10 rows, not 5 rows. (below output shows 5 rows)
+	\end{enumerate}
+\end{enumerate} 
 
 
 \begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
