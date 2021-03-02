@@ -1,0 +1,72 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\title{Data Mining: Exercise 3-2}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Do the Five Assignments in the Exercise Guide}
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+from pyspark.ml.fpm import FPGrowth
+from pyspark.sql.functions import col, split
+
+df0 = spark.read.text("/user/data/CSC533DM/groceries.csv").toDF("csv")
+df = df0.withColumn("items", split(col("csv"), ",").cast("array<string>"))
+\end{minted}
+
+\subsection*{Q1: Reading data}
+\begin{enumerate}[before=\itshape,label=\arabic*.]
+	\item Write spark odes to read above data.
+	\begin{enumerate}[before=\itshape,label=\alph*.]
+		\item Read four tables only for this exercise
+		\begin{enumerate}[before=\itshape,label=\roman*.]
+			\item orders
+			\item products
+			\item departments
+			\item order\_products\_train
+		\end{enumerate}
+		\item Read “headers” as well
+		\begin{enumerate}[before=\itshape,label=\roman*.]
+			\item Each csv file of the dataset has a header line.
+		\end{enumerate}
+	\end{enumerate}
+	\item Take screenshots of running your code in your pyspark shell in your terminal.
+\end{enumerate} 
+
+\subsection*{Q2: Training a model using FPGrowth}
+
+\subsection*{Q3: Finding frequent itemsets}
+
+\subsection*{Q4: Generating association rules}
+
+\subsection*{Q5: Identifying items frequently purchased together (association rules)}
+
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+
+\end{minted}
+
+\includegraphics[width=\linewidth]{image1}
+
+
+
+\end{document}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
