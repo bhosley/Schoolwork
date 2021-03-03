@@ -24,9 +24,6 @@
 \begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 from pyspark.ml.fpm import FPGrowth
 from pyspark.sql.functions import col, split
-
-df0 = spark.read.text("/user/data/CSC533DM/groceries.csv").toDF("csv")
-df = df0.withColumn("items", split(col("csv"), ",").cast("array<string>"))
 \end{minted}
 
 \subsection*{Q1: Reading data}
@@ -47,6 +44,19 @@ df = df0.withColumn("items", split(col("csv"), ",").cast("array<string>"))
 	\end{enumerate}
 	\item Take screenshots of running your code in your pyspark shell in your terminal.
 \end{enumerate} 
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+departments = spark.read.format('csv').options(header='true').load( '/user/data/CSC533DM/instacart/departments.csv')
+order_products_train = spark.read.format('csv').options(header='true').load( '/user/data/CSC533DM/instacart/order_products__train.csv')
+orders = spark.read.format('csv').options(header='true').load( '/user/data/CSC533DM/instacart/orders.csv')
+products = spark.read.format('csv').options(header='true').load( '/user/data/CSC533DM/instacart/products.csv')
+
+departments.createOrReplaceTempView("departments")
+order_products_train.createOrReplaceTempView("order_products_train")
+orders.createOrReplaceTempView("orders")
+products.createOrReplaceTempView("products")
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
 
 \subsection*{Q2: Training a model using FPGrowth}
 \begin{enumerate}[before=\itshape,label=\arabic*.]
