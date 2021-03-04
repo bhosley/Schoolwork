@@ -21,9 +21,9 @@
 
 \section*{Do the Five Assignments in the Exercise Guide}
 
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 from pyspark.ml.fpm import FPGrowth
-from pyspark.sql.functions import col, split
+from pyspark.sql.functions import col, split, count, collect_set
 \end{minted}
 
 \subsection*{Q1: Reading data}
@@ -80,6 +80,74 @@ products.createOrReplaceTempView("products")
 	\end{enumerate}
 \end{enumerate} 
 
+\begin{comment}
+df_orders_dow = spark.sql("""
+	select count(order_id) as total_orders, 
+		(case 
+			when order_dow = '0' then 'Sunday' 
+			when order_dow = '1' then 'Monday' 
+			when order_dow = '2' then 'Tuesday' 
+			when order_dow = '3' then 'Wednesday' 
+			when order_dow = '4' then 'Thursday' 
+			when order_dow = '5' then 'Friday' 
+			when order_dow = '6' then 'Saturday' 
+		end) as day_of_week 
+	from orders 
+	group by order_dow 
+	order by total_orders desc
+""")
+
+df_orders_dow.show()
+
+df_orders_hour = spark.sql("""
+	select count(order_id) as total_orders, order_hour_of_day as hour 
+		from orders
+	group by order_hour_of_day 
+	order by order_hour_of_day
+""")
+
+df_orders_hour.show(24)
+
+df_orders_shelf = spark.sql("""
+	select d.department, count(distinct p.product_id) as products
+		from products p
+	inner join departments d
+		on d.department_id = p.department_id
+	group by d.department
+	order by products desc
+	limit 10
+""")
+
+df_orders_shelf.show()
+
+rawData = spark.sql("select p.product_name, o.order_id from products p inner join order_products_train o where o.product_id = p.product_id")
+baskets = rawData.groupBy('order_id').agg(collect_set('product_name').alias('items'))
+baskets.createOrReplaceTempView('baskets')
+baskets.show(2, truncate=False)
+
+\end{comment}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+# Extract out the items 
+baskets_ds = spark.sql("select items from baskets")
+
+# Use FPGrowth
+fpgrowth = FPGrowth().setItemsCol("items").setMinSupport(0.001).setMinConfidence(0)
+model = fpgrowth.fit(baskets_ds)
+
+# Calculate frequent itemsets
+mostPopularItemInABasket = model.freqItemsets
+
+# Create temporary view
+mostPopularItemInABasket.createOrReplaceTempView("mostPopularItemInABasket")
+
+# Show Output of:
+model.freqItemsets.show(15, truncate=False)
+\end{minted}
+
+\includegraphics[width=\linewidth]{image2}
+
+
 \subsection*{Q3: Finding frequent itemsets}
 \begin{enumerate}[before=\itshape,label=\arabic*.]
 	\item Take a screenshot of running above codes in your pyspark shell in your terminal.
@@ -92,6 +160,15 @@ products.createOrReplaceTempView("products")
 		\item Show 15 rows, not 10 rows. (above output shows 10 rows)
 	\end{enumerate}
 \end{enumerate} 
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+model.freqItemsets.show(10, truncate=False)
+mostPopularItemInABasket_2 = spark.sql("""
+select items, freq from mostPopularItemInABasket where size(items) > 2 order by freq desc limit 20
+""")
+mostPopularItemInABasket_2.show(10, truncate=False)
+\end{minted}
+\includegraphics[width=\linewidth]{image3}
 
 
 \subsection*{Q4: Generating association rules}
@@ -115,6 +192,14 @@ products.createOrReplaceTempView("products")
 	\end{enumerate}
 \end{enumerate} 
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+# Store generated association rules in a DataFrame
+ifThen = model.associationRules
+# Create a view of ifThen
+ifThen.createOrReplaceTempView("ifThen")
+ifThen.show(10, truncate=False)
+\end{minted}
+\includegraphics[width=\linewidth]{image4}
 
 \subsection*{Q5: Identifying items frequently purchased together (association rules)}
 
@@ -130,17 +215,14 @@ products.createOrReplaceTempView("products")
 	\end{enumerate}
 \end{enumerate} 
 
-
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 
 \end{minted}
-
 \includegraphics[width=\linewidth]{image1}
-
 
 
 \end{document}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
