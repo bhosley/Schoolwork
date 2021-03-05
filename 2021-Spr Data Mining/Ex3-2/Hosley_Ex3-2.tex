@@ -11,6 +11,7 @@
 
 \usepackage{enumitem}
 \usepackage{hyperref}
+\usepackage{comment}
 
 \title{Data Mining: Exercise 3-2}
 \author{Brandon Hosley}
@@ -216,7 +217,10 @@ ifThen.show(10, truncate=False)
 \end{enumerate} 
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+assocRules = spark.sql("""
+select antecedent as 'antecedent (if)', consequent as 'consequent (then)', confidence from ifThen order by confidence desc limit 20
+""")
+assocRules.show(10, truncate=False)
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
 
