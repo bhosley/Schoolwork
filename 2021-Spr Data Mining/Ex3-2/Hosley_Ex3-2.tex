@@ -27,6 +27,8 @@ from pyspark.ml.fpm import FPGrowth
 from pyspark.sql.functions import col, split, count, collect_set
 \end{minted}
 
+\clearpage
+
 \subsection*{Q1: Reading data}
 \begin{enumerate}[before=\itshape,label=\arabic*.]
 	\item Write spark codes to read above data.
@@ -46,7 +48,7 @@ from pyspark.sql.functions import col, split, count, collect_set
 	\item Take screenshots of running your code in your pyspark shell in your terminal.
 \end{enumerate} 
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 departments = spark.read.format('csv').options(header='true').load( '/user/data/CSC533DM/instacart/departments.csv')
 order_products_train = spark.read.format('csv').options(header='true').load( '/user/data/CSC533DM/instacart/order_products__train.csv')
 orders = spark.read.format('csv').options(header='true').load( '/user/data/CSC533DM/instacart/orders.csv')
@@ -128,7 +130,7 @@ baskets.show(2, truncate=False)
 
 \end{comment}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 # Extract out the items 
 baskets_ds = spark.sql("select items from baskets")
 
@@ -218,7 +220,12 @@ ifThen.show(10, truncate=False)
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 assocRules = spark.sql("""
-select antecedent as 'antecedent (if)', consequent as 'consequent (then)', confidence from ifThen order by confidence desc limit 20
+	select antecedent as `antecedent (if)`, 
+		consequent as `consequent (then)`,
+		confidence 
+	from ifThen 
+	order by confidence desc 
+	limit 20
 """)
 assocRules.show(10, truncate=False)
 \end{minted}
@@ -226,6 +233,7 @@ assocRules.show(10, truncate=False)
 
 
 \end{document}
+
 
 \begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 \end{minted}
