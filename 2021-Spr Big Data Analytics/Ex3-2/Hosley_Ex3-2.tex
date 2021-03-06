@@ -37,12 +37,29 @@
 \subsection*{Q1.1: Rollup} 
 \emph{Modify/rewrite the grouping set query in the Section 2.2 using ROLLUP. Run and show the results. Explain the presentation of the result data by comparing the grouping set query’s presentation(First 10 lines of query results only)}
 
+\includegraphics[width=\linewidth]{image1.1.1} %\vspace{-1.5em}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+SELECT driverId, eventType, count(*) 
+	AS occurance FROM csc534.bhosl2_truck_event 
+	GROUP BY driverId, eventType 
+	WITH ROLLUP
+	LIMIT 10;
 \end{minted}
-\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image1.1.2} %\vspace{-1.5em}
 
 \subsection*{Q1.2: Cube} 
 \emph{Modify/rewrite the grouping set query in the Section 2.2 using CUBE. Run and show the results. Explain the presentation of the result data by comparing both the grouping set query and and ROLLUP query’s presentation(First 10 lines of query results only)}
+
+\includegraphics[width=\linewidth]{image1.2.1} %\vspace{-1.5em}
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+SELECT driverId, eventType, count(*) 
+	AS occurance FROM csc534.bhosl2_truck_event 
+	GROUP BY driverId, eventType 
+	WITH CUBE
+	LIMIT 10;
+\end{minted}
+\includegraphics[width=\linewidth]{image1.2.2} %\vspace{-1.5em}
+
 
 \section*{Assignment 2}
 
