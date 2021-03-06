@@ -35,8 +35,8 @@
 \emph{We exercised GROUPING SETS. There are some additional ways to perform these aggregations, using CUBE or ROLLUP. These are almost like shortcuts. While CUBE returns all possible aggregation combinations, ROLLUP does it in a more hierarchical fashion. You will replace GROUPING SETS with ROLLUP, and then similarly replace GROUPING SETS with CUBE.}
 
 \subsection*{Q1.1: Rollup} 
-\emph{Modify/rewrite the grouping set query in the Section 2.2 using ROLLUP. Run and show the results. Explain the presentation of the result data by comparing the grouping set query’s presentation(First 10 lines of query results only)}
-
+\emph{Modify/rewrite the grouping set query in the Section 2.2 using ROLLUP. Run and show the results. Explain the presentation of the result data by comparing the grouping set query’s presentation(First 10 lines of query results only)} \\
+\noindent
 \includegraphics[width=\linewidth]{image1.1.1} %\vspace{-1.5em}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 SELECT driverId, eventType, count(*) 
@@ -47,9 +47,11 @@ SELECT driverId, eventType, count(*)
 \end{minted}
 \includegraphics[width=\linewidth]{image1.1.2} %\vspace{-1.5em}
 
-\subsection*{Q1.2: Cube} 
-\emph{Modify/rewrite the grouping set query in the Section 2.2 using CUBE. Run and show the results. Explain the presentation of the result data by comparing both the grouping set query and and ROLLUP query’s presentation(First 10 lines of query results only)}
+The hierarchical grouping of the Rollup method produces results that are almost identical to the group-by presented in the exercise, the lone exception being the data-set total result from the all-NULL group.
 
+\subsection*{Q1.2: Cube} 
+\emph{Modify/rewrite the grouping set query in the Section 2.2 using CUBE. Run and show the results. Explain the presentation of the result data by comparing both the grouping set query and and ROLLUP query’s presentation(First 10 lines of query results only)} \\
+\noindent
 \includegraphics[width=\linewidth]{image1.2.1} %\vspace{-1.5em}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 SELECT driverId, eventType, count(*) 
@@ -60,6 +62,7 @@ SELECT driverId, eventType, count(*)
 \end{minted}
 \includegraphics[width=\linewidth]{image1.2.2} %\vspace{-1.5em}
 
+The Cube results differ significantly more from the group-by because it includes datasets that aggregate based on the second variable irrespective of the first; in this case: (NULL, $<$eventType$>$)
 
 \section*{Assignment 2}
 
