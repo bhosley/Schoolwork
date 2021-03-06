@@ -22,7 +22,6 @@
 \usepackage{hyperref}
 
 \usepackage[normalem]{ulem}
-\usepackage[T1]{fontenc}
 
 \title{Big Data Analytics: Exercise 3-2}
 \author{Brandon Hosley}
@@ -67,13 +66,104 @@ The Cube results differ significantly more from the group-by because it includes
 \section*{Assignment 2}
 
 \subsection*{Step 1: Load data into user space in HDFS} 
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+hadoop fs -mkdir Titanic
+hadoop fs - ls
+
+hadoop fs -put /home/data/CSC534BDA/datasets/Titanic/titanic.csv Titanic
+\end{minted}
+\includegraphics[width=\linewidth]{image2.1.1} %\vspace{-1.5em}
+
 \subsection*{Step 2: Create a Hive table}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+CREATE TABLE csc534.bhosl2_titanic (
+	PassengerId INT,
+	Survived INT,
+	Pclass INT,
+	Name STRING,
+	Sex STRING,
+	Age INT,
+	SibSp INT,
+	Parch INT,
+	Ticket STRING,
+	Fare DOUBLE,
+	Cabin STRING,
+	Embarked STRING
+)
+COMMENT 'Titanic Passenger Data'
+ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+WITH SERDEPROPERTIES (
+	"separatorChar" = ",",
+	"quoteChar"     = "\""
+)
+STORED AS TEXTFILE
+TBLPROPERTIES('skip.header.line.count'='1');
+\end{minted}
+\includegraphics[width=\linewidth]{image2.2.1} %\vspace{-1.5em}
+
 \subsection*{Step 3: Load data into Hive}
 \emph{verify that the loading was successful}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+LOAD DATA INPATH 'Titanic/titanic.csv' INTO TABLE csc534.bhosl2_titanic;
+\end{minted}
+\includegraphics[width=\linewidth]{image2.3.1} %\vspace{-1.5em}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+select count(*) from csc534.bhosl2_titanic;
+exit;
+\end{minted}
+\includegraphics[width=\linewidth]{image2.3.2} %\vspace{-1.5em}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+cat /home/data/CSC534BDA/datasets/Titanic/titanic.csv  | wc -l
+\end{minted}
+\includegraphics[width=\linewidth]{image2.3.3} %\vspace{-1.5em}
+
+891 entries + 1 row of column headers.
+
 \subsection*{Step 4: Calculate survivor counts and survival rates}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+set hive.cli.print.header=true;
+
+SELECT survived AS survived,
+	count(*) AS total,
+	count(*) / 8.91 AS survival_rate
+FROM csc534.bhosl2_titanic
+GROUP BY survived;
+\end{minted}
+\includegraphics[width=\linewidth]{image2.4.1} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image2.4.2} %\vspace{-1.5em}
+
 \subsection*{Step 5: Calculate survivor counts and survival rates by sex}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+SELECT survived AS survived,
+	sex AS sex,
+	count(*) AS total,
+	count(*) / 8.91 AS survival_rate
+FROM csc534.bhosl2_titanic
+GROUP BY survived, sex;
+\end{minted}
+\includegraphics[width=\linewidth]{image2.5.1} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image2.5.2} %\vspace{-1.5em}
+
 \subsection*{Step 6: Write a query to provide the results of steps 4 and 5}
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+SELECT survived AS survived,
+	sex AS sex,
+	count(*) AS total,
+	count(*) / 8.91 AS survival_rate
+FROM csc534.bhosl2_titanic
+GROUP BY survived, sex
+WITH CUBE;
+\end{minted}
+\includegraphics[width=\linewidth]{image2.6.1} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image2.6.2} %\vspace{-1.5em}
 
 \end{document}
 
