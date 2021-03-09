@@ -1,0 +1,63 @@
+$ hive
+
+CREATE TABLE csc534.bhosl2_drivers ( 
+    driverId INT, 
+    name STRING, 
+    ssn BIGINT, 
+    location STRING, 
+    certified STRING, 
+    wageplan STRING) 
+COMMENT 'drivers' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n' 
+STORED AS TEXTFILE 
+TBLPROPERTIES('skip.header.line.count'='1');
+
+CREATE TABLE csc534.bhosl2_timesheet ( 
+    driverId INT, 
+    week STRING, 
+    hoursLogged INT, 
+    milesLogged INT ) 
+COMMENT 'timesheet' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n' 
+STORED AS TEXTFILE 
+TBLPROPERTIES('skip.header.line.count'='1');
+
+CREATE TABLE csc534.bhosl2_truck_event ( 
+    driverId INT,
+    truckId INT,
+    eventTime INT,
+    eventType STRING,
+    longitude DOUBLE, 
+    latitude DOUBLE, 
+    eventKey INT, 
+    CorrelationId INT, 
+    driverName STRING, 
+    routeId INT, 
+    routeName STRING, 
+    eventDate DATE ) 
+COMMENT 'Truck Events' 
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n' 
+STORED AS TEXTFILE 
+TBLPROPERTIES('skip.header.line.count'='1');
+
+DESCRIBE csc534.bhosl2_timesheet;
+
+DESCRIBE csc534.bhosl2_truck_event;
+
+LOAD DATA LOCAL INPATH '/home/data/CSC534BDA/datasets/Truck-IoT/timesheet.csv'
+INTO TABLE csc534.bhosl2_timesheet;
+
+LOAD DATA LOCAL INPATH '/home/data/CSC534BDA/datasets/Truck-IoT/truck_event_text_partition.csv'
+INTO TABLE csc534.bhosl2_truck_event;
+
+SELECT * FROM csc534.bhosl2_timesheet LIMIT 5;
+SELECT COUNT(*) FROM csc534.bhosl2_timesheet;
+
+SELECT * FROM csc534.bhosl2_truck_event LIMIT 5;
+SELECT COUNT(*) FROM csc534.bhosl2_truck_event;
