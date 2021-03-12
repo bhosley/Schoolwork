@@ -53,19 +53,21 @@
 	\end{enumerate}
 \end{enumerate}
 
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-put 'bhosl2:truck_event', '20000', 'events:driverId', 'bhosl2'
-put 'bhosl2:truck_event', '20000', 'events:truckId', '999'
-put 'bhosl2:truck_event', '20000', 'events:eventTime', '1200'
-put 'bhosl2:truck_event', '20000', 'events:eventType', 'Overspeed'
-put 'bhosl2:truck_event', '20000', 'events:longitude', '-94.58'
-put 'bhosl2:truck_event', '20000', 'events:latitude', '37.03'
-put 'bhosl2:truck_event', '20000', 'events:CorrelationId', '1000'
-put 'bhosl2:truck_event', '20000', 'events:driverName', 'Brandon Hosley'
-put 'bhosl2:truck_event', '20000', 'events:routeId', '888'
-put 'bhosl2:truck_event', '20000', 'events:routeName', 'UIS to Chicago'
-put 'bhosl2:truck_event', '20000', 'events:eventDate', '2021-02-19-12'
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:driverId', 'bhosl2'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:truckId', '999'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:eventTime', '1200'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:eventType', 'Overspeed'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:longitude', '-94.58'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:latitude', '37.03'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:CorrelationId', '1000'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:driverName', 'Brandon Hosley'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:routeId', '888'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:routeName', 'UIS to Chicago'
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:eventDate', '2021-02-19-12'
 \end{minted}
+
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
 
 \subsection*{Q2: Write and run a HBase command to retrieve the row only you just inserted.} 
 \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
@@ -77,8 +79,12 @@ put 'bhosl2:truck_event', '20000', 'events:eventDate', '2021-02-19-12'
 \end{enumerate}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-get 'bhosl2:truck_event', '20000'
+hbase(main):001:0> get 'bhosl2:truck_event', '20000'
 \end{minted}
+
+\includegraphics[width=\linewidth]{image2} %\vspace{-1.5em}
+
+\clearpage
 
 \subsection*{Q3: Write and run two HBase commands to update the value of the row you inserted/retrieved and show the changes.} 
 \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
@@ -93,10 +99,14 @@ get 'bhosl2:truck_event', '20000'
 	\end{enumerate}
 \end{enumerate}
 
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-put 'bhosl2:truck_event', '20000', 'events:routeName', 'Chicago to UIS'
-get 'bhosl2:truck_event', '20000', 'events:routeName'
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+hbase(main):001:0> put 'bhosl2:truck_event', '20000', 'events:routeName', 'Chicago to UIS'
+hbase(main):001:0> get 'bhosl2:truck_event', '20000', 'events:routeName'
 \end{minted}
+
+\includegraphics[width=\linewidth]{image3} %\vspace{-1.5em}
+
+\clearpage
 
 \subsection*{Q4: Write and run a HBase command to retrieve two columns of the row you inserted/retrieved.} 
 \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
@@ -109,8 +119,10 @@ get 'bhosl2:truck_event', '20000', 'events:routeName'
 \end{enumerate}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-get 'bhosl2:truck_event', '20000', ['driverName','routeName']
+hbase(main):001:0> get 'bhosl2:truck_event', '20000', ['events:driverName','events:routeName']
 \end{minted}
+
+\includegraphics[width=\linewidth]{image4} %\vspace{-1.5em}
 
 \subsection*{Q5: Write and run a HBase command in non-interactive mode.} 
 \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
@@ -144,8 +156,10 @@ get 'bhosl2:truck_event', '20000', ['driverName','routeName']
 \end{enumerate}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-$ echo "describe 'bhosl2:truck_event'" | ./hbase shell -n
+[bhosl2@node00 ~]$ echo "describe 'bhosl2:truck_event'" | ./hbase shell -n
 \end{minted}
+
+\includegraphics[width=\linewidth]{image5} %\vspace{-1.5em}
 
 \end{document}
 
