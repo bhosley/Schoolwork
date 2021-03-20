@@ -20,38 +20,33 @@
 	\author{Author: Brandon Hosley}
 	\affiliation{Instructor: Liang Kong, Ph.D}
 
-% Subsubsection header run along with text.	
-\usepackage{titlesec}
-\titleformat{\subsection}[runin]% runin puts it in the same paragraph
-	{\normalfont\bfseries}% formatting commands to apply to the whole heading
-	{\thesubsection}% the label and number
-	{0.5em}% space between label/number and subsection title
-	{}% formatting commands applied just to subsection title
-	[]% punctuation or other commands following subsection title
-
 
 %\abstract{}
 
-%\usepackage{pdfpages}
-%\includepdf{./Snippets/SAS Output HW2-4.pdf}
+\usepackage{pdfpages}
 
 \begin{document}
 \maketitle
 \singlespacing
 	
 \subsection*{Q1: Write a SAS program to produce Mean, Minimum, Maximum, Standard Deviation, Skewness, and Kurtosis of the teaching efficiency for each classification. }
-t
+\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW3-1.sas}
+\includepdf[pages=-]{./Snippets/SAS Output HW3-1.pdf}
 
 \subsection*{Q2: Write a SAS program to produce a table which contains the mean and standard of the teaching efficiency and the value of test statistic and P-value for testing hypotheses that the mean of teaching efficiency is significant different from 14 for each major. }
-t
+\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW3-2.sas}
+\includepdf[pages=-]{./Snippets/SAS Output HW3-2.pdf}
 
 \subsection*{Q3: Write a SAS program to produce a test of Normality and a plot of Normal probability plot for IQ. }
-t
+\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW3-3.sas}
+\includepdf[pages=-]{./Snippets/SAS Output HW3-3.pdf}
 
 \subsection*{Q4: Write a SAS program to produce correlation coefficient for Math Score of SAT, IQ, Score of Pilot exam, and Score of Final exam with Teaching efficiency. }
-t
+\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW3-4.sas}
+\includepdf[pages=-]{./Snippets/SAS Output HW3-4.pdf}
 
 \subsection*{Q5: Write a SAS program to produce  a 95\% confidence interval for the mean of teaching efficiency for each major. }
-t
+\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW3-5.sas}
+\includepdf[pages=-]{./Snippets/SAS Output HW3-5.pdf}
 
 \end{document}
