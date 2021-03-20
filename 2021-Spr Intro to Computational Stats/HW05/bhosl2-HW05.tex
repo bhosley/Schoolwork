@@ -28,15 +28,16 @@
 \maketitle
 \singlespacing
 
-\emph{A researcher designed an experiment to study the effects of three factors (location, nitrogen, and water) to the yields of certain crop. For each one of the two locations (Trtc: c0 \& c1), he planted the corps in 48 plots. Then he applied one of the 12 combinations of treatments, four different rates of nitrogen application (Trta: a0, a1, a2, and a3) and three different level of watering (Trtb: b0, b1, and b2) to four randomly select plots. The results of yields are recorded in a MS Excel file (HW5.xlsx which is located at “Data Set” folder). In the file, the rate of nitrogen application (Trta) is stored in column A; the level of watering (Trtb) is stored in column B, the location (Trtc) is stored in column C, and the yields (Yeild1, Yield2, Yield3, \& Yield4) are stored I the column D, E, F, \& G.
-\\ Write a SAS Program to answer the following questions.}
+\emph{A researcher designed an experiment to study the effects of three factors (location, nitrogen, and water) to the yields of certain crop. For each one of the two locations (Trtc: c0 \& c1), he planted the crops in 48 plots. Then he applied one of the 12 combinations of treatments, four different rates of nitrogen application (Trta: a0, a1, a2, and a3) and three different level of watering (Trtb: b0, b1, and b2) to four randomly select plots. The results of yields are recorded in a MS Excel file (HW5.xlsx which is located at “Data Set” folder). In the file, the rate of nitrogen application (Trta) is stored in column A; the level of watering (Trtb) is stored in column B, the location (Trtc) is stored in column C, and the yields (Yeild1, Yield2, Yield3, \& Yield4) are stored I the column D, E, F, \& G.
+\\ Write a SAS Program to answer the following questions.
+}
 	
 \subsection*{Q1: Import MS Excel file HW5.xlsx and write it as a SAS data set. }
-% \inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-1.sas}
+\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-1.sas}
 % \includepdf[pages=-]{./Snippets/SAS Output HW5-1.pdf}
 
 \subsection*{Q2: Fit the data with a statistical model with all the main effects and interaction effects. }
-% \inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-2.sas}
+\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-2.sas}
 % \includepdf[pages=-]{./Snippets/SAS Output HW5-2.pdf}
 
 \subsection*{Q3: Fit the data with a statistical model with all significant ($\alpha$=0.05) main effects and interaction effects. }
@@ -47,20 +48,33 @@
 % \inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-4.sas}
 % \includepdf[pages=-]{./Snippets/SAS Output HW5-4.pdf}
 
+The Nitrogen levels corresponding to treatment a0 and a3 had the lower average yield.
+
 \subsection*{Q5: Based on the results of problem 3, using Duncan multiple-range test with $\alpha$=0.1 to perform a multiple comparison of the average yields for different levels of watering. Which level(s) has (have) the highest average yield? }
 % \inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-5.sas}
 % \includepdf[pages=-]{./Snippets/SAS Output HW5-5.pdf}
+
+Watering level treatment b1 had the highest average yield.
 
 \subsection*{Q6: Based on the results of problem 3, using Fisher’s LSD test with $\alpha$=0.025 to perform a multiple comparison of the average yields for different locations. Which location has a higher average yields? }
 % \inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-6.sas}
 % \includepdf[pages=-]{./Snippets/SAS Output HW5-6.pdf}
 
+Location c1 had the higher average yield.
+
 \subsection*{Q7: Based on the results of problem 3, using Tukey studentized range test with $\alpha$=0.025 to perform a multiple comparison of the average yields for different rates of nitrogen application. Which rate(s) has (have) the highest average yields? }
 % \inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-7.sas}
 % \includepdf[pages=-]{./Snippets/SAS Output HW5-7.pdf}
 
+Nitrogen treatments a1 and a2 have the highest average yield and are not significantly different.
+
 \subsection*{Q8: Based on the results of problem 3, using Performs Dunnett’s two-tailed t test with $\alpha$=0.025 to perform a comparison of the average yields of the control rate (a0) with other rates of nitrogen application. Which rates of nitrogen application has a significantly different average yields with the control rate? }
 % \inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW5-8.sas}
 % \includepdf[pages=-]{./Snippets/SAS Output HW5-8.pdf}
+
+All three of the other nitrogen treatment rates have a significant difference at the level of $\alpha$=0.025.
+
+
+\includepdf[pages=-]{./Snippets/SAS Output HW5-2.pdf}
 
 \end{document}
