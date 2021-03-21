@@ -1,0 +1,29 @@
+$ head /home/data/CSC534BDA/datasets/Truck-IoT/truck_event_text_partition.csv
+$ hbase shell
+
+create 'bhosl2:truck_event', 'events'
+exit
+
+$ hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.separator=, -Dimporttsv.columns="events:driverId,events:truckId,events::eventTime,events:eventType,events:longitude,events:latitude,HBASE_ROW_KEY,events:CorrelationId,events:driverName,events:routeId,events:routeName,events:eventDate" 'bhosl2:truck_event' hdfs://node00.sun:8020/user/data/CSC534BDA/Truck-IoT/truck_event_text_partition.csv
+$ hbase shell
+
+put 'bhosl2:truck_event', '20000', 'events:driverId', 'bhosl2'
+put 'bhosl2:truck_event', '20000', 'events:truckId', '999'
+put 'bhosl2:truck_event', '20000', 'events:eventTime', '1200'
+put 'bhosl2:truck_event', '20000', 'events:eventType', 'Overspeed'
+put 'bhosl2:truck_event', '20000', 'events:longitude', '-94.58'
+put 'bhosl2:truck_event', '20000', 'events:latitude', '37.03'
+put 'bhosl2:truck_event', '20000', 'events:CorrelationId', '1000'
+put 'bhosl2:truck_event', '20000', 'events:driverName', 'Brandon Hosley'
+put 'bhosl2:truck_event', '20000', 'events:routeId', '888'
+put 'bhosl2:truck_event', '20000', 'events:routeName', 'UIS to Chicago'
+put 'bhosl2:truck_event', '20000', 'events:eventDate', '2021-02-19-12'
+
+get 'bhosl2:truck_event', '20000'
+
+put 'bhosl2:truck_event', '20000', 'events:routeName', 'Chicago to UIS'
+get 'bhosl2:truck_event', '20000'
+
+get 'bhosl2:truck_event', '20000', ['events:driverName','events:routeName']
+
+$ echo "describe 'bhosl2:truck_event'" | hbase shell -n
