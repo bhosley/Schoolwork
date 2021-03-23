@@ -1,0 +1,60 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\title{Data Mining: Exercise 4-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Assignment 1: First Method Classification}
+
+\subsection*{Preparing Data}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
+
+
+\subsection*{Training/Testing}
+
+
+\subsection*{Evaluating Your Model}
+Use below metrics, see References [4] to find exact metric names
+Accuracy, Precision, Recall, F-1 measure
+
+\subsection*{Explain the Above Metric}
+What they are. Explain based on your results/outputs, e.g. how they are calculated
+Why some of their names are different and explain the difference, e.g. precision vs. weighted precision
+
+\section*{Assignment 2: Second Method Classification}
+
+\subsection*{Evaluate using Dataframe and RDD-Method}
+To use RDD-based metrics, convert predictions (DataFrame) into predictionAndLabel (RDD), see References [7]
+
+Use below metrics, see References [6]
+	Accuracy
+	Precision, Recall, F-1 measure (by label)
+	Precision, Recall, F-1 measure (weighted)
+
+\subsection*{Explain the differences of label and weighted based on your results.}
+
+
+\end{document}
+
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
