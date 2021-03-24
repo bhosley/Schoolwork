@@ -24,20 +24,62 @@
 
 \subsection*{Preparing Data}
 \begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-\end{minted}
-\includegraphics[width=\linewidth]{image1}
+data = spark.read.format("libsvm").load("/user/data/CSC533DM/sample_libsvm_data.txt")
+from pyspark.ml.feature import StringIndexer
+labelIndexer = StringIndexer(inputCol="label",outputCol="indexedLabel").fit(data)
+labelIndexer.transform(data).show(5)
 
+from pyspark.ml.feature import VectorIndexer
+featureIndexer = VectorIndexer(inputCol="features", outputCol="indexedFeatures",maxCategories=4).fit(data)
+featureIndexer.transform(data).show(5)
+
+(trainingData, testData) = data.randomSplit([0.7, 0.3])
+
+trainingData.show(5)
+testData.show(5)
+\end{minted}
+\includegraphics[width=\linewidth]{image1.1}
+\includegraphics[width=\linewidth]{image1.2}
+\includegraphics[width=\linewidth]{image1.3}
+\includegraphics[width=\linewidth]{image1.4}
 
 \subsection*{Training/Testing}
-
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+from pyspark.ml.classification import DecisionTreeClassifier
+dt = DecisionTreeClassifier(labelCol="indexedLabel",featuresCol="indexedFeatures")
+from pyspark.ml import Pipeline
+pipeline = Pipeline(stages=[labelIndexer, featureIndexer, dt])
+model = pipeline.fit(trainingData)
+predictions = model.transform(testData)
+#predictions.show(5)
+predictions.select("prediction", "indexedLabel", "features").show(5)
+\end{minted}
+\includegraphics[width=\linewidth]{image2}
 
 \subsection*{Evaluating Your Model}
-Use below metrics, see References [4] to find exact metric names
-Accuracy, Precision, Recall, F-1 measure
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+evaluator = MulticlassClassificationEvaluator(labelCol="indexedLabel",predictionCol="prediction", metricName="accuracy")
+accuracy = evaluator.evaluate(predictions)
+evaluator.setMetricName("weightedPrecision")
+precision = evaluator.evaluate(predictions)
+evaluator.setMetricName("weightedRecall")
+Recall = evaluator.evaluate(predictions)
+evaluator.setMetricName("f1")
+f1Measure = evaluator.evaluate(predictions)
+
+print("Accuracy: %g " % accuracy)
+print("Precision: %g " % precision)
+print("Recall: %g " % recall)
+print("F1: %g " % f1Measure)
+\end{minted}
+\includegraphics[width=\linewidth]{image3}
 
 \subsection*{Explain the Above Metric}
-What they are. Explain based on your results/outputs, e.g. how they are calculated
-Why some of their names are different and explain the difference, e.g. precision vs. weighted precision
+\emph{What they are. Explain based on your results/outputs, e.g. how they are calculated
+Why some of their names are different and explain the difference, e.g. precision vs. weighted precision} \vspace{2em}
+
+
 
 \section*{Assignment 2: Second Method Classification}
 
