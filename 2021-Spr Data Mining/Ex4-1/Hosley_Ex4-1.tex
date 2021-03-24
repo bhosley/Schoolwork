@@ -9,6 +9,7 @@
 	\usepackage{xcolor}
 		\definecolor{light-gray}{gray}{0.97}
 
+\usepackage{amsmath}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{comment}
@@ -79,7 +80,26 @@ print("F1: %g " % f1Measure)
 \emph{What they are. Explain based on your results/outputs, e.g. how they are calculated
 Why some of their names are different and explain the difference, e.g. precision vs. weighted precision} \vspace{2em}
 
+The definitions for the methods are provided by Spark documentation:
+\begin{align*}
+	ACC &= \frac{TP}{TP+FP} = \frac{1}{N}\sum_{i=0}^{N-1} \hat{\delta}(\hat{y}_i - y_i) \\
+	
+	PPV_w &= \frac{1}{N} \sum_{\ell \in L} \cdot \frac{
+		\sum_{i=0}^{N-1} \hat{\delta} (\hat{y_i}-\ell) \cdot \hat{\delta} (y_i-\ell)
+	}{\sum_{i=0}^{N-1} \hat{\delta} (\hat{y_i}-\ell)} 
+	\cdot \sum_{i=0}^{N-1} \hat{\delta} (y_i -\ell) \\
+	
+	TPR_w &= \frac{1}{N} \sum_{\ell \in L} \cdot \sum_{i=0}^{N-1} \hat{\delta} (\hat{y_i}-\ell) \cdot \hat{\delta} (y_i-\ell)\\
+	
+	F_w(\beta) &= \\
+\end{align*}
 
+In Other words:\\
+Accuracy is the ratio of true positives to true and false positives reported. \\
+Precision is the same. \\
+Recall is the ratio of true positives to all known positives. \\
+When weighted these measurements are reported proportionately to the frequency of their corresponding labels. \\
+The F-score is the harmonic mean of precision and recall. Which is the number of labels multiplied by the precisions and recalls of the label and divided by the sum of the precision and recalls. \\
 
 \section*{Assignment 2: Second Method Classification}
 
