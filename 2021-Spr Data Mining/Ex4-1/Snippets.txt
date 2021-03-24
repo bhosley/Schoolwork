@@ -1,35 +1,47 @@
-from pyspark.ml import Pipeline
-from pyspark.ml.classification import DecisionTreeClassifier
-from pyspark.ml.feature import StringIndexer, VectorIndexer
-from pyspark.ml.evaluation import MulticlassClassificationEvaluator
-# Load the data stored in LIBSVM format as a DataFrame.
-data = spark.read.format("libsvm").load("data/mllib/sample_libsvm_data.txt")
-# Index labels, adding metadata to the label column.
-# Fit on whole dataset to include all labels in index.
-labelIndexer = StringIndexer(inputCol="label", outputCol="indexedLabel").fit(data)
-# Automatically identify categorical features, and index them.
-# We specify maxCategories so features with > 4 distinct values are treated as
-continuous.
-featureIndexer = VectorIndexer(inputCol="features", outputCol="indexedFeatures",
-maxCategories=4).fit(data)
-# Split the data into training and test sets (30% held out for testing)
-(trainingData, testData) = data.randomSplit([0.7, 0.3])
-# Train a DecisionTree model.
-dt = DecisionTreeClassifier(labelCol="indexedLabel", featuresCol="indexedFeatures")
-# Chain indexers and tree in a Pipeline
-pipeline = Pipeline(stages=[labelIndexer, featureIndexer, dt])
-# Train model. This also runs the indexers.
-model = pipeline.fit(trainingData)
+wc -l ../data/apache-spark/sample_libsvm_data.txt
 
-# Make predictions.
+hadoop fs -put ../data/apache-spark/sample_libsvm_data.txt /user/data/CSC533DM/.
+
+hadoop fs -ls /user/data/CSC533DM/
+
+$ pyspark
+
+data = spark.read.format("libsvm").load("/user/data/CSC533DM/sample_libsvm_data.txt")
+from pyspark.ml.feature import StringIndexer
+labelIndexer = StringIndexer(inputCol="label",outputCol="indexedLabel").fit(data)
+labelIndexer.transform(data).show(5)
+
+from pyspark.ml.feature import VectorIndexer
+featureIndexer = VectorIndexer(inputCol="features", outputCol="indexedFeatures",maxCategories=4).fit(data)
+featureIndexer.transform(data).show(5)
+
+(trainingData, testData) = data.randomSplit([0.7, 0.3])
+
+trainingData.show(5)
+testData.show(5)
+
+
+
+from pyspark.ml.classification import DecisionTreeClassifier
+dt = DecisionTreeClassifier(labelCol="indexedLabel",featuresCol="indexedFeatures")
+from pyspark.ml import Pipeline
+pipeline = Pipeline(stages=[labelIndexer, featureIndexer, dt])
+model = pipeline.fit(trainingData)
 predictions = model.transform(testData)
-# Select example rows to display.
+#predictions.show(5)
 predictions.select("prediction", "indexedLabel", "features").show(5)
-# Select (prediction, true label) and compute test error
-evaluator = MulticlassClassificationEvaluator(labelCol="indexedLabel",
-predictionCol="prediction", metricName="accuracy")
+
+from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+evaluator = MulticlassClassificationEvaluator(labelCol="indexedLabel",predictionCol="prediction", metricName="accuracy")
 accuracy = evaluator.evaluate(predictions)
-print("Test Error = %g " % (1.0 - accuracy))
-treeModel = model.stages[2]
-# summary only
-print(treeModel)
+evaluator.setMetricName("weightedPrecision")
+precision = evaluator.evaluate(predictions)
+evaluator.setMetricName("weightedRecall")
+Recall = evaluator.evaluate(predictions)
+evaluator.setMetricName("f1")
+f1Measure = evaluator.evaluate(predictions)
+
+print("Accuracy: %g " % accuracy)
+print("Precision: %g " % precision)
+print("Recall: %g " % recall)
+print("F1: %g " % f1Measure)
