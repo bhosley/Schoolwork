@@ -1,94 +1,13 @@
-$ hive
+$ pyspark
 
-set hive.cli.print.header=true;
+textFile = spark.read.text("/user/bhosl2/COVID19/coronavirus-text-only-1000.txt")
 
-SELECT driverid, eventType, count(*) FROM csc534.bhosl2_truck_event GROUP BY driverId, eventType;
-SELECT driverId, count(*) FROM csc534.bhosl2_truck_event GROUP BY driverid;
+df = spark.read.option("header","true").csv("/user/data/CSC534BDA/COVID19/COVID19-worldwide.csv")
+df.printSchema()
+df.select("dateRep", "cases", "deaths", "countriesAndTerritories").show()
 
-SELECT driverid, eventType, count(*) AS total FROM csc534.bhosl2_truck_event GROUP BY driverId, eventType UNION ALL SELECT driverid, null as eventType, count(*) AS total FROM csc534.bhosl2_truck_event GROUP BY driverid;
-SELECT driverId, eventType, count(*) AS occurance FROM csc534.bhosl2_truck_event GROUP BY driverId, eventType GROUPING SETS ((driverId, eventType), driverId);
+df2 = spark.read.option("header","true").option("inferSchema", "true").csv("/user/data/CSC534BDA/COVID19/COVID19-worldwide.csv")
 
-SELECT driverId, eventType, count(*) 
-    AS occurance FROM csc534.bhosl2_truck_event 
-    GROUP BY driverId, eventType 
-    WITH ROLLUP
-    LIMIT 10;
+df2.groupBy("continentExp").agg(F.sum("cases"), F.sum("deaths")).show()
 
-SELECT driverId, eventType, count(*) 
-    AS occurance FROM csc534.bhosl2_truck_event 
-    GROUP BY driverId, eventType
-    WITH CUBE
-    LIMIT 10;
-
-$
-head /home/data/CSC534BDA/datasets/Titanic/titanic.csv
-
-hadoop fs -mkdir Titanic
-hadoop fs - ls
-
-hadoop fs -put /home/data/CSC534BDA/datasets/Titanic/titanic.csv Titanic
-
-$ hive
-
-CREATE TABLE csc534.bhosl2_titanic (
-    PassengerId INT,
-    Survived INT,
-    Pclass INT,
-    Name STRING,
-    Sex STRING,
-    Age INT,
-    SibSp INT,
-    Parch INT,
-    Ticket STRING,
-    Fare DOUBLE,
-    Cabin STRING,
-    Embarked STRING
-)
-COMMENT 'Titanic Passenger Data'
-ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
-WITH SERDEPROPERTIES (
-   "separatorChar" = ",",
-   "quoteChar"     = "\""
-)
-STORED AS TEXTFILE
-TBLPROPERTIES('skip.header.line.count'='1');
-
-LOAD DATA INPATH 'Titanic/titanic.csv' INTO TABLE csc534.bhosl2_titanic;
-
-select count(*) from csc534.bhosl2_titanic;
-exit;
-cat /home/data/CSC534BDA/datasets/Titanic/titanic.csv  | wc -l
-
-$ hive
-
-set hive.cli.print.header=true;
-
-SELECT survived AS survived,
-    count(*) AS total,
-    count(*) / 8.91 AS survival_rate
-FROM csc534.bhosl2_titanic
-GROUP BY survived;
-
-SELECT survived AS survived,
-    count(*) AS total,
-    count(*) / 8.91 AS survival_rate,
-    count(*) / sum(if(survived=1,1,0))
-FROM csc534.bhosl2_titanic
-GROUP BY survived;
-
-SELECT survived AS survived,
-    sex AS sex,
-    count(*) AS total,
-    count(*) / 8.91 AS survival_rate,
-    count(*) / sum(if(survived=1,1,0))
-FROM csc534.bhosl2_titanic
-GROUP BY survived, sex;
-
-SELECT survived AS survived,
-    sex AS sex,
-    count(*) AS total,
-    count(*) / 8.91 AS survival_rate,
-    count(*) / sum(survived)
-FROM csc534.bhosl2_titanic
-GROUP BY survived, sex
-WITH CUBE;
+df2.select("dateRep","cases","deaths","countriesAndTerritories").filter("deaths >= 800").filter("continentExp == 'America'").show(15)
