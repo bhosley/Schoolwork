@@ -1,0 +1,58 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+% Subsubsection header run along with text.	
+\usepackage{titlesec}
+\titleformat{\subsubsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\usepackage[normalem]{ulem}
+
+\title{Big Data Analytics: Exercise 4-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Assignment 1}
+\emph{ Write and run a Spark command (not SQL query) to show the date when # of deaths was serious (more than 800 deaths), as well as # of confirmed cases, # of deaths, and country using filter function. }
+
+
+
+\section*{Assignment 2}
+\emph{ Write and run a Spark command (not SQL query) to read the COVID19-worldwide.csv with inferSchema option, then show the schema.}
+
+
+
+\section*{Assignment 3}
+\emph{ Write and run a Spark SQL query, e.g. spark.sql("""\ldots"""), or Spark command to calculate delta (the changes) of cases from previous day. }
+
+
+\section*{Assignment 4}
+\emph{ Write and run a Spark SQL query, e.g. spark.sql("""\ldots""") or Spark command to find the 	countries with the highest number of confirmed cases each day among all countries during the period from Oct. 11 to Oct. 18 2020, using 'Rank() OVER(\ldots)'. O }
+
+
+
+\end{document}
+
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+\end{minted}
+\mintinline[bgcolor=light-gray]{bash}{} \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
+\end{enumerate}
