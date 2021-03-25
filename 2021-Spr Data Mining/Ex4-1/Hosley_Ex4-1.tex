@@ -82,16 +82,17 @@ Why some of their names are different and explain the difference, e.g. precision
 
 The definitions for the methods are provided by Spark documentation:
 \begin{align*}
-	ACC &= \frac{TP}{TP+FP} = \frac{1}{N}\sum_{i=0}^{N-1} \hat{\delta}(\hat{y}_i - y_i) \\
-	
-	PPV_w &= \frac{1}{N} \sum_{\ell \in L} \cdot \frac{
+	ACC &= \frac{TP}{TP+FP} = \frac{1}{N}\sum_{i=0}^{N-1} \hat{\delta}(\hat{y}_i - y_i) \\	
+	PPV_w &= \frac{1}{N} \sum_{\ell \in L} \frac{
 		\sum_{i=0}^{N-1} \hat{\delta} (\hat{y_i}-\ell) \cdot \hat{\delta} (y_i-\ell)
 	}{\sum_{i=0}^{N-1} \hat{\delta} (\hat{y_i}-\ell)} 
-	\cdot \sum_{i=0}^{N-1} \hat{\delta} (y_i -\ell) \\
-	
-	TPR_w &= \frac{1}{N} \sum_{\ell \in L} \cdot \sum_{i=0}^{N-1} \hat{\delta} (\hat{y_i}-\ell) \cdot \hat{\delta} (y_i-\ell)\\
-	
-	F_w(\beta) &= \\
+	\cdot \sum_{i=0}^{N-1} \hat{\delta} (y_i -\ell) \\	
+	TPR_w &= \frac{1}{N} \sum_{\ell \in L} \sum_{i=0}^{N-1} \hat{\delta} (\hat{y_i}-\ell) \cdot \hat{\delta} (y_i-\ell)\\
+	F_w(\beta) &=
+		\frac{1}{N}
+		\sum_{\ell \in L} (1+\beta^2) \cdot
+		(\frac{PPV(\ell) \cdot TPR(\ell)}{\beta^2 \cdot PPV(\ell)+TPR(\ell)}) \cdot
+		\sum_{i=0}^{N-1} \hat{\delta} (y_i -\ell) \\
 \end{align*}
 
 In Other words:\\
@@ -106,10 +107,33 @@ The F-score is the harmonic mean of precision and recall. Which is the number of
 \subsection*{Evaluate using Dataframe and RDD-Method}
 To use RDD-based metrics, convert predictions (DataFrame) into predictionAndLabel (RDD), see References [7]
 
-Use below metrics, see References [6]
-	Accuracy
-	Precision, Recall, F-1 measure (by label)
-	Precision, Recall, F-1 measure (weighted)
+Use below metrics, see References [6] \\
+	Accuracy \\
+	Precision, Recall, F-1 measure (by label) \\
+	Precision, Recall, F-1 measure (weighted) \\
+	
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+from pyspark.mllib.evaluation import MulticlassMetrics
+predictionAndLabels = predictions.select("prediction", "indexedLabel").rdd
+metrics = MulticlassMetrics(predictionAndLabels)
+
+# Statistics by class
+labels = predictionAndLabels.map(lambda lp: lp.label).distinct().collect()
+for label in sorted(labels):
+print("Class %s precision = %s" % (label, metrics.precision(label)))
+print("Class %s recall = %s" % (label, metrics.recall(label)))
+print("Class %s F1 Measure = %s" % (label, metrics.fMeasure(label, beta=1.0)))
+
+# Weighted stats
+print("Weighted recall = %s" % metrics.weightedRecall)
+print("Weighted precision = %s" % metrics.weightedPrecision)
+print("Weighted F(1) Score = %s" % metrics.weightedFMeasure())
+print("Weighted F(0.5) Score = %s" % metrics.weightedFMeasure(beta=0.5))
+print("Weighted false positive rate = %s" % metrics.weightedFalsePositiveRate)
+\end{minted}
+\includegraphics[width=\linewidth]{image5.0}
+\includegraphics[width=\linewidth]{image5.1}
+\includegraphics[width=\linewidth]{image5.2}
 
 \subsection*{Explain the differences of label and weighted based on your results.}
 
