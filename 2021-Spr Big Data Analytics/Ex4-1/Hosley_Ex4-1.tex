@@ -32,6 +32,7 @@
 
 \section*{Assignment 1}
 \emph{ Write and run a Spark command (not SQL query) to show the date when # of deaths was serious (more than 800 deaths), as well as # of confirmed cases, # of deaths, and country using filter function. }
+
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 df2.select("dateRep","cases","deaths","countriesAndTerritories").filter("deaths >= 800").filter("countryterritoryCode == 'USA'").show(15)
 \end{minted}
@@ -49,11 +50,20 @@ df2 = spark.read.option("header","true").option("inferSchema", "true").csv("/use
 \section*{Assignment 3}
 \emph{ Write and run a Spark SQL query, e.g. spark.sql("""\ldots"""), or Spark command to calculate delta (the changes) of cases from previous day. }
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image3} %\vspace{-1.5em}
+\textbf{Note:} Filter for USA and limiting return to 15 are for display purposes only.
 
 \section*{Assignment 4}
 \emph{ Write and run a Spark SQL query, e.g. spark.sql("""\ldots""") or Spark command to find the 	countries with the highest number of confirmed cases each day among all countries during the period from Oct. 11 to Oct. 18 2020, using 'Rank() OVER(\ldots)'. O }
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 
+\end{minted}
+%\includegraphics[width=\linewidth]{image4} %\vspace{-1.5em}
+\textbf{Note:} Filter for USA and limiting return to 15 are for display purposes only.
 
 \end{document}
 
