@@ -10,4 +10,42 @@ df2 = spark.read.option("header","true").option("inferSchema", "true").csv("/use
 
 df2.groupBy("continentExp").agg(F.sum("cases"), F.sum("deaths")).show()
 
-df2.select("dateRep","cases","deaths","countriesAndTerritories").filter("deaths >= 800").filter("continentExp == 'America'").show(15)
+df2.select("dateRep","cases","deaths","countriesAndTerritories").filter("deaths >= 800").filter("countryterritoryCode == 'USA'").show(15)
+
+from pyspark.sql.functions import col, to_date
+df3 = df2.withColumn("Date", to_date(col('dateRep'), 'MM/dd/yy'))
+df3.createOrReplaceTempView("covid19_stat_date")
+
+spark.sql("""
+    SELECT
+    countryterritoryCode AS country,
+    date,
+    cases,
+    cases - lag(cases) OVER(
+        PARTITION BY countryterritoryCode
+        ORDER BY date
+    ) AS cases_delta
+    FROM covid19_stat_date
+""").filter("countryterritoryCode == 'USA'").show(1000)
+
+spark.sql("""
+    SELECT
+    date,
+    countryterritoryCode AS country,
+    cases,
+    RANK() OVER(
+        PARTITION BY date
+        ORDER BY cases ASC
+    ) as rank
+    FROM covid19_stat_date
+    WHERE date >= '2020-10-11'
+      AND date <= '2020-10-18'
+""").filter(rank = 1).show()
+    
+
+    SUM(cases) OVER(
+    ORDER BY date
+    ) AS running_total
+
+.filter("countryterritoryCode == 'USA'")
+filter date between oct 11 and oct 18
