@@ -35,17 +35,10 @@ spark.sql("""
     cases,
     RANK() OVER(
         PARTITION BY date
-        ORDER BY cases ASC
+        ORDER BY cases DESC
     ) as rank
     FROM covid19_stat_date
     WHERE date >= '2020-10-11'
       AND date <= '2020-10-18'
-""").filter(rank = 1).show()
-    
-
-    SUM(cases) OVER(
-    ORDER BY date
-    ) AS running_total
-
-.filter("countryterritoryCode == 'USA'")
-filter date between oct 11 and oct 18
+    ORDER BY date ASC
+""").filter("rank == 1").drop("rank").show()
