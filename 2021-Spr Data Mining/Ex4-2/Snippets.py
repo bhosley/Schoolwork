@@ -33,13 +33,15 @@ features_df.count()
 
 # trainingData
 
-from apache.spark.ml.classification import RandomForestClassifier
+from pyspark.ml.classification import RandomForestClassifier
 rf = RandomForestClassifier(labelCol="Survived", featuresCol="features")
 modelRF = rf.fit(trainingData)
 
 # Evaluate
 
-from apache.spark.ml.evaluation import BinaryClassificationEvaluator
-
+from pyspark.ml.evaluation import BinaryClassificationEvaluator
 predictions = modelRF.transform(testData)
-evaluator = BinaryClassificationEvaluator(labelCol="Survived", predictionCol="predictions", metricName="Accuracy")
+evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderROC")
+evaluator.evaluate(predictions)
+evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderPR")
+evaluator.evaluate(predictions)
