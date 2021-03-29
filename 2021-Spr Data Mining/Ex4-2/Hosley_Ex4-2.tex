@@ -24,7 +24,9 @@
 \section*{Assignment 1: Index The Gender Values}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+from pyspark.ml.feature import StringIndexer
+indexed_df = StringIndexer(inputCol="Gender", outputCol="IndexedGender").fit(imputed_df).transform(imputed_df)
+indexed_df.show(5)
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
 
@@ -32,25 +34,35 @@
 \section*{Assignment 2: Split the dataset into training and testing datasets}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+(trainingData, testData) = features_df.randomSplit([0.8, 0.2])
+features_df.count()
+trainingData.count()
+testData.count()
 \end{minted}
-\includegraphics[width=\linewidth]{image1}
+\includegraphics[width=\linewidth]{image2}
 
 
 \section*{Assignment 3: Build a model with the training dataset}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+from pyspark.ml.classification import RandomForestClassifier
+rf = RandomForestClassifier(labelCol="Survived", featuresCol="features")
+modelRF = rf.fit(trainingData)
 \end{minted}
-\includegraphics[width=\linewidth]{image1}
+\includegraphics[width=\linewidth]{image3}
 
 
 \section*{Assignment 4: Evaluate the model}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+from pyspark.ml.evaluation import BinaryClassificationEvaluator
+predictions = modelRF.transform(testData)
+evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderROC")
+evaluator.evaluate(predictions)
+evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderPR")
+evaluator.evaluate(predictions)
 \end{minted}
-\includegraphics[width=\linewidth]{image1}
+\includegraphics[width=\linewidth]{image4}
 
 
 \section*{Assignment 5: Explain the differences of Evaluators}
