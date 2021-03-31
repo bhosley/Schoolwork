@@ -70,9 +70,26 @@ evaluator.evaluate(predictions)
 \emph{$\cdot$ BinaryClassificationEvaluator and MulticlassClassificationEvaluator} \\
 \emph{$\cdot$ List names of supported metrics for above evaluators} \\
 
+The multiclass classification evaluator has a large number of options for metrics: 
+f1,
+accuracy,
+weightedPrecision,
+weightedRecall,
+weightedTruePositiveRate, 
+weightedFalsePositiveRate, 
+weightedFMeasure, 
+truePositiveRateByLabel, 
+falsePositiveRateByLabel, 
+precisionByLabel, 
+recallByLabel, 
+fMeasureByLabel, 
+logLoss, 
+and hammingLoss.
+The binary classification evaluator is much more limited, having only the 
+area-under-curve and area-under-precision-recall-curve options.
 
 
-Binary classification evaluator is much more limited, having only the Area under curve and Area Under Precision Recall curve options.
+
 
 \emph{2. Study and explain what Area Under ROC curve (areaUnderRoc) and Area Under Precision-Recall curve (areaUnderPR) are. }
 
