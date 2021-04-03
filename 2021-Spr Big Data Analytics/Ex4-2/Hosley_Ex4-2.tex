@@ -1,0 +1,111 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+% Subsubsection header run along with text.	
+\usepackage{titlesec}
+\titleformat{\subsubsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\usepackage[normalem]{ulem}
+
+\title{Big Data Analytics: Exercise 4-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Assignment 1}
+\emph{ Write and run a Spark command (not SQL query) to show the date when \# of deaths was serious (more than 800 deaths), as well as \# of confirmed cases, \# of deaths, and country using filter function. }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+df2.select("dateRep","cases","deaths","countriesAndTerritories") .filter("deaths >= 800").filter("countryterritoryCode == 'USA'").show(15)
+\end{minted}
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
+\textbf{Note:} Filter for USA and limiting return to 15 are for display purposes only.
+
+\clearpage
+
+\section*{Assignment 2}
+\emph{ Write and run a Spark command (not SQL query) to read the COVID19-worldwide.csv with inferSchema option, then show the schema.}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+df2 = spark.read.option("header","true").option("inferSchema", "true").csv("/user/data/CSC534BDA/COVID19/COVID19-worldwide.csv") .printSchema()
+\end{minted}
+\includegraphics[width=\linewidth]{image2} %\vspace{-1.5em}
+
+\clearpage
+
+\section*{Assignment 3}
+\emph{ Write and run a Spark SQL query, e.g. spark.sql("""\ldots"""), or Spark command to calculate delta (the changes) of cases from previous day. }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+from pyspark.sql.functions import col, to_date
+df3 = df2.withColumn("Date", to_date(col('dateRep'), 'MM/dd/yy'))
+df3.createOrReplaceTempView("covid19_stat_date")
+\end{minted}
+Coming from the practice, these lines are necessary to provide dates for assignments 3 and 4.
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+spark.sql("""
+	SELECT
+	countryterritoryCode AS country,
+	date,
+	cases,
+	cases - lag(cases) OVER(
+		PARTITION BY countryterritoryCode
+		ORDER BY date
+	) AS cases_delta
+	FROM covid19_stat_date
+""").show(1000)
+\end{minted}
+\includegraphics[width=\linewidth]{image3.1} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image3.2} %\vspace{-1.5em}
+\textbf{Note:} Filter for USA and omission of middle results are for display purposes only.
+
+\clearpage 
+
+\section*{Assignment 4}
+\emph{ Write and run a Spark SQL query, e.g. spark.sql("""\ldots""") or Spark command to find the 	countries with the highest number of confirmed cases each day among all countries during the period from Oct. 11 to Oct. 18 2020, using 'Rank() OVER(\ldots)'. }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+spark.sql("""
+	SELECT
+	date,
+	countryterritoryCode AS country,
+	cases,
+	RANK() OVER(
+		PARTITION BY date
+		ORDER BY cases DESC
+	) as rank
+	FROM covid19_stat_date
+	WHERE date >= '2020-10-11'
+	  AND date <= '2020-10-18'
+	ORDER BY date ASC
+""").filter("rank == 1").drop("rank").show()
+\end{minted}
+\includegraphics[width=\linewidth]{image4} %\vspace{-1.5em}
+
+
+\end{document}
+
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
+\end{minted}
+\mintinline[bgcolor=light-gray]{bash}{} \begin{enumerate}[before=\itshape,font=\normalfont,label=\alph*.]
+\end{enumerate}
