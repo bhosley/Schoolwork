@@ -23,83 +23,93 @@
 
 \usepackage[normalem]{ulem}
 
-\title{Big Data Analytics: Exercise 4-1}
+\title{Big Data Analytics: Exercise 4-2}
 \author{Brandon Hosley}
 \date{\today}
 
 \begin{document}
 \maketitle
 
+\section*{Pre-Assignment}
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+from pyspark.ml.linalg import Vectors
+from pyspark.ml.classification import LogisticRegression
+training = spark.createDataFrame([
+	(1.0, Vectors.dense([0.0, 1.1, 0.1])),
+	(0.0, Vectors.dense([2.0, 1.0, -1.0])),
+	(0.0, Vectors.dense([2.0, 1.3, 1.0])),
+	(1.0, Vectors.dense([0.0, 1.2, -0.5]))], ["label", "features"])
+\end{minted}
+
 \section*{Assignment 1}
-\emph{ Write and run a Spark command (not SQL query) to show the date when \# of deaths was serious (more than 800 deaths), as well as \# of confirmed cases, \# of deaths, and country using filter function. }
+\emph{ Do the exercise in section 2.2.1.2 and 2.2.1.3 }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-df2.select("dateRep","cases","deaths","countriesAndTerritories") .filter("deaths >= 800").filter("countryterritoryCode == 'USA'").show(15)
+lr = LogisticRegression(maxIter=10, regParam=0.01)
+print("LogisticRegression parameters:\n" + lr.explainParams() + "\n")
+model1 = lr.fit(training)
+
+print("Model 1 was fit using parameters: ")
+print(model1.extractParamMap())
 \end{minted}
 \includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
-\textbf{Note:} Filter for USA and limiting return to 15 are for display purposes only.
 
-\clearpage
 
 \section*{Assignment 2}
-\emph{ Write and run a Spark command (not SQL query) to read the COVID19-worldwide.csv with inferSchema option, then show the schema.}
+\emph{ Do the exercise in section 2.2.1.4 and 2.2.1.5 }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-df2 = spark.read.option("header","true").option("inferSchema", "true").csv("/user/data/CSC534BDA/COVID19/COVID19-worldwide.csv") .printSchema()
+paramMap = {lr.maxIter: 20}
+paramMap[lr.maxIter] = 30 # Specify 1 Param, overwriting the original maxIter.
+paramMap.update({lr.regParam: 0.1, lr.threshold: 0.55}) # Specify multiple Params.
+
+paramMap2 = {lr.probabilityCol: "myProbability"} # Change output column name
+paramMapCombined = paramMap.copy()
+paramMapCombined.update(paramMap2)
+
+model2 = lr.fit(training, paramMapCombined)
+print("Model 2 was fit using parameters: ")
+print(model2.extractParamMap())
 \end{minted}
 \includegraphics[width=\linewidth]{image2} %\vspace{-1.5em}
 
-\clearpage
 
 \section*{Assignment 3}
-\emph{ Write and run a Spark SQL query, e.g. spark.sql("""\ldots"""), or Spark command to calculate delta (the changes) of cases from previous day. }
+\emph{ Do the exercise in section 2.2.1.7 and 2.2.1.8 }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-from pyspark.sql.functions import col, to_date
-df3 = df2.withColumn("Date", to_date(col('dateRep'), 'MM/dd/yy'))
-df3.createOrReplaceTempView("covid19_stat_date")
-\end{minted}
-Coming from the practice, these lines are necessary to provide dates for assignments 3 and 4.
+test = spark.createDataFrame([
+	(1.0, Vectors.dense([-1.0, 1.5, 1.3])),
+	(0.0, Vectors.dense([3.0, 2.0, -0.1])),
+	(1.0, Vectors.dense([0.0, 2.2, -1.5]))], ["label", "features"])
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-spark.sql("""
-	SELECT
-	countryterritoryCode AS country,
-	date,
-	cases,
-	cases - lag(cases) OVER(
-		PARTITION BY countryterritoryCode
-		ORDER BY date
-	) AS cases_delta
-	FROM covid19_stat_date
-""").show(1000)
-\end{minted}
-\includegraphics[width=\linewidth]{image3.1} %\vspace{-1.5em}
-\includegraphics[width=\linewidth]{image3.2} %\vspace{-1.5em}
-\textbf{Note:} Filter for USA and omission of middle results are for display purposes only.
+prediction = model2.transform(test)
+result = prediction.select("features", "label", "myProbability", "prediction").collect()
 
-\clearpage 
+for row in result:
+	print("features=%s, label=%s -> prob=%s, prediction=%s"
+		% (row.features, row.label, row.myProbability, row.prediction))
+\end{minted}
+\includegraphics[width=\linewidth]{image3} %\vspace{-1.5em}
+
 
 \section*{Assignment 4}
-\emph{ Write and run a Spark SQL query, e.g. spark.sql("""\ldots""") or Spark command to find the 	countries with the highest number of confirmed cases each day among all countries during the period from Oct. 11 to Oct. 18 2020, using 'Rank() OVER(\ldots)'. }
+\emph{ Do the exercise to learn ML pipeline in
+	\hyperref{https://spark.apache.org/docs/2.4.0/ml-pipeline.html#example-pipeline}{
+		Appache Docs}.
+ }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-spark.sql("""
-	SELECT
-	date,
-	countryterritoryCode AS country,
-	cases,
-	RANK() OVER(
-		PARTITION BY date
-		ORDER BY cases DESC
-	) as rank
-	FROM covid19_stat_date
-	WHERE date >= '2020-10-11'
-	  AND date <= '2020-10-18'
-	ORDER BY date ASC
-""").filter("rank == 1").drop("rank").show()
 \end{minted}
-\includegraphics[width=\linewidth]{image4} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
+
+
+\section*{Assignment 5}
+\emph{  }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\end{minted}
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
 
 
 \end{document}
