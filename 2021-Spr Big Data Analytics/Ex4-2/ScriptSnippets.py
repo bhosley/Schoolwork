@@ -82,3 +82,54 @@ for row in selected.collect():
     print("(%d, %s) --> prob=%s, prediction=%f" % (rid, text, str(prob), prediction))
 
 ##### 5 #####
+
+from pyspark.ml.linalg import Vectors
+from pyspark.ml.regression import GeneralizedLinearRegression
+from pyspark.ml import Pipeline
+from pyspark.ml.feature import HashingTF, Tokenizer, VectorAssembler
+from pyspark.sql.functions import split
+
+schema = 'TweetId LONG, Username STRING, Timestamp TIMESTAMP, Followers INT, Friends INT, Retweets INT, Favorites INT, Entities STRING, Sentiment STRING, Mentions STRING, Hashtags STRING, URLs STRING'
+
+# TweetId LONG, 
+# Username STRING, 
+# Timestamp TIMESTAMP, 
+# Followers INT, 
+# Friends INT, 
+# Retweets INT, 
+# Favorites INT, 
+# Entities STRING, 
+# Sentiment STRING, 
+# Mentions STRING, 
+# Hashtags STRING, 
+# URLs STRING
+
+df = spark.read.schema(schema) \
+    .option("delimiter", "\t") \
+    .option("timestampFormat", "EEE MMM dd HH:mm:ss Z yyyy") \
+    .csv("/user/data/CSC534BDA/COVID19-Retweet/TweetsCOV19-train.tsv")
+df.printSchema()
+
+## Fix Sentiment
+
+sent_col = split(df['Sentiment'], ' ')
+df = df.withColumn('Positivity', sent_col.getItem(0).cast('INT'))
+df = df.withColumn('Negativity', sent_col.getItem(1).cast('INT'))
+
+## Wash Data
+
+
+
+## Prepare Model Inputs
+
+assembler = VectorAssembler( \
+    outputCol='features', \
+    inputCols=['Followers', 'Friends', 'Positivity', 'Negativity'])
+features_df = assembler.transform(df)
+
+(trainingData, testData) = features_df.randomSplit([0.8, 0.2])
+lr = LogisticRegression(maxIter=10, regParam=0.01)
+model = lr.fit(training)
+
+## Test
+rf = RandomForestClassifier(labelCol="Survived", featuresCol="features")
