@@ -85,9 +85,8 @@ for row in selected.collect():
 
 from pyspark.ml.linalg import Vectors
 from pyspark.ml.evaluation import RegressionEvaluator
-from pyspark.ml.regression import GeneralizedLinearRegression
 from pyspark.ml import Pipeline
-from pyspark.ml.feature import HashingTF, Tokenizer, VectorAssembler
+from pyspark.ml.feature import HashingTF, Tokenizer, VectorAssembler, VectorIndexer
 from pyspark.sql.functions import split
 
 schema = 'TweetId LONG, Username STRING, Timestamp TIMESTAMP, Followers INT, Friends INT, Retweets INT, Favorites INT, Entities STRING, Sentiment STRING, Mentions STRING, Hashtags STRING, URLs STRING'
@@ -117,11 +116,7 @@ sent_col = split(df['Sentiment'], ' ')
 df = df.withColumn('Positivity', sent_col.getItem(0).cast('INT'))
 df = df.withColumn('Negativity', sent_col.getItem(1).cast('INT'))
 
-## Wash Data
-
-
-
-## Prepare Model Inputs
+## Split Data
 
 assembler = VectorAssembler( \
     outputCol='features', \
@@ -130,25 +125,43 @@ features_df = assembler.transform(df)
 
 (trainingData, testData) = features_df.randomSplit([0.8, 0.2])
 
-## Test
+## Generalized Linear Regression
 
-glr_predictions = model.transform(testData)
+from pyspark.ml.regression import GeneralizedLinearRegression
+
+glr = GeneralizedLinearRegression(labelCol='Retweets', featuresCol='features', \
+    family="gaussian", link="identity", maxIter=10, regParam=0.3)
+glr_model = glr.fit(trainingData)
+
+glr_predictions = glr_model.transform(testData)
 glr_evaluator = RegressionEvaluator(predictionCol="prediction", \
     labelCol="Retweets",metricName="r2")
 print("R Squared (R2) on test data = %g" % \
     glr_evaluator.evaluate(glr_predictions))
 glr_predictions.select("prediction","Retweets","features").show(5)
 
-glr_evaluator = RegressionEvaluator(predictionCol="prediction", \
-    labelCol="Retweets",metricName="mse")
-print("MSE on test data = %g" % \
-    glr_evaluator.evaluate(glr_predictions))
+
+## Decision Tree Regression
+
+from pyspark.ml.regression import DecisionTreeRegressor
+
+dt = DecisionTreeRegressor(labelCol='Retweets', featuresCol='features')
+dt_model = dt.fit(trainingData)
+
+dt_predictions = dt_model.transform(testData)
+dt_evaluator = RegressionEvaluator(predictionCol="prediction", \
+    labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+    dt_evaluator.evaluate(dt_predictions))
+dt_predictions.select("prediction","Retweets","features").show(5)
+
 
 ##### Isotonic Regression
 
 from pyspark.ml.regression import IsotonicRegression
 
-ir_model = IsotonicRegression(labelCol='Retweets', featuresCol='features').fit(trainingData)
+ir = IsotonicRegression(labelCol='Retweets', featuresCol='features', regParam=0.3)
+ir_model = ir.fit(trainingData)
 
 ir_predictions = ir_model.transform(testData)
 ir_evaluator = RegressionEvaluator(predictionCol="prediction", \
@@ -157,21 +170,70 @@ print("R Squared (R2) on test data = %g" % \
     ir_evaluator.evaluate(ir_predictions))
 ir_predictions.select("prediction","Retweets","features").show(5)
 
-## Decision Tree Regression
 
-from pyspark.mllib.tree import DecisionTree, DecisionTreeModel
-from pyspark.mllib.util import MLUtils
+### log regression
 
-dt_model = DecisionTree.trainRegressor(trainingData, \
-    featuresCol='features', labelCol='Retweets', \
-    categoricalFeaturesInfo={}, impurity='variance', \
-    maxDepth=5, maxBins=32)
+from pyspark.ml.classification import LogisticRegression
 
-predictions = dt_model.predict(testData.map(lambda x: x.features))
-labelsAndPredictions = testData.map(lambda lp: lp.label).zip(predictions)
-trainMSE = labelsAndPredictions.map(lambda (v, p): (v - p) * (v - p)).sum() / float(testData.count())
-print('Training Mean Squared Error = ' + str(trainMSE))
+lr = LogisticRegression(labelCol='Retweets', featuresCol='features', maxIter=10, regParam=0.001)
+lr_pipeline = Pipeline(stages=[lr])
+lr_model = lr_pipeline.fit(trainingData)
 
-print('Learned regression tree model:')
-print(model)
+lr_predictions = lr_model.transform(testData)
+lr_evaluator = RegressionEvaluator(predictionCol="prediction", \
+    labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+    lr_evaluator.evaluate(lr_predictions))
+lr_predictions.select("prediction","Retweets","features").show(5)
 
+
+## glr revisited
+
+from pyspark.ml.linalg import Vectors
+from pyspark.ml.evaluation import RegressionEvaluator
+from pyspark.ml.classification import LogisticRegression
+from pyspark.ml import Pipeline
+from pyspark.ml.feature import HashingTF, Tokenizer, VectorAssembler, VectorIndexer
+from pyspark.sql.functions import split
+
+schema = 'TweetId LONG, Username STRING, Timestamp TIMESTAMP, Followers INT, Friends INT, Retweets INT, Favorites INT, Entities STRING, Sentiment STRING, Mentions STRING, Hashtags STRING, URLs STRING'
+
+df = spark.read.schema(schema) \
+    .option("delimiter", "\t") \
+    .option("timestampFormat", "EEE MMM dd HH:mm:ss Z yyyy") \
+    .csv("/user/data/CSC534BDA/COVID19-Retweet/TweetsCOV19-train.tsv")
+df.printSchema()
+
+sent_col = split(df['Sentiment'], ' ')
+df = df.withColumn('Positivity', sent_col.getItem(0).cast('INT'))
+df = df.withColumn('Negativity', sent_col.getItem(1).cast('INT'))
+
+(trainingData, testData) = df.randomSplit([0.8, 0.2])
+
+tokenizer = Tokenizer(inputCol="Entities", outputCol="words")
+hashingTF = HashingTF(inputCol=tokenizer.getOutputCol(), outputCol="Words")
+assembler = VectorAssembler(outputCol='features', \
+    inputCols=['Followers', 'Friends', 'Favorites', 'Positivity', 'Negativity'])
+
+estimator = LogisticRegression(labelCol='Retweets', featuresCol='features', maxIter=10, regParam=0.001)
+
+pipeline = Pipeline(stages=[tokenizer, hashingTF, assembler, lr])
+model = pipeline.fit(trainingData)
+
+# Test
+
+predictions = model.transform(testData)
+evaluator = RegressionEvaluator(predictionCol="prediction", \
+    labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+    evaluator.evaluate(predictions))
+predictions.select("prediction","Retweets","features").show(5)
+
+
+
+predictions = model.transform(testData)
+evaluator = RegressionEvaluator(predictionCol="prediction", \
+    labelCol="Retweets",metricName="mse")
+print("Mean Squared (MSE) on test data = %g" % \
+    evaluator.evaluate(predictions))
+predictions.select("prediction","Retweets","features").show(5)
