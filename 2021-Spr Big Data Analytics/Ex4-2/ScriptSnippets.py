@@ -84,6 +84,7 @@ for row in selected.collect():
 ##### 5 #####
 
 from pyspark.ml.linalg import Vectors
+from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.regression import GeneralizedLinearRegression
 from pyspark.ml import Pipeline
 from pyspark.ml.feature import HashingTF, Tokenizer, VectorAssembler
@@ -128,8 +129,19 @@ assembler = VectorAssembler( \
 features_df = assembler.transform(df)
 
 (trainingData, testData) = features_df.randomSplit([0.8, 0.2])
-lr = LogisticRegression(maxIter=10, regParam=0.01)
-model = lr.fit(training)
+glr = GeneralizedLinearRegression(labelCol='Retweets', featuresCol='features', family="gaussian", maxIter=2, regParam=0.1)
+model = glr.fit(trainingData)
 
 ## Test
-rf = RandomForestClassifier(labelCol="Survived", featuresCol="features")
+
+glr_predictions = model.transform(testData)
+glr_evaluator = RegressionEvaluator(predictionCol="prediction", \
+    labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+    glr_evaluator.evaluate(glr_predictions))
+glr_predictions.select("prediction","Retweets","features").show(5)
+
+
+##### Isotonic Regression
+
+from pyspark.ml.regression import IsotonicRegression
