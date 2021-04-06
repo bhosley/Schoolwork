@@ -94,10 +94,11 @@ for row in result:
 
 
 \section*{Assignment 4}
-\emph{ Do the exercise to learn ML pipeline in
-	\hyperref{https://spark.apache.org/docs/2.4.0/ml-pipeline.html#example-pipeline}{
-		Appache Docs}.
- }
+
+\emph{ Do the exercise to learn ML pipeline in }
+\href{https://spark.apache.org/docs/2.4.0/ml-pipeline.html#example-pipeline
+}{Apache Docs}.
+ 
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 from pyspark.ml import Pipeline
@@ -136,11 +137,73 @@ for row in selected.collect():
 \end{minted}
 \includegraphics[width=\linewidth]{image4.2} %\vspace{-1.5em}
 
+
+\clearpage
+
+
 \section*{Assignment 5}
 \emph{ Learn a model using the ML pipeline and then test it and show the results. We will use 
 	\hyperref{CIKM2020 AnalytiCup COVID-19 Retweet}{} 
 	Prediction Challenge dataset. The CIKM is one of 
 	the best conferences in Machine Learning world. }
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{python}
+from pyspark.ml.linalg import Vectors
+from pyspark.ml.evaluation import RegressionEvaluator
+from pyspark.ml.classification import LogisticRegression
+from pyspark.ml import Pipeline
+from pyspark.ml.feature import HashingTF, Tokenizer, VectorAssembler, VectorIndexer
+from pyspark.sql.functions import split
+
+schema = 'TweetId LONG, Username STRING, Timestamp TIMESTAMP, Followers INT, Friends INT, Retweets INT, Favorites INT, Entities STRING, Sentiment STRING, Mentions STRING, Hashtags STRING, URLs STRING'
+
+df = spark.read.schema(schema) \
+  .option("delimiter", "\t") \
+  .option("timestampFormat","EEE MMM dd HH:mm:ss Z yyyy") \
+  .csv("/user/data/CSC534BDA/COVID19-Retweet/TweetsCOV19-train.tsv")
+df.printSchema()
+
+sent_col = split(df['Sentiment'], ' ')
+df = df.withColumn('Positivity', sent_col.getItem(0).cast('INT'))
+df = df.withColumn('Negativity', sent_col.getItem(1).cast('INT'))
+
+(trainingData, testData) = df.randomSplit([0.8, 0.2])
+
+tokenizer = Tokenizer(inputCol="Entities", outputCol="words")
+hashingTF = HashingTF(inputCol=tokenizer.getOutputCol(), outputCol="Words")
+assembler = VectorAssembler(outputCol='features', \
+  inputCols=['Followers', 'Friends', 'Favorites', 'Positivity', 'Negativity'])
+
+estimator = LogisticRegression(labelCol='Retweets', featuresCol='features', maxIter=10, regParam=0.001)
+
+pipeline = Pipeline(stages=[tokenizer, hashingTF, assembler, lr])
+model = pipeline.fit(trainingData)
+
+# Test
+
+predictions = model.transform(testData)
+evaluator = RegressionEvaluator(predictionCol="prediction", \
+  labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+  evaluator.evaluate(predictions))
+predictions.select("prediction","Retweets","features").show(5)
+\end{minted}
+\includegraphics[width=\linewidth]{image5.5} \vspace{1.5em}
+
+
+For this model we achieve a
+($R^2 = 0.251982$)
+which, while still a weak performer, 
+is a somewhat significant predictor. 
+
+Unfortunately we were unable to utilize some of the other metrics as the hashing of the tokenized versions of both Entities and Mentions caused heap overflow.
+
+While the small sample of the data set suggested that the retweets numbers fit a Tweedie distribution, the logistic regression ended up out-performing all of the other models tested.
+
+\clearpage
+
+\section*{Appendix:}
+The following are all of the models that were used to explore the provided data before the final selection was made.
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 from pyspark.ml.linalg import Vectors
@@ -154,7 +217,7 @@ schema = 'TweetId LONG, Username STRING, Timestamp TIMESTAMP, Followers INT, Fri
 
 df = spark.read.schema(schema) \
 	.option("delimiter", "\t") \
-	.option("timestampFormat", "EEE MMM dd HH:mm:ss Z yyyy") \
+	.option("timestampFormat","EEE MMM dd HH:mm:ss Z yyyy") \
 	.csv("/user/data/CSC534BDA/COVID19-Retweet/TweetsCOV19-train.tsv")
 df.printSchema()
 
@@ -233,24 +296,16 @@ ir_predictions.select("prediction","Retweets","features").show(5)
 The piece-wise fit of an isotonic regression provides 
 us with the first model to perform better than a fixed model 
 ($R^2 = 0.0224688$)
-but is still a very weak performer.
-
-
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
-\end{minted}
-\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
-
+but is still essentially an insignificant predictor.
 
 
 \end{document}
 
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
 \end{minted}
 \includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
-
-
 
 
 \includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
