@@ -137,14 +137,121 @@ for row in selected.collect():
 \includegraphics[width=\linewidth]{image4.2} %\vspace{-1.5em}
 
 \section*{Assignment 5}
-\emph{  }
+\emph{ Learn a model using the ML pipeline and then test it and show the results. We will use 
+	\hyperref{CIKM2020 AnalytiCup COVID-19 Retweet}{} 
+	Prediction Challenge dataset. The CIKM is one of 
+	the best conferences in Machine Learning world. }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+from pyspark.ml.linalg import Vectors
+from pyspark.ml.classification import LogisticRegression
+from pyspark.ml import Pipeline
+from pyspark.ml.feature import HashingTF, Tokenizer
+
+schema = 'TweetId LONG, Username STRING, Timestamp TIMESTAMP, Followers INT, Friends INT, Retweets INT, Favorites INT, Entities STRING, Sentiment STRING, Mentions STRING, Hashtags STRING, URLs STRING'
+
+# Define the Schema 
+
+df = spark.read.schema(schema) \
+	.option("delimiter", "\t") \
+	.option("timestampFormat", "EEE MMM dd HH:mm:ss Z yyyy") \
+	.csv("/user/data/CSC534BDA/COVID19-Retweet/TweetsCOV19-train.tsv")
+df.printSchema()
+
+# Fix Sentiment
+
+sent_col = split(df['Sentiment'], ' ')
+df = df.withColumn('Positivity', sent_col.getItem(0).cast('INT'))
+df = df.withColumn('Negativity', sent_col.getItem(1).cast('INT'))
+
+# Split Data
+
+assembler = VectorAssembler( \
+	outputCol='features', \
+	inputCols=['Followers', 'Friends', 'Positivity', 'Negativity'])
+features_df = assembler.transform(df)
+
+(trainingData, testData) = features_df.randomSplit([0.8, 0.2])
+\end{minted}
+\includegraphics[width=\linewidth]{image5.1} %\vspace{-1.5em}
+
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+from pyspark.ml.regression import GeneralizedLinearRegression
+
+glr = GeneralizedLinearRegression(labelCol='Retweets', featuresCol='features', \
+family="gaussian", link="identity", maxIter=10, regParam=0.3)
+glr_model = glr.fit(trainingData)
+
+glr_predictions = glr_model.transform(testData)
+glr_evaluator = RegressionEvaluator(predictionCol="prediction", \
+labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+glr_evaluator.evaluate(glr_predictions))
+glr_predictions.select("prediction","Retweets","features").show(5)
+\end{minted}
+\includegraphics[width=\linewidth]{image5.2} %\vspace{-1.5em}
+
+Logistic regression was performed and did not give very good results. 
+($R^2 = -0.0098882$)
+Slightly worse than a fixed predictor. 
+Next we will try a decision tree regression to compensate for the highly irregular distribution of retweets.
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+from pyspark.ml.regression import DecisionTreeRegressor
+
+dt_model = DecisionTreeRegressor(labelCol='Retweets', featuresCol='features').fit(trainingData)
+
+dt_predictions = dt_model.transform(testData)
+dt_evaluator = RegressionEvaluator(predictionCol="prediction", \
+	labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+	dt_evaluator.evaluate(dt_predictions))
+dt_predictions.select("prediction","Retweets","features").show(5)
+\end{minted}
+\includegraphics[width=\linewidth]{image5.3} %\vspace{-1.5em}
+
+This model performs worse than the linear regression.
+($R^2 = -0.0693814$)
+
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+from pyspark.ml.regression import IsotonicRegression
+
+ir = IsotonicRegression(labelCol='Retweets', featuresCol='features', regParam=0.3)
+ir_model = ir.fit(trainingData)
+
+ir_predictions = ir_model.transform(testData)
+ir_evaluator = RegressionEvaluator(predictionCol="prediction", \
+	labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+	ir_evaluator.evaluate(ir_predictions))
+ir_predictions.select("prediction","Retweets","features").show(5)
+\end{minted}
+\includegraphics[width=\linewidth]{image5.4} %\vspace{-1.5em}
+
+The piece-wise fit of an isotonic regression provides 
+us with the first model to perform better than a fixed model 
+($R^2 = 0.0224688$)
+but is still a very weak performer.
+
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
+
+
+
+\end{document}
+
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 \end{minted}
 \includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
 
 
-\end{document}
+
 
 \includegraphics[width=\linewidth]{image1} %\vspace{-1.5em}
 \begin{minted}[breaklines,bgcolor=light-gray,fontsize=\scriptsize]{shell-session}
