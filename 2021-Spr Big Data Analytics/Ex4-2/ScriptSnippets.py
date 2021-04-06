@@ -129,8 +129,6 @@ assembler = VectorAssembler( \
 features_df = assembler.transform(df)
 
 (trainingData, testData) = features_df.randomSplit([0.8, 0.2])
-glr = GeneralizedLinearRegression(labelCol='Retweets', featuresCol='features', family="gaussian", maxIter=2, regParam=0.1)
-model = glr.fit(trainingData)
 
 ## Test
 
@@ -141,7 +139,39 @@ print("R Squared (R2) on test data = %g" % \
     glr_evaluator.evaluate(glr_predictions))
 glr_predictions.select("prediction","Retweets","features").show(5)
 
+glr_evaluator = RegressionEvaluator(predictionCol="prediction", \
+    labelCol="Retweets",metricName="mse")
+print("MSE on test data = %g" % \
+    glr_evaluator.evaluate(glr_predictions))
 
 ##### Isotonic Regression
 
 from pyspark.ml.regression import IsotonicRegression
+
+ir_model = IsotonicRegression(labelCol='Retweets', featuresCol='features').fit(trainingData)
+
+ir_predictions = ir_model.transform(testData)
+ir_evaluator = RegressionEvaluator(predictionCol="prediction", \
+    labelCol="Retweets",metricName="r2")
+print("R Squared (R2) on test data = %g" % \
+    ir_evaluator.evaluate(ir_predictions))
+ir_predictions.select("prediction","Retweets","features").show(5)
+
+## Decision Tree Regression
+
+from pyspark.mllib.tree import DecisionTree, DecisionTreeModel
+from pyspark.mllib.util import MLUtils
+
+dt_model = DecisionTree.trainRegressor(trainingData, \
+    featuresCol='features', labelCol='Retweets', \
+    categoricalFeaturesInfo={}, impurity='variance', \
+    maxDepth=5, maxBins=32)
+
+predictions = dt_model.predict(testData.map(lambda x: x.features))
+labelsAndPredictions = testData.map(lambda lp: lp.label).zip(predictions)
+trainMSE = labelsAndPredictions.map(lambda (v, p): (v - p) * (v - p)).sum() / float(testData.count())
+print('Training Mean Squared Error = ' + str(trainMSE))
+
+print('Learned regression tree model:')
+print(model)
+
