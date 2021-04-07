@@ -21,87 +21,32 @@
 \begin{document}
 \maketitle
 
-\section*{Assignment 1: Index The Gender Values}
+\section*{Assignment 1: Read and summarize an article about the k-means algorithm and the parameter K.}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-from pyspark.ml.feature import StringIndexer
-indexed_df = StringIndexer(inputCol="Gender", outputCol="IndexedGender").fit(imputed_df).transform(imputed_df)
-indexed_df.show(5)
+
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
 
 
-\section*{Assignment 2: Split the dataset into training and testing datasets}
+\section*{Assignment 2: Redo your exercise with ‘K = 3’ and explain the changes in detail.}
+
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-(trainingData, testData) = features_df.randomSplit([0.8, 0.2])
-features_df.count()
-trainingData.count()
-testData.count()
+
 \end{minted}
 \includegraphics[width=\linewidth]{image2}
 
 
-\section*{Assignment 3: Build a model with the training dataset}
+\section*{Assignment 3: Try various K and find best K. Explain why it is best based on your results (in detail).}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-from pyspark.ml.classification import RandomForestClassifier
-rf = RandomForestClassifier(labelCol="Survived", featuresCol="features")
-modelRF = rf.fit(trainingData)
+
 \end{minted}
-\includegraphics[width=\linewidth]{image3}
+\includegraphics[width=\linewidth]{image2}
 
 
-\section*{Assignment 4: Evaluate the model}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-from pyspark.ml.evaluation import BinaryClassificationEvaluator
-predictions = modelRF.transform(testData)
-evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderROC")
-evaluator.evaluate(predictions)
-evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderPR")
-evaluator.evaluate(predictions)
-\end{minted}
-\includegraphics[width=\linewidth]{image4}
-
-
-\section*{Assignment 5: Explain the differences of Evaluators}
-\emph{1. Explain the differences of below evaluators, regarding metric support. } \\
-\emph{$\cdot$ BinaryClassificationEvaluator and MulticlassClassificationEvaluator} \\
-\emph{$\cdot$ List names of supported metrics for above evaluators} \\
-
-The multiclass classification evaluator has a large number of options for metrics: 
-f1, 
-accuracy, 
-weightedPrecision, 
-weightedRecall, 
-weightedTruePositiveRate, 
-weightedFalsePositiveRate, 
-weightedFMeasure, 
-truePositiveRateByLabel, 
-falsePositiveRateByLabel, 
-precisionByLabel, 
-recallByLabel, 
-fMeasureByLabel, 
-logLoss, 
-and hammingLoss. 
-The binary classification evaluator is much more limited, having only the 
-area-under-curve and area-under-precision-recall-curve options.
-
-The simplest explanation for the disparity between the two is the potentially large difference in classes; 
-there are a lot more ways to compare many classes than two.
-
-\vspace{1em}
-
-\emph{2. Study and explain what Area Under ROC curve (areaUnderRoc) and Area Under Precision-Recall curve (areaUnderPR) are. }
-
-\vspace{1em}
-
-The area under ROC is the area under a plot of true positive against false positive; 
-a larger area corresponds to the function's performance at determining identifying positive conditions without over-classifying as positive.
-The area under a precision recall curve represents the true positive rate plotted against the positive predicted value.
-
-The ROC tends to how well the model performs as a classifier, whereas the PR tends to represent how meaningful a classification is.
 
 \end{document}
 
