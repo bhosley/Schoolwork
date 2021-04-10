@@ -30,10 +30,6 @@
 \begin{document}
 \maketitle
 
-\section*{Pre-Assignment}
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-\end{minted}
-
 \section*{Assignment 1}
 \emph{ Do the exercise in section 3.2.1 }
 
@@ -55,6 +51,8 @@ os.environ["PATH"] = os.environ["JAVA_HOME"] + "/bin:" + os.environ["PATH"]
 
 \section*{Assignment 2}
 \emph{ Do the exercise in section 3.2.2 }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 from pyspark.sql import SparkSession
 from pyspark.ml import Pipeline
 from sparknlp.annotator import *
@@ -64,8 +62,6 @@ import sparknlp
 spark = sparknlp.start()
 print("Spark NLP version: ", sparknlp.version())
 print("Apache Spark version: ", spark.version)
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
 \end{minted}
 \includegraphics[width=\linewidth]{image2} %\vspace{-1.5em}
 
@@ -79,7 +75,7 @@ import urllib.request
 download_path = "./eng.train"
 if not Path(download_path).is_file():
 	print("File Not found will downloading it!")
-	url = "https://github.com/patverga/torch-ner-nlp-from-scratch/raw/master/data/conll2003/eng.train"
+	url = "https://github.com/patverga/ torch-ner-nlp-from-scratch/raw/master/data/conll2003/eng.train"
 	urllib.request.urlretrieve(url, download_path)
 else:
 	print("File already present.")
@@ -152,10 +148,10 @@ test_data.write.parquet("test_withEmbeds.parquet")
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
 import pyspark.sql.functions as F 
-predictions.select(F.explode(F.arrays_zip('token.result','label.result','ner.result')).alias("cols")) \
+predictions.select(F.explode(F.arrays_zip( 'token.result','label.result','ner.result')).alias("cols"))\
 .select(F.expr("cols['0']").alias("token"),
-F.expr("cols['1']").alias("ground_truth"),
-F.expr("cols['2']").alias("prediction")).show(truncate=False)
+   F.expr("cols['1']").alias("ground_truth"),
+   F.expr("cols['2']").alias("prediction")).show(truncate=False)
 \end{minted}
 \includegraphics[width=\linewidth]{image9.1} %\vspace{-1.5em}
 \includegraphics[width=\linewidth]{image9.2} %\vspace{-1.5em}
@@ -170,12 +166,18 @@ sparknlp.version()
 
 testData = spark.createDataFrame([
 (1, """
-The University of Illinois Springfield (UIS) is a public university in Springfield, Illinois, United 
-States. The university was established in 1969 as Sangamon State University by the Illinois 
-General Assembly and became a part of the University of Illinois system on July 1, 1995. As a 
-public liberal arts college, and the newest campus in the University of Illinois system, UIS is a 
-member of the Council of Public Liberal Arts Colleges. President: Timothy L. Killeen.
-Chancellor: Karen M. Whitney. Location: Springfield, Illinois, United States.
+The University of Illinois Springfield (UIS) 
+is a public university in Springfield, Illinois, 
+United States. The university was established in 1969 
+as Sangamon State University by the Illinois 
+General Assembly and became a part of the 
+University of Illinois system on July 1, 1995. 
+As a public liberal arts college, and the newest 
+campus in the University of Illinois system, UIS is a 
+member of the Council of Public Liberal Arts 
+Colleges. President: Timothy L. Killeen.
+Chancellor: Karen M. Whitney. Location: 
+Springfield, Illinois, United States.
 """),
 ]).toDF("id", "text")
 
@@ -188,7 +190,8 @@ annotation.show()
 annotation.select(F.explode(F.arrays_zip("token.result","ner.result"))\
 	.alias("Results:")).show(truncate=False)
 \end{minted}
-\includegraphics[width=\linewidth]{image10} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image10.1} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image10.2} %\vspace{-1.5em}
 
 \end{document}
 
