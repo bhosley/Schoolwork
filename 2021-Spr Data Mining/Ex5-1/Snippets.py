@@ -1,47 +1,56 @@
 $ pyspark
 
-raw_df = spark.read.csv("/user/data/CSC533DM/titanic.csv", header=True, inferSchema=True)
-raw_df.describe().show()
+from pyspark.ml.clustering import KMeans
+from pyspark.ml.evaluation import ClusteringEvaluator
 
-# Imputation
+# Loads data.
+dataset = spark.read.format("libsvm").load("data/mllib/sample_kmeans_data.txt")
 
-from pyspark.ml.feature import Imputer
-imputer = Imputer(strategy='mean', inputCols=['Age'], outputCols=['ImputedAge'])
-filtered_df = raw_df.select(['Survived', 'Pclass', 'Gender', 'Age', 'SibSp', 'Parch', 'Fare'])
-imputed_df = imputer.fit(filtered_df).transform(filtered_df)
-imputed_df.show()
+# Trains a k-means model.
+kmeans = KMeans().setK(2).setSeed(1)
+model = kmeans.fit(dataset)
 
-# String Indexer (1-3)
+# Make predictions
+predictions = model.transform(dataset)
 
-from pyspark.ml.feature import StringIndexer
-indexed_df = StringIndexer(inputCol="Gender", outputCol="IndexedGender").fit(imputed_df).transform(imputed_df)
-indexed_df.show(5)
+# Evaluate clustering by computing Silhouette score
+evaluator = ClusteringEvaluator()
 
-# Create Features VectorIndexer
+silhouette = evaluator.evaluate(predictions)
+print("Silhouette with squared euclidean distance = " + str(silhouette))
 
-from pyspark.ml.feature import VectorAssembler
-assembler = VectorAssembler(inputCols=['Pclass', 'SibSp', 'Parch', 'Fare', 'ImputedAge', 'IndexedGender'], outputCol='features')
-features_df = assembler.transform(indexed_df)
+# Shows the result.
+centers = model.clusterCenters()
+print("Cluster Centers: ")
+for center in centers:
+    print(center)
 
-# Splitting Dataset
 
-(trainingData, testData) = features_df.randomSplit([0.8, 0.2])
-trainingData.count()
-testData.count()
-trainingData.count() + testData.count()
-features_df.count()
+#######
 
-# trainingData
+wc -l /home/data/apache-spark/sample_kmeans_data.txt 
+hadoop fs -ls /user/data/CSC533DM/
 
-from pyspark.ml.classification import RandomForestClassifier
-rf = RandomForestClassifier(labelCol="Survived", featuresCol="features")
-modelRF = rf.fit(trainingData)
+$ pyspark
 
-# Evaluate
+data = spark.read.format("libsvm").load("/user/data/CSC533DM/sample_kmeans_data.txt")
+data.show(truncate=False)
 
-from pyspark.ml.evaluation import BinaryClassificationEvaluator
-predictions = modelRF.transform(testData)
-evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderROC")
-evaluator.evaluate(predictions)
-evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderPR")
-evaluator.evaluate(predictions)
+from pyspark.ml.clustering import KMeans
+from pyspark.ml.evaluation import ClusteringEvaluator
+
+kmeans = KMeans().setK(3).setSeed(1)
+model = kmeans.fit(data)
+
+predictions = model.transform(data)
+predictions.show(truncate=False)
+
+
+evaluator = ClusteringEvaluator()
+silhouette = evaluator.evaluate(predictions)
+print("Silhouette with squared euclidean distance = " + str(silhouette)) 
+
+
+centers = model.clusterCenters()
+print("Cluster Centers: "); \
+for center in centers: print(center)
