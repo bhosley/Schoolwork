@@ -22,11 +22,15 @@
 \maketitle
 
 \section*{Assignment 1: Read and summarize an article about the k-means algorithm and the parameter K.}
+\href{https://towardsdatascience.com/how-does-k-means-clustering-in-machine-learning-work-fdaaaf5acfa0}{Article linked here.}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+K-Nearest Neighbors is a method of machine learning in which new samples are categorized based on a survey of their closest $K$ neighbors. By closest we mean in terms of differences in values of features. The article describes how this is done with simpling bagging. 
 
-\end{minted}
-\includegraphics[width=\linewidth]{image1}
+The article does not mention that performance of a model can be improved if the features are re-weighted proportionally to their importance as a predictor. Because we don't often know how exactly what this ratio should be it is common practice to normalize all of the features which functionally treats them equally. This works by eliminating the range or scale of the features values from disproportionately weighing into the results when calculating distance.
+
+The article demonstrates balancing the bags for three classes of one dimensional data, calculating the mean of the existing points to allow for faster classification of future variables.
+
+The article shows single dimensional classification but does not describe methods for generating prototypes or models in multiple dimensions.
 
 
 \section*{Assignment 2: Redo your exercise with ‘K = 3’ and explain the changes in detail.}
