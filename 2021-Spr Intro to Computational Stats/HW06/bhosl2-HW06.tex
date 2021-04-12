@@ -1,0 +1,57 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{setspace}
+
+%% Images
+% \usepackage{graphicx}
+% 	\graphicspath{ {./images/} }
+% 	\usepackage{caption}
+
+% Minted
+	\usepackage[cache=false]{minted}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+	\usemintedstyle{vs}
+
+% Title
+	\title{Intro to Computational Statistics: Homework 6}
+	\shorttitle{HW06}
+	\author{Author: Brandon Hosley}
+	\affiliation{Instructor: Liang Kong, Ph.D}
+
+%\abstract{}
+
+\usepackage{pdfpages}
+
+\begin{document}
+\maketitle
+\singlespacing
+	
+\subsection*{Q1: Use SAS data set students.sas7bdat (from homework 1) to obtain a regression model to predict the Score of Final Exam by using Intelligence Quotient, Score of Mathematics part of SAT, and Score of Pilot Examination as regressors. What is the estimate model? }
+%\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/}
+% \includepdf[pages=-]{./Snippets/SAS Output HW5-1.pdf}
+
+\subsection*{Q2: What is the estimate model of the above question with all the coefficients are significant at 0.05 level of significance. }
+%\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/}
+% \includepdf[pages=-]{./Snippets/SAS Output HW5-2.pdf}
+
+\subsection*{Q3: Assuming Intelligence Quotient is the only information available, construct a 98\% prediction interval for the Score of Final Exam giving a score of 110 for Intelligence Quotient. }
+%\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/}
+% \includepdf[pages=-]{./Snippets/SAS Output HW5-3.pdf}
+
+\subsection*{Q4: Use SAS data set regp3.sas7bdat (located at "Data set" folder) to fit a simple linear regression model : $Y = \beta_0 + \beta_1X + \epsilon$. What is the 90\% confidence interval for $\beta1$? }
+%\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/}
+% \includepdf[pages=-]{./Snippets/SAS Output HW5-4.pdf}
+
+
+\subsection*{Q5: Use SAS data set regp3.sas7bdat (located at "Data set" folder) to fit the "best" linear regression model : $Y = \beta_0 + f(X; \beta_1, \beta_2, \beta_3, \ldots) + \epsilon$. For example, $f(X; \beta_1, \beta_2, \beta_3, \ldots)$ could be $\beta_1X^{0.5} + \beta_2 X^{1.5} + \beta_3 X_3$ or $\beta_1X_0 + \beta_2 X_2 \ldots$ . What is the 97\% confidence interval for the average values of $Y$ given $X=200$? }
+%\inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/}
+% \includepdf[pages=-]{./Snippets/SAS Output HW5-5.pdf}
+
+
+%\includepdf[pages=-]{./Snippets/SAS Output HW5-3.pdf}
+%\includepdf[pages=3-]{./Snippets/SAS Output HW5-4.pdf}
+
+
+\end{document}
