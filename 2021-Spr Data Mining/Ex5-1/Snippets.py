@@ -33,13 +33,13 @@ hadoop fs -ls /user/data/CSC533DM/
 
 $ pyspark
 
+from pyspark.ml.clustering import KMeans
+from pyspark.ml.evaluation import ClusteringEvaluator
 data = spark.read.format("libsvm").load("/user/data/CSC533DM/sample_kmeans_data.txt")
 data.show(truncate=False)
 
-from pyspark.ml.clustering import KMeans
-from pyspark.ml.evaluation import ClusteringEvaluator
 
-kmeans = KMeans().setK(3).setSeed(1)
+kmeans = KMeans().setK(7).setSeed(1)
 model = kmeans.fit(data)
 
 predictions = model.transform(data)
@@ -52,5 +52,5 @@ print("Silhouette with squared euclidean distance = " + str(silhouette))
 
 
 centers = model.clusterCenters()
-print("Cluster Centers: "); \
+print("Cluster Centers: ")
 for center in centers: print(center)
