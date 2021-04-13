@@ -35,21 +35,66 @@ The article shows single dimensional classification but does not describe method
 
 \section*{Assignment 2: Redo your exercise with ‘K = 3’ and explain the changes in detail.}
 
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+from pyspark.ml.clustering import KMeans
+from pyspark.ml.evaluation import ClusteringEvaluator
+data = spark.read.format("libsvm").load("/user/data/CSC533DM/ sample_kmeans_data.txt")
+data.show(truncate=False)
+\end{minted}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+kmeans = KMeans().setK(3).setSeed(1)
+model = kmeans.fit(data)
 
+predictions = model.transform(data)
+predictions.show(truncate=False)
 \end{minted}
-\includegraphics[width=\linewidth]{image2}
+\includegraphics[width=\linewidth]{image1.1}
 
+Each of the first five results is different. It is possible that the $k=2$ model is overfit to local features.
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+evaluator = ClusteringEvaluator()
+silhouette = evaluator.evaluate(predictions)
+print("Silhouette with squared euclidean distance = " + str(silhouette)) 
+\end{minted}
+\includegraphics[width=\linewidth]{image1.2}
+
+The decreased silhouette score suggests that more of the points in the clusters are closer to their decision boundaries. 
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+centers = model.clusterCenters()
+print("Cluster Centers: ")
+for center in centers: print(center)
+\end{minted}
+\includegraphics[width=\linewidth]{image1.3}
+
+One Cluster remains centered in the same spot, the original other cluster is cut in half.
 
 \section*{Assignment 3: Try various K and find best K. Explain why it is best based on your results (in detail).}
 
+\vspace{-0.75em}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+kmeans = KMeans().setK(4).setSeed(1)
+model = kmeans.fit(data)
 
+predictions = model.transform(data)
+predictions.show(truncate=False)
+
+
+evaluator = ClusteringEvaluator()
+silhouette = evaluator.evaluate(predictions)
+print("Silhouette with squared euclidean distance = " + str(silhouette)) 
+
+
+centers = model.clusterCenters()
+print("Cluster Centers: ")
+for center in centers: print(center)
 \end{minted}
 \includegraphics[width=\linewidth]{image2}
 
-
+Between $k=4$ had the best results between 2 and 5. 6 had a silhouette of 1.0 as each point comprised its own bucket due to the low sample size.
+The difference in silhouette score between 2 and 4 is not very large so it is likely that either may be chosen for whatever fits the use-case best. 
 
 
 \end{document}
