@@ -61,6 +61,10 @@ $\beta_1$ has a 90\% confidence interval of 4.03634 and 4.24609
 
 \subsection*{Q5: Use SAS data set regp3.sas7bdat (located at "Data set" folder) to fit the "best" linear regression model : $Y = \beta_0 + f(X; \beta_1, \beta_2, \beta_3, \ldots) + \epsilon$. For example, $f(X; \beta_1, \beta_2, \beta_3, \ldots)$ could be $\beta_1X^{0.5} + \beta_2 X^{1.5} + \beta_3 X_3$ or $\beta_1X_0 + \beta_2 X_2 \ldots$ . What is the 97\% confidence interval for the average values of $Y$ given $X=200$? }
 \inputminted[breaklines,bgcolor=light-gray]{sas}{./Snippets/DAT502-HW6-5.sas}
+
+For a $\beta_1X + \beta_2 X^2 + \beta_3$ model there is a 97\% confidence interval of $Y$ between $228.2901$ and $234.7784$ for the value of $X=200$
+
+\includegraphics[width=0.8\linewidth]{./images/image5.png}
 \includepdf[pages=-]{./Snippets/SAS Output HW6-5.pdf}
 
 \end{document}
