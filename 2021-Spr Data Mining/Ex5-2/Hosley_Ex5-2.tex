@@ -1,0 +1,77 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+\usepackage{amsmath}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\title{Data Mining: Exercise 5-1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Assignment 1: Do exercise in Section 1.2.1}
+
+\section*{Assignment 2: Do exercise in Section 2.1.1}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
+
+
+\section*{Assignment 3: Do exercise in Section 3.1.1}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
+
+
+\section*{Assignment 4: Write queries to answer which hours of the day had the highest number of pickups? (Assume K=8, Seed=1)}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
+
+\section*{Assignment 5: Write queries to answer how many pickups occurred in each cluster? (Assume K=8, Seed=1)}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
+
+\section*{Assignment 6:}
+\textbf{
+For the k-means algorithm, it is interesting to note that by choosing the initial cluster centers 
+carefully, we may be able to not only speed up the convergence of the algorithm, but also 
+guarantee the quality of the final clustering. The k-means++ algorithm is a variant of k-means, 
+which chooses the initial centers as follows. First, it selects one center uniformly at random from 
+the objects in the data set. Iteratively, for each object p other than the chosen center, it chooses 
+an object as the new center. This object is chosen at random with probability proportional to 
+dist(p)2, where dist(p)) is the distance from p, to the closest center that has already been chosen. 
+The iteration continues until k centers are selected.
+Explain why this method will not only speed up the convergence of the k-means algorithm, but 
+also guarantee the quality of the final clustering results.
+}
+
+
+
+\end{document}
+
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
