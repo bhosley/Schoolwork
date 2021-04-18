@@ -53,10 +53,12 @@ centers = model3.clusterCenters()
 print("Cluster Centers: ")
 for center in centers:
     print(center)
+
 centers = model5.clusterCenters()
 print("Cluster Centers: ")
 for center in centers:
     print(center)
+
 centers = model8.clusterCenters()
 print("Cluster Centers: ")
 for center in centers:
@@ -66,13 +68,18 @@ for center in centers:
 
 ## 4
 
-from pyspark.sql.functions import hour, mean
-(df
+from pyspark.sql.functions import hour, desc
+predictions8.groupBy(hour("Date/Time").alias("hour")) \
+    .count().sort(desc("count")).show(24)
+
+
+(uber_df
     .groupBy(hour("Date/Time").alias("hour"))
     .agg(count("value").alias("pickups"))
     .sort("pickups")
     .show())
 
+
 ## 5
 
-predictions8.collect()
+predictions8.groupBy("prediction").count().show(8)
