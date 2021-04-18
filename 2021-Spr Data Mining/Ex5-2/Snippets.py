@@ -1,56 +1,77 @@
 $ pyspark
 
-from pyspark.ml.clustering import KMeans
-from pyspark.ml.evaluation import ClusteringEvaluator
+hadoop fs -put /home/data/CSC533DM/uber.csv 
+hadoop fs -ls /user/data/CSC533DM/uber.csv
 
-# Loads data.
-dataset = spark.read.format("libsvm").load("data/mllib/sample_kmeans_data.txt")
+## 1.2.1
+
+schema = 'Date/Time: TIMESTAMP, Lat: DOUBLE, Lon: DOUBLE, Base: STRING'
+
+uber_df = spark.read.schema(schema) \
+    .option("timestampFormat", "EEE MMM dd HH:mm:ss Z yyyy") \
+    .csv("/user/data/CSC533DM/uber.csv")
+uber_df.printSchema()
+uber_df.show(5)
+
+##
+
+# Import the class
+from pyspark.ml.feature import VectorAssembler 
+# Creating a vector
+assembler = VectorAssembler(inputCols=['Lat', 'Lon'], outputCol='features') 
+# Transform
+features_df = assembler.transform(uber_df) 
+features_df.show(5)
+
+## 2.1.1
+from pyspark.ml.clustering import KMeans
 
 # Trains a k-means model.
-kmeans = KMeans().setK(2).setSeed(1)
-model = kmeans.fit(dataset)
+kmeans3 = KMeans().setK(3).setSeed(1)
+kmeans5 = KMeans().setK(5).setSeed(1)
+kmeans8 = KMeans().setK(8).setSeed(1)
 
-# Make predictions
-predictions = model.transform(dataset)
+model3 = kmeans3.fit(features_df)
+model5 = kmeans5.fit(features_df)
+model8 = kmeans8.fit(features_df)
 
-# Evaluate clustering by computing Silhouette score
+predictions3 = model3.transform(features_df)
+predictions5 = model5.transform(features_df)
+predictions8 = model8.transform(features_df)
+
 evaluator = ClusteringEvaluator()
 
-silhouette = evaluator.evaluate(predictions)
-print("Silhouette with squared euclidean distance = " + str(silhouette))
+silhouette3 = evaluator.evaluate(predictions3)
+silhouette5 = evaluator.evaluate(predictions5)
+silhouette8 = evaluator.evaluate(predictions8)
+print("Silhouette with squared euclidean distance = " + str(silhouette3))
+print("Silhouette with squared euclidean distance = " + str(silhouette5))
+print("Silhouette with squared euclidean distance = " + str(silhouette8))
 
-# Shows the result.
-centers = model.clusterCenters()
+centers = model3.clusterCenters()
+print("Cluster Centers: ")
+for center in centers:
+    print(center)
+centers = model5.clusterCenters()
+print("Cluster Centers: ")
+for center in centers:
+    print(center)
+centers = model8.clusterCenters()
 print("Cluster Centers: ")
 for center in centers:
     print(center)
 
+## 3.1.1
 
-#######
+## 4
 
-wc -l /home/data/apache-spark/sample_kmeans_data.txt 
-hadoop fs -ls /user/data/CSC533DM/
+from pyspark.sql.functions import hour, mean
+(df
+    .groupBy(hour("timestamp").alias("hour"))
+    .agg(count("value").alias("pickups"))
+    .sort("pickups")
+    .show())
 
-$ pyspark
+## 5
 
-from pyspark.ml.clustering import KMeans
-from pyspark.ml.evaluation import ClusteringEvaluator
-data = spark.read.format("libsvm").load("/user/data/CSC533DM/sample_kmeans_data.txt")
-data.show(truncate=False)
-
-
-kmeans = KMeans().setK(7).setSeed(1)
-model = kmeans.fit(data)
-
-predictions = model.transform(data)
-predictions.show(truncate=False)
-
-
-evaluator = ClusteringEvaluator()
-silhouette = evaluator.evaluate(predictions)
-print("Silhouette with squared euclidean distance = " + str(silhouette)) 
-
-
-centers = model.clusterCenters()
-print("Cluster Centers: ")
-for center in centers: print(center)
+predictions8.collect()
