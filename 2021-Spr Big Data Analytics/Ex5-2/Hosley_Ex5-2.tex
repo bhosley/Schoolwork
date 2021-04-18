@@ -1,0 +1,89 @@
+\documentclass[]{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+% Minted
+\usepackage[cache=false]{minted}
+	\usemintedstyle{vs}
+	\usepackage{xcolor}
+		\definecolor{light-gray}{gray}{0.97}
+
+% Subsubsection header run along with text.	
+\usepackage{titlesec}
+\titleformat{\subsubsection}[runin]% runin puts it in the same paragraph
+	{\normalfont\bfseries}% formatting commands to apply to the whole heading
+	{\thesubsection}% the label and number
+	{0.5em}% space between label/number and subsection title
+	{}% formatting commands applied just to subsection title
+	[]% punctuation or other commands following subsection title
+
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\usepackage[normalem]{ulem}
+
+\title{Big Data Analytics: Exercise 5-2}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+Colab Notebook located
+\href{}{here.}
+
+\section*{Assignment 1}
+\emph{ Do the exercise in section 3.6 }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
+
+
+\section*{Assignment 2}
+\emph{ Do the exercise in section 3.7 }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image2} 
+
+
+\section*{Assignment 3}
+\emph{ Do the exercise in section 3.8 }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image3} 
+
+
+\section*{Assignment 4}
+\emph{ Do the exercise in section 3.9 }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image4} %\vspace{-1.5em}
+
+
+\section*{Assignment 5}
+\emph{ Try different values of k and maxIter to see which combination best suits your data in Section 3.8. Show at least five different combinations, show their results, and explain why it’s best.}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image5} %\vspace{-1.5em}
+
+
+\section*{Assignment 6}
+\emph{ Rewrite the codes for finding topics in tweets coronavirus dataset.  Also try different values of k and maxIter to see which combination best suits the data. Show at least five different combinations, show their results, and explain why it’s best. }
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+
+\end{minted}
+\includegraphics[width=\linewidth]{image6} %\vspace{-1.5em}
+
+\end{document}
