@@ -1,14 +1,16 @@
 hadoop fs -put /home/data/CSC533DM/uber.csv 
 hadoop fs -ls /user/data/CSC533DM/
-hadoop fs -head /user/data/CSC533DM/uber.csv 
+head /user/data/CSC533DM/uber.csv 
 
 $ pyspark
 
 ## 1.2.1
 
-schema = 'Datetime TIMESTAMP, Lat DOUBLE, Lon DOUBLE, Base STRING'
-
-uber_df = spark.read.schema(schema).csv("/user/data/CSC533DM/uber.csv")
+schema = '`Date/Time` TIMESTAMP, Lat DOUBLE, Lon DOUBLE, Base STRING'
+uber_df = spark.read.schema(schema) \
+    .option("header","true") \
+    .option("timestampFormat", "M/d/yyyy HH:mm:ss") \
+    .csv("/user/data/CSC533DM/uber.csv")
 uber_df.printSchema()
 uber_df.show(5)
 
@@ -19,13 +21,13 @@ from pyspark.ml.feature import VectorAssembler
 # Creating a vector
 assembler = VectorAssembler(inputCols=['Lat', 'Lon'], outputCol='features') 
 # Transform
-features_df = assembler.transform(uber_df) 
+features_df = assembler.transform(uber_df)
 features_df.show(5)
 
 ## 2.1.1
 from pyspark.ml.clustering import KMeans
+from pyspark.ml.evaluation import ClusteringEvaluator
 
-# Trains a k-means model.
 kmeans3 = KMeans().setK(3).setSeed(1)
 kmeans5 = KMeans().setK(5).setSeed(1)
 kmeans8 = KMeans().setK(8).setSeed(1)
@@ -66,7 +68,7 @@ for center in centers:
 
 from pyspark.sql.functions import hour, mean
 (df
-    .groupBy(hour("Datetime").alias("hour"))
+    .groupBy(hour("Date/Time").alias("hour"))
     .agg(count("value").alias("pickups"))
     .sort("pickups")
     .show())
