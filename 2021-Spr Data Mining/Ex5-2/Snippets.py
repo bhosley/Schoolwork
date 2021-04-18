@@ -1,15 +1,14 @@
-$ pyspark
-
 hadoop fs -put /home/data/CSC533DM/uber.csv 
-hadoop fs -ls /user/data/CSC533DM/uber.csv
+hadoop fs -ls /user/data/CSC533DM/
+hadoop fs -head /user/data/CSC533DM/uber.csv 
+
+$ pyspark
 
 ## 1.2.1
 
-schema = 'Date/Time: TIMESTAMP, Lat: DOUBLE, Lon: DOUBLE, Base: STRING'
+schema = 'Datetime TIMESTAMP, Lat DOUBLE, Lon DOUBLE, Base STRING'
 
-uber_df = spark.read.schema(schema) \
-    .option("timestampFormat", "EEE MMM dd HH:mm:ss Z yyyy") \
-    .csv("/user/data/CSC533DM/uber.csv")
+uber_df = spark.read.schema(schema).csv("/user/data/CSC533DM/uber.csv")
 uber_df.printSchema()
 uber_df.show(5)
 
@@ -67,7 +66,7 @@ for center in centers:
 
 from pyspark.sql.functions import hour, mean
 (df
-    .groupBy(hour("timestamp").alias("hour"))
+    .groupBy(hour("Datetime").alias("hour"))
     .agg(count("value").alias("pickups"))
     .sort("pickups")
     .show())
