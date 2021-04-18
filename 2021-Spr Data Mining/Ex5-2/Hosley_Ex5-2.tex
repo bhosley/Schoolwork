@@ -23,9 +23,19 @@
 
 \section*{Assignment 1: Do exercise in Section 1.2.1}
 
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
+schema = '`Date/Time` TIMESTAMP, Lat DOUBLE, Lon DOUBLE, Base STRING'
+uber_df = spark.read.schema(schema) \
+	.option("timestampFormat", "M/d/yyyy HH:mm:ss") \
+	.csv("/user/data/CSC533DM/uber.csv")
+uber_df.printSchema()
+uber_df.show(5)
+\end{minted}
+\includegraphics[width=\linewidth]{image1}
+
 \section*{Assignment 2: Do exercise in Section 2.1.1}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
@@ -33,7 +43,7 @@
 
 \section*{Assignment 3: Do exercise in Section 3.1.1}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
@@ -41,14 +51,14 @@
 
 \section*{Assignment 4: Write queries to answer which hours of the day had the highest number of pickups? (Assume K=8, Seed=1)}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
 
 \section*{Assignment 5: Write queries to answer how many pickups occurred in each cluster? (Assume K=8, Seed=1)}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
@@ -72,6 +82,6 @@ also guarantee the quality of the final clustering results.
 \end{document}
 
 
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{python}
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
