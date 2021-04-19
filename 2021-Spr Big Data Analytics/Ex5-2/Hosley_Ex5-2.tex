@@ -30,13 +30,19 @@
 \begin{document}
 \maketitle
 
+\vspace{-1.5em}
+
 Colab Notebook located
 \href{https://colab.research.google.com/drive/1rxCV1SSGTpGZSGphk5AH8Iuuz3TFCNxB?usp=sharing}{here.}
 
-\section*{Assignment 1}
-\emph{ Do the exercise in section 3.6 }
+\vspace{-1.5em}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\section*{Assignment 1}
+\vspace{-1em}
+\emph{ Do the exercise in section 3.6 }
+\vspace{-0.5em}
+
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 document_assembler = DocumentAssembler() \
 	.setInputCol("headline_text") \
 	.setOutputCol("document") \
@@ -78,8 +84,8 @@ processed_df = nlp_model.transform(df)
 tokens_df = processed_df.select('publish_date','tokens').limit(10000)
 tokens_df.show()
 \end{minted}
-\includegraphics[width=\linewidth]{image1.1}
-\includegraphics[width=\linewidth]{image1.2}
+\includegraphics[width=0.8\linewidth]{image1.1}
+\includegraphics[width=0.8\linewidth]{image1.2}
 
 \section*{Assignment 2}
 \emph{ Do the exercise in section 3.7 }
@@ -139,17 +145,107 @@ for idx, topic in enumerate(topics_words):
 \emph{ Try different values of k and maxIter to see which combination best suits your data in Section 3.8. Show at least five different combinations, show their results, and explain why it’s best.}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+testVals = [[3,20],[5,10],[5,20],[10,10],[10,20],[15,10]]
+for i, iters in testVals:
+	from pyspark.ml.clustering import LDA
+	num_topics = i
+	lda = LDA(k=num_topics, maxIter=iters)
+	model = lda.fit(vectorized_tokens)
+	ll = model.logLikelihood(vectorized_tokens)
+	lp = model.logPerplexity(vectorized_tokens)
+	print("Results for {0} topics with {1} iterations:".format(num_topics,iters))
+	print("The lower bound on the log likelihood of the entire corpus: " +  str(ll))
+	print("The upper bound on perplexity: " + str(lp))
 \end{minted}
 \includegraphics[width=\linewidth]{image5} %\vspace{-1.5em}
 
+3 topics with 10 iterations performed the best as they had the highest log-likelihood and the lowest perplexity.
 
 \section*{Assignment 6}
 \emph{ Rewrite the codes for finding topics in tweets coronavirus dataset.  Also try different values of k and maxIter to see which combination best suits the data. Show at least five different combinations, show their results, and explain why it’s best. }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+file_location = r'./coronavirus-text-only-1000.txt'
+file_type = "csv"
+infer_schema = "true"
+first_row_is_header = "true"
+df = spark.read.format(file_type) \
+	.option("inferSchema", infer_schema) \
+	.option("header", first_row_is_header) \
+	.load(file_location)
+df.count()
+df.show(4)
 
+
+document_assembler = DocumentAssembler() \
+	.setInputCol("text") \
+	.setOutputCol("document") \
+	.setCleanupMode("shrink")
+
+tokenizer = Tokenizer() \
+	.setInputCols(["document"]) \
+	.setOutputCol("token")
+
+normalizer = Normalizer() \
+	.setInputCols(["token"]) \
+	.setOutputCol("normalized")
+
+wordlist = StopWordsCleaner().getStopWords()
+wordlist.append("coronavirus")
+
+stopwords_cleaner = StopWordsCleaner() \
+	.setInputCols("normalized") \
+	.setOutputCol("cleanTokens") \
+	.setStopWords(wordlist) \
+	.setCaseSensitive(False)
+
+stemmer = Stemmer() \
+	.setInputCols(["cleanTokens"]) \
+	.setOutputCol("stem")
+
+finisher = Finisher() \
+	.setInputCols(["stem"]) \
+	.setOutputCols(["tokens"]) \
+	.setOutputAsArray(True) \
+	.setCleanAnnotations(False)
+
+nlp_pipeline = Pipeline(
+	stages=[document_assembler, 
+		tokenizer,
+		normalizer,
+		stopwords_cleaner,
+		stemmer, 
+		finisher])
+
+nlp_model = nlp_pipeline.fit(df)
+processed_df = nlp_model.transform(df)
+tokens_df = processed_df.select('tokens').limit(1000)
+tokens_df.show()
+
+
+from pyspark.ml.feature import CountVectorizer
+cv = CountVectorizer(inputCol="tokens", outputCol="features", 
+vocabSize=500, minDF=3.0)
+cv_model = cv.fit(tokens_df)
+vectorized_tokens = cv_model.transform(tokens_df)
+
+from pyspark.ml.clustering import LDA
+testVals = [[3,10],[3,20],[5,10],[5,20],[10,10],[10,20],[20,10]]
+for i, iters in testVals:
+	num_topics = i
+	lda = LDA(k=num_topics, maxIter=iters)
+	model = lda.fit(vectorized_tokens)
+	ll = model.logLikelihood(vectorized_tokens)
+	lp = model.logPerplexity(vectorized_tokens)
+	print("Results for {0} topics with {1} iterations:".format(num_topics,iters))
+	print("The lower bound on the log likelihood of the entire corpus: " +  str(ll))
+	print("The upper bound on perplexity: " + str(lp))
+	print()
 \end{minted}
-\includegraphics[width=\linewidth]{image6} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image6.1} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image6.2} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image6.3} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image6.4} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image6.5} %\vspace{-1.5em}
 
 \end{document}
