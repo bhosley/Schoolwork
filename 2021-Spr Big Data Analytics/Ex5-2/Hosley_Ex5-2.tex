@@ -84,7 +84,7 @@ processed_df = nlp_model.transform(df)
 tokens_df = processed_df.select('publish_date','tokens').limit(10000)
 tokens_df.show()
 \end{minted}
-\includegraphics[width=0.8\linewidth]{image1.1}
+\includegraphics[width=0.8\linewidth]{image1.1} \\
 \includegraphics[width=0.8\linewidth]{image1.2}
 
 \section*{Assignment 2}
@@ -160,6 +160,8 @@ for i, iters in testVals:
 \includegraphics[width=\linewidth]{image5} %\vspace{-1.5em}
 
 3 topics with 10 iterations performed the best as they had the highest log-likelihood and the lowest perplexity.
+
+\clearpage
 
 \section*{Assignment 6}
 \emph{ Rewrite the codes for finding topics in tweets coronavirus dataset.  Also try different values of k and maxIter to see which combination best suits the data. Show at least five different combinations, show their results, and explain why it’s best. }
@@ -242,8 +244,8 @@ for i, iters in testVals:
 	print("The upper bound on perplexity: " + str(lp))
 	print()
 \end{minted}
-\includegraphics[width=\linewidth]{image6.1} %\vspace{-1.5em}
-\includegraphics[width=\linewidth]{image6.2} %\vspace{-1.5em}
+\includegraphics[width=0.8\linewidth]{image6.1} \\
+\includegraphics[width=0.8\linewidth]{image6.2} \\
 \includegraphics[width=\linewidth]{image6.3} %\vspace{-1.5em}
 \includegraphics[width=\linewidth]{image6.4} %\vspace{-1.5em}
 \includegraphics[width=\linewidth]{image6.5} %\vspace{-1.5em}
