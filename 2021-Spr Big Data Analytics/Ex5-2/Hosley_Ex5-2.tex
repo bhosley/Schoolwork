@@ -37,16 +37,61 @@ Colab Notebook located
 \emph{ Do the exercise in section 3.6 }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+document_assembler = DocumentAssembler() \
+	.setInputCol("headline_text") \
+	.setOutputCol("document") \
+	.setCleanupMode("shrink")
 
+tokenizer = Tokenizer() \
+	.setInputCols(["document"]) \
+	.setOutputCol("token")
+
+normalizer = Normalizer() \
+	.setInputCols(["token"]) \
+	.setOutputCol("normalized")
+
+stopwords_cleaner = StopWordsCleaner()\
+	.setInputCols("normalized")\
+	.setOutputCol("cleanTokens")\
+	.setCaseSensitive(False)
+
+stemmer = Stemmer() \
+	.setInputCols(["cleanTokens"]) \
+	.setOutputCol("stem")
+
+finisher = Finisher() \
+	.setInputCols(["stem"]) \
+	.setOutputCols(["tokens"]) \
+	.setOutputAsArray(True) \
+	.setCleanAnnotations(False)
+
+nlp_pipeline = Pipeline(
+	stages=[document_assembler, 
+		tokenizer,
+		normalizer,
+		stopwords_cleaner, 
+		stemmer, 
+		finisher])
+
+nlp_model = nlp_pipeline.fit(df)
+processed_df = nlp_model.transform(df)
+tokens_df = processed_df.select('publish_date','tokens').limit(10000)
+tokens_df.show()
 \end{minted}
-\includegraphics[width=\linewidth]{image1}
-
+\includegraphics[width=\linewidth]{image1.1}
+\includegraphics[width=\linewidth]{image1.2}
 
 \section*{Assignment 2}
 \emph{ Do the exercise in section 3.7 }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+from pyspark.ml.feature import CountVectorizer
+cv = CountVectorizer(inputCol="tokens", outputCol="features", 
+vocabSize=500, minDF=3.0)
+# train the model
+cv_model = cv.fit(tokens_df)
+# transform the data. Output column name will be features.
+vectorized_tokens = cv_model.transform(tokens_df)
 \end{minted}
 \includegraphics[width=\linewidth]{image2} 
 
@@ -55,7 +100,14 @@ Colab Notebook located
 \emph{ Do the exercise in section 3.8 }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+from pyspark.ml.clustering import LDA
+num_topics = 3
+lda = LDA(k=num_topics, maxIter=10)
+model = lda.fit(vectorized_tokens)
+ll = model.logLikelihood(vectorized_tokens)
+lp = model.logPerplexity(vectorized_tokens)
+print("The lower bound on the log likelihood of the entire corpus: " +  str(ll))
+print("The upper bound on perplexity: " + str(lp))
 \end{minted}
 \includegraphics[width=\linewidth]{image3} 
 
@@ -64,9 +116,23 @@ Colab Notebook located
 \emph{ Do the exercise in section 3.9 }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-
+# extract vocabulary from CountVectorizer
+vocab = cv_model.vocabulary
+topics = model.describeTopics() 
+topics_rdd = topics.rdd
+topics_words = topics_rdd\
+		.map(lambda row: row['termIndices'])\
+		.map(lambda idx_list: [vocab[idx] for idx in idx_list])\
+		.collect()
+for idx, topic in enumerate(topics_words):
+	print("topic: {}".format(idx))
+	print("*"*25)
+	for word in topic:
+		print(word)
+	print("*"*25)
 \end{minted}
-\includegraphics[width=\linewidth]{image4} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image4.1} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image4.2} %\vspace{-1.5em}
 
 
 \section*{Assignment 5}
