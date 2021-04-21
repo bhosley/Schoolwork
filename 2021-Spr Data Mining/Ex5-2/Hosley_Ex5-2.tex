@@ -91,6 +91,8 @@ For this assignment k=8 seems to be a good choice based on silhouette.
 \includegraphics[width=\linewidth]{image3}
 Clusters sized to their silhouette value.
 
+\clearpage
+
 \section*{Assignment 4: Write queries to answer which hours of the day had the highest number of pickups? (Assume K=8, Seed=1)}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
@@ -121,7 +123,9 @@ Explain why this method will not only speed up the convergence of the k-means al
 also guarantee the quality of the final clustering results.
 }
 
-By selecting new initial points randomly from the data points we see a higher probability of cluster centers being chosen in higher density areas of data points; the assumed clusters. 
+\vspace{2em}
+
+By selecting new initial points randomly from the data points we will observe a higher probability of cluster centers being chosen in higher density areas of data points; the assumed clusters. 
 By altering the probability of subsequent centers by a square of the distance to the original center we reduce the probability that the subsequent points join a cluster that already has a nearby local center.
 By balancing these two concerns in this manner we will not get perfect results but it provides a much better starting point than choosing the points randomly or attempting to programmatically start all of the centers in specific locations.
 Additionally, by having locations initiated in this manner we start closer to what an acceptable convergence should look like, and therefore can reach a convergence faster.
