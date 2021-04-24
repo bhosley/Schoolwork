@@ -31,13 +31,15 @@ filtered_df = raw_df.select(['Survived', 'Pclass', 'Gender', 'Age', 'SibSp', 'Pa
 \end{minted}
 \includegraphics[width=\linewidth]{image0}
 
-Outliers will be calculated based on their original distribution in the data set, but removed from a common set. The intention of doing it this was is to find and remove outliers such that order will not matter with earlier outliers removing data points that would otherwise be used to calculate subsequent ranges and outliers.
+Outliers will be calculated based on their original distribution in the data set, but removed from a common set. 
+The intention of doing it this way is to prevent removal of one feature's outliers from altering the calculation of subsequent ranges and outliers.
+
+\clearpage
 
 \section*{Assignment 1: Remove outliers from Fare}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
-## Fare
-quantiles = filtered_df.approxQuantile("Fare", [0.25, 0.75], 0.0)
+quantiles = filtered_df.approxQuantile("Fare",[0.25, 0.75],0.0)
 Q1, Q3 = quantiles[0], quantiles[1]
 IQR = Q3-Q1
 fareLowerRange, fareUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
@@ -81,13 +83,14 @@ trimmed_df.count()
 First we check for nulls. \\
 Then we impute the arithmetic mean into the null values. \\
 Then we calculate the IQR. \\
-Last we count number of outliers. \\ 
-\includegraphics[width=\linewidth]{image2.1}
+Last we count number of outliers. \vspace{1em} \\
+\includegraphics[width=\linewidth]{image2.1} \\
 
 Since there are outliers we then update the trimming filter. \\
-It is necessary to do it this way as the previously trimmed dataframe does not have the imputed ages available for filtering.
+It is necessary to do it this way as the previously trimmed dataframe does not have the imputed ages available for filtering. \vspace{1em} \\
 \includegraphics[width=\linewidth]{image2.2}
 
+\clearpage
 
 \section*{Assignment 3: Remove outliers from Siblings-Spouses}
 
@@ -120,14 +123,75 @@ No null values means no need to impute missing data.
 \section*{Assignment 4: Remove outliers from }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
+# Check for Nulls
+filtered_df.filter(filtered_df.Parch.isNull()).count()
 
+# Find IQR 
+quantiles = filtered_df.approxQuantile('Parch', [0.25, 0.75], 0.0)
+Q1, Q3 = quantiles[0], quantiles[1]
+IQR = Q3-Q1
+parchLowerRange, parchUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+# Count outliers
+filtered_df.filter(filtered_df.Parch < parchLowerRange).count() + \
+filtered_df.filter(filtered_df.Parch > parchUpperRange).count()
+
+# Check IQR
+parchLowerRange, parchUpperRange
+# Check result if Applied to trim
+trimmed_df.filter(trimmed_df.Parch == parchUpperRange).count()
+
+# Trim
+trimmed_df = trimmed_df.filter(trimmed_df.Parch == parchUpperRange)
+trimmed_df.count()
 \end{minted}
-\includegraphics[width=\linewidth]{image1}
+\includegraphics[width=\linewidth]{image4.1}
 
+The large count of outliers raises some concern.
+It is worth looking into.
 
+The reason is that Q1 and Q3 are both 0, resulting from the vast majority of samples being 0; everything above is treated as an outlier.
+It may be problematic to filter this data, especially if there is not significant overlap between this data and the previously filtered outliers. 
+This is checked as well.
 
 
 \section*{Assignment 5: Redo HW 4-2 with the new, no-outliers dataset. Explain the differences in results.}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
+# Index Gender
+from pyspark.ml.feature import StringIndexer
+indexed_df = StringIndexer(inputCol="Gender", outputCol="IndexedGender").fit(trimmed_df).transform(trimmed_df)
+# Vectorize Features
+from pyspark.ml.feature import VectorAssembler
+assembler = VectorAssembler(inputCols=['Pclass', 'SibSp', 'Parch', 'Fare', 'ImputedAge', 'IndexedGender'], outputCol='features')
+features_df = assembler.transform(indexed_df)
+# Train-Test Split
+(trainingData, testData) = features_df.randomSplit([0.8, 0.2])
+trainingData.count()
+testData.count()
+trainingData.count() + testData.count()
+features_df.count()
+# trainingData
+from pyspark.ml.classification import RandomForestClassifier
+rf = RandomForestClassifier(labelCol="Survived", featuresCol="features")
+modelRF = rf.fit(trainingData)
+# Evaluate
+from pyspark.ml.evaluation import BinaryClassificationEvaluator
+predictions = modelRF.transform(testData)
+evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderROC")
+evaluator.evaluate(predictions)
+evaluator = BinaryClassificationEvaluator(labelCol="Survived", rawPredictionCol="prediction", metricName="areaUnderPR")
+evaluator.evaluate(predictions)
+\end{minted}
+\includegraphics[width=\linewidth]{image5.1}
+
+In the first iteration of HW 4-2 the AUROC was 0.791043 and AUPR was 0.738639.
+As shown in the image removing all outliers actually decreased the effectiveness of the model based on these metrics.
+When trimming is done again but leaving the Parent-Child outliers in the data set we get slightly better results.
+
+\includegraphics[width=\linewidth]{image5.2}
+
+In this case the AUROC is improved slightly and the AUPR is decreased more than the AUROC gains. This version of the model is slightly less likely to introduce false positives but it also slightly less precise overall.
+
 
 
 \end{document}
