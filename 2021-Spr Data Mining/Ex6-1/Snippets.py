@@ -49,14 +49,47 @@ trimmed_df = filtered_df \
 trimmed_df.count()
 
 
+## SibSp
+
+# Check for Nulls
+filtered_df.filter(filtered_df.SibSp.isNull()).count()
+# Find IQR 
+quantiles = filtered_df.approxQuantile('SibSp', [0.25, 0.75], 0.0)
+Q1, Q3 = quantiles[0], quantiles[1]
+IQR = Q3-Q1
+sibSpLowerRange, sibSpUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+# Count outliers
+filtered_df.filter(filtered_df.SibSp < sibSpLowerRange).count() + \
+filtered_df.filter(filtered_df.SibSp > sibSpUpperRange).count()
+
+# Trim
+trimmed_df = trimmed_df \
+    .filter(trimmed_df.SibSp > sibSpLowerRange) \
+    .filter(trimmed_df.SibSp < sibSpUpperRange)
+trimmed_df.count()
+
+
 ## Parch
 
 # Check for Nulls
 filtered_df.filter(filtered_df.Parch.isNull()).count()
 
+# Find IQR 
+quantiles = filtered_df.approxQuantile('Parch', [0.25, 0.75], 0.0)
+Q1, Q3 = quantiles[0], quantiles[1]
+IQR = Q3-Q1
+parchLowerRange, parchUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+# Count outliers
+filtered_df.filter(filtered_df.Parch < parchLowerRange).count() + \
+filtered_df.filter(filtered_df.Parch > parchUpperRange).count()
 
+# Check IQR
+parchLowerRange, parchUpperRange
+# Check result if Applied to trim
+trimmed_df.filter(trimmed_df.Parch == parchUpperRange).count()
 
-## SibSp
+# Trim
+trimmed_df = trimmed_df.filter(trimmed_df.Parch == parchUpperRange)
+trimmed_df.count()
 
-# Check for Nulls
-filtered_df.filter(filtered_df.SibSp.isNull()).count()
+######### Redoing 4-2
