@@ -28,49 +28,99 @@ raw_df = spark.read.csv("/user/data/CSC533DM/titanic.csv", header=True, inferSch
 raw_df.describe().show()
 
 filtered_df = raw_df.select(['Survived', 'Pclass', 'Gender', 'Age', 'SibSp', 'Parch', 'Fare'])
-trimmed_df = filtered_df
 \end{minted}
-\includegraphics[width=\linewidth]{image1}
+\includegraphics[width=\linewidth]{image0}
 
 Outliers will be calculated based on their original distribution in the data set, but removed from a common set. The intention of doing it this was is to find and remove outliers such that order will not matter with earlier outliers removing data points that would otherwise be used to calculate subsequent ranges and outliers.
 
 \section*{Assignment 1: Remove outliers from Fare}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
+## Fare
 quantiles = filtered_df.approxQuantile("Fare", [0.25, 0.75], 0.0)
 Q1, Q3 = quantiles[0], quantiles[1]
 IQR = Q3-Q1
-lowerRange, upperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
-lowerRange, upperRange
+fareLowerRange, fareUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+fareLowerRange, fareUpperRange
 
-trimmed_df = trimmed_df \
-	.filter(filtered_df.Fare > lowerRange) \
-	.filter(filtered_df.Fare < upperRange)
-
+trimmed_df = filtered_df \
+	.filter(filtered_df.Fare > fareLowerRange) \
+	.filter(filtered_df.Fare < fareUpperRange)
 trimmed_df.count()
 \end{minted}
-\includegraphics[width=\linewidth]{image2}
+\includegraphics[width=\linewidth]{image1}
 
 
 \section*{Assignment 2: Remove outliers from Age}
 
-Trimmed dataframe will need ot be re-filtered in order to avoid discrepancies that imputing the trimmed frame separately from the filtered frame would cause.
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
+# Check for Nulls
+filtered_df.filter(filtered_df.Age.isNull()).count()
+# Impute missing values with arithmetic mean
+from pyspark.ml.feature import Imputer
+imputer = Imputer(strategy='mean', inputCols=['Age'], outputCols=['ImputedAge'])
+filtered_df = imputer.fit(filtered_df).transform(filtered_df)
+
+# Find IQR 
+quantiles = filtered_df.approxQuantile('ImputedAge', [0.25, 0.75], 0.0)
+Q1, Q3 = quantiles[0], quantiles[1]
+IQR = Q3-Q1
+ageLowerRange, ageUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+# Count outliers
+filtered_df.filter(filtered_df.ImputedAge < ageLowerRange).count() + \
+filtered_df.filter(filtered_df.ImputedAge > ageUpperRange).count()
+
+# Re-trim
+trimmed_df = filtered_df \
+	.filter(filtered_df.Fare > fareLowerRange) \
+	.filter(filtered_df.Fare < fareUpperRange) \
+	.filter(filtered_df.ImputedAge > ageLowerRange) \
+	.filter(filtered_df.ImputedAge < ageUpperRange)
+trimmed_df.count()
+\end{minted}
+First we check for nulls. \\
+Then we impute the arithmetic mean into the null values. \\
+Then we calculate the IQR. \\
+Last we count number of outliers. \\ 
+\includegraphics[width=\linewidth]{image2.1}
+
+Since there are outliers we then update the trimming filter. \\
+It is necessary to do it this way as the previously trimmed dataframe does not have the imputed ages available for filtering.
+\includegraphics[width=\linewidth]{image2.2}
+
+
+\section*{Assignment 3: Remove outliers from Siblings-Spouses}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
+# Check for Nulls
+filtered_df.filter(filtered_df.SibSp.isNull()).count()
+
+# Find IQR 
+quantiles = filtered_df.approxQuantile('SibSp', [0.25, 0.75], 0.0)
+Q1, Q3 = quantiles[0], quantiles[1]
+IQR = Q3-Q1
+sibSpLowerRange, sibSpUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+# Count outliers
+filtered_df.filter(filtered_df.SibSp < sibSpLowerRange).count() + \
+filtered_df.filter(filtered_df.SibSp > sibSpUpperRange).count()
+
+# Trim
+trimmed_df = trimmed_df \
+	.filter(trimmed_df.SibSp > sibSpLowerRange) \
+	.filter(trimmed_df.SibSp < sibSpUpperRange)
+trimmed_df.count()
 \end{minted}
-\includegraphics[width=\linewidth]{image1}
 
+\includegraphics[width=\linewidth]{image3.1}
+No null values means no need to impute missing data.
 
-\section*{Assignment 3: Remove outliers from }
-
-\begin{minted}[breaklines,bgcolor=light-gray]{python}
-\end{minted}
-\includegraphics[width=\linewidth]{image1}
+\includegraphics[width=\linewidth]{image3.2}
 
 
 \section*{Assignment 4: Remove outliers from }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
+
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
 
