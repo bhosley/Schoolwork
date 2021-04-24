@@ -21,114 +21,36 @@
 \begin{document}
 \maketitle
 
-\section*{Assignment 1: Do exercise in Section 1.2.1}
+\section*{Assignment 1: Remove outliers from }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
-schema = '`Date/Time` TIMESTAMP, Lat DOUBLE, Lon DOUBLE, Base STRING'
-uber_df = spark.read.schema(schema) \
-	.option("header","true") \
-	.option("timestampFormat", "M/d/yyyy HH:mm:ss") \
-	.csv("/user/data/CSC533DM/uber.csv")
-uber_df.printSchema()
-uber_df.show(5)
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
 
-\section*{Assignment 2: Do exercise in Section 2.1.1}
+
+\section*{Assignment 2: Remove outliers from }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
-from pyspark.ml.clustering import KMeans
-from pyspark.ml.evaluation import ClusteringEvaluator
-
-kmeans3 = KMeans().setK(3).setSeed(1)
-kmeans5 = KMeans().setK(5).setSeed(1)
-kmeans8 = KMeans().setK(8).setSeed(1)
-
-model3 = kmeans3.fit(features_df)
-model5 = kmeans5.fit(features_df)
-model8 = kmeans8.fit(features_df)
-
-predictions3 = model3.transform(features_df)
-predictions5 = model5.transform(features_df)
-predictions8 = model8.transform(features_df)
-
-evaluator = ClusteringEvaluator()
-
-silhouette3 = evaluator.evaluate(predictions3)
-silhouette5 = evaluator.evaluate(predictions5)
-silhouette8 = evaluator.evaluate(predictions8)
-print("Silhouette with squared euclidean distance = " + str(silhouette3))
-print("Silhouette with squared euclidean distance = " + str(silhouette5))
-print("Silhouette with squared euclidean distance = " + str(silhouette8))
-
-centers = model3.clusterCenters()
-print("Cluster Centers: ")
-for center in centers:
-	print(center)
-
-centers = model5.clusterCenters()
-print("Cluster Centers: ")
-for center in centers:
-	print(center)
-
-centers = model8.clusterCenters()
-print("Cluster Centers: ")
-for center in centers:
-	print(center)
-
 \end{minted}
-\includegraphics[width=\linewidth]{image2.1}
-\includegraphics[width=\linewidth]{image2.2}
-\includegraphics[width=\linewidth]{image2.3}
+\includegraphics[width=\linewidth]{image1}
 
-Without seeing how each cluster's silhouette compares to the mean, it would appear that k=8 is the best performing option. 
-Typically the mean silhouette will decrease as k increases, except in cases where the higher k performs better than the lower value. 
-In this specific case the k=8 outperforms the k=5, suggesting notable improvement.
-For this assignment k=8 seems to be a good choice based on silhouette.
 
-\section*{Assignment 3: Do exercise in Section 3.1.1}
-
-\includegraphics[width=\linewidth]{image3}
-Clusters sized to their silhouette value.
-
-\clearpage
-
-\section*{Assignment 4: Write queries to answer which hours of the day had the highest number of pickups? (Assume K=8, Seed=1)}
+\section*{Assignment 3: Remove outliers from }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
-from pyspark.sql.functions import hour, desc
-predictions8.groupBy(hour("Date/Time").alias("hour")) \
-.count().sort(desc("count")).show(24)
 \end{minted}
-\includegraphics[width=\linewidth]{image4}
+\includegraphics[width=\linewidth]{image1}
 
-\section*{Assignment 5: Write queries to answer how many pickups occurred in each cluster? (Assume K=8, Seed=1)}
+
+\section*{Assignment 4: Remove outliers from }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
-predictions8.groupBy("prediction").count().show(8)
 \end{minted}
-\includegraphics[width=\linewidth]{image5}
+\includegraphics[width=\linewidth]{image1}
 
-\section*{Assignment 6:}
-\textbf{
-For the k-means algorithm, it is interesting to note that by choosing the initial cluster centers 
-carefully, we may be able to not only speed up the convergence of the algorithm, but also 
-guarantee the quality of the final clustering. The k-means++ algorithm is a variant of k-means, 
-which chooses the initial centers as follows. First, it selects one center uniformly at random from 
-the objects in the data set. Iteratively, for each object p other than the chosen center, it chooses 
-an object as the new center. This object is chosen at random with probability proportional to 
-dist(p)2, where dist(p)) is the distance from p, to the closest center that has already been chosen. 
-The iteration continues until k centers are selected.
-Explain why this method will not only speed up the convergence of the k-means algorithm, but 
-also guarantee the quality of the final clustering results.
-}
 
-\vspace{2em}
+\section*{Assignment 5: Redo HW 4-2 with the new, no-outliers dataset. Explain the differences in results.}
 
-By selecting new initial points randomly from the data points we will observe a higher probability of cluster centers being chosen in higher density areas of data points; the assumed clusters. 
-By altering the probability of subsequent centers by a square of the distance to the original center we reduce the probability that the subsequent points join a cluster that already has a nearby local center.
-By balancing these two concerns in this manner we will not get perfect results but it provides a much better starting point than choosing the points randomly or attempting to programmatically start all of the centers in specific locations.
-Additionally, by having locations initiated in this manner we start closer to what an acceptable convergence should look like, and therefore can reach a convergence faster.
 
 \end{document}
 
