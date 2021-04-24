@@ -21,14 +21,40 @@
 \begin{document}
 \maketitle
 
-\section*{Assignment 1: Remove outliers from }
+\section*{Preliminary: }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
+raw_df = spark.read.csv("/user/data/CSC533DM/titanic.csv", header=True, inferSchema=True)
+raw_df.describe().show()
+
+filtered_df = raw_df.select(['Survived', 'Pclass', 'Gender', 'Age', 'SibSp', 'Parch', 'Fare'])
+trimmed_df = filtered_df
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
 
+Outliers will be calculated based on their original distribution in the data set, but removed from a common set. The intention of doing it this was is to find and remove outliers such that order will not matter with earlier outliers removing data points that would otherwise be used to calculate subsequent ranges and outliers.
 
-\section*{Assignment 2: Remove outliers from }
+\section*{Assignment 1: Remove outliers from Fare}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
+quantiles = filtered_df.approxQuantile("Fare", [0.25, 0.75], 0.0)
+Q1, Q3 = quantiles[0], quantiles[1]
+IQR = Q3-Q1
+lowerRange, upperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+lowerRange, upperRange
+
+trimmed_df = trimmed_df \
+	.filter(filtered_df.Fare > lowerRange) \
+	.filter(filtered_df.Fare < upperRange)
+
+trimmed_df.count()
+\end{minted}
+\includegraphics[width=\linewidth]{image2}
+
+
+\section*{Assignment 2: Remove outliers from Age}
+
+Trimmed dataframe will need ot be re-filtered in order to avoid discrepancies that imputing the trimmed frame separately from the filtered frame would cause.
 
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
 \end{minted}
@@ -47,6 +73,8 @@
 \begin{minted}[breaklines,bgcolor=light-gray]{python}
 \end{minted}
 \includegraphics[width=\linewidth]{image1}
+
+
 
 
 \section*{Assignment 5: Redo HW 4-2 with the new, no-outliers dataset. Explain the differences in results.}
