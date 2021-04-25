@@ -228,8 +228,9 @@ news_df.show(30)
 \includegraphics[width=\linewidth]{image6.2.1}
 \includegraphics[width=\linewidth]{image6.2.2}
 
+\clearpage
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 # Preprocessing (Pipeline)
 documentAssembler = DocumentAssembler()\
 	.setInputCol("text")\
@@ -239,15 +240,15 @@ use = UniversalSentenceEncoder.pretrained(lang="en") \
 	.setInputCols(["document"])\
 	.setOutputCol("sentence_embeddings")
 
-model_name = 'classifierdl_use_fakenews' # pre-trained model name
+model_name = 'classifierdl_use_fakenews' #pre-trained model name
 document_classifier = ClassifierDLModel.pretrained(model_name)\
 	.setInputCols(['document', 
 'sentence_embeddings']).setOutputCol("prediction")
 
 nlp_Pipeline = Pipeline(
 	stages=[documentAssembler, 
-			use,
-			document_classifier])
+		use,
+		document_classifier])
 
 # Training (Pipeline)
 empty_df = spark.createDataFrame([['']]).toDF("text")
@@ -260,15 +261,16 @@ t_news_df.printSchema()
 \includegraphics[width=\linewidth]{image6.3.1} 
 \includegraphics[width=\linewidth]{image6.3.2} 
 
+\clearpage
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 # Visualize the results
 import pyspark.sql.functions as F
 t_news_df.select("label",
-	F.explode(F.arrays_zip('prediction.result', 'document.result')).alias("cols")) \
-		.select("label",
-				F.expr("cols['0']").alias("prediction"),
-				F.expr("cols['1']").alias("document")).show(truncate=True)
+  F.explode(F.arrays_zip('prediction.result', 'document.result')).alias("cols")) \
+    .select("label",
+	F.expr("cols['0']").alias("prediction"),
+	F.expr("cols['1']").alias("document")).show(truncate=True)
 \end{minted}
 \includegraphics[width=\linewidth]{image6.4} 
 
