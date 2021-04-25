@@ -183,7 +183,93 @@ As stated in the assignment, the performance of this model appears to be fairly 
 
 \section*{Assignment 6: Rewrite news for a different fake and real news dataset}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+from pathlib import Path
+import urllib.request
+download_path = "./fake_or_real_news.csv.zip"
+if not Path(download_path).is_file():
+	print("File Not found will download it!")
+	url = "https://raw.githubusercontent.com/joolsa/fake_real_news_dataset/master/fake_or_real_news.csv.zip"
+	urllib.request.urlretrieve(url, download_path)
+else:
+	print("File already present.")
+
+!unzip ./fake_or_real_news.csv.zip
 \end{minted}
-\includegraphics[width=\linewidth]{image6} 
+\includegraphics[width=\linewidth]{image6.1} 
+
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+file_location = r"./fake_or_real_news.csv"
+file_type = "csv"
+# CSV options
+infer_schema = "true"
+first_row_is_header = "true"
+delimiter = ","
+news_df = news_df.replace('“','"').replace('”','"')
+news_df = spark.read.format(file_type) \
+	.option("header", first_row_is_header) \
+	.option("inferSchema", infer_schema) \
+	.option("multiline", "true") \
+	.option("quote", '"') \
+	.option("escape", '"') \
+	.option("sep", delimiter) \
+	.load(file_location)
+
+from pyspark.sql.functions import regexp_replace,col
+news_df = news_df.withColumn('text', regexp_replace(col('text'), "\\n", ""))
+news_df.count()
+
+news_df.printSchema()
+news_df.show(30)
+\end{minted}
+\includegraphics[width=\linewidth]{image6.2.1}
+\includegraphics[width=\linewidth]{image6.2.2}
+
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+# Preprocessing (Pipeline)
+documentAssembler = DocumentAssembler()\
+	.setInputCol("text")\
+	.setOutputCol("document")
+
+use = UniversalSentenceEncoder.pretrained(lang="en") \
+	.setInputCols(["document"])\
+	.setOutputCol("sentence_embeddings")
+
+model_name = 'classifierdl_use_fakenews' # pre-trained model name
+document_classifier = ClassifierDLModel.pretrained(model_name)\
+	.setInputCols(['document', 
+'sentence_embeddings']).setOutputCol("prediction")
+
+nlp_Pipeline = Pipeline(
+	stages=[documentAssembler, 
+			use,
+			document_classifier])
+
+# Training (Pipeline)
+empty_df = spark.createDataFrame([['']]).toDF("text")
+pipelineModel = nlp_Pipeline.fit(empty_df)
+t_news_df = pipelineModel.transform(news_df)
+
+# Show Schema
+t_news_df.printSchema()
+\end{minted}
+\includegraphics[width=\linewidth]{image6.3.1} 
+\includegraphics[width=\linewidth]{image6.3.2} 
+
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+# Visualize the results
+import pyspark.sql.functions as F
+t_news_df.select("label",
+	F.explode(F.arrays_zip('prediction.result', 'document.result')).alias("cols")) \
+		.select("label",
+				F.expr("cols['0']").alias("prediction"),
+				F.expr("cols['1']").alias("document")).show(truncate=True)
+\end{minted}
+\includegraphics[width=\linewidth]{image6.4} 
+
+
+
 
 \end{document}
