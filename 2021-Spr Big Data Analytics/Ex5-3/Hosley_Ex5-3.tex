@@ -23,7 +23,7 @@
 
 \usepackage[normalem]{ulem}
 
-\title{Big Data Analytics: Exercise 5-2}
+\title{Big Data Analytics: Exercise 5-3}
 \author{Brandon Hosley}
 \date{\today}
 
@@ -33,221 +33,157 @@
 \vspace{-1.5em}
 
 Colab Notebook located
-\href{https://colab.research.google.com/drive/1rxCV1SSGTpGZSGphk5AH8Iuuz3TFCNxB?usp=sharing}{here.}
+\href{https://colab.research.google.com/drive/1vNtxLyW-ZiW-fKm9A9IOu655ZulL9s1E?usp=sharing}{here.}
 
 \vspace{-1.5em}
 
-\section*{Assignment 1}
-\vspace{-1em}
-\emph{ Do the exercise in section 3.6 }
-\vspace{-0.5em}
+\section*{Assignment 1: Section 2.4}
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+# Show Schema
+text_df.printSchema()
 
-\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
-document_assembler = DocumentAssembler() \
-	.setInputCol("headline_text") \
-	.setOutputCol("document") \
-	.setCleanupMode("shrink")
-
-tokenizer = Tokenizer() \
-	.setInputCols(["document"]) \
-	.setOutputCol("token")
-
-normalizer = Normalizer() \
-	.setInputCols(["token"]) \
-	.setOutputCol("normalized")
-
-stopwords_cleaner = StopWordsCleaner()\
-	.setInputCols("normalized")\
-	.setOutputCol("cleanTokens")\
-	.setCaseSensitive(False)
-
-stemmer = Stemmer() \
-	.setInputCols(["cleanTokens"]) \
-	.setOutputCol("stem")
-
-finisher = Finisher() \
-	.setInputCols(["stem"]) \
-	.setOutputCols(["tokens"]) \
-	.setOutputAsArray(True) \
-	.setCleanAnnotations(False)
-
-nlp_pipeline = Pipeline(
-	stages=[document_assembler, 
-		tokenizer,
-		normalizer,
-		stopwords_cleaner, 
-		stemmer, 
-		finisher])
-
-nlp_model = nlp_pipeline.fit(df)
-processed_df = nlp_model.transform(df)
-tokens_df = processed_df.select('publish_date','tokens').limit(10000)
-tokens_df.show()
+# Verify the Count
+text_df.count()
 \end{minted}
-\includegraphics[width=0.8\linewidth]{image1.1} \\
-\includegraphics[width=0.8\linewidth]{image1.2}
+\includegraphics[width=0.8\linewidth]{image1}
 
-\section*{Assignment 2}
-\emph{ Do the exercise in section 3.7 }
+\section*{Assignment 2: Section 2.5}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-from pyspark.ml.feature import CountVectorizer
-cv = CountVectorizer(inputCol="tokens", outputCol="features", 
-vocabSize=500, minDF=3.0)
-# train the model
-cv_model = cv.fit(tokens_df)
-# transform the data. Output column name will be features.
-vectorized_tokens = cv_model.transform(tokens_df)
+# Preprocessing (Pipeline)
+documentAssembler = DocumentAssembler()\
+	.setInputCol("text")\
+	.setOutputCol("document")
+
+use = UniversalSentenceEncoder.pretrained(lang="en") \
+	.setInputCols(["document"])\
+	.setOutputCol("sentence_embeddings")
+
+model_name = 'classifierdl_use_fakenews' # pre-trained model name
+document_classifier = ClassifierDLModel.pretrained(model_name)\
+	.setInputCols(['document', 
+'sentence_embeddings']).setOutputCol("prediction")
+
+nlp_Pipeline = Pipeline(
+	stages=[documentAssembler, 
+			use,
+			document_classifier])
 \end{minted}
 \includegraphics[width=\linewidth]{image2} 
 
 
-\section*{Assignment 3}
-\emph{ Do the exercise in section 3.8 }
+\section*{Assignment 3: Section 2.6}
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-from pyspark.ml.clustering import LDA
-num_topics = 3
-lda = LDA(k=num_topics, maxIter=10)
-model = lda.fit(vectorized_tokens)
-ll = model.logLikelihood(vectorized_tokens)
-lp = model.logPerplexity(vectorized_tokens)
-print("The lower bound on the log likelihood of the entire corpus: " +  str(ll))
-print("The upper bound on perplexity: " + str(lp))
+# Training (Pipeline)
+empty_df = spark.createDataFrame([['']]).toDF("text")
+pipelineModel = nlp_Pipeline.fit(empty_df)
+result_df = pipelineModel.transform(text_df)
+
+# Show Schema
+result_df.printSchema()
 \end{minted}
 \includegraphics[width=\linewidth]{image3} 
 
 
-\section*{Assignment 4}
+\section*{Assignment 4: Section 2.7}
 \emph{ Do the exercise in section 3.9 }
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-# extract vocabulary from CountVectorizer
-vocab = cv_model.vocabulary
-topics = model.describeTopics() 
-topics_rdd = topics.rdd
-topics_words = topics_rdd\
-		.map(lambda row: row['termIndices'])\
-		.map(lambda idx_list: [vocab[idx] for idx in idx_list])\
-		.collect()
-for idx, topic in enumerate(topics_words):
-	print("topic: {}".format(idx))
-	print("*"*25)
-	for word in topic:
-		print(word)
-	print("*"*25)
+# Visualize the results
+import pyspark.sql.functions as F
+result_df.select(F.explode(F.arrays_zip('prediction.result', 
+'document.result')).alias("cols")) \
+	.select(F.expr("cols['0']").alias("prediction"),
+			F.expr("cols['1']").alias("document")).show(truncate=True)
 \end{minted}
-\includegraphics[width=\linewidth]{image4.1} %\vspace{-1.5em}
-\includegraphics[width=\linewidth]{image4.2} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image4}
 
 
-\section*{Assignment 5}
-\emph{ Try different values of k and maxIter to see which combination best suits your data in Section 3.8. Show at least five different combinations, show their results, and explain why it’s best.}
+\section*{Assignment 5: Rewrite news detection for the Trump and Biden tweet dataset}
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+import requests
+candidates = ['DonaldTrump', 'JoeBiden']
+data = {}
+for i, c in enumerate(candidates):
+	url = "https://raw.githubusercontent.com/gomachinelearning/Blogs/master/" + c + "Tweets.txt"
+	req = requests.get(url)
+	data[c] = req.text
+
+# check the sizes: Count the number of characters
+print("Verify the dictionary variables are not empty. Print total number of characters in the variables:\n")
+print("Donald Trump: {} , Joe Biden: {}".format(len(data['DonaldTrump']) ,len(data['JoeBiden'])))
+
+def print_first_n_characters(n):
+	if n == -1:
+		print('Printing full tweets of each candidate \n'.format(n) )
+	else:
+		print('\n\nPrinting the first {} characters of tweets of each candidate \n'.format(n) )
+	
+	print('DONALD TRUMP: \n ' + data['DonaldTrump'][0:n])  
+	print('\n\nJOE BIDEN: \n ' + data['JoeBiden'][0:n])
+
+print_first_n_characters(500)
+\end{minted}
+\includegraphics[width=\linewidth]{image5.1} %\vspace{-1.5em}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}\\
+import pandas as pd
+tweets_df = spark.createDataFrame( \
+	pd.DataFrame({"author":'Trump',"text":lst_donald_trump_tweets}).append( \
+	pd.DataFrame({"author":'Biden',"text":lst_joe_biden_tweets})))
+
+tweets_df.printSchema()
+
+# Preprocessing (Pipeline)
+documentAssembler = DocumentAssembler()\
+	.setInputCol("text")\
+	.setOutputCol("document")
+
+use = UniversalSentenceEncoder.pretrained(lang="en") \
+	.setInputCols(["document"])\
+	.setOutputCol("sentence_embeddings")
+
+model_name = 'classifierdl_use_fakenews' # pre-trained model name
+document_classifier = ClassifierDLModel.pretrained(model_name)\
+	.setInputCols(['document', 
+'sentence_embeddings']).setOutputCol("prediction")
+
+nlp_Pipeline = Pipeline(
+	stages=[documentAssembler, 
+			use,
+			document_classifier])
+\end{minted}
+\includegraphics[width=\linewidth]{image5.2} %\vspace{-1.5em}
+
+\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}\\
+# Training (Pipeline)
+empty_df = spark.createDataFrame([['']]).toDF("text")
+pipelineModel = nlp_Pipeline.fit(empty_df)
+result_df = pipelineModel.transform(tweets_df)
+
+# Show Schema
+result_df.printSchema()
+\end{minted}
+\includegraphics[width=\linewidth]{image5.3} %\vspace{-1.5em}
+
 
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-testVals = [[3,20],[5,10],[5,20],[10,10],[10,20],[15,10]]
-for i, iters in testVals:
-	from pyspark.ml.clustering import LDA
-	num_topics = i
-	lda = LDA(k=num_topics, maxIter=iters)
-	model = lda.fit(vectorized_tokens)
-	ll = model.logLikelihood(vectorized_tokens)
-	lp = model.logPerplexity(vectorized_tokens)
-	print("Results for {0} topics with {1} iterations:".format(num_topics,iters))
-	print("The lower bound on the log likelihood of the entire corpus: " +  str(ll))
-	print("The upper bound on perplexity: " + str(lp))
+# Visualize the results
+import pyspark.sql.functions as F
+result_df.select(F.explode(F.arrays_zip('prediction.result', 
+'document.result')).alias("cols")) \
+	.select(F.expr("cols['0']").alias("prediction"),
+			F.expr("cols['1']").alias("document")).show(truncate=False)
 \end{minted}
-\includegraphics[width=\linewidth]{image5} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image5.4} %\vspace{-1.5em}
 
-3 topics with 10 iterations performed the best as they had the highest log-likelihood and the lowest perplexity.
+As stated in the assignment, the performance of this model appears to be fairly poor. It is likely that this is largely due to the age of the pre-trained model being less capable on modern data.
 
-\clearpage
 
-\section*{Assignment 6}
-\emph{ Rewrite the codes for finding topics in tweets coronavirus dataset.  Also try different values of k and maxIter to see which combination best suits the data. Show at least five different combinations, show their results, and explain why it’s best. }
-
+\section*{Assignment 6: Rewrite news for a different fake and real news dataset}
 \begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
-file_location = r'./coronavirus-text-only-1000.txt'
-file_type = "csv"
-infer_schema = "true"
-first_row_is_header = "true"
-df = spark.read.format(file_type) \
-	.option("inferSchema", infer_schema) \
-	.option("header", first_row_is_header) \
-	.load(file_location)
-df.count()
-df.show(4)
-
-
-document_assembler = DocumentAssembler() \
-	.setInputCol("text") \
-	.setOutputCol("document") \
-	.setCleanupMode("shrink")
-
-tokenizer = Tokenizer() \
-	.setInputCols(["document"]) \
-	.setOutputCol("token")
-
-normalizer = Normalizer() \
-	.setInputCols(["token"]) \
-	.setOutputCol("normalized")
-
-wordlist = StopWordsCleaner().getStopWords()
-wordlist.append("coronavirus")
-
-stopwords_cleaner = StopWordsCleaner() \
-	.setInputCols("normalized") \
-	.setOutputCol("cleanTokens") \
-	.setStopWords(wordlist) \
-	.setCaseSensitive(False)
-
-stemmer = Stemmer() \
-	.setInputCols(["cleanTokens"]) \
-	.setOutputCol("stem")
-
-finisher = Finisher() \
-	.setInputCols(["stem"]) \
-	.setOutputCols(["tokens"]) \
-	.setOutputAsArray(True) \
-	.setCleanAnnotations(False)
-
-nlp_pipeline = Pipeline(
-	stages=[document_assembler, 
-		tokenizer,
-		normalizer,
-		stopwords_cleaner,
-		stemmer, 
-		finisher])
-
-nlp_model = nlp_pipeline.fit(df)
-processed_df = nlp_model.transform(df)
-tokens_df = processed_df.select('tokens').limit(1000)
-tokens_df.show()
-
-
-from pyspark.ml.feature import CountVectorizer
-cv = CountVectorizer(inputCol="tokens", outputCol="features", 
-vocabSize=500, minDF=3.0)
-cv_model = cv.fit(tokens_df)
-vectorized_tokens = cv_model.transform(tokens_df)
-
-from pyspark.ml.clustering import LDA
-testVals = [[3,10],[3,20],[5,10],[5,20],[10,10],[10,20],[20,10]]
-for i, iters in testVals:
-	num_topics = i
-	lda = LDA(k=num_topics, maxIter=iters)
-	model = lda.fit(vectorized_tokens)
-	ll = model.logLikelihood(vectorized_tokens)
-	lp = model.logPerplexity(vectorized_tokens)
-	print("Results for {0} topics with {1} iterations:".format(num_topics,iters))
-	print("The lower bound on the log likelihood of the entire corpus: " +  str(ll))
-	print("The upper bound on perplexity: " + str(lp))
-	print()
 \end{minted}
-\includegraphics[width=0.8\linewidth]{image6.1} \\
-\includegraphics[width=0.8\linewidth]{image6.2} \\
-\includegraphics[width=\linewidth]{image6.3} %\vspace{-1.5em}
-\includegraphics[width=\linewidth]{image6.4} %\vspace{-1.5em}
-\includegraphics[width=\linewidth]{image6.5} %\vspace{-1.5em}
+\includegraphics[width=\linewidth]{image6} 
 
 \end{document}
