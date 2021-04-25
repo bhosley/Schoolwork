@@ -38,7 +38,7 @@ Colab Notebook located
 \vspace{-1.5em}
 
 \section*{Assignment 1: Section 2.4}
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 # Show Schema
 text_df.printSchema()
 
@@ -49,7 +49,7 @@ text_df.count()
 
 \section*{Assignment 2: Section 2.5}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 # Preprocessing (Pipeline)
 documentAssembler = DocumentAssembler()\
 	.setInputCol("text")\
@@ -74,7 +74,7 @@ nlp_Pipeline = Pipeline(
 
 \section*{Assignment 3: Section 2.6}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 # Training (Pipeline)
 empty_df = spark.createDataFrame([['']]).toDF("text")
 pipelineModel = nlp_Pipeline.fit(empty_df)
@@ -89,19 +89,20 @@ result_df.printSchema()
 \section*{Assignment 4: Section 2.7}
 \emph{ Do the exercise in section 3.9 }
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 # Visualize the results
 import pyspark.sql.functions as F
 result_df.select(F.explode(F.arrays_zip('prediction.result', 
 'document.result')).alias("cols")) \
 	.select(F.expr("cols['0']").alias("prediction"),
-			F.expr("cols['1']").alias("document")).show(truncate=True)
+		F.expr("cols['1']").alias("document")).show(truncate=True)
 \end{minted}
 \includegraphics[width=\linewidth]{image4}
 
+\clearpage
 
 \section*{Assignment 5: Rewrite news detection for the Trump and Biden tweet dataset}
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{python}
 import requests
 candidates = ['DonaldTrump', 'JoeBiden']
 data = {}
@@ -127,7 +128,7 @@ print_first_n_characters(500)
 \end{minted}
 \includegraphics[width=\linewidth]{image5.1} %\vspace{-1.5em}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}\\
+\begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{python}
 import pandas as pd
 tweets_df = spark.createDataFrame( \
 	pd.DataFrame({"author":'Trump',"text":lst_donald_trump_tweets}).append( \
@@ -156,7 +157,7 @@ nlp_Pipeline = Pipeline(
 \end{minted}
 \includegraphics[width=\linewidth]{image5.2} %\vspace{-1.5em}
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}\\
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 # Training (Pipeline)
 empty_df = spark.createDataFrame([['']]).toDF("text")
 pipelineModel = nlp_Pipeline.fit(empty_df)
@@ -168,27 +169,28 @@ result_df.printSchema()
 \includegraphics[width=\linewidth]{image5.3} %\vspace{-1.5em}
 
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 # Visualize the results
 import pyspark.sql.functions as F
 result_df.select(F.explode(F.arrays_zip('prediction.result', 
 'document.result')).alias("cols")) \
 	.select(F.expr("cols['0']").alias("prediction"),
-			F.expr("cols['1']").alias("document")).show(truncate=False)
+			F.expr("cols['1']").alias("document")) .show(truncate=False)
 \end{minted}
 \includegraphics[width=\linewidth]{image5.4} %\vspace{-1.5em}
 
 As stated in the assignment, the performance of this model appears to be fairly poor. It is likely that this is largely due to the age of the pre-trained model being less capable on modern data.
 
+\clearpage
 
 \section*{Assignment 6: Rewrite news for a different fake and real news dataset}
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 from pathlib import Path
 import urllib.request
 download_path = "./fake_or_real_news.csv.zip"
 if not Path(download_path).is_file():
 	print("File Not found will download it!")
-	url = "https://raw.githubusercontent.com/joolsa/fake_real_news_dataset/master/fake_or_real_news.csv.zip"
+	url = "https://raw.githubusercontent.com/joolsa/ fake_real_news_dataset/master/fake_or_real_news.csv.zip"
 	urllib.request.urlretrieve(url, download_path)
 else:
 	print("File already present.")
@@ -197,8 +199,9 @@ else:
 \end{minted}
 \includegraphics[width=\linewidth]{image6.1} 
 
+\clearpage
 
-\begin{minted}[breaklines,bgcolor=light-gray]{shell-session}
+\begin{minted}[breaklines,bgcolor=light-gray]{python}
 file_location = r"./fake_or_real_news.csv"
 file_type = "csv"
 # CSV options
