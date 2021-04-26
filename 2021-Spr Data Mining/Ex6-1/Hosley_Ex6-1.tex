@@ -99,13 +99,13 @@ It is necessary to do it this way as the previously trimmed dataframe does not h
 filtered_df.filter(filtered_df.SibSp.isNull()).count()
 
 # Find IQR 
-quantiles = filtered_df.approxQuantile('SibSp', [0.25, 0.75], 0.0)
+quantiles = filtered_df.approxQuantile('SibSp',[0.25, 0.75],0.0)
 Q1, Q3 = quantiles[0], quantiles[1]
 IQR = Q3-Q1
-sibSpLowerRange, sibSpUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+sibSpLowerRange, sibSpUpperRange = Q1 - 1.5*IQR, Q3 + 1.5*IQR
 # Count outliers
-filtered_df.filter(filtered_df.SibSp < sibSpLowerRange).count() + \
-filtered_df.filter(filtered_df.SibSp > sibSpUpperRange).count()
+filtered_df.filter(filtered_df.SibSp<sibSpLowerRange).count()+ \
+filtered_df.filter(filtered_df.SibSp>sibSpUpperRange).count()
 
 # Trim
 trimmed_df = trimmed_df \
@@ -114,11 +114,13 @@ trimmed_df = trimmed_df \
 trimmed_df.count()
 \end{minted}
 
-\includegraphics[width=\linewidth]{image3.1}
-No null values means no need to impute missing data.
+\includegraphics[width=\linewidth]{image3.1} \\
 
-\includegraphics[width=\linewidth]{image3.2}
+No null values means no need to impute missing data. \\
 
+\includegraphics[width=\linewidth]{image3.2} \\
+
+\clearpage
 
 \section*{Assignment 4: Remove outliers from }
 
@@ -127,13 +129,13 @@ No null values means no need to impute missing data.
 filtered_df.filter(filtered_df.Parch.isNull()).count()
 
 # Find IQR 
-quantiles = filtered_df.approxQuantile('Parch', [0.25, 0.75], 0.0)
+quantiles = filtered_df.approxQuantile('Parch',[0.25, 0.75],0.0)
 Q1, Q3 = quantiles[0], quantiles[1]
 IQR = Q3-Q1
-parchLowerRange, parchUpperRange = Q1 - 1.5 * IQR, Q3 + 1.5 * IQR
+parchLowerRange, parchUpperRange = Q1 - 1.5*IQR, Q3 + 1.5*IQR
 # Count outliers
-filtered_df.filter(filtered_df.Parch < parchLowerRange).count() + \
-filtered_df.filter(filtered_df.Parch > parchUpperRange).count()
+filtered_df.filter(filtered_df.Parch<parchLowerRange).count()+ \
+filtered_df.filter(filtered_df.Parch>parchUpperRange).count()
 
 # Check IQR
 parchLowerRange, parchUpperRange
@@ -147,12 +149,13 @@ trimmed_df.count()
 \includegraphics[width=\linewidth]{image4.1}
 
 The large count of outliers raises some concern.
-It is worth looking into.
+It is worth looking into. \vspace{1em}
 
 The reason is that Q1 and Q3 are both 0, resulting from the vast majority of samples being 0; everything above is treated as an outlier.
 It may be problematic to filter this data, especially if there is not significant overlap between this data and the previously filtered outliers. 
 This is checked as well.
 
+\clearpage
 
 \section*{Assignment 5: Redo HW 4-2 with the new, no-outliers dataset. Explain the differences in results.}
 
@@ -160,20 +163,24 @@ This is checked as well.
 # Index Gender
 from pyspark.ml.feature import StringIndexer
 indexed_df = StringIndexer(inputCol="Gender", outputCol="IndexedGender").fit(trimmed_df).transform(trimmed_df)
+
 # Vectorize Features
 from pyspark.ml.feature import VectorAssembler
 assembler = VectorAssembler(inputCols=['Pclass', 'SibSp', 'Parch', 'Fare', 'ImputedAge', 'IndexedGender'], outputCol='features')
 features_df = assembler.transform(indexed_df)
+
 # Train-Test Split
 (trainingData, testData) = features_df.randomSplit([0.8, 0.2])
 trainingData.count()
 testData.count()
 trainingData.count() + testData.count()
 features_df.count()
+
 # trainingData
 from pyspark.ml.classification import RandomForestClassifier
 rf = RandomForestClassifier(labelCol="Survived", featuresCol="features")
 modelRF = rf.fit(trainingData)
+
 # Evaluate
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
 predictions = modelRF.transform(testData)
@@ -186,8 +193,7 @@ evaluator.evaluate(predictions)
 
 In the first iteration of HW 4-2 the AUROC was 0.791043 and AUPR was 0.738639.
 As shown in the image removing all outliers actually decreased the effectiveness of the model based on these metrics.
-When trimming is done again but leaving the Parent-Child outliers in the data set we get slightly better results.
-
+When trimming is done again but leaving the Parent-Child outliers in the data set we get slightly better results. \\
 \includegraphics[width=\linewidth]{image5.2}
 
 In this case the AUROC is improved slightly and the AUPR is decreased more than the AUROC gains. This version of the model is slightly less likely to introduce false positives but it also slightly less precise overall.
