@@ -105,12 +105,14 @@ The F-score is the harmonic mean of precision and recall. Which is the number of
 \section*{Assignment 2: Second Method Classification}
 
 \subsection*{Evaluate using Dataframe and RDD-Method}
-To use RDD-based metrics, convert predictions (DataFrame) into predictionAndLabel (RDD), see References [7]
+\emph{
+To use RDD-based metrics, convert predictions (DataFrame) into predictionAndLabel (RDD), see References [7]}
 
+\emph{
 Use below metrics, see References [6] \\
 	Accuracy \\
 	Precision, Recall, F-1 measure (by label) \\
-	Precision, Recall, F-1 measure (weighted) \\
+	Precision, Recall, F-1 measure (weighted)} \\ 
 	
 \begin{minted}[breaklines,bgcolor=light-gray,fontsize=\footnotesize]{shell-session}
 from pyspark.mllib.evaluation import MulticlassMetrics
@@ -118,7 +120,8 @@ predictionAndLabels = predictions.select("prediction", "indexedLabel").rdd
 metrics = MulticlassMetrics(predictionAndLabels)
 
 # Statistics by class
-labels = predictionAndLabels.map(lambda lp: lp.label).distinct().collect()
+#labels = predictionAndLabels.map(lambda lp: lp.label).distinct().collect()
+labels = [0.0,1.0]
 for label in sorted(labels):
 print("Class %s precision = %s" % (label, metrics.precision(label)))
 print("Class %s recall = %s" % (label, metrics.recall(label)))
@@ -131,12 +134,16 @@ print("Weighted F(1) Score = %s" % metrics.weightedFMeasure())
 print("Weighted F(0.5) Score = %s" % metrics.weightedFMeasure(beta=0.5))
 print("Weighted false positive rate = %s" % metrics.weightedFalsePositiveRate)
 \end{minted}
-\includegraphics[width=\linewidth]{image5.0}
-\includegraphics[width=\linewidth]{image5.1}
-\includegraphics[width=\linewidth]{image5.2}
+\includegraphics[width=\linewidth]{image4.1}
+\includegraphics[width=\linewidth]{image4.2}
 
 \subsection*{Explain the differences of label and weighted based on your results.}
 
+As above, the labeled measurements are based on their corresponding label. The weighted results are the values in proportion to the frequency of their true label in the dataset.
+
+\textbf{Note:} The fact that all three measures are reported as identical is uncommon but indicates that false positives and false negatives are equal. Checking the confusion matrix verifies that this is the case and may not indicate an error in the script.
+
+\includegraphics[width=\linewidth]{image6}
 
 \end{document}
 
