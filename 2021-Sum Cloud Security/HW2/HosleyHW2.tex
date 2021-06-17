@@ -1,0 +1,38 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage[hypcap=false]{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	hidelinks
+	}
+
+\title{Cloud Security: Assignment 2.1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+\section{Summary} 
+
+In this paper\cite{Wang2010} the authors seek to evaluate the cause of observations of unusual packet delay in virtualized data centers.
+To isolate potential causes for the packet delays the authors check three parts of the cluster: processor sharing times, round trip delays, and TCP/UDP throughput.
+They measure these effects across two different types of VM instance and within one availability zone.
+One problem that arose was an issue with measuring tools being subject to irregular scheduling by the hypervisor causing missed events and incomplete evaluation periods.
+The authors conclude that scheduling of VMs on the processor fits as a probable source for all the observed networking issues and they provide a few example implications that this would have in practice.
+
+\section{Analysis}
+The first two concerns presented are with scientific computing and network experiments using the cloud.
+A cloud-based model cannot accurately represent a standard network in this format.
+Interruptions to machine priority also mean that the VM is not always listening, and results may miss important observations.
+The third example the authors provide is with network management systems hosted in a virtual environment; the problem experienced will be the same with interruptions preventing a consistent and uninterrupted observation period.
+This last observation is one that will plague industries as they move to virtualizing more resources, and their network grows. 
+A sufficiently small organization may not need much in the way of network monitoring and they may be able to operate within the services provided by the cloud provider.
+Larger organizations, especially international organizations that will have networks spanning multiple availability zones or data centers in disparate places will have a much greater need for strong network monitoring tools to maintain the health and effectiveness of their network.
+
+\clearpage
+\bibliographystyle{acm}
+\bibliography{\jobname}
+\end{document}
