@@ -17,9 +17,24 @@
 	
 \section{Summary} 
 
-In this paper\cite{Mirai2017} 
+In this paper\cite{Mirai2017} for the 26th USENIX Symposium a large team examined the life-cycle of the Mirai botnet which had gained a large amount of attention in the previous year.
+Mirai achieved this notoriety through propagating primarily among embedded and IoT systems, and by DDoSing several well known sites and services.
+The team was able to reconstruct the timeline of infection and determine how rapidly the malware was able to propagate. 
+While Mirai was slower than many similar strains of malware it was a bit more sophisticated in its techniques used to gain access and propagate.
+Mirai was also more sophisticated in its attach methodology.
+Victims of the botnet included Krebs on Security, Brazilian Minecraft servers, Dyn, the Liberian telecom company Lonestar, and Deutsche Telekom.
+Although the attackers appeared to have originated in numerous places outside the United States the botnets were primarily comprised of US located devices.
+The team was able to determine that Mirai was deployed by several different malicious actors, 
+and that subsequent iterations of Mirai had different password dictionaries, possibly to increase effectiveness against certain types of devices.
+In the end the team suggests that the many different manufacturers and heterogeneous landscape of IoT infrastructure compared to traditional and mobile computing is the most significant contributing factor to this attack.
 
 \section{Analysis}
+
+The analysis performed by the team was very thorough within the domains and sources that they were operating.
+The resulting information has a high usability potential for IoT, embedded systems developers, and security professionals;
+though the information provided is less actionable for web service providers.
+The analysis did not provide signatures that really improve the server side DDoS prevention but the researchers did propose a method to combat these types of networks by attacking their command and control processes.
+Additionally, the team provided actionable information on methods used to compromise the devices that Mirai and its progenitors targeted.
 
 
 \clearpage
