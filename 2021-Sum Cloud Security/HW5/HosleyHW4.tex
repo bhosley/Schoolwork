@@ -1,0 +1,48 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage[hypcap=false]{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	hidelinks
+	}
+
+\title{Cloud Security: Assignment 4.4}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+\section{Summary} 
+
+In this paper\cite{Shucheng2010} Shucheng et al. describe methodologies for securing resources stored in a cloud environment.
+The research team identifies that the shared nature of cloud environments present numerous security challenges to organizations wishing to utilize such services.
+Additionally, the team describes challenges to securing resources that a data owner may wish to share with specific parties.
+The researchers assume an honest-but-curious model for the cloud service provider, and communication channels with industry standard security.
+The newly developed model will address concerns that the researchers had with previous cloud-access-control schemes;
+high-end scalability of unique access lockbox-key models, 
+low-end scalability within file-groups,
+performance issues with large file-specific revocation lists,
+potential key exposure with proxy re-encryption,
+and using a mutual semi-trusted third party to protect data owner keys.
+
+In simple terms the proposed method starts with the data-owner encrypting the data before storing it on the server. 
+The data-owner provides part of the decryption key to the server.
+The data-owner maintains an access control list.
+When a requester is granted access to a file stored on the cloud server, the server sends a ciphertext that is the stored ciphertext lazily encrypted with the requester's public key.
+The requester can then decrypt the ciphertext using their private key, and the two parts of the original key provided by the cloud provider and the data-owner.
+
+\section{Analysis}
+
+The authors do well in integrating good aspects of previously existing work.
+The intuition of the proposed system seems to work well and address the concerns enumerated by the team.
+While the system will be inferior to the others in certain ways, for the team's described purpose their system makes well warranted trade-offs.
+Achieving these results with linear complexity should be acceptable to any practical real-world application.
+
+
+\clearpage
+\bibliographystyle{acm}
+\bibliography{\jobname}
+\end{document}
