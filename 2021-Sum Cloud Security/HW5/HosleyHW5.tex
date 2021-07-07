@@ -1,0 +1,42 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage[hypcap=false]{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	hidelinks
+	}
+
+\title{Cloud Security: Assignment 5.1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+\section{Summary} 
+
+In this paper\cite{Huang2011} Huang et al. propose a methodology for securing communication using garbled circuits.
+The team describes an alternative implementation of Yao's garbled circuits that solved the previously held notion that the method would be too inefficient at larger scales to ever be usable.
+The team's primary contribution and solution to the previously mentioned problem was to efficiently pipeline the garbled circuit generation such that the majority of the circuit would be generated at run-time.
+By doing so, the amount of memory used is essentially constant.
+The pipelining process is similarly optimized so that it offers several improvements to performance not achieved with traditional methods.
+Pipelining allows their method to adjust the encryption length to as short as necessary,
+and different gates can be chosen to more efficiently garble;
+neither of the options are available when the garbled circuits are produced by compilation.
+
+
+\section{Analysis}
+
+The method of testing used in this paper offers a compelling demonstration of the advantages of this implementation.
+The team argues that this method offers a cryptological option that works better than homomorphic encryption in almost all cases,
+however, the team does not provide examples of this being the case.
+While this method does seem to be a lot more efficient, especially considering the linear increases in processing and memory requirements,
+this is likely true as most of the proposed purposes for fully homomorphic encryption involve anonymous or secure updates to protected information and it is unclear how garbled circuits would provide this function.
+
+
+\clearpage
+\bibliographystyle{acm}
+\bibliography{\jobname}
+\end{document}
