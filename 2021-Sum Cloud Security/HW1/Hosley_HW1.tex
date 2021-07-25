@@ -10,15 +10,39 @@
 		\definecolor{light-gray}{gray}{0.97}
 
 
-\title{Cloud Security: Assignment 1}
+\title{Cloud Security: Assignment 1.1}
 \author{Brandon Hosley}
 \date{\today}
 
 \begin{document}
 \maketitle
 
-\subsection*{}
+\subsection*{Summary}
+
+In this paper \cite{inproceedings} the authors propose a repository system for virtual machine images entitled ‘Mirage’. 
+Mirage promises to improve security and efficiency of storage;
+accomplishing both by dividing the images that it stores into constituent parts.
+Forked and updated images that share parts do not cause those parts to be duplicated.
+This reduces the amount of space needed to store similar or derived builds and reduces the amount of information that the repository owner will have to scan.
+Additionally, this allows updates to be applied across an entire family of images, and with the accounting that the system provides any malware discovered on an image can be traced to original infection and all related images infected with the malware may be more easily identified.
+Finally, an access control scheme is included in the proposed system for an additional layer of security.
+The authors demonstrate how this may work with a proof-of-concept with measures of performance.
+
+\subsection*{Analysis}
+
+Mirage’s piece-wise storage of an image may have been novel at the time that the paper was written but has since become fairly common among containerization schemes, 
+however, the method of storage and scanning may still provide significant benefit to repository admins.
+
+While the team acknowledged resource scaling in their proof-of-concept, the example only provided images of the same build. 
+The team claims that the resource needs of additional images scale proportionally to the difference between images; 
+they fail to demonstrate this by providing no differences between the builds.
+The team also fails to factor in the overhead of Mirage into the resource utilization, 
+specifically, how the cost of breaking images into parts and indexing similar parts compares to the savings of their system.
+If the overhead is greater than the savings the system is not viable in a real-world setting.
 
 
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{\jobname}
 \end{document}
 
