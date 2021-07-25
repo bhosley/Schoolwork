@@ -1,0 +1,41 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage[hypcap=false]{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	hidelinks
+	}
+
+\title{Cloud Security: Assignment 6.5}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+\section{Summary} 
+
+In this paper\cite{Pinno2017} Pinno et. al. outline a method for using a blockchain implementation to maintain security of an internet of things (IoT) network.
+This team outlines a number of benefits for using a method based on this technology and compares these benefits to a number of other common methods.
+The team calls their implementation ControlChain and compares it to non-blockchain technologies XACML, OAuth, and UMA; and the blockchain-based FairAccess.
+They use a number of metrics for comparison that appear to be very relevant for commercial implementation of secure IoT networks.
+
+
+\section{Analysis}
+
+
+Although the team outlines a number of great metrics they do not show specific measurements to objectively compare each metric.
+While it makes intuitive sense that the 'Get Authorization' step is nearly instantaneous for all methods except FairAccess; 
+the explanation provided is that it involves twice as many sequential blocks to be mined.
+It is not shown in practice whether this effect is substantial in a variety of IoT network sizes, or if increases numbers of subscribers effectively compensates for this increased algorithmic complexity.
+This problem is similarly encountered with new authorizations, the team acknowledges that new authorizations are slower with the blockchain methods, but does not provide a metric for how much slower.
+Additionally, it is not clear how this metric fairs in different sizes of networks.
+Finally, the team fails to acknowledge a major security concern with using a blockchain for anything, the 51\% attack.
+While this is typically an impractical concern, the team acknowledges that ControlChain is built to run on and be split among many small and low power devices, devices that even cumulatively may be rather easy to overcome.
+
+\clearpage
+\bibliographystyle{acm}
+\bibliography{\jobname}
+\end{document}
