@@ -1,0 +1,43 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage[hypcap=false]{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+	hidelinks
+	}
+
+\title{Data Analytics Capstone: Reading 1}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+\section{Summary} 
+
+In this paper \cite{Lakkaraju2015} the research team seeks to increase the efficacy of machine learning models applied to certain problems by improving the way in which the usefulness of the models is evaluated. 
+The framework compares the predictive results of five models produced using common machine learning algorithms: Random Forest, AdaBoost, Linear Regression, Decision Tree, SVM.
+The scenario approached by the research team is using school data to predict at risk students.
+The first measurement used is the ROC curve, a traditional metric used to evaluate the predictive effectiveness of the models.
+In this case all models are performing quite similarly.
+
+In the scenario used by the research team the final predictive accuracy of the model is not the sole measurement of value.
+The team's framework provides visualization techniques for the high-use features in each model;
+which allows the end user to eliminate models that may over-emphasize features that are problematic for any reason.
+Next, the team introduces a features of their framework in which early prediction accuracy is visualized for each mode.
+In this scenario the earlier a model can predict an at-risk student, the earlier intervention efforts may begin.
+
+\section{Analysis}
+
+The framework proposed by the team seems to be a good approach to solving two potential problems with traditional model evaluation methods.
+With respect to eliminating models that over-emphasize objectionable features, it seems that reserving the elimination to be performed post-facto allows the feature to be used up to a certain threshold before being subject to elimination.
+While the model will likely perform better with all features included, if one is to respect the user's desire to eliminate problematic features it would be more in-line with that respect to eliminate it from the models altogether.
+
+Adding the temporal consideration to models in a manner digestible to the average user will offer tremendous benefits to any purpose that values intervention, such as health and social services.
+
+\clearpage
+\bibliographystyle{acm}
+\bibliography{\jobname}
+\end{document}
