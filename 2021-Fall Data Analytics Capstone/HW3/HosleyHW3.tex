@@ -20,11 +20,22 @@
 Sculley et al.\cite{Sculley2015} write about a common software life-cycle problem call technical debt, specifically as it applies to software utilizing machine learning. 
 The research team make the argument that this type of software is especially vulnerable to the added costs of technical debt due to a number of reasons, including costs associated with increasingly complex models.
 When software is improved over its lifetime a lot of vestigial code may remain, and for the 'black box' of most machine learning models this vestigial code is even more difficult to manage.
-
+They describe how data dependencies and digestion can cause debt as the software or input signals change over time.
+Another problem characteristic of any machine learning application is the vulnerability to problems caused by feedback.
+Finally, they describe how reproducibility and the inherent non-deterministic nature of training models creates a large amount of development debt.
 
 \section{Analysis}
 
 The arguments presented by the research team are well structured and convincing.
+The team proposes two additional potential sources of debt not mentioned above. 
+The reason that these two are not included above is that they are not characteristic of machine learning applications per se, but rather sources of debt that may affect any piece of software.
+
+The team describes a set of anti-patterns that will create technical debt.
+The anti-patterns should bear strong consideration for any developer and aren't exclusive or significantly more applicable to machine learning over other types of software.
+
+Similarly the team describes configuration debt,
+a type of debt incurred in which certain options are applied sub-optimally.
+Not only does this problem apply to any types of software with significant configuration options, the solutions proposed by the team 
 
 \clearpage
 \bibliographystyle{acm}
