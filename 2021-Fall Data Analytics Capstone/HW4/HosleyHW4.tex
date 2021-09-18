@@ -19,9 +19,41 @@
 
 This paper will summarize two proposals for a capstone project for the Data Analytics program.
 
-\section{Computer Vision Project}
+\section{Computer Vision Project 1}
+
+This proposal seeks to address a problem set associated with visual image target scoring. Traditionally in ISSF (International Spot Shooting Federation) and Olympic style shooting
+targets are scored using acoustic or laser triangulation 
+\cite{Anderson2018} \cite{SUIS}.
+Due to the high cost associated with commercial products that use these methods, 
+there are numerous open source \cite{etarg} \cite{freetarget}
+and research projects \cite{Rudzinski2012} \cite{Stenhager2021}
+dedicated to producing cheaper alternatives.
+A promising alternative is using visual image target scoring.
+
+While the visual method has shown great success in scoring hit-miss events \cite{Ye2011}
+limitations to producing accurate scores in a practical setting exist.
+Some methods \cite{Rudzinski2012} produce accurate results 
+but require strong controls on the setting.
+Others \cite{Stenhager2021} are more setting robust, 
+with a lower detection rate or accuracy in its product.
+
+The first project proposal will be to extend on previous work done in this line and to  attempt to produce a more robust visual scoring framework.
+
+\section{Computer Vision Project 2}
+
+The research and open source projects referenced in the previous section seek to solve the problem of a lack of affordability in commercial solutions to shot scoring and recording.
+Generally, the use cases described are for shooting clubs or individual practitioners without the means to acquire professional grade equipment, not the type of club or organization sizable enough to host a tournament.
+As such it seems that the underlying motivation is to make opportunities for higher quality training more attainable for all people.
+Shot scoring is only one aspect of training and dry-fire training is often \cite{}
+considered to be a more important for developing a effective results.
+
+As with shot scoring solutions, commercial options for dry-fire training can be expensive, or very limited in scope.
+The second project proposal will be to use computer vision, a standard USB camera, and a laser to emulate point of aim feedback available in more expensive 
+\cite{} commercial products.
+% ShootOff is a similar laser spot tracker, but only tracks the shot
 
 
+\section{Web Scraping Project}
 
 \clearpage
 \bibliographystyle{acm}
