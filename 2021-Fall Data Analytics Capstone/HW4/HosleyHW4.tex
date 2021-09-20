@@ -1,8 +1,10 @@
 \documentclass[]{article}
 \usepackage[english]{babel}
 \usepackage{amsmath}
-\usepackage[hypcap=false]{caption}
 \usepackage{graphicx}
+\usepackage[hypcap=false]{caption}
+\usepackage{subcaption}
+\graphicspath{ {./images/} }
 \usepackage{hyperref}
 \hypersetup{
 	hidelinks
@@ -44,16 +46,45 @@ The first project proposal will be to extend on previous work done in this line 
 The research and open source projects referenced in the previous section seek to solve the problem of a lack of affordability in commercial solutions to shot scoring and recording.
 Generally, the use cases described are for shooting clubs or individual practitioners without the means to acquire professional grade equipment, not the type of club or organization sizable enough to host a tournament.
 As such it seems that the underlying motivation is to make opportunities for higher quality training more attainable for all people.
-Shot scoring is only one aspect of training and dry-fire training is often \cite{}
+Shot scoring is only one aspect of training and dry-fire training is often \cite{Potter2017}
 considered to be a more important for developing a effective results.
 
 As with shot scoring solutions, commercial options for dry-fire training can be expensive, or very limited in scope.
 The second project proposal will be to use computer vision, a standard USB camera, and a laser to emulate point of aim feedback available in more expensive 
-\cite{} commercial products.
+\cite{scatt} commercial products.
 % ShootOff is a similar laser spot tracker, but only tracks the shot
 
+\begin{figure}[h]
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{perfect_shot}
+		\caption{SCATT \cite{scatt} feedback.}
+	\end{subfigure}
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[width=0.6\linewidth]{mantisx_output}
+		\caption{MantisX output.}
+	\end{subfigure}
+\end{figure}
 
-\section{Web Scraping Project}
+
+\section{Data Cleaning and Exploratory Analysis}
+
+The Covid-19 pandemic has resulted in large collections of data.
+It seems that analysis of these datasets has become a common project for Data Science students during this time.
+Rather than approaching the epidemiological application of these data sets the third proposed project will be to collect, combine, and explore Covid-19 related disinformation.
+A number of datasets are easily available.
+\cite{Shapiro2021}
+
+Medical technologies have made significant strides during this time period and appear to have been able to meet the technological difficulties presented by the illness.
+It seems that the result of disinformation and misinformation is among the most significant challenges remaining to overcoming this pandemic.
+Hopefully information gathered from studying disinformation on this topic will help to understand the threat in other sectors as well.
+
+% ESOC Disinformation collection https://esoc.princeton.edu/publications/esoc-covid-19-misinformation-dataset
+% Disinformation Campaign Effects: https://carnegieendowment.org/2021/06/28/measuring-effects-of-influence-operations-key-findings-and-gaps-from-empirical-research-pub-84824
+% DHS Combating Disinformation https://www.dhs.gov/sites/default/files/publications/ia/ia_combatting-targeted-disinformation-campaigns.pdf
+% Similar Paper https://paperswithcode.com/dataset/covid-19-disinfo
+
 
 \clearpage
 \bibliographystyle{acm}
