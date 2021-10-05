@@ -1,8 +1,10 @@
 \documentclass[]{article}
 \usepackage[english]{babel}
 \usepackage{amsmath}
-\usepackage[hypcap=false]{caption}
 \usepackage{graphicx}
+\usepackage[hypcap=false]{caption}
+\usepackage{subcaption}
+\graphicspath{ {./images/} }
 \usepackage{hyperref}
 \hypersetup{
 	hidelinks
@@ -33,7 +35,14 @@ The CIC features are developed as permission and intent features,extracted from 
 \section{Algorithm}
 
 % Explain the algorithm/method for visualization in detail from your understanding (20 points)
+
 % Draw a flowchart of the algorithm for visualization (10 points)
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\linewidth]{SRBM_Flowchart}
+	\caption{SRBM Flow Chart \cite{Liu2021}}
+\end{figure}
+
 
 \section{Results}
 
@@ -45,6 +54,7 @@ PCA and Agglomeration are unsupervised feature extraction methods.
 \section{Advantages and Disadvantages}
 
 % Discuss the advantages from your understanding (10 points)
+
 % Discuss the disadvantages from your understanding (15 points)
 
 \section{Improvements}
