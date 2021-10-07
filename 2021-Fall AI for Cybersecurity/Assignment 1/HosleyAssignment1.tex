@@ -35,6 +35,10 @@ The CIC features are developed as permission and intent features,extracted from 
 \section{Algorithm}
 
 % Explain the algorithm/method for visualization in detail from your understanding (20 points)
+The algorithm presented is based on several techniques that have been shown to independently improve unsupervised model generation.
+The first step is based on the idea that random subspaces can improve the results of an ensemble RBM model, however, instead of using random subspaces the team applies a $k$-step contrastive divergence algorithm.
+The resulting clusters are used as the subspaces.
+
 
 % Draw a flowchart of the algorithm for visualization (10 points)
 \begin{figure}[h]
@@ -54,6 +58,8 @@ PCA and Agglomeration are unsupervised feature extraction methods.
 \section{Advantages and Disadvantages}
 
 % Discuss the advantages from your understanding (10 points)
+The research team attributes the primary advantage of this algorithm to the feature-set subspaces.
+By using the clustering algorithm to generate the subspaces the team is able to reduce the overall computational time significantly as the resulting subspaces do not need feature reduction.
 
 % Discuss the disadvantages from your understanding (15 points)
 
