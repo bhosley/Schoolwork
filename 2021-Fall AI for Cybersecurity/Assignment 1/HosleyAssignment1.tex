@@ -36,9 +36,11 @@ The CIC features are developed as permission and intent features,extracted from 
 
 % Explain the algorithm/method for visualization in detail from your understanding (20 points)
 The algorithm presented is based on several techniques that have been shown to independently improve unsupervised model generation.
-The first step is based on the idea that random subspaces can improve the results of an ensemble RBM model, however, instead of using random subspaces the team applies a $k$-step contrastive divergence algorithm.
+The first step is based on the idea that random subspaces can improve the results of an ensemble RBM model, however, instead of using random subspaces the team applies a $k$-means algorithm.
 The resulting clusters are used as the subspaces.
 
+
+The constituent RBM models are trained with traditional gradient ascent, and utilize a sigmoid activation function as the output layer.
 
 % Draw a flowchart of the algorithm for visualization (10 points)
 \begin{figure}[h]
