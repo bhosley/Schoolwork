@@ -83,12 +83,11 @@ The advantage to the computational complexity comes as a trade for potentially m
 \section{Improvements}
 
 % Provide the specific ideas to improve the algorithm. General ideas are not allowed. (15 points)
-For this paper the authors primarily speak on the comparison of the SRBM model to the RBM model.
-In some ways this may make sense as the SRBM can be considered an ensemble and hybrid improvement based on an RBM.
-However, this model only consistently outperformed the RBM, the other models typically performed better during the testing, though the authors do not acknowledge that, instead positing that SRBM experiences inferior performance on \emph{certain data sets}.
+For this paper the authors primarily write to the comparison of the SRBM model to the RBM model.
+However, this model only consistently outperformed the RBM, with other models performing better in several of the other test cases.
 
 The authors do not emphasize the model's strongest accomplishment, the superior identification of zero-day malware. 
-Within the Cybersecurity domain this is a tremendous challenge with out-sized benefits as there are already many methods for efficiently identifying known malware, however, identification of novel malware is naturally more difficult.
+Within the Cybersecurity domain early identification of malware is a big and highly sought advantage.
 
 In the cases outside of zero-day classification the models that most consistently outperform the SRBM are the clustering models.
 The third model, SAE, does not outperform SRBM in about half of the published results.
@@ -98,7 +97,8 @@ This sentiment is possibly validated by the best performer in their results bein
 We believe that clustering algorithms may offer improvement over the SRBM results in the future, however, the models used by this research team were optimized for prediction of known malware.
 This situational overfitting likely reduced the ability to correctly  classify zero-day malware.
 Perhaps a less fitted implementation of the same models may outperform prediction in novel cases.
-Finally, for practical applications the clustering algorithms had much lower time consumption and the time consumption scaled much slower than SRBM as the number of learned features increased.
+Finally, the clustering algorithms all had much lower time consumption and the time consumption scaled much slower than SRBM as the number of learned features increased.
+If the generalization trade-off proved successful, it is likely that the lower resource consumption would make the clustering algorithms a more practical choice.
 
 \clearpage
 \bibliographystyle{acm}
