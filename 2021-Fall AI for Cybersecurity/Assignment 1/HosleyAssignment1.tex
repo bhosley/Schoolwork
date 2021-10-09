@@ -19,6 +19,8 @@
 	
 \section{Introduction}
 
+In this paper we will examine the results from Liu et al. \cite{Liu2021}. In their report the research team proposes a model based on Restricted Boltzman Machines (RMBs) for reducing the feature space in data used to classify software as malware or benignware.
+
 \section{Data Sources}
 
 % Describe the data used in this paper including source, sample, attribute, etc. (10 points)
@@ -35,12 +37,11 @@ The CIC features are developed as permission and intent features,extracted from 
 \section{Algorithm}
 
 % Explain the algorithm/method for visualization in detail from your understanding (20 points)
-The algorithm presented is based on several techniques that have been shown to independently improve unsupervised model generation.
+The algorithm presented is based on several techniques that have been shown to independently improve unsupervised feature reduction methods.
 The first step is based on the idea that random subspaces can improve the results of an ensemble RBM model, however, instead of using random subspaces the team applies a $k$-means algorithm.
 The resulting clusters are used as the subspaces.
-
-
-The constituent RBM models are trained with traditional gradient ascent, and utilize a sigmoid activation function as the output layer.
+The constituent RBM models are trained with traditional gradient ascent, and utilize a sigmoid activation function in the output layer.
+The output feature spaces are recombined into a reduced dimensionality feature space.
 
 % Draw a flowchart of the algorithm for visualization (10 points)
 \begin{figure}[h]
@@ -53,21 +54,51 @@ The constituent RBM models are trained with traditional gradient ascent, and uti
 \section{Results}
 
 % Explain the experimental results in detail from your understanding (10 points)
-The team compares their model to a Restricted Bolztman Machine (RBM), Stacked Auto-Encoder (SAE), Principle Component Analysis (PCA), and Agglomeration techniques.
-RBM and SAE are unsupervised feature learning methods. 
+The team compares their model to models using Restricted Bolztman Machine (RBM), Stacked Auto-Encoder (SAE), Principle Component Analysis (PCA), and Agglomeration techniques.
+RBM and SAE are unsupervised dimension reducing methods. 
 PCA and Agglomeration are unsupervised feature extraction methods.
+
+For the purposes of this experiment the team compares zero-day prediction, clustering, classification, and time consumption performances.
+With regard to those areas the SRBM model is compared to the others using the
+ACC (Accuracy),
+NMI (Normalized Mutual Information),
+F-Score,
+and OA (Overall Accuracy).
+In all cases the SRBM model outperforms the RBM model. 
+However, performance compared to the other models varies.
 
 \section{Advantages and Disadvantages}
 
 % Discuss the advantages from your understanding (10 points)
 The research team attributes the primary advantage of this algorithm to the feature-set subspaces.
-By using the clustering algorithm to generate the subspaces the team is able to reduce the overall computational time significantly as the resulting subspaces do not need feature reduction.
+By using the clustering algorithm to generate the subspaces the team is able to reduce the overall computational time significantly as the resulting subspaces do not needlessly include as many apparently random subspaces.
+This generalization improves the model's predictive capabilities on novel data; specifically when identifying zero-day malware.
 
 % Discuss the disadvantages from your understanding (15 points)
+The team mentions a number of disadvantages
+
+One potential disadvantage that the team does not mention is the result of the application of the clustering algorithm in the first step.
+The advantage to the computational complexity comes as a trade for potentially missing strong subspaces that provide a stronger advantage in prediction or identification but do not cluster well when using the chosen algorithm.
 
 \section{Improvements}
 
 % Provide the specific ideas to improve the algorithm. General ideas are not allowed. (15 points)
+For this paper the authors primarily speak on the comparison of the SRBM model to the RBM model.
+In some ways this may make sense as the SRBM can be considered an ensemble and hybrid improvement based on an RBM.
+However, this model only consistently outperformed the RBM, the other models typically performed better during the testing, though the authors do not acknowledge that, instead positing that SRBM experiences inferior performance on \emph{certain data sets}.
+
+The authors do not emphasize the model's strongest accomplishment, the superior identification of zero-day malware. 
+Within the Cybersecurity domain this is a tremendous challenge with out-sized benefits as there are already many methods for efficiently identifying known malware, however, identification of novel malware is naturally more difficult.
+
+In the cases outside of zero-day classification the models that most consistently outperform the SRBM are the clustering models.
+The third model, SAE, does not outperform SRBM in about half of the published results.
+Earlier in this paper it was mentioned that the research team credited the clustering algorithm applied before the ensemble RBMs as the biggest contribution to the model's improvements.
+This sentiment is possibly validated by the best performer in their results being Agglomeration, a recursive clustering algorithm for feature reduction.
+
+We believe that clustering algorithms may offer improvement over the SRBM results in the future, however, the models used by this research team were optimized for prediction of known malware.
+This situational overfitting likely reduced the ability to correctly  classify zero-day malware.
+Perhaps a less fitted implementation of the same models may outperform prediction in novel cases.
+Finally, for practical applications the clustering algorithms had much lower time consumption and the time consumption scaled much slower than SRBM as the number of learned features increased.
 
 \clearpage
 \bibliographystyle{acm}
