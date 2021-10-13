@@ -19,12 +19,16 @@
 	
 \section{Introduction}
 
-
+In this article \cite{Zhao2020} Zhao et al. aim to produce an ensemble IDS method that outperforms other methodologies, achieving a Perato optimum for the particular ensemble.
 
 \section{Data Sources}
 
 % Describe the data used in this paper including source, sample, attribute, etc. (10 points)
-
+The team suggests using KDD1999 \cite{Kdd1999}. However, they reference studies
+\cite{Brown2009, Mchugh2000, Engen2010}
+that show problems with the KDD1999 data set in training IDSs.
+To overcome this potential problem, the team has chosen to use a refined version of KDD, NSL-KDD \cite{Tavallaee2011}.
+However, due to the size of NSL-KDD, the team uses three smaller subsets of the data.
 
 \section{Algorithm}
 
@@ -35,15 +39,20 @@
 % Draw a flowchart of the algorithm for visualization (10 points)
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\linewidth]{SRBM_Flowchart}
-	\caption{SRBM Flow Chart \cite{Liu2021}}
+	\begin{subfigure}
+		\includegraphics[width=0.48\linewidth]{Stage_1}
+	\end{subfigure}
+	\begin{subfigure}
+		\includegraphics[width=0.48\linewidth]{Stage_2}
+	\end{subfigure}
+	\caption{Proposed method stages \cite{Zhao2020}}
 \end{figure}
 
 
 \section{Results}
 
 % Explain the experimental results in detail from your understanding (10 points)
-
+The results of the proposed method are
 
 \section{Advantages and Disadvantages}
 
