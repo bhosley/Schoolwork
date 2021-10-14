@@ -19,21 +19,22 @@
 	
 \section{Introduction}
 
-In this article \cite{Zhao2020} Zhao et al. aim to produce an ensemble IDS method that outperforms other methodologies, achieving a Perato optimum for the particular ensemble.
+In this article \cite{Zhao2020} Zhao et al. aim to produce an ensemble IDS method that out-performs other methodologies, achieving a Perato optimum for the particular ensemble.
 
 \section{Data Sources}
 
 % Describe the data used in this paper including source, sample, attribute, etc. (10 points)
-The team suggests using KDD1999 \cite{Kdd1999}. However, they reference studies
+The team suggests using KDD1999 \cite{Kdd1999}. 
+However, they reference studies
 \cite{Brown2009, Mchugh2000, Engen2010}
 that show problems with the KDD1999 data set in training IDSs.
 To overcome this potential problem, the team has chosen to use a refined version of KDD, NSL-KDD \cite{Tavallaee2011}.
-However, due to the size of NSL-KDD, the team uses three smaller subsets of the data.
+Additionally, due to the size of NSL-KDD, the team uses three smaller subsets of the data that they manufacture for the purposes of this experiment.
 
 \section{Algorithm}
 
 % Explain the algorithm/method for visualization in detail from your understanding (20 points)
-The proposed algorithm executes in two parts, both of which use the AMGA2 \cite{Tiwari2011}. (Archive-based Micro Genetic Algorithm) to achieve a Pareto optimum.
+The proposed algorithm executes in two parts, both of which use the AMGA2 \cite{Tiwari2011} (Archive-based Micro Genetic Algorithm) to achieve a Pareto optimum solution.
 
 In the first part an initial random population of Neural Networks (NN) is created.
 The population is evaluated with fitness functions until it meets a stopping criteria.
@@ -72,19 +73,19 @@ The proposed model had about half the false positive rate, and improved on detec
 % Discuss the advantages from your understanding (10 points)
 The most substantive advantage of this method is that the team achieves a Pareto optimal state for the ensemble.
 In their experiments it is shown to overcome the problem of overfitting faced by other models.
-It generalizes well and does not present a strong bias towards much less common attacks that may lead to higher false positive rates.
+It generalizes well and does not present a strong bias towards much less common attacks that may lead to higher false positive rates in other implementations.
 
 % Discuss the disadvantages from your understanding (15 points)
 The largest disadvantage of the proposed method is that it requires a large amount of computation resources and takes a long time to train relative to the other models.
-The research team acknowledges this additional cost but does not relate how it compares to the training of the other models, so it is not known how much additional cost is incurred.
+The research team acknowledges this additional cost but does not relate how it compares to the training of the other models, so it is not made known how much additional cost is incurred.
 
 \section{Improvements}
 
 % Provide the specific ideas to improve the algorithm. General ideas are not allowed. (15 points)
 For this experiment the team used only used MLP-NN (Multi-Layered Perceptron Neural Network) as the base unit for their algorithm. 
-To capitalize more on the benefit of creating an ensemble, perhaps a future experiment would utilized several different types of classifiers.
+To capitalize more on the benefit of creating an ensemble, perhaps a future experiment would utilize several different types of classifiers.
 Doing so may assist the model in identifying the large variety of intrusion methods more reliably and with fewer false positives.
-However, even if this proposal does work it is very likely that it will further exacerbate the disadvantage of large compute time.
+However, even if this proposal does successfully improve upon these results it is very likely that it will further exacerbate the disadvantage of large compute time.
 
 \clearpage
 \bibliographystyle{acm}
