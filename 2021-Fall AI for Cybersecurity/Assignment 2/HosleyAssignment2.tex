@@ -33,8 +33,16 @@ However, due to the size of NSL-KDD, the team uses three smaller subsets of the 
 \section{Algorithm}
 
 % Explain the algorithm/method for visualization in detail from your understanding (20 points)
+The proposed algorithm executes in two parts, both of which use the AMGA2 \cite{Tiwari2011}. (Archive-based Micro Genetic Algorithm) to achieve a Pareto optimum.
 
+In the first part an initial random population of Neural Networks (NN) is created.
+The population is evaluated with fitness functions until it meets a stopping criteria.
+When the stopping criteria has not been met, a selection of the more fit of the population of NN is crossed over and mutated to generate a new population.
+Here the Pareto optimum is achieved for individual functions. 
 
+In the second stage AMGA2 is applied in a similar manner but at the ensemble level.
+In this case, random ensembles are created from the products of the first stage and evaluated for fitness.
+Until a stopping criteria is met the model selects a set of better performing models, crosses them over, and mutates to generate a new generation of ensembles.
 
 % Draw a flowchart of the algorithm for visualization (10 points)
 \begin{figure}[h]
@@ -73,8 +81,10 @@ The research team acknowledges this additional cost but does not relate how it c
 \section{Improvements}
 
 % Provide the specific ideas to improve the algorithm. General ideas are not allowed. (15 points)
-
-
+For this experiment the team used only used MLP-NN (Multi-Layered Perceptron Neural Network) as the base unit for their algorithm. 
+To capitalize more on the benefit of creating an ensemble, perhaps a future experiment would utilized several different types of classifiers.
+Doing so may assist the model in identifying the large variety of intrusion methods more reliably and with fewer false positives.
+However, even if this proposal does work it is very likely that it will further exacerbate the disadvantage of large compute time.
 
 \clearpage
 \bibliographystyle{acm}
