@@ -14,22 +14,22 @@
 \author{Brandon Hosley}
 \date{\today}
 
+\begin{document}
+	\maketitle
+	
 \begin{abstract}
 	%
 	%	content...
 	%
 \end{abstract}
 
-\begin{document}
-	\maketitle
-	
 \section{Introduction}
 
-Shooting sports are a type inextricably linked to technology, 
+Shooting sports are a type of sport inextricably linked to technology, 
 both in terms of the equipment used by the athletes and tools used in their training.
 There is substantial interest in maintaining the cutting edge on both fronts as athletes and teams work to remain on top of their competition.
 Access to this type of technology comes with a substantial price, which may be suitable to professional athletes or clubs and individuals of greater means.
-
+Due to the high cost, some highly talented athletes may never get access to high quality equipment or training.
 
 In this paper we propose to develop an open source training option that accomplished the following:
 
@@ -42,12 +42,8 @@ In this paper we propose to develop an open source training option that accompli
 	\item Identify the bull's-eye as a frame of reference for the above functions.
 \end{enumerate}
 
-
-
-% Commercial Solutions \cite{scatt} \cite{noptel}
-% Additional SCATT info and photos
-
-
+With these functions we desire to advance the field of open source options for shooting athletes to improve their craft in a manner functionally similar to the commercial offerings \cite{scatt} \cite{noptel}.
+% ShootOff is a similar laser spot tracker, but only tracks the shot
 
 \section{Related Work}
 
@@ -66,7 +62,8 @@ More recently \cite{Stenhager2021} was able to achieve a fairly robust model tha
 
 %%%		Aim tracing
 
-
+Shot scoring is only one aspect of training and dry-fire training is often \cite{Potter2017}
+considered to be a more important for developing a effective results.
 
 
 \section{Dataset}
@@ -90,21 +87,13 @@ More recently \cite{Stenhager2021} was able to achieve a fairly robust model tha
 
 
 
+%
+%		OpenCV - Hugh Circle Transform
+%
 
 
 
-\section{Computer Vision Project 2}
 
-The research and open source projects referenced in the previous section seek to solve the problem of a lack of affordability in commercial solutions to shot scoring and recording.
-Generally, the use cases described are for shooting clubs or individual practitioners without the means to acquire professional grade equipment, not the type of club or organization sizable enough to host a tournament.
-As such it seems that the underlying motivation is to make opportunities for higher quality training more attainable for all people.
-Shot scoring is only one aspect of training and dry-fire training is often \cite{Potter2017}
-considered to be a more important for developing a effective results.
-
-As with shot scoring solutions, commercial options for dry-fire training can be expensive, or very limited in scope.
-The second project proposal will be to use computer vision, a standard USB camera, and a laser to emulate point of aim feedback available in more expensive 
-\cite{scatt} commercial products.
-% ShootOff is a similar laser spot tracker, but only tracks the shot
 
 \begin{figure}[h]
 	\begin{subfigure}{.5\textwidth}
