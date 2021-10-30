@@ -72,21 +72,45 @@ The commercial trainers share a set of common features and outputs,
 in addition to collecting the point of aim these software break up the trace into several parts:
 \begin{enumerate}
 	\item Entry onto target and sighting
-	\item Triggering (usually approximated)
-	\item Shot and Impact
+	\item Triggering (approximated as 1 second before impact)
+	\item Shot (0.3 seconds before impact)  and Impact
 	\item Follow-through and leaving the target
 \end{enumerate}
+For ease of interpretation each of these stages are delineated by color; the schema presented by SCATT can be seen in figures 
+\ref{fig:SCATT_Example} and
+\ref{fig:MantisX_Example}.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{perfect_shot}
+	\caption{SCATT \cite{scatt} feedback.}
+	\label{fig:SCATT_Example}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\linewidth]{mantisx_output}
+	\caption{MantisX output.}
+	\label{fig:MantisX_Example}
+\end{figure}
 
 \section{Dataset}
 
-% scatt-db https://scattdb.com/database \cite{scatt-db}
+All of the data sets that we encountered during the research for this project utilized proprietary storage methods.
+While one site was able to use a framework that retrieved the actual shot results from SCATT traces \cite{scatt-db}, that particular framework was not able to retrieve the trace data itself.
+
+To address this we use an easier to ingest data storage method, trading potential gains in efficiency when using binaries for ease of access.
 
 \section{Methods}
+
+
+
 \section{Analysis}
 % Replay Time Series
 % Heat map
 % Scoring
+
+% Ref Zeljko for analysis to shot cycle correlation
 \section{Results}
 % Images from the above,
 % Examples of mistakes etc. and corrective actions
@@ -101,27 +125,8 @@ in addition to collecting the point of aim these software break up the trace int
 
 %
 %		OpenCV - Hugh Circle Transform
+%		Another Commercial option: https://www.traceshooting.com/?lang=en
 %
-
-
-
-
-
-\begin{figure}[h]
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=\linewidth]{perfect_shot}
-		\caption{SCATT \cite{scatt} feedback.}
-	\end{subfigure}
-	\begin{subfigure}{.5\textwidth}
-		\centering
-		\includegraphics[width=0.6\linewidth]{mantisx_output}
-		\caption{MantisX output.}
-	\end{subfigure}
-\end{figure}
-
-
-
 
 \clearpage
 \bibliographystyle{ieee}
