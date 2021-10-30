@@ -31,7 +31,7 @@ There is substantial interest in maintaining the cutting edge on both fronts as 
 Access to this type of technology comes with a substantial price, which may be suitable to professional athletes or clubs and individuals of greater means.
 Due to the high cost, some highly talented athletes may never get access to high quality equipment or training.
 
-In this paper we propose to develop an open source training option that accomplished the following:
+In this paper we propose to develop an open source training option that my accomplish the following:
 
 \begin{enumerate}
 	\item Identify the point of aim in real-time.
@@ -42,28 +42,40 @@ In this paper we propose to develop an open source training option that accompli
 	\item Identify the bull's-eye as a frame of reference for the above functions.
 \end{enumerate}
 
-With these functions we desire to advance the field of open source options for shooting athletes to improve their craft in a manner functionally similar to the commercial offerings \cite{scatt} \cite{noptel}.
+With these functions we desire to advance the field of open source options for shooting athletes to improve their craft in a manner functionally similar to the commercial offerings \cite{scatt, noptel}.
 % ShootOff is a similar laser spot tracker, but only tracks the shot
 
 \section{Related Work}
 
-%%%		Open Source Options
+\subsection{Similar Open-Source Tools}
 
 First we examine work that similarly looks to address the problem of high cost associated with competitive equipment.
 At the time of this writing the available open-source options all address the problem of shot scoring.
 Traditionally, target scoring is performed using Piezo-electronic sensor to achieve acoustic triangulation \cite{Anderson2018}.
 However, some manufacturers have had success with laser triangulation \cite{SUIS}.
-In response to the price of this equipment some developers have produced open source projects featuring acoustic scoring \cite{etarg} \cite{freetarget}.
-Still more researchers have sought to use computer vision to perform the scoring \cite{Rudzinski2012} \cite{Stenhager2021}.
+In response to the price of this equipment some developers have produced open source projects featuring acoustic scoring \cite{etarg, freetarget}.
+Still more researchers have sought to use computer vision to perform the scoring \cite{Rudzinski2012, Stenhager2021}.
 
 Accurate scoring with computer vision and commonly available parts continues to progress rapidly in recent years.
 \cite{Ye2011} reliably produced  hit-miss results while \cite{Rudzinski2012} were able to produce competition level accuracy in scoring static targets with the trade-off of extremely controlled reading conditions.
-More recently \cite{Stenhager2021} was able to achieve a fairly robust model that could perform in a realistic setting and gave results usable at an amateur level; their scoring unable to accurately score a round at the necessary resolution.
+More recently \cite{Stenhager2021} was able to achieve a fairly robust model that could perform in a realistic setting and gave results usable at an amateur level; their system unable to accurately score a round at the necessary resolution.
 
-%%%		Aim tracing
+\subsection{Aim tracing}
 
-Shot scoring is only one aspect of training and dry-fire training is often \cite{Potter2017}
-considered to be a more important for developing a effective results.
+Shot scoring is only one aspect of training and dry-fire training is often 
+considered to be the most important for developing a effective results.
+\cite{Potter2017}
+This importance is reflected in shot trainers that sometimes cost as much as the top of the line equipment itself.
+\cite{scatt, noptel}
+
+The commercial trainers share a set of common features and outputs,
+in addition to collecting the point of aim these software break up the trace into several parts:
+\begin{enumerate}
+	\item Entry onto target and sighting
+	\item Triggering (usually approximated)
+	\item Shot and Impact
+	\item Follow-through and leaving the target
+\end{enumerate}
 
 
 \section{Dataset}
