@@ -34,14 +34,14 @@ Due to the high cost, some highly talented athletes may never get access to high
 In this paper we propose to develop a two-part open source framework for training that my accomplish the following:
 
 \begin{enumerate}
-	\item Recording
+	\item Recording the Shot Cycle
 	\begin{enumerate}
 		\item Identify the bull's-eye as a frame of reference.
 		\item Identify the point of aim in real-time.
 		\item Record the point of aim over the period of an entire shot cycle.
 		\item Record actual shot position
 	\end{enumerate}
-	\item Reporting
+	\item Reporting the Shot Cycle
 	\begin{enumerate}
 		\item Report the above information in an intuitive manner, that may be interpreted by the athlete and to allow for immediate feedback.
 		\item Use the shot position to provide the score and direction.
@@ -109,32 +109,75 @@ To address this we use an easier to ingest data storage method, trading potentia
 
 \section{Methods}
 
+The hardware used for this experiment was 
+a Microsoft Lifecam HD-5000,
+a Steyr evo 10 E,
+and a red laser pointer of unknown origin.
+All recording, processing, and analysis was performed on 
+a 2020 Apple M1 Macbook Pro.
+
+Video capture and processing was performed using the 
+OpenCV \cite{itseez2015opencv} framework as a base.
+The bullseye area is used as a frame of reference for recording and 
+the necessary data is determined by applying a series of OpenCV functions.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.75\linewidth]{example-image}
+	\caption{Recording Algorithm.}
+	\label{fig:capture_algorithm}
+\end{figure}
+
+The first step is to import the frame as a hue, saturation, value image.
+Then a mask is applied to filter for only the near-black area.
+A contour is applied to the outer edge of the mask.
+The moments of the outer contour are calculated.
+The first order moment of each dimension is divided by the zeroth moment to determine the center coordinate for the corresponding dimension.
+($M_{10}$ and $M_{01}$ each divided by $M_{10}$ using eq. \eqref{Moments})
+Finally, a minimum enclosing circle is applied around the contour and used to provide an approximate radius.
+
+\begin{equation}\label{Moments}
+	\text{Moments} = M_{ij} = \sum_{x} \sum_{y} x^i y^j I(x,y)
+\end{equation}
+
+A Hough Circle Transform solution \cite{} was considered for producing both of these data.
+However, the results were extremely unstable when applied to the conditions used for this experiment and the video capture itself.
+Additionally, while this method may have been more accurate for determining the true center of the target, it would not work well for an ellipsoid reference.
+This problem is mentioned further in the conclusion of this paper.
 
 
 \section{Analysis}
-% Replay Time Series
-% Heat map
-% Scoring
 
-% Ref Zeljko for analysis to shot cycle correlation
+\noindent
+\textlangle Output of replay graph \textrangle \\
+\textlangle Heatmap \textrangle \\
+\textlangle Time-series scalar distance \textrangle \\
+\textlangle Score report \textrangle \\
+\textlangle Ref Zeljko for analysis to shot cycle correlation \textrangle
+
 \section{Results}
-% Images from the above,
-% Examples of mistakes etc. and corrective actions
+
+\noindent
+\textlangle Include example of common mistakes \textrangle \\
+\textlangle Visualizations should be intuitive \textrangle
+
 \section{Conclusion}
-% + Future work?
+
+\subsection{Areas for Improvement}
+The method used to evaluate the bullseye reference frame does not compensate for the viewing angle. Instead of using a circular-bound it will need to use an ellipsoid and additional transformations will need to be applied to more accurately place the trace on the target.
+
+\subsection{Future Work}
+
+\noindent
+\textlangle Incorporate other open source projects \textrangle \\
+\textlangle Expand this project + Areas of Improvement \textrangle
+
 % 		Expand on open sourced technologies
 %			Polycarbonate impact surface and Piezo-electronic vibration sensing
 %			Screen Behind for target variation, immediate shot recording and track playback, even with dry-fire training
-
-
-
-
-%
-%		OpenCV - Hugh Circle Transform
 %		Another Commercial option: https://www.traceshooting.com/?lang=en
 %	Helpful for script generation: https://techvidvan.com/tutorials/create-air-canvas-using-opencv-python/
-
 \clearpage
-\bibliographystyle{ieee}
+\bibliographystyle{IEEEtran}
 \bibliography{\jobname}
 \end{document}
