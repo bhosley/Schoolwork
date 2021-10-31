@@ -6,6 +6,7 @@ import numpy as np
 cap = cv2.VideoCapture(0)
 kernel = np.ones((10,10), np.uint8)
 marker_threshold = 3000
+font = cv2.FONT_HERSHEY_SIMPLEX
 
 while (1):
     ret, frame = cap.read()
@@ -14,10 +15,11 @@ while (1):
     mask = cv2.inRange(frame, 
         np.array([0, 0, 0]),  # BGR Black
         np.array([75, 75, 75]))  # BGR lighter Black
-    mask = cv2.dilate(mask, np.ones((10,10), np.uint8), iterations=1)
+    #mask = cv2.dilate(mask, np.ones((10,10), np.uint8), iterations=1)
     #mask = cv2.bitwise_not(mask)
 
-    edges = cv2.Canny(frame,250,550)
+    #edges = cv2.Canny(frame,250,550)
+    #edges = cv2.Canny(mask,50,150)
 
     try:
         # currently frame, may need to be HSV
@@ -33,6 +35,7 @@ while (1):
 
             # Draw the center of the circle (red)
             cv2.circle(frame, (i[0], i[1]), 2, (0, 0, 255), 3)
+            
     except:
         pass
 
@@ -50,6 +53,13 @@ while (1):
             mX = int(M["m10"] / M["m00"])
             mY = int(M["m01"] / M["m00"])
             cv2.circle(frame, (mX, mY), 2, (0, 255, 0), 2)
+            cv2.drawContours(frame, cmax, -1, (255, 0, 0), 2)
+            (x,y),radius = cv2.minEnclosingCircle(cmax)
+            center = (int(x),int(y))
+            radius = int(radius)
+            # Draw outer circle
+            cv2.circle(frame,center,radius,(0,0,255),2)
+            cv2.putText(frame,str('Center:{},{} Radius:{}'.format(center[0],center[1],radius)),(10,30), font, 1,(255,255,255),2,cv2.LINE_AA)
     else:
         previous_center_point= 0
 
