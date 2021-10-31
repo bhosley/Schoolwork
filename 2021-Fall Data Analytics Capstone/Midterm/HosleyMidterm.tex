@@ -31,18 +31,24 @@ There is substantial interest in maintaining the cutting edge on both fronts as 
 Access to this type of technology comes with a substantial price, which may be suitable to professional athletes or clubs and individuals of greater means.
 Due to the high cost, some highly talented athletes may never get access to high quality equipment or training.
 
-In this paper we propose to develop an open source training option that my accomplish the following:
+In this paper we propose to develop a two-part open source framework for training that my accomplish the following:
 
 \begin{enumerate}
-	\item Identify the point of aim in real-time.
-	\item Record the point of aim over the period of an entire shot cycle.
-	\item Report this information in an intuitive manner, that may be interpreted by the athlete and to allow for immediate feedback.
-	
-	\item Record the shot position and to provide the score and direction.
-	\item Identify the bull's-eye as a frame of reference for the above functions.
+	\item Recording
+	\begin{enumerate}
+		\item Identify the bull's-eye as a frame of reference.
+		\item Identify the point of aim in real-time.
+		\item Record the point of aim over the period of an entire shot cycle.
+		\item Record actual shot position
+	\end{enumerate}
+	\item Reporting
+	\begin{enumerate}
+		\item Report the above information in an intuitive manner, that may be interpreted by the athlete and to allow for immediate feedback.
+		\item Use the shot position to provide the score and direction.
+	\end{enumerate}
 \end{enumerate}
 
-With these functions we desire to advance the field of open source options for shooting athletes to improve their craft in a manner functionally similar to the commercial offerings \cite{scatt, noptel}.
+With these functions we desire to advance the field of open source options for shooting athletes to improve their craft in a manner functionally similar to the commercial offerings \cite{scatt, noptel} that may otherwise be out of reach.
 % ShootOff is a similar laser spot tracker, but only tracks the shot
 
 \section{Related Work}
@@ -96,7 +102,7 @@ For ease of interpretation each of these stages are delineated by color; the sch
 
 \section{Dataset}
 
-All of the data sets that we encountered during the research for this project utilized proprietary storage methods.
+All of the data sets that we encountered during the preliminary research for this project utilized proprietary storage methods.
 While one site was able to use a framework that retrieved the actual shot results from SCATT traces \cite{scatt-db}, that particular framework was not able to retrieve the trace data itself.
 
 To address this we use an easier to ingest data storage method, trading potential gains in efficiency when using binaries for ease of access.
