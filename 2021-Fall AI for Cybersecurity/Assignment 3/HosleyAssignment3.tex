@@ -1,0 +1,93 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[hypcap=false]{caption}
+\usepackage{subcaption}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+\hypersetup{
+	hidelinks
+	}
+
+\title{Artificial Intelligence in Cybersecurity: Assignment 2}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+\section{Introduction}
+
+In this article \cite{Zhao2020} Zhao et al. aim to produce an ensemble IDS method that out-performs other methodologies, achieving a Perato optimum for the particular ensemble.
+
+\section{Data Sources}
+
+% Describe the data used in this paper including source, sample, attribute, etc. (10 points)
+The team suggests using KDD1999 \cite{Kdd1999}. 
+However, they reference studies
+\cite{Brown2009, Mchugh2000, Engen2010}
+that show problems with the KDD1999 data set in training IDSs.
+To overcome this potential problem, the team has chosen to use a refined version of KDD, NSL-KDD \cite{Tavallaee2011}.
+Additionally, due to the size of NSL-KDD, the team uses three smaller subsets of the data that they manufacture for the purposes of this experiment.
+
+\section{Algorithm}
+
+% Explain the algorithm/method for visualization in detail from your understanding (20 points)
+The proposed algorithm executes in two parts, both of which use the AMGA2 \cite{Tiwari2011} (Archive-based Micro Genetic Algorithm) to achieve a Pareto optimum solution.
+
+In the first part an initial random population of Neural Networks (NN) is created.
+The population is evaluated with fitness functions until it meets a stopping criteria.
+When the stopping criteria has not been met, a selection of the more fit of the population of NN is crossed over and mutated to generate a new population.
+Here the Pareto optimum is achieved for individual functions. 
+
+In the second stage AMGA2 is applied in a similar manner but at the ensemble level.
+In this case, random ensembles are created from the products of the first stage and evaluated for fitness.
+Until a stopping criteria is met the model selects a set of better performing models, crosses them over, and mutates to generate a new generation of ensembles.
+
+% Draw a flowchart of the algorithm for visualization (10 points)
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.48\linewidth}
+		\includegraphics[width=\textwidth]{Stage_1}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}{0.48\linewidth}
+		\includegraphics[width=\textwidth]{Stage_2}
+	\end{subfigure}
+	\caption{Proposed method stages \cite{Zhao2020}}
+\end{figure}
+
+
+\section{Results}
+
+% Explain the experimental results in detail from your understanding (10 points)
+The research team compares their proposed model to several other ensemble models, also using MLP as their basis.
+They utilize MLP with backpropogation, a boosted MLP ensemble, and a bagged MLP ensemble.
+They compare average false positive rate, the average detection rate, and the detection rates for a number of attack vectors. 
+The proposed method outperforms the methods that it was compared to in each of the metrics used.
+The proposed model had about half the false positive rate, and improved on detection rate by about 10\% with very large improvements on detection of user to root and root to local attacks.
+
+\section{Advantages and Disadvantages}
+
+% Discuss the advantages from your understanding (10 points)
+The most substantive advantage of this method is that the team achieves a Pareto optimal state for the ensemble.
+In their experiments it is shown to overcome the problem of overfitting faced by other models.
+It generalizes well and does not present a strong bias towards much less common attacks that may lead to higher false positive rates in other implementations.
+
+% Discuss the disadvantages from your understanding (15 points)
+The largest disadvantage of the proposed method is that it requires a large amount of computation resources and takes a long time to train relative to the other models.
+The research team acknowledges this additional cost but does not relate how it compares to the training of the other models, so it is not made known how much additional cost is incurred.
+
+\section{Improvements}
+
+% Provide the specific ideas to improve the algorithm. General ideas are not allowed. (15 points)
+For this experiment the team used only used MLP-NN (Multi-Layered Perceptron Neural Network) as the base unit for their algorithm. 
+To capitalize more on the benefit of creating an ensemble, perhaps a future experiment would utilize several different types of classifiers.
+Doing so may assist the model in identifying the large variety of intrusion methods more reliably and with fewer false positives.
+However, even if this proposal does successfully improve upon these results it is very likely that it will further exacerbate the disadvantage of large compute time.
+
+\clearpage
+\bibliographystyle{acm}
+\bibliography{\jobname}
+\end{document}
