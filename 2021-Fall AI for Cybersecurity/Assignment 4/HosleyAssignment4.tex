@@ -26,10 +26,19 @@ They call this framework AutoVAS; Automatic Vulnerability Analysis System.
 \section{Data Sources}
 
 % Describe the data used in this paper including source, sample, attribute, etc. (10 points)
+The datasets used by the research team are derived from the NVD and SARD projects.
 
 
 \section{Algorithm}
 
+The algorithm for AutoVAS begins with code slicing.
+They use both the Weiser \cite{Weiser1984} and SDG/IFDS \cite{Naeem2010} techniques for this.
+From the output of the slicers they perform a tokenization and embedding action.
+For this function they again utilize several methods;
+Word2Vec \cite{Mikolov2013},
+Doc2Vec \cite{Le2014},
+GloVe \cite{Pennington2014},
+and FastText \cite{Mikolov2017}.
 
 
 % Draw a flowchart of the algorithm for visualization (10 points)
