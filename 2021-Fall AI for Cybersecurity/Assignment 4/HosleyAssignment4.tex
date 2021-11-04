@@ -10,7 +10,7 @@
 	hidelinks
 	}
 
-\title{Artificial Intelligence in Cybersecurity: Assignment 3}
+\title{Artificial Intelligence in Cybersecurity: Assignment 4}
 \author{Brandon Hosley}
 \date{\today}
 
@@ -27,7 +27,17 @@ They call this framework AutoVAS; Automatic Vulnerability Analysis System.
 
 % Describe the data used in this paper including source, sample, attribute, etc. (10 points)
 The datasets used by the research team are derived from the NVD and SARD projects.
-
+They utilized 368 open-source programs with 2033 files from NVD.
+And utilized 10655 programs with 10655 files from SARD.
+The vulnerabilities collected in these datasets are categorized as:
+buffer and memory,
+format string and information loss,
+command execution,
+improper error handling,
+cryptographic issues,
+concurrency issues,
+exposed data and privileges,
+and etc.
 
 \section{Algorithm}
 
@@ -39,7 +49,11 @@ Word2Vec \cite{Mikolov2013},
 Doc2Vec \cite{Le2014},
 GloVe \cite{Pennington2014},
 and FastText \cite{Mikolov2017}.
+After slicing and embedding the data are passed to targeted RNN-based LSTM and GRU models \cite{Su2017}.
 
+To help deal with the uneven distribution of samples across the different vulnerability types is normalized utilizing the 
+SMOTEENN \cite{Li2013}
+algorithm to create a synthetic balance.
 
 % Draw a flowchart of the algorithm for visualization (10 points)
 \begin{figure}[h]
@@ -52,7 +66,10 @@ and FastText \cite{Mikolov2017}.
 \section{Results}
 
 % Explain the experimental results in detail from your understanding (10 points)
-
+The team utilizes Keras with Tensorflow to implement their framework.
+Through implementing the framework they were able to determine which combination of the above methods produced the best results.
+In this case they settled on SDG/IDFS as the slicer and FastText to embed.
+The neural network that they chose was GRU as the resulting accuracy was essentially the same as the LSTM but the GRU would train faster.
 
 \section{Advantages and Disadvantages}
 
