@@ -21,7 +21,10 @@
 
 In this article \cite{Jeon2021} Jeon et al. develop a framework that is intended to automate vulnerability discovery.
 They call this framework AutoVAS; Automatic Vulnerability Analysis System.
-
+The AutoVAS should be able to identify known types of vulnerabilities in source code even if the implementation of the vulnerability is executed in an unintentionally novel manner.
+Additionally, the team would end up finding 3 vulnerabilities unknown to their training data set,
+one of which was previously unknown altogether.
+This vulnerability would acquire its own CVE by the time their paper was published.
 
 \section{Data Sources}
 
@@ -59,7 +62,7 @@ algorithm to create a synthetic balance.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{Algorithm}
-	\caption{Deep4SNet \cite{Jeon2021}}
+	\caption{AutoVAS \cite{Jeon2021}}
 \end{figure}
 
 
