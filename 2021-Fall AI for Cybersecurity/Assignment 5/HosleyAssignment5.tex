@@ -20,7 +20,7 @@
 \section{Introduction}
 
 In this article \cite{Vien2021} outlines a proposal to use machine learning to improve and secure the transmission of images over a public space.
-The team utilizes machine learning in the form of Convolutional Neural Networks (CNNs) for both the down-sampling of high-resolution images and up-sampling low-resolution images.
+The team utilizes machine learning in the form of Convolutional Neural Networks (CNNs) for up-sampling low-resolution images that had been previously down-sampled for improved ease of transmission.
 For the transmission portion the team use a steganographic method that they erroneously refer to as stenography for the majority of the paper, except when the authors refer to the carrier images loaded with the data to be secured as 'stegos'.
 
 \section{Data Sources}
@@ -35,7 +35,20 @@ It was originally used for pattern recognition, but for this paper the images ar
 \section{Algorithm}
 
 % Explain the algorithm/method for visualization in detail from your understanding (20 points)
-
+To begin, the algorithm down-samples the payload image using a bicubic filter.
+The image is combined with a random carrier image from an image datastore.
+The images are combined using RLNC (Random Linear Network Coding) 
+\cite{Koetter2003}.
+The implementation of this combination occurs in two possible manners; 
+by pixel and by image.
+The image is transmitted over an arbitrary channel which introduces interference or noise.
+For the purposes of this paper the signal noise is replicated with 
+Gaussian noise \cite{ Zhang2017} and 
+salt-and-pepper noise \cite{Chan2005}.
+Once arrived at the recipient, the image is first denoised.
+Image separation is simple knowing both the algorithm and the index of the carrier image.
+Finally, the low-resolution payload is restored to a higher resolution using a very deep CNN to up-sample the image.
+The method they use is based on \cite{Wang2020}.
 
 % Draw a flowchart of the algorithm for visualization (10 points)
 \begin{figure}[h]
@@ -43,7 +56,6 @@ It was originally used for pattern recognition, but for this paper the images ar
 	\includegraphics[width=0.8\textwidth]{Algorithm}
 	\caption{Deep-NC \cite{Vien2021}}
 \end{figure}
-
 
 \section{Results}
 
