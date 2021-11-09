@@ -1,0 +1,183 @@
+\documentclass[conference]{IEEEtran}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[hypcap=false]{caption}
+\usepackage{subcaption}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+\hypersetup{
+	hidelinks
+	}
+
+\title{DAT Midterm Project: Working Title}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+	\maketitle
+	
+\begin{abstract}
+	%
+	%	content...
+	%
+\end{abstract}
+
+\section{Introduction}
+
+Shooting sports are a type of sport inextricably linked to technology, 
+both in terms of the equipment used by the athletes and tools used in their training.
+There is substantial interest in maintaining the cutting edge on both fronts as athletes and teams work to remain on top of their competition.
+Access to this type of technology comes with a substantial price, which may be suitable to professional athletes or clubs and individuals of greater means.
+Due to the high cost, some highly talented athletes may never get access to high quality equipment or training.
+
+In this paper we propose to develop a two-part open source framework for training that my accomplish the following:
+
+\begin{enumerate}
+	\item Recording the Shot Cycle
+	\begin{enumerate}
+		\item Identify the bull's-eye as a frame of reference.
+		\item Identify the point of aim in real-time.
+		\item Record the point of aim over the period of an entire shot cycle.
+		\item Record actual shot position
+	\end{enumerate}
+	\item Reporting the Shot Cycle
+	\begin{enumerate}
+		\item Report the above information in an intuitive manner, that may be interpreted by the athlete and to allow for immediate feedback.
+		\item Use the shot position to provide the score and direction.
+	\end{enumerate}
+\end{enumerate}
+
+With these functions we desire to advance the field of open source options for shooting athletes to improve their craft in a manner functionally similar to the commercial offerings \cite{scatt, noptel} that may otherwise be out of reach.
+% ShootOff is a similar laser spot tracker, but only tracks the shot
+
+\section{Related Work}
+
+\subsection{Similar Open-Source Tools}
+
+First we examine work that similarly looks to address the problem of high cost associated with competitive equipment.
+At the time of this writing the available open-source options all address the problem of shot scoring.
+Traditionally, target scoring is performed using Piezo-electronic sensor to achieve acoustic triangulation \cite{Anderson2018}.
+However, some manufacturers have had success with laser triangulation \cite{SUIS}.
+In response to the price of this equipment some developers have produced open source projects featuring acoustic scoring \cite{etarg, freetarget}.
+Still more researchers have sought to use computer vision to perform the scoring \cite{Rudzinski2012, Stenhager2021}.
+
+Accurate scoring with computer vision and commonly available parts continues to progress rapidly in recent years.
+\cite{Ye2011} reliably produced  hit-miss results while \cite{Rudzinski2012} were able to produce competition level accuracy in scoring static targets with the trade-off of extremely controlled reading conditions.
+More recently \cite{Stenhager2021} was able to achieve a fairly robust model that could perform in a realistic setting and gave results usable at an amateur level; their system unable to accurately score a round at the necessary resolution.
+
+\subsection{Aim tracing}
+
+Shot scoring is only one aspect of training and dry-fire training is often 
+considered to be the most important for developing a effective results.
+\cite{Potter2017}
+This importance is reflected in shot trainers that sometimes cost as much as the top of the line equipment itself.
+\cite{scatt, noptel}
+
+The commercial trainers share a set of common features and outputs,
+in addition to collecting the point of aim these software break up the trace into several parts:
+\begin{enumerate}
+	\item Entry onto target and sighting
+	\item Triggering (approximated as 1 second before impact)
+	\item Shot (0.3 seconds before impact)  and Impact
+	\item Follow-through and leaving the target
+\end{enumerate}
+For ease of interpretation each of these stages are delineated by color; the schema presented by SCATT can be seen in figures 
+\ref{fig:SCATT_Example} and
+\ref{fig:MantisX_Example}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{perfect_shot}
+	\caption{SCATT \cite{scatt} feedback.}
+	\label{fig:SCATT_Example}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\linewidth]{mantisx_output}
+	\caption{MantisX output.}
+	\label{fig:MantisX_Example}
+\end{figure}
+
+\section{Dataset}
+
+All of the data sets that we encountered during the preliminary research for this project utilized proprietary storage methods.
+While one site was able to use a framework that retrieved the actual shot results from SCATT traces \cite{scatt-db}, that particular framework was not able to retrieve the trace data itself.
+
+To address this we use an easier to ingest data storage method, trading potential gains in efficiency when using binaries for ease of access.
+
+\section{Methods}
+
+The hardware used for this experiment was 
+a Microsoft Lifecam HD-5000,
+a Steyr evo 10 E,
+and a red laser pointer of unknown origin.
+All recording, processing, and analysis was performed on 
+a 2020 Apple M1 Macbook Pro.
+
+Video capture and processing was performed using the 
+OpenCV \cite{itseez2015opencv} framework as a base.
+The bullseye area is used as a frame of reference for recording and 
+the necessary data is determined by applying a series of OpenCV functions.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.75\linewidth]{example-image}
+	\caption{Recording Algorithm.}
+	\label{fig:capture_algorithm}
+\end{figure}
+
+The first step is to import the frame as a hue, saturation, value image.
+Then a mask is applied to filter for only the near-black area.
+A contour is applied to the outer edge of the mask.
+The moments of the outer contour are calculated.
+The first order moment of each dimension is divided by the zeroth moment to determine the center coordinate for the corresponding dimension.
+($M_{10}$ and $M_{01}$ each divided by $M_{10}$ using eq. \eqref{Moments})
+Finally, a minimum enclosing circle is applied around the contour and used to provide an approximate radius.
+
+\begin{equation}\label{Moments}
+	\text{Moments} = M_{ij} = \sum_{x} \sum_{y} x^i y^j I(x,y)
+\end{equation}
+
+A Hough Circle Transform solution \cite{} was considered for producing both of these data.
+However, the results were extremely unstable when applied to the conditions used for this experiment and the video capture itself.
+Additionally, while this method may have been more accurate for determining the true center of the target, it would not work well for an ellipsoid reference.
+This problem is mentioned further in the conclusion of this paper.
+
+
+\section{Analysis}
+
+\noindent
+\textlangle Output of replay graph \textrangle \\
+\textlangle Heatmap \textrangle \\
+\textlangle Time-series scalar distance \textrangle \\
+\textlangle Score report \textrangle \\
+\textlangle Ref Zeljko for analysis to shot cycle correlation \textrangle
+
+\section{Results}
+
+\noindent
+\textlangle Include example of common mistakes \textrangle \\
+\textlangle Visualizations should be intuitive \textrangle
+
+\section{Conclusion}
+
+\subsection{Areas for Improvement}
+The method used to evaluate the bullseye reference frame does not compensate for the viewing angle. Instead of using a circular-bound it will need to use an ellipsoid and additional transformations will need to be applied to more accurately place the trace on the target.
+
+\subsection{Future Work}
+
+\noindent
+\textlangle Incorporate other open source projects \textrangle \\
+\textlangle Expand this project + Areas of Improvement \textrangle
+
+% 		Expand on open sourced technologies
+%			Polycarbonate impact surface and Piezo-electronic vibration sensing
+%			Screen Behind for target variation, immediate shot recording and track playback, even with dry-fire training
+%		Another Commercial option: https://www.traceshooting.com/?lang=en
+%	Helpful for script generation: https://techvidvan.com/tutorials/create-air-canvas-using-opencv-python/
+\clearpage
+\bibliographystyle{IEEEtran}
+\bibliography{\jobname}
+\end{document}
