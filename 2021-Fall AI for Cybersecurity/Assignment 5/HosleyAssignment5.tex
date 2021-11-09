@@ -19,14 +19,14 @@
 	
 \section{Introduction}
 
-In this article \cite{Vien2021} outlines a proposal to use machine learning to improve and secure the transmission of images over a public space.
+In this article Vien et al.\cite{Vien2021} outline a proposal to use machine learning to improve and secure the transmission of images over a public space.
 The team utilizes machine learning in the form of Convolutional Neural Networks (CNNs) for up-sampling low-resolution images that had been previously down-sampled for improved ease of transmission.
-For the transmission portion the team use a steganographic method that they erroneously refer to as stenography for the majority of the paper, except when the authors refer to the carrier images loaded with the data to be secured as 'stegos'.
+For the transmission portion of the process the team use a steganographic method that they erroneously refer to as stenography for the majority of the paper, except when the authors refer to the carrier images loaded with the data to be secured as 'stegos'.
 
 \section{Data Sources}
 
 % Describe the data used in this paper including source, sample, attribute, etc. (10 points)
-The data utilized for this paper was sourced from \cite{Grubinger2006}.
+The data utilized for this paper was sourced from the IAPR TC-12 benchmark dataset \cite{Grubinger2006}.
 This dataset consists of a large number of photos collected for the 
 CLEF cross-language image retrieval track (ImageCLEF).
 The dataset is assembled from 20,000 images from a private collection.
@@ -48,7 +48,7 @@ salt-and-pepper noise \cite{Chan2005}.
 Once arrived at the recipient, the image is first denoised.
 Image separation is simple knowing both the algorithm and the index of the carrier image.
 Finally, the low-resolution payload is restored to a higher resolution using a very deep CNN to up-sample the image.
-The method they use is based on \cite{Wang2020}.
+The method they use is based on Wang et al's image super resolution algorithm \cite{Wang2020}.
 
 % Draw a flowchart of the algorithm for visualization (10 points)
 \begin{figure}[h]
@@ -60,20 +60,36 @@ The method they use is based on \cite{Wang2020}.
 \section{Results}
 
 % Explain the experimental results in detail from your understanding (10 points)
-The research team successfully demonstrated the capability of their framework to accomplish what they had intended for it to accomplish. Their steganographic method with CNN enabled upsampling was able to achieve a 32 db PSTN (Peak Signal To Noise) ratio when compared to an eavesdropper.
+The research team successfully demonstrated the capability of their framework to accomplish what they had intended for it to accomplish. 
+Their steganographic method with CNN enabled upsampling was able to achieve a 32 db PSTN (Peak Signal To Noise) ratio when compared to an eavesdropper.
+Their method of denoising followed by up-sampling with the ISR algorithm was able to accurately reproduce the high resolution images.
+
 
 \section{Advantages and Disadvantages}
 
 % Discuss the advantages from your understanding (10 points)
-
+Steganography provides an additional layer to the defense-in-depth of the moving data. 
+The advantage provided by this that remains relevant with modern cryptographic methods is that it provides a sensical stopping point for a would-be hacker.
+Additionally, the up-sampling at the end of the pipeline provides a higher resolution image, which resolves an issue common to the majority of image transmission.
 
 % Discuss the disadvantages from your understanding (15 points)
-
+This framework is very experimental, as such it has a number of items that make it impractical for actual applications as it stands.
+Steganography in this application relies on security through obscurity or misdirection.
+Even with RLNC if the listener has access to the original images the payload is easy to recover relative to other cryptographic methods. 
+This framework relies on a shared set of images, these images must also be kept secret.
+This presents both a security issue in preservation of this secret, 
+and a logistics issue in the secure transmission of the image.
+While the framework does specify that the index of the carrier image will be transmitted to the recipient, today it is trivial to associate the subject image to the relevant member of the datastore using computer vision alone.
 
 \section{Improvements}
 
 % Provide the specific ideas to improve the algorithm. General ideas are not allowed. (15 points)
-
+The work performed by these researchers is great if not novel on the image up-sampling front. 
+They successfully down-sample an image for transmission and recover the image to a full resolution while also denoising the image.
+This process has a significant place in digital communications and is very relevant as the volume of communication increases and features significant numbers of images.
+Additionally, the denoising benefits the increasing amount of traffic traversing wireless communication mediums.
+The security aspect of this research is not as notable. 
+Further emphasis on their work from a quality of service mode would be better.
 
 
 \clearpage
