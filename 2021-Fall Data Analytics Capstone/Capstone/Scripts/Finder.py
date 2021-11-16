@@ -23,8 +23,8 @@ while (1):
 
     try:
         # currently frame, may need to be HSV
-        circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, 1, 20,
-                            param1=50, param2=40, minRadius=0, maxRadius=0)
+        #circles = cv2.HoughCircles(edges, cv2.HOUGH_GRADIENT, 1, 20,
+        #                   param1=50, param2=40, minRadius=0, maxRadius=0)
 
         circles = np.uint16(np.around(circles))
         print(len(circles))
