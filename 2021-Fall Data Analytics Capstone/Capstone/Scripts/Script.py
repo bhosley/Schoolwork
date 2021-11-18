@@ -5,7 +5,7 @@ CAP = cv2.VideoCapture(0)
 FONT = cv2.FONT_HERSHEY_SIMPLEX
 KERNEL = np.ones((10,10), np.uint8)
 FIDUCIAL_THRESHOLD = 3000
-MARKER_THRESHOLD = 1000
+MARKER_THRESHOLD = 500
 MARKER_RANGE = np.array([[0, 0, 255],[255, 255, 255]])
 
 # 
@@ -57,10 +57,9 @@ while True:
         # Checking if the area of the contour is greater than a threshold
         if area > MARKER_THRESHOLD:
             # Find center point of the contour
-            (mx,my),r = cv2.minEnclosingCircle(cmax)
-            #M = cv2.moments(cmax)
-            #mx = int(M["m10"] / M["m00"])
-            #my = int(M["m01"] / M["m00"])
+            M = cv2.moments(cmax)
+            mx = int(M["m10"] / M["m00"])
+            my = int(M["m01"] / M["m00"])
     else:
         previous_center_point= 0
     
@@ -72,7 +71,7 @@ while True:
     cv2.circle(frame, (int(origin[0]),int(origin[1])), int(radius), (255, 0, 0), 2)
     cv2.circle(frame, (int(mx),int(my)), 1, (0, 0, 255), 2)
     cv2.imshow('Detected Circles', frame)
-    #cv2.imshow('Mask', marker_mask)
+    cv2.imshow('Mask', marker_mask)
 
 # End While-Loop
 
