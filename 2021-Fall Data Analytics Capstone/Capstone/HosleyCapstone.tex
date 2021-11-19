@@ -74,6 +74,18 @@ considered to be the most important for developing a effective results.
 This importance is reflected in shot trainers that sometimes cost as much as the top of the line equipment itself.
 \cite{scatt, noptel}
 
+Both the Noptel and SCATT systems utilize computer vision for their tracking.
+They utilize the relative positioning of the bullseye within the camera's view to determine the position of the aim.
+Actual point of aim is calibrated by having the weapon fire and recording where in the frame the resulting hole is observed.
+The cameras use an uncommon lens configuration for the optical zoom which produce effective results for their intended purpose, but are not likely useful in other applications.
+Conversely, cameras of this type are not easily sourced from other applications.
+
+The Mantis X product utilizes an inertial measurement unit that has been ruggedized against small arm recoil. 
+This product does not utilize a camera and is not able to produce a prediction of a point of aim.
+Instead the output is a trace of relative position and will correlate the relative positions to the position when the weapon is fired.
+In this way it can still produce data valuable to the shot cycle without actually being able to score.
+The advantage is that it may eschew any visual obstacles or shortcomings.
+
 The commercial trainers share a set of common features and outputs,
 in addition to collecting the point of aim these software break up the trace into several parts:
 \begin{enumerate}
@@ -149,6 +161,8 @@ The surface of standard competition targets causes the laser to reflect diffusel
 The diffusion causes the marker to appear as a highly irregular ellipsoid,
 however, when the angle of incident is low the moment is still an effective measure of center for the marker.
 This was not a problem with the dark area of the bulls-eye as it was far less reflective.
+
+
 
 \section{Analysis}
 
