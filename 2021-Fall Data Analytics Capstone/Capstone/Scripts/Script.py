@@ -23,7 +23,7 @@ def find_origin(frame):
         if len(contours) > 0:
             largest_contour = max(contours, key = cv2.contourArea) # Largest Contour
             area = cv2.contourArea(largest_contour)
-            
+
             if area > FIDUCIAL_THRESHOLD:
                 (cx,cy),r = cv2.minEnclosingCircle(largest_contour)
                 x += cx
@@ -69,6 +69,7 @@ while True:
             my = int(M["m01"] / M["m00"])
     
     # Export Data
+    
 
     # Output Image
     cv2.putText(frame,str('Marker: {},{}'.format(mx-origin[0], origin[1]-my)),(10,30), FONT, 1,(255,255,255),2,cv2.LINE_AA)
