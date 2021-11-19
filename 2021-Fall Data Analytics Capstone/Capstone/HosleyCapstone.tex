@@ -118,7 +118,7 @@ a 2020 Apple M1 Macbook Pro.
 
 Video capture and processing was performed using the 
 OpenCV \cite{itseez2015opencv} framework as a base.
-The bullseye area is used as a frame of reference for recording and 
+The bullseye area is used as a fiducial for recording and 
 the necessary data is determined by applying a series of OpenCV functions.
 
 \begin{figure}[h]
@@ -140,11 +140,15 @@ Finally, a minimum enclosing circle is applied around the contour and used to pr
 	\text{Moments} = M_{ij} = \sum_{x} \sum_{y} x^i y^j I(x,y)
 \end{equation}
 
-A Hough Circle Transform solution \cite{} was considered for producing both of these data.
+A Hough Circle Transform solution \cite{Hough1964} was considered for producing both of these data.
 However, the results were extremely unstable when applied to the conditions used for this experiment and the video capture itself.
 Additionally, while this method may have been more accurate for determining the true center of the target, it would not work well for an ellipsoid reference.
-This problem is mentioned further in the conclusion of this paper.
+This problem is discussed further in the conclusion of this paper.
 
+The surface of standard competition targets causes the laser to reflect diffusely.
+The diffusion causes the marker to appear as a highly irregular ellipsoid,
+however, when the angle of incident is low the moment is still an effective measure of center for the marker.
+This was not a problem with the dark area of the bulls-eye as it was far less reflective.
 
 \section{Analysis}
 
@@ -162,6 +166,8 @@ This problem is mentioned further in the conclusion of this paper.
 \textlangle Visualizations should be intuitive \textrangle
 
 \section{Conclusion}
+
+The diffuse reflection mentioned in the method section did cause some problems, especially when the marker was crossing from the light areas of the outer target to the dark area of the bullseye which experienced a lot less diffusion.
 
 \subsection{Areas for Improvement}
 The method used to evaluate the bullseye reference frame does not compensate for the viewing angle. Instead of using a circular-bound it will need to use an ellipsoid and additional transformations will need to be applied to more accurately place the trace on the target.
