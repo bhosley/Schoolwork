@@ -1,5 +1,8 @@
 import cv2
+import time
 import numpy as np
+from pandas import DataFrame as DF
+from stopwatch import Stopwatch
 
 CAP = cv2.VideoCapture(0)
 FONT = cv2.FONT_HERSHEY_SIMPLEX
@@ -8,12 +11,15 @@ FIDUCIAL_THRESHOLD = 3000
 MARKER_THRESHOLD = 500
 MARKER_RANGE = np.array([[0, 0, 255],[255, 255, 255]])
 
+# Constants only for testing and dev purposes
+trace_number = 1
+
 #################
 #   Functions   #
 #################
 
 def find_origin(frame):
-    x,y,radius = 0,0,0
+    x, y, radius = 0, 0, 0
     for _ in range(100):     
         mask = cv2.inRange(frame, 
             np.array([0, 0, 0]),  # BGR Black
@@ -29,7 +35,8 @@ def find_origin(frame):
                 x += cx
                 y += cy
                 radius += r
-                       
+
+    # Tested 100 times, return average               
     center = (x/100, y/100)
     radius = radius/100
     return center, radius
@@ -38,9 +45,14 @@ def find_origin(frame):
 #   Program Init    #
 #####################
 
+# Instantiate outside of loop variables
+trace = []
+mx, my = 0, 0
+timer = Stopwatch()
+
+# Determine reference frame
 ret, frame = CAP.read()
 origin, radius = find_origin(frame)
-mx, my = 0,0
 
 #####################
 #   Program Loop    #
@@ -67,9 +79,19 @@ while True:
             M = cv2.moments(largest_contour)
             mx = int(M["m10"] / M["m00"])
             my = int(M["m01"] / M["m00"])
+            
+            # Normalize coordinates to fiducial radius
+            
+
+            trace.append([timer, mx, my])
+            
+            # Start the timer after the first recorded marker
+            if timer.elapsed == 0: timer.start()
     
-    # Export Data
-    
+    # Record no faster than 100 Hz;
+    # We do not want to output too much data,
+    # especially without enough time for relevant change.
+    time.sleep(0.01) 
 
     # Output Image
     cv2.putText(frame,str('Marker: {},{}'.format(mx-origin[0], origin[1]-my)),(10,30), FONT, 1,(255,255,255),2,cv2.LINE_AA)
@@ -83,5 +105,10 @@ while True:
 #   Program End    #
 ####################
 
+# Convert trace data to dataframe and export as csv
+export_data = DF(trace, columns = ['time','x','y'])
+export_data.to_csv("trace_{}.csv".format(trace_number),index=False)
+
+# Kill windows
 CAP.release()
 cv2.destroyAllWindows()
