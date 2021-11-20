@@ -1,12 +1,13 @@
-import cv2
 import time
+
+import cv2
 import numpy as np
 from pandas import DataFrame as DF
 from stopwatch import Stopwatch
 
 CAP = cv2.VideoCapture(0)
 FONT = cv2.FONT_HERSHEY_SIMPLEX
-KERNEL = np.ones((10,10), np.uint8)
+KERNEL = np.ones((10, 10), np.uint8)
 FIDUCIAL_THRESHOLD = 3000
 MARKER_THRESHOLD = 500
 MARKER_RANGE = np.array([[0, 0, 255],[255, 255, 255]])
@@ -31,7 +32,7 @@ def find_origin(frame):
             area = cv2.contourArea(largest_contour)
 
             if area > FIDUCIAL_THRESHOLD:
-                (cx,cy),r = cv2.minEnclosingCircle(largest_contour)
+                (cx, cy), r = cv2.minEnclosingCircle(largest_contour)
                 x += cx
                 y += cy
                 radius += r
@@ -74,29 +75,29 @@ while True:
         largest_contour = max(contours, key = cv2.contourArea)
         area = cv2.contourArea(largest_contour)
 
-        # If large enough, return coordinates of contour's moment 
+        # If large enough, find coordinates of contour's moment 
         if area > MARKER_THRESHOLD:
             M = cv2.moments(largest_contour)
             mx = int(M["m10"] / M["m00"])
             my = int(M["m01"] / M["m00"])
             
             # Normalize coordinates to fiducial radius
-            
+            mx, my = mx/radius, my/radius
 
             trace.append([timer, mx, my])
             
             # Start the timer after the first recorded marker
-            if timer.elapsed == 0: timer.start()
+            if timer.elapsed == 0: 
+                timer.start()
     
-    # Record no faster than 100 Hz;
-    # We do not want to output too much data,
-    # especially without enough time for relevant change.
+    # Sleep to prevent recording faster than 100 Hz;
+    # We would like to avoid recording too many too small changes.
     time.sleep(0.01) 
 
     # Output Image
-    cv2.putText(frame,str('Marker: {},{}'.format(mx-origin[0], origin[1]-my)),(10,30), FONT, 1,(255,255,255),2,cv2.LINE_AA)
-    cv2.circle(frame, (int(origin[0]),int(origin[1])), 2, (0, 255, 0), 2)
-    cv2.circle(frame, (int(origin[0]),int(origin[1])), int(radius), (255, 0, 0), 2)
+    cv2.putText(frame,str('Marker: {},{}'.format(mx-origin[0], origin[1]-my)), (10,30), FONT, 1, (255,255,255), 2, cv2.LINE_AA)
+    cv2.circle(frame, (int(origin[0]), int(origin[1])), 2, (0, 255, 0), 2)
+    cv2.circle(frame, (int(origin[0]), int(origin[1])), int(radius), (255, 0, 0), 2)
     cv2.circle(frame, (int(mx),int(my)), 1, (0, 0, 255), 2)
     cv2.imshow('Detected Circles', frame)
     #cv2.imshow('Mask', marker_mask)
@@ -106,9 +107,9 @@ while True:
 ####################
 
 # Convert trace data to dataframe and export as csv
-export_data = DF(trace, columns = ['time','x','y'])
-export_data.to_csv("trace_{}.csv".format(trace_number),index=False)
+export_data = DF(trace, columns = ['time', 'x', 'y'])
+export_data.to_csv("./trace_{}.csv".format(trace_number), index=False)
 
-# Kill windows
+# Kill view windows
 CAP.release()
 cv2.destroyAllWindows()
