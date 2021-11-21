@@ -167,6 +167,8 @@ The diffusion caused the marker to appear as a highly irregular ellipsoid,
 however, when the angle of incident is low the moment is still an effective measure of center for the marker.
 This was not a problem with the dark area of the bulls-eye as it was far less reflective.
 
+To overcome the irregularity, and improve the stability of the readings, the script will attempt 5 readings, and average the results.
+This has the added benefit of reducing the record speed and preventing the script from needlessly recording data without meaningful differences from the previous point.
 
 
 \begin{figure}[h]
@@ -193,9 +195,20 @@ This was not a problem with the dark area of the bulls-eye as it was far less re
 
 \section{Conclusion}
 
+As a proof-of-concept this project has successfully shown that it is possible to record an athlete's point of aim with cheap and widely available materials.
+However, the implementation produced for this project is far from robust and still requires strong caveats on its usage.
+The shortcomings and difficulties will be listed in this section, 
+and ideas for improvement and future experiments will be discuss in the next section.
+
 The diffuse reflection mentioned in the method section did cause some problems, especially when the marker was crossing from the light areas of the outer target to the dark area of the bullseye which experienced a lot less diffusion.
+This distortion had a tendency to bias the readings of the marker toward the outer edge of the bullseye area.
+Additionally, if the user did not maintain a shallow angle of incidence with the laser the diffusion would bias the readings in the opposite direction from the user.
+
+Because this computer vision task utilizes light reflecting off a flat surface the algorithm cannot use edges and must instead rely on color or changes in image.
+The reliance on color makes this implementation sensitive to changes in lighting condition and the webcam's color gamut.
 
 \subsection{Areas for Improvement}
+
 The method used to evaluate the bullseye reference frame does not compensate for the viewing angle. Instead of using a circular-bound it will need to use an ellipsoid and additional transformations will need to be applied to more accurately place the trace on the target.
 
 \subsection{Future Work}
