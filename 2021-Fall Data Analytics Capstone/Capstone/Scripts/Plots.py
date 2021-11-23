@@ -25,11 +25,14 @@ ax.axhline(y=0, color='w')
 ax.axvline(x=0, color='w')
 ax.axis('off')
 
-plt.show()
+#plt.show()
 
 ##############
 #  Re-Trace  #
 ##############
 
-# Target Plot
-#
+fig, ax = plt.subplots()
+
+ax.plot(df4['x'], df4['y'])
+
+plt.show()
