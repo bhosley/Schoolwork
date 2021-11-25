@@ -11,6 +11,7 @@ KERNEL = np.ones((10, 10), np.uint8)
 FIDUCIAL_THRESHOLD = 3000
 MARKER_THRESHOLD = 1000
 MARKER_RANGE = np.array([[0, 0, 255],[255, 255, 255]])
+MARKER_RADIUS = 29.75 #mm; for NRA B40, ISSF standard 10m Pistol
 
 # Constants only for testing and dev purposes
 trace_number = 5
@@ -40,6 +41,7 @@ def find_origin(frame):
     # Tested 100 times, return average               
     center = (_x/100, _y/100)
     radius = radius/100
+    radius = radius/MARKER_RADIUS
     return center, radius
 
 #####################
