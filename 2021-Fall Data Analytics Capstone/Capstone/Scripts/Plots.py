@@ -1,10 +1,13 @@
 import numpy as np
 from numpy.core.fromnumeric import size
 import pandas as pd
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+from matplotlib.collections import LineCollection
+from matplotlib.colors import ListedColormap, BoundaryNorm
 from scipy.ndimage.filters import gaussian_filter
+
+SHOT_TIME = 1
 
 df4 = pd.read_csv("trace_4.csv")
 
@@ -71,6 +74,9 @@ df4_polar = pd.DataFrame(columns = ['time', 'x', 'y'])
 df4_polar['rho'], df4_polar['phi'] = cart2pol(df4['x'], df4['y'])
 df4_polar['time'] = df4['time']
 
+#cmap = ListedColormap([, 'g', 'b','r'])
+#norm = BoundaryNorm([-1, -0.5, 0.5, 1], cmap.N)
+
 fig, ax = plt.subplots()
 ax = fig.add_subplot(111, polar=True)
 target(ax)
@@ -83,9 +89,9 @@ ax.plot(df4_polar['phi'], df4_polar['rho'])
 ##############
 
 fig, ax = plt.subplots()
-ax = fig.add_subplot()
 ax.plot(df4_polar['time'], df4_polar['rho'])
-ax.hfill(0,29.75)
+for i in [2.5, 5.75, 29.75]:
+    ax.axhline(i, color='gray')
 
 plt.show()
 '''
