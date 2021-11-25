@@ -1,4 +1,5 @@
 import numpy as np
+from numpy.core.fromnumeric import size
 import pandas as pd
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -34,12 +35,13 @@ def target(ax):
     ax.set_ylim([0, 77.75])
 
     rings = [2.5, 5.75]
-    for i in range(0,8):
-        for d in [0,0.5*np.pi,np.pi,1.5*np.pi]:
-            y = ((8-i)*8) + 5.75
-            ax.annotate(str(i+1), xy=(d, y)) #y+1 for spacing
-            rings.append(y)
-        
+    for i in range(0,8):                            # Ring values
+        y = ((8-i)*8) + 5.75
+        rings.append(y)
+        for d in [0,0.5*np.pi,np.pi,1.5*np.pi,]:    # Value directions           
+            ax.annotate(str(i+1), xy=(d, y+4),      # y+4 for centering
+                ha='center', va='center', size='x-small') 
+            
     ax.axes.get_yaxis().set_ticks(rings)
     ax.fill_between(
         np.linspace(0, 2*np.pi, 100),    # Theta fill range
@@ -74,4 +76,17 @@ ax = fig.add_subplot(111, polar=True)
 target(ax)
 ax.plot(df4_polar['phi'], df4_polar['rho'])
 
+#plt.show()
+
+##############
+#  Re-Trace  #
+##############
+
+fig, ax = plt.subplots()
+ax = fig.add_subplot()
+ax.plot(df4_polar['time'], df4_polar['rho'])
+ax.hfill(0,29.75)
+
 plt.show()
+'''
+'''
