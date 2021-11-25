@@ -1,3 +1,4 @@
+from matplotlib import colors
 import numpy as np
 from numpy.core.fromnumeric import size
 import pandas as pd
@@ -7,7 +8,7 @@ from matplotlib.collections import LineCollection
 from matplotlib.colors import ListedColormap, BoundaryNorm
 from scipy.ndimage.filters import gaussian_filter
 
-SHOT_TIME = 1
+IMPACT_TIME = 22.7708
 
 df4 = pd.read_csv("trace_4.csv")
 
@@ -74,13 +75,19 @@ df4_polar = pd.DataFrame(columns = ['time', 'x', 'y'])
 df4_polar['rho'], df4_polar['phi'] = cart2pol(df4['x'], df4['y'])
 df4_polar['time'] = df4['time']
 
-#cmap = ListedColormap([, 'g', 'b','r'])
-#norm = BoundaryNorm([-1, -0.5, 0.5, 1], cmap.N)
+seg_color = ['g','y','b','r']
+segments = [[],[],[],[]]
+segments[0] = df4_polar.query('time <= @IMPACT_TIME-1')
+segments[1] = df4_polar.query('time <= @IMPACT_TIME-0.4' and 'time > @IMPACT_TIME-1')
+segments[2] = df4_polar.query('time <= @IMPACT_TIME' and 'time > @IMPACT_TIME-0.4')
+segments[3] = df4_polar.query('time > @IMPACT_TIME')
 
 fig, ax = plt.subplots()
 ax = fig.add_subplot(111, polar=True)
 target(ax)
-ax.plot(df4_polar['phi'], df4_polar['rho'])
+
+for i in range(0,4):
+    ax.plot(segments[i]['phi'], segments[i]['rho'], color=seg_color[i])
 
 #plt.show()
 
@@ -89,7 +96,8 @@ ax.plot(df4_polar['phi'], df4_polar['rho'])
 ##############
 
 fig, ax = plt.subplots()
-ax.plot(df4_polar['time'], df4_polar['rho'])
+for i in range(0,4):
+    ax.plot(segments[i]['time'], segments[i]['rho'], color=seg_color[i])
 for i in [2.5, 5.75, 29.75]:
     ax.axhline(i, color='gray')
 
