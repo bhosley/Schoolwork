@@ -57,13 +57,13 @@ def target(ax):
 #  Heatmap  #
 #############
 
-fig, ax = plt.subplots()
+plt.figure(0)
 
 img, extent = heatplot(df4['x'], df4['y'], 32)
-ax.imshow(img, extent= extent, origin= 'lower', cmap= cm.jet)
-ax.axhline(y=0, color='w')
-ax.axvline(x=0, color='w')
-ax.axis('off')
+plt.imshow(img, extent= extent, origin= 'lower', cmap= cm.jet)
+plt.axhline(y=0, color='w')
+plt.axvline(x=0, color='w')
+plt.axis('off')
 
 #plt.show()
 
@@ -78,12 +78,11 @@ df4_polar['time'] = df4['time']
 seg_color = ['g','y','b','r']
 segments = [[],[],[],[]]
 segments[0] = df4_polar.query('time <= @IMPACT_TIME-1')
-segments[1] = df4_polar.query('time <= @IMPACT_TIME-0.4' and 'time > @IMPACT_TIME-1')
-segments[2] = df4_polar.query('time <= @IMPACT_TIME' and 'time > @IMPACT_TIME-0.4')
-segments[3] = df4_polar.query('time > @IMPACT_TIME')
+segments[1] = df4_polar.query('time <= @IMPACT_TIME-0.4' and 'time >= @IMPACT_TIME-1')
+segments[2] = df4_polar.query('time <= @IMPACT_TIME' and 'time >= @IMPACT_TIME-0.4')
+segments[3] = df4_polar.query('time >= @IMPACT_TIME')
 
-fig, ax = plt.subplots()
-ax = fig.add_subplot(111, polar=True)
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
 target(ax)
 
 for i in range(0,4):
@@ -95,11 +94,11 @@ for i in range(0,4):
 #  Re-Trace  #
 ##############
 
-fig, ax = plt.subplots()
+plt.figure(2)
 for i in range(0,4):
-    ax.plot(segments[i]['time'], segments[i]['rho'], color=seg_color[i])
+    plt.plot(segments[i]['time'], segments[i]['rho'], color=seg_color[i])
 for i in [2.5, 5.75, 29.75]:
-    ax.axhline(i, color='gray')
+    plt.axhline(i, color='gray')
 
 plt.show()
 '''
