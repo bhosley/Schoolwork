@@ -1,11 +1,7 @@
-from matplotlib import colors
 import numpy as np
-from numpy.core.fromnumeric import size
 import pandas as pd
-import matplotlib.pyplot as plt
 import matplotlib.cm as cm
-from matplotlib.collections import LineCollection
-from matplotlib.colors import ListedColormap, BoundaryNorm
+import matplotlib.pyplot as plt
 from scipy.ndimage.filters import gaussian_filter
 
 IMPACT_TIME = 22.7708
@@ -32,8 +28,17 @@ def heatplot(x, y, s, bins=1000):
     extent = [xedges[0], xedges[-1], yedges[0], yedges[-1]]
     return heatmap.T, extent
 
+def getSegments(df):
+    segs = [[],[],[],[]]
+    segs[0] = df.query('time <= @IMPACT_TIME-1')
+    segs[1] = df.query('time <= @IMPACT_TIME-0.4' and 'time >= @IMPACT_TIME-1')
+    segs[2] = df.query('time <= @IMPACT_TIME' and 'time >= @IMPACT_TIME-0.4')
+    segs[3] = df.query('time >= @IMPACT_TIME')
+    return segs
+
 def target(ax):
-    ax.grid(alpha=0.2)   
+    ax.grid(alpha=0.4)
+    ax.patch.set_facecolor('ivory')   
     ax.axes.get_xaxis().set_ticks([])
     ax.axes.get_yaxis().set_ticklabels([])
     ax.set_ylim([0, 77.75])
@@ -50,8 +55,15 @@ def target(ax):
     ax.fill_between(
         np.linspace(0, 2*np.pi, 100),    # Theta fill range
         0, 29.75,                        # Radius fill range
-        color='grey', alpha=0.25, linewidth=0
+        color='whitesmoke', linewidth=0
     )
+
+def polarize(df):
+    polar = pd.DataFrame(columns = ['time', 'rho', 'phi'])
+    polar['rho'], polar['phi'] = cart2pol(df['x'], df['y'])
+    if not df. 
+        polar['time'] = df['time']
+    return polar
 
 #############
 #  Heatmap  #
@@ -71,16 +83,10 @@ plt.axis('off')
 #  Re-Trace  #
 ##############
 
-df4_polar = pd.DataFrame(columns = ['time', 'x', 'y'])
-df4_polar['rho'], df4_polar['phi'] = cart2pol(df4['x'], df4['y'])
-df4_polar['time'] = df4['time']
-
+# plt.figure(1)
+df4_polar = polarize(df4)
+segments = getSegments(df4_polar)
 seg_color = ['g','y','b','r']
-segments = [[],[],[],[]]
-segments[0] = df4_polar.query('time <= @IMPACT_TIME-1')
-segments[1] = df4_polar.query('time <= @IMPACT_TIME-0.4' and 'time >= @IMPACT_TIME-1')
-segments[2] = df4_polar.query('time <= @IMPACT_TIME' and 'time >= @IMPACT_TIME-0.4')
-segments[3] = df4_polar.query('time >= @IMPACT_TIME')
 
 fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
 target(ax)
@@ -90,16 +96,29 @@ for i in range(0,4):
 
 #plt.show()
 
-##############
-#  Re-Trace  #
-##############
+#################
+#  Time-Scalar  #
+#################
 
 plt.figure(2)
+plt.axhspan(0,29.75, color='lightgray')
+for i in [2.5, 5.75, 29.75, 77.75]:
+    plt.axhline(i, color='darkgray')
 for i in range(0,4):
     plt.plot(segments[i]['time'], segments[i]['rho'], color=seg_color[i])
-for i in [2.5, 5.75, 29.75]:
-    plt.axhline(i, color='gray')
+
+#plt.show()
+
+#################
+#  Plot Points  #
+#################
+
+#plt.figure(3)
+fig, ax = plt.subplots(subplot_kw={'projection': 'polar'})
+target(ax)
+
+df = pd.read_csv("TargetScan Data.csv")
+df_polar = polarize(df)
+ax.scatter(x=df_polar['x'],y=df_polar['y'])
 
 plt.show()
-'''
-'''
