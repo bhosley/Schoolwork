@@ -106,6 +106,8 @@ for i in [2.5, 5.75, 29.75, 77.75]:
     plt.axhline(i, color='darkgray')
 for i in range(0,4):
     plt.plot(segments[i]['time'], segments[i]['rho'], color=seg_color[i])
+plt.xlabel('Time')
+plt.ylabel('Distance From Center')
 
 plt.savefig('../images/distance_from_center.png')
 
@@ -134,5 +136,5 @@ plt.axhline(y=0, color='w')
 plt.axvline(x=0, color='w')
 plt.axis('off')
 
-plt.savefig('../images/point_heats.png')
+plt.savefig('../images/points_heat.png')
 plt.show()
