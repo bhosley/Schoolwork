@@ -61,7 +61,7 @@ def target(ax):
 def polarize(df):
     polar = pd.DataFrame(columns = ['time', 'rho', 'phi'])
     polar['rho'], polar['phi'] = cart2pol(df['x'], df['y'])
-    if not df. 
+    if 'time' in df: 
         polar['time'] = df['time']
     return polar
 
@@ -119,6 +119,19 @@ target(ax)
 
 df = pd.read_csv("TargetScan Data.csv")
 df_polar = polarize(df)
-ax.scatter(x=df_polar['x'],y=df_polar['y'])
+ax.scatter(x=df_polar['phi'],y=df_polar['rho'])
+
+#plt.show()
+
+####################
+#  Heatmap Points  #
+####################
+
+plt.figure(4)
+img, extent = heatplot(df['x'], df['y'], 16)
+plt.imshow(img, extent= extent, origin= 'lower', cmap= cm.jet)
+plt.axhline(y=0, color='w')
+plt.axvline(x=0, color='w')
+plt.axis('off')
 
 plt.show()
