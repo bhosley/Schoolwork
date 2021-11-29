@@ -77,7 +77,7 @@ plt.axhline(y=0, color='w')
 plt.axvline(x=0, color='w')
 plt.axis('off')
 
-#plt.show()
+plt.savefig('../images/heatmap.png')
 
 ##############
 #  Re-Trace  #
@@ -94,7 +94,7 @@ target(ax)
 for i in range(0,4):
     ax.plot(segments[i]['phi'], segments[i]['rho'], color=seg_color[i])
 
-#plt.show()
+plt.savefig('../images/trace.png')
 
 #################
 #  Time-Scalar  #
@@ -107,7 +107,7 @@ for i in [2.5, 5.75, 29.75, 77.75]:
 for i in range(0,4):
     plt.plot(segments[i]['time'], segments[i]['rho'], color=seg_color[i])
 
-#plt.show()
+plt.savefig('../images/distance_from_center.png')
 
 #################
 #  Plot Points  #
@@ -121,7 +121,7 @@ df = pd.read_csv("TargetScan Data.csv")
 df_polar = polarize(df)
 ax.scatter(x=df_polar['phi'],y=df_polar['rho'])
 
-#plt.show()
+plt.savefig('../images/points.png')
 
 ####################
 #  Heatmap Points  #
@@ -134,4 +134,5 @@ plt.axhline(y=0, color='w')
 plt.axvline(x=0, color='w')
 plt.axis('off')
 
+plt.savefig('../images/point_heats.png')
 plt.show()
