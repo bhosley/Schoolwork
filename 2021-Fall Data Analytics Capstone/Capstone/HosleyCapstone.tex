@@ -180,9 +180,37 @@ This has the added benefit of reducing the record speed and preventing the scrip
 
 \section{Analysis}
 
-\noindent
-\textlangle Output of replay graph \textrangle \\
-\textlangle Heatmap \textrangle \\
+The output of the tracking algorithm is easily digestible with common data visualization techniques.
+Below are just a few examples of what may be done with the data to replicate similar visualizations common in other for the commercial training systems.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{trace}
+	\caption{Trace replay.}
+	\label{fig:trace}
+\end{figure}
+
+In figure \ref{fig:trace} the replace of a shot may be seen.
+It is presented in a manner similar to figure \ref{fig:SCATT_Example}, 
+though with inferior technique.
+The movement is wider and spends less time at the center of the target compared to the nearly perfect shot of  \ref{fig:SCATT_Example}
+
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{heatmap}
+	\caption{Trace heatmap.}
+	\label{fig:heatmap}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\linewidth]{distance_from_center}
+	\caption{Scalar distance and time}
+	\label{fig:dfc}
+\end{figure}
+
 \textlangle Time-series scalar distance \textrangle \\
 \textlangle Score report \textrangle \\
 \textlangle Ref Zeljko for analysis to shot cycle correlation \textrangle
@@ -227,7 +255,7 @@ With these parts we may be able to replicate the method used in the commercial o
 %			Screen Behind for target variation, immediate shot recording and track playback, even with dry-fire training
 %		Another Commercial option: https://www.traceshooting.com/?lang=en
 %	Helpful for script generation: https://techvidvan.com/tutorials/create-air-canvas-using-opencv-python/
-\clearpage
+%\clearpage
 \bibliographystyle{IEEEtran}
 \bibliography{\jobname}
 \end{document}
