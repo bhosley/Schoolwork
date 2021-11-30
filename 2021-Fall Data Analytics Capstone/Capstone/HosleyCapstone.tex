@@ -68,6 +68,20 @@ More recently \cite{Stenhager2021} was able to achieve a fairly robust model tha
 
 \subsection{Aim tracing}
 
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\linewidth]{perfect_shot}
+	\caption{SCATT \cite{scatt} feedback.}
+	\label{fig:SCATT_Example}
+\end{figure}
+
+\begin{figure}[]
+	\centering
+	\includegraphics[width=0.6\linewidth]{mantisx_output}
+	\caption{MantisX \cite{mantisx} output.}
+	\label{fig:MantisX_Example}
+\end{figure}
+
 Shot scoring is only one aspect of training and dry-fire training is often 
 considered to be the most important for developing a effective results.
 \cite{Potter2017}
@@ -99,19 +113,6 @@ For ease of interpretation each of these stages are delineated by color; the sch
 \ref{fig:SCATT_Example} and
 \ref{fig:MantisX_Example}.
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{perfect_shot}
-	\caption{SCATT \cite{scatt} feedback.}
-	\label{fig:SCATT_Example}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=0.6\linewidth]{mantisx_output}
-	\caption{MantisX \cite{mantisx} output.}
-	\label{fig:MantisX_Example}
-\end{figure}
 
 \section{Dataset}
 
@@ -134,7 +135,7 @@ OpenCV \cite{itseez2015opencv} framework as a base.
 The bullseye area is used as a fiducial for recording and 
 the necessary data is determined by applying a series of OpenCV functions.
 
-\begin{figure}[h]
+\begin{figure}[]
 	\centering
 	\includegraphics[width=0.75\linewidth]{example-image}
 	\caption{Recording Algorithm.}
@@ -162,6 +163,13 @@ The moment of the bullseye will be referenced as the origin for plotting the oth
 The radius will be used to normalize the reported coordinates of the marker so they are recorded in absolute terms.
 This will allow the results to be consistent among various recording distances and various sizes of camera views.
 
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\linewidth]{screen_cap3}
+	\caption{Capture of the OpenCV frame.}
+	\label{fig:screen_cap}
+\end{figure}
+
 The surface of standard competition targets causes the laser to reflect diffusely.
 The diffusion caused the marker to appear as a highly irregular ellipsoid,
 however, when the angle of incident is low the moment is still an effective measure of center for the marker.
@@ -171,7 +179,7 @@ To overcome the irregularity, and improve the stability of the readings, the scr
 This has the added benefit of reducing the record speed and preventing the script from needlessly recording data without meaningful differences from the previous point.
 
 
-\begin{figure}[h]
+\begin{figure}[]
 	\centering
 	\includegraphics[width=0.75\linewidth]{example-image}
 	\caption{Database.}
@@ -183,7 +191,7 @@ This has the added benefit of reducing the record speed and preventing the scrip
 The output of the tracking algorithm is easily digestible with common data visualization techniques.
 Below are just a few examples of what may be done with the data to replicate similar visualizations common in other for the commercial training systems.
 
-\begin{figure}[h]
+\begin{figure}[]
 	\centering
 	\includegraphics[width=\linewidth]{trace}
 	\caption{Trace replay.}
@@ -194,22 +202,27 @@ In figure \ref{fig:trace} the replace of a shot may be seen.
 It is presented in a manner similar to figure \ref{fig:SCATT_Example}, 
 though with inferior technique.
 The movement is wider and spends less time at the center of the target compared to the nearly perfect shot of  \ref{fig:SCATT_Example}
+One way this can be shown is to visualize the scalar distance over time as in figure \ref{fig:dfc}.
+
+The scalar distance over time can help the user evaluate several aspects of their shot cycle without the distractions of actual placement on the recreated target.
 
 
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\linewidth]{distance_from_center}
+	\caption{Scalar distance and time}
+	\label{fig:dfc}
+\end{figure}
 
-\begin{figure}[h]
+
+\begin{figure}[]
 	\centering
 	\includegraphics[width=\linewidth]{heatmap}
 	\caption{Trace heatmap.}
 	\label{fig:heatmap}
 \end{figure}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\linewidth]{distance_from_center}
-	\caption{Scalar distance and time}
-	\label{fig:dfc}
-\end{figure}
+
 
 \textlangle Time-series scalar distance \textrangle \\
 \textlangle Score report \textrangle \\
@@ -238,6 +251,19 @@ The reliance on color makes this implementation sensitive to changes in lighting
 \subsection{Areas for Improvement}
 
 The method used to evaluate the bullseye reference frame does not compensate for the viewing angle. Instead of using a circular-bound it will need to use an ellipsoid and additional transformations will need to be applied to more accurately place the trace on the target.
+
+Unlike the software that inspired this project there is no user friendly way to calibrate the laser emitter to the proper placement relative to the sights.
+The most common method used is to require the user to place at least one live shot onto the target, though multiple are often recommended.
+The program will then identify the actual placement of the shot and correlate that position to the frame provided by the camera.
+This can be seen in figure \ref{fig:scatt_calibration}.
+
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\linewidth]{scatt_calibration}
+	\caption{Scatt \cite{scatt} calibration menu.}
+	\label{fig:scatt_calibration}
+\end{figure}
+
 
 \subsection{Future Work}
 
