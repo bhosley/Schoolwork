@@ -82,14 +82,14 @@ More recently \cite{Stenhager2021} was able to achieve a fairly robust model tha
 	\label{fig:MantisX_Example}
 \end{figure}
 
-Shot scoring is only one aspect of training and dry-fire training is often 
-considered to be the most important for developing a effective results.
-\cite{Potter2017}
-This importance is reflected in shot trainers that sometimes cost as much as the top of the line equipment itself.
-\cite{scatt, noptel}
+Shot scoring is only one aspect of training, and dry-fire training is often 
+considered to be the most important for developing a training regimen with effective results
+\cite{Potter2017}.
+This importance is reflected in shot trainers that sometimes cost as much as the top of the line equipment itself
+\cite{scatt, noptel}.
 
 Both the Noptel and SCATT systems utilize computer vision for their tracking.
-They utilize the relative positioning of the bullseye within the camera's view to determine the position of the aim.
+They utilize the relative positioning of the bullseye within the camera's field of view to determine the position of the aim.
 Actual point of aim is calibrated by having the weapon fire and recording where in the frame the resulting hole is observed.
 The cameras use an uncommon lens configuration for the optical zoom which produce effective results for their intended purpose, but are not likely useful in other applications.
 Conversely, cameras of this type are not easily sourced from other applications.
@@ -147,7 +147,7 @@ Then a mask is applied to filter for only the near-black area.
 A contour is applied to the outer edge of the mask.
 The moments of the outer contour are calculated.
 The first order moment of each dimension is divided by the zeroth moment to determine the center coordinate for the corresponding dimension.
-($M_{10}$ and $M_{01}$ each divided by $M_{10}$ using eq. \eqref{Moments})
+$M_{10}$ and $M_{01}$ each divided by $M_{10}$ using eq. \eqref{Moments}.
 Finally, a minimum enclosing circle is applied around the contour and used to provide an approximate radius.
 
 \begin{equation}\label{Moments}
@@ -162,6 +162,19 @@ This problem is discussed further in the conclusion of this paper.
 The moment of the bullseye will be referenced as the origin for plotting the other points. 
 The radius will be used to normalize the reported coordinates of the marker so they are recorded in absolute terms.
 This will allow the results to be consistent among various recording distances and various sizes of camera views.
+However, it does require that the radius of the bullseye can be input into the script.
+For common, standardized targets this information is easily accessible
+\cite{issfRules} and may added to a more refined version of this program.
+
+The surface of standard competition targets causes the laser to reflect diffusely.
+The diffusion caused the marker to appear as a highly irregular ellipsoid,
+however, when the angle of incident is low the moment is still an effective measure of center for the marker.
+This was not a problem with the dark area of the bulls-eye as it was far less reflective.
+
+To overcome the irregularity, and improve the stability of the readings, the script will attempt 3 readings, and average the results.
+This has the added benefit of reducing the record speed and preventing the script from needlessly recording data without meaningful differences from the previous point.
+
+
 
 \begin{figure}[]
 	\centering
@@ -170,14 +183,10 @@ This will allow the results to be consistent among various recording distances a
 	\label{fig:screen_cap}
 \end{figure}
 
-The surface of standard competition targets causes the laser to reflect diffusely.
-The diffusion caused the marker to appear as a highly irregular ellipsoid,
-however, when the angle of incident is low the moment is still an effective measure of center for the marker.
-This was not a problem with the dark area of the bulls-eye as it was far less reflective.
-
-To overcome the irregularity, and improve the stability of the readings, the script will attempt 5 readings, and average the results.
-This has the added benefit of reducing the record speed and preventing the script from needlessly recording data without meaningful differences from the previous point.
-
+The result of these functions can be seen in figure \ref{fig:screen_cap}.
+In this example a blue circle is drawn around the fiducial,
+a green dot placed at it center represents the predicted origin, and
+a red dot is placed at the center of the detected marker.
 
 \begin{figure}[]
 	\centering
@@ -186,10 +195,11 @@ This has the added benefit of reducing the record speed and preventing the scrip
 	\label{fig:database}
 \end{figure}
 
+
 \section{Analysis}
 
 The output of the tracking algorithm is easily digestible with common data visualization techniques.
-Below are just a few examples of what may be done with the data to replicate similar visualizations common in other for the commercial training systems.
+Presented are just a few examples of what may be done with the data to replicate similar visualizations common in other for the commercial training systems.
 
 \begin{figure}[]
 	\centering
