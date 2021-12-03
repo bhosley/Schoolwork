@@ -102,12 +102,13 @@ plt.savefig('../images/trace.png')
 
 plt.figure(2)
 plt.axhspan(0,29.75, color='lightgray')
-for i in [2.5, 5.75, 29.75, 77.75]:
+for i in [2.5, 5.75, 29.75]:
     plt.axhline(i, color='darkgray')
 for i in range(0,4):
     plt.plot(segments[i]['time'], segments[i]['rho'], color=seg_color[i])
 plt.xlabel('Time')
 plt.ylabel('Distance From Center')
+plt.ylim(0,77.75)
 
 plt.savefig('../images/distance_from_center.png')
 
