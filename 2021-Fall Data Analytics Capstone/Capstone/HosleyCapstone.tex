@@ -215,7 +215,24 @@ For the purposes of this implementation the actual database is eschewed in favor
 \section{Analysis}
 
 The output of the tracking algorithm is easily digestible with common data visualization techniques.
-Presented are just a few examples of what may be done with the data to replicate similar visualizations common in other for the commercial training systems.
+Several proposals for analysis and the visualization of this information are presented in this section and will be shown and training value discussed in the next section.
+
+The scalar distance over time can help the user evaluate several aspects of their shot cycle without the distractions of actual placement on the recreated target,
+but is not a visualization provided by other implementations.
+By plotting directly against the time variable certain parts of the shot cycle
+\cite{Zeljko2020}
+can be more closely examined.
+This is accomplished by converting the Cartesian coordinates to Polar and plotting the $\rho$ variable against time.
+In this format specific times of the cycle may be examined.
+Of particular note is the entry onto target and directness of the approach to center.
+This slope should take a similar shape to the slope of the point of aim leaving the target, any deviations will suggest an uneven or erratic entry movement.
+The movement at the time of triggering and the first part of the follow-through may also be more easily examined in this format.
+
+While the scalar mode may assist the user in understanding events in the shot cycle that occur at specific times, to improve positional feedback we provide a heatmap.
+The heatmap is produced using a Gaussian filter which will help normalize the distribution of positions.
+This visual is intended to show the user where the point of aim spends the most time and may highlight directional bias that might not otherwise be obvious with the other trace playback methods.
+
+\section{Results}
 
 \begin{figure}[]
 	\centering
@@ -224,11 +241,11 @@ Presented are just a few examples of what may be done with the data to replicate
 	\label{fig:trace}
 \end{figure}
 
-In figure \ref{fig:trace} the replace of a shot may be seen.
+In figure \ref{fig:trace} the replay of a shot may be seen.
 It is presented in a manner similar to figure \ref{fig:SCATT_Example}, 
 though with inferior technique.
 The movement is wider and spends less time at the center of the target compared to the nearly perfect shot of  \ref{fig:SCATT_Example}
-One way this can be shown is to visualize the scalar distance over time as in figure \ref{fig:dfc}.
+One way this can be shown is the scalar over time in figure \ref{fig:dfc}.
 
 \begin{figure}[]
 	\centering
@@ -237,15 +254,8 @@ One way this can be shown is to visualize the scalar distance over time as in fi
 	\label{fig:dfc}
 \end{figure}
 
-The scalar distance over time can help the user evaluate several aspects of their shot cycle without the distractions of actual placement on the recreated target,
-but is not a visualization provided by other implementations.
-By plotting directly against the time variable certain parts of the shot cycle
-\cite{Zeljko2020}
-can be more closely examined.
-Of particular note is the entry onto target and directness of the approach to center.
-This slope should take a similar shape to the slope of the point of aim leaving the target, any deviations will suggest an uneven or erratic entry movement.
-The movement at the time of triggering and the first part of the follow-through may also be more easily examined in this format.
-
+Next we examine the heatmap visual presented in figure \ref{fig:heatmap}.
+This example highlights a bias toward the lower left quadrant that is not obvious when compared to figure \ref{fig:trace}.
 
 
 \begin{figure}[]
@@ -257,14 +267,11 @@ The movement at the time of triggering and the first part of the follow-through 
 
 
 
-\textlangle Score report \textrangle \\
-\textlangle Ref Zeljko for analysis to shot cycle correlation \textrangle
 
-\section{Results}
 
-\noindent
-\textlangle Include example of common mistakes \textrangle \\
-\textlangle Visualizations should be intuitive \textrangle
+
+
+
 
 \section{Conclusion}
 
