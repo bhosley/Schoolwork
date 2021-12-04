@@ -10,7 +10,7 @@
 	hidelinks
 	}
 
-\title{DAT Midterm Project: Working Title}
+\title{DAT Capstone Project: An Open Source Method for Optical Point of Aim Tracking and Visual Feedback}
 \author{Brandon Hosley}
 \date{\today}
 
@@ -231,6 +231,14 @@ The movement at the time of triggering and the first part of the follow-through 
 While the scalar mode may assist the user in understanding events in the shot cycle that occur at specific times, to improve positional feedback we provide a heatmap.
 The heatmap is produced using a Gaussian filter which will help normalize the distribution of positions.
 This visual is intended to show the user where the point of aim spends the most time and may highlight directional bias that might not otherwise be obvious with the other trace playback methods.
+The heatmap is produced by using SciPy's built-in Gaussian filter 
+\cite{Nixon2019}(equation )\ref{gaussian_filter}) to smooth the results. 
+Then those results are plotted with a two-dimensional histogram.
+
+\begin{equation}\label{gaussian_filter}
+	G(x,y) = \frac{1}{2 \pi \sigma^2} e^{ -\frac{x^2+y^2}{2\sigma^2} }
+\end{equation}
+
 
 \section{Results}
 
@@ -254,8 +262,7 @@ One way this can be shown is the scalar over time in figure \ref{fig:dfc}.
 	\label{fig:dfc}
 \end{figure}
 
-Next we examine the heatmap visual presented in figure \ref{fig:heatmap}.
-This example highlights a bias toward the lower left quadrant that is not obvious when compared to figure \ref{fig:trace}.
+Figure \ref{fig:dfc} shows an example of the visualization of scalar distance over time. 
 
 
 \begin{figure}[]
@@ -265,9 +272,10 @@ This example highlights a bias toward the lower left quadrant that is not obviou
 	\label{fig:heatmap}
 \end{figure}
 
-
-
-
+Next we examine the heatmap visual presented in figure \ref{fig:heatmap}.
+This example highlights a bias toward the lower left quadrant that is not obvious when compared to figure \ref{fig:trace}.
+While the center of this may suggest errors in the sights, the shape of the high frequency areas suggests an error on the athlete's side.
+We suspect that the shape in this example is consistent with poor posture of the upper thoracic spine and insufficient engagement of the trapezius and levator muscles.
 
 
 
@@ -313,7 +321,8 @@ however, this will potentially need to compensate for wind disturbance.
 Another line of effort will be to source commonly available parts from other applications, specifically, continued use of a webcam and the addition of a small telescopic lens, the type marketed for increasing the focal distance of a cell phone camera.
 With these parts we may be able to replicate the method used in the commercial offerings listed earlier.
 
-
+It is possible that with enough trace data that is associated with diagnosed errors in the athlete's technique we may be able to produce models that will be able to recognize these errors from new trace date.
+If able to do this we may be able to make training even more accessible to aspiring athletes that do not have accessibility to coaching for this sport.
 
 % 		Expand on open sourced technologies
 %			Polycarbonate impact surface and Piezo-electronic vibration sensing
