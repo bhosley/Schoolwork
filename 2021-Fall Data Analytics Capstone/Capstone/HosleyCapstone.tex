@@ -18,9 +18,11 @@
 	\maketitle
 	
 \begin{abstract}
-	%
-	%	content...
-	%
+This study explored the viability of using commonly available devices to replicate the function of more costly training equipment for precision target shooting.
+First the functions of several popular commercial training software were examined,
+followed by several popular open-source offerings none of which, at the time of this writing, offered a function to record and analyze the point of aim the athlete over the period of shot cycles.
+We leveraged open source computer vision and data visualization frameworks to collect the data of several cycles and present the same visuals as the commercial software and propose several new visualization techniques intended to highlight specific aspects of the athlete's performance.
+The results demonstrate a viability of this type of framework but substantial work remains before it could be considered a project practical for the intended users.
 \end{abstract}
 
 \section{Introduction}
@@ -29,9 +31,13 @@ Shooting sports are a type of sport inextricably linked to technology,
 both in terms of the equipment used by the athletes and tools used in their training.
 There is substantial interest in maintaining the cutting edge on both fronts as athletes and teams work to remain on top of their competition.
 Access to this type of technology comes with a substantial price, which may be suitable to professional athletes or clubs and individuals of greater means.
-Due to the high cost, some highly talented athletes may never get access to high quality equipment or training.
+However, due to the high cost some highly talented athletes may never get access to high quality equipment or training.
 
-In this paper we propose to develop a two-part open source framework for training that my accomplish the following:
+The primary technology used exclusively for training athletes is Optoelectric analysis of aim during the shot cycle \cite{Mononen2003, Simo2018}.
+There are several commercially available options that athletes commonly use \cite{scatt, noptel}.
+This specialized equipment may be out of reach for new, casual, or underprivileged athletes leaving them with fewer options to improve their skills with similar efficiency.
+
+In this paper we propose to develop a two-part open source framework for training that may replicate similar commercially available software by accomplishing the following:
 
 \begin{enumerate}
 	\item Recording the Shot Cycle
@@ -48,8 +54,6 @@ In this paper we propose to develop a two-part open source framework for trainin
 	\end{enumerate}
 \end{enumerate}
 
-With these functions we desire to advance the field of open source options for shooting athletes to improve their craft in a manner functionally similar to the commercial offerings \cite{scatt, noptel} that may otherwise be out of reach.
-% ShootOff is a similar laser spot tracker, but only tracks the shot
 
 \section{Related Work}
 
@@ -65,6 +69,11 @@ Still more researchers have sought to use computer vision to perform the scoring
 Accurate scoring with computer vision and commonly available parts continues to progress rapidly in recent years.
 \cite{Ye2011} reliably produced  hit-miss results while \cite{Rudzinski2012} were able to produce competition level accuracy in scoring static targets with the trade-off of extremely controlled reading conditions.
 More recently \cite{Stenhager2021} was able to achieve a fairly robust model that could perform in a realistic setting and gave results usable at an amateur level; their system unable to accurately score a round at the necessary resolution.
+
+The Shoot-Off Project \cite{shootoff} uses off the shelf webcams and lasers to record shot data much like this project.
+However, Shoot-Off only records the actual shot location, not the course of aim over an entire shot cycle or throughout the training sessions that they offer.
+At the time of this writing code-base had not been updated since 2016.
+Even so this project offers a different type of training resource with a very similar development philosophy.
 
 \subsection{Aim tracing}
 
@@ -118,8 +127,12 @@ For ease of interpretation each of these stages are delineated by color; the sch
 
 All of the data sets that we encountered during the preliminary research for this project utilized proprietary storage methods.
 While one site was able to use a framework that retrieved the actual shot results from SCATT traces \cite{scatt-db}, that particular framework was not able to retrieve the trace data itself.
-
 To address this we use an easier to ingest data storage method, trading potential gains in efficiency when using binaries for ease of access.
+
+To determine the scale of the data as stored we chose to use a scale similar to a data set that we had access to that was stored in a common manner.
+TargetScan \cite{targetscan} outputs data via csv and in addition to the scores it records the approximate coordinates of the center fo the shot. 
+This style of data will be used in our recording as well.
+Additionally, the datasets that we were able to gather from this source will be used for bulk scoring during the visualization portion of this paper.
 
 
 \section{Methods}
@@ -132,7 +145,7 @@ All recording, processing, and analysis was performed on
 a 2020 Apple M1 Macbook Pro.
 
 Video capture and processing was performed using the 
-OpenCV \cite{itseez2015opencv} framework as a base.
+OpenCV \cite{itseez2015opencv, itseez2014theopencv} framework as a base.
 The bullseye area is used as a fiducial for recording and 
 the necessary data is determined by applying a series of OpenCV functions.
 
@@ -220,7 +233,7 @@ Several proposals for analysis and the visualization of this information are pre
 The scalar distance over time can help the user evaluate several aspects of their shot cycle without the distractions of actual placement on the recreated target,
 but is not a visualization provided by other implementations.
 By plotting directly against the time variable certain parts of the shot cycle
-\cite{Zeljko2020}
+\cite{Zeljko2010,Zeljko2020}
 can be more closely examined.
 This is accomplished by converting the Cartesian coordinates to Polar and plotting the $\rho$ variable against time.
 In this format specific times of the cycle may be examined.
@@ -241,6 +254,8 @@ Then those results are plotted with a two-dimensional histogram.
 
 
 \section{Results}
+
+All scripts produced for this project are available at the following url: \href{https://git.io/bhosley-capstone-scripts}{https://git.io/bhosley-capstone-scripts}
 
 \begin{figure}[]
 	\centering
@@ -275,7 +290,7 @@ Figure \ref{fig:dfc} shows an example of the visualization of scalar distance ov
 Next we examine the heatmap visual presented in figure \ref{fig:heatmap}.
 This example highlights a bias toward the lower left quadrant that is not obvious when compared to figure \ref{fig:trace}.
 While the center of this may suggest errors in the sights, the shape of the high frequency areas suggests an error on the athlete's side.
-We suspect that the shape in this example is consistent with poor posture of the upper thoracic spine and insufficient engagement of the trapezius and levator muscles.
+We suspect that the shape in this example is consistent with poor posture of the upper thoracic spine and insufficient engagement of the trapezius and levator muscles \cite{Simo2018}.
 
 
 
@@ -324,12 +339,17 @@ With these parts we may be able to replicate the method used in the commercial o
 It is possible that with enough trace data that is associated with diagnosed errors in the athlete's technique we may be able to produce models that will be able to recognize these errors from new trace date.
 If able to do this we may be able to make training even more accessible to aspiring athletes that do not have accessibility to coaching for this sport.
 
+To further improve data collection and expand the usability of this project the option for target side sensors would also be explored.
+This would ideally incorporate the acoustic methods mentioned at the beginning of this paper, but we would also like to explore piezo electric sensors on sheets of polycarbonate.
+This would allow for more coordination of actual shot placement in a live-fire practice, and may allow for a larger variety of target types similar to Shoot-Off \cite{shootoff} and Sport Quantum's SQ10 \cite{sportquantum}
+
 % 		Expand on open sourced technologies
 %			Polycarbonate impact surface and Piezo-electronic vibration sensing
 %			Screen Behind for target variation, immediate shot recording and track playback, even with dry-fire training
 %		Another Commercial option: https://www.traceshooting.com/?lang=en
 %	Helpful for script generation: https://techvidvan.com/tutorials/create-air-canvas-using-opencv-python/
 %\clearpage
+\nocite{github}
 \bibliographystyle{IEEEtran}
 \bibliography{\jobname}
 \end{document}
