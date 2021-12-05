@@ -34,7 +34,7 @@ Access to this type of technology comes with a substantial price, which may be s
 However, due to the high cost some highly talented athletes may never get access to high quality equipment or training.
 
 The primary technology used exclusively for training athletes is Optoelectric analysis of aim during the shot cycle \cite{Mononen2003, Simo2018}.
-There are several commercially available options that athletes commonly use \cite{scatt, noptel}.
+There are several commercially available options that athletes commonly use for example, SCATT \cite{scatt} and Noptel\cite{noptel}.
 This specialized equipment may be out of reach for new, casual, or underprivileged athletes leaving them with fewer options to improve their skills with similar efficiency.
 
 In this paper we propose to develop a two-part open source framework for training that may replicate similar commercially available software by accomplishing the following:
@@ -92,8 +92,7 @@ Even so this project offers a different type of training resource with a very si
 \end{figure}
 
 Shot scoring is only one aspect of training, and dry-fire training is often 
-considered to be the most important for developing a training regimen with effective results
-\cite{Potter2017}.
+considered to be the most important for developing a training regimen with effective results \cite{Potter2017}.
 This importance is reflected in shot trainers that sometimes cost as much as the top of the line equipment itself
 \cite{scatt, noptel}.
 
@@ -101,7 +100,7 @@ Both the Noptel and SCATT systems utilize computer vision for their tracking.
 They utilize the relative positioning of the bullseye within the camera's field of view to determine the position of the aim.
 Actual point of aim is calibrated by having the weapon fire and recording where in the frame the resulting hole is observed.
 The cameras use an uncommon lens configuration for the optical zoom which produce effective results for their intended purpose, but are not likely useful in other applications.
-Conversely, cameras of this type are not easily sourced from other applications.
+Additionally, cameras of this type are not easily sourced from other applications.
 
 The Mantis X \cite{mantisx} product utilizes an inertial measurement unit that has been ruggedized against small arm recoil. 
 This product does not utilize a camera and is not able to produce a prediction of a point of aim.
@@ -137,6 +136,8 @@ Additionally, the datasets that we were able to gather from this source will be 
 
 \section{Methods}
 
+\subsection{Hardware}
+
 The hardware used for this experiment was 
 a Microsoft Lifecam HD-5000,
 a Steyr evo 10 E,
@@ -144,14 +145,18 @@ and a red laser pointer of unknown origin.
 All recording, processing, and analysis was performed on 
 a 2020 Apple M1 Macbook Pro.
 
+\subsection{Packages Used}
+
 Video capture and processing was performed using the 
 OpenCV \cite{itseez2015opencv, itseez2014theopencv} framework as a base.
 The bullseye area is used as a fiducial for recording and 
 the necessary data is determined by applying a series of OpenCV functions.
 
+\subsection{Algorithm}
+
 \begin{figure}[]
 	\centering
-	\includegraphics[width=0.75\linewidth]{example-image}
+	\includegraphics[width=0.75\linewidth]{algorithm_flowchart}
 	\caption{Recording Algorithm.}
 	\label{fig:capture_algorithm}
 \end{figure}
@@ -219,8 +224,8 @@ For the purposes of this implementation the actual database is eschewed in favor
 
 \begin{figure}[]
 	\centering
-	\includegraphics[width=0.75\linewidth]{example-image}
-	\caption{Database.}
+	\includegraphics[width=\linewidth]{ERD}
+	\caption{Proposed Relational Database.}
 	\label{fig:database}
 \end{figure}
 
@@ -229,6 +234,8 @@ For the purposes of this implementation the actual database is eschewed in favor
 
 The output of the tracking algorithm is easily digestible with common data visualization techniques.
 Several proposals for analysis and the visualization of this information are presented in this section and will be shown and training value discussed in the next section.
+
+\subsection{Scalar Mode}
 
 The scalar distance over time can help the user evaluate several aspects of their shot cycle without the distractions of actual placement on the recreated target,
 but is not a visualization provided by other implementations.
@@ -241,6 +248,8 @@ Of particular note is the entry onto target and directness of the approach to ce
 This slope should take a similar shape to the slope of the point of aim leaving the target, any deviations will suggest an uneven or erratic entry movement.
 The movement at the time of triggering and the first part of the follow-through may also be more easily examined in this format.
 
+\subsection{Frequency Heatmap}
+
 While the scalar mode may assist the user in understanding events in the shot cycle that occur at specific times, to improve positional feedback we provide a heatmap.
 The heatmap is produced using a Gaussian filter which will help normalize the distribution of positions.
 This visual is intended to show the user where the point of aim spends the most time and may highlight directional bias that might not otherwise be obvious with the other trace playback methods.
@@ -252,10 +261,20 @@ Then those results are plotted with a two-dimensional histogram.
 	G(x,y) = \frac{1}{2 \pi \sigma^2} e^{ -\frac{x^2+y^2}{2\sigma^2} }
 \end{equation}
 
+\subsection{Scoring}
+
+In this section we will be including the most common feature in open source training software; the score report and plot.
+For the purposes of this project a hole detection algorithm was not implemented.
+Instead we will be utilizing data gathered using TargetScan \cite{targetscan}.
+This type of scanning could be implemented at a later time, however,
+the nature of this project tends toward gathering data at the time of the occurrences rather than detecting the holes in an already spent target.
+
 
 \section{Results}
 
 All scripts produced for this project are available at the following url: \href{https://git.io/bhosley-capstone-scripts}{https://git.io/bhosley-capstone-scripts}
+
+\subsection{Trace}
 
 \begin{figure}[]
 	\centering
@@ -270,6 +289,8 @@ though with inferior technique.
 The movement is wider and spends less time at the center of the target compared to the nearly perfect shot of  \ref{fig:SCATT_Example}
 One way this can be shown is the scalar over time in figure \ref{fig:dfc}.
 
+\subsection{Scalar Mode}
+
 \begin{figure}[]
 	\centering
 	\includegraphics[width=\linewidth]{distance_from_center}
@@ -279,6 +300,7 @@ One way this can be shown is the scalar over time in figure \ref{fig:dfc}.
 
 Figure \ref{fig:dfc} shows an example of the visualization of scalar distance over time. 
 
+\subsection{Frequency Heatmap}
 
 \begin{figure}[]
 	\centering
@@ -292,8 +314,26 @@ This example highlights a bias toward the lower left quadrant that is not obviou
 While the center of this may suggest errors in the sights, the shape of the high frequency areas suggests an error on the athlete's side.
 We suspect that the shape in this example is consistent with poor posture of the upper thoracic spine and insufficient engagement of the trapezius and levator muscles \cite{Simo2018}.
 
+\subsection{Scoring}
 
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=\linewidth]{points}
+	\caption{Plotting shots from 60 round session.}
+	\label{fig:points}
+\end{figure}
 
+In figure \ref{fig:points} we see the plotting of 60 rounds, the typical for a standard ISSF competition \cite{issfRules}.
+The large number of distinct points may reduce the ability of the user to identify useful patterns, so we have included a Gaussian filter to create a frequency heatmap for this data too.
+While in the standard plot it is fairly easy to notice the upper right outliers,
+the frequency heatmap shows that this pattern occurs within the center cluster as well.
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=\linewidth]{points_heat}
+	\caption{Shots frequency heatmap.}
+	\label{fig:points_heat}
+\end{figure}
 
 
 \section{Conclusion}
@@ -309,6 +349,7 @@ Additionally, if the user did not maintain a shallow angle of incidence with the
 
 Because this computer vision task utilizes light reflecting off a flat surface the algorithm cannot use edges and must instead rely on color or changes in image.
 The reliance on color makes this implementation sensitive to changes in lighting condition and the webcam's color gamut.
+
 
 \subsection{Areas for Improvement}
 
@@ -343,11 +384,8 @@ To further improve data collection and expand the usability of this project the 
 This would ideally incorporate the acoustic methods mentioned at the beginning of this paper, but we would also like to explore piezo electric sensors on sheets of polycarbonate.
 This would allow for more coordination of actual shot placement in a live-fire practice, and may allow for a larger variety of target types similar to Shoot-Off \cite{shootoff} and Sport Quantum's SQ10 \cite{sportquantum}
 
-% 		Expand on open sourced technologies
-%			Polycarbonate impact surface and Piezo-electronic vibration sensing
-%			Screen Behind for target variation, immediate shot recording and track playback, even with dry-fire training
-%		Another Commercial option: https://www.traceshooting.com/?lang=en
-%	Helpful for script generation: https://techvidvan.com/tutorials/create-air-canvas-using-opencv-python/
+
+
 %\clearpage
 \nocite{github}
 \bibliographystyle{IEEEtran}
