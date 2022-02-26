@@ -1,0 +1,202 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+\title{Exercise Assignment 12}
+\shorttitle{ES12}
+\author{Brandon Hosley}
+\date{2018 11 19}
+\affiliation{Mike Davis}
+%\abstract{}
+\begin{document}
+	\singlespacing
+	\raggedbottom
+	\maketitle
+\subsection{1. You are stranded on a desert island and you only have NAND gates.  Construct the following using only NAND gates. For each of the following show the logic circuit with only NAND gates and the truth table. (Six Points)}
+\emph{Create a NOT gate.}\\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p1not.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c | c }
+			Input & Output \\
+			\hline
+			0 & 1 \\
+			1 & 0 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Create an AND gate.} \\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p1and.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c | c }
+			\multicolumn{2}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & \\
+			\hline
+			0 & 0 & 1 & 0 \\
+			0 & 1 & 1 & 0 \\
+			1 & 0 & 1 & 0 \\
+			1 & 1 & 0 & 1 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Create an OR gate.} \\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p1or.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c c | c }
+			\multicolumn{3}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & B$_{1}$ & \\
+			\hline
+			0 & 0 & 1 & 1 & 0 \\
+			0 & 1 & 1 & 0 & 1 \\
+			1 & 0 & 0 & 1 & 1 \\
+			1 & 1 & 0 & 0 & 1 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Create a NOR gate.} \\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p1nor.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c c c | c }
+			\multicolumn{4}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & B$_{1}$ & A$_{2}$ & \\
+			\hline
+			0 & 0 & 1 & 1 & 0 & 1 \\
+			0 & 1 & 1 & 0 & 1 & 0 \\
+			1 & 0 & 0 & 1 & 1 & 0 \\
+			1 & 1 & 0 & 0 & 1 & 0 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Create and XOR gate.} \\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p1xor.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c c c | c }
+			\multicolumn{4}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & A$_{2}$ & B$_{2}$ & \\
+			\hline
+			0 & 0 & 1 & 1 & 1 & 0 \\
+			0 & 1 & 1 & 1 & 0 & 1 \\
+			1 & 0 & 1 & 0 & 1 & 1 \\
+			1 & 1 & 0 & 1 & 1 & 0 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Inverting the output of an XOR gate creates an XNOR gate.  Create an XNOR gate.} \\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p1xnor.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c c c c | c }
+			\multicolumn{5}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & A$_{2}$ & B$_{2}$ & A$_{3}$ & \\
+			\hline
+			0 & 0 & 1 & 1 & 1 & 0 & 1 \\
+			0 & 1 & 1 & 1 & 0 & 1 & 0 \\
+			1 & 0 & 1 & 0 & 1 & 1 & 0 \\
+			1 & 1 & 0 & 1 & 1 & 0 & 1 \\
+		\end{tabular}
+	\end{minipage} ~\\
+
+\subsection{2. You are stranded on a desert island and you only have NOR gates.  Construct the following using only NOR gates. For each of the following, show the logic circuit with only NOR gates and the truth table. (Six Points)}
+\emph{Create a NOT gate.} \\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p2not.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c | c }
+			Input & Output \\
+			\hline
+			0 & 1 \\
+			1 & 0 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Create an AND gate.} \\
+		\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p2and.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c c | c }
+			\multicolumn{3}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & B$_{1}$ & \\
+			\hline
+			0 & 0 & 1 & 1 & 0 \\
+			0 & 1 & 1 & 0 & 0 \\
+			1 & 0 & 0 & 1 & 0 \\
+			1 & 1 & 0 & 0 & 1 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Create an OR gate.} \\
+		\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p2or.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c | c }
+			\multicolumn{2}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & \\
+			\hline
+			0 & 0 & 1 & 0 \\
+			0 & 1 & 0 & 1 \\
+			1 & 0 & 0 & 1 \\
+			1 & 1 & 0 & 1 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Create a NAND gate.} \\
+		\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p2nand.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c c c | c }
+			\multicolumn{4}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & B$_{1}$ & A$_{2}$ & \\
+			\hline
+			0 & 0 & 1 & 1 & 0 & 1 \\
+			0 & 1 & 1 & 0 & 0 & 1 \\
+			1 & 0 & 0 & 1 & 0 & 1 \\
+			1 & 1 & 0 & 0 & 1 & 0 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Create and XOR gate.} \\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p2xor.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c c c c | c }
+			\multicolumn{5}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & A$_{2}$ & B$_{2}$ & A$_{3}$ & \\
+			\hline
+			0 & 0 & 1 & 0 & 0 & 1 & 0 \\
+			0 & 1 & 0 & 1 & 0 & 0 & 1 \\
+			1 & 0 & 0 & 0 & 1 & 0 & 1 \\
+			1 & 1 & 0 & 0 & 0 & 1 & 0 \\
+		\end{tabular}
+	\end{minipage} ~\\
+\emph{Inverting the output of an XOR gate creates an XNOR gate.  Create an XNOR gate.} \\
+	\begin{minipage}{2.5in}
+		\includegraphics[width=\linewidth]{ES12p2xnor.png}
+	\end{minipage}
+	\begin{minipage}{2.5in}
+		\begin{tabular}{ c c | c c c | c }
+			\multicolumn{4}{c}{Input} & & Output \\
+			A$_{0}$ & B$_{0}$ & A$_{1}$ & A$_{2}$ & B$_{2}$ & \\
+			\hline
+			0 & 0 & 1 & 0 & 0 & 1 \\
+			0 & 1 & 0 & 1 & 0 & 0 \\
+			1 & 0 & 0 & 0 & 1 & 0 \\
+			1 & 1 & 0 & 0 & 0 & 1 \\
+		\end{tabular}
+	\end{minipage} ~\\
+
+\nocite{warford10}
+\bibliographystyle{apacite}
+\bibliography{CS} %link to relevant .bib file
+\end{document}
