@@ -1,0 +1,73 @@
+\documentclass[a4paper,man,natbib]{apa6}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+
+
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Exercise Assignment 5}
+\shorttitle{ES5}
+\author{Brandon Hosley}
+\date{2018 09 25}
+\affiliation{Mike Davis}
+
+%\abstract{}
+
+\begin{document}
+\maketitle
+\singlespacing
+\subsection{25a}
+\emph{Assuming nine-bit two's complement representation, convert each of the following decimal numbers to binary, show the effect of the ASL operation on it, and
+	then convert the result back to decimal. Repeat with the ASR operation:} \\
+94 \\
+BIN $\rightarrow$ 0 0101 1110 \\
+ASL $\rightarrow$ 0 1011 1100 \\
+DEC $\rightarrow$ 188 \\
+ASR $\rightarrow$ 0 0101 1110 $\rightarrow$ 94 \\
+\subsection{25c}
+\emph{Assuming nine-bit two's complement representation, convert each of the following decimal numbers to binary, show the effect of the ASL operation on it, and
+	then convert the result back to decimal. Repeat with the ASR operation:} \\
+-62 \\
+BIN $\rightarrow$ 1 1100 0010 \\
+ASL $\rightarrow$ 1 1000 0100 \\
+DEC $\rightarrow$ -124
+ASR $\rightarrow$ 0 1100 0010$_{2}$ $\rightarrow$ 194$_{10}$
+\subsection{26a}
+\emph{Write the RTL specification for an arithmetic shift right on a six-bit cell.} \\
+$c\rightarrow r\langle 0\rangle ,r \langle 0...5\rangle\rightarrow r\langle 1...6\rangle ,r\langle 6\rangle\rightarrow C$ \\
+\subsection{26b}
+\emph{Write the RTL specification for an arithmetic shift left on a 16-bit cell.} \\
+$C\leftarrow r\langle 0\rangle ,r \langle 0...15\rangle\leftarrow rlangle 1...16\rangle ,r\langle 6\rangle\leftarrow c$
+\subsection{28a}
+\emph{C = 1, ROL 0 0110 1101} \\
+C=0, 0 1101 1011 \\
+\subsection{28b}
+\emph{C = 0, ROL 0 0110 1101} \\
+C=0, 0 1101 1010 \\
+\subsection{35b}
+\emph{Assuming nine-bit two's complement binary representation, convert the following numbers from hexadecimal to decimal. Remember to check the sign bit: 0F5} \\
+0F5$_{16}$ $\rightarrow$ 0 1111 0101$_{2}$ $\rightarrow$ 245$_{10}$
+\subsection{35c}
+\emph{Assuming nine-bit two's complement binary representation, convert the following numbers from hexadecimal to decimal. Remember to check the sign bit: 100} \\
+100$_{16}$ $\rightarrow$ 1 0000 0000$_{2}$ $\rightarrow$ -255$_{10}$
+\subsection{53b}
+\emph{For IEEE 754 single precision floating point, write the hexadecimal representation for the following decimal values: -1.0} \\
+-1.0$_{10}$ $\rightarrow$ 1 0111 1111 000 0000 0000 0000 0000 0000$_{2}$ $\rightarrow$ BF800000$_{16}$
+\subsection{53c}
+\emph{For IEEE 754 single precision floating point, write the hexadecimal representation for the following decimal values: -0.0} \\
+-0.0$_{10}$ $\rightarrow$ 1 0000 0000 000 0000 0000 0000 0000 0000$_{2}$ $\rightarrow$ 80000000$_{16}$
+
+\nocite{warford10}
+\bibliographystyle{apacite}
+\bibliography{CS} %link to relevant .bib file
+
+\end{document}
