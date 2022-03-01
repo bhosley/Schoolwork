@@ -1,0 +1,74 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+% End Packages %
+
+\title{Exercise Assignment 4}
+\shorttitle{ES4}
+\author{Brandon Hosley}
+\date{2018 09 17}
+\affiliation{Mike Davis}
+
+%\abstract{}
+
+\begin{document}
+	\maketitle
+	\singlespacing
+	\subsection{3.4 c)}
+	\textbf{Convert $[1011]_{2}$ from binary to decimal, assuming unsigned binary.} \\
+	$1011_{2} = 11_{10}$
+	\subsection{3.4 e)}
+	\textbf{Convert $[11111]_{2}$ from binary to decimal, assuming unsigned binary.} \\
+	$11111_{2} = 31_{10}$
+	\subsection{3.13 a)}
+	\textbf{Write the polynomial representation of $29.458_{10}$} \\
+	$(2)10^{1}+(9)10^{0}+(4)10^{-1}+(5)10^{-2}+(8)10^{-2}$
+	\subsection{3.13 c)}
+	\textbf{What is the decimal value of $1011.100101_{2}$} \\
+	$1011.100101_{2} = 11.65625_{10}$
+	\subsection{3.16 a)}
+	\textbf{Convert $[51]_{10}$ to binary using nine-bit two's compliment.} \\
+	$51_{10} = 0 0011 0011_{2}$
+	\subsection{3.16 e)}
+	\textbf{Convert $[-256]_{10}$ to binary using nine-bit two's compliment.} \\
+	$-256_{10} = 1 0000 0000_{2}$
+	\subsection{3.20 c)}
+	\textbf{Perform a binary addition, assuming nine-bit two's compliment. Show the effect on the status bits:} \\
+	1 0001 1011 \\
+	\noindent\underline{ADD 1 0101 0100} \\
+	0 0110 1111 \\
+	N = 1 \\
+	Z = 0 \\
+	V = 1 \\
+	C = 1
+	\newpage
+	\subsection{3.20 e)}
+	\textbf{Perform a binary addition, assuming nine-bit two's compliment. Show the effect on the status bits:} \\
+	0 0011 0100 \\
+	\noindent\underline{ADD 0 1101 0010} \\
+	1 0000 0110 \\
+	N = 0 \\
+	Z = 0 \\
+	V = 1 \\
+	C = 0
+	\subsection{3.21 c)}
+	\textbf{With two's complement binary representation what is the range of numbers in binary and decimal notation for: a four-bit cell} \\
+	A four bit cell has: \\
+	$range_{2} = 1000$ to $0111$ \\
+	$range_{10} = -8$ to $7$
+	\subsection{3.21 d)}
+	\textbf{With two's complement binary representation what is the range of numbers in binary and decimal notation for: a five-bit cell} \\
+	A five-bit cell has: \\
+	$range_{2} = 1 0000$ to $0 1111$ \\
+	$range_{10} = -16$ to $15$ 
+	
+	\newpage
+	\nocite{warford10}
+	\bibliography{ComputerArchitecture} %link to relevant .bib file
+	\bibliographystyle{apacite}
+	
+\end{document}
