@@ -1,0 +1,59 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Exercise Assignment 3}
+\shorttitle{Exercise Assignment 3}
+\author{Brandon Hosley}
+\date{\today}
+\affiliation{Mike Davis}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\singlespacing
+\inputminted{c++}{./SourceCode/fig2,25.cpp}
+\subsection{2.1 a)}
+\textbf{How many times is sum called altogether?} \\
+The sum function is called 4 times, three times it recurses and the fourth returns a[0].
+\subsection{2.1 b)}
+\textbf{Draw a picture of the main program's variables and runtime stack at the time of the 3rd call ( should be 3 stack frames ).} \\
+\includegraphics[]{es3problem1b} \\
+\subsection{2.1 c)}
+\textbf{Draw the stack just before the return from the call in part (b).} \\
+\includegraphics[]{es3problem1c} \\
+\subsection{2.2 c)}
+\textbf{Draw the call tree of binCoeff(3,2) of fig 2.28 as seen in fig. 2.30} \\
+\includegraphics[]{es3problem2c} \\
+The function binCoeff() is called five times total including the initial binCoeff(3,2) \\
+This give a total of 6 stack frames with main() included. \\
+The order of calls and returns are such that the left side of each pair is called and returned first. That is, binCoeff(2,2) before binCoeff(2,1) and binCoeff(1,1) before binCoeff(1,0).
+\subsection{2.5 b)}
+\textbf{Draw the call tree for \textit{fib}(4)}
+\includegraphics{es3problem5b} \\
+The function fib() is called 9 times including the initial fib(4). This means that there are a max number of 10 stack frames allocated at runtime, including the stack frame for main().
+\subsection{2.8 a)}
+\textbf{Examine the following C++ program:}
+\inputminted{c++}{./SourceCode/ExampleCPP.cpp}
+\textbf{Draw the run-time stack just after the first call.}
+\includegraphics{es3problem8a} \\
+\subsection{2.8 b)}
+\textbf{What is the output of the program?} \\
+The program will output "abba".
+
+\newpage
+\nocite{warford10}
+\bibliographystyle{apacite}
+\bibliography{ComputerArchitecture} %link to relevant .bib file
+
+
+
+\end{document}
