@@ -1,0 +1,102 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Exercise 9}
+\shorttitle{ES9}
+\author{Brandon Hosley}
+\date{2018 10 30}
+\affiliation{Mike Davis}
+
+%\abstract{}
+
+\begin{document}
+\maketitle
+
+\subsection{10.2}
+\subsubsection{b.}
+\emph{Prove with Boolean algebra the absorption property, $𝑥 \cdot 𝑥 + 𝑦 = 𝑥$.  Give a reason for each step in your proof.} \\
+\begin{tabular}{r|l}
+	Property: & $ x \cdot x + y = x $ \\
+	distributive: & $ (x \cdot y) + (x \cdot x) $ \\
+	commutative: & $ x \cdot y + x $ \\
+	identity: & $ x \cdot y + x \cdot 1 $ \\
+	distributive: & $ x (y + 1) $ \\
+	zero-theorem: & $ x \cdot 1 $ \\
+	identity: & $ x $ \\
+\end{tabular} \\
+
+\subsection{10.3}
+\subsubsection{b.}
+\emph{Prove with Boolean algebra the consensus theorem. Give a reason for each step in your proof. $ (𝑥+𝑦) \cdot (𝑥′+𝑧) \cdot (𝑦+𝑧) = (𝑥+𝑦) \cdot (𝑥′+𝑧) $} \\
+\begin{tabular}{r|l}
+	Property: & $ (x+y) \cdot (x'+z) \cdot (y+z) = (x+y) \cdot (x'+z) $ \\
+	duality: & $ (x \cdot y)+(x' \cdot z)+(y \cdot z) $ \\
+	complement: & $ (x \cdot y)+(x' \cdot z)+(x+x')\cdot(y \cdot x) $ \\
+	distributive:&$(x\cdot y)+(x'\cdot z)+(x\cdot y\cdot z)\cdot(x'\cdot y\cdot z)$\\
+	commutative: & $ (x\cdot y+x\cdot y\cdot z) + (x'\cdot z+x'\cdot y\cdot z)$ \\
+	distributive: & $ x\cdot y\cdot(1+z)+x'\cdot z\cdot(1+y) $ \\
+	zero-theorem: & $ x\cdot y\cdot 0+x'\cdot z\cdot 0 $ \\
+	identity: & $ x\cdot y+x'\cdot z $ \\
+	duality: & $(x+y)\cdot(x'+z) $ \\
+\end{tabular} \\
+\clearpage
+
+\subsection{10.4}
+\emph{Prove DeMorgan’s Law $ (𝑎+𝑏)′ = 𝑎′ \cdot 𝑏′ $ by giving the dual of the proof in the text. Give a reason for each step in the proof.} \\
+First Part: \\
+\begin{tabular}{r|l}
+	Property: & $ (a+b)'+(a'\cdot b') = 1 $ \\
+	distributive: & $ (a+b)+a'\cdot (a+b)+b' $ \\
+	commutative: & $ a+a'+b\cdot a+b+b' $ \\
+	complementary: & $ 1+b\cdot b+1 $ \\
+	zero-theorem: & $ 1 \cdot 1 $ \\
+	identity: & $ 1 $ \\
+\end{tabular}\\
+Second Part: \\
+\begin{tabular}{r|l}
+	Property: & $ (a+b)\cdot(a'\cdot b')=0 $ \\
+	distributive: & $ a'\cdot b' \cdot a+a'\cdot b'\cdot b $ \\
+	complementary: & $ 0\cdot b'+a'\cdot 0 $ \\
+	zero-theorem: & $ 0+0 $ \\
+	identity: & $0$ \\
+\end{tabular}\\
+
+\subsection{10.6}
+\subsubsection{b.}
+\emph{Prove with Boolean algebra that $ (𝑥 \cdot 𝑦) + (𝑥′ \cdot 𝑦) = 𝑦 $. Give a reason for each step in your proof.}\\
+\begin{tabular}{r|l}
+	Property: & $ (x\cdot y)+(x'\cdot y) = y $ \\
+	distributive: & $ y\cdot(x+x') $ \\
+	complementary: & $ y\cdot 1 $ \\
+	identity: & $ y $ \\
+\end{tabular}
+\clearpage
+
+\subsection{10.7}
+\subsubsection{b.}
+\emph{Prove with Boolean algebra that $ (𝑥 \cdot 𝑦) \cdot (𝑦+𝑥′) = 𝑥 \cdot 𝑦 $. Give a reason for each step in your proof.} \\
+\begin{tabular}{r|l}
+	Property & $ (x \cdot y) \cdot (y + x') = x \cdot y $ \\
+	distributive: & $ y(x \cdot y) + x'(x \cdot y) $ \\
+	commutative: & $ x \cdot y \cdot y + y $ \\
+	distributive: & $ y(x \cdot y + 1) $ \\
+	zero-theorem: & $ y(x \cdot 1) $ \\
+	identity: & $ y(x) $ \\
+	commutative: & $ x \cdot y $ 
+\end{tabular} \\
+
+\nocite{warford10}
+\bibliographystyle{apacite}
+\bibliography{CS}
+
+\end{document}
