@@ -1,0 +1,344 @@
+\documentclass[a4paper,man,natbib]{apa6}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+%\usepackage[cache=false]{minted}
+\usepackage{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Homework 3}
+\shorttitle{HW3}
+\author{Brandon Hosley}
+\date{2018 09 25}
+\affiliation{Mike Davis}
+%\abstract{}
+\begin{document}
+\maketitle
+\singlespacing
+\raggedbottom
+\subsection{1a}
+\emph{What is the output of the following PEP 8 program.} \\
+-202 \\
+99 \\
+cat \\
+\subsection{1b}
+\emph{Explain how each of the 5 outputs are produced from the 4 inputs:} \\
+The fourth input is a .WORD input of 2 bytes, and is comprised of the 'at' ASCII.
+\subsection{2a}
+\emph{Cut \& paste the Assembler Listing including the symbol table at the bottom.} \\
+	\begin{Verbatim}
+-------------------------------------------------------
+Object
+Addr  code   Symbol   Mnemon  Operand     Comment
+------------------------------------------------------
+0000  040007          BR      three       
+0003  0010   one:     .WORD   16          
+0005  0016   two:     .WORD   0x0016      
+;
+0007  390003 three:   DECO    one,d       
+000A  50000A          CHARO   '\n',i      
+000D  390005          DECO    two,d       
+0010  50000A          CHARO   '\n',i      
+0013  390007          DECO    three,d     
+0016  00              STOP                
+0017                  .END                  
+-------------------------------------------------------
+
+
+Symbol table
+--------------------------------------
+Symbol    Value        Symbol    Value
+--------------------------------------
+one       0003         three     0007
+two       0005         
+--------------------------------------
+	\end{Verbatim}
+\subsection{2b}
+\emph{Explain the values of the symbols one, two, and three in the symbol table.} \\
+The values described in the symbol table are addresses of the data that each symbol describes, or in the case of symbol three, the place in which the imperative part of the program will begin.
+\subsection{2c}
+\emph{Explain the values of the output of DECO one, DECO two \& DECO three} \\
+DECO one prints 16$_{10}$ represented as 16$_{10}$ or 10$_{16}$ \\
+DECO two prints 22$_{10}$ represented as 16$_{16}$ \\
+DECO three looks at the word stored at the location of symbol three. What it finds is the first 'print' machine code instruction. The instruction 39 00 03 becomes 3900$_{16}$ and is printed as 14592$_{10}$ \\
+\subsection{3}
+\emph{Write an assembly language program that prints your first name on the screen. Use immediate addressing with a hexadecimal constant to designate the operand of CHARO for each letter of your name. Comment each line except STOP \& .END. Cut \& paste the Assembler Listing into your document and paste a screen shot of the Output area of the PEP/8.} \\
+{\renewcommand\fcolorbox[4][]{\textcolor{black}{\strut#4}}
+	\begin{minted}{asm}
+------------------------------------------------------------
+Object
+Addr  code   Symbol   Mnemon  Operand     Comment
+------------------------------------------------------------
+0000  500042          CHARO   0x0042,i    ;Print B
+0003  500052          CHARO   0x0052,i    ;Print R
+0006  500041          CHARO   0x0041,i    ;Print A
+0009  50004E          CHARO   0x004E,i    ;Print N
+000C  500044          CHARO   0x0044,i    ;Print D
+000F  50004F          CHARO   0x004F,i    ;Print O
+0012  50004E          CHARO   0x004E,i    ;Print N
+0015  50000A          CHARO   '\n',i      ;Newline
+0018  00              STOP                
+0019                  .END                  
+-------------------------------------------------------------
+	\end{minted}
+\includegraphics[width=\linewidth]{NameOutput.png}
+
+\subsection{4}
+\emph{Write an assembly language program that prints your full name on the screen. Use .ASCII pseudo-op to store the characters at the top of your program. Use BR to branch around the characters and use STRO to output your name. Comment each line except STOP \& .END. Cut \& paste the Assembler Listing into your document and paste a screen shot of the Output area of the PEP/8.} \\
+{\renewcommand\fcolorbox[4][]{\textcolor{black}{\strut#4}}
+	\begin{minted}{asm}
+----------------------------------------------------------
+Object
+Addr  code   Symbol   Mnemon  Operand     Comment
+----------------------------------------------------------
+0000  04000C          BR      two         
+0003  425241 one:     .ASCII  "BRANDON\n\x00"
+      4E444F 
+      4E0A00 
+             ;
+000C  410003 two:     STRO    one,d       
+000F  00              STOP                
+0010                  .END                  
+----------------------------------------------------------
+
+
+Symbol table
+--------------------------------------
+Symbol    Value        Symbol    Value
+--------------------------------------
+one       0003         two       000C
+--------------------------------------
+	\end{minted}
+\includegraphics[width=\linewidth]{AsciiName.png}
+
+\subsection{5a}
+\emph{Write an assembly language program (no loops!)  that starts at 8 and counts down by 2 to 0. The C++ program is shown below. Comment each line except STOP \& .END. Add something to the output that makes this program uniquely yours. Cut \& paste the Assembler Listing into your document and paste a screen shot of the Output area of the PEP/8.} \\
+{\renewcommand\fcolorbox[4][]{\textcolor{black}{\strut#4}}
+	\begin{minted}{asm}
+--------------------------------------------------------------------------
+Object
+Addr  code   Symbol   Mnemon  Operand     Comment
+--------------------------------------------------------------------------
+0000  040007          BR      main        
+0003  0008   num:     .WORD   8           
+0005  0002   op:      .WORD   2           
+;
+0007  390003 main:    DECO    num,d       ;Print Original(8)
+000A  50000A          CHARO   '\n',i      ;newline
+000D  C10003          LDA     num,d       ;load the number
+0010  810005          SUBA    op,d        ;subtract op from number
+0013  E10003          STA     num,d       ;save result
+0016  390003          DECO    num,d       ;print result (6)
+0019  50000A          CHARO   '\n',i      ;newline
+001C  C10003          LDA     num,d       ;load the number
+001F  810005          SUBA    op,d        ;subtract op from number
+0022  E10003          STA     num,d       ;save result
+0025  390003          DECO    num,d       ;print result (4)
+0028  50000A          CHARO   '\n',i      ;newline
+002B  C10003          LDA     num,d       ;load the number
+002E  810005          SUBA    op,d        ;subtract op from number
+0031  E10003          STA     num,d       ;save result
+0034  390003          DECO    num,d       ;print result (2)
+0037  50000A          CHARO   '\n',i      ;newline
+003A  C10003          LDA     num,d       ;load the number
+003D  810005          SUBA    op,d        ;subtract op from number
+0040  E10003          STA     num,d       ;save result
+0043  390003          DECO    num,d       ;print result (0)
+0046  50000A          CHARO   '\n',i      ;newline
+0049  00              STOP                
+004A                  .END                  
+--------------------------------------------------------------------------
+
+
+Symbol table
+--------------------------------------
+Symbol    Value        Symbol    Value
+--------------------------------------
+main      0007         num       0003
+op        0005         
+--------------------------------------
+	\end{minted}
+\subsection{5b}
+\emph{Cut and paste a screen shot of the Output of the PEP/8} \\
+\includegraphics[width=\linewidth]{FakeLoop.png}
+\subsection{5c}
+\emph{Explain the status bit(s) NZVC at the point that STOP is loaded.} \\
+N = 0 \\
+Z = 1 \\
+V = 0 \\
+C = 1 \\
+\subsection{6a}
+\emph{Write an assembly language program that corresponds to the following C++ program. Comment each line except STOP \& .END. Add something to the output that makes this program uniquely yours. Cut \& paste the Source Code into your document. (Hint: PEP/8 does not have a divide instruction; however we have discussed an instruction that divides by 2. Please use that instruction.)} \\
+Source Code:
+{\renewcommand\fcolorbox[4][]{\textcolor{black}{\strut#4}}
+	\begin{minted}{asm}
+BR main
+numA: .WORD 0
+numB: .WORD 0
+numC: .WORD 0
+numD: .WORD 0
+sum: .WORD 0
+avg: .WORD 0
+labA: .ASCII "input a = \x00"
+labB: .ASCII "input b = \x00"
+labC: .ASCII "input c = \x00"
+labD: .ASCII "input d = \x00"
+labSum: .ASCII "sum = \x00"
+labAvg: .ASCII "average = \x00"
+;set the variables
+main: LDA 2,i
+STA numA,d ;set a = 2
+LDA 4,i
+STA numB,d ;set b = 4
+LDA 5,i
+STA numC,d ;set c = 5
+LDA 1,i
+STA numD,d ;set d = 1
+;calculate results
+LDA numA,d ;load a
+ADDA numB,d ;add b
+ADDA numC,d ;add c
+ADDA numD,d ;add d
+STA sum,d ;store sum
+;calculate simple average
+LDA sum,d ;load sum
+ASRA ;Arithmetic left(proxy division by 2)
+ASRA ;As above
+STA avg,d ;store average
+;tell the variables
+STRO labA,d ;print a label 
+DECO numA,d ;Print a
+CHARO '\n',i ;newline
+STRO labB,d ;print b label 
+DECO numB,d ;Print b
+CHARO '\n',i ;newline
+STRO labC,d ;print c label 
+DECO numC,d ;Print c
+CHARO '\n',i ;newline
+STRO labD,d ;print d label 
+DECO numD,d ;Print d
+CHARO '\n',i ;newline
+STRO labSum,d ;print sum label 
+DECO sum,d ;Print sum
+CHARO '\n',i ;newline
+STRO labAvg,d ;print average label 
+DECO avg,d ;Print average
+STOP
+.END	
+	\end{minted}
+Assembler Listing:
+{\renewcommand\fcolorbox[4][]{\textcolor{black}{\strut#4}}
+	\begin{minted}{asm}
+--------------------------------------------------------------------------
+Object
+Addr  code   Symbol   Mnemon  Operand     Comment
+--------------------------------------------------------------------------
+0000  04004D          BR      main        
+0003  0000   numA:    .WORD   0           
+0005  0000   numB:    .WORD   0           
+0007  0000   numC:    .WORD   0           
+0009  0000   numD:    .WORD   0           
+000B  0000   sum:     .WORD   0           
+000D  0000   avg:     .WORD   0           
+000F  696E70 labA:    .ASCII  "input a = \x00"
+757420 
+61203D 
+2000   
+001A  696E70 labB:    .ASCII  "input b = \x00"
+757420 
+62203D 
+2000   
+0025  696E70 labC:    .ASCII  "input c = \x00"
+757420 
+63203D 
+2000   
+0030  696E70 labD:    .ASCII  "input d = \x00"
+757420 
+64203D 
+2000   
+003B  73756D labSum:  .ASCII  "sum = \x00"
+203D20 
+00     
+0042  617665 labAvg:  .ASCII  "average = \x00"
+726167 
+65203D 
+2000   
+;set the variables
+004D  C00002 main:    LDA     2,i         
+0050  E10003          STA     numA,d      ;set a = 2
+0053  C00004          LDA     4,i         
+0056  E10005          STA     numB,d      ;set b = 4
+0059  C00005          LDA     5,i         
+005C  E10007          STA     numC,d      ;set c = 5
+005F  C00001          LDA     1,i         
+0062  E10009          STA     numD,d      ;set d = 1
+;calculate results
+0065  C10003          LDA     numA,d      ;load a
+0068  710005          ADDA    numB,d      ;add b
+006B  710007          ADDA    numC,d      ;add c
+006E  710009          ADDA    numD,d      ;add d
+0071  E1000B          STA     sum,d       ;store sum
+;calculate simple average
+0074  C1000B          LDA     sum,d       ;load sum
+0077  1E              ASRA                ;Arithmetic left(proxy division by 2)
+0078  1E              ASRA                ;As above
+0079  E1000D          STA     avg,d       ;store average
+;tell the variables
+007C  41000F          STRO    labA,d      ;print a label
+007F  390003          DECO    numA,d      ;Print a
+0082  50000A          CHARO   '\n',i      ;newline
+0085  41001A          STRO    labB,d      ;print b label
+0088  390005          DECO    numB,d      ;Print b
+008B  50000A          CHARO   '\n',i      ;newline
+008E  410025          STRO    labC,d      ;print c label
+0091  390007          DECO    numC,d      ;Print c
+0094  50000A          CHARO   '\n',i      ;newline
+0097  410030          STRO    labD,d      ;print d label
+009A  390009          DECO    numD,d      ;Print d
+009D  50000A          CHARO   '\n',i      ;newline
+00A0  41003B          STRO    labSum,d    ;print sum label
+00A3  39000B          DECO    sum,d       ;Print sum
+00A6  50000A          CHARO   '\n',i      ;newline
+00A9  410042          STRO    labAvg,d    ;print average label
+00AC  39000D          DECO    avg,d       ;Print average
+00AF  00              STOP                
+00B0                  .END                  
+--------------------------------------------------------------------------
+
+
+Symbol table
+--------------------------------------
+Symbol    Value        Symbol    Value
+--------------------------------------
+avg       000D         labA      000F
+labAvg    0042         labB      001A
+labC      0025         labD      0030
+labSum    003B         main      004D
+numA      0003         numB      0005
+numC      0007         numD      0009
+sum       000B         
+--------------------------------------
+	\end{minted}
+\subsection{6b}
+\emph{ Run it twice – once with values that yield a output that is within the range of the PEP/8 and once with values that yield a output that is outside the range of the PEP/8. Explain the limits. Paste screen shots of the Output area of the PEP/8 for both runs.} \\
+\includegraphics[width=\linewidth]{Pep8Arith.png} \\
+\includegraphics[width=\linewidth]{Pep8Over.png} \\
+\subsection{6c}
+\emph{Explain the status bit(s) NZVC at the point that STOP is loaded for the invalid run.} \\
+N = 1 \\
+Z = 0 \\
+V = 1 \\
+C = 0 \\
+
+\nocite{warford10}
+\bibliographystyle{apacite}
+\bibliography{CS} %link to relevant .bib file
+
+\end{document}
