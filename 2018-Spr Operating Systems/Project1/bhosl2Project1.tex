@@ -1,0 +1,39 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+%\usepackage{amsmath}
+%\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+% End Packages %
+
+\title{Project 1}
+\shorttitle{P1}
+\author{Brandon Hosley}
+\date{2018 11 19}
+\affiliation{Chung-Wei Lee}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\subsection{Compilation}
+The submitted program compiles and executes without error. \\
+The most obvious improvement in this category will be to improve the program's handling of additional parameters.
+\subsection{Arguments}
+The program currently accepts integers between 1 and 10, if outside this range it will default to N = 10.
+\subsection{Commands}
+This program currently accepts any of the commands listed in the original assignment, calling the corresponding Linux function; cal, date, ls, ps, pwd, who, quit. A "help" function was additionally added to inform the user of which functions are available to them and what those functions do. 
+\subsection{Forking}
+The program will evoke the fork() function for any valid user command except for "quit" and "help" which will perform their function outright. \\
+Each other function will be executed in a child process and passed to a member of the exec() family of functions, in this case, execvp() with no additional parameters.
+\subsection{Difficulties}
+The most profound difficulty arising in this project was the result of unfamiliarity with the C language, and with system calls. 
+\clearpage
+\includegraphics[width=\linewidth]{screenshot.png}
+
+%\bibliographystyle{apacite}
+%\bibliography{} %link to relevant .bib file
+\end{document}
