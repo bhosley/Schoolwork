@@ -1,0 +1,45 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+%\usepackage{amsmath}
+%\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./Images/} }
+% End Packages %
+
+\title{Project 2}
+\shorttitle{P2}
+\author{Brandon Hosley}
+\date{2018 12 12}
+\affiliation{Chung-Wei Lee}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\raggedbottom
+\subsection{Compilation}
+The submitted program compiles and executes without error. \\
+The program currently works well under the two process implementation. It accepts the necessary arguments appropriately.
+ 
+\subsection{loader2}
+The modified version that accepts the necessary parameters, but only takes the options for 2 processes.
+Works as expected.
+
+\subsection{loader3}
+This version is intended to accept 2 or 3 processes. \\
+Modifications for this program included the direct increases to the number of semaphores and creating a new set of the four types of semaphores.
+The main will instantiate 8 semaphores in either case, 12 if the user inputs the 3 for concurrency. A variable will hold and report the number of concurrent processes, this will be set in the first part of the main() function as well.\\
+Next the loader(), cpu(), and printer() functions are all updated with options concerning how to handle the third process. The functions operate about the same regardless of user input, only with the 2-option causing the functions to bypass the third initiation of a process. \\
+
+It seems to get deadlocked in one part of the process, though it isn't clear which part.
+This version of the program accepts the appropriate parameters, and does not result in any errors;
+it simply fails to finish and report any results. \\~\\
+
+\includegraphics[width=\linewidth]{screenshot.png}
+
+%\bibliographystyle{apacite}
+%\bibliography{} %link to relevant .bib file
+\end{document}
