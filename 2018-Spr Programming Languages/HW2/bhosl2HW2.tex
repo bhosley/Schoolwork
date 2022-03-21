@@ -1,0 +1,79 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{setspace}
+\usepackage[cache=false]{minted}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{amsmath}
+\usepackage{caption}
+\usepackage[]{appendix}
+
+\usepackage{graphicx}
+\graphicspath{ {./images/} }
+
+% End Packages %
+
+
+
+\title{Homework 2}
+\shorttitle{HW2}
+\author{Brandon Hosley}
+\date{2018 10 26}
+\affiliation{Brian-Thomas Rogers}
+
+\begin{document}
+
+\maketitle
+
+\subsection{Note on Production}
+Due to an error in understanding the requirements of the project the initial implementation used the ArrayList<integer> class to store the numbers and to feed the assignment's algorithm. In homage to this original mistake and for simplicity sake, the custom built Linked List class uses the same language for its methods and has some of the same methods implemented for the sake of this application.
+
+\subsection{Objective}
+\noindent
+This program takes a single set \\ 
+$ S = \{...\} $ \\ \noindent
+of integers and attempts to determine if it is possible to divide the set into two \\
+$ A \subset S $ and $ B \subset S $ and $ S=\{A,B\} $\\ \noindent
+such that \\
+$ \sum A \subset B $ and $ \sum B \subset A $ \\ \noindent
+if this division of set $S$ to $A$ and $B$ is possible the program will print "YES" into the command line; if it is not possible, it will print "NO". \\
+
+\subsection{Algorithm}
+
+\begin{algorithm}[H]
+	\begin{algorithmic}
+		\State\emph{First load the series of numbers into custom LinkedList.}
+		\For {Each pair of subsets}
+			\If {$ \sum A \subset B $ \&\& $ \sum B \subset A $}
+				\State Set Result $\rightarrow$ True.
+				\State Break;
+			\EndIf
+		\EndFor
+		\If {Result == True}
+			\State Print "YES"
+		\Else
+			\State Print "NO"
+		\EndIf		
+	\end{algorithmic}
+	\caption{}
+\end{algorithm}
+
+The test portion of this problem is fairly trivial, the difficulty lies in producing each possible combinations of set $A$ and $B$. The strategy employed in this particular case is to procedurally produce (then immediately test) each set $A$ of size $n$ and compare to set $B$ produced by $ S \slash A = B $. \\
+Once all possible sets of $A$ size $n$ have been compared, $n$ is incremented.
+
+\subsection{Efficiency}
+
+To improve efficiency several considerations were made.
+\begin{itemize}
+\item First, rather than produce all possible subsets, storing them, then comparing them; each set is produced, then tested, then disposed of. The moment that one of the pairs matches the criteria the program halts and reports success and does not produce any more sets than was necessary.
+\item Second when incrementing $n$ for Set $A$ sizes the program halts after $n$ reaches half the size of set $S$. This is because the compliments of each set size $n$ are each possible combination of set size $S{} - n$. The only time this produces redundancy is when the size of $S$ is even and the program begins to compare the sets $A$ and $B$ of equal size.
+\end{itemize}
+\noindent
+The runtime approximation of this program is \\
+$F(n) = \mathcal{O}(n!)$
+
+\bibliographystyle{apacite}
+\nocite{sebasta}
+\bibliography{CS}
+\end{document}
