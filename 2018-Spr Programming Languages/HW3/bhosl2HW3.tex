@@ -1,0 +1,111 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+% End Packages %
+
+\title{Homework 3}
+\shorttitle{HW3}
+\author{Brandon Hosley}
+\date{2018 11 12}
+\affiliation{Brian-Thomas Rogers}
+%\abstract{}
+
+\begin{document}
+\maketitle
+\raggedbottom
+\subsection{Objective}
+\noindent
+This program will take a set of numbers \\ 
+$S = \{...\}$ \\ \noindent
+and check for any possible pair of subsets \\
+$ A \subset S $ and $ B \subset S $ \\ \noindent
+where \\
+$x = \Sigma A = \Sigma B$ and $x \in S-(A \cup B)$ \\ \noindent
+If such a pair of subsets exist the program will output a truthy boolean. If no such sets exist the program will conclude with no output.
+
+\subsection{Restrictions and Considerations}
+Because this project is an exercise in the Functional Programming Paradigm several restrictions have been made to the implementation of this program. First, the operations available will be limited to: \\
+\singlespacing
+\begin{itemize}
+	\item Named Variables
+	\item Integer Primitives
+	\item Basic Comparisons ( = , < , > , and , or , null?)
+	\item If-Else Operators
+	\item Arithmetic Operators
+	\item Scheme Operations 
+		\subitem car
+		\subitem cdr
+	\item The User-Defined "has-subtarget?" Function
+\end{itemize}
+\doublespacing
+
+\subsection{Algorithm}
+\begin{algorithm}[H]
+	\begin{algorithmic}
+		\State \textbf{Function} Find Subset:
+		\State \textbf{Input:} \{...\} $S$, Integer $A$, Integer $B$, \{..\} $C$
+		\If {$S$ has \emph{any} elements}
+			\State Iterative Recursive Call:
+			\State $\cdot$ Find Subset ( $S\{\}-S_0$ , $A+S_0$ , $B$ , $C\{\}$ )
+			\State $\cdot$ Find Subset ( $S\{\}-S_0$ , $A$ , $B+S_0$ , $C\{\}$ )
+			\State $\cdot$ Find Subset ( $S\{\}-S_0$ , $A$ , $B$ , $C\{\}+S_0$ )
+		\ElsIf {Input is Testable*}
+			\State \textbf{Call Function:} Has Target Number(<Target Number , Set):
+				\If {Any Number in <Set> = <Target Number>}
+					\State \textbf{Return:} \#t
+				\EndIf
+		\Else {$\implies$ Function has no further iterations, and is not testable.}
+			\State Return Nothing 
+		\EndIf
+		\State \textbf{End} Find Subset
+		\State
+		\State \textbf{*}Input is \emph{Testable} if:
+			\State $A>0$
+			\State $A=B \implies B>0$
+			\State List $C$ is not Empty
+	\end{algorithmic}
+	\caption{}
+\end{algorithm}
+
+\clearpage
+\subsection{Efficiency}
+This program was built around solving the problem at hand with the simplest and shortest code possible; as a result the efficiency does suffer. Factors that reduced or impacted efficiency follow:
+\begin{itemize}
+	\item The program will continue even after the first \#t is returned. As such it will examine each testable iteration.
+	\item The process for producing iterations preserves order and will test combinations that are equivalent separately.
+	\subitem $S\{1,1,2,2\}$ will return \#t because $\{1,1\}$ and $\{2\}$ both sum to 2.
+	\subitem $S\{1_a,1_b,2_c,2_d\}$ will produce subsets $A=\{1_a,1_b\}$ which will evaluate \#t for both $B=\{2_c\}$ and $B=\{2_d\}$ which in turn will produce another pair of true results when the values given to A and B are swapped.
+	\subitem As a result four \#t are returned even though each is the result of equivalent subsets.
+	\item Once called, the function will "spool-up" a number of recursive calls until they are resolvable and can be disposed of. Once "spooled" the stack will generally contain $3n+1$ calls to the 'has-subtarget?' function.
+\end{itemize}
+$F(n) = \mathcal{O}(3^n) = \Theta(3^n) = \Omega(3^n)$
+\clearpage
+\subsection{Source Code}
+\begin{minted}{scheme}
+(define has-target-num?
+   (lambda (Sum Set)
+      (if (member Sum Set) (display #t) (display ""))))
+
+(define (has-subtarget? Lst SubA SubB Holder)
+  (cond
+    ((eqv? Holder 0)(has-subtarget? Lst SubA SubB '()))
+    ((not(null? Lst)) ;do recursion?
+      (begin
+        (has-subtarget? (cdr Lst) (+ SubA (car Lst)) SubB Holder)
+        (has-subtarget? (cdr Lst) SubA (+ SubB (car Lst)) Holder)
+        (has-subtarget? (cdr Lst) SubA SubB (append Holder (list(car Lst))))))
+    ((and(not(null? Holder))(and(not(null? SubA))(= SubA SubB))) ;testable?
+      (has-target-num? SubA Holder))
+    ))
+\end{minted}
+\end{document}
