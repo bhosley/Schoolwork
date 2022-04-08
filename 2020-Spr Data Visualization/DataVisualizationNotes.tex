@@ -1,0 +1,913 @@
+\documentclass[]{article}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+
+%opening
+\title{}
+\author{}
+
+\begin{document}
+\section{R-Language Basic Syntax}
+\subsection{Scripting and Preamble}
+	\begin{minted}{r}
+?hist
+help.search("search term")
+	\end{minted}
+Input/Output
+	\begin{minted}{r}
+install.packages("Package Name")
+library("Package Name")
+
+data <- read.csv("\filePath\fileName.csv")
+	\end{minted}
+
+\subsection{Data}
+	\begin{minted}{r}
+D <- read.table(“path”,sep=“,”,header=TRUE)
+D\$Column
+d <- c(1,2,3,4)
+# Defining a column vector
+m <- cbind(c1,c2,c3)
+# Binding a number of columns into a matrix
+# Must be the same data type
+df <- data.frame(x1,x2,x3)
+# Data frames can hold multiple data types
+v <- rnorm(100,5,2)
+# 100 numbers, mean of 5, SD of 2
+	\end{minted}
+
+\subsection{Functions}
+	\begin{minted}{r}
+expr <- function(x,y){
+	statements
+	return(result)
+}
+
+for(i in 1:n){
+	statement
+}
+
+while (test_expression) {
+	statement
+}
+
+repeat {
+	statement
+}
+
+ifelse(condition, truthy return, falsey return)
+
+if (test_expression) {
+	statement
+} else {
+	statement
+}
+	\end{minted}
+
+\subsection{Import/Export}
+	\begin{minted}{r}
+write.table(dataset, path, sep=“,”, row.names=FALSE, col.names=FALSE)
+# Exports csv
+	\end{minted}
+\section{Regular Plots}
+\subsection{Basic ggplot2}
+Boxplot
+\begin{minted}{r}
+plot(xData, yData)
+boxplot(DataSource, aes(x = xData, y = yData)) + geom_boxplot()
+# In either case xData is a vector of FACTORS. (~Qualitative or grouped items)
+# ex: Pokemon EV ratings: Okay, Good, Fairly Good, Very Good, Excellent, Perfect
+boxplot(yData ~ xData,data =DataSource)
+boxplot(DataSource, aes(x = xData, y = yData, fill = xData)) + 
+	geom_boxplot(outlier.color = "black", outlier.shape = 16, outlier.size = 2)
+# This will fill each of multiple xData-based box and whiskers with a different color
+\end{minted}
+Function Curve
+\begin{minted}{r}
+curve(x=y)
+curve(func1(x), from=xMin, to=xMax)
+# To add more lines
+curve(func2(), add = TRUE, col = "color")
+\end{minted}
+
+\section{Bar Graphs}
+
+\subsection{Parameters}
+\begin{minted}{r}
+ggplot(DataSet, 
+	aes(
+		x= xData,
+		y= yData,
+		fill= zData  ))
+\end{minted}
+\begin{tabular}{l l}
+	Factors: & Bar charts are better for Categorical data \\
+	Bins: & x= factor(data) \\
+	Fill: & Will divide data by the passed column.  \\
+\end{tabular}
+
+\begin{minted}{r}
++ geom_bar( ... )
+	stat= "",
+	fill= "",
+	color= "",
+	position= "",
+	width= 0.9
+\end{minted}
+\begin{tabular}{l l}
+	stat: & the name of the column that the bars will be labeled from \\
+	fill: & Infill color \\
+	color: & Outline color \\
+	position:" & "dodge" will change bars from stacked to adjacent \\
+	width: & Default, 0.9; width of bars \\
+\end{tabular}
+
+\begin{minted}{r}
++ geom_text( ... ) 
+	aes(label= xData),
+	color= "",
+	y= i,
+	vjust= i
+	position= position_dodge()
+\end{minted}
+\begin{tabular}{l l}
+	label: & the column name from which the label data will be derived \\
+	color: & color of the text \\
+	y: & sets the height of the label on the bar \\
+	vjust; & vertical justify; -0.2 puts it just above bar, 1.5 just below \\
+\end{tabular}
+
+\begin{minted}{r}
++ guides(fill = guide_legend(reverse=TRUE))
++ scale_fill_brewer(palette= "Pastel1")
++ scale_fill_manual(values:c("#669933", "#FFCC66"))
+\end{minted}
+\begin{tabular}{l l}
+	guides: & Control things relating to legend; shown is how to reverse order \\
+	brewer: & Uses palettes for coloring \\
+	manual:	& Allows custom color palettes \\
+\end{tabular}
+
+\subsection{Examples}
+
+\includegraphics[width=0.5\linewidth]{"Bar Chart 4"}
+\includegraphics[width=0.5\linewidth]{"Bar Chart 3"}
+\begin{minted}{r}
+# 1 Stacked; default
+# 2 geom_bar(position= "dodge")
+\end{minted}
+\includegraphics[width=0.5\linewidth]{"Bar Chart 2"}
+\includegraphics[width=0.5\linewidth]{"Bar Chart 5"}
+\begin{minted}{r}
+# 3 aes(x = reorder(xData, yData), y = yData)
+# 4 geom_text(aes(label=Weight),vjust=-0.2)
+\end{minted}
+
+\subsection{Proportional Stacked Graph:}
+\includegraphics[width=0.6\linewidth]{"Proportional Bar Chart"}
+\begin{minted}{r}
+library("plyr")
+ddply(cabbage_exp,"Date",transform,percent_weight=Weight/sum(Weight)*100)
+# apply as D<-ddply(...)
+ddply(DataSource,"Split_Data_By_This",transform,new_col_name=expr())
+\end{minted}
+
+\subsection{Cleveland Dot Plot:}
+\includegraphics[width=0.5\linewidth]{"Cleveland Dot Plot 1"}
+\includegraphics[width=0.5\linewidth]{"Cleveland Dot Plot 2"}
+\begin{minted}{r}
+library(gcookbook)
+tophit <-tophitters2001[1:25, ] 
+ggplot(tophit,aes(x=avg,y=reorder(name,avg))) 
+	+ geom_point(size=3) 
+	+ theme_bw() 
+	+ theme(panel.grid.major.x =element_blank(), 
+		panel.grid.minor.x =element_blank(), 
+		panel.grid.major.y =element_line(
+				colour="grey60",
+				linetype="dashed"))
+\end{minted}
+Graph 2:
+\begin{minted}{r}
+nameorder <-tophit$name[order(tophit$lg,tophit$avg)]
+tophit$name <-factor(tophit$name,levels=nameorder)
+ggplot(tophit,aes(x=avg,y=name)) 
+	+ geom_segment(aes(yend= name), xend= 0, colour= "grey50") 
+	+ geom_point(size= 3, aes(colour= lg)) 
+	+ scale_colour_brewer(palette="Set1",limits=c("NL","AL"),guide=FALSE) 
+	+ theme_bw() 
+	+ theme(panel.grid.major.y= element_blank()) 
+	+ facet_grid(lg ~ ., scales= "free_y",space= "free_y")
+\end{minted}
+\begin{tabular}{l l}
+	geom segment: & Makes the bar line; xend sets it to end at the point \\
+	brewer: 	& Setting palette, setting league labels, eliminating the legend \\
+	theme: 		& Set white background, setting grid \\
+	facet grid: & Sorts and labels based on a facet; in this case lg (Player's League) \\
+\end{tabular}
+
+\section{Line Graphs}
+
+\subsection{Parameters}
+\begin{minted}{r}
+ggplot(DataSet, 
+	aes(
+		x= xData, 
+		y= yData, 
+		fill= "", 
+		order= desc("")))
+\end{minted}
+\begin{tabular}{l l}
+	Line Graphs & Typically represent data across a continuum \\
+	fill('color'): & Colors in the area below the plot \\
+	order: & Allows you to swap order of Stacked Area graph \\
+\end{tabular}
+
+\begin{minted}{r}
++ geom_line( ... )
+	position_dodge= i,
+	linetype= "dashed",
+	size= i,
+	color= "blue"
+\end{minted}
+\begin{tabular}{l l}
+	position\_dodge(0.9): & 
+		offsets overlapped data, prevents collision of multiple lines \\
+	linetype: & Style of line (solid, dashed, dotted, etc)\\
+	size(i): & Thickness of line \\
+\end{tabular}
+
+\begin{minted}{r}
++ geom_point( ... )
+	position_dodge= i,
+	size= i,
+	color= "",
+	shape= i,
+	fill= ""
+\end{minted}
+\begin{tabular}{l l}
+	position\_dodge(0.9): & offsets overlap, prevents collision of multiple points \\
+	shape: & Integer index to different shapes \\
+	color: & Outline color \\
+	fill: & Infill color \\
+\end{tabular}
+
+\begin{minted}{r}
++ geom_area( ... )
+	color= "",
+	fill= "",
+	alpha= 0.i
+\end{minted}
+\begin{tabular}{l l}
+	color: & Outline color \\
+	fill: & Infill color \\
+	alpha: & transparency (lower i is more transparent) \\
+\end{tabular} \\
+* If you want to avoid lines on the sides of the area, draw a geom\_line over top instead of using the color option here.
+
+\begin{minted}{r}
++ expand_limits(y= i, x= j)
++ scale_color_brewer(palette= "")
++ scale_fill_manual(c(" "," "))
++ scale_y_log10(),
++ geom_ribbon()
+\end{minted}
+\begin{tabular}{l l}
+	expand limits: & Increases the shown axis limits \\
+	scale color brewer: & Using built-in palette options \\
+	scale fill manual(): & c('','') Custom Palette options \\
+	scale y log10: & Will change the y scale to logarithmic \\
+	geom ribbon: & (ymin=,ymax=) a confidence area bound by those functions \\
+\end{tabular} \\
+*Specify Points after line so that they are drawn on top
+
+\subsection{Multiple Lines}
+\begin{minted}{r}
+library(plyr)
+tg <-ddply(ToothGrowth,c("supp", "dose"), summarise, length=mean(len))
+\end{minted}
+Creates a dataframe in which groups are broken up by supp(ly) and measured by dose; \\
+Summarise takes the average of overlapping points.
+
+\subsection{Examples}
+	\includegraphics[width=0.5\linewidth]{"Line Graph 1"}
+	\includegraphics[width=0.5\linewidth]{"Line Graph 2"}
+	\includegraphics[width=0.5\linewidth]{"Line Graph 3"}
+	\includegraphics[width=0.5\linewidth]{"Line Graph 4"}
+\begin{minted}{r}
+# 1 geom_line() + geom_point()
+# 2 As above + scale_y_log10()
+# 3 Graphed with a ddply transform
+# 4 Graphed with a geom_area(fill())
+\end{minted}
+
+	\includegraphics[width=0.5\linewidth]{"Line Graph 5"}
+	\includegraphics[width=0.5\linewidth]{"Line Graph 6"}
+\begin{minted}{r}
+ggplot(uspopage,aes(x=Year,y=Thousands,fill=AgeGroup)) 
+	+ geom_area(colour="black",size=.2,alpha=.4) 
+	+ scale_fill_brewer(palette="Blues",breaks=rev(levels(uspopage$AgeGroup)))
+\end{minted}
+
+	\includegraphics[width=0.5\linewidth]{"Line Graph 7"}
+	\includegraphics[width=0.5\linewidth]{"Line Graph 8"}
+\begin{minted}{r}
+ggplot(clim,aes(x=Year,y=Anomaly10y)) 
+	+ geom_ribbon(aes(ymin=Anomaly10y-Unc10y,ymax=Anomaly10y+Unc10y),alpha=0.2) 
+	+ geom_line()
+ggplot(clim,aes(x=Year,y=Anomaly10y)) 
+	+ geom_line(aes(y=Anomaly10y-Unc10y),colour="grey50",linetype="dotted") 
+	+ geom_line(aes(y=Anomaly10y+Unc10y),colour="grey50",linetype="dotted") 
+	+ geom_line()
+\end{minted}
+
+\section{Scatter Plots}
+\subsection{Parameters}
+\begin{minted}{r}
+ggplot(DataSet,
+	aes(
+		x= xData,
+		y= yData,
+		color= "col",
+		shape= "col",
+		size= "col"		
+\end{minted}
+\begin{tabular}{l l}
+	Color: & Sort by color based on 'col' data \\
+	Shape: & Sort by shape based on 'col' data \\
+	Size: & Will make a Balloon plot \\
+\end{tabular}
+
+\begin{minted}{r}
++ geom_point(...)
+	shape= i,
+	size= 2,
+	color= "",
+	alpha= i,
+	position= "jitter",
+	position= position_jitter(width= i, height= i)
+\end{minted}
+\begin{tabular}{l l}
+	alpha: & Transparency of the point (Useful to combat over-plotting) \\
+	Jittering: & Gives data a lateral offset, combats over-plotting and looks good \\
+\end{tabular}
+
+\begin{minted}{r}
++ stat_smooth(...)
+	method= lm,
+	level= i,
+	se= TRUE,
+\end{minted}
+\begin{tabular}{l l}
+	Stat Smooth: & Fits a linear regression line and 95\% confidence interval \\
+	Method: & auto: Chosen based on largest group available \\
+		& loess: local weighted polynomial (for <1000) \\
+		& lm: Linear Method \\
+		& glm: gam:  \\
+	Level: & Sets the confidence interval \\
+	SE: & True is default; False turns off confidence interval \\
+\end{tabular}
+
+\begin{minted}{r}
++ scale_color_brewer(Palette)
++ scale_shape_manual(i,j,...)
++ stat_bin2d(bins= OptionalDef)
++ stat_binhex()
++ scale_fill_gradient(low= "color", high= "color", limits= c(i,I)
++ geom_line(data= predicted, ...)
++ annotate("text", label= "...", parse= TRUE, x=, y= )
++ geom_text(aes(), size, vjust, hjust, ...)
+\end{minted}
+\begin{tabular}{l l}
+	Stat Bin 2D: & condense overplotted points into bins \\
+	Stat Bin Hex: & Like 2d but hexagons instead of squares \textbf{Lib(hexbin)} \\
+	Scale Gradient & Build a gradient between the two colors matching the two limits \\
+	Geom Line: & A standard line can be overlaid; if data setting is predicted \\
+	Annotate: & Place a note at the define coordinates \\
+		& Parse: will try to properly show math formula \\
+	Geom Text & Will label all of the data as provided \\
+\end{tabular}
+
+\subsection{Examples}
+\includegraphics[width=0.5\linewidth]{"Dot Plot 1"}
+\includegraphics[width=0.5\linewidth]{"Dot Plot 2"}
+\begin{minted}{r}
+# 1 Standard
+# 2 geom_point( alpha = 0.1 )
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Dot Plot 3"}
+\includegraphics[width=0.5\linewidth]{"Dot Plot 4"}
+\begin{minted}{r}
+# 3 geom_point( alpha = 0.01 )
+# 4 + stat_bin2d()
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Dot Plot 5"}
+\includegraphics[width=0.5\linewidth]{"Dot Plot 6"}
+\begin{minted}{r}
+# 5 + stat_binhex()
+# 6 + geom_point(position= position_jitter(width=.5,height=0)
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Dot Plot 7"}
+\includegraphics[width=0.5\linewidth]{"Dot Plot 8"}
+\begin{minted}{r}
+# 7 + geom_smooth()
+# 8 + geom_line(data= predicted)
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Dot Plot 9"}
+\includegraphics[width=0.5\linewidth]{"Dot Plot 10"}
+\begin{minted}{r}
+# 9 + annotate("text",x=4350,y=5.4,label="Canada") 
+	+ annotate("text",x=7400,y=6.8,label="USA")
+# 10 + geom_text(aes(x=healthexp+100,label=Name),size=4,hjust=0)
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Dot Plot 11"}
+\includegraphics[width=0.5\linewidth]{"Dot Plot 12"}
+\begin{minted}{r}
+# 11 ggplot(..., size= GDP) 
+# 12 pairs(countries2009[2:5]) # Dot Plot Matrix
+\end{minted}
+
+\section{Distribution Summaries}
+\subsection{Histograms}
+\begin{minted}{r}
+ggplot(DataSet,
+	aes(
+		x= ""
++ geom_histogram(...)
+	binwidth= i,
+	fill= "",
+	color= "",
+	alpha= 0.i,
+	position= "",
+\end{minted}
+\begin{tabular}{l l}
+	Histograms: & DataSet can be null if x is passed a complete vector \\
+	Binwidth: & The range of data that each bar will cover \\
+	Fill: & Either a color or a Factor \\
+	Position: & "identity": Will overlay two sets of data \\
+		& "dodge": Positions data sets adjacent \\
+\end{tabular}
+\begin{minted}{r}
++ facet_grid(...)
+	factor ~ .,
+	scales= "free"
+\end{minted}
+\begin{tabular}{l l}
+	Factor: & The factor by which the facets will divide the data \\
+	Scales: & Sets scaling. Free lets each facet scale to fit \\
+\end{tabular} \\
+
+\includegraphics[width=0.5\linewidth]{"Histogram 1"} 
+\includegraphics[width=0.5\linewidth]{"Histogram 2"} \\
+\begin{minted}{r}
+# 1 
+ggplot(birthwt,aes(x=bwt)) 
+	+ geom_histogram(fill="white",colour="black") + facet_grid(smoke ~ .)
+# 2 
+library(MASS);  birthwt1$smoke <-factor(birthwt1$smoke)
+ggplot(birthwt1,aes(x=bwt, fill=smoke)) 
+	+ geom_histogram(position="identity", alpha=0.4)
+\end{minted}
+
+\subsection{Density Curves}
+\begin{minted}{r}
+ggplot(DataSet,
+	aes(
+		x= "",
+		fill= "",
+		color= ""
++ geom_density(...)
+	
++ geom_line(...)
+	stat= "density",
+	adjust= i,
+	
+\end{minted}
+\begin{tabular}{l l}
+	Geom Density: & Draws the density curve as a complete polygon (incl. sides) \\
+	Geom Line: & Will do a density line without lines on sides and bottom \\
+	Adjust: & Determine bandwidth and smoothing \\
+\end{tabular} \\
+* Using Geom first then line allows you to fill the area 
+and then map the curve as an overlay. \\
+** Overlay density about a histogram to show how prediction curve
+meets observations. Use aes(y=..density..) in the histogram options.\\
+\includegraphics[width=0.5\linewidth]{"Density Curve 1"}
+\includegraphics[width=0.5\linewidth]{"Density Curve 2"} \\
+\begin{minted}{r}
+# 1 
+ggplot(faithful,aes(x=waiting)) 
+	+ geom_line(stat="density", adjust=.25,colour="red") 
+	+ geom_line(stat="density") 
+	+ geom_line(stat="density", adjust=2,colour="blue")
+# 2 
+ggplot(faithful,aes(x=waiting, y=..density..)) 
+	+ geom_histogram(fill="cornsilk", colour="grey60",size=.2) 
+	+ geom_density() 
+	+ xlim(35, 105)
+\end{minted}
+
+\subsection{Box Plot}
+\begin{minted}{r}
+ggplot(DataSet,
+	aes(
+		x= "",
+		y= ""
++ geom_boxplot(...)
+	outlier.size= i,
+	outlier.shape= i,
+	notch= "TRUE" or "FALSE"
+\end{minted}
+\begin{tabular}{l l}
+	Outlier: & Controls Outlier point options \\
+	Notch: & Shrinks the width of the median point for easier comparison \\	
+\end{tabular} \\
+\includegraphics[width=0.5\linewidth]{"Boxplot 1"}
+\includegraphics[width=0.5\linewidth]{"Boxplot 2"} \\
+\begin{minted}{r}
+# 1 ggplot(birthwt,aes(x=factor(race),y=bwt)) + geom_boxplot(notch=TRUE)
+# 2 ggplot(birthwt, aes(x=factor(race),y=bwt)) + geom_boxplot() 
+	+ stat_summary(fun.y="mean", geom="point", shape=23,size=3,fill="white")
+\end{minted}
+
+\subsection{Violin Plot}
+\begin{minted}{r}
+ggplot(DataSet,
+	aes(
+		x= "",
+		y= ""
++ geom_violin(...)
+	trim= "TRUE",
+	scale= "count",
+	adjust= i
+\end{minted}
+\begin{tabular}{l l}
+	Trim: & Trims the tails off either end of the plot (default is true) \\
+	Scale: & Changes the scale; Normal is each plot having the same total area \\
+	Adjust: & Smoothing; Less smoothing < 1 < More Smoothing \\
+\end{tabular}
+\includegraphics[width=0.5\linewidth]{"Violin Plot 1"}
+\includegraphics[width=0.5\linewidth]{"Violin Plot 2"} \\
+\begin{minted}{r}
+# 1 ggplot(heightweight,aes(x=sex,y=heightIn)) 
+	+ geom_violin() 
+	+ geom_boxplot(width=.1,fill="black", outlier.colour=NA) 
+	+ stat_summary(fun.y=median, geom="point",fill="white", shape=21,size=2.5)
+# 2 ggplot(heightweight,aes(x=sex,y=heightIn,fill=sex)) 
+	+ geom_violin(alpha=0.4, trim="FALSE")
+\end{minted}
+
+\subsection{Frequency Dot Plot}
+\begin{minted}{r}
+ggplot(DataSet,
+	aes(
+		x= "",
++ geom_dotplot(...)
+	binwidth= i,
+	stackdir= "",
+\end{minted}
+\begin{tabular}{l l}
+	Binwidth: & Acts like Histo-Binwidths \\
+	Stack Direction: & Manner in which dots stack \\
+		& center, center\_whole, 
+\end{tabular} \\
+\includegraphics[width=0.5\linewidth]{"Frequency Dot Plot 1"}
+\includegraphics[width=0.5\linewidth]{"Frequency Dot Plot 2"} \\
+\begin{minted}{r}
+# 1 ggplot(countries2009,aes(x=infmortality))
+	+ geom_dotplot(binwidth=.25,stackdir="centerwhole") 
+	+ scale_y_continuous(breaks=NULL) 
+	+ theme(axis.title.y=element_blank())
+# 2 ggplot(heightweight, aes(x=sex,y=heightIn)) 
+	+ geom_dotplot(binaxis="y",binwidth=.5,stackdir="center")
+\end{minted}
+
+\subsection{2-Dimensional Density Plot}
+\begin{minted}{r}
+ggplot(DataSet,
+	aes(
+		x= "",
++ stat_density2d(...)
+\end{minted}
+\begin{tabular}{l l}
+\end{tabular} \\
+\includegraphics[width=0.5\linewidth]{"2D Density 1"}
+\includegraphics[width=0.5\linewidth]{"2D Density 2"} \\
+\begin{minted}{r}
+# 1 ggplot(faithful, aes(x=eruptions,y=waiting))
++ geom_point() + stat_density2d()
+# 2 ggplot(faithful, aes(x=eruptions,y=waiting))
++ stat_density2d(aes(fill=..density..), geom="raster", contour=FALSE, h=c(.5,5))
+\end{minted}
+
+\section{Annotations}
+
+\subsection{Text}
+\begin{minted}{r}
++ annotate("text",
+	x= i,
+	y= i, 
+	label= "",
+	color= "",
+	alpha= 0.i,
+	size= i,
+	family= "",
+	fontface= "",
+	parse= FALSE, TRUE, F, or T,
+\end{minted}
+\begin{tabular}{l l}
+	x,y: & Sets the center of the text, uses graph's scale \\
+		& Inf, -Inf, mean(range(data\$stat)) \\
+	Label: & Contents of the annotation \\
+	Family: & "serif", \\
+	Fontface: & "italic", \\
+	Parse: & Will format a math formula for show from the label \\
+		& 'Single Quotes' to escape parser \\
+\end{tabular} \\
+
+\subsection{Lines}
+\begin{minted}{r}
++ geom_hline(yintercept= i)
++ geom_vline(xintercept= i)
++ geom_abline(intercept= i, slope= i)
++ annotate("segment", x=i,xend=i,y=i,yend=i)
+	color= "",
+	size= i,
+	linetype= i,
+\end{minted}
+\begin{tabular}{l l}
+\end{tabular} \\
+
+\subsection{Showing Error}
+\begin{minted}{r}
++ geom_errorbar(aes(ymin=Stat-se,ymax=Stat+se) ... )
+\end{minted}
+\begin{tabular}{l l}
+\end{tabular} \\
+
+
+\subsection{Examples}
+\includegraphics[width=0.5\linewidth]{"Annotate 1"}
+\includegraphics[width=0.5\linewidth]{"Annotate 2"}
+\begin{minted}{r}
+# 1
+p + annotate("text", x=3,y=48, label="Group 1", 
+	family="serif", fontface="italic", colour="darkred", size=3) 
+  + annotate("text", x=4.5,y=66, label="Group 2", 
+  	family="serif", fontface="italic", colour="darkred", size=3)
+# 2
+p + annotate("text", x=2,y=0.3,parse=TRUE, 
+	label="frac(1, sqrt(2 * pi)) * e ^ {-x^2 / 2}")
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Annotate 3"}
+\includegraphics[width=0.5\linewidth]{"Annotate 4"}
+\begin{minted}{r}
+# 3
+p + geom_hline(yintercept=60) 
+  + geom_vline(xintercept=14) 
+  + geom_abline(intercept=37.4,slope=1.75)
+# 4
+p + geom_hline(aes(yintercept=heightIn,colour=sex), 
+	data=hw_means, linetype="dashed", size=1)
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Annotate 5"}
+\includegraphics[width=0.5\linewidth]{"Annotate 6"}
+\begin{minted}{r}
+# 5
+p +annotate("segment",x=1850,xend=1820,y=-.8,yend=-.95,colour="blue",size=2,
+	arrow=arrow()) 
+  +annotate("segment", x=1950,xend=1980,y=-.25,yend=-.25,
+  	arrow=arrow(ends="both",angle=90,length=unit(.2,"cm")))
+# 6
+p <-ggplot(subset(climate, Source=="Berkeley"), aes(x=Year,y=Anomaly10y)) 
+  + geom_line()
+p + annotate("rect", xmin=1950,xmax=1980,ymin=-1,ymax=1,alpha=.1, fill="blue")
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Annotate 7"}
+\includegraphics[width=0.5\linewidth]{"Annotate 8"}
+\begin{minted}{r}
+# 7
+ggplot(cabbage_exp,aes(x=Date,y=Weight,fill=Cultivar)) 
++ geom_bar(stat= "identity",position="dodge") 
++ geom_errorbar(aes(ymin=Weight-se,ymax=Weight+se), 
+	position=position_dodge(0.9),width=.2) 
+# 8
+p <-ggplot(mpg,aes(x=displ,y=hwy)) +geom_point() + facet_grid(.~ drv)
+f_labels <-data.frame(drv =c("4", "f", "r"), label =c("4wd", "Front", "Rear"))
+p + geom_text(x=6,y=40,aes(label=label),  data=f_labels)
+# If you use annotate(), the label will appear in all facets
+p + annotate("text", x=6,y=42,label="label text")
+\end{minted}
+
+\section{Axes}
+
+\subsection{Basic Operations}
+\begin{minted}{r}
++ ylim(min,max)
++ xlim(max,min) # Reverse values for a reversed axis
++ coord_flip()
++ scale_x_discrete(limits=rev(levels( DAT$X )))
+	limits= c(cat1, cat2, ...)
++ scale_y_continuous(...)
+	limits= c(min,max),
+	breaks= TRUE or FALSE,
+	breaks= seq(beginning, end, interval),
+	breaks= c(a,b,c,d),
+	name= "Axis Label"
++ scale_y_reverse(limits= c(i,i))
+\end{minted}
+\begin{tabular}{l l}
+	Coord Flip: & Swaps x and y axes \\
+	Discrete Axis: & \\
+		& Reverse Limits: Reverses order of a set of Factors \\	
+		& c() To manually define order of Categorical Data \\
+	Continuous: & \\
+	 	& Breaks: Sets whether or not axis will have lines \\
+\end{tabular} \\
+
+\subsection{Scaling and Labels}
+\begin{minted}{r}
++ coord_fixed()
+	ratio= i	# y=ix
++ theme( ... )
+	axis.text.y =element_blank()
+		=element_text(
+			angle= i,
+			vjust= i,
+			hjust= i,
+			family= "",
+			face= "",
+			color= "",
+			size= i
+	axis.ticks.x =element_blank()
+	axis.title.y
+	axis.line
++ xlab("Label Literal")
++ labs(x= "", y=""
+\end{minted}
+\begin{tabular}{l l}
+	Fixed Coordinates: & Equal scaling on both Axes \\
+	Axis Text: & Leaves tick marks, but removes labels \\
+	Axis. & Items may be addressed as both, .x, or .y \\
+\end{tabular} \\
+
+
+
+\subsection{Examples}
+\includegraphics[width=0.5\linewidth]{"Axes 1"}
+\includegraphics[width=0.5\linewidth]{"Axes 2"} \\
+\begin{minted}{r}
+# 1 
++ scale_y_continuous(breaks=c(50, 56, 60, 66, 72), 
+	labels=c("Tiny", "Really\nshort", "Short", "Medium", "Tallish"))
+# 2 library(scales)
+ggplot(Animals,aes(x=body,y=brain,label=rownames(Animals))) + 
+	geom_text(size=3) + 
+	annotation_logticks() + 
+	scale_x_log10(breaks = trans_breaks("log10", function(x) 10^x),  
+		labels = trans_format("log10",math_format(10^.x)), 
+		minor_breaks =log10(5) + -2:5) + 
+	scale_y_log10(breaks =trans_breaks("log10", function(x) 10^x), 
+		labels = trans_format("log10",math_format(10^.x)), 
+		minor_breaks =log10(5) + -1:3) + 
+	coord_fixed() + 
+	theme_bw()
+\end{minted}
+
+\includegraphics[width=0.5\linewidth]{"Axes 3"}
+\includegraphics[width=0.5\linewidth]{"Axes 4"} \\
+\begin{minted}{r}
+# 3
+ggplot(wind,aes(x=DirCat,fill=SpeedCat)) + 
+	geom_histogram(binwidth=15,origin=-7.5) + 
+	coord_polar() + 
+	scale_x_continuous(limits=c(0,360))
+# 4
+ggplot(www,aes(x=minute,y=users)) +
+	geom_line() + 
+	scale_x_continuous(name="time",breaks=seq(0, 100,by=10),
+		labels=timeHM_formatter)
+\end{minted}
+
+\section{Overall Appearances}
+
+\subsection{Title}
+\begin{minted}{r}
++ ggtitle( "..." )
++ labs(title= "" )
++ theme(plot.title= "")
+\end{minted}
+\begin{tabular}{l l}
+\end{tabular}
+
+\subsection{Themes}
+\begin{minted}{r}
++ theme_grey(...)
++ theme_bw(...)
+	<Options from this entire packet>
+my_theme <- theme_bw() + theme( ... )
+\end{minted}
+\begin{tabular}{l l}
+\end{tabular}
+
+\subsection{Examples}
+\includegraphics[width=0.5\linewidth]{"Theme 1"}
+\includegraphics[width=0.5\linewidth]{"Theme 2"} \\
+\begin{minted}{r}
+# 1 p + 
+theme(panel.grid.major = element_line(colour="red"), 
+	panel.grid.minor = element_line(colour="red", linetype="dashed", size=0.2),
+	panel.background = element_rect(fill="lightblue"), 
+	panel.border = element_rect(colour="blue", fill=NA, size=2))
+# 2 p + 
+	facet_grid(sex ~ .) +
+	theme(strip.background =element_rect(fill="pink"), 
+		strip.text.y =element_text(size=14,angle=-90,face="bold"))
+\end{minted}
+
+\section{Legends}
+\begin{minted}{r}
++ guides( ... ) 
+	fill= FALSE #To remove legend
++ theme(
+	legend.position= "none" # To Remove
+	legend.position= "top", "bottom"
+	legend.position= c(i,i) # Coordinates
+	legend.justification= c(i,i)
+	legend.background= element_rect(fill='', color='')
+	legend.background= element_blank()
+	legend.key= element_blank()	# Remove background behind key-symbols
+	legend.title= element_text(...)
+		face= "",
+		family="",
+		color="",
+		size=""
+	legend.text= element_text(...) # As Above
+\end{minted}
+\begin{tabular}{l l}
+	Position: & Coordinate Space starts (0,0) at the bottom left, 
+				and goes to (1,1) at the top right. \\
+	Justification:& Which part of the legend is treated as the positioning point.\\
+	Key: & A box around the key symbols in the legend. \\
+\end{tabular}
+
+\subsection{Examples}
+\includegraphics[width=0.5\linewidth]{"Legend 1"}
+\includegraphics[width=0.5\linewidth]{"Legend 2"} \\
+\begin{minted}{r}
+# 1 p + 
+scale_shape_discrete(labels=c("Female", "Male")) + 
+scale_color_discrete(labels=c("Female", "Male"))
+# 2 library(grid)
+p + 
+scale_fill_discrete(labels=
+	c("Control", "Type 1\ntreatment", "Type 2\ntreatment")) + 
+theme(legend.text=element_text(lineheight=.8), 
+	legend.key.height=unit(1, "cm")) 
+\end{minted}
+
+\section{General Use}
+
+Many Examples use: \\
+"library(gcookbook)" \\
+"library(MASS)" \\
+
+\subsection{Palettes}
+ColorBrewer Palettes \\
+\includegraphics[width=\linewidth]{"ColorBrewer"} \\
+Viridis Palettes \\
+\includegraphics[width=\linewidth]{"Viridis"} \\
+
+\section{Other Examples}
+\includegraphics[width=\linewidth]{"Viridis Demo 1"} \\
+\begin{minted}{r}
+ggplot(data.frame(x=rnorm(10000),y=rnorm(10000)), aes(x=x,y=y)) 
++ geom_hex() 
++ coord_fixed() 
++ scale_fill_viridis() 
++ theme_bw()
+\end{minted}
+
+\includegraphics[width=\linewidth]{"Viridis Demo 2"} \\
+\inputminted[]{r}{"Viridis Map Demo.rhistory"}
+
+
+\end{document}
+
+% Darling Cartogram
+% Demers Cartogram
+% Gridded Hex Cartogram
+% http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
