@@ -1,0 +1,35 @@
+\chapter{NumPy}
+\label{ch:NumPy}
+
+For this chapter we will be using:
+\begin{minted}{python}
+import numpy as np
+\end{minted}
+
+\section{Functions}
+
+\subsection{Generating Sets}
+\begin{minted}{python}
+np.arange(start, stop, step=1, dtype=none)
+\end{minted}
+Will return an ndarray, vs Python.range which returns a list. 
+arange goes from [start, stop); stop exclusive. 
+
+\subsection{Randomization}
+\begin{minted}{python}
+np.random.rand(x0,x1,...,xn)
+\end{minted}
+Rand() will return an $n$-Dimensional array,
+of $x$ length(s) of random floats between 0.0 and 1.0. 
+
+\section{Input/Output}
+\label{sec:NumPyIO}
+
+\subsection{Reading Files}
+
+\paragraph{Reading from a Text File}
+\begin{minted}{python}
+data = np.loadtxt('my_data.txt')
+X = data[:,0]
+Y = data[:,1]
+\end{minted}
