@@ -1,0 +1,66 @@
+\documentclass[a4paper,12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{multicol}
+
+\usepackage[cache=false]{minted}
+\graphicspath{ {./Images/} }
+\usepackage[hidelinks]{hyperref}
+\hypersetup{linktoc=all}
+
+
+
+\author{Brandon Hosley}
+\title{Data Science With Python}
+\date{2020}
+
+\raggedbottom
+
+\begin{document}
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+\part{Python}
+\include{./TeX_files/SetEnvironment}
+\include{./TeX_files/VanillaPython}
+\part{Math Modules}
+\include{./TeX_files/numPy}
+\part{Data Visualization}
+\include{./TeX_files/MatPlotLib}
+\include{./TeX_files/Seaborn}
+\include{./TeX_files/ggplot}
+\include{./TeX_files/Plotly}
+\include{./TeX_files/Altair}
+\include{./TeX_files/Bokeh}
+
+
+\backmatter
+% bibliography, glossary and index would go here.
+\end{document}
+
+%%% TODO
+Annotations/Labels/Legends
+Axes/Scales
+Overall Appearance
+%Plots
+Frequency Dot Plot
+Density Curves
+Box Plot
+Violin Plot
+2D Density Plot
+
+Sankey Plot
+
+% Cartograms:
+Dorling Cartogram
+Demers Cartogram
+
+\section{}
+\subsection{}
+\subsubsection{}
+\paragraph{}
+\subparagraph{}
