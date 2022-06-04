@@ -1,0 +1,104 @@
+\chapter{MatPlotLib}
+\label{ch:MatPlotLib}
+
+\section{Py Plot}
+\begin{minted}{python}
+import matplotlib.pyplot as plt
+# ... #
+plt.show
+\end{minted}
+Plots can be called multiple times on same instance of 
+pyplot for overlaying multiple items.
+
+\subsection{Line Plots}
+\includegraphics[width=0.5\linewidth]{SinCosPlot}
+\begin{minted}{python}
+plt.plot(X,Y)
+\end{minted}
+Plot will use a pair of Lists. 
+
+\subsection{Scatter Plots}
+\begin{minted}{python}
+plt.scatter(X,Y)
+\end{minted}
+Scatter will use a pair of Lists. 
+
+\subsection{Bar Charts}
+\begin{minted}{python}
+plt.bar(X,Y)
+plt.hbar(X,Y)
+\end{minted}
+Bar will use a pair of Lists. 
+
+\subsubsection{Multiple Bar Charts}
+\paragraph{Side-By-Side}
+\begin{minted}{python}
+plt.bar(X + 0.0, Y0, color = 'b', width = 0.5)
+plt.bar(X + 0.5, Y1, color = 'r', width = 0.5)
+\end{minted}
+For adjacent bars the X-axis will be used as the bottom.
+Therefore it will be necessary to adjust the placement laterally on the X.
+Likewise, it will be necessary to adjust the width of the bars to prevent overlap.
+
+\paragraph{Stacked Bar Charts}
+\begin{minted}{python}
+plt.bar(X,Y0, color = 'b')
+plt.bar(X,Y1, color = 'r', Bottom = Y0)
+\end{minted}
+For stacked bars the bottom of each bar will be the top of the previous bar.
+This can be done consecutively.  
+
+\paragraph{Back-to-back Bar Charts}
+\begin{minted}{python}
+plt.barh(X, Y0)
+plt.barh(X, -Y1)
+\end{minted}
+Back-to-back is as simple as making the y value of the second plot negative. 
+
+\subsection{Pie Charts}
+\begin{minted}{python}
+plt.pie(X)
+\end{minted}
+Pie takes a single List. 
+
+\subsection{Histograms}
+\begin{minted}{python}
+plt.hist(X, bins = 10)
+\end{minted}
+Histogram takes a single List; divides data into 10 bins by default. 
+
+\subsection{Boxplots}
+\begin{minted}{python}
+plt.boxplot(X)
+\end{minted}
+Boxplot takes a single List.
+
+\section{Colors}
+\label{sec:MPLColors}
+MatLibPlot will use HTML color names, or a Triplet/Quadruplet syntax.
+\begin{description}
+	\item[Triplet] (1.0,0.0,0.5) Scaled to $[0.0,1.0]$ (R,G,B)
+	\item[Quadruplet] Like a triplet but with transparency. (R,G,B,A)
+	\item[Color Names] b Blue; g Green; r Red; c Cyan; m Magenta; y Yellow; k Black; w White
+	\item[HTML Color Strings] \#RRGGBB ; 8bit values $[0-f]$
+	\item[Shades of Gray] color='.75'; Like Black with transparency
+\end{description}
+
+\subsection{Color Maps}
+\begin{minted}{python}
+import matplotlib.cm as cm
+\end{minted}
+
+\section{Labels}
+\begin{minted}{python}
+# create a figure and axis
+fig, ax = plt.subplots()
+
+ax.set_title('...')
+ax.set_xlabel('...')
+ax.set_ylabel('...')
+
+\end{minted}
+
+\section{Markers}
+\label{sec:mplMarkers}
