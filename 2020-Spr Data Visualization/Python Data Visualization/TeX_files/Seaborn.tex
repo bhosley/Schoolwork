@@ -1,0 +1,402 @@
+\chapter{Seaborn}
+\label{ch:Seaborn}
+
+Seaborn is a higher level extension of \hyperref[ch:MatPlotLib]{matplotlib}. It allows the abstraction of a number of primary functions while still allowign elective access to the lower level functions in matplotlib.
+
+\paragraph{Common Parameters}[itemsep=0pt]
+\begin{description}
+	\item[\{x,y\}=] Variable to assign to axes; from \emph{data} or vector
+	\item[hue=] Variable to assign different colors; from \emph{data} or vector
+	\item[size=] Variable to assign different sizes; from \emph{data} or vector
+	\item[style=] Variable to assign different shapes; from \emph{data} or vector
+	\item[data=] The dataframe to be referenced; dataframe
+	\item[palette=] Palette name, list, or dictionary
+	\item[cmap=] \hyperref[sec:MPLColors]{MPL colormap}
+	\item[hue\_order=] Specify the order of the palette; list
+	\item[hue\_norm=] Normalization applied to colored, numeric var; tuple
+	\item[sizes=] Specifies the sizes to use; list, dict, tuple
+	\item[size\_order=] Order of sizes to be used; list
+	\item[size\_norm=] Normalization applied to sized, numeric var; tuple
+	\item[markers=] Symbols to use as points; bool, list dict \hyperref[sec:mplMarkers]{(mpl markers)}
+	\item[orient=] Orientation of plots; 'v' or 'h'
+	\item[style\_order=] Order of the markers to be applied; list
+	\item[alpha=] Transparency applied to vars; float
+	\item[legend=] 'full', 'brief', or false
+	\item[ax] To pass in a mpl axis
+\end{description}
+
+\paragraph{Parameters Associated with Confidence Intervals}
+\begin{description}
+	\item[units=] Sampling unit identities; \{long\_form\_var\}
+	\item[estimator=] Method to aggregate similar values; Pandas module name
+	\item[ci=] Confidence interval for ribbon; int or 'sd' for Standard Deviation
+	\item[n\_boot=] Number of bootstraps to use for CI; int
+	\item[seed=] Rand seed for reproducible bootstrapping; int
+\end{description}
+
+\paragraph{Parameters Associated with Plot Grids}
+\begin{description}
+	\item[row,col=] Categories to determine the faceting of the grid
+	\item[col\_wrap=] 'Wrap' the column entries at this number; int
+	\item[row,col\_order=] The order to put the plots in; list of strings
+\end{description}
+
+\section{Relational Plots} 
+
+\subsection{Scatter Plot}
+\begin{minted}{python}
+seaborn.scatterplot(x=None, y=None, hue=None, style=None, 
+size=None, data=None, palette=None, hue_order=None, 
+hue_norm=None, sizes=None, size_order=None, size_norm=None, 
+markers=True, style_order=None, x_bins=None, y_bins=None, 
+units=None, estimator=None, ci=95, n_boot=1000, alpha='auto', 
+x_jitter=None, y_jitter=None, legend='brief', ax=None, **kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/scatterplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/scatterplot2}
+\begin{description}
+	\item[**kwargs] Keyword arguments passed to matplotlib.axes.Axes.scatter()
+\end{description}
+
+\subsection{Line Plot}
+\begin{minted}{python}
+seaborn.lineplot(x=None, y=None, hue=None, size=None, style=None, 
+data=None, palette=None, hue_order=None, hue_norm=None, sizes=None,
+size_order=None, size_norm=None, dashes=True, markers=None, 
+style_order=None, units=None, estimator='mean', ci=95, n_boot=1000, 
+seed=None, sort=True, err_style='band', err_kws=None, legend='brief', 
+ax=None, **kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/lineplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/lineplot2}
+\begin{description}
+	\item[dashes=] Controls line style; bool, list, dict
+	\item[sort=] Whether or not to sort items; bool
+	\item[err\_style=] the confidence interval ribbon; 'band' or 'bars'
+	\item[err\_kws=] Keywords passed to matplotlib.axes.Axes.fill\_between() \\ or matplotlib.axes.Axes.errorbar()
+	\item[**kwargs] Keyword arguments passed to matplotlib.axes.Axes.plot()
+\end{description}
+
+\subsection{Relational Plot Grid}
+\begin{minted}{python}
+seaborn.relplot(x=None, y=None, hue=None, size=None, style=None,
+data=None, row=None, col=None, col_wrap=None, row_order=None,
+col_order=None, palette=None, hue_order=None, hue_norm=None,
+sizes=None, size_order=None, size_norm=None, markers=None,
+dashes=None, style_order=None, legend='brief', kind='scatter',
+height=5, aspect=1, facet_kws=None, **kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/relplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/relplot2}
+\begin{description}
+	\item[kind=] Type of plots to draw; 'scatter', 'line'
+\end{description}
+
+\section{Categorical Plots}
+
+\subsection{Count Plot and Bar Plot}
+\begin{minted}{python}
+seaborn.countplot(x=None, y=None, hue=None, data=None, order=None,
+hue_order=None, orient=None, color=None, palette=None, saturation=0.75,
+dodge=True, ax=None, **kwargs)
+
+seaborn.barplot(x=None, y=None, hue=None, data=None, order=None,
+hue_order=None, estimator=<function mean at 0x10a2a03b0>, ci=95,
+n_boot=1000, units=None, seed=None, orient=None, color=None,
+palette=None, saturation=0.75, errcolor='.26', errwidth=None,
+capsize=None, dodge=True, ax=None, **kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/countplot}
+\includegraphics[width=0.5\linewidth]{seaborn/barplot}
+These are basically just categorical Histograms, one without interval reporting and one with.
+\begin{description}
+	\item[errcolor=] Color of error bar; \hyperref[sec:MPLColors]{MPL color}
+	\item[errwidth=] Thickness of error bar; int
+	\item[capsize=] Width of "caps" on error bars; int
+\end{description}
+
+\subsection{Boxplot and Enhanced Boxplot}
+\begin{minted}{python}
+seaborn.boxplot(x=None, y=None, hue=None, data=None, order=None,
+hue_order=None, orient=None, color=None, palette=None, 
+saturation=0.75, width=0.8, dodge=True, fliersize=5, linewidth=None,
+whis=1.5, ax=None, **kwargs)
+
+seaborn.boxenplot( {boxplot args} +
+k_depth='proportion', scale='exponential', outlier_prop=None)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/boxplot}
+\includegraphics[width=0.5\linewidth]{seaborn/boxenplot}
+\begin{description}
+	\item[dodge=] Axis shift when hue nesting is used; bool
+	\item[fliersize=] Size of outlier markers; int
+	\item[whis=] Proportion past IGR to extend whiskers; float
+	\item[**kwargs] Passed to matplotlib.axes.Axes.boxplot()
+	\item[$\cdots$] 
+	\item[k\_depth=] Method for number of percentiles; 'proportion', 'tukey', 'trustworthy'
+	\item[scale=] Percentile's visual scaling; 'linear', 'exponential', 'area'
+	\item[outlier\_prop=] Proportion to treat as outliers; float
+\end{description}
+
+\subsection{Swarm Plot and Strip Plot}
+\begin{minted}{python}
+seaborn.swarmplot(x=None, y=None, hue=None, data=None, order=None,
+hue_order=None, dodge=False, orient=None, color=None, palette=None,
+size=5, edgecolor='gray', linewidth=0, ax=None, **kwargs)
+
+seaborn.stripplot( {swarmplot args} +
+jitter=True)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/swarmplot}
+\includegraphics[width=0.5\linewidth]{seaborn/stripplot}
+\begin{description}
+	\item[jitter=] Categorical axis shift; bool, or float
+	\item[**kwargs] matplotlib.axes.Axes.scatter()
+\end{description}
+
+\subsection{Violin Plot}
+\begin{minted}{python}
+seaborn.violinplot(x=None, y=None, hue=None, data=None, order=None,
+hue_order=None, bw='scott', cut=2, scale='area', scale_hue=True,
+gridsize=100, width=0.8, inner='box', split=False, dodge=True,
+orient=None, linewidth=None, color=None, palette=None, saturation=0.75,
+ax=None, **kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/violinplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/violinplot2}
+\begin{description}[itemsep=0pt]
+	\item[bw=] Kernel bandwidth; float, 'scott', or 'silverman'
+	\item[cut=] Distance past most extreme point to extend area, 0 is like ggplot trim; float
+	\item[scale=] 'area' each violin will have same area, 'width' each will have same width, 'count' each will scale by amount of data
+	\item[gridsize=] Number of points in grid used to estimate kernel density; int
+	\item[inner=] Figure inside violin; 'box', 'quartile', 'point', 'stick'
+	\item[split=] Will allow each half to represent categorical difference; bool
+	\item[**kwargs] matplotlib.axes.Axes.violinplot()
+\end{description}
+
+\subsection{Categorical Plot Grid}
+\begin{minted}{python}
+seaborn.catplot(x=None, y=None, hue=None, data=None, row=None, 
+col=None, col_wrap=None, estimator=<function mean at 0x10a2a03b0>,
+ci=95, n_boot=1000, units=None, seed=None, order=None, 
+hue_order=None, row_order=None, col_order=None, kind='strip', 
+height=5, aspect=1, orient=None, color=None, palette=None, 
+legend=True, legend_out=True, sharex=True, sharey=True, 
+margin_titles=False, facet_kws=None, **kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/catplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/catplot2}
+\begin{description}[itemsep=0.25pt]
+	\item[kind=] 'point', 'bar', 'strip', 'swarm', 'box', 'violin', or 'boxen'
+\end{description}
+
+\section{Distribution Plots}
+
+\subsection{Kernel Distribution Estimate (KDE) Plots}
+\begin{minted}{python}
+seaborn.kdeplot(data, data2=None, shade=False, vertical=False, 
+kernel='gau', bw='scott', gridsize=100, cut=3, clip=None, 
+legend=True, cumulative=False, shade_lowest=True, cbar=False, 
+cbar_ax=None, cbar_kws=None, ax=None, **kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/kdeplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/kdeplot2}
+\begin{description}
+	\item[data(2)=] Data to plot, 2 for bivariate kde; vector
+	\item[shade=] fill under or between lines; bool
+	\item[kernel=] 'gau’, ‘cos’, ‘biw’, ‘epa’, ‘tri’, ‘triw’  (bivariate only 'gau')
+	\item[bw=] Kernel bandwidth; 'scott', 'silverman', float, or pair of float for bivar
+	\item[**kwargs] passes to plt.plot() or plt.contour{f} (bivariate)
+\end{description}
+
+\subsection{Rug Plot}
+\begin{minted}{python}
+seaborn.rugplot(a, height=0.05, axis='x', ax=None, **kwargs)
+\end{minted}
+\begin{description}
+	\item[a] Vector
+	\item[height=] Height of lines on rug; float
+	\item[**kwargs] passed to LineCollection
+\end{description}
+
+\subsection{Distribution Plot Grid}
+\begin{minted}{python}
+seaborn.distplot(a, bins=None, hist=True, kde=True, rug=False, 
+fit=None, hist_kws=None, kde_kws=None, rug_kws=None, fit_kws=None, 
+color=None, vertical=False, norm_hist=False, axlabel=None, 
+label=None, ax=None)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/distplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/distplot2}
+\begin{description}
+	\item[a=] Data vector
+	\item[kde=] To use kde; bool
+	\item[rug=] To use rug; bool
+	\item[*\_kws=] Keywords passed to kdeplot,rugplot, etc.
+\end{description}
+
+\section{Regression Plots}
+
+\subsection{Regression Plot}
+\begin{minted}{python}
+seaborn.regplot(x, y, data=None, x_estimator=None, x_bins=None, 
+x_ci='ci', scatter=True, fit_reg=True, ci=95, n_boot=1000, 
+units=None, seed=None, order=1, logistic=False, lowess=False, 
+robust=False, logx=False, x_partial=None, y_partial=None, 
+truncate=True, dropna=True, x_jitter=None, y_jitter=None, 
+label=None, color=None, marker='o', scatter_kws=None, 
+line_kws=None, ax=None)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/regplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/regplot2}
+\begin{description}
+	\item[lowess=] Fit a lowess smoother to regression? Bool
+	\item[\{x,y\}\_partial=] Vector/Matrix of data to ignore
+	\item[order=] Order of the polynomial to fit to data
+	\item[logistic,logx] Logistics; bool
+	\item[**kwargs] 
+\end{description}
+
+\subsection{Residual Plots}
+\begin{minted}{python}
+seaborn.residplot(x, y, data=None, lowess=False, x_partial=None, 
+y_partial=None, order=1, robust=False, dropna=True, label=None, 
+color=None, scatter_kws=None, line_kws=None, ax=None)
+\end{minted}
+Residuals are the difference between the regression prediction and the actual observations.
+
+\subsection{LMPlot}
+\begin{minted}{python}
+seaborn.lmplot(x, y, data, hue=None, col=None, row=None, 
+palette=None, col_wrap=None, height=5, aspect=1, markers='o', 
+sharex=True, sharey=True, hue_order=None, col_order=None, 
+row_order=None, legend=True, legend_out=True, x_estimator=None, x_bins=None, x_ci='ci', scatter=True, fit_reg=True, ci=95, 
+n_boot=1000, units=None, seed=None, order=1, logistic=False, 
+lowess=False, robust=False, logx=False, x_partial=None, 
+y_partial=None, truncate=True, x_jitter=None, y_jitter=None, 
+scatter_kws=None, line_kws=None, size=None)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/lmplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/lmplot2}
+\begin{description}
+	\item[height=] In inches, of the output chart
+	\item[truncate=] Extend the regression beyond data limit? bool
+	\item[**kwargs] 
+\end{description}
+
+\section{Matrix Plots}
+
+\subsection{Heatmap}
+\begin{minted}{python}
+seaborn.heatmap(data, vmin=None, vmax=None, cmap=None, 
+center=None, robust=False, annot=None, fmt='.2g', 
+annot_kws=None, linewidths=0, linecolor='white', cbar=True, 
+cbar_kws=None, cbar_ax=None, square=False, xticklabels='auto', 
+yticklabels='auto', mask=None, ax=None, **kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/heatmap1}
+\includegraphics[width=0.5\linewidth]{seaborn/heatmap2}
+\begin{description}
+	\item[annot=] Annotate values on top of map? Bool
+	\item[format=] How to format annotation; String
+	\item[cbar=] Color Bar key; Bool
+	\item[cbar\_ax=] Axis to place cbar; MPL Axis
+	\item[square=] Make map items square? Bool
+	\item[**kwargs] Passed to matplotlib.axes.Axes.pcolormesh()
+\end{description}
+
+\subsection{Clustermap}
+\begin{minted}{python}
+seaborn.clustermap(data, pivot_kws=None, method='average', 
+metric='euclidean', z_score=None, standard_scale=None, 
+figsize=(10, 10), cbar_kws=None, row_cluster=True, 
+col_cluster=True, row_linkage=None, col_linkage=None, 
+row_colors=None, col_colors=None, mask=None, dendrogram_ratio=0.2, 
+colors_ratio=0.03, cbar_pos=(0.02, 0.8, 0.05, 0.18), tree_kws=None, 
+**kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/clustermap1}
+\includegraphics[width=0.5\linewidth]{seaborn/clustermap2}
+\begin{description}
+	\item[method=] Linkage method used to calculate clusters
+		\\see: scipy.cluster.hierarchy.linkage
+	\item[**kwargs] 
+\end{description}
+
+\section{Multi-Grid Plots}
+
+\subsection{Facet Grid}
+\begin{minted}{python}
+class seaborn.FacetGrid(data, row=None, col=None, hue=None, 
+col_wrap=None, sharex=True, sharey=True, height=3, aspect=1, 
+palette=None, row_order=None, col_order=None, hue_order=None, 
+hue_kws=None, dropna=True, legend_out=True, despine=True, 
+margin_titles=False, xlim=None, ylim=None, subplot_kws=None, 
+gridspec_kws=None, size=None)
+
+g = sns.FacetGrid(...)
+g = (g.map(method, x, y, **kwargs))
+# Method - plt.plot; plt.scatter etc.
+# Method specific kwargs - like marker= etc.
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/FacetGrid1}
+\includegraphics[width=0.5\linewidth]{seaborn/FacetGrid2}
+
+\subsection{Pair Plot}
+\begin{minted}{python}
+seaborn.pairplot(data, hue=None, hue_order=None, palette=None, 
+vars=None, x_vars=None, y_vars=None, kind='scatter', 
+diag_kind='auto', markers=None, height=2.5, aspect=1, corner=False, 
+dropna=True, plot_kws=None, diag_kws=None, grid_kws=None, size=None)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/pairplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/pairplot2}
+\begin{description}
+	\item[{x,y}\_vars=] List of the vars to plot on that side of grid
+	\item[daig\_kind=] 'auto', 'hist', 'kde', 'none'
+	\item[**kwargs] 
+\end{description}
+
+\subsection{Pair Grid}
+\begin{minted}{python}
+class seaborn.PairGrid(data, hue=None, hue_order=None, palette=None, 
+hue_kws=None, vars=None, x_vars=None, y_vars=None, corner=False, 
+diag_sharey=True, height=2.5, aspect=1, layout_pad=0, despine=True, 
+dropna=True, size=None)
+
+g = sns.PairGrid( .. DataFrame .. )
+g = g.map(func, kwargs)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/pairplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/pairplot2}
+\begin{description}
+	\item[g.add\_legend] 
+	\item[g.map] 
+	\item[g.map\_diag]
+	\item[g.map\_lower] 
+	\item[g.map\_offdiag] 
+	\item[g.map\_upper]
+	\item[g.savefig]   
+\end{description}
+
+\subsection{Joint Plot and Joint Grid}
+\begin{minted}{python}
+seaborn.jointplot(x, y, data=None, kind='scatter', stat_func=None, 
+color=None, height=6, ratio=5, space=0.2, dropna=True, xlim=None, 
+ylim=None, joint_kws=None, marginal_kws=None, annot_kws=None, **kwargs)
+
+class seaborn.JointGrid(x, y, data=None, height=6, ratio=5, space=0.2, 
+dropna=True, xlim=None, ylim=None, size=None)
+\end{minted}
+\includegraphics[width=0.5\linewidth]{seaborn/jointplot1}
+\includegraphics[width=0.5\linewidth]{seaborn/jointplot2}
+\begin{description}
+	\item[kind=] 'scatter', 'reg', 'resid', 'kde', 'hex' 	
+	\item[**kwargs] 
+	\item[ $\cdots$ ] 
+	\item[g.plot(..)] Wrapper to define all plots
+	\item[g.plot(..)] What to plot in joint space
+	\item[g.plot\_marginals(..)] What to plot on the margins
+	\item[g.savefig()] 
+\end{description}
+
