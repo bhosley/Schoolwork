@@ -1,0 +1,15 @@
+\chapter{Vanilla Python}
+
+\section{Input/Output}
+
+\subsection{Reading From a File}
+
+\paragraph{Reading a space separated Chart}
+\begin{minted}{python}
+X, Y = [], []
+for line in open('my_data.txt', 'r'):
+	values = [float(s) for s in line.split()]
+	X.append(values[0])
+	Y.append(values[1])
+\end{minted}
+This can also be performed with \hyperref[sec:NumPyIO]{\textbf{NumPy}}.
