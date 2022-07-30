@@ -1,0 +1,188 @@
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+\usepackage{multirow}
+% End Packages %
+
+\title{Homework 1}
+\shorttitle{HW1}
+\author{Brandon Hosley}
+\date{2020 01 13}
+\affiliation{DAT 332 - Matrix Analysis and Numeric Optimization \\
+	Liang Kong}
+
+%\abstract{}
+
+\begin{document}
+\maketitle
+\raggedbottom
+
+\subsection{Problem 1}
+\singlespacing
+\emph{
+Four products are processed successively on two machines.
+The manufacturing times in hours per unit of each product 
+are tabulated below for the two machines. }
+\begin{center}	
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		\multirow{2}{*}{Machine} & \multicolumn{4}{|c|}{Time per unit (hours)} \\
+		\cline{2-5}
+		& Product 1 & Product 2 & Product 3 & Product 4 \\ \hline
+		1 & 2 & 3 & 4 & 2 \\ \hline
+		2 & 3 & 2 & 1 & 2 \\ \hline
+	\end{tabular} 
+\end{center}
+\emph{
+The total cost of producing a unit of each product is based directly on the machine time.  
+Assume the cost per hour for  machines 1 and 2 are \$10 and \$15.  
+The total hours budgeted for all the products on machine 1 and 2 are 500 and 380.  
+If the sale price per unit for products 1, 2, 3, and 4 are \$65, \$70, \$55, and  \$45, 
+formulate the problem as a linear programming model to maximize total net profit. 
+} \\
+\doublespacing
+Begin with a matrix of the each product by how much time is required for each machine to produce it. \\
+\begin{tabular}{ll}	
+	& \\
+	$ \begin{bmatrix}
+	2 & 3 & 4 & 2 \\
+	3 & 2 & 1 & 2 \\
+	\end{bmatrix} $ &
+	$ \begin{bmatrix} \$10 \\ \$15 \end{bmatrix} \times M_1 \rightarrow M_2 $ \\
+	& (Machine time cost multiplied by Production times = Part Production Cost) \\ 
+	$ \begin{bmatrix}
+	\$20 & \$30 & \$40 & \$20 \\
+	\$45 & \$30 & \$15 & \$30 \\
+	\end{bmatrix} $ &
+	$ \begin{bmatrix}
+	\$65 & \$70 & \$55 & \$45 \\
+	\$65 & \$70 & \$55 & \$45 \\
+	\end{bmatrix} - M_2 \rightarrow M_3 $ \\
+	& (Per-part Profit minus production cost = Net Profit Per Part) \\ 
+	$ \begin{bmatrix}
+	\$45 & \$40 & \$15 & \$25 \\
+	\$20 & \$40 & \$40 & \$30 \\
+	\end{bmatrix} $ &
+	$ \frac{M_3}{M_1} \rightarrow M_4 $ \\
+	& (Net Profit divided by production hours = Profit/Hour) \\
+	$ \begin{bmatrix}
+	\$22\frac{1}{2} & \$13\frac{1}{3} & \$3\frac{3}{4} & \$12\frac{1}{2} \\
+	\$6\frac{2}{3}  & \$20            & \$40           & \$15            \\
+	\end{bmatrix} $ & \\
+	& \\
+\end{tabular}
+Maximum profit is obtained when each machine is dedicated to producing its most profitable product for as much time as it is alloted. 
+Machine one will produce 250 units of product 1 for a profit of \$11,250.
+Machine two will produce 380 units of product 3 for a profit of \$15,200.
+Together this will net a profit of \$26,450.
+\singlespacing
+\newpage
+\subsection{Problem 2 (page 55 \#1)}
+\emph{
+Farmer Jones must determine how many acres of corn and wheat to plant this year. 
+An Acre of wheat yields 25 bushels of wheat and requires 10 hours of labor per week.
+And acre of corn yields 10 bushels of corn and requires 4 hours of labor per week.
+All wheat can be sold at \$4 a bushel, and all corn can be sold at \$3 a bushel.
+Seven acres of land and 40 hours per week of labor are available.
+Government regulations require that at least 30 bushels of corn be produced during the current year.
+Let $x_1 = $ number of acres of corn planted, 
+and $x_2 = $ number of acres of wheat planted.
+Using these decision variables, formulate an LP whose solution will tell Farmer Jones how to maximize the total revenue from wheat and corn. 
+}\\
+
+\subsubsection{Solving Long-Hand:}
+\doublespacing
+\begin{tabular}{l l}
+	$ x_1 + x_2 = 7 $ & : Total Acreage is the sum of Corn and Wheat (7 Acres) \\
+	$ 4x_1 + 10x_2 \leq 40 $ & : Working hours must be less than 40 hours \\
+	$ 10x_1 + 25x_2 = b_t $ & : Number of bushels produced total \\	
+	$ 10x_1 \geq 30 $ & : Meeting Government requirements \\
+	$ 30x_1 + 100x_2 = P_\$ $ & : Total profit \\
+	\hline
+	$ x_2 = 7 - x_1 $ & : For Substitution \\
+	$ 30x_1 + 100\left( 7-x_1 \right) = P_\$$ & : Total profit in terms of $x_1$ \\
+	$ 700 - 70x_1 = P_\$$ & : Simplified \\
+	\hline
+	$4x_1+10\left( 7-x_1 \right)\leq40$ & : Comply to Labor Laws \\
+	$ 70 - 6x_1 \leq 40 $ & :  \\
+	$ -6x_1 \leq -30 $ & :  \\
+	$ x_1 \geq 5 $ & : Simplified \\
+	& \\
+\end{tabular}
+
+\subsubsection{Using Matrix:} \hfill\\
+
+\begin{tabular}{ll}	
+	$ \begin{bmatrix}
+		1 & 1  & 7  \\
+		4 & 10 & 40 \\
+	\end{bmatrix} $ &
+	$ r_2 - 4r_1 \rightarrow r_2 $ \\
+	& \\
+	$ \begin{bmatrix}
+		1 & 1  & 7  \\
+		0 & 6 & 12 \\
+	\end{bmatrix} $ &
+	$ \frac{r_2}{6} \rightarrow r_2 $ \\
+	& \\
+	$ \begin{bmatrix}
+		1 & 1 & 7 \\
+		0 & 1 & 2 \\
+	\end{bmatrix} $ &
+	$ r_1 - r_2 \rightarrow r_1 $ \\
+	& \\
+	$ \begin{bmatrix}
+		1 & 0 & 5 \\
+		0 & 1 & 2 \\
+	\end{bmatrix} $ & \\
+\end{tabular}
+	
+\singlespacing
+In both cases we are given 
+5 acres of corn and 
+2 acres of wheat 
+yielding a profit of \$350
+
+\newpage
+\subsection{Problem 3 (page 55 \#4)}
+\emph{
+TruckCo manufactures two types of trucks: 1 and 2.
+Each truck must go through the painting shop and assembly shop.
+If the painting shop were completely devoted to painting 
+Type 1 trucks, then 800 per day could be painted;
+Type 2 trucks, then 700 per day could be painted.
+If the assembly shop were completely dedicated to assembling
+Type 1 engines, then 1,500 per day could be assembled;
+Type 2 engines, then 1,200 per day could be assembled.
+Each Type 1 truck contributes \$300 to profit;
+each Type 2 truck contributes \$500.
+Formulate an LP that will maximize TruckCo's profit. 
+}\\
+\doublespacing
+\begin{tabular} {l l}
+	$ p = 300x_1 + 500x_2 $ & : Equation for total profit \\
+	$ 1 = \frac{x_1}{800} + \frac{x_2}{700} $ & 
+	: Equation for daily production from the factory. \\
+	$ \frac{x_2}{700} = 1 - \frac{x_1}{800} $ & : Solve for $x_2$ \\ 
+	$ x_2 = 700 - \frac{7}{8}x_1 $ & \\
+	$ p = 300x_1 + 500 \left( 700 - \frac{7}{8}x_1 \right) $ & 
+	: Substitute $x_2$ into the profit equation. \\
+	$ p = 350,000 - 137\frac{1}{2}x_1 $ & : Simplify \\	
+	& \\
+\end{tabular}
+Each type 1 truck is \$137.50 less profit than the type 2. 
+It would be ideal for TruckCo to produce 0 Type 1 trucks, and 
+700 Type 2 trucks for a total daily profit of \$350,000. \\
+
+
+\bibliographystyle{apacite}
+\bibliography{} %link to relevant .bib file
+\end{document}
