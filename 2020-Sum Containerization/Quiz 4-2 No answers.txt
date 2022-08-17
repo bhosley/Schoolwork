@@ -1,0 +1,3077 @@
+<div id="questions" class="assessment_results  suppress_correct_answers">
+  
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77933"></a>
+  <div class="display_question question true_false_question" id="question_77933">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2">Question 1</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                10
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">true_false_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77933" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117065</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;All containers in a Pod share a hostname, IP address, memory address space, and volumes.&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77933_question_text" class="question_text user_content enhanced">
+          <p>All containers in a Pod share a hostname, IP address, memory address space, and volumes.</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_5058" style="" title="True. You selected this answer.">
+
+
+      <span class="hidden id">5058</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-5058" name="question-77933" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-5058">
+        <div class="answer_text">True</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 38px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="True">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">True</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77933</span>
+      <span class="id">5058</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_800" style="">
+
+
+      <span class="hidden id">800</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-800" name="question-77933" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-800">
+        <div class="answer_text">False</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 47.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="False">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">False</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77933</span>
+      <span class="id">800</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77934"></a>
+  <div class="display_question question multiple_choice_question" id="question_77934">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2">Question 2</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                10
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77934" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117066</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about shared networking in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77934_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about shared networking in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_6933" style="">
+
+
+      <span class="hidden id">6933</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-6933" name="question-77934" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-6933">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77934</span>
+      <span class="id">6933</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_5121" style="" title="Two containers in the same Pod can use the same port. You selected this answer.">
+
+
+      <span class="hidden id">5121</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-5121" name="question-77934" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-5121">
+        <div class="answer_text">Two containers in the same Pod can use the same port</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 494px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Two containers in the same Pod can use the same port">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Two containers in the same Pod can use the same port</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77934</span>
+      <span class="id">5121</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_9211" style="">
+
+
+      <span class="hidden id">9211</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-9211" name="question-77934" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-9211">
+        <div class="answer_text">Every Pod on the Pod network can talk directly to every other Pod due to every Pod gets its own routable IP.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 1026px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Every Pod on the Pod network can talk directly to every other Pod due to every Pod gets its own routable IP.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Every Pod on the Pod network can talk directly to every other Pod due to every Pod gets its own routable IP.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77934</span>
+      <span class="id">9211</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_3906" style="">
+
+
+      <span class="hidden id">3906</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-3906" name="question-77934" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-3906">
+        <div class="answer_text">Two containers in the same Pod communicate via the Pod’s localhost interface.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 731.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Two containers in the same Pod communicate via the Pod’s localhost interface.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Two containers in the same Pod communicate via the Pod’s localhost interface.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77934</span>
+      <span class="id">3906</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_1188" style="">
+
+
+      <span class="hidden id">1188</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-1188" name="question-77934" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-1188">
+        <div class="answer_text">Each Pod creates its own network namespace</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 399px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Each Pod creates its own network namespace">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Each Pod creates its own network namespace</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77934</span>
+      <span class="id">1188</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77935"></a>
+  <div class="display_question question multiple_choice_question     " id="question_77935">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2">Question 3</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                10
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77935" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117067</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about lifecycle of Pods in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77935_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about lifecycle of Pods in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_740" style="">
+
+
+      <span class="hidden id">740</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-740" name="question-77935" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-740">
+        <div class="answer_text">When Pods die, new one come with the same config, but a different ID and IP.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 722px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="When Pods die, new one come with the same config, but a different ID and IP.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">When Pods die, new one come with the same config, but a different ID and IP.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77935</span>
+      <span class="id">740</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_9873" style="">
+
+
+      <span class="hidden id">9873</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-9873" name="question-77935" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-9873">
+        <div class="answer_text">Containers in a Pod will be scheduled on the same node.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 522.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Containers in a Pod will be scheduled on the same node.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Containers in a Pod will be scheduled on the same node.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77935</span>
+      <span class="id">9873</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_6107" style="">
+
+
+      <span class="hidden id">6107</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-6107" name="question-77935" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-6107">
+        <div class="answer_text">Pods enters the pending state while the container runtime on the node downloads images and starts any containers.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 1073.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Pods enters the pending state while the container runtime on the node downloads images and starts any containers.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Pods enters the pending state while the container runtime on the node downloads images and starts any containers.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77935</span>
+      <span class="id">6107</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_9706" style="" title="You can schedule a single Pod instance to span multiple nodes.. You selected this answer.">
+
+
+      <span class="hidden id">9706</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-9706" name="question-77935" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-9706">
+        <div class="answer_text">You can schedule a single Pod instance to span multiple nodes.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 589px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="You can schedule a single Pod instance to span multiple nodes.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">You can schedule a single Pod instance to span multiple nodes.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77935</span>
+      <span class="id">9706</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_9616" style="">
+
+
+      <span class="hidden id">9616</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-9616" name="question-77935" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-9616">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77935</span>
+      <span class="id">9616</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77937"></a>
+  <div class="display_question question multiple_choice_question   incorrect" id="question_77937">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2" aria-describedby="user_answer_NaN_arrow"><span class="answer_arrow incorrect" style="left: -108px; top: 9px;" id="user_answer_NaN_arrow">Incorrect</span>Question 4</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                0
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77937" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117069</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about the Deployment in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77937_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about the Deployment in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_4076" style="">
+
+
+      <span class="hidden id">4076</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-4076" name="question-77937" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-4076">
+        <div class="answer_text">ReplicaSets provide self-healing and scaling.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 427.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="ReplicaSets provide self-healing and scaling.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">ReplicaSets provide self-healing and scaling.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77937</span>
+      <span class="id">4076</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_6843" style="">
+
+
+      <span class="hidden id">6843</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-6843" name="question-77937" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-6843">
+        <div class="answer_text">Deployments manage ReplicaSets and ReplicaSets manage Pods.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 560.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Deployments manage ReplicaSets and ReplicaSets manage Pods.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Deployments manage ReplicaSets and ReplicaSets manage Pods.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77937</span>
+      <span class="id">6843</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_5198" style="" title="Deployment provide rolling updates and rollbacks.. You selected this answer.">
+
+
+      <span class="hidden id">5198</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-5198" name="question-77937" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-5198">
+        <div class="answer_text">Deployment provide rolling updates and rollbacks.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 465.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Deployment provide rolling updates and rollbacks.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Deployment provide rolling updates and rollbacks.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77937</span>
+      <span class="id">5198</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_8528" style="">
+
+
+      <span class="hidden id">8528</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-8528" name="question-77937" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-8528">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77937</span>
+      <span class="id">8528</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_3175" style="">
+
+
+      <span class="hidden id">3175</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-3175" name="question-77937" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-3175">
+        <div class="answer_text">Single Deployment object can only manage a single Pod template, so can’t manage multiple replicas of the same Pod.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 1083px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Single Deployment object can only manage a single Pod template, so can’t manage multiple replicas of the same Pod.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Single Deployment object can only manage a single Pod template, so can’t manage multiple replicas of the same Pod.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77937</span>
+      <span class="id">3175</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77938"></a>
+  <div class="display_question question multiple_choice_question     " id="question_77938">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2">Question 5</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                10
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77938" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117070</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about the Self-healing and Scaling in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77938_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about the Self-healing and Scaling in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_5966" style="">
+
+
+      <span class="hidden id">5966</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-5966" name="question-77938" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-5966">
+        <div class="answer_text">If a Pod managed by a Deployment fails, it will be replaced. We call it Self-healing.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 807.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="If a Pod managed by a Deployment fails, it will be replaced. We call it Self-healing.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">If a Pod managed by a Deployment fails, it will be replaced. We call it Self-healing.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77938</span>
+      <span class="id">5966</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_6440" style="">
+
+
+      <span class="hidden id">6440</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-6440" name="question-77938" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-6440">
+        <div class="answer_text">Deployments use an object called a ReplicaSet to accomplish self-healing and Scalability.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 845.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Deployments use an object called a ReplicaSet to accomplish self-healing and Scalability.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Deployments use an object called a ReplicaSet to accomplish self-healing and Scalability.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77938</span>
+      <span class="id">6440</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_6849" style="">
+
+
+      <span class="hidden id">6849</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-6849" name="question-77938" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-6849">
+        <div class="answer_text">If a Pod managed by a Deployment sees increased load, you can easily add more of the same Pod to deal with the load.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 1102px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="If a Pod managed by a Deployment sees increased load, you can easily add more of the same Pod to deal with the load.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">If a Pod managed by a Deployment sees increased load, you can easily add more of the same Pod to deal with the load.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77938</span>
+      <span class="id">6849</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_832" style="" title="Pods provide self-healing and scalability.. You selected this answer.">
+
+
+      <span class="hidden id">832</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-832" name="question-77938" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-832">
+        <div class="answer_text">Pods provide self-healing and scalability.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 399px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Pods provide self-healing and scalability.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Pods provide self-healing and scalability.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77938</span>
+      <span class="id">832</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_8684" style="">
+
+
+      <span class="hidden id">8684</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-8684" name="question-77938" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-8684">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77938</span>
+      <span class="id">8684</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77939"></a>
+  <div class="display_question question multiple_choice_question     " id="question_77939">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2">Question 6</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                10
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77939" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117071</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about the Reconciliation loops in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77939_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about the Reconciliation loops in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_7566" style="" title="All true. You selected this answer.">
+
+
+      <span class="hidden id">7566</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-7566" name="question-77939" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-7566">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77939</span>
+      <span class="id">7566</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_3945" style="">
+
+
+      <span class="hidden id">3945</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-3945" name="question-77939" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-3945">
+        <div class="answer_text">Kubernetes is constantly making sure that current state matches desired state.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 741px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Kubernetes is constantly making sure that current state matches desired state.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Kubernetes is constantly making sure that current state matches desired state.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77939</span>
+      <span class="id">3945</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_6816" style="">
+
+
+      <span class="hidden id">6816</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-6816" name="question-77939" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-6816">
+        <div class="answer_text">ReplicaSets implement a background reconciliation loop.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 522.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="ReplicaSets implement a background reconciliation loop.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">ReplicaSets implement a background reconciliation loop.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77939</span>
+      <span class="id">6816</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_2001" style="">
+
+
+      <span class="hidden id">2001</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-2001" name="question-77939" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-2001">
+        <div class="answer_text">Reconciliation loops enables scaling.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 351.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Reconciliation loops enables scaling.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Reconciliation loops enables scaling.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77939</span>
+      <span class="id">2001</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_1661" style="">
+
+
+      <span class="hidden id">1661</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-1661" name="question-77939" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-1661">
+        <div class="answer_text">If current state and desired state don’t match, add more or terminate some replicas.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 798px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="If current state and desired state don’t match, add more or terminate some replicas.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">If current state and desired state don’t match, add more or terminate some replicas.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77939</span>
+      <span class="id">1661</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77940"></a>
+  <div class="display_question question multiple_choice_question   incorrect" id="question_77940">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2" aria-describedby="user_answer_NaN_arrow"><span class="answer_arrow incorrect" style="left: -108px; top: 9px;" id="user_answer_NaN_arrow">Incorrect</span>Question 7</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                0
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77940" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117072</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about the Rolling updates with Deployments in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77940_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about the Rolling updates with Deployments in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_9992" style="">
+
+
+      <span class="hidden id">9992</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-9992" name="question-77940" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-9992">
+        <div class="answer_text">For rolling update, Kubernetes creates a new ReplicaSet for a Pod with the new image.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 807.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="For rolling update, Kubernetes creates a new ReplicaSet for a Pod with the new image.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">For rolling update, Kubernetes creates a new ReplicaSet for a Pod with the new image.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77940</span>
+      <span class="id">9992</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_8453" style="">
+
+
+      <span class="hidden id">8453</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-8453" name="question-77940" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-8453">
+        <div class="answer_text">ReplicaSets provides rolling updates.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 351.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="ReplicaSets provides rolling updates.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">ReplicaSets provides rolling updates.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77940</span>
+      <span class="id">8453</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_9996" style="">
+
+
+      <span class="hidden id">9996</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-9996" name="question-77940" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-9996">
+        <div class="answer_text">Kubernetes increases the number of Pods in a new ReplicaSet and decreases the number of Pods in the old ReplicaSet.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 1092.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Kubernetes increases the number of Pods in a new ReplicaSet and decreases the number of Pods in the old ReplicaSet.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Kubernetes increases the number of Pods in a new ReplicaSet and decreases the number of Pods in the old ReplicaSet.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77940</span>
+      <span class="id">9996</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_6518" style="" title="Details about how to perform rolling updates can be described in YAML configuration file.. You selected this answer.">
+
+
+      <span class="hidden id">6518</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-6518" name="question-77940" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-6518">
+        <div class="answer_text">Details about how to perform rolling updates can be described in YAML configuration file.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 845.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Details about how to perform rolling updates can be described in YAML configuration file.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Details about how to perform rolling updates can be described in YAML configuration file.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77940</span>
+      <span class="id">6518</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_1738" style="">
+
+
+      <span class="hidden id">1738</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-1738" name="question-77940" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-1738">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77940</span>
+      <span class="id">1738</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77941"></a>
+  <div class="display_question question multiple_choice_question     " id="question_77941">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2">Question 8</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                10
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77941" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117073</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about the Services in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77941_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about the Services in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_9974" style="" title="Services provide stable IP, DNS, and port, but don’t provide load balancing.. You selected this answer.">
+
+
+      <span class="hidden id">9974</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-9974" name="question-77941" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-9974">
+        <div class="answer_text">Services provide stable IP, DNS, and port, but don’t provide load balancing.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 722px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Services provide stable IP, DNS, and port, but don’t provide load balancing.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Services provide stable IP, DNS, and port, but don’t provide load balancing.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77941</span>
+      <span class="id">9974</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_5348" style="">
+
+
+      <span class="hidden id">5348</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-5348" name="question-77941" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-5348">
+        <div class="answer_text">Service objects provide stable and reliable networking for a set of dynamic Pods.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 769.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Service objects provide stable and reliable networking for a set of dynamic Pods.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Service objects provide stable and reliable networking for a set of dynamic Pods.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77941</span>
+      <span class="id">5348</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_2632" style="">
+
+
+      <span class="hidden id">2632</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-2632" name="question-77941" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-2632">
+        <div class="answer_text">Every Service gets its own stable IP address, its own stable DNS name, and its own stable port.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 902.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Every Service gets its own stable IP address, its own stable DNS name, and its own stable port.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Every Service gets its own stable IP address, its own stable DNS name, and its own stable port.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77941</span>
+      <span class="id">2632</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_3920" style="">
+
+
+      <span class="hidden id">3920</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-3920" name="question-77941" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-3920">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77941</span>
+      <span class="id">3920</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_2521" style="">
+
+
+      <span class="hidden id">2521</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-2521" name="question-77941" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-2521">
+        <div class="answer_text">Service is a REST object in the API that you define in a manifest and POST to the API Server.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 883.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Service is a REST object in the API that you define in a manifest and POST to the API Server.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Service is a REST object in the API that you define in a manifest and POST to the API Server.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77941</span>
+      <span class="id">2521</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77942"></a>
+  <div class="display_question question multiple_choice_question     " id="question_77942">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2">Question 9</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                10
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77942" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117074</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about the Service labels in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77942_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about the Service labels in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_90" style="">
+
+
+      <span class="hidden id">90</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-90" name="question-77942" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-90">
+        <div class="answer_text">For a Service to match a set of Pods, the Pods must possess every label in the Services label selector.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 978.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="For a Service to match a set of Pods, the Pods must possess every label in the Services label selector.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">For a Service to match a set of Pods, the Pods must possess every label in the Services label selector.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77942</span>
+      <span class="id">90</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_5653" style="" title="All true. You selected this answer.">
+
+
+      <span class="hidden id">5653</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-5653" name="question-77942" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-5653">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77942</span>
+      <span class="id">5653</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_5330" style="">
+
+
+      <span class="hidden id">5330</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-5330" name="question-77942" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-5330">
+        <div class="answer_text">Pod can have additional labels that are not listed in the Service’s label selector.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 788.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Pod can have additional labels that are not listed in the Service’s label selector.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Pod can have additional labels that are not listed in the Service’s label selector.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77942</span>
+      <span class="id">5330</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_2405" style="">
+
+
+      <span class="hidden id">2405</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-2405" name="question-77942" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-2405">
+        <div class="answer_text">Services leverage labels to dynamically select the Pods in the cluster they will send traffic to.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 921.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Services leverage labels to dynamically select the Pods in the cluster they will send traffic to.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Services leverage labels to dynamically select the Pods in the cluster they will send traffic to.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77942</span>
+      <span class="id">2405</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_2517" style="">
+
+
+      <span class="hidden id">2517</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-2517" name="question-77942" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-2517">
+        <div class="answer_text">Services are loosely coupled with Pods via labels and label selectors.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 665px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Services are loosely coupled with Pods via labels and label selectors.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Services are loosely coupled with Pods via labels and label selectors.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77942</span>
+      <span class="id">2517</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+<div role="region" aria-label="Question" class="quiz_sortable question_holder " id="" style="" data-group-id="">
+  <div style="display: block; height: 1px; overflow: hidden;">&nbsp;</div>
+  <a name="question_77943"></a>
+  <div class="display_question question multiple_choice_question" id="question_77943">
+    
+<div class="move">
+  <a tabindex="0" class="draggable-handle" role="button">
+    <i class="icon-drag-handle">
+      <span class="screenreader-only">Move To...</span>
+      <span class="accessibility-warning screenreader-only">
+        This element is a more accessible alternative to drag &amp; drop reordering. Press Enter or Space to move this question.
+      </span>
+    </i>
+  </a>
+</div>
+
+
+    <div class="header">
+      <span class="name question_name" role="heading" aria-level="2">Question 10</span>
+      <span class="question_points_holder" style="">
+        <div class="user_points">
+                10
+          <span class="points question_points"> / 10</span> pts
+        </div>
+    </span>
+    </div>
+      <div class="links" style="display: none;">
+        <a href="#" class="edit_question_link no-hover" title="Edit this Question"><i class="icon-edit standalone-icon"><span class="screenreader-only">Edit this Question</span></i></a>
+          <a href="#" class="delete_question_link no-hover" title="Delete this Question"><i class="icon-end standalone-icon"><span class="screenreader-only">Delete this Question</span></i></a>
+      </div>
+    <div style="display: none;">
+      <span class="regrade_option"></span>
+      <span class="regrade_disabled">0</span>
+      <span class="question_type">multiple_choice_question</span>
+      <span class="answer_selection_type"></span>
+        <a href="/courses/1183/quizzes/4321/questions/77943" class="update_question_url">&nbsp;</a>
+      <span class="assessment_question_id">117075</span>
+    </div>
+    <div class="text">
+      <div class="original_question_text" style="display: none;">
+        <textarea style="display: none;" name="text_after_answers" class="textarea_text_after_answers"></textarea>
+        <textarea style="display: none;" name="question_text" class="textarea_question_text">&lt;p&gt;Which of the following is NOT true about accessing services from outside cluster in Kubernetes?&lt;/p&gt;</textarea>
+      </div>
+      <div id="question_77943_question_text" class="question_text user_content enhanced">
+          <p>Which of the following is NOT true about accessing services from outside cluster in Kubernetes?</p>
+      </div>
+      <div class="answers">
+                <div class="answers_wrapper">
+                  
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_6127" style="">
+
+
+      <span class="hidden id">6127</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-6127" name="question-77943" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-6127">
+        <div class="answer_text">NodePort Service builds on top of ClusterIP enables access from outside of the cluster by adding another port, called Nodeport.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 1206.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="NodePort Service builds on top of ClusterIP enables access from outside of the cluster by adding another port, called Nodeport.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">NodePort Service builds on top of ClusterIP enables access from outside of the cluster by adding another port, called Nodeport.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77943</span>
+      <span class="id">6127</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_1353" style="">
+
+
+      <span class="hidden id">1353</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-1353" name="question-77943" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-1353">
+        <div class="answer_text">Routing traffic to systems outside of your Kubernetes cluster is called ExternalName Services.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 893px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Routing traffic to systems outside of your Kubernetes cluster is called ExternalName Services.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Routing traffic to systems outside of your Kubernetes cluster is called ExternalName Services.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77943</span>
+      <span class="id">1353</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_2229" style="">
+
+
+      <span class="hidden id">2229</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-2229" name="question-77943" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-2229">
+        <div class="answer_text">Traffic from outside of the cluster can hit any node in the cluster on the NodePort.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 798px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="Traffic from outside of the cluster can hit any node in the cluster on the NodePort.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">Traffic from outside of the cluster can hit any node in the cluster on the NodePort.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77943</span>
+      <span class="id">2229</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+         selected_answer unspecified_answer" id="answer_7945" style="" title="All true. You selected this answer.">
+
+
+      <span class="hidden id">7945</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-7945" name="question-77943" type="radio" checked="" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-7945">
+        <div class="answer_text">All true</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 76px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="All true">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">All true</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77943</span>
+      <span class="id">7945</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+      <div class="quiz_comment empty">
+        <div class="answer_comment"></div>
+        <div class="answer_comment_html"></div>
+      </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+    <div class="answer answer_for_
+         
+         
+         
+         
+          unspecified_answer" id="answer_1457" style="">
+
+
+      <span class="hidden id">1457</span>
+
+    <div class="select_answer answer_type">
+        <input id="answer-1457" name="question-77943" type="radio" class="question_input" aria-disabled="true" disabled="">&nbsp;
+      <label for="answer-1457">
+        <div class="answer_text">LoadBalancer Services build on top of NodePort and allow clients on the internet to reach your Pods via one of your cloud’s load-balancers.</div>
+        <div class="answer_html"></div>
+      </label>
+    </div>
+    <div class="answer_type short_answer" style="display:none;">
+      <input name="answer_text" type="text" style="width: 1320.5px; margin-bottom: 5px; color: rgb(0, 0, 0);" disabled="true" value="LoadBalancer Services build on top of NodePort and allow clients on the internet to reach your Pods via one of your cloud’s load-balancers.">
+    </div>
+    <div class="answer_match matching_answer answer_type" style="display:none;">
+      <div class="answer_match_left">LoadBalancer Services build on top of NodePort and allow clients on the internet to reach your Pods via one of your cloud’s load-balancers.</div>
+      <div class="answer_match_left_html" style="display:none;"></div>
+      <div class="answer_match_middle">&nbsp;</div>
+      <div class="answer_match_right">
+              
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div style="display: none;">
+      <span class="numerical_answer_type">exact_answer</span>
+      <span class="blank_id">none</span>
+      <span class="question_id">77943</span>
+      <span class="id">1457</span>
+      <span class="match_id"></span>
+    </div>
+    <div class="numerical_range_answer answer_type" style="display:none;">
+      <span class="answer_equation"></span>
+      <span class="margin" style="display: none;">
+        margin of error
+        <span style="font-size: 0.8em;">
+          +/-
+        </span>
+        <span class="answer_tolerance"></span>
+      </span>
+    </div>
+
+    <div class="clear"></div>
+  </div>
+
+    <div class="clear"></div>
+
+                </div>
+      </div>
+      <div class="after_answers">
+      </div>
+    </div>
+      
+    <div class="clear"></div>
+  </div>
+</div>
+
+</div>
