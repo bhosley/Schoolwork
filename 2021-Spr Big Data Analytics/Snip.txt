@@ -1,0 +1,1 @@
+pscp bhosl2@10.64.3.50:/home/data/CSC534BDA/datasets/COVID19/coronavirus-text-only-1000.txt "C:\Users\brand\Downloads\coronavirus-text-only-1000.txt"
