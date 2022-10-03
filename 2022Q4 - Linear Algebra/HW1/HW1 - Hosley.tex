@@ -1,0 +1,143 @@
+\documentclass[12pt]{amsart}
+
+
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancybox}
+
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newcounter{Theorem}
+\newcounter{Definition}
+\numberwithin{equation}{section}
+\numberwithin{Theorem}{section}
+
+\theoremstyle{plain} %% This is the default, anyway
+\newtheorem{thm}[Theorem]{Theorem}
+\newtheorem{cor}[Theorem]{Corollary}
+\newtheorem{lem}[Theorem]{Lemma}
+\newtheorem{prop}[Theorem]{Proposition}
+%\usepackage{upgreek}
+
+\theoremstyle{definition}
+\newtheorem{defn}[Theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{ex}[Theorem]{Example}
+\newtheorem{nota}[Theorem]{Notation}
+
+\newif\ifanswers
+
+%\answerstrue
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent{\Large Homework 1\ifanswers\ Solutions\fi. (Due October 7 at 8am)}\bigskip
+
+
+
+On this homework, we consider a way to combine two vector spaces to produce another vector space,
+as well as two ways to combine two subspaces of a common vector space to produce other subspaces of it.\bigskip
+
+\begin{enumerate}[1.]
+\item
+Let $\mathcal{V}$ and $\mathcal{W}$ be two vector spaces over the same field $\mathbb{F}$.
+The \textit{direct sum} $\mathcal{V}\oplus\mathcal{W}$ of $\mathcal{V}$ and $\mathcal{W}$ is their Cartesian product $\mathcal{V}\times\mathcal{W}:=\{(\mathbf{v},\mathbf{w}): \mathbf{v}\in\mathcal{V}, \mathbf{w}\in\mathcal{W}\}$ equipped with entrywise addition and scalar multiplication:
+\begin{equation*}
+(\mathbf{v}_1,\mathbf{w}_1)+(\mathbf{v}_2,\mathbf{w}_2):=(\mathbf{v}_1+\mathbf{v}_2,\mathbf{w}_1+\mathbf{w}_2),
+\quad
+c(\mathbf{v},\mathbf{w}):=(c\mathbf{v},c\mathbf{w}),
+\end{equation*}
+for all \(c\in\mathbb{F}\) and \(\mathbf{v},\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V},\,\mathbf{w},\mathbf{w}_1,\mathbf{w}_2\in\mathcal{W}\). Show that $\mathcal{V}\oplus\mathcal{W}$ is a vector space by directly proving that it satisfies the eight properties of a vector space.
+
+\textit{Hint: These properties are ``inherited" from $\mathcal{V}$ and $\mathcal{W}$.
+For example, since $\mathcal{V}$ and $\mathcal{W}$ are vector spaces, their respective addition operations are commutative, satisfying $\mathbf{v}_1+\mathbf{v}_2=\mathbf{v}_2+\mathbf{v}_1$ for all $\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}$ and $\mathbf{w}_1+\mathbf{w}_2=\mathbf{w}_2+\mathbf{w}_1$ for all $\mathbf{w}_1,\mathbf{w}_2\in\mathcal{W}$,
+and so for any $(\mathbf{v}_1,\mathbf{w}_1),(\mathbf{v}_2,\mathbf{w}_2)\in\mathcal{V}\oplus\mathcal{W}$,
+\begin{equation*}
+(\mathbf{v}_1,\mathbf{w}_1)+(\mathbf{v}_2,\mathbf{w}_2)
+=(\mathbf{v}_1+\mathbf{v}_2,\mathbf{w}_1+\mathbf{w}_2)
+=(\mathbf{v}_2+\mathbf{v}_1,\mathbf{w}_2+\mathbf{w}_1)
+=(\mathbf{v}_2,\mathbf{w}_2)+(\mathbf{v}_1,\mathbf{w}_1),
+\end{equation*}
+as desired.
+Use a similar argument to prove that $\mathcal{V}\oplus\mathcal{W}$ inherits the remaining seven properties of a vector space from the assumption that $\mathcal{V}$ and $\mathcal{W}$ satisfy them individually.}
+\end{enumerate}\bigskip
+
+The remaining problems involve \textit{subspaces} of vector spaces.
+As discussed in class, if $\mathcal{V}$ is a vector space over a field $\mathbb{F}$,
+then a subset $\mathcal{U}$ of $\mathcal{V}$ is a \textit{subspace} of $\mathcal{V}$ if $\mathbf{0}\in\mathcal{U}$ and $c_1\mathbf{u}_1+c_2\mathbf{u}_2\in\mathcal{U}$ for all $c_1,c_2\in\mathbb{F}$ and $\mathbf{u}_1,\mathbf{u}_2\in\mathcal{U}$.\bigskip
+
+\begin{enumerate}[1.]
+\setcounter{enumi}{1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+The \textit{intersection} of two subsets $\mathcal{U}_1$ and $\mathcal{U}_2$ of a set $\mathcal{V}$ is the set of points $\mathcal{V}$ that belong to both of them:
+\begin{equation*}
+\mathcal{U}_1\cap\mathcal{U}_2:=\{\mathbf{v}\in\mathcal{V}: \mathbf{v}\in\mathcal{U}_1\ \text{and}\ \mathbf{v}\in\mathcal{U}_2\}.
+\end{equation*}
+Show that if $\mathcal{V}$ is a vector space and $\mathcal{U}_1$ and $\mathcal{U}_2$ are both subspaces of $\mathcal{V}$ then $\mathcal{U}_1\cap\mathcal{U}_2$ is a subspace of $\mathcal{V}$.\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+The \textit{union} of two subsets $\mathcal{U}_1$ and $\mathcal{U}_2$ of a set $\mathcal{V}$ is the set of points in $\mathcal{V}$ that belong to either of them:
+\begin{equation*}
+\mathcal{U}_1\cup\mathcal{U}_2:=\{\mathbf{v}\in\mathcal{V}: \mathbf{v}\in\mathcal{U}_1\ \text{or}\ \mathbf{v}\in\mathcal{U}_2\}.
+\end{equation*}
+Give an example of two subspaces $\mathcal{U}_1$ and $\mathcal{U}_2$ of $\mathbb{R}^2$ with the property that $\mathcal{U}_1\cup\mathcal{U}_2$ is not a subspace of $\mathbb{R}^2$.\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+The \textit{sum} of two subspaces $\mathcal{U}_1$ and $\mathcal{U}_2$ of a set $\mathcal{V}$ is the of all points in $\mathcal{V}$ that can be written as a sum of a vector in $\mathcal{U}_1$ with a vector in $\mathcal{U}_2$:
+\begin{equation*}
+\mathcal{U}_1+\mathcal{U}_2:=\{\mathbf{u}_1+\mathbf{u}_2: \mathbf{u}_1\in\mathcal{U}_1,\mathbf{u}_2\in\mathcal{U}_2\}.
+\end{equation*}
+Show that $\mathcal{U}_1+\mathcal{U}_2$ is the smallest subspace of $\mathcal{V}$ that contains $\mathcal{U}_1\cup\mathcal{U}_2$ by proving the following three things:
+\begin{enumerate}[(a)]
+\item
+$\mathcal{U}_1+\mathcal{U}_2$ is a subspace of $\mathcal{V}$;
+\item
+$\mathcal{U}_1\cup\mathcal{U}_2\subseteq\mathcal{U}_1+\mathcal{U}_2$;
+\item
+If $\mathcal{U}$ is any subspace of $\mathcal{V}$ such that $\mathcal{U}_1\cup\mathcal{U}_2\subseteq\mathcal{U}$ then $\mathcal{U}_1+\mathcal{U}_2\subseteq\mathcal{U}$.
+\end{enumerate}\bigskip
+
+\textit{Note:
+In general, ``$\mathcal{A}\subseteq\mathcal{B}$" denotes that ``$\mathcal{A}$ is a subset of $\mathcal{B}$," namely that ``$\mathcal{A}$ is contained in $\mathcal{B}$" or equivalently that ``$\mathcal{B}$ contains $\mathcal{A}$"; these all just mean that every element of $\mathcal{A}$ is also an element of $\mathcal{B}$.}\bigskip
+
+\item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a966457. Upload a completion certificate for this activity to your homework folder.
+\end{enumerate}
+
+
+
+\end{document}
