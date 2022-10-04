@@ -1,0 +1,140 @@
+% !TeX document-id = {8a6a6473-5fee-4dfd-a8cb-085b30fb17aa}
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+%\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+\usepackage{multirow}
+% End Packages %
+
+\usepackage{amssymb}
+\usepackage[table,xcdraw]{xcolor}
+
+\title{Homework 1}
+\shorttitle{HW1}
+\author{Brandon Hosley}
+\date{\today}
+\affiliation{STAT 587 - Introduction to Probability and Statistics}
+
+%\abstract{}
+
+\begin{document}
+\maketitle
+\raggedbottom
+\singlespacing
+
+\subsection{Problem 1}
+\emph{In how many ways can three boys and three girls sit in a row if boys and girls must alternate?}
+
+\subsection{Problem 2}
+\emph{$k\binom{n}{k}$}
+\doublespacing
+\begin{align*}
+	k \binom{n}{k} &=  k \frac{n!}{k!(n-k)!} \\
+	&= \frac{n!}{(k-1)!(n-k)!} \\
+	&= n\frac{(n-1)!}{(k-1)!(n-k)!} \\
+	&= n\frac{(n-1)!}{(k-1)!(n-k+(1-1))!} \\
+	&= n\frac{(n-1)!}{(k-1)!(n-1-k+1)!} \\
+	&= n\frac{(n-1)!}{(k-1)!((n-1)-(k-1))!} \\
+	&= n\binom{n-1}{k-1}
+\end{align*}
+\singlespacing
+
+\subsection{Problem 3}
+\emph{When an experiment is performed, one and only one of the events $A_1,A_2$ or $A_3$ will occur. 
+	Find $P(A_1), P(A_2)$ and $P(A_3)$ under the assumption: $P(A_3) = \frac{1}{2}$ and $P(A_1) = P(A_2)=$}
+
+\begin{align*}
+	P(A_1) + P(A_2) + P(A_3) &= 1 \\
+	P(A_3) &= 1/2 \\
+	P(A_1) + P(A_2) &= 1/2 \\
+	P(A_1) &= P(A_2) \\
+	P(A_1), P(A_2) &= 1/4 \\
+\end{align*}
+
+\subsection{Problem 4}
+\emph{There are four basic blood groups: $O, A, B,$ and $AB$. 
+	Ordinarily, anyone can receive the blood of a donor from their own group. Also, anyone can receive the blood of a donor from the $O$ group, and any of the four types can be used by a recipient from the $AB$ group. All other possibilities are undesirable. An experiment consists of drawing a pint of blood and determining its type for each of the next two donors who enter a blood bank. Suppose, for a particular group, the four blood types are equally likely to occur. Compute the probability that the second donor can receive blood from the first donor.} \vspace{1em}
+
+Sample Space: \\
+\begin{tabular}{|c|c|c|c|c|}
+	\hline
+	& Donor2 O & Donor2 A & Donor2 B & Donor2 AB \\
+	\hline Donor1 O   & \checkmark &  \checkmark & \checkmark  & \checkmark \\
+	\hline Donor1 A   & X & \checkmark  & X & \checkmark \\
+	\hline Donor1 B   & X & X & \checkmark  & \checkmark  \\
+	\hline Donor1 AB & X  & X & X &  \checkmark  \\
+	\hline
+\end{tabular}
+
+	In the described situation the probability that Donor2 can receive from Donor1 appropriately is
+	$\frac{9}{16} = 0.5625$
+
+\subsection{Problem 5}
+\emph{}
+
+\subsection{Problem 6}
+\emph{}
+
+\subsection{Problem 7}
+\emph{}
+
+\subsection{Problem 8}
+\emph{}
+
+\subsection{Problem 9}
+\emph{}
+
+\subsection{Problem 10}
+\emph{A balanced coin is tossed four times. In your work, list the possible outcomes. Compute the probability of getting exactly three heads:} \vspace{1em}
+
+\begin{tabular}{|c|cccccccc|cccccccc|}
+	\hline
+	1 &
+	\multicolumn{8}{c|}{H} &
+	\multicolumn{8}{c|}{T} \\ \hline
+	2 &
+	\multicolumn{4}{c|}{H} &
+	\multicolumn{4}{c|}{T} &
+	\multicolumn{4}{c|}{H} &
+	\multicolumn{4}{c|}{T} \\ \hline
+	3 &
+	\multicolumn{2}{c|}{H} &
+	\multicolumn{2}{c|}{T} &
+	\multicolumn{2}{c|}{H} &
+	\multicolumn{2}{c|}{T} &
+	\multicolumn{2}{c|}{H} &
+	\multicolumn{2}{c|}{T} &
+	\multicolumn{2}{c|}{H} &
+	\multicolumn{2}{c|}{T} \\ \hline
+	4 &
+	\multicolumn{1}{c|}{H} &
+	\multicolumn{1}{c|}{\cellcolor[HTML]{34FF34}T} &
+	\multicolumn{1}{c|}{\cellcolor[HTML]{34FF34}H} &
+	\multicolumn{1}{c|}{T} &
+	\multicolumn{1}{c|}{\cellcolor[HTML]{34FF34}H} &
+	\multicolumn{1}{c|}{T} &
+	\multicolumn{1}{c|}{H} &
+	T &
+	\multicolumn{1}{c|}{\cellcolor[HTML]{34FF34}H} &
+	\multicolumn{1}{c|}{T} &
+	\multicolumn{1}{c|}{H} &
+	\multicolumn{1}{c|}{T} &
+	\multicolumn{1}{c|}{H} &
+	\multicolumn{1}{c|}{T} &
+	\multicolumn{1}{c|}{H} &
+	T \\ \hline
+\end{tabular}
+
+\vspace{1em}
+The probability of heads landing exactly 3 times is $4/16 = 0.25$
+
+\bibliographystyle{apacite}
+\bibliography{} %link to relevant .bib file
+\end{document}
