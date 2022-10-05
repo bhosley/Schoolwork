@@ -92,7 +92,108 @@ and so for any $(\mathbf{v}_1,\mathbf{w}_1),(\mathbf{v}_2,\mathbf{w}_2)\in\mathc
 \end{equation*}
 as desired.
 Use a similar argument to prove that $\mathcal{V}\oplus\mathcal{W}$ inherits the remaining seven properties of a vector space from the assumption that $\mathcal{V}$ and $\mathcal{W}$ satisfy them individually.}
-\end{enumerate}\bigskip
+%\end{enumerate}
+\bigskip\hrule\bigskip
+
+Above we have seen that $\mathcal{V}\oplus\mathcal{W}$ satisfies the commutative property. Below we will demonstrate the remaining properties of a vector space. \\
+\textbf{Proof.} \\
+
+\begin{itemize}
+	\item[1.2] Addition is Associative. \\
+	Let $v_1,v_2,v_3 \in \mathcal{V}$ and $w_1,w_2,w_3 \in \mathcal{W}$ be arbitrary.
+	\begin{align*}
+		(v_1,w_1)+[(v_2,w_2)+(v_3,w_3)] 
+		&=   (v_1,w_1)+(v_2+v_3, w_2+w_3) \\
+		&=   (v_1+ (v_2+v_3), w_1+ (w_2+w_3)) \\
+		&=   (v_1+ (v_2+v_3),  w_1+ (w_2+w_3)) \\
+		&=   (v_1+ v_2+v_3,  w_1+ w_2+w_3) \\
+		&=   ((v_1+ v_2)+v_3,  (w_1+ w_2)+w_3) \\
+		&=   (v_1+ v_2 , w_1+ w_2) + (v_3, w_3) \\
+		&=   [(v_1,w_1)+(v_2,w_2)]+(v_3,w_3)  
+	\end{align*}
+	Therefore, $(v_1,w_1)+[(v_2,w_2)+(v_3,w_3)]  =  [(v_1,w_1)+(v_2,w_2)]+(v_3,w_3)$ \\
+	
+	\item[1.3]  Additive Identity Element. \\
+	\textbf{Proof:}
+	Let $(v_0,w_0) =(0,0)$ \\
+	Let $v_1 \in \mathcal{V}$ and $w_1 \in \mathcal{W}$ be arbitrary.
+	\begin{align*}
+				(v_1,w_1)+(v_0,w_0)
+		&=   (v_1+v_0, w_1+w_0) \\
+		&=   (v_1+0, w_1+0) \\
+		&=   (v_1, w_1)
+	\end{align*}
+	Since $(v_1,w_1)+(v_0,w_0) = (v_1, w_1)$ we show that $(v_0,w_0) =(0,0)$ is an additive identity. \\
+	
+	\item[1.4]  Additive Inverse Element. \\
+	\textbf{Proof:}
+	Let $v_n \in \mathcal{V}$ and $w_n \in \mathcal{W}$ be arbitrary. \\
+	Let $x_n = -v_n$ and $x\in \mathcal{V}$ for arbitrary $n$. \\
+	Let $y_n = -w_n$ and $x\in \mathcal{W}$ for arbitrary $n$. 
+	\begin{align*}
+			(v_n,w_n)+(x_n,y_n)
+		&= (v_n+x_n, w_n+y_n) \\
+		&= (v_n-v_n, w_n-w_n) \\
+		&= (0,0)
+	\end{align*}
+	This shows $v_n,w_n)+(x_n,y_n) = (0,0)$ when $x_n = -v_n$ and $y_n = -w_n$ \\
+	
+	\item[1.5]  Compatibility of scalar multiplication with field multiplication. \\
+	\textbf{Proof:}
+	Let $c_1, c_2 \in\mathbb{F}$
+	and $v \in \mathcal{V}$ and $w \in \mathcal{W}$ be arbitrary.
+	\begin{align*}
+		[c_1(c_2(v,w))]
+		&= (c_1(c_2v,c_2w)) \\
+		&= (c_1(c_2v),c_1(c_2w)) \\
+		&= (c_1c_2v,c_1c_2w) \\
+		&= ((c_1c_2)v,(c_1c_2)w) \\
+		&= (c_1c_2)(v,w) \\
+	\end{align*}
+	This shows $[c_1(c_2(v,w))] = (c_1c_2)(v,w)$ \\
+	
+	\item[1.6]  Multiplicative Identity Element. \\
+	\textbf{Proof:}
+	Let $v \in \mathcal{V}$ and $w \in \mathcal{W}$ and be arbitrary.
+	\begin{align*}
+		1(v,w) = (1v,1w) = (v,w) 
+	\end{align*}
+	Therefore $1(v,w) = (v,w)$ \\
+	
+	\item[1.7]  Distributivity of scalar multiplication with respect to vector addition. \\
+	\textbf{Proof:}
+	Let $c \in\mathbb{F}$
+	and $v_1,v_2 \in \mathcal{V}$ and $w_1,w_2 \in \mathcal{W}$ and be arbitrary. 
+	\begin{align*}
+		c[(v_1,w_1)+(v_2,w_2)]
+		&= c(v_1+v_2,w_1+w_2) \\
+		&= (c(v_1+v_2),c(w_1+w_2)) \\
+		&= ((cv_1+cv_2),(cw_1+cw_2)) \\
+		&= (cv_1+cv_2,cw_1+cw_2) \\
+		&= (cv_1,cw_1) + (cv_2,cw_2) \\
+		&= c(v_1,w_1) + c(v_2,w_2)
+	\end{align*}
+	Thus $c[(v_1,w_1)+(v_2,w_2)] = c(v_1,w_1) + c(v_2,w_2)$ \\
+	
+	\item[1.8]  Distributivity of scalar multiplication with respect to field addition. \\
+	\textbf{Proof:}
+	Let $c_1, c_2 \in\mathbb{F}$
+	and $v \in \mathcal{V}$ and $w \in \mathcal{W}$ be arbitrary. 
+	\begin{align*}
+		(c_1+c_2)(v,w)
+		&= ((c_1+c_2)v,(c_1+c_2)w) \\
+		&= (c_1v+c_2v,c_1w+c_2w) \\
+		&= (c_1v,c_1w)+(c_2v,c_2w) \\
+		&= c_1(v,w)+C-2(v,w) \\
+	\end{align*}
+	Thus $(c_1+c_2)(v,w) = c_1(v,w)+c_2(v,w)$. \\
+	
+	
+\end{itemize}
+
+
+\end{enumerate}
+\bigskip\hrule\bigskip
 
 The remaining problems involve \textit{subspaces} of vector spaces.
 As discussed in class, if $\mathcal{V}$ is a vector space over a field $\mathbb{F}$,
