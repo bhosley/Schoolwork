@@ -32,6 +32,15 @@
 \subsection{Problem 1}
 \emph{In how many ways can three boys and three girls sit in a row if boys and girls must alternate?}\vspace{1em}
 
+The alternation constrain implies that all sample points will comply to one of two patterns:
+$$
+{b,g,b,g,b,g} \text{ or } {g,b,g,b,g,b}.
+$$
+So the number of sample points will be equal to 
+$2\times\text{(Permutations of boys)}\times\text{(Permutations of Girls)}$ 
+$=2(b!)(g!) = 2(3!)(3!) = 72$
+
+
 \subsection{Problem 2}
 \emph{$k\binom{n}{k}$}
 \doublespacing
@@ -81,11 +90,19 @@ Sample Space: \\
 
 \subsection{Problem 6}
 \emph{A laboratory test for steroid use in professional athletes has detection rates given in the table.
-	If the rate of steroid use among professional athletes is 1 in 50, what is the probability that a professional athlete chosen at random will have a negative test result for steroid use? (Hint: these are conditional probabilities, e.g., $P(\plus| \text{"use steriods"})=0.9$
-}\vspace{1em}
+	If the rate of steroid use among professional athletes is 1 in 50, what is the probability that a professional athlete chosen at random will have a negative test result for steroid use? (Hint: these are conditional probabilities, e.g.,} 
+	$P(+|  \text{"use steriods"} )=0.9$
+\vspace{1em}
 
 \subsection{Problem 7}
 \emph{How many ways can 10 students be lined up to get on a bus if a particular pair of students refuse to follow each other in line?}\vspace{1em}
+
+This can be represented as the permutation of all ten students subtracting the excluded events:
+$$ P^{10}_{10} - (\text{Excluded Events})$$
+The excluded events are any in which students a and b $S_a, S_b$ are placed immediately next to each other. Which may be represented by each position they can be inserted into a line of the other 8 students:
+$$ (n_i, S_a, S_b, n_{8-i})\text{ and  }(n_i, S_b, S_a, n_{8-i}).$$
+This represents 18 positions in which  $S_a, S_b$ may be inserted into each permutation of the other 8 students. Or;
+$$P^{10}_{10} - (18)P^{8}_{8}  = 10! - (18)8! = 3628800 - (18)40320 = 3628800 - 725760 = 2903040$$
 
 \subsection{Problem 8}
 \emph{ 
@@ -96,6 +113,17 @@ Sample Space: \\
 \subsection{Problem 9}
 \emph{Suppose $P(A_i )= \frac{1}{(3+i)}$ for $i=1,2,3,4$. 
 	Find an upper bound for $P(A_1 \cup A_2 \cup A_3 \cup A_4)$. }\vspace{1em}
+
+Assuming that $P(A_i )$ are independent:
+\begin{align*}
+	P(A_1 \cup A_2 \cup A_3 \cup A_4)
+	&= 1-P((A_1 \cup A_2 \cup A_3 \cup A_4)^c) \\
+	&= 1-P(A_1^c \cap A_2^c \cap A_3^c \cap A_4^c) \\
+	&= 1-P(A_1^c)\cap P(A_2^c)\cap P(A_3^c) \cap P(A_4^c) \\
+	&= 1-(3/4)(4/5)(5/6)(6/7) \\
+	&= 1- 0.428571428571 \\
+	&= 0.571428571429
+\end{align*}
 
 \subsection{Problem 10}
 \emph{A balanced coin is tossed four times. In your work, list the possible outcomes. Compute the probability of getting exactly three heads:} \vspace{1em}
