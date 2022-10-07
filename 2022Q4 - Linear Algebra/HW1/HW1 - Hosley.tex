@@ -242,7 +242,7 @@ This will mean that
 	u_1 + u_2 = (x,-x)+(x,2x) = (x+x,-x+2x) = (2x,x).
 \end{align*}
 The result, $(2x,x)$ is not contained in $\mathcal{U}_1$ or $\mathcal{U}_2$.
-So $u_1, u_2 \in \mathcal{U}_1\cup\mathcal{U}_2$ while $u_1+ u_2 \notin \mathcal{U}_1\cup\mathcal{U}_2$. Therefore, in this case, $\mathcal{U}_1\cup\mathcal{U}_2$ is not closed under addition.
+So $u_1, u_2 \in \mathcal{U}_1\cup\mathcal{U}_2$ while $u_1+ u_2 \notin \mathcal{U}_1\cup\mathcal{U}_2$. Therefore, in this case, $\mathcal{U}_1\cup\mathcal{U}_2$ is not closed under addition. \textbf{QED}
 \bigskip\hrule\bigskip
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item
@@ -261,7 +261,57 @@ If $\mathcal{U}$ is any subspace of $\mathcal{V}$ such that $\mathcal{U}_1\cup\m
 \end{enumerate}\bigskip
 
 \textit{Note:
-In general, ``$\mathcal{A}\subseteq\mathcal{B}$" denotes that ``$\mathcal{A}$ is a subset of $\mathcal{B}$," namely that ``$\mathcal{A}$ is contained in $\mathcal{B}$" or equivalently that ``$\mathcal{B}$ contains $\mathcal{A}$"; these all just mean that every element of $\mathcal{A}$ is also an element of $\mathcal{B}$.}\bigskip
+In general, ``$\mathcal{A}\subseteq\mathcal{B}$" denotes that ``$\mathcal{A}$ is a subset of $\mathcal{B}$," namely that ``$\mathcal{A}$ is contained in $\mathcal{B}$" or equivalently that ``$\mathcal{B}$ contains $\mathcal{A}$"; these all just mean that every element of $\mathcal{A}$ is also an element of $\mathcal{B}$.}
+
+\bigskip\hrule\bigskip
+\begin{enumerate}[(a)]
+	\item
+	Let $c\in\mathbb{F}$ and $u_1,u_2\in\mathcal{U}_1$ and $v_1,v_2\in\mathcal{U}_2$.
+	The sum of any two vectors from $\mathcal{U}_1+\mathcal{U}_2$ may be represented as
+	\begin{align*}
+	(u_1+v_1)+(u_2+v_2) 
+	&= u_1+u_2+v_1+v_2 \\
+	&= (u_1+u_2)+(v_1+v_2) 
+	\in \mathcal{U}_1+\mathcal{U}_2.
+	\end{align*}
+	Therefore $\mathcal{U}_1+\mathcal{U}_2$ is close under addition. 
+	It can be shown as closed under multiplication by
+	$$
+	c(u_1+v_1) = cu_1 + cv_1 \in\mathcal{U}_1+\mathcal{U}_2.
+	$$
+	And since $0\in\mathcal{U}_1, 0\in\mathcal{U}_2$ 
+	and $0+0=0\in\mathcal{U}_1+\mathcal{U}_2$,
+	it shown that $\mathcal{U}_1+\mathcal{U}_2$ is a subspace of $\mathcal{V}$.
+	
+	\bigskip
+	\item
+	Let $u\in U_1$ and $v \in U_2$.
+	Since $U_1,U_2$ are both subspaces we may see that
+	$$u=u+\mathbf{0} \in u+v \in U_1+U_2$$
+	and
+	$$v=\mathbf{0}+v \in u+v \in U_1+U_2$$.
+	Showing that $U_1\cup U_2 \subseteq U_1+U_2$.
+	
+	\bigskip
+	\item
+	Let $u_1,u_2\in U_1$ and $v_1,v_2\in U_2$.
+	Assuming that 
+	$U_1\cup U_2 \subseteq U$
+	it follows that
+	$(u_1+u_2),(v_1+v_2)\in U$.
+	And since $U$ is a subspace
+	\begin{align*}
+		U_1+U_2&=(u_1+v_1)+(u_2+v_2) \\
+		&=u_1+v_1+u_2+v_2\\
+		&=u_1+u_2+v_1+v_2\\
+		&=(u_1+u_2)+(v_1+v_2)\in U.
+	\end{align*}
+	Thus if $U_1\cup U_2 \subseteq U$ then $U_1+U_2\subseteq U$.
+\end{enumerate}
+
+
+
+\bigskip\hrule\bigskip
 
 \item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a966457. Upload a completion certificate for this activity to your homework folder.
 \end{enumerate}
