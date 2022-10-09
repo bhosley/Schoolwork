@@ -88,10 +88,26 @@ Sample Space: \\
 \subsection{Problem 5}
 \emph{  $\sum_{i=0}^{n} \binom{2n}{2i} =$  }\vspace{1em}
 
+\begin{align*}
+	\sum_{i=0}^{n}\binom{2n}{2i}
+	&= \sum_{i=0}^{n}\bigg[ \binom{2n-1}{2i-1}+\binom{2n-1}{2i} \bigg] \\
+	&= \sum_{i=-1}^{2n}\binom{2n-1}{2i}  \\
+	&= \sum_{i=0}^{2n-1}\binom{2n-1}{2i}  \\
+	&= 2^{2n-1}
+\end{align*}
+
 \subsection{Problem 6}
 \emph{A laboratory test for steroid use in professional athletes has detection rates given in the table.
 	If the rate of steroid use among professional athletes is 1 in 50, what is the probability that a professional athlete chosen at random will have a negative test result for steroid use? (Hint: these are conditional probabilities, e.g.,} 
 	$P(+|  \text{"use steriods"} )=0.9$
+	
+	\begin{align*}
+		P(-) &= P(-|No)P(No) \\
+		&= P(-|No)P(Yes)^c \\
+		&= P(0.99)(0.98) \\
+		&= 0.9702
+	\end{align*}
+	
 \vspace{1em}
 
 \subsection{Problem 7}
@@ -108,7 +124,15 @@ $$P^{10}_{10} - (18)P^{8}_{8}  = 10! - (18)8! = 3628800 - (18)40320 = 3628800 - 
 \emph{ 
 	In a marble game a shooter may $(A)$ miss, $(B)$ hit one marble out and stick in the ring, or $(C)$ hit one marble out and leave the ring. If $B$ occurs, the shooter shoots again. Let  $P(A)=p_1, P(B)=p_2$ and $P(C)=p_3$ where these probabilities do not change from shot to shot. Show that the probability of getting one marble is greater than the probability of getting zero marbles if $p_1 < \frac{1-p_2}{2-p_2}$. }\vspace{1em}
 
-
+\begin{align*}
+	P(1) &> P(0) &\text{}\\
+	p_2p_1 + p_3 &> p_1 &\text{Lose marbles from miss, }p_1\\
+	p_2p_1 + 1- p_2 - p_1 &> p_1 &\text{Expand: }p_3 = 1- p_2 - p_1\\
+	1-p_2  &> p_1 + p_1 - p_2p_1 & +p_1, -p_2p_1 \text{ to both sides.} \\
+	1-p_2  &> p_1(2-p_2) & \text{ Factor } p_1 + p_1 - p_2p_1 = p_1(2-p_2) \\
+	\frac{1-p_2}{2-p_2}  &> p_1 & \text{ Divide by } p_1(2-p_2) \\
+	p_1  &< \frac{1-p_2}{2-p_2}   & \text{ Flip } \\
+\end{align*}
 
 \subsection{Problem 9}
 \emph{Suppose $P(A_i )= \frac{1}{(3+i)}$ for $i=1,2,3,4$. 
