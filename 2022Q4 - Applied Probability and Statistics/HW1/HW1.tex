@@ -90,10 +90,10 @@ Sample Space: \\
 
 \begin{align*}
 	\sum_{i=0}^{n}\binom{2n}{2i}
-	&= \sum_{i=0}^{n}\bigg[ \binom{2n-1}{2i-1}+\binom{2n-1}{2i} \bigg] \\
-	&= \sum_{i=-1}^{2n}\binom{2n-1}{2i}  \\
-	&= \sum_{i=0}^{2n-1}\binom{2n-1}{2i}  \\
-	&= 2^{2n-1}
+	&= \sum_{i=0}^{n}\bigg[ \binom{2n-1}{2i-1}+\binom{2n-1}{2i} \bigg] &\text{Pascal's Identity}\\
+	&= \sum_{i=-1}^{2n}\binom{2n-1}{i}  & \text{Condense using even-odd summation}\\
+	&= \sum_{i=0}^{2n-1}\binom{2n-1}{i}  &\\
+	&= 2^{2n-1}  &\text{Binomial Identity}
 \end{align*}
 
 \subsection{Problem 6}
