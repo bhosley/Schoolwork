@@ -71,12 +71,38 @@
 \[\mathbf{V}(\mathbf{x}) = \sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_{n}.\]
 Show that for any subspace \(\mathcal{X}\) of \(\mathbb{F}^{\mathcal{N}}\), the set 
 \[\mathbf{V}(\mathcal{X}) = \{\mathbf{V}(\mathbf{x}) : \mathbf{x}\in\mathcal{X}\}\]
-is a subspace of \(\mathcal{V}\).
+is a subspace of \(\mathcal{V}\). \\
+\hrule
 \bigskip
 
+
+Assume that $\mathcal{X}$ is a subspace, it follows $0\in\mathcal{X}$.
 \begin{align*}
 	\mathbf{0} = \sum_{n\in\mathcal{N}}  0(n)v_n = \mathbf{V}(0)
 \end{align*}
+
+
+Addition
+
+\begin{align*}
+	\mathbf{V}(x_1)+\mathbf{V}(x_2) 
+	&= \sum_{n\in\mathcal{N}}x_1(n)v_n + \sum_{n\in\mathcal{N}}x_2(n)v_n \\
+	&= \sum_{n\in\mathcal{N}}x_1(n)v_n + x_2(n)v_n \\
+	&= \sum_{n\in\mathcal{N}}(x_1(n) + x_2(n))v_n \\
+	&= \sum_{n\in\mathcal{N}}(x_1+x_2(n))v_n \\
+	&= \mathbf{V}(x_1 + x_2)
+\end{align*}
+
+Multiplication
+
+\begin{align*}
+	c\mathbf{V}(x)
+	&= \sum_{n\in\mathcal{N}}x(n)v_n \\
+	&= \sum_{n\in\mathcal{N}}c(x(n)v_n) \\
+	&= \sum_{n\in\mathcal{N}}cx(n)v_n \\
+	&= \mathbf{V}(cx)
+\end{align*}
+
 
 \newpage
 
@@ -86,18 +112,24 @@ is a subspace of \(\mathcal{V}\).
 
 
 Hint: Proofs that a sequence such as \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) is linearly independent often take the following form: Suppose \(\mathbf{x}\in\mathbb{F}^{\mathcal{N}}\) is a vector such that \(\sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_{n} = \mathbf{0}\), then use the properties you know about the sequence \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) to argue that \(\mathbf{x}(n) = 0\) for each \(n\in\mathcal{N}\). In this case, you know two things about \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\).
-
+\\
+\hrule
 \bigskip
+
+Suppose \(\mathbf{x}\in\mathbb{F}^{\mathcal{N}}\) is a vector such that \(\sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_{n} = \mathbf{0}\)
+
+
+
 \newpage
 
 \item Assume \(\mathcal{V}\) is a vector space over a field \(\mathbb{F}\), \(\mathcal{N}\) is a finite nonempty set, and \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) is a sequence of vectors in \(\mathcal{V}\). Suppose \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) is a dependent set.  Prove that there is some \(n_{0}\in\mathcal{N}\) such that
 \[\operatorname{span}\{\mathbf{v}_{n}\}_{n\in\mathcal{N}\setminus\{n_{0}\}} = \operatorname{span}\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}.\]
-Hint: In this problem you are trying to show that two sets are equal. Proofs that two sets \(A\) and \(B\) are equal often take the following form: Let \(x\in A\) be arbitrary, and argue that \(x\in B\). This shows that \(A\subset B\). Next, let \(y\in B\) be arbitrary, and argue that \(y\in A\). This shows that \(B\subset A\). Thus \(A=B\).
-
+Hint: In this problem you are trying to show that two sets are equal. Proofs that two sets \(A\) and \(B\) are equal often take the following form: Let \(x\in A\) be arbitrary, and argue that \(x\in B\). This shows that \(A\subset B\). Next, let \(y\in B\) be arbitrary, and argue that \(y\in A\). This shows that \(B\subset A\). Thus \(A=B\). \\
+\hrule
 \bigskip
 
 
-
+\vspace*{\fill}
 \item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a901772. Upload a completion certificate for this activity to your homework folder.
 \end{enumerate}
 
