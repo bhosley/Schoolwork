@@ -74,35 +74,34 @@ Show that for any subspace \(\mathcal{X}\) of \(\mathbb{F}^{\mathcal{N}}\), the 
 is a subspace of \(\mathcal{V}\). \\
 \hrule
 \bigskip
+We will show that any set $\mathbf{V}(\mathcal{X})$ is a subspace of \(\mathcal{V}\) using Theorem 1.8,by proving that $\mathbf{V}(\mathcal{X})$ has the properties outlined in the theorem; contains a $\mathbf{0}$, is closed under addition, and is closed under multiplication.
 
-
-Assume that $\mathcal{X}$ is a subspace, it follows $0\in\mathcal{X}$.
+\textbf{Proof.} Since $\mathcal{X}$ is a subspace, it follows that $0\in\mathcal{X}$. The zero vector can be represented as
 \begin{align*}
-	\mathbf{0} = \sum_{n\in\mathcal{N}}  0(n)v_n = \mathbf{V}(0)
+	\mathbf{0} = \sum_{n\in\mathcal{N}}  \mathbf{0}(n)\mathbf{v}_n = \mathbf{V}(\mathbf{0}).
 \end{align*}
 
-
-Addition
-
+Next, let $u_1, u_2 \in \mathbf{V}(\mathcal{X})$ such that  $u_1 = \mathbf{V}(\mathbf{x}_1)$ and $ u_2 = \mathbf{V}(\mathbf{x}_2)$.
 \begin{align*}
-	\mathbf{V}(x_1)+\mathbf{V}(x_2) 
-	&= \sum_{n\in\mathcal{N}}x_1(n)v_n + \sum_{n\in\mathcal{N}}x_2(n)v_n \\
-	&= \sum_{n\in\mathcal{N}}x_1(n)v_n + x_2(n)v_n \\
-	&= \sum_{n\in\mathcal{N}}(x_1(n) + x_2(n))v_n \\
-	&= \sum_{n\in\mathcal{N}}(x_1+x_2(n))v_n \\
-	&= \mathbf{V}(x_1 + x_2)
+	\mathbf{V}(\mathbf{x}_1)+\mathbf{V}(\mathbf{x}_2) 
+	&= \sum_{n\in\mathcal{N}}\mathbf{x}_1(n)\mathbf{v}_n + \sum_{n\in\mathcal{N}}\mathbf{x}_2(n)\mathbf{v}_n \\
+	&= \sum_{n\in\mathcal{N}}\mathbf{x}_1(n)\mathbf{v}_n + \mathbf{x}_2(n)\mathbf{v}_n \\
+	&= \sum_{n\in\mathcal{N}}(\mathbf{x}_1(n) + \mathbf{x}_2(n))\mathbf{v}_n \\
+	&= \sum_{n\in\mathcal{N}}(\mathbf{x}_1+\mathbf{x}_2(n))\mathbf{v}_n \\
+	&= \mathbf{V}(\mathbf{x}_1+ \mathbf{x}_2).
 \end{align*}
+Since $\mathbf{V}(\mathbf{x}_1)+\mathbf{V}(\mathbf{x}_2) = \mathbf{V}(\mathbf{x}_1+ \mathbf{x}_2)$, $\mathbf{V}(\mathcal{X}$ is closed under addition.
 
-Multiplication
-
+Finally, let $c\in\mathbb{F}$ and $u\in\mathbf{V}(\mathcal{X})$ such that $u=\mathbf{V}(\mathbf{x})$.
+Then, for arbitrary $\mathbf{x}\in\mathcal{X}$ it can be shown that  
 \begin{align*}
-	c\mathbf{V}(x)
-	&= \sum_{n\in\mathcal{N}}x(n)v_n \\
-	&= \sum_{n\in\mathcal{N}}c(x(n)v_n) \\
-	&= \sum_{n\in\mathcal{N}}cx(n)v_n \\
-	&= \mathbf{V}(cx)
+	c\mathbf{V}(\mathbf{x})
+	&= \sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_n \\
+	&= \sum_{n\in\mathcal{N}}c(\mathbf{x}(n)\mathbf{v}_n) \\
+	&= \sum_{n\in\mathcal{N}}c\mathbf{x}(n)\mathbf{v}_n \\
+	&= \mathbf{V}(c\mathbf{x}).
 \end{align*}
-
+Thus, $\mathbf{V}(\mathcal{X})$ is closed under multiplication. \textbf{QED.}
 
 \newpage
 
@@ -116,7 +115,17 @@ Hint: Proofs that a sequence such as \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) is
 \hrule
 \bigskip
 
-Suppose \(\mathbf{x}\in\mathbb{F}^{\mathcal{N}}\) is a vector such that \(\sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_{n} = \mathbf{0}\)
+Suppose $\mathbf{x}\in\mathbb{F}^{\mathcal{N}}$ be a vector such that $\sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_{n} = \mathbf{0}$. Then,\\
+
+\begin{align*}
+	\mathbf{0} &=\sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_{n} \\
+	\mathbf{0} &= \sum_{n\in\mathcal{N}_{0}}\mathbf{x}(n)\mathbf{v}_{n} +  \mathbf{x}(n_0)\mathbf{v}_{n_{0}}\\
+	-\mathbf{x}(n_0)\mathbf{v}_{n_{0}} &= \sum_{n\in\mathcal{N}_{0}}\mathbf{x}(n)\mathbf{v}_{n} \\
+	\mathbf{v}_{n_{0}}  &= \frac{1}{-\mathbf{x}(n_0)} \sum_{n\in\mathcal{N}_{0}}\mathbf{x}(n)\mathbf{v}_{n}. \\
+\end{align*}
+
+Thus we see that if $\mathbf{x}(n_0)\neq0$ then $\mathbf{v}_{n_{0}}$ could be written as a linear combination in $\sum\limits_{n\in\mathcal{N}_{0}}\mathbf{x}(n)\mathbf{v}_{n}$. 
+However, since $\mathbf{v}_{n_{0}}$ is not in $\operatorname{span}\{\mathbf{v}_{n}\}_{n\in\mathcal{N}_{0}}$ we conclude that $\mathbf{x}(n_0)=0$ and therefore $\sum\limits_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_{n}$ is also linearly independent.
 
 
 
@@ -127,6 +136,25 @@ Suppose \(\mathbf{x}\in\mathbb{F}^{\mathcal{N}}\) is a vector such that \(\sum_{
 Hint: In this problem you are trying to show that two sets are equal. Proofs that two sets \(A\) and \(B\) are equal often take the following form: Let \(x\in A\) be arbitrary, and argue that \(x\in B\). This shows that \(A\subset B\). Next, let \(y\in B\) be arbitrary, and argue that \(y\in A\). This shows that \(B\subset A\). Thus \(A=B\). \\
 \hrule
 \bigskip
+
+Note that 
+$ \operatorname{span}\{\mathbf{v}_{n}\}_{n\in\mathcal{N}\setminus\{n_{0}\}} =
+\sum\limits_{n\in\mathcal{N}\setminus\{n_0\}}\mathbf{x}(n)\mathbf{v}_{n} $
+and 
+$ \operatorname{span}\{\mathbf{v}_{n}\}_{n\in\mathcal{N}} = 
+ \sum\limits_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_{n} $.
+
+Let $y\in \operatorname{span}\{\mathbf{v}_{n}\}_{n\in\mathcal{N}\setminus\{n_{0}\}} $ be arbitrary.
+Because this span is a vector space, there exists an $\textbf{x}\in\mathbb{F}$ such that
+
+$ \sum\limits_{n\in\mathcal{N}\setminus\{n_0\}}\mathbf{x}(n)\mathbf{v}_{n} = y $
+
+Suppose that $\mathbf{x}(n_0) = 0$ Then,
+
+$ \sum\limits_{n\in\mathcal{N}\setminus\{n_0\}}\mathbf{x}(n)\mathbf{v}_{n} + \mathbf{x}(n_0)\mathbf{v}_{n_0} $
+
+$y+0 = y \in   \operatorname{span}\{\mathbf{v}_{n}\}_{n\in\mathcal{N}} $
+
 
 
 \vspace*{\fill}
