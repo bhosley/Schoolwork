@@ -1,0 +1,116 @@
+% !TeX document-id = {8a6a6473-5fee-4dfd-a8cb-085b30fb17aa}
+\documentclass[a4paper,man,natbib]{apa6}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+
+% Common Packages - Delete Unused Ones %
+\usepackage{setspace}
+\usepackage{amsmath}
+%\usepackage[cache=false]{minted}
+\usepackage{graphicx}
+\usepackage{caption}
+\graphicspath{ {./images/} }
+\usepackage{multirow}
+% End Packages %
+
+\usepackage{amssymb}
+\usepackage[table,xcdraw]{xcolor}
+
+\title{Homework 2}
+\shorttitle{HW2}
+\author{Brandon Hosley}
+\date{\today}
+\affiliation{STAT 587 - Introduction to Probability and Statistics}
+
+%\abstract{}
+
+\begin{document}
+\maketitle
+\raggedbottom
+\singlespacing
+
+\subsection{Problem 1}
+\emph{Let $X$ be a nonnegative continuous random variable with CDF $F(x)$ and 
+	$E[X]<\infty$
+	. Use integration by parts to show that $E[X] = \int_{0}^{\infty}[1−F(x)] dx$.  Note that the function 
+	$1−F(x)$ is called the \textbf{survival function}. \\
+	Remember integration by parts: $\int_{b}^{a} u \frac{dv}{dx} dx = uv a_b^a -\int_{b}^{a}v\frac{du}{dx} dx$.  Which $u$ and $v$ should you select to prove the result above?}
+
+
+
+\subsection{Problem 2}
+\emph{At a computer store, the annual demand for a particular software package is a discrete random variable $X$. The store owner orders four copies of the package at \$10 per copy and charges customers \$35 per copy. At the end of the year the package is obsolete and the owner loses the investment on unsold copies. The pdf of $X$ is given by the following table:}\\
+	\begin{tabular}{l|lllll}
+		\textbf{x }  & 0   & 1   & 2   & 3   & 4   \\ \hline
+		$f(x)$ & 0.1 & 0.3 & 0.3 & 0.2 & 0.1
+	\end{tabular}
+
+\begin{align*}
+	E[x] &= 35(\sum f(x) x) - 10(4) \\
+	&= 35(0*0.1 + 1*0.3 + 2*0.3+ 3*0.2 + 4*0.1) - 40 \\
+	&= 35(0 + 0.3 + 0.6 + 0.6 + 0.4) -40 \\
+	&= 35(1.9) - 40 \\
+	&= 66.5 - 40 \\
+	&= 26.5
+\end{align*}
+
+
+\subsection{Problem 3}
+\emph{For the FMGF $G_X^{(r)}(t) = r!(2−t)^{−r−1}$, find $E[X(X-1)(X-2)] =$}
+
+
+
+\subsection{Problem 4}
+\emph{A discrete random variable $X$ has a pdf of the form $f(x) = c(8−x)$ for $x = 0,1,2,3,4,5$ and zero otherwise.  Find the CDF $F_X(x)$.}
+
+\begin{tabular}{rllllll}
+	x:  & 0    & 1     & 2     & 3     & 4     & 5    \\  
+	$f(x)$: & 8c   & 7c    & 6c    & 5c    & 4c    & 3c  \hspace{3em} $= 33c$\hspace{2em}$c=1/33$ \\
+	& 8/33 & 7/33  & 6/33  & 5/33  & 4/33  & 3/33 \\
+	CDF: & 8/33 & 15/33 & 21/33 & 26/33 & 30/33 & 1   
+\end{tabular}
+
+\subsection{Problem 5}
+\emph{Let $X$ be continuous with pdf $f(x)=3x^2$ if $0<x<1$ and zero otherwise.  Use Chebyshev's inequality to obtain a lower bound on $P(5/8<X<7/8)$.}\vspace{1em}
+
+
+\subsection{Problem 6}
+\emph{A discrete random variable has pdf $f(x)$. If $f(x)=k(1/2)^x$ for $x=1,2,3$ and zero otherwise, find $k$.} \vspace{1em}
+
+\begin{align*}
+	(x) &= k(1/2)^x \\
+	1 &= \frac{k}{2} + \frac{k}{4} + \frac{k}{8} \\
+	&= \frac{4k + 2k + k}{8} \\
+	&= \frac{7}{8}k \\
+	k &= \frac{8}{7}
+\end{align*}
+
+\subsection{Problem 7}
+\emph{Assume that $X$	is a continuous random variable with MGF $M_X(t)= \frac{e^{−2t}}{(1−t)}$. \\ Find $E[X]$.}\vspace{1em}
+ 
+ 
+ 
+\subsection{Problem 8}
+\emph{Suppose that $X$	is a discrete random variable with MGF $M_x(t) = (1/8)e^t+(1/4)e^{2t}+(5/8)e^{5t}$.  What is the distribution of $X$?}\vspace{1em}
+
+
+\subsection{Problem 9}
+\emph{Suppose $E[X]= \mu \text{and Var}[X] = \sigma^2$. Find the approximate mean and variance of $h(x) = e^x$.}\vspace{1em}
+
+
+\subsection{Problem 10}
+\emph{A random variable $X$ has the pdf}
+$$
+f(x) =
+\begin{cases}
+	x^2 & \text{if } 0<x\leq1 \\
+	2/3 & \text{if } 1<x\leq2 \\
+	0 & \text{otherwise} 
+\end{cases}
+$$ 
+\emph{Find the median of $X$}.
+\vspace{1em}
+
+
+
+\end{document}
