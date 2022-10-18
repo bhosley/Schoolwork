@@ -1,0 +1,140 @@
+\documentclass[12pt]{amsart}
+
+
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancybox}
+
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newcounter{Theorem}
+\newcounter{Definition}
+\numberwithin{equation}{section}
+\numberwithin{Theorem}{section}
+
+\theoremstyle{plain} %% This is the default, anyway
+\newtheorem{thm}[Theorem]{Theorem}
+\newtheorem{cor}[Theorem]{Corollary}
+\newtheorem{lem}[Theorem]{Lemma}
+\newtheorem{prop}[Theorem]{Proposition}
+%\usepackage{upgreek}
+
+\theoremstyle{definition}
+\newtheorem{defn}[Theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{ex}[Theorem]{Example}
+\newtheorem{nota}[Theorem]{Notation}
+
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent{\Large Homework 3 (Due October 21 at 8am)}\bigskip
+
+
+
+
+
+\begin{enumerate}[1.]
+
+\item This problem is a warmup for the next:
+
+Consider the sequences \(\{\mathbf{v}_{n}\}_{n=1}^{3}\) and \(\{\mathbf{u}_{n}\}_{n=1}^{3}\) in \(\mathbb{R}^{3}\) and \(\mathbb{R}^{2}\), respectively, where
+\[\mathbf{v}_{1} = \begin{bmatrix} 1\\ 0\\ 0\end{bmatrix},\ \mathbf{v}_{2} = \begin{bmatrix} 2\\ 1\\ 0\end{bmatrix},\ \mathbf{v}_{3} = \begin{bmatrix} 0\\ -1\\ 1\end{bmatrix},\ \mathbf{u}_{1} = \begin{bmatrix} 1\\ 2\end{bmatrix},\ \mathbf{u}_{2} = \begin{bmatrix} 1\\ 2\end{bmatrix},\ \mathbf{u}_{3} = \begin{bmatrix} 0\\ -1\end{bmatrix}.\]
+
+Since we have proved that all synthesis operators are linear, part (a) shows that \(\mathbf{V}^{-1}\) is linear, and part (b) shows that there exists a \textit{linear} map \(\mathbf{L}:\mathbb{R}^{3}\to\mathbb{R}^{2}\) with the property that \(\mathbf{L}(\mathbf{v}_{n}) = \mathbf{u}_{n}\) for each \(n\in[3]\).
+
+\begin{enumerate}
+
+\item Let \(\mathbf{V}:\mathbb{R}^{3}\to\mathbb{R}^{3}\) be the synthesis operator of \(\{\mathbf{v}_{n}\}_{n=1}^{3}\). What theorem from class tells us that \(\mathbf{V}\) is an invertible function? Find a sequence \(\{\mathbf{w}_{n}\}_{n=1}^{3}\) in \(\mathbb{R}^{3}\) such that \(\mathbf{V}^{-1}\) is the synthesis operator of \(\{\mathbf{w}_{n}\}_{n=1}^{3}\). Show that your answer is correct.
+
+
+\bigskip
+
+\item Find a sequence \(\{\boldsymbol{\ell}_{n}\}_{n=1}^{3}\) such that if \(\mathbf{L}:\mathbb{R}^{3}\to\mathbb{R}^{2}\) is the synthesis operator of \(\{\boldsymbol{\ell}_{n}\}_{n=1}^{3}\), then \(\mathbf{L}(\mathbf{v}_{n}) = \mathbf{u}_{n}\) for all \(n\in[3]\). (You don't need to include the proof that the sequence you give has the desired property, but you should prove it to yourself!)
+
+\bigskip
+
+\end{enumerate}
+
+\clearpage
+
+\item In this problem we will show that if we have a basis \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) for a vector space \(\mathcal{V}\), and for each basis element \(\mathbf{v}_{n}\) we select some vector \(\mathbf{u}_{n}\) in the vector space \(\mathcal{U}\), then there is a unique linear map \(\mathbf{L}:\mathcal{V}\to\mathcal{U}\) such that \(\mathbf{L}(\mathbf{v}_{n}) = \mathbf{u}_{n}\). This has two important consequences:
+
+\begin{itemize}
+\item If we simply prescribe where each element of a basis for \(\mathcal{V}\) gets mapped to, then there exists a \textbf{linear} map on the \textbf{whole space} \(\mathcal{V}\) that maps each basis element in the domain to the prescribed vectors in the codomain. That is, we can define a linear map by simply describing how it acts on a basis for the domain.
+
+\item If two linear functions \(\mathbf{L},\mathbf{M}:\mathcal{V}\to\mathcal{U}\) have the same output for all inputs in some basis for \(\mathcal{V}\), then the two functions have the same output for \textbf{every} input in \(\mathcal{V}\), that is, they are the same function. That is, a linear function is entirely determined by how it acts on a basis.
+\end{itemize}
+
+Let \(\mathcal{V}\) and \(\mathcal{U}\) be vector spaces over the field \(\mathbb{F}\). Suppose \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) is a basis for \(\mathcal{V}\) and \(\{\mathbf{u}_{n}\}_{n\in\mathcal{N}}\) is a sequence in \(\mathcal{U}\). 
+
+
+
+
+\bigskip
+
+\begin{enumerate}
+
+\item Let \(\mathbf{V}:\mathbb{F}^{\mathcal{N}}\to\mathcal{V}\) be the synthesis operator of the sequence \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\). Since \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) is a basis, by a theorem from class the synthesis operator is a bijective function. Therefore, \(\mathbf{V}\) has an inverse \(\mathbf{V}^{-1}:\mathcal{V}\to\mathbb{F}^{\mathcal{N}}\). Prove that
+\[\mathbf{w} = \sum_{n\in\mathcal{N}}\big(\mathbf{V}^{-1}(\mathbf{w})\big)(n)\mathbf{v}_{n}\quad\text{for all }\mathbf{w}\in\mathcal{V}.\]
+
+\bigskip
+
+
+\item Show that \(\mathbf{V}^{-1}\) is a linear map. (Hint: Use Part (a) to write \(c_{1}\mathbf{w}_{1} + c_{2}\mathbf{w}_{2}\) as a linear combination of \(\{\mathbf{v}_{n}\}_{n\in\mathcal{N}}\) in two different ways.)
+
+\bigskip
+
+\item Let \(\mathbf{U}:\mathbb{F}^{\mathcal{N}}\to\mathcal{U}\) be the synthesis operator of \(\{\mathbf{u}_{n}\}_{n\in\mathcal{N}}\). Show that the composition \(\mathbf{L}:=\mathbf{U}\circ\mathbf{V}^{-1}:\mathcal{V}\to\mathcal{U}\) is linear.
+
+\bigskip
+
+\item Prove \(\mathbf{L}:\mathcal{V}\to\mathcal{U}\) is the unique linear map such that
+\[\mathbf{L}(\mathbf{v}_{n}) = \mathbf{u}_{n}\quad\text{for all }n\in\mathcal{N}.\]
+
+
+\bigskip
+
+
+\end{enumerate}
+
+
+
+\hspace*{\fill}
+\item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a697132. Upload a completion certificate for this activity to your homework folder.
+\end{enumerate}
+
+\end{document}
