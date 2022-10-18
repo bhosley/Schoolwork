@@ -9,14 +9,17 @@
 \date{\today}
 
 \setcounter{secnumdepth}{0}
+\usepackage{soul}
+\usepackage{xcolor}
 
 \begin{document}
 \maketitle
+%\sethlcolor{green} 
 
 \section{Problem 1}
 Consider the following linear program: 
 \begin{flalign*}
-	\text{Max } z=9x_1 +7x_2 & &\\
+	\text{Max  } z=9x_1 +7x_2 & &\\
 	\text{s.t.}\hspace{2.5em} 2x_1 + 1 x_2 &\leq 10 &\\
 	4x_1 + 5 x_2 &\leq 40 &\\
 	x_1 \hspace{3em} &\geq 2 &\\
@@ -27,31 +30,73 @@ Consider the following linear program:
 	\item[b)] Solve the problem with the simplex method. Indicate which points on the graph correspond to which simplex tableaus.
 \end{itemize}
 
+\begin{tabular}{lllllllllll}
+	bv & $z$                    & $x_1$ & $x_2$ & $s_1$ & $s_2$ & $s_3$ & $A_1$                  &              &   ratio   &   \\ \cline{2-9}
+	\multicolumn{1}{l|}{ $s_1$ } & \multicolumn{1}{l|}{0} & 2     & 1     & 1     & 0     & 0     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{10} & 10/2=5 &   \\
+	\multicolumn{1}{l|}{ $s_2$ } & \multicolumn{1}{l|}{0} & 4     & 5     & 0     & 1     & 0     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{40} & 40/4=10  &   \\
+	\multicolumn{1}{l|}{ $A_1$ } & \multicolumn{1}{l|}{0} & 1     & 0     & 0     & 0     & -1    & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{2}  & 2/1=1  &   \\ \cline{2-9}
+	\multicolumn{1}{l|}{ $z$ } & \multicolumn{1}{l|}{1} &\hl{-9 }& -7   & 0     & 0     & 0     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0}  &   &   \\ \cline{2-9}	
+\end{tabular}
+
+
 \section{Problem 2}
 
 Solve the following problem using the simplex method.
 \begin{flalign*}
-	\text{Max} z=2x_1 -1x_2 +5x_3 & & \\
+	\text{Max  } z=2x_1 -1x_2 +5x_3 & & \\
 	\text{s.t.}\hspace{2.5em} 3x_1 \hspace{2.5em}- 2 x_3 &\leq 16 & \\
 	2x_1 + 5 x_2 \hspace{2.5em}&\leq 10 & \\
 	3x_2 + 1x_3 &\leq 12 & \\
 	x_1 , x_2, x_3 &\geq 0 &
 \end{flalign*}
 
+\begin{tabular}{lllllllllll}
+	& $z$                    & $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $s_3$                  &                         &   &   \\ \cline{2-9}
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{0} & 3     & 0     & -2    & 1     & 0     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{16} & . & . \\
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{0} & 2     & 5     & 0     & 0     & 1     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{10} & . & . \\
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{0} & 0     & 3     & 1     & 0     & 0     & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{12} & . & . \\ \cline{2-9}
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{1} & -2     & 1    & -5     & 0     & 0     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0}  & . & . \\ \cline{2-9}
+\end{tabular}
+
 \section{Problem 3}
 
 The Hobatt Manufacturing Company wishes to allocate its 100 employees to the various functions involved in its plant. There are three basic functions to be performed: cutting, milling and finishing. Because of the simplicity of the cutting function and the limited facilities, no more than 25 employees should be placed there. Existing facilities in the other two departments make it necessary that cutting and finishing together do not exceed milling by more than 20 employees. A recent productivity study conducted by the company indicates that the daily profit contribution made by each employee in the three departments is \$24, \$18, and \$20 per day respectively. \bigskip
 
-Formulate and solve via the simplex method a problem to determine how the company should allocate the available employees to the different departments in order to maximize daily profit.
+Formulate and solve via the simplex method a problem to determine how the company should allocate the available employees to the different departments in order to maximize daily profit. \bigskip
+
+
+Let each task be represented as follows: profit: $z$; cutting, $x_1$; milling, $x_3$; finishing, $x_3$.
+\begin{flalign*}
+	\text{Max  } z = 24 x_1 + 18 x_2 + 20 x_3 & & \\
+	x_1 +  \hspace{1em} x_2 +  \hspace{1em} x_3 &\leq 100 &\\ 
+	x_1 \hspace{6.5em} &\leq 25 &\\
+	x_1 - \hspace{1em} x_2 + \hspace{1em} x_3 &\leq 20 &\\
+	x_1, x_2, x_3  &\geq 0 &
+\end{flalign*}
+
+\begin{tabular}{lllllllllll}
+	& $z$                    & $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $s_3$                  &                          &   &   \\ \cline{2-9}
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{0} & 1     & 1     & 1     & 1     & 0     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{100} & . & . \\
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{0} & 1     & 0     & 0     & 0     & 1     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{25}  & . & . \\
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{0} & 1     & -1    & 1     & 0     & 0     & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{20}  & . & . \\ \cline{2-9}
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{1} & -24  & -18  & -20  & 0     & 0     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0}   & . & . \\ \cline{2-9}
+\end{tabular}
 
 \section{Problem 4}
 Solve the following problem via the simplex method.
 \begin{flalign*}
-	\text{Min} z=2x_1 +9x_2 +4x_3 & &\\
-	\text{s.t.}\hspace{2em} 2x_1 + 3x_2 + 4x_3 &\geq 12 &\\
+	\text{Min  } z=2x_1 +9x_2 +4x_3 & &\\
+	\text{s.t. }\hspace{2em} 2x_1 + 3x_2 + 4x_3 &\geq 12 &\\
 	1x_1 + 6x_2 + 2x_3 &\geq 4 & \\
 	x_1 , x_2 , x_3 &\geq 0 &
 \end{flalign*}
+
+\begin{tabular}{llllllllllll}
+	& $z$                    & $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $A_1$ & $A_2$                  &                         &   &   \\ \cline{2-10}
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{0} & 2     & 3     & 4     & -1    & 0     & 1     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{12} & . & . \\
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{0} & 1     & 6     & 2     & 0     & -1    & 0     & \multicolumn{1}{l|}{1} & \multicolumn{1}{l|}{4}  & . & . \\ \cline{2-10}
+	\multicolumn{1}{l|}{.} & \multicolumn{1}{l|}{1} & -2   & -9   & -4    & 0     & 0     & 0     & \multicolumn{1}{l|}{0} & \multicolumn{1}{l|}{0}  & . & . \\ \cline{2-10}
+\end{tabular}
 
 
 \end{document}
