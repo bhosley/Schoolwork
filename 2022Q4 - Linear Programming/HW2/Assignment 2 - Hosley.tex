@@ -1,0 +1,57 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+
+\title{OPER 510 - Introduction to Mathematical Programming%
+	\\ Assignment 2}
+\author{Brandon Hosley}
+\date{\today}
+
+\setcounter{secnumdepth}{0}
+
+\begin{document}
+\maketitle
+
+\section{Problem 1}
+Consider the following linear program: 
+\begin{flalign*}
+	\text{Max } z=9x_1 +7x_2 & &\\
+	\text{s.t.}\hspace{2.5em} 2x_1 + 1 x_2 &\leq 10 &\\
+	4x_1 + 5 x_2 &\leq 40 &\\
+	x_1 \hspace{3em} &\geq 2 &\\
+	x_1 , x_2 &\geq 0 &
+\end{flalign*}
+\begin{itemize}
+	\item[a)] Solve the problem graphically.
+	\item[b)] Solve the problem with the simplex method. Indicate which points on the graph correspond to which simplex tableaus.
+\end{itemize}
+
+\section{Problem 2}
+
+Solve the following problem using the simplex method.
+\begin{flalign*}
+	\text{Max} z=2x_1 -1x_2 +5x_3 & & \\
+	\text{s.t.}\hspace{2.5em} 3x_1 \hspace{2.5em}- 2 x_3 &\leq 16 & \\
+	2x_1 + 5 x_2 \hspace{2.5em}&\leq 10 & \\
+	3x_2 + 1x_3 &\leq 12 & \\
+	x_1 , x_2, x_3 &\geq 0 &
+\end{flalign*}
+
+\section{Problem 3}
+
+The Hobatt Manufacturing Company wishes to allocate its 100 employees to the various functions involved in its plant. There are three basic functions to be performed: cutting, milling and finishing. Because of the simplicity of the cutting function and the limited facilities, no more than 25 employees should be placed there. Existing facilities in the other two departments make it necessary that cutting and finishing together do not exceed milling by more than 20 employees. A recent productivity study conducted by the company indicates that the daily profit contribution made by each employee in the three departments is \$24, \$18, and \$20 per day respectively. \bigskip
+
+Formulate and solve via the simplex method a problem to determine how the company should allocate the available employees to the different departments in order to maximize daily profit.
+
+\section{Problem 4}
+Solve the following problem via the simplex method.
+\begin{flalign*}
+	\text{Min} z=2x_1 +9x_2 +4x_3 & &\\
+	\text{s.t.}\hspace{2em} 2x_1 + 3x_2 + 4x_3 &\geq 12 &\\
+	1x_1 + 6x_2 + 2x_3 &\geq 4 & \\
+	x_1 , x_2 , x_3 &\geq 0 &
+\end{flalign*}
+
+
+\end{document}
