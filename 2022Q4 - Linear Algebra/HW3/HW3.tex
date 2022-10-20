@@ -87,24 +87,101 @@ Since we have proved that all synthesis operators are linear, part (a) shows tha
 \bigskip
 
 \end{enumerate}
+\hrule
+\bigskip
 
-a) Theorem 5.5(d) from the Dr. Fikus notes state that a synthesis operator is by definition invertable. \\
+a) Theorem 5.5(d) from the Dr. Fikus notes state that "(ii) $\mathbf{V}$ [synthesis operator] is invertible", is equivalent to "(i) ${\mathbf{v}_n}_{n\in \mathcal{N}}$ is a basis for $\mathbf{V}$". To evaluate if the given synthesis function constitutes a basis consider 
+\begin{align*}
+	\mathbf{V}(\mathbf{v}) = \sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_n = 
+	\mathbf{x}(1)\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} +
+	\mathbf{x}(2)\begin{bmatrix} 2 \\ 1 \\ 0 \end{bmatrix} +
+	\mathbf{x}(3)\begin{bmatrix} 0 \\ -1 \\ 1 \end{bmatrix} =
+	\begin{bmatrix}
+		\mathbf{x}(1) + 2\mathbf{x}(2) \\
+		\mathbf{x}(2) - \mathbf{x}(3) \\
+		\mathbf{x}(3)
+	\end{bmatrix}
+	\begin{matrix} \\ \\ . \end{matrix}
+\end{align*}
 
 
-To find a sequence \(\{\mathbf{w}_{n}\}_{n=1}^{3}\) with a synthesis operator \(\mathbf{V}^{-1}\)
-
-Define $\mathbf{x}$
-
-
-
-
+To evaluate linear independence it is sufficient to solve
 \[
 \begin{bmatrix}
-	\mathbf{w}(1) + 2\mathbf{w}(2) \\
-	\mathbf{w}(2) - \mathbf{w}(3) \\
-	\mathbf{w}(3)
+	\mathbf{x}(1) + 2\mathbf{x}(2) \\
+	\mathbf{x}(2) - \mathbf{x}(3) \\
+	\mathbf{x}(3)
 \end{bmatrix}
+= 
+\begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+\begin{matrix} \\ \\ . \end{matrix}
 \]
+
+This shows that to produce $\mathbf{0}$, each $\mathbf{x}(n)$ must equal zero, and therefore that this sequence of vectors is linearly independent. 
+Additionally, because this set of \(\{\mathbf{v}_{n}\}_{n=1}^{3}\) contains three linearly independent vectors in $\mathbb{R}^3$ we know that this sequence spans $\mathbb{R}^3$. 
+Since this sequence is linearly independent and spans $\mathbb{R}^3$ it constitutes a basis. 
+Recalling theorem 5.5(d), that this sequence is a basis implies that \(\mathbf{V}\) is invertable.
+
+To calculate the members of \(\{\mathbf{u}_{n}\}_{n=1}^{3}\) let
+$\boldsymbol{\delta}$ be the standard basis and
+consider that for $n\in[3]$ 
+\[
+\mathbf{V}^{-1}(\boldsymbol{\delta}_n) = \mathbf{w}_n  
+\]
+and since $\mathbf{V}^{-1}$ is invertable
+\[
+\mathbf{V}(\mathbf{w}_n) = \boldsymbol{\delta}_n .
+\].
+Evaluated at each $n\in[3]$ we see
+\begin{align}
+	\mathbf{V}(\mathbf{w}_1) &=
+	\begin{bmatrix}
+		\mathbf{w}_1(1) + 2\mathbf{w}_1(2) \\
+		\mathbf{w}_1(2) -  \mathbf{w}_1(3) \\
+		\mathbf{w}_1(3)
+	\end{bmatrix}
+	&= 
+	\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}
+	\rightarrow
+	\mathbf{w}_1 &=
+	\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}
+	\\
+	\mathbf{V}(\mathbf{w}_2) &=
+	\begin{bmatrix}
+		\mathbf{w}_2(1) + 2\mathbf{w}_2(2) \\
+		\mathbf{w}_2(2) -  \mathbf{w}_2(3) \\
+		\mathbf{w}_2(3)
+	\end{bmatrix}
+	&= 
+	\begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}
+	\rightarrow
+	\mathbf{w}_3 &=
+	\begin{bmatrix} -2 \\ 1 \\ 0 \end{bmatrix}
+	\\
+	\mathbf{V}(\mathbf{w}_3) &=
+	\begin{bmatrix}
+		\mathbf{w}_3(1) + 2\mathbf{w}_3(2) \\
+		\mathbf{w}_3(2) -  \mathbf{w}_3(3) \\
+		\mathbf{w}_3(3)
+	\end{bmatrix}
+	&= 
+	\begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}
+	\rightarrow
+	\mathbf{w}_3 &=
+	\begin{bmatrix} -2 \\ 1 \\ 1 \end{bmatrix}
+\end{align}
+
+
+
+
+
+  
+
+
+
+
+
+
 
 
 
