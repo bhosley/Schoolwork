@@ -20,6 +20,7 @@
 \usepackage{epstopdf}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{fancybox}
+\usepackage{mathtools}
 
 \newcommand{\1}{\mathbbm{1}}
 
@@ -90,9 +91,9 @@ Since we have proved that all synthesis operators are linear, part (a) shows tha
 \hrule
 \bigskip
 
-a) Theorem 5.5(d) from the Dr. Fikus notes state that "(ii) $\mathbf{V}$ [synthesis operator] is invertible", is equivalent to "(i) ${\mathbf{v}_n}_{n\in \mathcal{N}}$ is a basis for $\mathbf{V}$". To evaluate if the given synthesis function constitutes a basis consider 
+a) Theorem 5.5(d) from the Dr. Fickus notes state that "(ii) $\mathbf{V}$ [synthesis operator] is invertible", is equivalent to "(i) ${\mathbf{v}_n}_{n\in \mathcal{N}}$ is a basis for $\mathbf{V}$". To evaluate if the given synthesis function constitutes a basis consider 
 \begin{align*}
-	\mathbf{V}(\mathbf{v}) = \sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_n = 
+	\mathbf{V}(\mathbf{x}) = \sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_n = 
 	\mathbf{x}(1)\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix} +
 	\mathbf{x}(2)\begin{bmatrix} 2 \\ 1 \\ 0 \end{bmatrix} +
 	\mathbf{x}(3)\begin{bmatrix} 0 \\ -1 \\ 1 \end{bmatrix} =
@@ -133,8 +134,8 @@ and since $\mathbf{V}^{-1}$ is invertable
 \mathbf{V}(\mathbf{w}_n) = \boldsymbol{\delta}_n .
 \].
 Evaluated at each $n\in[3]$ we see
-\begin{align}
-	\mathbf{V}(\mathbf{w}_1) &=
+\begin{align*}
+	\mathbf{V}(\mathbf{w}_1) =
 	\begin{bmatrix}
 		\mathbf{w}_1(1) + 2\mathbf{w}_1(2) \\
 		\mathbf{w}_1(2) -  \mathbf{w}_1(3) \\
@@ -143,10 +144,10 @@ Evaluated at each $n\in[3]$ we see
 	&= 
 	\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}
 	\rightarrow
-	\mathbf{w}_1 &=
+	\mathbf{w}_1 =
 	\begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}
 	\\
-	\mathbf{V}(\mathbf{w}_2) &=
+	\mathbf{V}(\mathbf{w}_2) =
 	\begin{bmatrix}
 		\mathbf{w}_2(1) + 2\mathbf{w}_2(2) \\
 		\mathbf{w}_2(2) -  \mathbf{w}_2(3) \\
@@ -155,10 +156,10 @@ Evaluated at each $n\in[3]$ we see
 	&= 
 	\begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}
 	\rightarrow
-	\mathbf{w}_3 &=
+	\mathbf{w}_3 =
 	\begin{bmatrix} -2 \\ 1 \\ 0 \end{bmatrix}
 	\\
-	\mathbf{V}(\mathbf{w}_3) &=
+	\mathbf{V}(\mathbf{w}_3) =
 	\begin{bmatrix}
 		\mathbf{w}_3(1) + 2\mathbf{w}_3(2) \\
 		\mathbf{w}_3(2) -  \mathbf{w}_3(3) \\
@@ -167,26 +168,99 @@ Evaluated at each $n\in[3]$ we see
 	&= 
 	\begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}
 	\rightarrow
-	\mathbf{w}_3 &=
+	\mathbf{w}_3 =
 	\begin{bmatrix} -2 \\ 1 \\ 1 \end{bmatrix}
-\end{align}
+	\begin{matrix} \\ \\ . \end{matrix}
+\end{align*}
+This is the sequence \(\{\mathbf{w}_{n}\}_{n=1}^{3}\) such that \(\mathbf{V}^{-1}\) is the synthesis operator of \(\{\mathbf{w}_{n}\}_{n=1}^{3}\).
 
 
+\clearpage
+b)
+To find a sequence 
+\(\{\boldsymbol{\ell}_{n}\}_{n=1}^{3}\) such that 
+\(\mathbf{L}(\mathbf{v}_{n}) = \mathbf{u}_{n}\) is the synthesis operator,
+we may evaluate 
+\(\{\boldsymbol{\ell}_{n}\}_{n=1}^{3}\)
+for each 
+\(\{\mathbf{v}_{n}\}_{n=1}^{3}\) and
+\(\{\mathbf{u}_{n}\}_{n=1}^{3}\) for $n\in[3]$.
 
+The value of $\boldsymbol{\ell}_{1}$ can be calculated by evaluating
+\begin{align*}
+	\mathbf{L}(\mathbf{v}_1) 
+	= 
+	\mathbf{v}_1(1)\boldsymbol{\ell}_{1} +
+	\mathbf{v}_1(2)\boldsymbol{\ell}_{2} +
+	\mathbf{v}_1(3)\boldsymbol{\ell}_{3} =
+	\mathbf{u}_1 &= \begin{bmatrix} 1 \\ 2 \end{bmatrix} \\
+%		
+	1\boldsymbol{\ell}_{1} +
+	0\boldsymbol{\ell}_{2} +
+	0\boldsymbol{\ell}_{3} &=
+	\begin{bmatrix}1 \\ 2 \end{bmatrix} \\
+%		
+	\boldsymbol{\ell}_{1} &=
+	\begin{bmatrix}1 \\ 2 \end{bmatrix} 
+	\begin{matrix} \\ \\ . \end{matrix}
+\end{align*}
+The value of $\boldsymbol{\ell}_{2}$ can be calculated by evaluating  
+\begin{align*}
+	\mathbf{L}(\mathbf{v}_2) 
+	= 
+	\mathbf{v}_2(1)\boldsymbol{\ell}_{1} +
+	\mathbf{v}_2(2)\boldsymbol{\ell}_{2} +
+	\mathbf{v}_2(3)\boldsymbol{\ell}_{3} =
+	\mathbf{u}_2 &= \begin{bmatrix} 1 \\ 2 \end{bmatrix} \\
+	%		
+	2\boldsymbol{\ell}_{1} +
+	1\boldsymbol{\ell}_{2} +
+	0\boldsymbol{\ell}_{3} &=
+	\begin{bmatrix}1 \\ 2 \end{bmatrix} \\
+	%		
+	\begin{bmatrix} 2 \\ 4 \end{bmatrix} +
+	\boldsymbol{\ell}_{2} &=
+	\begin{bmatrix}1 \\ 2 \end{bmatrix} \\
+	\boldsymbol{\ell}_{2} &=
+	\begin{bmatrix} -1 \\ -2 \end{bmatrix}
+	\begin{matrix} \\ \\ . \end{matrix}
+\end{align*}
+The value of $\boldsymbol{\ell}_{3}$ can be calculated by evaluating
+\begin{align*}
+	\mathbf{L}(\mathbf{v}_3) 
+	= 
+	\mathbf{v}_3(1)\boldsymbol{\ell}_{1} +
+	\mathbf{v}_3(2)\boldsymbol{\ell}_{2} +
+	\mathbf{v}_3(3)\boldsymbol{\ell}_{3} =
+	\mathbf{u}_3 &= \begin{bmatrix} 0 \\ -1 \end{bmatrix} \\
+	%		
+	0\boldsymbol{\ell}_{1} +
+	(-1)\boldsymbol{\ell}_{2} +
+	1\boldsymbol{\ell}_{3} &=
+	\begin{bmatrix} 0 \\ -1 \end{bmatrix} \\
+	%		
+	\begin{bmatrix} 1 \\ 2 \end{bmatrix} +
+	\boldsymbol{\ell}_{3} &=
+	\begin{bmatrix} 0 \\ -1 \end{bmatrix} \\
+	%
+	\boldsymbol{\ell}_{3} &=
+	\begin{bmatrix} -1 \\ -3 \end{bmatrix}
+	\begin{matrix} \\ \\ . \end{matrix}
+\end{align*}
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
+Thus we find 
+\[
+\boldsymbol{\ell}_{1} =
+\begin{bmatrix}1 \\ 2 \end{bmatrix} 
+,
+\boldsymbol{\ell}_{2} =
+\begin{bmatrix} -1 \\ -2 \end{bmatrix}
+,
+\boldsymbol{\ell}_{3} =
+\begin{bmatrix} -1 \\ -3 \end{bmatrix}
+\]
+a viable sequence \(\{\boldsymbol{\ell}_{n}\}_{n=1}^{3}\) for the synthesis operator
+\(\mathbf{L}:\mathbb{R}^{3}\to\mathbb{R}^{2}\) as defined above.
 
 
 
@@ -226,12 +300,54 @@ Let \(\mathcal{V}\) and \(\mathcal{U}\) be vector spaces over the field \(\mathb
 \item Prove \(\mathbf{L}:\mathcal{V}\to\mathcal{U}\) is the unique linear map such that
 \[\mathbf{L}(\mathbf{v}_{n}) = \mathbf{u}_{n}\quad\text{for all }n\in\mathcal{N}.\]
 
-
+\bigskip
+\end{enumerate}
+\hrule
 \bigskip
 
+(a) Let $\mathbf{x}\in\mathbb{F}^\mathcal{N}$ such that 
+$\mathbf{V}(\mathbf{x}) = \mathbf{w}$. Then for all $\mathbf{w}\in\mathcal{V}$
+\begin{align*}
+	\mathbf{w} 
+	&= \mathbf{V}(\mathbf{x}) \\
+	&= \sum_{n\in\mathcal{N}}\mathbf{x}(n)\mathbf{v}_n \\
+	&= \sum_{n\in\mathcal{N}}(\mathbf{V}^{-1}(\mathbf{w}))(n)\mathbf{v}_n .
+\end{align*}
 
-\end{enumerate}
+(b)
+Let  $\mathbf{w}_1,\mathbf{w}_2\in\mathcal{V}$ and $c_1,c_2\in\mathbb{F}$ we see that
+\begin{align*}
+	c_1\mathbf{w}_1 + c_2\mathbf{w}_2
+	&= c_1 \sum_{n\in\mathcal{N}}(\mathbf{V}^{-1}(\mathbf{w}_1))(n)\mathbf{v}_n +
+		c_2 \sum_{n\in\mathcal{N}}(\mathbf{V}^{-1}(\mathbf{w}_2))(n)\mathbf{v}_n \\
+	&= \sum_{n\in\mathcal{N}}c_1(\mathbf{V}^{-1}(\mathbf{w}_1))(n)\mathbf{v}_n +
+		\sum_{n\in\mathcal{N}}c_2(\mathbf{V}^{-1}(\mathbf{w}_2))(n)\mathbf{v}_n \\
+	&= \sum_{n\in\mathcal{N}}c_1(\mathbf{V}^{-1}(\mathbf{w}_1))(n)\mathbf{v}_n +
+		c_2(\mathbf{V}^{-1}(\mathbf{w}_2))(n)\mathbf{v}_n \\
+	&= \sum_{n\in\mathcal{N}}\big(c_1\mathbf{V}^{-1}(\mathbf{w}_1) +
+	c_2\mathbf{V}^{-1}(\mathbf{w}_2)\big)(n)\mathbf{v}_n \\
+\shortintertext{and}
+	(c_1\mathbf{w}_1 + c_2\mathbf{w}_2)
+	&= \sum_{n\in\mathcal{N}} \mathbf{V}^{-1}(c_1\mathbf{w}_1 + c_2\mathbf{w}_2)(n)\mathbf{v}_n .
+\shortintertext{Thus,}
+	\sum_{n\in\mathcal{N}} \mathbf{V}^{-1}(c_1\mathbf{w}_1 + c_2\mathbf{w}_2)(n)\mathbf{v}_n
+	&=
+	\sum_{n\in\mathcal{N}}\big(c_1\mathbf{V}^{-1}(\mathbf{w}_1) +
+	c_2\mathbf{V}^{-1}(\mathbf{w}_2)\big)(n)\mathbf{v}_n
+\intertext{and therefore}
+	\mathbf{V}^{-1}(c_1\mathbf{w}_1 + c_2\mathbf{w}_2)
+	&= 
+	c_1\mathbf{V}^{-1}(\mathbf{w}_1) +
+	c_2\mathbf{V}^{-1}(\mathbf{w}_2).
+\end{align*}
+This shows that $\mathbf{V}^{-1}$ follows the definition of linear mapping
+(Definition 2.1) from the Dr. Fickus notes.
 
+(c)
+
+
+
+(d)
 
 
 \vspace*{\fill}
