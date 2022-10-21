@@ -314,7 +314,13 @@ $\mathbf{V}(\mathbf{x}) = \mathbf{w}$. Then for all $\mathbf{w}\in\mathcal{V}$
 	&= \sum_{n\in\mathcal{N}}(\mathbf{V}^{-1}(\mathbf{w}))(n)\mathbf{v}_n .
 \end{align*}
 
+\clearpage
 (b)
+Definition 2.1 from the Dr. Fickus notes states that for vector spaces $\mathcal{V}$ and $\mathcal{U}$ over common field $\mathbb{F}$ a function $\mathbf{L}:\mathcal{V}\rightarrow\mathcal{U}$ is linear if for all $c_1,c_2\in\mathbb{F},\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}$,
+\[
+\mathbf{L}(c_1\mathbf{v}_1+c_2\mathbf{v}_2) = c_1\mathbf{L}(\mathbf{v}_1)+c_2\mathbf{L}(\mathbf{v}_2).
+\]
+
 Let  $\mathbf{w}_1,\mathbf{w}_2\in\mathcal{V}$ and $c_1,c_2\in\mathbb{F}$ we see that
 \begin{align*}
 	c_1\mathbf{w}_1 + c_2\mathbf{w}_2
@@ -340,12 +346,33 @@ Let  $\mathbf{w}_1,\mathbf{w}_2\in\mathcal{V}$ and $c_1,c_2\in\mathbb{F}$ we see
 	c_1\mathbf{V}^{-1}(\mathbf{w}_1) +
 	c_2\mathbf{V}^{-1}(\mathbf{w}_2).
 \end{align*}
-This shows that $\mathbf{V}^{-1}$ follows the definition of linear mapping
-(Definition 2.1) from the Dr. Fickus notes.
+This shows that $\mathbf{V}^{-1}$ is a linear map.
 
-(c)
-
-
+\bigskip
+\bigskip
+(c) 
+Let
+\(\mathbf{U}:\mathbb{F}^{\mathcal{N}}\to\mathcal{U}\) be the synthesis operator of \(\{\mathbf{u}_{n}\}_{n\in\mathcal{N}}\),
+\(\mathbf{L}:=\mathbf{U}\circ\mathbf{V}^{-1}:\mathcal{V}\to\mathcal{U}\),
+and
+$\mathbf{w}_1,\mathbf{w}_2\in\mathcal{V}$,$c_1,c_2\in\mathbb{F}$.
+Then,
+\begin{align*}
+	\mathbf{L}(c_1\mathbf{w}_1 + c_2\mathbf{w}_2)
+	&= \mathbf{U}(\mathbf{V}^{-1}(c_1\mathbf{w}_1 + c_2\mathbf{w}_2)) \\
+	&= \mathbf{U}(\mathbf{V}^{-1}(c_1\mathbf{w}_1) + \mathbf{V}^{-1}(c_2\mathbf{w}_2)) \\
+	&= \mathbf{U}(c_1\mathbf{V}^{-1}(\mathbf{w}_1) + c_2\mathbf{V}^{-1}(\mathbf{w}_2)) \\
+	&= \sum_{n\in\mathcal{N}}\mathbf{u}_n(c_1\mathbf{V}^{-1}(\mathbf{w}_1) + c_2\mathbf{V}^{-1}(\mathbf{w}_2))(n) \\
+	&= \sum_{n\in\mathcal{N}}\mathbf{u}_n(c_1\mathbf{V}^{-1}(\mathbf{w}_1))(n) + \sum_{n\in\mathcal{N}}\mathbf{u}_n(c_2\mathbf{V}^{-1}(\mathbf{w}_2))(n) \\
+	&= \sum_{n\in\mathcal{N}}c_1\mathbf{u}_n(\mathbf{V}^{-1}(\mathbf{w}_1))(n) + \sum_{n\in\mathcal{N}}c_2\mathbf{u}_n(\mathbf{V}^{-1}(\mathbf{w}_2))(n) \\
+	&= c_1\sum_{n\in\mathcal{N}}\mathbf{u}_n(\mathbf{V}^{-1}(\mathbf{w}_1))(n) + c_2\sum_{n\in\mathcal{N}}\mathbf{u}_n(\mathbf{V}^{-1}(\mathbf{w}_2))(n) \\
+	&= c_1\mathbf{U}(\mathbf{V}^{-1}(\mathbf{w}_1)) + c_2\mathbf{U}(\mathbf{V}^{-1}(\mathbf{w}_2)) \\
+	&= c_1\mathbf{L}(\mathbf{w}_1 + c_2\mathbf{L}(\mathbf{w}_2).
+\intertext{Thus}
+	\mathbf{L}(c_1\mathbf{w}_1 + c_2\mathbf{w}_2)
+	&= c_1\mathbf{L}(\mathbf{w}_1 + c_2\mathbf{L}(\mathbf{w}_2)
+\end{align*}
+shows that the composition represented by $\mathbf{L}$ is linear.
 
 (d)
 
