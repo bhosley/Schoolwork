@@ -396,14 +396,16 @@ for all \(n\in\mathcal{N}\),
 then
 \begin{align*}
 	\mathbf{L}(\mathbf{x})
-	&= \mathbf{L}(\sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{v}_n) \\
-	&= \sum_{n\in\mathcal{N}} \mathbf{L}(\mathbf{w}(n)\mathbf{v}_n) \\
-	&= \sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{L}(\mathbf{v}_n) \\
-	&= \sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{u}_n \\
-	&= \sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{M}(\mathbf{v}_n) \\
-	&= \sum_{n\in\mathcal{N}} \mathbf{M}(\mathbf{w}(n)\mathbf{v}_n) \\
-	&= \mathbf{M}(\sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{v}_n) \\
-	&= \mathbf{M}(\mathbf{x}).
+	= \mathbf{L}(\sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{v}_n)
+	&= \sum_{n\in\mathcal{N}} \mathbf{L}(\mathbf{w}(n)\mathbf{v}_n)
+	= \sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{L}(\mathbf{v}_n)
+	= \sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{u}_n \\
+\intertext{and}
+	\mathbf{M}(\mathbf{x})
+	= \mathbf{M}(\sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{v}_n) 
+	&= \sum_{n\in\mathcal{N}} \mathbf{M}(\mathbf{w}(n)\mathbf{v}_n)
+	= \sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{M}(\mathbf{v}_n)
+	= \sum_{n\in\mathcal{N}} \mathbf{w}(n)\mathbf{u}_n.
 \end{align*}
 Thus $\mathbf{L}(\mathbf{x}) = \mathbf{M}(\mathbf{x})$ for every $\mathbf{x}$ and are not distinct.
 \end{proof}
