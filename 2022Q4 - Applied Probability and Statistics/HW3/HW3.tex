@@ -1,0 +1,135 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\graphicspath{{./Images/}}
+
+\title{STAT 587 - Introduction to Probability and Statistics%
+	\\ Homework 3}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+\maketitle
+\begin{questions}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 1}	  %
+%%%%%%%%%%%%%%
+\question 
+Suppose an ordinary six-sided die is rolled repeatedly, and the outcome--1,2,3,4,5 or 6--is noted on each roll. What is the probability that the number of rolls until the first 6 occurs is at most 10?
+\begin{solution}
+	\(P(X\leq10) = 1-(1-1/6)^10 = 1-(5/6)^10 = 1-0.16150558 = 0.83849442\)
+\end{solution}
+%\end{ Question 1}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 2}	  %
+%%%%%%%%%%%%%%
+\question 
+The time (in minutes) until the third customer of the day enters a store is a random variable \(x \sim \operatorname{GAM}(1,3)\). If the store opens at 8 a.m. find the third customer arrives after 8:10.
+\begin{solution}
+	\(\alpha=1, \beta=3, x \leq 10\)
+	\begin{align*}
+	f(x=10) 
+	&= 1-\frac{(x=10)^{1-(\alpha=1)}e^{-(x=10)/(\beta=3)}}{(\beta=3)^{(\alpha=1)}\Gamma(\alpha=1)}
+	= 1-\frac{(10)^{1-1}e^{-10/3}}{3^{1}\Gamma(1)} \\
+	&= 1-\frac{10e^{-10/3}}{3} = 1-0.11891331115 = 0.88108668885
+	\end{align*}
+\end{solution}
+%\end{ Question 2}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 3}	  %
+%%%%%%%%%%%%%%
+\question 
+A jar contains 30 green jelly beans and 20 purple jelly beans. Suppose 10 jelly beans are selected at random from the jar. Find the probability of obtaining exactly five purple jelly beans if they are selected without replacement.
+\begin{solution}
+	\begin{align*}
+		\frac{\binom{20}{5}\binom{50-20}{10-5}}{\binom{50}{10}}
+		&= \frac{\bigg(\frac{20!}{5!\cdot15!}\bigg)\bigg(\frac{30!}{5!\cdot25!}\bigg)}%
+				{\bigg(\frac{50!}{10!\cdot40!}\bigg)} \\
+		&= \frac{(15504)(142506)}{(10272278170)} \\
+		&= 0.215085007184825
+	\end{align*}
+\end{solution}
+%\end{ Question 3}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 4}	  %
+%%%%%%%%%%%%%%
+\question 
+A man pays \$1 a throw to try to win a \$3 Kewpie doll. His probability of winning on each throw is 0.1. What is the probability that $x$ throws will be required to win the doll?
+\begin{solution} \\
+	\includegraphics[width=5em]{kewpie2}
+	\hspace*{\fill}
+	\raisebox{2em}{\hbox{\(P(X=x) = p(1-p)^{x-1} = \mathbf{0.1(0.9)^{1-x}}\)}}
+	\hspace*{\fill}
+	\includegraphics[width=5em]{kewpie1}
+\end{solution}
+%\end{ Question 4}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 5}	  %
+%%%%%%%%%%%%%%
+\question 
+Assume the amount of light $X$ (in lumens) produced by a certain type of light bulb is normally distributed with mean \(\mu=350\) and variance \(\sigma^2=400\). Find the value $c$ such that the amount of light produced by 90\% of the light bulbs will exceed $c$ lumens.
+\begin{solution}
+	\(P = 0.1 \rightarrow Z = 1.285\) (Source: Z-score table) \\
+	\[c = 350 - (\sqrt{450}(1.285)) = 350 - 20(1.285) = 350 - 25.7 = 324.3\]
+\end{solution}
+%\end{ Question 5}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 6}	  %
+%%%%%%%%%%%%%%
+\question 
+Derive \(E[X^2]\) of a \emph{Poisson} \((\lambda)\) random variable. Please make sure you show your work for this question in your file upload upon completion of this homework. Remember, there are multiple ways to do this.
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 6}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 7}	  %
+%%%%%%%%%%%%%%
+\question 
+If \(X\sim\operatorname{GAM}(\beta=1,\alpha=2)\), find the mode of $X$.
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 7}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 8}	  %
+%%%%%%%%%%%%%%
+\question 
+Let \(X\sim\operatorname{UNIF}(a,b)\). Derive the MGF of $X$.
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 8}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 9}	  %
+%%%%%%%%%%%%%%
+\question 
+In a 10-question true-false test, what is the probability of getting all answers correct by guessing?
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 9}
+
+%%%%%%%%%%%%%%
+%	\begin{ Question 10}	  %
+%%%%%%%%%%%%%%
+\question 
+Consider a seven-game world series between team $A$ and team $B$, where for each game \(P(A\text{ wins})=p\). What value of $p$ maximizes your chances of attending game 7?
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 10}
+
+\end{questions}
+\end{document}
