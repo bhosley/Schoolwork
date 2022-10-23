@@ -87,7 +87,33 @@ Assume the amount of light $X$ (in lumens) produced by a certain type of light b
 \question 
 Derive \(E[X^2]\) of a \emph{Poisson} \((\lambda)\) random variable. Please make sure you show your work for this question in your file upload upon completion of this homework. Remember, there are multiple ways to do this.
 \begin{solution}
-	S
+	Easy Version:
+	\begin{align*}
+		Var[X] &= E[X^2] - E[X]^2 \\
+		E[X^2] &= Var[X] + E[X]^2 \\
+		E[X^2] &= \sigma^2 + \mu^2 \\
+		E[X^2] &= \lambda + \lambda^2 \\
+	\end{align*}
+	More Proper Derivation:
+	\begin{align*}
+		E[X^2] = M_x''(0) 
+		&= \frac{d}{dt}\frac{d}{dt} e^{\lambda(e^t-1)} \\
+		&= \frac{d}{dt} e^{\lambda(e^t-1)} \frac{d}{dt} \lambda(e^t-1) \\
+		&= \frac{d}{dt} e^{\lambda(e^t-1)} \lambda \frac{d}{dt} (e^t-1) \\
+		&= \frac{d}{dt} e^{\lambda(e^t-1)} \lambda e^t \\
+		&= \lambda e^t \frac{d}{dt}(e^{\lambda(e^t-1)}) 
+		 + e^{\lambda(e^t-1)} \frac{d}{dt}\lambda e^t \\
+		&= \lambda e^t e^{\lambda(e^t-1)} \lambda e^t
+		 + e^{\lambda(e^t-1)} \lambda e^t \\
+		M_x''(t=0)
+		&= \lambda e^0 e^{\lambda(e^0-1)} \lambda e^0
+		+ e^{\lambda(e^0-1)} \lambda e^0 \\ 
+		&= \lambda 1 e^{\lambda(1-1)} \lambda 1
+		+ e^{\lambda(1-1)} \lambda 1 \\ 
+		&= \lambda e^{\lambda(0)} \lambda + e^{\lambda(0)} \lambda \\
+		&= \lambda 1 \lambda + 1 \lambda \\ 
+		&= \lambda^2 + \lambda \\   
+	\end{align*}
 \end{solution}
 %\end{ Question 6}
 
