@@ -56,6 +56,7 @@ A jar contains 30 green jelly beans and 20 purple jelly beans. Suppose 10 jelly 
 \end{solution}
 %\end{ Question 3}
 
+\clearpage
 %%%%%%%%%%%%%%
 %	\begin{ Question 4}	  %
 %%%%%%%%%%%%%%
@@ -123,7 +124,7 @@ Derive \(E[X^2]\) of a \emph{Poisson} \((\lambda)\) random variable. Please make
 \question 
 If \(X\sim\operatorname{GAM}(\beta=1,\alpha=2)\), find the mode of $X$.
 \begin{solution}
-	S
+	GAM Mode \(= (k-1)\theta = (\alpha - 1)(1/\beta) = (2-1)(1/1) = 1\)
 \end{solution}
 %\end{ Question 7}
 
@@ -133,17 +134,27 @@ If \(X\sim\operatorname{GAM}(\beta=1,\alpha=2)\), find the mode of $X$.
 \question 
 Let \(X\sim\operatorname{UNIF}(a,b)\). Derive the MGF of $X$.
 \begin{solution}
-	S
+	\begin{align*}
+		E[e^{tx}] 
+		&= \int_{a}^{b}e^{tx}\frac{1}{b-a}dx \\
+		&= \frac{1}{b-a} \int_{a}^{b}e^{tx}dx \\
+		&= \left. \frac{1}{b-a} \frac{e^{tx}}{t} \right|^b_a \\
+		&= \frac{e^{tb}}{t(b-a)} - \frac{e^{ta}}{t(b-a)} \\
+		&= \mathbf{\frac{e^{bt}-e^{at}}{(b-a)t}}
+	\end{align*}
 \end{solution}
 %\end{ Question 8}
 
+\clearpage
 %%%%%%%%%%%%%%
 %	\begin{ Question 9}	  %
 %%%%%%%%%%%%%%
 \question 
 In a 10-question true-false test, what is the probability of getting all answers correct by guessing?
 \begin{solution}
-	S
+	\[
+	\binom{10}{10} = (1/2)^10(1/2)^0 = (1/2)^10 = 0.0009765625
+	\]
 \end{solution}
 %\end{ Question 9}
 
@@ -153,7 +164,12 @@ In a 10-question true-false test, what is the probability of getting all answers
 \question 
 Consider a seven-game world series between team $A$ and team $B$, where for each game \(P(A\text{ wins})=p\). What value of $p$ maximizes your chances of attending game 7?
 \begin{solution}
-	S
+	To play in game seven the team requires a 3-3.
+	\begin{align*}
+		\mu &= np \\
+		3 &= 6p \\
+		p &= 1/2 = 0.5
+	\end{align*}
 \end{solution}
 %\end{ Question 10}
 
