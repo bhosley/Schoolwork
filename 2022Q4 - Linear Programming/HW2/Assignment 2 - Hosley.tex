@@ -31,6 +31,15 @@ Consider the following linear program:
 \end{itemize}
 
 \includegraphics[width=0.5\linewidth]{Graph}
+
+\begin{flalign*}
+	\text{Max  } z=9x_1 +7x_2 +0s_1 +0s_2 -MA_1 & &\\
+	\text{s.t.}\hspace{2.5em} 2x_1 + 1 x_2 +s_1 \hspace{6.5em} &\leq 10 &\\
+	4x_1 + 5 x_2 \hspace{2.25em} +s_2 \hspace{4.25em}&\leq 40 &\\
+	x_1 \hspace{7em}-s_3 + A_1 &\geq 2 &\\
+	x_1 , x_2, s_1, s_2 &\geq 0 &
+\end{flalign*}
+
 \clearpage
 
 \begin{tabular}{cccccccccc}
@@ -109,6 +118,13 @@ Solve the following problem using the simplex method.
 	3x_2 + x_3 &\leq 12 & \\
 	x_1 , x_2, x_3 &\geq 0 &
 \end{flalign*}
+\begin{flalign*}
+	\text{Max }z = 2x_1 -x_2 +5x_3 +0s_1 +0s_2 +0s_3 & & \\
+	\text{s.t. }\hspace{2em} 3x_1 \hspace{2.5em} -2x_3 +s_1 \hspace{5.5em} &\leq 16 & \\
+	2x_1 + 5 x_2 \hspace{8em} +s_2 &\leq 10 & \\ 
+	3x_2 + x_3 \hspace{5.5em} +s_3 &\leq 12 & \\
+	x_1 , x_2, x_3, s_1, s_2, s_3 &\geq 0 &
+\end{flalign*}
 
 \begin{tabular}{cccccccccc}
 	$c_j$                  &                            &                                & 2     & -1    & 5     & 0     & 0     & 0     &            \\
@@ -167,6 +183,13 @@ Let each task be represented as follows: profit: $z$; cutting, $x_1$; milling, $
 	x_1 \hspace{6.5em} &\leq 25 &\\
 	x_1 - \hspace{1em} x_2 + \hspace{1em} x_3 &\leq 20 &\\
 	x_1, x_2, x_3  &\geq 0 &
+\end{flalign*}
+\begin{flalign*}
+	\text{Max  } z = 24 x_1 + 18 x_2 + 20 x_3 +0s_1 +0s_2 +0s_3 & & \\
+	x_1 \hspace{1em}   +x_2 \hspace{1em} +x_3 +s_1 \hspace{5.8em}&\leq 100 &\\ 
+	x_1 \hspace{9.5em} +s_2 \hspace{2.8em} &\leq 25 &\\
+	x_1 \hspace{1em}   -x_2 \hspace{1em} +x_3 \hspace{5.8em}+s_3&\leq 20 &\\
+	x_1, x_2, x_3, s_1, s_2, s_3  &\geq 0 &
 \end{flalign*}
 
 \begin{tabular}{cccccccccc}
@@ -237,18 +260,22 @@ Solve the following problem via the simplex method.
 	1x_1 + 6x_2 + 2x_3 &\geq 4 & \\
 	x_1 , x_2 , x_3 &\geq 0 &
 \end{flalign*}
+\begin{flalign*}
+	\text{Max  } -z=-2x_1 -9x_2 -4x_3 +0s_1 +0s_2 +MA_1 +MA_2& &\\
+	\text{s.t. }\hspace{4em} 2x_1 + 3x_2 + 4x_3 -s_1 \hspace{3.8em} +A_1 \hspace{3.8em} &\geq 12 &\\
+	1x_1 + 6x_2 + 2x_3 \hspace{3em} -s_2 \hspace{4.6em} +A_2 &\geq 4 & \\
+	x_1 , x_2 , x_3, s_1, s_2 &\geq 0 &
+\end{flalign*}
 
 Max $-z=-2x_1-9x_2-4x_3$.
 
-
-
 \begin{tabular}{ccccccccccc}
-	$c_j$                   &                            &                                & -2    & -9    & -4    & 0     & 0     & -M    & -M    &         \\
-	\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $A_1$ & $A_2$ & ratio   \\ \cline{1-10}
-	\multicolumn{1}{c|}{-M} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{12}        & 2     & 3     & 4     & -1    & 0     & 1     & 0     & 12/3=4  \\
-	\multicolumn{1}{c|}{-M} & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{4}         & 1     & \hl{6}     & 2     & 0     & -1    & 0     & 1     & \hl{4/6=2/3} \\ \cline{1-10}
-	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{-16M}      & -3M   & -9M   & -6M   & M     & M     & -M    & -M    &         \\ \cline{3-10}
-	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & 3M-2  & \hl{9M-9}  & 6M-4  & -M    & -M    & 0     & 0     &        
+	$c_j$                  &                            &                           & -2    & -9    & -4    & 0     & 0     & M    & M    &         \\
+	\multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}  & $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $A_1$ & $A_2$ & ratio   \\ \cline{1-10}
+	\multicolumn{1}{c|}{M} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{12}   & 2     & 3     & 4     & -1    & 0     & 1     & 0     & 12/3=4  \\
+	\multicolumn{1}{c|}{M} & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{4}    & 1     & \hl{6}     & 2     & 0     & -1    & 0     & 1     & \hl{4/6=2/3} \\ \cline{1-10}
+	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{16M}      & 3M   & 9M   & 6M   & -M     & -M     & M    & M    &         \\ \cline{3-10}
+	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & -3M-2  & \hl{-9M-9}  & -6M-4  & M    & M    & 0     & 0     &        
 \end{tabular} \\
 
 \noindent
@@ -257,14 +284,13 @@ Row2 / 6 \\
 Row1 - 3Row2 \\
 
 
-
 \begin{tabular}{ccccccccccc}
-	$c_j$                   &                            &                                & -2        & -9    & -4    & 0     & 0        & -M    & -M       &               \\
+	$c_j$                   &                            &                                & -2        & -9    & -4    & 0     & 0        & M    & M       &               \\
 	\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$     & $x_2$ & $x_3$ & $s_1$ & $s_2$    & $A_1$ & $A_2$    & ratio         \\ \cline{1-10}
-	\multicolumn{1}{c|}{-M} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{10}        & 1/2       & 0     & 3     & -1    & 1/2      & 1     & -1/2     & 10/3=3 1/3    \\
+	\multicolumn{1}{c|}{M} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{10}        & 1/2       & 0     & 3     & -1    & 1/2      & 1     & -1/2     & 10/3=3 1/3    \\
 	\multicolumn{1}{c|}{-9} & \multicolumn{1}{c|}{$x_2$} & \multicolumn{1}{c|}{2/3}       & 1/6       & 1     & \hl{1/3}   & 0     & -1/6     & 0     & 1/6      & \hl{(2/3)/(1/3)=2} \\ \cline{1-10}
-	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{-6-M}      & -3/2-1/2M & -9    & -3-3M & M     & 3/2-1/2M & -M    & 1/2M-3/2 &               \\ \cline{3-10}
-	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & 1/2M-1/2  & 0     & \hl{3M-1}  & -M    & 1/2M-3/2 & 0     & 3/2-3/2M &              
+	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{10M-6}      & 1/2M+3/2 & -9    & 3M-3 & -M     & 1/2M+3/2 & M    & -1/2M-3/2 &               \\ \cline{3-10}
+	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & -1/2M-1/2  & 0     & \hl{-3M-1}  & M    & -1/2M-3/2 & 0     & 1/2M+3/2 &              
 \end{tabular} \\
 
 \noindent
@@ -274,12 +300,12 @@ Row1 - 3Row2 \\
 
 
 \begin{tabular}{ccccccccccc}
-	$c_j$                   &                            &                                & -2    & -9    & -4    & 0     & 0     & -M    & -M    &             \\
+	$c_j$                   &                            &                                & -2    & -9    & -4    & 0     & 0     & M    & M    &             \\
 	\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $A_1$ & $A_2$ & ratio       \\ \cline{1-10}
-	\multicolumn{1}{c|}{-M} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{4}         & -1    & -9    & 0     & -1    & \hl{2}     & 1     & -2    & \hl{4/2=2}       \\
+	\multicolumn{1}{c|}{M} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{4}         & -1    & -9    & 0     & -1    & \hl{2}     & 1     & -2    & \hl{4/2=2}       \\
 	\multicolumn{1}{c|}{-4} & \multicolumn{1}{c|}{$x_3$} & \multicolumn{1}{c|}{2}         & 1/2   & 3     & 1     & 0     & -1/2  & 0     & 1/2   & 2/(-1/2)=-4 \\ \cline{1-10}
-	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{-4M-8}     & M-2   & 9M-12 & -4    & M     & 2-2M  & -M    & 2M-2  &             \\ \cline{3-10}
-	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & -M    & 3-9M  & 0     & -M    & \hl{2M}    & 0     & 2-3M  &            
+	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{-4M-8}     & -M-2   & -9M-12 & -4  & -M     & 2M+2  & -M    & -2M-2  &             \\ \cline{3-10}
+	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & M    & 3+9M  & 0     & M    & \hl{-2M-2}    & 0     & 3M+2  &            
 \end{tabular} \\
 
 \noindent
@@ -289,22 +315,16 @@ Row2 + 1/2Row1 \\
 
 
 \begin{tabular}{ccccccccccc}
-	$c_j$                   &                            &                                & -2    & -9    & -4    & 0     & 0     & -M    & -M    &       \\
+	$c_j$                   &                            &                                & -2    & -9    & -4    & 0     & 0     & M    & M    &       \\
 	\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$ & $x_2$ & $x_3$ & $s_1$ & $s_2$ & $A_1$ & $A_2$ & ratio \\ \cline{1-10}
 	\multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{$s_2$} & \multicolumn{1}{c|}{2}         & -1/2  & -9/2  & 0     & -1/2  & 1     & 1/2   & -1    &       \\
 	\multicolumn{1}{c|}{-4} & \multicolumn{1}{c|}{$x_3$} & \multicolumn{1}{c|}{3}         & 1/4   & 3/4   & 1     & -1/4  & 0     & 1/4   & 0     &       \\ \cline{1-10}
 	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{-12}       & -1    & -3    & -4    & 1     & 0     & -1    & 0     &       \\ \cline{3-10}
-	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & -1    & -6    & 0     & -1    & 0     & -M-1  & -M    &      
+	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & -1    & -6    & 0     & -1    & 0     & M-1  & M    &      
 \end{tabular} \\
 
 \noindent
 The optimum of this system is $x_1 = 0$, $x_2 = 0$, and $x_3 = 3$ giving the minimum $z = 12$.
-
-
-
-
-
-
 
 
 \end{document}
