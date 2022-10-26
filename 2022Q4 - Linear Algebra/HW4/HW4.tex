@@ -1,0 +1,154 @@
+\documentclass[12pt]{amsart}
+
+
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancybox}
+
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newcounter{Theorem}
+\newcounter{Definition}
+\numberwithin{equation}{section}
+\numberwithin{Theorem}{section}
+
+\theoremstyle{plain} %% This is the default, anyway
+\newtheorem{thm}[Theorem]{Theorem}
+\newtheorem{cor}[Theorem]{Corollary}
+\newtheorem{lem}[Theorem]{Lemma}
+\newtheorem{prop}[Theorem]{Proposition}
+%\usepackage{upgreek}
+
+\theoremstyle{definition}
+\newtheorem{defn}[Theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{ex}[Theorem]{Example}
+\newtheorem{nota}[Theorem]{Notation}
+
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent{\Large Homework 4 (Due October 28 at 8am)}\bigskip
+
+
+\begin{enumerate}[1.]
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For any integer $N>2$, the \textbf{difference operator (discrete derivative)} is the operator
+\begin{equation*}
+\mathbf{D}:\mathbb{F}^{N}\rightarrow\mathbb{F}^{N-1},\quad(\mathbf{D}\mathbf{x})(n):=\mathbf{x}(n+1)-\mathbf{x}(n).
+\end{equation*}
+Show that $\mathbf{D}$ is linear, and in the specific example of $N=4$, find the $3\times 4$ matrix representation of $\mathbf{D}$.
+
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Let $\mathbf{1}\in\mathbb{F}^N$ be the \textbf{all-ones vector} defined by $\mathbf{1}(n)=1$ for all $n\in[N]$.
+
+Show that $\mathbf{D}\mathbf{x}=\mathbf{0}$ if and only if $\mathbf{x}$ is a scalar multiple of $\mathbf{1}$, that is, that
+\begin{equation*}
+\ker(\mathbf{D})
+=\{\mathbf{x}\in\mathbb{F}^N: \mathbf{D}\mathbf{x}=\mathbf{0}\}
+=\{c\mathbf{1}: c\in\mathbb{F}\}.
+\end{equation*}
+
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For any integer $N>2$, the \textbf{cumulative sum (discrete integral)} is the operator
+\begin{equation*}
+\mathbf{S}:\mathbb{F}^{N-1}\rightarrow\mathbb{F}^{N},\quad(\mathbf{S}\mathbf{y})(n):=\left\{\begin{array}{cl}0,&n=1,\\\displaystyle\sum_{k=1}^{n-1}\mathbf{y}(k),&n>1.\end{array}\right.
+\end{equation*}
+Show that $\mathbf{S}$ is linear, and in the specific example of $N=4$, find the $4\times 3$ matrix representation of $\mathbf{S}$.
+
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Prove the discrete version of one-half of the Fundamental Theorem of Calculus, namely that:
+\begin{equation*}
+\mathbf{D}(\mathbf{S}\mathbf{y})=\mathbf{y},\quad\forall\,\mathbf{y}\in\mathbb{F}^{N-1}.
+\end{equation*}
+
+\textit{Hint: For any $n\in[N-1]$,
+note $[\mathbf{D}(\mathbf{S}\mathbf{y})](n)=(\mathbf{S}\mathbf{y})(n+1)-(\mathbf{S}\mathbf{y})(n)$ and then use the definition of $\mathbf{S}$.}
+
+\textit{Note: In class, we will discuss how operator composition corresponds to matrix multiplication.
+In particular, the statement that $\mathbf{D}(\mathbf{S}\mathbf{y})=\mathbf{y}$ for all $\mathbf{y}$ is equivalent to having $\mathbf{D}\mathbf{S}=\mathbf{I}$.
+For example, when $N=4$, multiplying the $3\times 4$ and $4\times 3$ matrices you found in the previous problems should yield a $3\times 3$ identity matrix.
+Here, we caution that $\mathbf{S}\mathbf{D}\neq\mathbf{I}$ and moreover that $\mathbf{D}$ is not invertible.}
+
+\bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Putting the previous problems together with results from class,
+show that for any $\mathbf{y}\in\mathbb{F}^{N-1}$ the equation $\mathbf{D}\mathbf{x}=\mathbf{y}$ has a solution, and moreover, that the set of all solutions $\mathbf{x}$ to this equation is
+\begin{equation*}
+\{\mathbf{x}\in\mathbb{F}^N: \mathbf{D}\mathbf{x}=\mathbf{y}\}
+=\{\mathbf{S}\mathbf{y}+c\mathbf{1}: c\in\mathbb{R}\}.
+\end{equation*}
+
+\textit{Note:
+The fact that $\mathbf{D}\mathbf{x}=\mathbf{y}$ has a solution for any $\mathbf{y}\in\mathbb{F}^{N-1}$ implies that the image of $\mathbf{D}$ is its codomain.
+In general, when this occurs, we say the operator is \textbf{onto (surjective)}.
+In this particular instance, we see that any discrete function $\mathbf{y}$ is the discrete derivative of other discrete functions $\mathbf{x}$,
+one of which is the discrete integral $\mathbf{S}\mathbf{y}$ of $\mathbf{y}$;
+all other solutions are obtained by adding an arbitrary constant discrete function $c\mathbf{1}$ to it.}
+
+
+\bigskip
+
+\item Let \(\mathcal{V}\) be a finite-dimensional vector space over a field \(\mathbb{F}\). Prove that a subset \(\mathcal{W}\subset\mathcal{V}\) is a subspace if and only if there exists a linear function \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) such that \(\mathcal{W}=\operatorname{ker}(\mathbf{L})\). 
+
+Hint: Let \(M = \operatorname{dim}\mathcal{W}\) and let \(\{w_{n}\}_{n=1}^{M}\) be a basis for \(\mathcal{W}\). Extend this to a basis (by a theorem from class) for \(\mathcal{V}\), define \(\mathbf{L}\) on this basis, and extend linearly (by a theorem from homework).
+
+
+\bigskip
+
+
+\item No EigenQuiz assignment this week!
+
+\end{enumerate}
+
+
+
+\end{document}
