@@ -126,12 +126,27 @@ Show that $\mathbf{D}\mathbf{x}=\mathbf{0}$ if and only if $\mathbf{x}$ is a sca
 \bigskip
 
 \begin{proof}
+	(\(\mathbf{x}=c\mathbf{1} \Rightarrow \mathbf{D}\mathbf{x}=\mathbf{0}\) )
+	Let \(n\in[N]\) be arbitrary. Then,
+	\[ \mathbf{D}(\mathbf{1})(n) = \mathbf{1}(n+1) - \mathbf{1}(n) = 1 - 1 = 0 \]
+	and since $\mathbf{D}$ is linear, for arbitrary \(c\in\mathbb{F}\)
+	\[ \mathbf{D}(c\mathbf{1})(n) = c\mathbf{D}\mathbf{1}(n) = c0 = \mathbf{0}.\]
+	
+	
+	
+	Next, let \(n\in[N]\) be arbitrary. Then for any \(\mathbf{x}_0\in\operatorname{ker}(\mathbf{D})\),
+	\begin{align*}
+		\mathbf{D}\mathbf{x}_0 &= \mathbf{x}_0(n+1) - \mathbf{x}_0(n) = \mathbf{0}
+		\intertext{or equivalently, }
+		\mathbf{x}_0(n) &= \mathbf{x}_0(n+1). 
+	\end{align*}
+	Thus, since every element in $\mathbf{x}_0$ is arbitrary but equal, any $\mathbf{x}_0$ can be written as $c\mathbf{1}$.
+	
+	Since every 
+
+	
 	
 \end{proof}
-for all \(n\in[N]\)
-\[ \mathbf{D}(\mathbf{1})(n) = \mathbf{1}(n+1) - \mathbf{1}(n) = 1 - 1 = 0 \]
-and consequently,
-\[ \mathbf{D}(c\mathbf{1})(n) = c\mathbf{D}\mathbf{1}(n) = c0 = 0. \]
 
 \bigskip
 \hrule
