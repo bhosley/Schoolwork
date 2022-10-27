@@ -77,6 +77,38 @@ For any integer $N>2$, the \textbf{difference operator (discrete derivative)} is
 Show that $\mathbf{D}$ is linear, and in the specific example of $N=4$, find the $3\times 4$ matrix representation of $\mathbf{D}$.
 
 \bigskip
+\hrule
+\bigskip
+
+\begin{proof}
+	Let \(c_1,c_2 \in \mathbb{F}\) and \( x_1, x_2 \in \mathbb{F}^\mathcal{N} \) be arbitrary.
+	Then for any \(n\in N\),
+	\begin{align*}
+		[\mathbf{D}(c_1\mathbf{x_1} + c_2\mathbf{x_2})](n)
+		&= (c_1\mathbf{x_1} + c_2\mathbf{x_2})(n+1) - (c_1\mathbf{x_1} + c_2\mathbf{x_2})(n) \\
+		&= (c_1\mathbf{x_1})(n+1) + (c_2\mathbf{x_2})(n+1) - (c_1\mathbf{x_1})(n) - (c_2\mathbf{x_2})(n) \\
+		&= (c_1\mathbf{x_1})(n+1) - (c_1\mathbf{x_1})(n) + (c_2\mathbf{x_2})(n+1) - (c_2\mathbf{x_2})(n) \\
+		&= c_1(\mathbf{x_1}(n+1) - \mathbf{x_1}(n)) + c_2(\mathbf{x_2}(n+1) - \mathbf{x_2})(n) \\
+		&= c_1\mathbf{D}(\mathbf{x_1})(n) + c_2\mathbf{D}(\mathbf{x_2})(n).
+	\end{align*}
+	Thus, $\mathbf{D}$ is linear.
+\end{proof}
+The function \(\mathbf{D}\) can be represented by the matrix \(\mathbf{Ax}\) where \(N=4\) as
+\[
+\mathbf{Ax} = \begin{bmatrix}
+	-1 & 0 & 0 & 0 \\
+	1 & -1 & 0 & 0 \\
+	0 & 1 & -1 & 0 \\
+	0 & 0 & 1 & -1 \\
+\end{bmatrix}
+\begin{matrix}
+	\\ \\ \\ .\\
+\end{matrix}
+\]
+
+\bigskip
+\hrule
+\bigskip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item
@@ -90,6 +122,20 @@ Show that $\mathbf{D}\mathbf{x}=\mathbf{0}$ if and only if $\mathbf{x}$ is a sca
 \end{equation*}
 
 \bigskip
+\hrule
+\bigskip
+
+\begin{proof}
+	
+\end{proof}
+for all \(n\in[N]\)
+\[ \mathbf{D}(\mathbf{1})(n) = \mathbf{1}(n+1) - \mathbf{1}(n) = 1 - 1 = 0 \]
+and consequently,
+\[ \mathbf{D}(c\mathbf{1})(n) = c\mathbf{D}\mathbf{1}(n) = c0 = 0. \]
+
+\bigskip
+\hrule
+\bigskip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item
@@ -99,6 +145,12 @@ For any integer $N>2$, the \textbf{cumulative sum (discrete integral)} is the op
 \end{equation*}
 Show that $\mathbf{S}$ is linear, and in the specific example of $N=4$, find the $4\times 3$ matrix representation of $\mathbf{S}$.
 
+\bigskip
+\hrule
+\bigskip
+
+\bigskip
+\hrule
 \bigskip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -116,6 +168,12 @@ In particular, the statement that $\mathbf{D}(\mathbf{S}\mathbf{y})=\mathbf{y}$ 
 For example, when $N=4$, multiplying the $3\times 4$ and $4\times 3$ matrices you found in the previous problems should yield a $3\times 3$ identity matrix.
 Here, we caution that $\mathbf{S}\mathbf{D}\neq\mathbf{I}$ and moreover that $\mathbf{D}$ is not invertible.}
 
+\bigskip
+\hrule
+\bigskip
+
+\bigskip
+\hrule
 \bigskip
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -142,6 +200,12 @@ all other solutions are obtained by adding an arbitrary constant discrete functi
 Hint: Let \(M = \operatorname{dim}\mathcal{W}\) and let \(\{w_{n}\}_{n=1}^{M}\) be a basis for \(\mathcal{W}\). Extend this to a basis (by a theorem from class) for \(\mathcal{V}\), define \(\mathbf{L}\) on this basis, and extend linearly (by a theorem from homework).
 
 
+\bigskip
+\hrule
+\bigskip
+
+\bigskip
+\hrule
 \bigskip
 
 
