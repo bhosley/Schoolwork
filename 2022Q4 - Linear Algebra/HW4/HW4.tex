@@ -257,13 +257,29 @@ all other solutions are obtained by adding an arbitrary constant discrete functi
 \hrule
 \bigskip
 
-Using Theorem 2.4(a)
+Using Theorem 2.4(a):
 for any $\mathbf{y}\in\mathbb{F}^{N-1}$, the equation
 $\mathbf{D}\mathbf{x}=\mathbf{y}$ has a solution
-if and only if
-$\mathbf{y}\in\mathbf{D}(\mathbb{F}^N)$
+if and only if $\mathbf{y}\in\mathbf{D}(\mathbb{F}^N)$ and that when this occurs
+\[\mathbf{x_0} + \operatorname{ker}(\mathbf{D}) = 
+	\{\mathbf{x_0} + \mathbf{x} : \mathbf{x}\in\operatorname{ker}(\mathbf{D})\}.\] 
 
-
+\begin{proof}
+	As shown in problem 2
+	\begin{equation*}
+		\ker(\mathbf{D})
+		=\{\mathbf{x}\in\mathbb{F}^N: \mathbf{D}\mathbf{x}=\mathbf{0}\}
+		=\{c\mathbf{1}: c\in\mathbb{F}\}.
+	\end{equation*}
+		
+	
+	In problem 4 it was shown that 
+	$\mathbf{D}(\mathbf{Sy}) = \mathbf{y}$ for all $\mathbf{y}$.
+	
+	Thus,
+	\[\mathbf{x_0} + \operatorname{ker}(\mathbf{D}) = 
+		\{\mathbf{x_0} + \mathbf{x} : \mathbf{x}\in\operatorname{ker}(\mathbf{D})\}.\] 
+\end{proof}
 
 \bigskip
 \hrule
