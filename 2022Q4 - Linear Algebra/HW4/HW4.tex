@@ -81,25 +81,25 @@ Show that $\mathbf{D}$ is linear, and in the specific example of $N=4$, find the
 \bigskip
 
 \begin{proof}
-	Let \(c_1,c_2 \in \mathbb{F}\) and \( x_1, x_2 \in \mathbb{F}^\mathcal{N} \) be arbitrary.
-	Then for any \(n\in N\),
+	Let \(c_1,c_2 \in \mathbb{F}\) and \( \mathbf{x}_1, \mathbf{x}_2 \in \mathbb{F}^N \) be arbitrary.
+	Then for any \(n\in [N]\),
 	\begin{align*}
 		[\mathbf{D}(c_1\mathbf{x_1} + c_2\mathbf{x_2})](n)
 		&= (c_1\mathbf{x_1} + c_2\mathbf{x_2})(n+1) - (c_1\mathbf{x_1} + c_2\mathbf{x_2})(n) \\
 		&= (c_1\mathbf{x_1})(n+1) + (c_2\mathbf{x_2})(n+1) - (c_1\mathbf{x_1})(n) - (c_2\mathbf{x_2})(n) \\
 		&= (c_1\mathbf{x_1})(n+1) - (c_1\mathbf{x_1})(n) + (c_2\mathbf{x_2})(n+1) - (c_2\mathbf{x_2})(n) \\
 		&= c_1(\mathbf{x_1}(n+1) - \mathbf{x_1}(n)) + c_2(\mathbf{x_2}(n+1) - \mathbf{x_2})(n) \\
-		&= c_1\mathbf{D}(\mathbf{x_1})(n) + c_2\mathbf{D}(\mathbf{x_2})(n).
+		&= c_1(\mathbf{D}\mathbf{x_1})(n) + c_2(\mathbf{D}\mathbf{x_2})(n) \\
+		&= (c_1\mathbf{D}\mathbf{x_1} + c_2\mathbf{D}\mathbf{x_2})(n).
 	\end{align*}
 	Thus, $\mathbf{D}$ is linear.
 \end{proof}
-The function \(\mathbf{D}\) can be represented by the matrix \(\mathbf{Ax}\) where \(N=4\) as
+The function \(\mathbf{D}\) can be represented by the matrix \(\mathbf{A_D}\) where \(N=4\) as
 \[
-\mathbf{Ax} = \begin{bmatrix}
+\mathbf{A_D} = \begin{bmatrix}
 	-1 & 0 & 0 & 0 \\
 	1 & -1 & 0 & 0 \\
 	0 & 1 & -1 & 0 \\
-	0 & 0 & 1 & -1 \\
 \end{bmatrix}
 \begin{matrix}
 	\\ \\ \\ .\\
@@ -126,31 +126,25 @@ Show that $\mathbf{D}\mathbf{x}=\mathbf{0}$ if and only if $\mathbf{x}$ is a sca
 \bigskip
 
 \begin{proof}
-	(\(\mathbf{x}=c\mathbf{1} \Rightarrow \mathbf{D}\mathbf{x}=\mathbf{0}\) )
-	Let \(n\in[N]\) be arbitrary. Then,
+	(\(\mathbf{x}=c\mathbf{1} \Rightarrow \mathbf{D}\mathbf{x}=\mathbf{0}\))
+	Let \(n\in[N]\) be arbitrary. Then, when \(\mathbf{x}=\mathbf{1}\),
 	\[ \mathbf{D}(\mathbf{1})(n) = \mathbf{1}(n+1) - \mathbf{1}(n) = 1 - 1 = 0 \]
 	and since $\mathbf{D}$ is linear, for arbitrary \(c\in\mathbb{F}\)
-	\[ \mathbf{D}(c\mathbf{1})(n) = c\mathbf{D}\mathbf{1}(n) = c0 = \mathbf{0}.\]
+	\[ \mathbf{D}(c\mathbf{1})(n) = c\mathbf{D}\mathbf{1}(n) = c0 = 0.\]
+	Thus \(\mathbf{D}(c\mathbf{1}) = \mathbf{0}\). \\
 	
-	
-	
-	Next, let \(n\in[N]\) be arbitrary. Then for any \(\mathbf{x}_0\in\operatorname{ker}(\mathbf{D})\),
+	\noindent
+	(\(\mathbf{D}\mathbf{x}=\mathbf{0} \Rightarrow \mathbf{x}=c\mathbf{1}\))
+	Let \(n\in[N]\) be arbitrary. Then for any \(\mathbf{x}_0\in\operatorname{ker}(\mathbf{D})\),
 	\begin{align*}
 		\mathbf{D}\mathbf{x}_0 &= \mathbf{x}_0(n+1) - \mathbf{x}_0(n) = \mathbf{0}
 		\intertext{or equivalently, }
 		\mathbf{x}_0(n) &= \mathbf{x}_0(n+1). 
 	\end{align*}
-	Thus, since every element in $\mathbf{x}_0$ is arbitrary but equal, any $\mathbf{x}_0$ can be written as $c\mathbf{1}$.
-	
-	Since every 
-
-	
-	
+	Thus, since every element in any $\mathbf{x}_0$ is arbitrary but equal, which is equivalent to $c\mathbf{1}$.
 \end{proof}
 
-\bigskip
-\hrule
-\bigskip
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item
@@ -164,9 +158,41 @@ Show that $\mathbf{S}$ is linear, and in the specific example of $N=4$, find the
 \hrule
 \bigskip
 
-\bigskip
-\hrule
-\bigskip
+\begin{proof}
+	Let \(c_1,c_2 \in \mathbb{F}, \mathbf{y}_1, \mathbf{y}_2 \in \mathbb{F}^{N-1} \) and \(n\in [N-1]\) be arbitrary.
+	Then, when $n=1$ we see that
+	\begin{align*}
+		\mathbf{S}(c_1\mathbf{y}_1 + c_2\mathbf{y}_2)(1) &= 0
+		\intertext{and}
+		(c_1\mathbf{S}\mathbf{y}_1 + c_2\mathbf{S}\mathbf{y}_2)(1) &= c_10 + c_20 = 0.
+	\end{align*}
+	When $n>1$,
+	\begin{align*}
+		\mathbf{S}(c_1\mathbf{y}_1 + c_2\mathbf{y}_2)(n) 
+		&= \sum_{k=1}^{n-1}(c_1\mathbf{y}_1 + c_2\mathbf{y}_2)(k) \\
+		&= \sum_{k=1}^{n-1}(c_1\mathbf{y}_1)(k) + (c_2\mathbf{y}_2)(k) \\
+		&= \sum_{k=1}^{n-1}c_1\mathbf{y}_1(k) + \sum_{k=1}^{n-1}c_2\mathbf{y}_2(k) \\
+		&= c_1\sum_{k=1}^{n-1}\mathbf{y}_1(k) + c_2\sum_{k=1}^{n-1}\mathbf{y}_2(k) \\
+		&= c_1(\mathbf{S}\mathbf{y}_1)(n) + c_2(\mathbf{S}\mathbf{y}_2)(n) \\
+		&= (c_1\mathbf{S}\mathbf{y}_1 + c_2\mathbf{S}\mathbf{y}_2)(n).
+	\end{align*}
+	Therefore $\mathbf{S}$ is linear in both cases.
+\end{proof}
+
+The function \(\mathbf{S}\) can be represented by the matrix \(\mathbf{A_S}\) where \(N=4\) as
+\[
+\mathbf{A_S} = \begin{bmatrix}
+	0 & 0 & 0 \\
+	1 & 0 & 0 \\
+	1 & 1 & 0 \\
+	1 & 1 & 1 \\
+\end{bmatrix}
+\begin{matrix}
+	\\ \\ \\ .\\
+\end{matrix}
+\]
+
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item
@@ -186,6 +212,26 @@ Here, we caution that $\mathbf{S}\mathbf{D}\neq\mathbf{I}$ and moreover that $\m
 \bigskip
 \hrule
 \bigskip
+
+\begin{proof}
+	Let \(n\in[N-1]\) and \(\mathbf{y}\in\mathbb{F}^{N-1}\) be arbitrary.
+	When $n=1$,
+	\begin{align*}
+		[\mathbf{D}(\mathbf{S}\mathbf{y})](1)
+		&= (\mathbf{S}\mathbf{y})(2)-(\mathbf{S}\mathbf{y})(1) \\
+		&= \sum_{k=1}^{2-1}\mathbf{y}(k) - 0 \\
+		&= \mathbf{y}(n).\\
+	\end{align*}
+	When $n>1$,
+	\begin{align*}
+		[\mathbf{D}(\mathbf{S}\mathbf{y})](n)
+		&= (\mathbf{S}\mathbf{y})(n+1)-(\mathbf{S}\mathbf{y})(n) \\
+		&= \sum_{k=1}^{n}\mathbf{y}(k) - \sum_{k=1}^{n}\mathbf{y}(k) \\
+		&= \mathbf{y}(n) + \sum_{k=1}^{n-1}\mathbf{y}(k) - \sum_{k=1}^{n}\mathbf{y}(k) \\
+		&= \mathbf{y}(n).
+	\end{align*}
+	Thus \(\mathbf{D}(\mathbf{S}\mathbf{y})=\mathbf{y}\) for all \(\mathbf{y}\in\mathbb{F}^{N-1}\).
+\end{proof}
 
 \bigskip
 \hrule
@@ -207,7 +253,20 @@ In this particular instance, we see that any discrete function $\mathbf{y}$ is t
 one of which is the discrete integral $\mathbf{S}\mathbf{y}$ of $\mathbf{y}$;
 all other solutions are obtained by adding an arbitrary constant discrete function $c\mathbf{1}$ to it.}
 
+\bigskip
+\hrule
+\bigskip
 
+Using Theorem 2.4(a)
+for any $\mathbf{y}\in\mathbb{F}^{N-1}$, the equation
+$\mathbf{D}\mathbf{x}=\mathbf{y}$ has a solution
+if and only if
+$\mathbf{y}\in\mathbf{D}(\mathbb{F}^N)$
+
+
+
+\bigskip
+\hrule
 \bigskip
 
 \item Let \(\mathcal{V}\) be a finite-dimensional vector space over a field \(\mathbb{F}\). Prove that a subset \(\mathcal{W}\subset\mathcal{V}\) is a subspace if and only if there exists a linear function \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) such that \(\mathcal{W}=\operatorname{ker}(\mathbf{L})\). 
@@ -219,11 +278,10 @@ Hint: Let \(M = \operatorname{dim}\mathcal{W}\) and let \(\{w_{n}\}_{n=1}^{M}\) 
 \hrule
 \bigskip
 
-\bigskip
-\hrule
-\bigskip
 
 
+
+\vspace*{\fill}
 \item No EigenQuiz assignment this week!
 
 \end{enumerate}
