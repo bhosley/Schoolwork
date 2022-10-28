@@ -61,7 +61,9 @@
 
 \thispagestyle{empty}
 
-\noindent{\Large Homework 4 (Due October 28 at 8am)}\bigskip
+\noindent{\Large Homework 4 (Due October 28 at 8am)}
+\hspace{\fill} {\Large B. Hosley}
+\bigskip
 
 
 \begin{enumerate}[1.]
@@ -233,9 +235,7 @@ Here, we caution that $\mathbf{S}\mathbf{D}\neq\mathbf{I}$ and moreover that $\m
 	Thus \(\mathbf{D}(\mathbf{S}\mathbf{y})=\mathbf{y}\) for all \(\mathbf{y}\in\mathbb{F}^{N-1}\).
 \end{proof}
 
-\bigskip
-\hrule
-\bigskip
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \item
@@ -257,44 +257,80 @@ all other solutions are obtained by adding an arbitrary constant discrete functi
 \hrule
 \bigskip
 
-Using Theorem 2.4(a):
-for any $\mathbf{y}\in\mathbb{F}^{N-1}$, the equation
-$\mathbf{D}\mathbf{x}=\mathbf{y}$ has a solution
-if and only if $\mathbf{y}\in\mathbf{D}(\mathbb{F}^N)$ and that when this occurs
-\[\mathbf{x_0} + \operatorname{ker}(\mathbf{D}) = 
-	\{\mathbf{x_0} + \mathbf{x} : \mathbf{x}\in\operatorname{ker}(\mathbf{D})\}.\] 
 
 \begin{proof}
-	As shown in problem 2
-	\begin{equation*}
-		\ker(\mathbf{D})
-		=\{\mathbf{x}\in\mathbb{F}^N: \mathbf{D}\mathbf{x}=\mathbf{0}\}
-		=\{c\mathbf{1}: c\in\mathbb{F}\}.
-	\end{equation*}
-		
+	Restating Theorem 2.4(a) for this problem: 
+	For $\mathbf{y}\in\mathbb{F}^{N-1}$ the equation
+	$\mathbf{D}\mathbf{x}=\mathbf{y}$ has a solution
+	if and only if $\mathbf{y}\in\mathbf{D}(\mathbb{F}^N)$ and that when this occurs
+	any $\mathbf{x}_0$ such that $\mathbf{D}(\mathbf{x}_0) = \mathbf{y}$ the set of all solutions is
+	\[
+	\{\mathbf{x}_0\in\mathbb{F}^N: \mathbf{D}\mathbf{x}_0=\mathbf{y}\} =
+	\mathbf{x}_0 + \ker(\mathbf{D}) = 
+	\{\mathbf{x}_0 + \mathbf{x} : \mathbf{x}\in\operatorname{ker}(\mathbf{D})\}
+	\]
 	
-	In problem 4 it was shown that 
-	$\mathbf{D}(\mathbf{Sy}) = \mathbf{y}$ for all $\mathbf{y}$.
+	Shows that since $\mathbf{D}(\mathbb{F}^N)$ is the image of $\mathbf{D}$, $\mathbb{F}^{N-1}$ is its codomain. 
+%	
+	In problem 4 it was shown that for
+	$\mathbf{D}(\mathbf{Sy})=\mathbf{y}$ for all $\mathbf{y}\in\mathbb{F}^{N-1}$.
+	Let $\mathbf{x}_0 = \mathbf{Sy}$
+	then the set of all solutions becomes
+	\[
+	\{\mathbf{x}_0\in\mathbb{F}^N: \mathbf{D}\mathbf{x}_0=\mathbf{y}\} =
+	\mathbf{Sy} + \ker(\mathbf{D}) = 
+	\{\mathbf{Sy} + \mathbf{x} : \mathbf{x}\in\operatorname{ker}(\mathbf{D})\}.
+	\]
 	
-	Thus,
-	\[\mathbf{x_0} + \operatorname{ker}(\mathbf{D}) = 
-		\{\mathbf{x_0} + \mathbf{x} : \mathbf{x}\in\operatorname{ker}(\mathbf{D})\}.\] 
+	In problem 2 it was shown that 
+	\(\ker(\mathbf{D}) = \{c\mathbf{1}: c\in\mathbb{R}\}\).
+	Let $\mathbf{x} = c\mathbf{1}$
+	then the set of all solutions becomes
+	\[
+	\{\mathbf{x}_0\in\mathbb{F}^N: \mathbf{D}\mathbf{x}_0=\mathbf{y}\} =
+	\{\mathbf{Sy} + c\mathbf{1} : c\mathbf{1}: c\in\mathbb{R}\}.
+	\]
+	
 \end{proof}
 
-\bigskip
-\hrule
-\bigskip
+\clearpage
 
 \item Let \(\mathcal{V}\) be a finite-dimensional vector space over a field \(\mathbb{F}\). Prove that a subset \(\mathcal{W}\subset\mathcal{V}\) is a subspace if and only if there exists a linear function \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) such that \(\mathcal{W}=\operatorname{ker}(\mathbf{L})\). 
 
 Hint: Let \(M = \operatorname{dim}\mathcal{W}\) and let \(\{w_{n}\}_{n=1}^{M}\) be a basis for \(\mathcal{W}\). Extend this to a basis (by a theorem from class) for \(\mathcal{V}\), define \(\mathbf{L}\) on this basis, and extend linearly (by a theorem from homework).
 
-
 \bigskip
 \hrule
 \bigskip
 
-
+\begin{proof}
+	(\(\mathcal{W}\subset\mathcal{V}\) is a subspace $\Rightarrow$ \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) such that \(\mathcal{W}=\operatorname{ker}(\mathbf{L})\)) \\
+	%
+	Let \(\mathcal{V}\) be a finite-dimensional vector space over a field \(\mathbb{F}\).
+	Assume \(\mathcal{W}\subset\mathcal{V}\) is a subspace.
+	Let \(M = \operatorname{dim}\mathcal{W}\) 
+	and \(\{w_{n}\}_{n=1}^{M}\) be a basis for \(\mathcal{W}\).
+	%
+	Let \[\mathcal{U}=\{\mathbf{u}\in\mathcal{V}:\mathbf{u}\in\operatorname{span}\{w_{n}\}_{n=1}^{M} \} \]
+	and \[\mathcal{X}=\{\mathbf{x}\in\mathcal{V}:\mathbf{x}\notin\operatorname{span}\{w_{n}\}_{n=1}^{M} \}.\]
+	
+	Then, for arbitrary \(\mathbf{u}\in\mathcal{U},\mathbf{x}\in\mathcal{X}\),
+	let \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\)
+	such that \(\mathbf{L}(\mathbf{u}) = \mathbf{0} \)
+	and \(\mathbf{L}(\mathbf{x}) \neq \mathbf{0} \).
+	
+	
+	Therefore there exists an \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) 
+	such that \(\mathcal{W}=\operatorname{ker}(\mathbf{L})\).
+	
+	\bigskip
+	(\(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) such that \(\mathcal{W}=\operatorname{ker}(\mathbf{L})\)
+	$\Rightarrow$  \(\mathcal{W}\subset\mathcal{V}\) is a subspace) \\
+	%
+	Assume that \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) such that \(\mathcal{W}=\ker(\mathbf{L})\). 
+	By Theorem 4.2(d) \(\ker(\mathbf{L})\) is a subspace of \(\mathcal{V}\) and therefore \(\mathcal{W}\) is a subspace of \(\mathcal{V}\).
+	
+\end{proof}
 
 
 \vspace*{\fill}
