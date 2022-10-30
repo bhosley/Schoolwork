@@ -1,0 +1,149 @@
+\documentclass[12pt]{amsart}
+
+
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancybox}
+
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newcounter{Theorem}
+\newcounter{Definition}
+\numberwithin{equation}{section}
+\numberwithin{Theorem}{section}
+
+\theoremstyle{plain} %% This is the default, anyway
+\newtheorem{thm}[Theorem]{Theorem}
+\newtheorem{cor}[Theorem]{Corollary}
+\newtheorem{lem}[Theorem]{Lemma}
+\newtheorem{prop}[Theorem]{Proposition}
+%\usepackage{upgreek}
+
+\theoremstyle{definition}
+\newtheorem{defn}[Theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{ex}[Theorem]{Example}
+\newtheorem{nota}[Theorem]{Notation}
+
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent{\Large Homework 5 (Due November 4 at 8am)}
+\hspace{\fill} {\Large B. Hosley}
+\bigskip
+
+
+\begin{enumerate}[1.]
+
+
+
+\item Let \(\mathcal{V}\) be a vector space over a field \(\mathbb{F}\), and let \(\mathcal{W}\) be a subspace of \(\mathcal{V}\). For each \(\mathbf{v}\in\mathcal{V}\) define the set
+\[[\mathbf{v}]:=\{\mathbf{v}+\mathbf{w} : \mathbf{w}\in\mathcal{W}\}.\]
+Set
+\[\mathcal{V}/\mathcal{W}: = \{[\mathbf{v}] : \mathbf{v}\in\mathcal{V}\}.\]
+The set \(\mathcal{V}/\mathcal{W}\) is called the \textit{quotient space} of \(\mathcal{V}\) by \(\mathcal{W}\). We read the symbols \(\mathcal{V}/\mathcal{W}\) as ``\(\mathcal{V}\) mod \(\mathcal{W}\).''
+
+
+
+\bigskip
+
+\begin{enumerate}[(a)]
+
+
+
+\item Show that \([\mathbf{v}_{1}]=[\mathbf{v}_{2}]\) if and only if \(\mathbf{v}_{1}-\mathbf{v}_{2}\in\mathcal{W}\).
+
+\bigskip
+
+\item Let \(\mathbf{x}\in\mathcal{V}/\mathcal{W}\) and \(\mathbf{v}\in\mathcal{V}\). Show that \(\mathbf{x}=[\mathbf{v}]\) if and only if \(\mathbf{v}\in\mathbf{x}\).
+
+\bigskip
+
+\end{enumerate}
+
+\noindent Given \(\mathbf{v}_{1},\mathbf{v}_{2}\in\mathcal{V}\) and \(c\in\mathbb{F}\) define
+\[[\mathbf{v}_{1}]+[\mathbf{v}_{2}]:=[\mathbf{v}_{1}+\mathbf{v}_{2}]\quad\text{and}\quad c[\mathbf{v}_{1}] := [c\mathbf{v}_{1}].\]
+Note that it is not obvious that these operations are well defined. For example, if \(\mathbf{w}_{1}\neq \mathbf{w}_{2}\), but \([\mathbf{w}_{1}]=[\mathbf{w}_{2}]\), then we must show that \([c\mathbf{w}_{1}]=[c\mathbf{w}_{2}]\) in order for scalar multiplication to be well defined in \(\mathcal{V}/\mathcal{W}\).\bigskip
+
+\begin{enumerate}[(a)]
+
+\addtocounter{enumii}{2}
+
+\item Show that addition and scalar multiplication are well defined. That is, if \(\mathbf{v}_{1},\mathbf{v}_{2},\mathbf{u}_{1},\mathbf{u}_{2}\in\mathcal{V}\) and \(c\in\mathbb{F}\) such that \([\mathbf{v}_{1}]=[\mathbf{v}_{2}]\) and \([\mathbf{u}_{1}]=[\mathbf{u}_{2}]\), then \([\mathbf{v}_{1}+\mathbf{v}_{2}]=[\mathbf{u}_{1}+\mathbf{u}_{2}]\) and \([c\mathbf{v}_{1}]=[c\mathbf{v}_{2}]\).
+
+\bigskip
+
+\item Prove that \(\mathcal{V}/\mathcal{W}\) is a vector space with the addition and scalar multiplication defined above. What set is the additive identity in \(\mathcal{V}/\mathcal{W}\)?
+
+\bigskip
+
+\item Suppose that \(\mathcal{V}\) is a finite-dimensional space. Prove that \(\operatorname{dim}(\mathcal{V}/\mathcal{W}) = \operatorname{dim}(\mathcal{V}) - \operatorname{dim}(\mathcal{W})\). (Hint: Take a basis \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) for \(\mathcal{W}\), where \(M=\operatorname{dim}\mathcal{W}\), extend it to a basis \(\{\mathbf{w}_{n}\}_{n=1}^{N}\) for \(\mathcal{V}\), where \(N=\operatorname{dim}\mathcal{V}\). Show that \(\{[\mathbf{w}_{n}]\}_{n=M+1}^{N}\) is a basis for \(\mathcal{V}/\mathcal{W}\).)
+
+\bigskip
+
+\end{enumerate}
+
+\item Let \(\mathcal{V}\) and \(\mathcal{U}\) be vector spaces over a field \(\mathbb{F}\), and let \(\mathbf{L}:\mathcal{V}\to\mathcal{U}\) be a linear map. In this exercise we will show that
+\[\mathbf{L}(\mathcal{V})\cong \mathcal{V}/\operatorname{ker}(\mathbf{L}).\]
+This statement is known as the \textit{first isomorphism theorem}.
+
+\bigskip
+
+\begin{enumerate}[(a)]
+
+\item For each \(\mathbf{x}\in\mathcal{V}/\operatorname{ker}(\mathbf{L})\) show that the set \(\mathcal{L}_{\mathbf{x}}:=\{\mathbf{L}(\mathbf{v}) : \mathbf{v}\in\mathbf{x}\}\) contains exactly one element.
+
+\bigskip
+
+\item Let \(\mathbf{\Phi}(\mathbf{x})\) be the unique element in \(\mathcal{L}_{\mathbf{x}}\) for each \(\mathbf{x}\in\mathcal{V}/\operatorname{ker}(\mathbf{L})\). Show that if \(\mathbf{x}\in\mathcal{V}/\operatorname{ker}(\mathbf{L})\) and \(\mathbf{v}\in\mathbf{x}\), then \(\mathbf{\Phi}(\mathbf{x}) = \mathbf{L}(\mathbf{v})\). In particular, \(\mathbf{\Phi}([\mathbf{v}]) = \mathbf{L}(\mathbf{v})\) for any \(\mathbf{v}\in\mathcal{V}\). 
+
+\bigskip
+
+\item Show that \(\mathbf{\Phi}: \mathcal{V}/\operatorname{ker}(\mathbf{L})\to\mathbf{L}(\mathcal{V})\) is an isomorphism.
+
+\bigskip
+
+\end{enumerate}
+
+\item Use problems 1(e) and 2(c) to prove the Rank-Nullity Theorem.
+
+\bigskip
+
+\item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a584703. Upload a completion certificate for this activity to your homework folder.
+
+\end{enumerate}
+
+\end{document}
