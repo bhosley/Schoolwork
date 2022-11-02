@@ -88,9 +88,51 @@ The set \(\mathcal{V}/\mathcal{W}\) is called the \textit{quotient space} of \(\
 
 \bigskip
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 (a)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+($\Rightarrow$) Assuming \([\mathbf{v}_1] = [\mathbf{v}_2]\): \\
+Let \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) and suppose \([\mathbf{v}_1] = [\mathbf{v}_2]\).
+Let \(\mathbf{w}_1,\mathbf{w}_2\in\mathcal{W}\) be arbitrary, then
+\[
+[\mathbf{v}_1] = [\mathbf{v}_2]
+\mathbf{v}_1 + \mathbf{w}_1 = \mathbf{v}_2 + \mathbf{w}_2
+\mathbf{v}_1 - \mathbf{v}_1 = \mathbf{w}_2 - \mathbf{w}_1
+.\]
+Since \(\mathcal{W}\) is closed under addition \(w_2 - w_1\in\mathcal{W}\) and therefore \(\mathbf{v}_1 - \mathbf{v}_2\in\mathcal{W}\)
+
+($\Leftarrow$) Assuming \(\mathbf{v}_1-\mathbf{v}_2\in\mathcal{W}\): \\
+Let \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) and \(\mathbf{w}\in\mathcal{W}\) be arbitrary and
+and suppose \(\mathbf{v}_1-\mathbf{v}_2\in\mathcal{W}\) then
+\begin{align*}
+[\mathbf{v}_1] 
+= \mathbf{v}_1 + \mathbf{w}
+= \mathbf{v}_1 + (\mathbf{v}_2-\mathbf{v}_1) + (\mathbf{v}_1-\mathbf{v}_2) + \mathbf{w}
+\intertext{and since $(\mathbf{v}_1-\mathbf{v}_2)\in\mathcal{W}$ we get}
+\mathbf{v}_1 + (\mathbf{v}_2-\mathbf{v}_1) + \mathbf{w}
+= \mathbf{v}_2 + \mathbf{w}
+= [\mathbf{v}_2] .
+\end{align*}
+
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 1 (a)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \item Let \(\mathbf{x}\in\mathcal{V}/\mathcal{W}\) and \(\mathbf{v}\in\mathcal{V}\). Show that \(\mathbf{x}=[\mathbf{v}]\) if and only if \(\mathbf{v}\in\mathbf{x}\).
 
 \bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 (b)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 1 (b)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{enumerate}
 
@@ -106,15 +148,65 @@ Note that it is not obvious that these operations are well defined. For example,
 
 \bigskip
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 (c)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+(i) Since \([\mathbf{v}_{1}]=[\mathbf{v}_{2}]\) and \([\mathbf{u}_{1}]=[\mathbf{u}_{2}]\), 
+\begin{align*}
+	[\mathbf{v}_{1}] + [\mathbf{u}_{1}] = [\mathbf{v}_{2}] + [\mathbf{u}_{2}] 
+\intertext{and using the definition of addition from above,}
+	[\mathbf{v}_{1} + \mathbf{u}_{1}] = [\mathbf{v}_{2} + \mathbf{u}_{2}] 
+\end{align*}
+	
+(ii) Since \([\mathbf{v}_{1}]=[\mathbf{v}_{2}]\)
+\[
+[c\mathbf{v}_1] = c[\mathbf{v}_1] = c[\mathbf{v}_2] = [c\mathbf{v}_2]
+\]
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 1 (c)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \item Prove that \(\mathcal{V}/\mathcal{W}\) is a vector space with the addition and scalar multiplication defined above. What set is the additive identity in \(\mathcal{V}/\mathcal{W}\)?
 
 \bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 (d)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Associativity
+Commutativity
+Scalar field multiplication
+Multiplicative identity
+
+Distributive under vector addition
+Distributive under field addition	
+Inverse elements
+Additive identity
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 1 (d)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \item Suppose that \(\mathcal{V}\) is a finite-dimensional space. Prove that \(\operatorname{dim}(\mathcal{V}/\mathcal{W}) = \operatorname{dim}(\mathcal{V}) - \operatorname{dim}(\mathcal{W})\). (Hint: Take a basis \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) for \(\mathcal{W}\), where \(M=\operatorname{dim}\mathcal{W}\), extend it to a basis \(\{\mathbf{w}_{n}\}_{n=1}^{N}\) for \(\mathcal{V}\), where \(N=\operatorname{dim}\mathcal{V}\). Show that \(\{[\mathbf{w}_{n}]\}_{n=M+1}^{N}\) is a basis for \(\mathcal{V}/\mathcal{W}\).)
 
 \bigskip
 
 \end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 (e)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 1 (e)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
 
 \item Let \(\mathcal{V}\) and \(\mathcal{U}\) be vector spaces over a field \(\mathbb{F}\), and let \(\mathbf{L}:\mathcal{V}\to\mathcal{U}\) be a linear map. In this exercise we will show that
 \[\mathbf{L}(\mathcal{V})\cong \mathcal{V}/\operatorname{ker}(\mathbf{L}).\]
@@ -128,19 +220,61 @@ This statement is known as the \textit{first isomorphism theorem}.
 
 \bigskip
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2 (a)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 2 (a)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \item Let \(\mathbf{\Phi}(\mathbf{x})\) be the unique element in \(\mathcal{L}_{\mathbf{x}}\) for each \(\mathbf{x}\in\mathcal{V}/\operatorname{ker}(\mathbf{L})\). Show that if \(\mathbf{x}\in\mathcal{V}/\operatorname{ker}(\mathbf{L})\) and \(\mathbf{v}\in\mathbf{x}\), then \(\mathbf{\Phi}(\mathbf{x}) = \mathbf{L}(\mathbf{v})\). In particular, \(\mathbf{\Phi}([\mathbf{v}]) = \mathbf{L}(\mathbf{v})\) for any \(\mathbf{v}\in\mathcal{V}\). 
 
 \bigskip
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2 (b)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 2 (b)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \item Show that \(\mathbf{\Phi}: \mathcal{V}/\operatorname{ker}(\mathbf{L})\to\mathbf{L}(\mathcal{V})\) is an isomorphism.
 
 \bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2 (c)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 2 (c)}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{enumerate}
 
 \item Use problems 1(e) and 2(c) to prove the Rank-Nullity Theorem.
 
 \bigskip
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 3}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 3}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace*{\fill}
 
 \item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a584703. Upload a completion certificate for this activity to your homework folder.
 
