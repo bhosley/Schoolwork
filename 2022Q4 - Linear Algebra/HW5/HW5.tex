@@ -191,17 +191,20 @@ Note that it is not obvious that these operations are well defined. For example,
 %	\begin{ Question 1 (d)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof}
-Let 
-\(\mathbf{v},\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3,\)\(c_1,c_2\)
+For each feature of a vector space addressed below let
+\(\mathbf{v},\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3\in\mathcal{V}\)
+and \(c_1,c_2\in\mathbb{F}\)
+be arbitrary and let \(\mathbf{0}\in\mathcal{V}\). \\
 
 (i) Additive associativity can be shown by
-\[
+\begin{align*}
 [\mathbf{v}_1] + ([\mathbf{v}_2]+[\mathbf{v}_3]) =
 [\mathbf{v}_1] + [\mathbf{v}_2+\mathbf{v}_3] =
 [\mathbf{v}_1+\mathbf{v}_2+\mathbf{v}_3] =
 [\mathbf{v}_1+\mathbf{v}_2]+[\mathbf{v}_3] =
 ([\mathbf{v}_1]+[\mathbf{v}_2])+[\mathbf{v}_3]
-.\]
+.\end{align*}
+
 (ii) Commutativity can be shown  by
 \begin{align*}
 [\mathbf{v}_1] + [\mathbf{v}_2] =
@@ -211,8 +214,28 @@ Let
 [\mathbf{v}_2 + \mathbf{v}_1] =
 [\mathbf{v}_2] + [\mathbf{v}_1].
 \end{align*}
-(iii) Additive identity
-(iv) Additive inverse
+
+(iii) The additive identity can be shown to be \([\mathbf{0}]\) by
+\begin{align*}
+[\mathbf{v}]+[\mathbf{0}] 
+&= [\mathbf{v}+\mathbf{0}] \\
+&= \{\mathbf{v}+\mathbf{0}+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} \\ 
+&= \{\mathbf{v}+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} +
+	\{\mathbf{0}+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} \\ 
+&= \{\mathbf{v}+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} \\
+&= [\mathbf{v}]
+.\end{align*}
+
+(iv)  Since $\mathcal{V}$ is a vector space there exists $-\mathbf{v}\in\mathcal{V}$.
+Thus the additive inverse can be shown as
+\[ 
+[\mathbf{v}]+[-\mathbf{v}] =
+[\mathbf{v}+(-\mathbf{v})] =
+\{\mathbf{v}+(-\mathbf{v})+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} =
+\{\mathbf{0}+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} =
+[\mathbf{0}] =
+\mathcal{W}
+.\]
 (v) Multiplication is associative:
 \[
 c_1c_2[\mathbf{v}] =
@@ -223,16 +246,38 @@ c_2[c_1\mathbf{v}]
 
 (vi) Multiplicative identity can be shown by
 \[
-\mathbf{1}[\mathbf{v}] = [\mathbf{1}\mathbf{v}] = 
-\mathbf{1}\mathbf{v} + \mathbf{w} =
+\mathbf{1}[\mathbf{v}] = 
+[\mathbf{1}\mathbf{v}] = 
+\{\mathbf{1}\mathbf{v}+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} =
+\{\mathbf{v}+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} =
 [\mathbf{v}]
 .\]
-(vii) Multiplication distributes over addition
-(viii) Addition distributes over multiplication
+
+(vii) Multiplication distributes over addition:
+\[
+c_1[\mathbf{v}_1+\mathbf{v}_2] =
+[c_1(\mathbf{v}_1+\mathbf{v}_2)] =
+[c_1\mathbf{v}_1+c_1\mathbf{v}_2] =
+[c_1\mathbf{v}_1]+[c_1\mathbf{v}_2] =
+c_1[\mathbf{v}_1]+c_1[\mathbf{v}_2]
+.\]
+
+(viii) Addition distributes over multiplication:
+\[
+[(c_1+c_2)\mathbf{v}] =
+(c_1+c_2)[\mathbf{v}] =
+c_1[\mathbf{v}]+c_2[\mathbf{v}] =
+[c_1\mathbf{v}]+[c_2\mathbf{v}] =
+[c_1\mathbf{v}+c_2\mathbf{v}]
+.\]
+
+Thus \(\mathcal{V}/\mathcal{W}\) is a vector space.
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 1 (d)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
 
 \item Suppose that \(\mathcal{V}\) is a finite-dimensional space. Prove that \(\operatorname{dim}(\mathcal{V}/\mathcal{W}) = \operatorname{dim}(\mathcal{V}) - \operatorname{dim}(\mathcal{W})\). (Hint: Take a basis \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) for \(\mathcal{W}\), where \(M=\operatorname{dim}\mathcal{W}\), extend it to a basis \(\{\mathbf{w}_{n}\}_{n=1}^{N}\) for \(\mathcal{V}\), where \(N=\operatorname{dim}\mathcal{V}\). Show that \(\{[\mathbf{w}_{n}]\}_{n=M+1}^{N}\) is a basis for \(\mathcal{V}/\mathcal{W}\).)
 
@@ -243,9 +288,54 @@ c_2[c_1\mathbf{v}]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 1 (e)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	
-	
+\begin{proof}
+Because \(\mathcal{W}\) is a subspace in \(\mathcal{V}\),
+a basis for \(\mathcal{W}\) can be extended to be a basis in \(\mathcal{V}\).
+Let \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) be a basis for \(\mathcal{W}\)
+and \(\{\mathbf{w}_{n}\}_{n=1}^{N}\) be a basis for \(\mathcal{V}\).
+Then for each $\mathbf{v}\in\mathcal{V}$ there exists a 
+$\{c_n\}_{n=1}^N$ of \(c\in\mathbb{F}\) such that,
+\[
+\mathbf{v} = \sum_{n=1}^{N}c_n\mathbf{w}_n = 
+\sum_{n=M+1}^{N}c_n\mathbf{w}_n + \sum_{n=1}^{M}c_n\mathbf{w}_n
+.\]
+Additionally for each $\mathbf{w}\in\mathcal{W}$
+there exists a sequence $\{b_n\}_{n=1}^N$ of \(b\in\mathbb{F}\) such that,
+\[
+\mathbf{w} = \sum_{n=1}^{M}b_n\mathbf{w}_n
+.\]
+Then for arbitrary \([\mathbf{v}]\in\mathcal{V}/\mathcal{W}\)
+\[
+[\mathbf{v}] = 
+\sum_{n=M+1}^{N}c_n\mathbf{w}_n + 
+\sum_{n=1}^{M}c_n\mathbf{w}_n + 
+\sum_{n=1}^{M}b_n\mathbf{w}_n
+\]
+and because $\mathcal{W}$ is a subspace
+\[
+\sum_{n=1}^{M}c_n\mathbf{w}_n + 
+\sum_{n=1}^{M}b_n\mathbf{w}_n
+\in \mathcal{W}
+\]
+and therefore,
+\[
+[\mathbf{v}] = 
+[\sum_{n=M+1}^{N}c_n\mathbf{w}_n] =
+\sum_{n=M+1}^{N}[c_n\mathbf{w}_n] =
+\sum_{n=M+1}^{N}c_n[\mathbf{w}_n]
+.\]
+This combination spans \(\mathcal{V}/\mathcal{W}\) and is linearly independent. 
+Thus there exists  a sequence \(\{\mathbf{w}_n\}_{n=M+1}^{N}\) 
+that forms basis for \(\mathcal{V}/\mathcal{W}\).
+\\
+
+Since the $M$ and $N$ where arbitrary the \(\operatorname{dim}(mathcal{V}/\mathcal{W})\) can be determined from the basis \(\{\mathbf{w}_n\}_{n=M+1}^{N}\) as
+\[
+\operatorname{dim}(\mathcal{V}/\mathcal{W}) 
+= N - M =
+\operatorname{dim}(\mathcal{V}) - \operatorname{dim}(\mathcal{W})
+.\]
+\end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 1 (e)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -311,9 +401,27 @@ This statement is known as the \textit{first isomorphism theorem}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 3}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	
-	
+\begin{proof}
+Problem 1(e) showed that
+\[
+\operatorname{dim}(\mathcal{V}/\operatorname{ker}(\mathbf{L})) 
+	= \operatorname{dim}(\mathcal{V}) - \operatorname{dim}(\operatorname{ker}(\mathbf{L}))
+\]
+which implies
+\[
+\operatorname{dim}(\mathcal{V})
+	= \operatorname{dim}(\mathcal{V}/\operatorname{ker}(\mathbf{L})) + \operatorname{dim}(\operatorname{ker}(\mathbf{L}))
+.\]
+Problem 2(c) showed that
+\[
+\mathcal{V}/\operatorname{ker}(\mathbf{L}) \cong \mathbf{L}(\mathbf{\mathcal{V}})
+.\]
+Combining 1(e) and 2(c) gives the Rank-Nullity Theorem:
+\[
+\operatorname{dim}(\mathcal{V})
+	= \operatorname{dim}(\mathbf{L}(\mathbf{\mathcal{V}})) + \operatorname{dim}(\operatorname{ker}(\mathbf{L}))
+.\]
+\end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 3}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
