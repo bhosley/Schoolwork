@@ -19,6 +19,7 @@
 \usepackage{graphicx}
 \usepackage{epstopdf}
 \usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
 \usepackage{fancybox}
 
 \newcommand{\1}{\mathbbm{1}}
@@ -92,29 +93,29 @@ The set \(\mathcal{V}/\mathcal{W}\) is called the \textit{quotient space} of \(\
 %	\begin{ Question 1 (a)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{proof}
-($\Rightarrow$) Assuming \([\mathbf{v}_1] = [\mathbf{v}_2]\): \\
+($\Rightarrow$) 
 Let \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) and suppose \([\mathbf{v}_1] = [\mathbf{v}_2]\).
-Let \(\mathbf{w}_1,\mathbf{w}_2\in\mathcal{W}\) be arbitrary, then
+Let \(\mathbf{w}_1,\mathbf{w}_2\in\mathcal{W}\) be arbitrary, then 
+\([\mathbf{v}_1] = [\mathbf{v}_2]\) can be rewritten as
+\(\mathbf{v}_1 + \mathbf{w}_1 = \mathbf{v}_2 + \mathbf{w}_2 \) and from that it can be seen that
 \[
-[\mathbf{v}_1] = [\mathbf{v}_2]
-\mathbf{v}_1 + \mathbf{w}_1 = \mathbf{v}_2 + \mathbf{w}_2
-\mathbf{v}_1 - \mathbf{v}_1 = \mathbf{w}_2 - \mathbf{w}_1
-.\]
-Since \(\mathcal{W}\) is closed under addition \(w_2 - w_1\in\mathcal{W}\) and therefore \(\mathbf{v}_1 - \mathbf{v}_2\in\mathcal{W}\)
+\mathbf{v}_1 - \mathbf{v}_1 = \mathbf{w}_2 - \mathbf{w}_1 .
+\]
+Since \(\mathcal{W}\) is a subspace, \(\mathbf{w}_2 - \mathbf{w}_1\in\mathcal{W}\) and therefore \(\mathbf{v}_1 - \mathbf{v}_2\in\mathcal{W}\). \\
 
-($\Leftarrow$) Assuming \(\mathbf{v}_1-\mathbf{v}_2\in\mathcal{W}\): \\
+($\Leftarrow$) 
 Let \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) and \(\mathbf{w}\in\mathcal{W}\) be arbitrary and
 and suppose \(\mathbf{v}_1-\mathbf{v}_2\in\mathcal{W}\) then
 \begin{align*}
 [\mathbf{v}_1] 
 = \mathbf{v}_1 + \mathbf{w}
 = \mathbf{v}_1 + (\mathbf{v}_2-\mathbf{v}_1) + (\mathbf{v}_1-\mathbf{v}_2) + \mathbf{w}
-\intertext{and since $(\mathbf{v}_1-\mathbf{v}_2)\in\mathcal{W}$ we get}
+\intertext{and since $(\mathbf{v}_1-\mathbf{v}_2)\in\mathcal{W}$,}
 \mathbf{v}_1 + (\mathbf{v}_2-\mathbf{v}_1) + \mathbf{w}
 = \mathbf{v}_2 + \mathbf{w}
 = [\mathbf{v}_2] .
 \end{align*}
-
+Thus \([\mathbf{v}_1] = [\mathbf{v}_2]\).
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 1 (a)}	  %
@@ -127,9 +128,24 @@ and suppose \(\mathbf{v}_1-\mathbf{v}_2\in\mathcal{W}\) then
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 1 (b)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	
-	
+\begin{proof}
+($\Rightarrow$) 
+Assume \(\mathbf{x}=[\mathbf{v}]\) then
+\(\mathbf{x} = \{\mathbf{v}+\mathbf{w}:\mathbf{w}\in\mathcal{W}\}\), 
+since $\mathcal{W}$ is a subspace $\mathbf{0}\in\mathcal{W}$,
+\(\mathbf{v}+\mathbf{0}\in\mathbf{x}\)
+thus \(\mathbf{v}\in\mathbf{x}\). \\
+
+($\Leftarrow$)
+Assume $\mathbf{v}\in\mathbf{x}$ then
+\(\mathbf{x} = \{\mathbf{v}_0+\mathbf{w}:\mathbf{w}\in\mathcal{W}\}\)
+for some $\mathbf{v}_0\in\mathcal{V}$.
+Let $\mathbf{w}_0\in\mathcal{W}$ such that 
+\(\mathbf{v}=\mathbf{v}_0+\mathbf{w}_0\), then
+\(\mathbf{v}-\mathbf{v}_0=\mathbf{w}_0\).
+Then by using part (a) it can be seen that 
+\([\mathbf{v}]=[\mathbf{v}_0]=\mathbf{x}\).
+\end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 1 (b)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -155,13 +171,12 @@ Note that it is not obvious that these operations are well defined. For example,
 (i) Since \([\mathbf{v}_{1}]=[\mathbf{v}_{2}]\) and \([\mathbf{u}_{1}]=[\mathbf{u}_{2}]\), 
 \begin{align*}
 	[\mathbf{v}_{1}] + [\mathbf{u}_{1}] = [\mathbf{v}_{2}] + [\mathbf{u}_{2}] 
-\intertext{and using the definition of addition from above,}
-	[\mathbf{v}_{1} + \mathbf{u}_{1}] = [\mathbf{v}_{2} + \mathbf{u}_{2}] 
+\shortintertext{and using the definition of addition from above,}
+	[\mathbf{v}_{1} + \mathbf{u}_{1}] = [\mathbf{v}_{2} + \mathbf{u}_{2}] .
 \end{align*}
-	
-(ii) Since \([\mathbf{v}_{1}]=[\mathbf{v}_{2}]\)
+(ii) Since \([\mathbf{v}_{1}]=[\mathbf{v}_{2}]\),
 \[
-[c\mathbf{v}_1] = c[\mathbf{v}_1] = c[\mathbf{v}_2] = [c\mathbf{v}_2]
+[c\mathbf{v}_1] = c[\mathbf{v}_1] = c[\mathbf{v}_2] = [c\mathbf{v}_2].
 \]
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -175,17 +190,46 @@ Note that it is not obvious that these operations are well defined. For example,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 1 (d)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+Let 
+\(\mathbf{v},\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3,\)\(c_1,c_2\)
 
-Associativity
-Commutativity
-Scalar field multiplication
-Multiplicative identity
+(i) Additive associativity can be shown by
+\[
+[\mathbf{v}_1] + ([\mathbf{v}_2]+[\mathbf{v}_3]) =
+[\mathbf{v}_1] + [\mathbf{v}_2+\mathbf{v}_3] =
+[\mathbf{v}_1+\mathbf{v}_2+\mathbf{v}_3] =
+[\mathbf{v}_1+\mathbf{v}_2]+[\mathbf{v}_3] =
+([\mathbf{v}_1]+[\mathbf{v}_2])+[\mathbf{v}_3]
+.\]
+(ii) Commutativity can be shown  by
+\begin{align*}
+[\mathbf{v}_1] + [\mathbf{v}_2] =
+[\mathbf{v}_1 + \mathbf{v}_2] =
+&\{\mathbf{v}_1+\mathbf{v}_2+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} \\ =
+&\{\mathbf{v}_2+\mathbf{v}_1+\mathbf{w}:\mathbf{w}\in\mathcal{W}\} =
+[\mathbf{v}_2 + \mathbf{v}_1] =
+[\mathbf{v}_2] + [\mathbf{v}_1].
+\end{align*}
+(iii) Additive identity
+(iv) Additive inverse
+(v) Multiplication is associative:
+\[
+c_1c_2[\mathbf{v}] =
+c_1[c_2\mathbf{v}] =
+[c_1c_2\mathbf{v}] =
+c_2[c_1\mathbf{v}]
+.\]
 
-Distributive under vector addition
-Distributive under field addition	
-Inverse elements
-Additive identity
-	
+(vi) Multiplicative identity can be shown by
+\[
+\mathbf{1}[\mathbf{v}] = [\mathbf{1}\mathbf{v}] = 
+\mathbf{1}\mathbf{v} + \mathbf{w} =
+[\mathbf{v}]
+.\]
+(vii) Multiplication distributes over addition
+(viii) Addition distributes over multiplication
+\end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 1 (d)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
