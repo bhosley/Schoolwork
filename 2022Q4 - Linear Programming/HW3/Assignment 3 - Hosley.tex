@@ -8,11 +8,12 @@
 \author{Brandon Hosley}
 \date{\today}
 
-\setcounter{secnumdepth}{0}
-\usepackage{soul}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage{graphicx}
 \usepackage{nicefrac}
+\usepackage{enumitem}
+\usepackage{makecell}
+\renewcommand{\subpartlabel}{}
 
 \begin{document}
 \maketitle
@@ -20,6 +21,30 @@
 
 \begin{questions}
 \question
+A company produces two products. Relevant information for each product is shown in Table 58. The company has a goal of \$48 in profits and incurs a \$1 penalty for each dollar it falls short of this goal. A total of 32 hours of labor are available. A \$2 penalty is incurred for each hour of overtime (labor over 32 hours) used, and a \$1 penalty is incurred for each hour of available labor that is unused. Marketing considerations require that at least 10 units of product 2 be produced. For each unit (of either product) by which production falls short of demand, a penalty of \$5 is assessed.
+
+\begin{parts}
+	\part Formulate an LP that can be used to minimize the penalty incurred by the company.
+	\part Suppose the company sets (in order of importance) the following goals:
+	\begin{subparts}
+		\subpart
+		\begin{enumerate}
+			\item[Goal 1] Avoid underutilization of labor.
+			\item[Goal 2] Meet demand for product 1.  
+			\item[Goal 3] Meet demand for product 2.
+			\item[Goal 4] Do not use any overtime.
+		\end{enumerate}
+	\end{subparts}
+	\begin{tabular}[]{ccc} \Xhline{.5pt} \rowcolor{gray!25}
+		& \textcolor{blue}{\textbf{Product 1}} & \textcolor{blue}{\textbf{Product 2}} \\
+		\hline
+		Labor required & 4 hours & 2 hours \\
+		Contribution to profit & \$4 & \$2 \\
+		\Xhline{1.2pt}
+	\end{tabular}
+\end{parts}
+
+Formulate and solve a preemptive goal programming model for this situation.
 
 
 \question
@@ -48,20 +73,32 @@ Consider the solution to the following linear programming problem:
 	(\nicefrac{1}{2}) x_1 + (\nicefrac{11}{4})x_2 + (\nicefrac{25}{8})x_3 + x_6 &=145 &\text{(resource 3)} &\\
 	x_j &\geq 0 &\text{for all }j &
 \end{flalign*}
-\begin{parts}
-	\part
-\end{parts}
-
 Optimal Tableau (Classic)
+
+\begin{tabular}{cccccccccc}
+	$c_j$                   &                            &                                & 10    & 8     & 17    & 0     & 0     & 0     &       \\
+	\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & ratio \\ \cline{1-9}
+	\multicolumn{1}{c|}{8}  & \multicolumn{1}{c|}{$x_2$} & \multicolumn{1}{c|}{40}        & 0     & 1     & 1/2   & -2    & 2     & 0     &       \\
+	\multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{$x_1$} & \multicolumn{1}{c|}{30}        & 1     & 0     & 3/2   & 3     & -1    & 0     &       \\
+	\multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{$x_6$} & \multicolumn{1}{c|}{20}        & 0     & 0     & 1     & 4     & -5    & 1     &       \\ \cline{1-9}
+	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{620}       & 10    & 8     & 19    & 14    & 6     & 0     &       \\ \cline{3-9}
+	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & 0     & 0     & -2    & -14   & -6    & 0     &      
+\end{tabular}
 
 (You may use either the classic or the text tableau as you prefer.)
 Using the final tableau in either form answer the following questions showing your work:
-a. What are the current marginal values (shadow prices) of resources 1, 2 and 3 in the optimal tableau?
-b. Find the sensitivity range for c1, c2, and c3?
-c. Find the sensitivity range for b1, b2, and b3?
-d. By how much would profit be increased if 10 additional units of resource 1 could be obtained? What would be the new solution?
-e. Suppose a new product can be produced at a cost of \$8.00 and would use 1 unit of resource 1, 2 units of resource 2 and 2 units of resource 3. Based on the current optimal solution, what is the minimum selling price that could be set if the new product is to be profitable to produce?
-
+\begin{parts}
+	\part
+	What are the current marginal values (shadow prices) of resources 1, 2 and 3 in the optimal tableau?
+	\part
+	Find the sensitivity range for c1, c2, and c3?
+	\part
+	Find the sensitivity range for b1, b2, and b3?
+	\part
+	By how much would profit be increased if 10 additional units of resource 1 could be obtained? What would be the new solution?
+	\part
+	Suppose a new product can be produced at a cost of \$8.00 and would use 1 unit of resource 1, 2 units of resource 2 and 2 units of resource 3. Based on the current optimal solution, what is the minimum selling price that could be set if the new product is to be profitable to produce?
+\end{parts}
 
 \question
 \begin{parts}
