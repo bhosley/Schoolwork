@@ -324,12 +324,13 @@ and therefore,
 \sum_{n=M+1}^{N}[c_n\mathbf{w}_n] =
 \sum_{n=M+1}^{N}c_n[\mathbf{w}_n]
 .\]
-This combination spans \(\mathcal{V}/\mathcal{W}\) and is linearly independent. 
+This combination spans \(\mathcal{V}/\mathcal{W}\) and as a subset of 
+the basis of $\mathcal{V}$, is linearly independent. 
 Thus there exists  a sequence \(\{\mathbf{w}_n\}_{n=M+1}^{N}\) 
 that forms basis for \(\mathcal{V}/\mathcal{W}\).
-\\
-
-Since the $M$ and $N$ where arbitrary the \(\operatorname{dim}(mathcal{V}/\mathcal{W})\) can be determined from the basis \(\{\mathbf{w}_n\}_{n=M+1}^{N}\) as
+Since the $M$ and $N$ where arbitrary the 
+\(\operatorname{dim}(\mathcal{V}/\mathcal{W})\) 
+can be determined from the basis \(\{\mathbf{w}_n\}_{n=M+1}^{N}\) as
 \[
 \operatorname{dim}(\mathcal{V}/\mathcal{W}) 
 = N - M =
@@ -357,9 +358,26 @@ This statement is known as the \textit{first isomorphism theorem}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 2 (a)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	
-	
+\begin{proof}
+Let \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) be arbitrary.
+As the results in problem one show there are 
+\(\mathbf{w}_1,\mathbf{w}_2\in\ker(\mathbf{L})\) 
+such that \(\mathbf{v}_1+\mathbf{w}_1=\mathbf{v}\) 
+and \(\mathbf{v}_2+\mathbf{w}_2=\mathbf{v}\) 
+for some \(\mathbf{v}\in\mathcal{V}\).
+From this we can see for 
+\(\mathbf{L}(\mathbf{v}_1),\mathbf{L}(\mathbf{v}_2\in\mathbf{x}\) that
+\[
+\mathbf{L}(\mathbf{v}_1) 
+= \mathbf{L}(\mathbf{v}_1) + \mathbf{L}(\mathbf{w}_1)
+= \mathbf{L}(\mathbf{v}_1+\mathbf{w}_1)
+= \mathbf{L}(\mathbf{v})
+= \mathbf{L}(\mathbf{v}_2+\mathbf{w}_2)
+= \mathbf{L}(\mathbf{v}_2) + \mathbf{L}(\mathbf{w}_2)
+= \mathbf{L}(\mathbf{v}_2)
+.\]
+\end{proof}	
+Since \(\mathbf{v}_1\text{ and }\mathbf{v}_2\) were arbitrary, there is only one element in $\mathcal{L}_\mathbf{x}$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 2 (a)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -371,9 +389,21 @@ This statement is known as the \textit{first isomorphism theorem}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 2 (b)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	
-	
+\begin{proof}
+Let $\mathbf{v}\in\mathcal{V}$ be arbitrary.
+Then, recalling the bracket function from part 1, the 
+$\ker(\mathbf{L})$ can be substituted for $\mathcal{W}$ such that
+\[
+[\mathbf{v}] = \{\mathbf{v}+\mathbf{w}:\mathbf{w}\in\ker(\mathbf{L})\}
+.\]
+From this we can see
+\[
+\mathbf{\Phi}(\mathbf{x})
+= \mathbf{\Phi}([\mathbf{v}])
+= \mathbf{\Phi}(\{\mathbf{v}+\mathbf{w}:\mathbf{w}\in\ker(\mathbf{L})\})
+= \mathbf{L}(\mathbf{v})
+.\]
+\end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 2 (b)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -385,12 +415,37 @@ This statement is known as the \textit{first isomorphism theorem}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 2 (c)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
-	
-	
+\begin{proof}
+Let \(\mathbf{x}_1,\mathbf{x}_2\in\mathcal{V}/\ker(\mathbf{L})\)
+and $\mathbf{v},\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}$ 
+and \(\mathbf{w}\in\ker(\mathbf{L})\) be arbitrary.
+Surjectivity can be shown by
+\[
+\mathbf{L}(\mathbf{v})
+= \mathbf{L}(\mathbf{v}) + \mathbf{L}(\mathbf{w})
+= \mathbf{L}(\mathbf{v}+\mathbf{w})
+= \mathbf{Phi}(\mathbf{v}+\mathbf{w})
+= \mathbf{Phi}([\mathbf{v}])
+= \mathbf{Phi}([\mathbf{x}])
+\in \mathbf{Phi}(\mathcal{V}/\ker(\mathbf{L})
+.\]
+Injectivity can be shown by considering
+\[\mathbf{L}(\mathbf{v}_1) = \mathbf{L}(\mathbf{v}_2)\]
+or
+\[\mathbf{L}(\mathbf{v}_1+\mathbf{v}_2) = \mathbf{0}.\]
+Which shows
+\[\mathbf{v}_1+\mathbf{v}_2\in\ker(\mathbf{L}).\]
+Problem 1(a) showed that when this is the case then
+\[
+[\mathbf{v}_1]=[\mathbf{v}_2] \text{ and } \mathbf{x}_1=\mathbf{x}_2.
+\]
+Thus, $\mathbf{\Phi}$ is an isomorphism.
+\end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 2 (c)}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
 
 \end{enumerate}
 
