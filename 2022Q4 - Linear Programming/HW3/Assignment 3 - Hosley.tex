@@ -1,0 +1,84 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+
+\title{OPER 510 - Introduction to Mathematical Programming%
+	\\ Assignment 3}
+\author{Brandon Hosley}
+\date{\today}
+
+\setcounter{secnumdepth}{0}
+\usepackage{soul}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{nicefrac}
+
+\begin{document}
+\maketitle
+\unframedsolutions
+
+\begin{questions}
+\question
+
+
+\question
+\begin{parts}
+	\part
+	Find the dual of the following problem:
+	\begin{flalign*}
+		\operatorname{Max }z =4x_1 +6x_2 +10x_3 +12x_4 & &\\
+		\text{s.t.} 1x_1+3x_2+ 2x_3+ 4x_4 &\leq 5 &\\
+		1x_1+1x_2+ 5x_3+ 3x_4 &\leq 15 &\\
+		x_1, x_2, x_3, x_4 &\geq 0 &\\
+	\end{flalign*}
+	
+	
+	\part
+	Graph the dual and use the Complementary Slackness Theorem to find the solution of the primal. Show that your solution to the primal is an extreme point to that problem.
+\end{parts}
+
+
+\question
+Consider the solution to the following linear programming problem:
+\begin{flalign*}
+	\operatorname{Max } z = 10x_1 + 8x_2 + 17x_3 & & &\\
+	\text{s.t.} (\nicefrac{1}{2}) x_1 + (\nicefrac{1}{4})x_2 + (\nicefrac{7}{8})x_3 + x_4 &= 25 &\text{(resource 1)} &\\
+	(\nicefrac{1}{2}) x_1 + (\nicefrac{3}{4})x_2 + (\nicefrac{9}{8})x_3 + x_5 &=45 &\text{(resource 2)} &\\
+	(\nicefrac{1}{2}) x_1 + (\nicefrac{11}{4})x_2 + (\nicefrac{25}{8})x_3 + x_6 &=145 &\text{(resource 3)} &\\
+	x_j &\geq 0 &\text{for all }j &
+\end{flalign*}
+\begin{parts}
+	\part
+\end{parts}
+
+Optimal Tableau (Classic)
+
+(You may use either the classic or the text tableau as you prefer.)
+Using the final tableau in either form answer the following questions showing your work:
+a. What are the current marginal values (shadow prices) of resources 1, 2 and 3 in the optimal tableau?
+b. Find the sensitivity range for c1, c2, and c3?
+c. Find the sensitivity range for b1, b2, and b3?
+d. By how much would profit be increased if 10 additional units of resource 1 could be obtained? What would be the new solution?
+e. Suppose a new product can be produced at a cost of \$8.00 and would use 1 unit of resource 1, 2 units of resource 2 and 2 units of resource 3. Based on the current optimal solution, what is the minimum selling price that could be set if the new product is to be profitable to produce?
+
+
+\question
+\begin{parts}
+	\part
+	Solve the following problem via the dual simplex method.
+	\begin{flalign*}
+		\operatorname{Min } z=2x_1 +1x_2 & &\\
+		\text{s.t.} 1x_1 + 1x_2 &\geq 15 &\\
+		1x_1 - 1x2 &\leq 1 &\\
+		x_1, x_2 &\geq 0 &\\
+	\end{flalign*}
+	
+	\part
+	Add the constraint \(2x_1 + x_2 \leq 7\) to the optimal tableau in (a). State the new solution with this additional constraint.
+	
+\end{parts}
+
+
+\end{questions}
+\end{document}
