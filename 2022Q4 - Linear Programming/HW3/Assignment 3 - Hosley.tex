@@ -8,11 +8,10 @@
 \author{Brandon Hosley}
 \date{\today}
 
-\usepackage[table]{xcolor}
+\usepackage[table,dvipsnames]{xcolor}
 \usepackage{graphicx}
 \usepackage{nicefrac}
 \usepackage{enumitem}
-\usepackage{makecell}
 \renewcommand{\subpartlabel}{}
 
 \begin{document}
@@ -35,12 +34,15 @@ A company produces two products. Relevant information for each product is shown 
 			\item[Goal 4] Do not use any overtime.
 		\end{enumerate}
 	\end{subparts}
-	\begin{tabular}[]{ccc} \Xhline{.5pt} \rowcolor{gray!25}
-		& \textcolor{blue}{\textbf{Product 1}} & \textcolor{blue}{\textbf{Product 2}} \\
+	\begin{tabular}[]{ccc} 
+		\arrayrulecolor{MidnightBlue} \noalign{\global\arrayrulewidth=1pt} \hline 
+		\rowcolor{gray!25} & \textcolor{MidnightBlue}{\textbf{Product 1}} & \textcolor{MidnightBlue}{\textbf{Product 2}} \\
 		\hline
 		Labor required & 4 hours & 2 hours \\
 		Contribution to profit & \$4 & \$2 \\
-		\Xhline{1.2pt}
+		\noalign{\global\arrayrulewidth=2pt}
+		\hline
+		\noalign{\global\arrayrulewidth=0.4pt}
 	\end{tabular}
 \end{parts}
 
@@ -52,10 +54,10 @@ Formulate and solve a preemptive goal programming model for this situation.
 	\part
 	Find the dual of the following problem:
 	\begin{flalign*}
-		\operatorname{Max }z =4x_1 +6x_2 +10x_3 +12x_4 & &\\
-		\text{s.t.} 1x_1+3x_2+ 2x_3+ 4x_4 &\leq 5 &\\
-		1x_1+1x_2+ 5x_3+ 3x_4 &\leq 15 &\\
-		x_1, x_2, x_3, x_4 &\geq 0 &\\
+		\operatorname{Max }z =4x_1 +6x_2 +10x_3 +12x_4 & &&\\
+		\text{s.t.}\hspace{3em} 1x_1+3x_2+ \hspace{1ex} 2x_3+ \hspace{1ex} 4x_4 &\leq 5 &&\\
+		1x_1+1x_2+ \hspace{1ex} 5x_3+ \hspace{1ex} 3x_4 &\leq 15 &&\\
+		x_1, x_2, x_3, x_4 &\geq 0 &&\\
 	\end{flalign*}
 	
 	
@@ -67,22 +69,22 @@ Formulate and solve a preemptive goal programming model for this situation.
 \question
 Consider the solution to the following linear programming problem:
 \begin{flalign*}
-	\operatorname{Max } z = 10x_1 + 8x_2 + 17x_3 & & &\\
-	\text{s.t.} (\nicefrac{1}{2}) x_1 + (\nicefrac{1}{4})x_2 + (\nicefrac{7}{8})x_3 + x_4 &= 25 &\text{(resource 1)} &\\
-	(\nicefrac{1}{2}) x_1 + (\nicefrac{3}{4})x_2 + (\nicefrac{9}{8})x_3 + x_5 &=45 &\text{(resource 2)} &\\
-	(\nicefrac{1}{2}) x_1 + (\nicefrac{11}{4})x_2 + (\nicefrac{25}{8})x_3 + x_6 &=145 &\text{(resource 3)} &\\
-	x_j &\geq 0 &\text{for all }j &
+	\operatorname{Maximize } z = 10x_1 + 8x_2 + 17x_3 \hspace{15ex} & & \\
+	\text{s.t.}\hspace{2em} (\nicefrac{1}{2}) x_1 + (\nicefrac{1}{4})x_2 + (\nicefrac{7}{8})x_3 + x_4 \hspace{9ex} &= 25 &\text{(resource 1)} &&&&\hspace{10em}\\
+	(\nicefrac{1}{2}) x_1 + (\nicefrac{3}{4})x_2 + (\nicefrac{9}{8})x_3 \hspace{3ex} +x_5 \hspace{6ex} &=45 &\text{(resource 2)} &&&&\hspace{10em}\\
+	(\nicefrac{1}{2}) x_1 + (\nicefrac{11}{4})x_2 + (\nicefrac{25}{8})x_3 \hspace{6ex} +x_6 \hspace{3ex} &=145 &\text{(resource 3)} &&&&\hspace{10em}\\
+	x_j &\geq 0 &\text{for all }j &&&&\hspace{10em}
 \end{flalign*}
 Optimal Tableau (Classic)
 
-\begin{tabular}{cccccccccc}
-	$c_j$                   &                            &                                & 10    & 8     & 17    & 0     & 0     & 0     &       \\
-	\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & ratio \\ \cline{1-9}
-	\multicolumn{1}{c|}{8}  & \multicolumn{1}{c|}{$x_2$} & \multicolumn{1}{c|}{40}        & 0     & 1     & 1/2   & -2    & 2     & 0     &       \\
-	\multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{$x_1$} & \multicolumn{1}{c|}{30}        & 1     & 0     & 3/2   & 3     & -1    & 0     &       \\
-	\multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{$x_6$} & \multicolumn{1}{c|}{20}        & 0     & 0     & 1     & 4     & -5    & 1     &       \\ \cline{1-9}
-	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{620}       & 10    & 8     & 19    & 14    & 6     & 0     &       \\ \cline{3-9}
-	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & 0     & 0     & -2    & -14   & -6    & 0     &      
+\begin{tabular}{ccccccccc}
+	$c_j$                   &                            &                                & 10    & 8     & 17    & 0     & 0     & 0     \\
+	\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\ \cline{1-9}
+	\multicolumn{1}{c|}{8}  & \multicolumn{1}{c|}{$x_2$} & \multicolumn{1}{c|}{40}        & 0     & 1     & 1/2   & -2    & 2     & 0     \\
+	\multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{$x_1$} & \multicolumn{1}{c|}{30}        & 1     & 0     & 3/2   & 3     & -1    & 0     \\
+	\multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{$x_6$} & \multicolumn{1}{c|}{20}        & 0     & 0     & 1     & 4     & -5    & 1     \\ \cline{1-9}
+	& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{620}       & 10    & 8     & 19    & 14    & 6     & 0            \\ \cline{3-9}
+	&                            & \multicolumn{1}{c|}{$c_j-z_j$} & 0     & 0     & -2    & -14   & -6    & 0          
 \end{tabular}
 
 (You may use either the classic or the text tableau as you prefer.)
@@ -99,6 +101,30 @@ Using the final tableau in either form answer the following questions showing yo
 	\part
 	Suppose a new product can be produced at a cost of \$8.00 and would use 1 unit of resource 1, 2 units of resource 2 and 2 units of resource 3. Based on the current optimal solution, what is the minimum selling price that could be set if the new product is to be profitable to produce?
 \end{parts}
+\begin{solution}
+	\begin{parts}
+		\part
+		Shadow Prices:
+		Resource 1: 14
+		Resource 2: 6
+		Resource 3: 0
+		
+		\part
+		
+		
+		\part
+		
+		
+		$BV_j$ Matrix
+		\(\begin{bmatrix}
+			% x_2 x_1 x_3
+			\nicefrac{1}{4}  & \nicefrac{1}{2} & \nicefrac{7}{8}  \\
+			\nicefrac{3}{4}  & \nicefrac{1}{2} & \nicefrac{9}{8}  \\
+			\nicefrac{11}{4} & \nicefrac{1}{2} & \nicefrac{25}{8} \\
+		\end{bmatrix}\)
+		
+	\end{parts}
+\end{solution}
 
 \question
 \begin{parts}
@@ -106,7 +132,7 @@ Using the final tableau in either form answer the following questions showing yo
 	Solve the following problem via the dual simplex method.
 	\begin{flalign*}
 		\operatorname{Min } z=2x_1 +1x_2 & &\\
-		\text{s.t.} 1x_1 + 1x_2 &\geq 15 &\\
+		\text{s.t.} \hspace{2em} 1x_1 + 1x_2 &\geq 15 &\\
 		1x_1 - 1x2 &\leq 1 &\\
 		x_1, x_2 &\geq 0 &\\
 	\end{flalign*}
