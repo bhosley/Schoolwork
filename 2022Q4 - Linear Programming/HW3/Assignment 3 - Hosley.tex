@@ -48,6 +48,10 @@ A company produces two products. Relevant information for each product is shown 
 
 Formulate and solve a preemptive goal programming model for this situation.
 
+\begin{solution}
+	% Demand: 7 10 
+\end{solution}
+
 
 \question
 \begin{parts}
@@ -60,10 +64,60 @@ Formulate and solve a preemptive goal programming model for this situation.
 		x_1, x_2, x_3, x_4 &\geq 0 &&\\
 	\end{flalign*}
 	
-	
 	\part
 	Graph the dual and use the Complementary Slackness Theorem to find the solution of the primal. Show that your solution to the primal is an extreme point to that problem.
 \end{parts}
+\begin{solution}
+	\begin{parts}
+		\part
+		Dual:
+		\begin{flalign*}
+			\operatorname{Min } z_2 = 5y_1 + 15y_2 \\
+			\text{s.t.}\hspace{2em} 
+			y_1 + y_2 \geq 4 \\
+			3y_1 + y_2 \geq 6 \\
+			2y_1 + 5y_2 \geq 10 \\
+			4y_1 + 3y_2 \geq 12 \\
+			y_1, y_2 \geq 0 \\
+		\end{flalign*}
+		Refactored as a maximization problem with slack variables added.
+		\begin{flalign*}
+			\operatorname{Max } -z_2 = -5y_1 -15y_2 \\
+			\text{s.t.}\hspace{2em} 
+			y_1 + y_2 + e_1 = 4 \\
+			3y_1 + y_2 + e_1 = 6 \\
+			2y_1 + 5y_2 + e_1 = 10 \\
+			4y_1 + 3y_2 + e_1 = 12 \\
+			y_1, y_2, e_1, e_2, e_3, e_4 \geq 0 \\
+		\end{flalign*}
+		
+		\part
+		%need labeled axes
+		Graph of the Dual: \\
+		\includegraphics[width=0.8\linewidth]{"2b"} \bigskip \\
+		\begin{tabular}{cc}
+			Point & Value ($z_2=5y_1+15y_2$) \\
+			\hline
+			$(0,6)$ & $90$\\
+			$\mathbf{(5,0)}$ & $\mathbf{25}$\\
+			$(1,3)$ & $50$ \\
+			$(10/3,2/3)$ & $26.33\bar{3}$ \\
+		\end{tabular} \bigskip \\
+		Solving for values of slack values in the dual when $y_1=5$ and $y_2=0$,
+		then applying complementary slackness: \bigskip \\
+		\begin{tabular}{cc}
+			Dual Slack & Primal Variable \\
+			\hline
+			$e_1=1$ & $x_1=0$ \\
+			$e_2=9$ & $x_2=0$ \\
+			$e_3=0$ & $x_3\geq0$ \\
+			$e_4=8$ & $x_4=0$ \\
+		\end{tabular} \bigskip \\
+		Placing these values back into the primal system, we see $x_3\leq2.5$ and $x_3\leq3$.
+		Evaluating the primal objective function with $x_3=2.5$ returns $z=25$, matching the value of the dual objective.
+		
+	\end{parts}
+\end{solution}
 
 
 \question
@@ -104,15 +158,56 @@ Using the final tableau in either form answer the following questions showing yo
 \begin{solution}
 	\begin{parts}
 		\part
-		Shadow Prices:
-		Resource 1: 14
-		Resource 2: 6
-		Resource 3: 0
+		Shadow Prices shown by $z_j$ of the corresponding slack variable ($x_4,x_5,x_6$ respectively): \bigskip \\
+		\begin{tabular}{c|c}
+			Resource: & Unit of Currency: \\
+			\hline
+			1 & 14 \\
+			2 & 6 \\
+			3 & 0 \\
+		\end{tabular} \bigskip \\
+		
 		
 		\part
-		
-		
+		\begin{align}
+			c_1 = 8 \\
+			\operatorname{max}(\frac{-19}{1/2},\frac{-2}{6})\leq\delta&c_1\leq\operatorname{min}(\frac{-14}{-2}) \\
+			-\frac{1}{3}\leq\delta&c_1\leq7 \\
+			7\nicefrac{2}{3}\leq\delta&c_1\leq15 \\
+		\end{align}
+		\begin{align}
+			c_2 = 10 \\
+			\operatorname{max}(\frac{-19}{3/2},\frac{-14}{3})\leq\delta&c_2\leq\operatorname{min}(\frac{-6}{-1}) \\
+			-4\frac{1}{3}\leq\delta&c_2\leq7 \\
+			5\nicefrac{1}{3}\leq\delta&c_1\leq16 \\
+		\end{align}
+		\begin{align}
+			c_3 = 0 \\
+			\operatorname{max}(\frac{-19}{1},\frac{-14}{4})\leq\delta&c_3\leq\operatorname{min}(\frac{-6}{-5}) \\
+			-3\frac{1}{3}\leq\delta&c_3\leq\frac{6}{5} \\
+			-3\nicefrac{1}{3}\leq\delta&c_3\leq1\nicefrac{1}{5} \\
+		\end{align}
+	
+	
 		\part
+		\begin{align}
+			b_1: x_4 = 25 \\
+			\operatorname{max}(\frac{-40}{2})\leq\delta&b_1\leq\operatorname{min}(\frac{-20}{-5},\frac{-30}{-1}) \\
+			-20\leq\delta&b_1\leq4 \\
+			5\leq\delta&b_1\leq29 \\
+		\end{align}
+		\begin{align}
+			b_2: x_5 = 45 \\
+			\operatorname{max}(\frac{-30}{3},\frac{-20}{4})\leq\delta&b_2\leq\operatorname{min}(\frac{-40}{-2}) \\
+			-5\leq\delta&b_2\leq20 \\
+			40\leq\delta&b_2\leq65 \\
+		\end{align}
+		\begin{align}
+			b_3: x_6 = 145 \\
+			\operatorname{max}(\frac{-30}{0},\frac{-20}{1},\frac{-40}{0})\leq\delta&b_3\leq\operatorname{min}() \\
+			-20\leq\delta&b_3 \\
+			125\leq\delta&b_3 \\
+		\end{align}
 		
 		
 		$BV_j$ Matrix
