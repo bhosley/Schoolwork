@@ -14,6 +14,7 @@
 \usepackage{enumitem}
 \renewcommand{\subpartlabel}{}
 \usepackage{multicol}
+\usepackage{setspace}
 
 \begin{document}
 \maketitle
@@ -160,74 +161,132 @@ Using the final tableau in either form answer the following questions showing yo
 		\part
 		Shadow Prices shown by $z_j$ of the corresponding slack variable ($x_4,x_5,x_6$ respectively): \bigskip \\
 		\begin{tabular}{c|c}
-			Resource: & Unit of Currency: \\
+			Resource & Unit of Currency \\
 			\hline
 			1 & 14 \\
 			2 & 6 \\
 			3 & 0 \\
 		\end{tabular} \bigskip \\
-		
+
 		
 		\part 
 		\begin{multicols}{3}
 		\begin{footnotesize}
 		\begin{align*}
-			c_1 = 8 \\
-			\operatorname{max}(\frac{-19}{1/2},\frac{-2}{6})\leq\Delta&c_1\leq\operatorname{min}(\frac{-14}{-2}) \\
-			-\frac{1}{3}\leq\Delta&c_1\leq7 \\
-			7\nicefrac{2}{3}\leq&c_1\leq15 \\
+			c_1 = 10 \\
+			\operatorname{max}(\frac{-2}{3/2},\frac{-14}{3})\leq\Delta&c_1\leq\operatorname{min}(\frac{-6}{-1}) \\
+			-\frac{4}{3}\leq\Delta&c_1\leq6 \\
+			8\nicefrac{2}{3}\leq&c_1\leq16 \\
 		\end{align*}
 		\vfill\null\columnbreak
 		\begin{align*}
-			c_2 = 10 \\
-			\operatorname{max}(\frac{-19}{3/2},\frac{-14}{3})\leq\Delta&c_2\leq\operatorname{min}(\frac{-6}{-1}) \\
-			-4\frac{1}{3}\leq\Delta&c_2\leq7 \\
-			5\nicefrac{1}{3}\leq&c_1\leq16 \\
+			c_2 = 8 \\
+			\operatorname{max}(\frac{-2}{1/2},\frac{-6}{2})\leq\Delta&c_2\leq\operatorname{min}(\frac{-14}{-2}) \\
+			-3\leq\Delta&c_2\leq7 \\
+			5\leq&c_2\leq15 \\
 		\end{align*}
 		\vfill\null\columnbreak	
 		\begin{align*}
-			c_3 = 0 \\
-			\operatorname{max}(\frac{-19}{1},\frac{-14}{4})\leq\Delta&c_3\leq\operatorname{min}(\frac{-6}{-5}) \\
-			-3\frac{1}{3}\leq\Delta&c_3\leq\frac{6}{5} \\
-			-3\nicefrac{1}{3}\leq&c_3\leq1\nicefrac{1}{5} \\
+			c_3 = 17 \\
+			c_3 \text{ is non-basic: } \\
+			-\infty\leq\Delta&c_3\leq z_j \\
+			-\infty\leq&c_3\leq19 \\
 		\end{align*}
 		\end{footnotesize}
 		\end{multicols}
+		The sensitivity ranges for the basic variable coefficients is:\\
+		$8\nicefrac{2}{3}\leq c_1\leq16$ \\
+		$5\nicefrac{1}{3}\leq c_2\leq15$ \\
+		$-\infty\leq c_3\leq19$ \\
+	
 	
 		\part
 		\begin{multicols}{3}
 		\begin{footnotesize}
 		\begin{align*}
-			b_1: x_4 = 25 \\
+			b_1 = 45 \\
 			\operatorname{max}(\frac{-40}{2})\leq\Delta&b_1\leq\operatorname{min}(\frac{-20}{-5},\frac{-30}{-1}) \\
 			-20\leq\Delta&b_1\leq4 \\
-			5\leq&b_1\leq29 \\
+			25\leq&b_1\leq49 \\
 		\end{align*}
 		\vfill\null
 		\begin{align*}
-			b_2: x_5 = 45 \\
+			b_2 = 25 \\
 			\operatorname{max}(\frac{-30}{3},\frac{-20}{4})\leq\Delta&b_2\leq\operatorname{min}(\frac{-40}{-2}) \\
 			-5\leq\Delta&b_2\leq20 \\
-			40\leq&b_2\leq65 \\
+			20\leq&b_2\leq45 \\
 		\end{align*}
 		\vfill\null
 		\begin{align*}
-			b_3: x_6 = 145 \\
+			b_3 = 145 \\
 			\operatorname{max}(\frac{-30}{0},\frac{-20}{1},\frac{-40}{0})\leq\Delta&b_3\leq\operatorname{min}() \\
 			-20\leq\Delta&b_3 \\
-			125\leq&b_3 \\
+			125\leq&b_3\leq\infty \\
 		\end{align*}
 		\end{footnotesize}
 		\end{multicols}
+		The range of of available units of resource for which $x_1, x_2, \text{ and } x_6$ remain the basic variables is: \\
+		\(25\leq b_1\leq49\) \\
+		\(20\leq b_2\leq45\) \\
+		\(125\leq b_3\leq\infty\) \\
 		
-		$BV_j$ Matrix
-		\(\begin{bmatrix}
-			% x_2 x_1 x_3
-			\nicefrac{1}{4}  & \nicefrac{1}{2} & \nicefrac{7}{8}  \\
-			\nicefrac{3}{4}  & \nicefrac{1}{2} & \nicefrac{9}{8}  \\
-			\nicefrac{11}{4} & \nicefrac{1}{2} & \nicefrac{25}{8} \\
-		\end{bmatrix}\)
+		
+		\part
+		10 additional units of Resource 1 will increase the objective value by $10(14)=140$.
+		This can be illustrated with the new solution:
+		
+		\[\begin{bmatrix}
+			\nicefrac{1}{2} & \nicefrac{1}{4} & 0 \\
+			\nicefrac{1}{2} & \nicefrac{3}{4} & 0 \\
+			\nicefrac{1}{2} & \nicefrac{11}{4} & 0 \\
+		\end{bmatrix}\begin{bmatrix}
+			35 \\ 45 \\ 145 
+		\end{bmatrix}\]
+		\((\nicefrac{1}{2})x_1+3(35-(\nicefrac{1}{2})x_1)\) \\
+		\(x_1 = 60, x_2 = 20\) \\
+		\(10(60)+8(20)=760\) \bigskip \\
+		\textbf{Executive Summary: }
+		The availability of 10 additional Resource 1 changes the optimal solution to be \(x_1=60\) and \(x_2=20\), resulting in a final objective value of 760, for an increase in 140 over the value prior to the additional resource.
+		
+		
+		\part
+		\[\bar{\hat{x}}_7 =
+		\begin{bmatrix}
+			-2 & 2 & 0 \\
+			3 & -1 & 0 \\
+			4 & -5 & 1
+		\end{bmatrix}\begin{bmatrix}
+			1 \\ 2 \\ 2
+		\end{bmatrix} = \begin{bmatrix}
+			2 \\ 1 \\ -4
+		\end{bmatrix}
+		\]
+		The updated tableau will resemble the following: \\
+		\begin{tabular}{ccccccccccc}
+			$c_j$                   &                            &                                & 10    & 8     & 17    & 0     & 0     & 0     & $c_7$    &  \\
+			\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $x_7$    &  \\ \cline{1-10}
+			\multicolumn{1}{c|}{8}  & \multicolumn{1}{c|}{$x_2$} & \multicolumn{1}{c|}{40}        & 0     & 1     & 1/2   & -2    & 2     & 0     & 2        &  \\
+			\multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{$x_1$} & \multicolumn{1}{c|}{30}        & 1     & 0     & 3/2   & 3     & -1    & 0     & 1        &  \\
+			\multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{$x_6$} & \multicolumn{1}{c|}{20}        & 0     & 0     & 1     & 4     & -5    & 1     & 4        &  \\ \cline{1-10}
+			& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{620}       & 10    & 8     & 19    & 14    & 6     & 0     & 26       &  \\ \cline{3-10}
+			&                            & \multicolumn{1}{c|}{$c_j-z_j$} & 0     & 0     & -2    & -14   & -6    & 0     & $c_7-26$ & 
+		\end{tabular} \\
 	
+		From this one may note that for this tableau to cease being optimal $c_7-26>0$, 
+		which is $c_7>26$. To check this, and to remain consistent with integer coefficients the following tableau represents optimal when $c_7=27$: \\
+		
+		\begin{tabular}{ccccccccccc}
+			$c_j$                   &                            &                                & 10    & 8     & 17    & 0     & 0     & 0     & 27    &  \\
+			\multicolumn{1}{c|}{}   & \multicolumn{1}{c|}{bv}    & \multicolumn{1}{c|}{RHS}       & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ & $x_7$ &  \\ \cline{1-10}
+			\multicolumn{1}{c|}{27} & \multicolumn{1}{c|}{$x_7$} & \multicolumn{1}{c|}{20}        & 0     & 1/2   & 1/4   & -1/2  & 1     & 0     & 1     &  \\
+			\multicolumn{1}{c|}{10} & \multicolumn{1}{c|}{$x_1$} & \multicolumn{1}{c|}{30}        & 1     & -1/2  & 5/4   & 7/2   & -2    & 0     & 0     &  \\
+			\multicolumn{1}{c|}{0}  & \multicolumn{1}{c|}{$x_6$} & \multicolumn{1}{c|}{100}       & 0     & 2     & 1     & 2     & 11    & 1     & 0     &  \\ \cline{1-10}
+			& \multicolumn{1}{c|}{$z_j$} & \multicolumn{1}{c|}{640}       & 10    & 17/2  & 77/4  & 25/2  & 7     & 0     & 27    &  \\ \cline{3-10}
+			&                            & \multicolumn{1}{c|}{$c_j-z_j$} & 0     & -1/2  & -9/4  & -25/2 & -7    & 0     & 0     & 
+		\end{tabular} \\
+	
+		\textbf{Executive Summary:}
+		The new product will be profitable to produce when the objective coefficient is greater than 26. Based on the assumption that the originally provided function is a calculation of profit then the new product is profitable at a sale price above \$34. As an example case the price of \$35 is considered and the new optimal production is 30 units of product $x_1$ and 10 units of the new product ($x_7$) for an objective value of 640 (assumed to be equivalent to profit of \$640 based on the information provided).
 	
 	\end{parts}
 \end{solution}
@@ -261,45 +320,47 @@ Using the final tableau in either form answer the following questions showing yo
 			1  & 2  &  1  & 0   & 0   & 0          & -z        \\
 			0  & -1  & -1  & 1   & 0   & -15        & x_3       \\
 			0  & 1   & -1  & 0   & 1   & 1          & x_4
-		\end{array}$ \\
-		Leaving $x_3$, enter $x_2$. \\
+		\end{array}$ \bigskip\\
+		Leaving $x_3$, enter $x_2$. \bigskip\\
 		$\begin{array}{ccccccc}
 			-z & x_1 & x_2 & x_3 & x_4 & \text{RHS} & \text{BV} \\ \hline
 			1  & 3  & 0  & -1   & 0   & -15          & -z        \\
 			0  & 1   & 1  & -1  & 0   & 15          & x_2       \\
 			0  & 2   & 0  & -1   & 1   & 16          & x_4
-		\end{array}$ \smallskip\\ 
+		\end{array}$ \bigskip\\ 
 		Optimal is achieved with $x_1=0, x_2=15$ and resulting in a $z=15$.
 		
 		
 		
 		\part
-		\(W = [2,1,0,0] b_n=7\) \\
-		\(N = [1,0]\) \\
+		\(W = [2,1,0,0] b_n=7\) \\ \bigskip
+		\(N = [1,0]\) \\ \bigskip
 		\(NB_0^{-1}A = [1,0]\begin{bmatrix} 1&1&-1&0\\2&0&-1&1\end{bmatrix} 
-			=[1,1,-1,0]\) \\
+			=[1,1,-1,0]\) \\ \bigskip
 		\(W-NB_0^{-1}A = [2,1,0,0]-[1,1,-1,0] = [1,0,1,0]\) \\
 		\(b_N-NB_0^{-1}\bar{b} = 7 - [1,0]\begin{bmatrix}15\\16\end{bmatrix}
-			=7-15=-8\)\bigskip
+			=7-15=-8\)
+			
 		The new tableau: \\
+		
 		$\begin{array}{cccccccc}
-			-z & x_1 & x_2 & x_3 & x_4 & x_5 \text{RHS} & \text{BV} &     \\ \hline
-			1  & 3   & 0   & -1  & 0   & 0              & -15       & -z  \\
-			0  & 1   & 1   & -1  & 0   & 0              & 15        & x_2 \\
-			0  & 2   & 0   & -1  & 1   & 0              & 16        & x_4 \\
-			0  & 1   & 0   & 1   & 0   & 1              & -8        & x_5
-		\end{array}$ \smallskip\\ 
-		Leaving $x_5$, entering $x_3$ \\
+			-z & x_1 & x_2 & x_3 & x_4 & x_5 & \text{RHS} & \text{BV} \\ \hline
+			1  & 3   & 0   & -1  & 0   & 0   & -15        & -z        \\
+			0  & 1   & 1   & -1  & 0   & 0   & 15         & x_2       \\
+			0  & 2   & 0   & -1  & 1   & 0   & 16         & x_4       \\
+			0  & 1   & 0   & 1   & 0   & 1   & -8         & x_5
+		\end{array}$ \bigskip \\
+		Leaving $x_5$, entering $x_3$ \bigskip \\
 		$\begin{array}{cccccccc}
-			-z & x_1 & x_2 & x_3 & x_4 & x_5 \text{RHS} & \text{BV} &     \\ \hline
-			1  & 4   & 0   & 0   & 0   & 1              & -23       & -z  \\
-			0  & 2   & 1   & 0   & 0   & 1              & 7         & x_2 \\
-			0  & 3   & 0   & 0   & 1   & 1              & 8         & x_4 \\
-			0  & 1   & 0   & 1   & 0   & 1              & -8        & x_5
-		\end{array}$ \smallskip\\
+			-z & x_1 & x_2 & x_3 & x_4 & x_5 & \text{RHS} & \text{BV} \\ \hline
+			1  & 4   & 0   & 0   & 0   & 1   & -23        & -z        \\
+			0  & 2   & 1   & 0   & 0   & 1   & 7          & x_2       \\
+			0  & 3   & 0   & 0   & 1   & 1   & 8          & x_4       \\
+			0  & 1   & 0   & 1   & 0   & 1   & -8         & x_5
+		\end{array}$ \bigskip\\
 		With the added constraint this problem is no longer feasible. 
 		In particular, this infeasibility is a result of constraint one 
-		$1x_1 + 1x_2 \geq 15$ and constraint 3 \(2x_1 + x_2 \leq 7\).
+		$1x_1 + 1x_2 \geq 15$ and constraint three \(2x_1 + x_2 \leq 7\).
 		
 	\end{parts}
 \end{solution}
