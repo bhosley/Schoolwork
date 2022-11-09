@@ -24,6 +24,7 @@
 \question
 A company produces two products. Relevant information for each product is shown in Table 58. The company has a goal of \$48 in profits and incurs a \$1 penalty for each dollar it falls short of this goal. A total of 32 hours of labor are available. A \$2 penalty is incurred for each hour of overtime (labor over 32 hours) used, and a \$1 penalty is incurred for each hour of available labor that is unused. Marketing considerations require that at least 10 units of product 2 be produced. For each unit (of either product) by which production falls short of demand, a penalty of \$5 is assessed.
 
+
 \begin{parts}
 	\part Formulate an LP that can be used to minimize the penalty incurred by the company.
 	\part Suppose the company sets (in order of importance) the following goals:
@@ -36,6 +37,8 @@ A company produces two products. Relevant information for each product is shown 
 			\item[Goal 4] Do not use any overtime.
 		\end{enumerate}
 	\end{subparts}
+	Formulate and solve a preemptive goal programming model for this situation. \\
+	
 	\begin{tabular}[]{ccc} 
 		\arrayrulecolor{MidnightBlue} \noalign{\global\arrayrulewidth=1pt} \hline 
 		\rowcolor{gray!25} & \textcolor{MidnightBlue}{\textbf{Product 1}} & \textcolor{MidnightBlue}{\textbf{Product 2}} \\
@@ -46,11 +49,107 @@ A company produces two products. Relevant information for each product is shown 
 		\hline
 		\noalign{\global\arrayrulewidth=0.4pt}
 	\end{tabular}
+
 \end{parts}
 
-Formulate and solve a preemptive goal programming model for this situation.
+
 
 \begin{solution}
+\begin{parts}
+	\part
+	The LP will use the variables:
+	
+	\begin{tabular}{r|l}
+		Penalty & $z$ \\
+		Product 1& $x_1$ \\
+		Product 2 & $x_2$ \\
+		Profit Slack & $s_1$ \\
+		(Unmet Profit) & $s_1^-$ \\
+		Labor Slack & $s_2$ \\
+		(Unused Labor) & $s_2^-$ \\
+		(Overtime) & $s_2^+$ \\
+		Product Deficit & $s_{3,4}^-$ \\
+		Product Surplus & $s_{3,4}^+$ \\
+		Marketing (P2) Surplus & $s_5$ \\
+		
+	\end{tabular} \\
+
+	The constraints will be:
+	\begin{flalign*}
+		\operatorname{Min } z = 
+			0x_1 + 0x_2 + s_1^- + 0s_1^+ + s_2^- + 2s_2^+ + 
+			5s_3^- + 5s_4^- + 0s_5 & &
+			(\text{Penalties})  & \hspace{1em} \\
+		\text{s.t.} \hspace{5ex} 
+		4x_1 + 2x_2 + s_1^- -\hspace{1ex} s_1^+ \hspace{32ex} &= 48 &(\text{Pre-Penalty Profit})  & \\
+		4x_1+2x_2 \hspace{12ex} + s_2^- -\hspace{1ex} s_2^+ \hspace{20ex} &= 32 &(\text{Labor})  & \\
+		- \hspace{1ex} x_2 \hspace{38ex} + \hspace{1ex}s_5 &= -10 &(\text{Marketing Consideration})   & \\
+		x_1,x_2,s_1^-,s_1^+,s_2^-,s_2^+,s_3^-,s_3^+,s_4^-,s_4^+&\geq 0 & 
+	\end{flalign*}
+	\textbf{Note:} Demand for products was not included in the provided table.
+	
+	\part
+	The Preemptive Program;
+	\begin{flalign*}
+		\operatorname{Min } z = P_1s_2^1 + P_2s_3^- + P_3s_4^- + P_4s_2^+ \\
+		\text{s.t.}\hspace{5ex} 
+		4x_1 + 2x_2 + s_1^- -\hspace{1ex} s_1^+ \hspace{12ex} &= 48 & \\
+		4x_1+2x_2 \hspace{12ex} + s_2^- -\hspace{1ex} s_2^+ \hspace{0ex} &= 32 & \\
+		- \hspace{1ex} x_2 \hspace{18ex} + \hspace{1ex}s_5 &= -10 & \\
+	\end{flalign*}
+
+	\begin{tabular}{lcccccccc}
+		\hline
+		& $x_1$  & $x_2$  & $s_1^-$ & $s_1^+$ & $s_2^-$ & $s_2^+$ & $s_5$ & RHS         \\ \hline
+		0 (Labor)    & $4P_1$ & $2P_1$ &         &         &         & $P_1$   &       & $z_1=32P_1$ \\
+		0 (Overtime) & $4P_4$ & $2P_4$ &         &         & $P_4$   &         &       & $z_4=32P_4$ \\
+		Profit       & 4      & 2      & 1       & -1      &         &         &       & 48          \\
+		Labor        & 4      & 2      &         &         & 1       & -1      &       & 32          \\
+		Marketing    &        & -1     &         &         &         &         & 1     & -10        
+	\end{tabular} \\
+
+	Enter on $x_1$, exit on Labor.
+	
+	\begin{tabular}{lcccccccc}
+		\hline
+		& $x_1$ & $x_2$ & $s_1^-$ & $s_1^+$ & $s_2^-$ & $s_2^+$ & $s_5$ & RHS     \\ \hline
+		0 (Labor)    &       &       &         &         & $-P_1$  & $2P_1$  &       & $z_1=0$ \\
+		0 (Overtime) &       &       &         &         &         & $P_4$   &       & $z_4=0$ \\
+		Profit       &       &       & 1       & -1      & -1      & 1       &       & 16      \\
+		Labor        & 1     & 1/2   &         &         & 1/4     & -1/4    &       & 8       \\
+		Marketing    &       & -1    &         &         &         &         & 1     & -10    
+	\end{tabular} \\
+
+	Adjust for marketing feasibility.
+	
+	\begin{tabular}{lcccccccc}
+		\hline
+		& $x_1$ & $x_2$ & $s_1^-$ & $s_1^+$ & $s_2^-$ & $s_2^+$ & $s_5$ & RHS     \\ \hline
+		0 (Labor)    &       &       &         &         & $-P_1$  & $2P_1$  &       & $z_1=0$ \\
+		0 (Overtime) &       &       &         &         &         & $P_4$   &       & $z_4=0$ \\
+		Profit       &       &       & 1       & -1      & -1      & 1       &       & 16      \\
+		Labor        & 1     &       &         &         & 1/4     & -1/4    & 1/2   & 3       \\
+		Marketing    &       & 1     &         &         &         &         & -1    & 10     
+	\end{tabular}
+
+
+	\textbf{Executive Summary:} 
+	The recommended production allocation is for 
+	3 of product 1 and 10 of product 2.
+	This will result in an estimated \$32 in profit,
+	and avoid under utilization of labor 
+	and require no overtime.
+	
+	It is equally viable to produce 
+	0,1, or 2 of Product 1 and 
+	16,14,12 of Product 2 respectively,
+	which will have the same outcome as above.
+	The discerning factor will be demand for product 1,
+	and the above recommendation is on the basis that the probability of
+	the demand for product 1 being 3 or greater is higher than the probability
+	of that demand being 0, 1, or 2.
+
+\end{parts}
 	% Demand: 7 10 
 \end{solution}
 
@@ -63,7 +162,7 @@ Formulate and solve a preemptive goal programming model for this situation.
 		\operatorname{Max }z =4x_1 +6x_2 +10x_3 +12x_4 & &&\\
 		\text{s.t.}\hspace{3em} 1x_1+3x_2+ \hspace{1ex} 2x_3+ \hspace{1ex} 4x_4 &\leq 5 &&\\
 		1x_1+1x_2+ \hspace{1ex} 5x_3+ \hspace{1ex} 3x_4 &\leq 15 &&\\
-		x_1, x_2, x_3, x_4 &\geq 0 &&\\
+		x_1, x_2, x_3, x_4 &\geq 0 &&
 	\end{flalign*}
 	
 	\part
@@ -80,17 +179,17 @@ Formulate and solve a preemptive goal programming model for this situation.
 			3y_1 + \hspace{2ex} y_2 &\geq 6 &\\
 			2y_1 + \hspace{1ex} 5y_2 &\geq 10 &\\
 			4y_1 + \hspace{1ex} 3y_2 &\geq 12 &\\
-			y_1, y_2 &\geq 0 &\\
+			y_1, y_2 &\geq 0 &
 		\end{flalign*}
 		Refactored as a maximization problem to show slack values without needing artificial variables. The slack variables ($e_n$) will appear as follows:
 		\begin{flalign*}
-			\operatorname{Max } -z_2 = -5y_1 -15y_2 \hspace{11ex} & &\\
+			\operatorname{Max } -w = -5y_1 -15y_2 \hspace{11ex} & &\\
 			\text{s.t.}\hspace{5em} 
 			y_1 + \hspace{2ex} y_2 - e_1 \hspace{6ex} &= 4 &\\
 			3y_1 + \hspace{2ex} y_2 \hspace{2ex} - e_2 \hspace{4ex} &= 6 &\\
 			2y_1 + \hspace{1ex} 5y_2 \hspace{4ex} - e_3 \hspace{2ex} &= 10 &\\
 			4y_1 + \hspace{1ex} 3y_2 \hspace{6ex} - e_4 &= 12 &\\
-			y_1, y_2, e_1, e_2, e_3, e_4 &\geq 0 &\\
+			y_1, y_2, e_1, e_2, e_3, e_4 &\geq 0 &
 		\end{flalign*}
 		
 		\part
@@ -102,7 +201,7 @@ Formulate and solve a preemptive goal programming model for this situation.
 			A & $(0,6)$ & $90$\\
 			B & $(10/3,2/3)$ & $26.3\bar{3}$ \\
 			C & $(1,3)$ & $50$ \\
-			D & $\mathbf{(5,0)}$ & $\mathbf{25}$\\
+			D & $\mathbf{(5,0)}$ & $\mathbf{25}$
 		\end{tabular} \bigskip \\
 		Solving for values of slack values in the dual when $y_1=5$ and $y_2=0$,
 		then applying complementary slackness: \bigskip \\
@@ -112,7 +211,7 @@ Formulate and solve a preemptive goal programming model for this situation.
 			$e_1=1$ & $x_1=0$ \\
 			$e_2=9$ & $x_2=0$ \\
 			$e_3=0$ & $x_3\geq0$ \\
-			$e_4=8$ & $x_4=0$ \\
+			$e_4=8$ & $x_4=0$ 
 		\end{tabular} \bigskip \\
 		Placing these values back into the primal system, we see $x_3\leq2.5$ and $x_3\leq3$.
 		Evaluating the primal objective function with $x_3=2.5$ returns $z=25$, matching the value of the dual objective.
@@ -176,28 +275,28 @@ Using the final tableau in either form answer the following questions showing yo
 			c_1 = 10 \\
 			\operatorname{max}(\frac{-2}{3/2},\frac{-14}{3})\leq\Delta&c_1\leq\operatorname{min}(\frac{-6}{-1}) \\
 			-\frac{4}{3}\leq\Delta&c_1\leq6 \\
-			8\nicefrac{2}{3}\leq&c_1\leq16 \\
+			8\nicefrac{2}{3}\leq&c_1\leq16 
 		\end{align*}
 		\vfill\null\columnbreak
 		\begin{align*}
 			c_2 = 8 \\
 			\operatorname{max}(\frac{-2}{1/2},\frac{-6}{2})\leq\Delta&c_2\leq\operatorname{min}(\frac{-14}{-2}) \\
 			-3\leq\Delta&c_2\leq7 \\
-			5\leq&c_2\leq15 \\
+			5\leq&c_2\leq15 
 		\end{align*}
 		\vfill\null\columnbreak	
 		\begin{align*}
 			c_3 = 17 \\
 			c_3 \text{ is non-basic: } \\
 			-\infty\leq\Delta&c_3\leq z_j \\
-			-\infty\leq&c_3\leq19 \\
+			-\infty\leq&c_3\leq19 
 		\end{align*}
 		\end{footnotesize}
 		\end{multicols}
 		The sensitivity ranges for the basic variable coefficients is:\\
 		$8\nicefrac{2}{3}\leq c_1\leq16$ \\
 		$5\nicefrac{1}{3}\leq c_2\leq15$ \\
-		$-\infty\leq c_3\leq19$ \\
+		$-\infty\leq c_3\leq19$ 
 	
 	
 		\part
@@ -207,28 +306,28 @@ Using the final tableau in either form answer the following questions showing yo
 			b_1 = 45 \\
 			\operatorname{max}(\frac{-40}{2})\leq\Delta&b_1\leq\operatorname{min}(\frac{-20}{-5},\frac{-30}{-1}) \\
 			-20\leq\Delta&b_1\leq4 \\
-			25\leq&b_1\leq49 \\
+			25\leq&b_1\leq49 
 		\end{align*}
 		\vfill\null
 		\begin{align*}
 			b_2 = 25 \\
 			\operatorname{max}(\frac{-30}{3},\frac{-20}{4})\leq\Delta&b_2\leq\operatorname{min}(\frac{-40}{-2}) \\
 			-5\leq\Delta&b_2\leq20 \\
-			20\leq&b_2\leq45 \\
+			20\leq&b_2\leq45
 		\end{align*}
 		\vfill\null
 		\begin{align*}
 			b_3 = 145 \\
 			\operatorname{max}(\frac{-30}{0},\frac{-20}{1},\frac{-40}{0})\leq\Delta&b_3\leq\operatorname{min}() \\
 			-20\leq\Delta&b_3 \\
-			125\leq&b_3\leq\infty \\
+			125\leq&b_3\leq\infty
 		\end{align*}
 		\end{footnotesize}
 		\end{multicols}
 		The range of of available units of resource for which $x_1, x_2, \text{ and } x_6$ remain the basic variables is: \\
 		\(25\leq b_1\leq49\) \\
 		\(20\leq b_2\leq45\) \\
-		\(125\leq b_3\leq\infty\) \\
+		\(125\leq b_3\leq\infty\) 
 		
 		
 		\part
