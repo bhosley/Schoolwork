@@ -8,6 +8,7 @@
 \author{Brandon Hosley}
 \date{\today}
 
+\usepackage{comment}
 \begin{comment}
 	Choose two of questions 1 through 3 to complete 
 	Choose two of questions 4 through 6 to complete 
@@ -20,16 +21,90 @@
 \maketitle
 \begin{questions}
 
-%%%%%%%%%%%%%%
-%	\begin{ Question 1}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 1}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+A local organization is conducting a raffle where 50 tickets are to be sold—one per customer. There are three prizes to be awarded. If the four organizers of the raffle each buy one ticket, what is the probability that the four organizers win none of the prizes?
 \begin{solution}
-	S
+	Probability that only non-organizer tickets are drawn:
+	\begin{equation*}
+		(46/50)(45/49)(44/48) = 0.774489795918367
+	\end{equation*}
 \end{solution}
 %\end{ Question 1}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 2}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{question}{2}
+%\end{ Question 2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 3}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+A foundry ships a lot of 20 engine blocks of which five contain internal flaws. The purchaser will select three blocks at random and test them for hardness. The lot will be accepted if no flaws are found. What is the probability that this lot will be accepted?
+\begin{solution}
+	Probability that only quality engine block are selected:
+	\begin{equation*}
+		(15/20)(14/19)(14/18) = 0.491228070175439.
+	\end{equation*}
+\end{solution}
+%\end{ Question 3}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 5}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Your mom and dad take turns driving you to and from your STAT 587 class. Your mom drives you 60\% of the time, while your dad drives you 40\% of the time. After class they sometimes pick up cookies or ice cream, but never both. Your mother prefers cookies, so given she drives, she gets cookies 54\% of the time and ice cream 25\% of the time. You come home with cookies 33\% of the time and ice cream 52\% of the time. \\
+Given you come home with cookies or ice cream, what is the probability your dad drove you?
+\begin{solution} \\
+	\begin{tabular}{cc|ccc}
+		&  & $T_0$ & $T_c$ & $T_i$ \\
+		& 1 & 0.15 & 0.33 & 0.52 \\
+		\hline
+		$D_m$ & 0.6 & 0.21 & 0.54 & 0.25 \\
+		$D_d$ & 0.4 & 0.06 & 0.015 & 0.925 \\
+		\hline
+	\end{tabular}
+	\begin{equation*}
+		P(T_c\cup T_i|D_d) = \frac{P(T_c\cup T_i)(1-P(D_m)P(T_c\cup T_i))}{P(D_d)}
+		= 0.94
+	\end{equation*}
+	\begin{align*}
+		P(D_d|T_c\cup T_i) = \frac{P(D_d)(P(T_c\cup T_i|D-d))}{P(T_c\cup T_i)}
+	\end{align*}
+		
+\end{solution}
+%\end{ Question 5}
+
+0.442352941176471
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 14}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+
+\begin{solution}
+	
+\end{solution}
+%\end{ Question 14}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 15}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+
+\begin{solution}
+	
+\end{solution}
+%\end{ Question 15}
 
 \end{questions}
 \end{document}
