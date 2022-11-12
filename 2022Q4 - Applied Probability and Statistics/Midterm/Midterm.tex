@@ -53,7 +53,11 @@ A foundry ships a lot of 20 engine blocks of which five contain internal flaws. 
 \end{solution}
 %\end{ Question 3}
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 4}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{question}{4}
+%\end{ Question 4}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 5}  %
@@ -75,13 +79,37 @@ Given you come home with cookies or ice cream, what is the probability your dad 
 		= 0.94
 	\end{equation*}
 	\begin{align*}
-		P(D_d|T_c\cup T_i) = \frac{P(D_d)(P(T_c\cup T_i|D-d))}{P(T_c\cup T_i)}
+		P(D_d|T_c\cup T_i) &= \frac{P(D_d)(P(T_c\cup T_i|D_d))}{P(T_c\cup T_i)} \\
+		&= \frac{(0.4)(0.94)}{(0.85)} \\
+		&= 0.442352941176471
 	\end{align*}
 		
 \end{solution}
 %\end{ Question 5}
 
-0.442352941176471
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 6}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Consider telegraph signals "dot" and "dash" sent in the proportion 3:4, where erratic transmissions cause a dot to become a dash with probability 1/4 and a dash to become a dot with probability 1/3. If a dash is received, what is the probability that a dash has been sent?
+\begin{solution} \\
+	\begin{tabular}{cc|cc}
+		\multicolumn{1}{l}{$\cdot$} & -    & \multicolumn{1}{l}{Sent} & \multicolumn{1}{l}{} \\
+		3/7                         & 4/7  & \multicolumn{2}{r}{Received}                    \\ \hline
+		9/28                        & 4/21 & 43/84                    & $\cdot$              \\
+		3/28                        & 8/21 & 41/84                    & -                   
+	\end{tabular}
+	\begin{align*}
+		P(S_-|R_-)
+		= \frac{P(S_-\cap R_-)}{P(R_-)}
+		= \frac{(8/21)}{(41/84)}
+		= \frac{8(84)}{21(41)}
+		= 0.780487804878049
+	\end{align*}
+\end{solution}
+%\end{ Question 6}
+
+
 
 
 
