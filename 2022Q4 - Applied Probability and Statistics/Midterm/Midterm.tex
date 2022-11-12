@@ -109,10 +109,93 @@ Consider telegraph signals "dot" and "dash" sent in the proportion 3:4, where er
 \end{solution}
 %\end{ Question 6}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 7}   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+The management at a fast-food outlet is interested in the joint behavior of the random variables $Y_1$, defined as the total time between a customer’s arrival at the store and departure from the service window, and $Y_2$, the time a customer waits in line before reaching the service window. Because $Y_1$ includes the time a customer waits in line, we must have $Y_1\geq Y_2$. The relative frequency distribution of observed values of $Y_1$ and $Y_2$ can be modeled by the probability density function
+$$ f(y_1,y_2)=\begin{cases} e^{-y_1} & \text{for } 0\leq y_2\leq y_1 \\
+	0 & \text{elsewhere} \end{cases} $$
+with time measured in minutes. Find $P(Y_1<2,Y_2>1)$.
+\begin{solution}
+	\begin{align*}
+		\int_{1}^{2}\int_{1}^{y_1}e^{-y_1}dy_2dy_1 
+		= \int_{1}^{2}\bigg.\bigg(-y_2e^{-y_1}\bigg)\bigg|_1^{y_1} dy_1
+		= \int_{1}^{2} -y_1e^{-y_1} + e^{-y_1} dy_1
+		= \bigg. \frac{1}{2}y_1^2e^{-y_1}-e^{-y_1} \bigg|_1^2
+		= \bigg(\frac{1}{2}(2^2)e^{-2}-e^{-2}\bigg)-\bigg(\frac{1}{2}(1^2)e^{-1}-e^{-1}\bigg)
+		= 2e^{-2}-e^{-2}-\frac{1}{2}e^{-1}+e^{-1}
+		= e^{-2}+\frac{1}{2}e^{-1}
+		= 0.319275003822334
+	\end{align*}
+\end{solution}
+%\end{ Question 7} 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 8}   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\end{ Question 8}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 9}   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{question}{9}
+%\end{ Question 9}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 10}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Let $Y_1$ and $Y_2$ have joint density function
+\[ f(y_1,y_2) = \begin{cases}
+	30y_1y_2^2 & \text{for } y_1-1\leq y_2\leq1-y_1 \text{ and } 0\leq y_1\leq1 \\
+	0 & \text{elsewhere}
+\end{cases} \]
+What is $P(Y_1>Y_2)$?
+\begin{solution}
+	\begin{align*}
+		P(Y_2<Y_1)
+		= \int_{0}^{1}\int_{0}^{1-y_1} 30y_1y_2^2 dy_2 dy_1
+		= 30\int_{0}^{1}y_1\int_{0}^{1-y_1} y_2^2 dy_2 dy_1
+		= 30\int_{0}^{1}y_1 \bigg.\bigg( \frac{1}{3}y_2^3 \bigg)\bigg|_{0}^{1-y_1} dy_1
+		= 30\int_{0}^{1}y_1 \bigg( \frac{1}{3}(1-y_1)^3 \bigg) dy_1
+		= 10\int_{0}^{1}y_1(1-y_1)^3 dy_1
+		= 10\int_{0}^{1} y_1-y_1^2+3y_1^3-y_1^4 dy_1
+		= 10( \frac{1}{2}y_1^2-y_1^3+\frac{3}{4}y_1^4-\frac{1}{5}y_1^5 )
+		= 10(1/4 - 1/5) = 10(1/20) = \frac{1}{2}
+	\end{align*}
+\end{solution}
+%\end{ Question 10}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 11}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
 
+\begin{solution}
+	
+\end{solution}
+%\end{ Question 11}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 12}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+
+\begin{solution}
+	
+\end{solution}
+%\end{ Question 12}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 13}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+
+\begin{solution}
+	
+\end{solution}
+%\end{ Question 13}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 14}  %
