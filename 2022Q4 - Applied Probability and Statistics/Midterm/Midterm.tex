@@ -171,8 +171,26 @@ What is $P(Y_1>Y_2)$?
 % 	\begin{ Question 11}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+A soft-drink machine has a random amount $Y_2$ in supply at the beginning of a given day and dispenses a random amount $Y_1$ during the day (with measurements in gallons). It is not resupplied during the day, and hence $Y_1\leq Y_2$. It has been observed that $Y_1$ and $Y_2$ have a joint density given by
+\[ f(y_1,y_2) = \begin{cases}
+	1/2 & \text{for } 0\leq y_1\leq y_2\leq2 \\ 0 & \text{elsewhere}
+\end{cases}\]
+Evaluate the probability that less than 1/2 gallon will be sold, given that the machine contains 1.5 gallons at the start of the day.
 \begin{solution}
+	$P(Y_1<0.5|y_2=1.5)$ \\
+	First we find marginal density for $Y_2$
+	\begin{align*}
+		f_{Y_2} = \int_{0}^{y_2} \frac{1}{2} dy_1 =\frac{y_2}{2}
+	\end{align*}
+	Next, substitute into conditional probability,
+	\begin{align*}
+		P(Y_1<0.5|y_2=1.5) 
+		&= \int_{0}^{0.5}\frac{1/2}{y_2/2} dy_1 \\
+		&= \int_{0}^{0.5}\frac{1}{1.5} dy_1 \\
+		&= \int_{0}^{0.5}\frac{2}{3} dy_1 \\
+		&= \bigg. \frac{2}{3}y_1 \bigg|_{0}^{0.5} \\
+		&= \frac{1}{3}
+	\end{align*}
 	
 \end{solution}
 %\end{ Question 11}
@@ -180,28 +198,46 @@ What is $P(Y_1>Y_2)$?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 12}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-
-\begin{solution}
-	
-\end{solution}
+\setcounter{question}{12}
 %\end{ Question 12}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 13}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+Suppose $Y_1$ and $Y_2$ are uniformly distributed over the area of a triangle bound by the points {(-1,0), (1,0),(0,1)}. Find $P(Y_2\geq1/2|Y_1=1/4)$.
 \begin{solution}
-	
+	Parameters: $0\leq y_2\leq1$, $-1\leq y_1\leq1$ 
+	\[f_{Y_1,Y_2}(y_1,y_2) = \begin{cases}
+		y_2\leq 1+y_1 & for -1\leq y_1\leq0 \\
+		y_2\leq 1-y_1 & for 0\leq y_1\leq1 
+	\end{cases}\]
+	Find Marginal density for $Y_1$:
+	\begin{align*}
+		f(y_1)
+		&= \int_{-1}^{0} 1+y_1 dy_2 + \int_{0}^{1} 1-y_1 dy_2 \\
+		&= \bigg. y_2(1+y_1) \bigg|_{-1}^{0} + \bigg. y_2(1-y_1) \bigg|_{0}^{1} \\
+		&= (1+y_1) + (1-y_1) = 2
+	\end{align*}
+	Then substitute for conditional probability:
+	\begin{align*}
+		P(Y_2\geq1/2|Y_1=1/4)
+		&= \int_{1/2}^{1}\frac{f_{Y_1,Y_2}(y_1,y_2)}{f_{Y_1}(y_1)} dy_2 \\
+		&= \int_{1/2}^{1}\frac{1-y_1}{2} dy_2 \\
+		&= \int_{1/2}^{1}\frac{3}{8} dy_2 \\
+		&= \bigg. \frac{3}{8}y_2 \bigg|_{1/2}^{1} \\
+		&= \frac{3}{8} - \frac{3}{16} = \frac{3}{16} = 0.1875
+	\end{align*}
 \end{solution}
-%\end{ Question 13}
+%\end{ Question 13} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 14}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+A random variable $X$ has a probability density function of the form
+\[ f(x) = \frac{1}{\theta} e^{\frac{-(x-\gamma)}{\theta}};\hspace{5ex} x>\gamma\]
+where defines the lower bound of the random variable $X$. Derive the expectation and variance of $X$ in whatever way you see fit; there are many ways to complete this problem. In your work, show this is a valid density. Select "True" as your answer for this question.
 \begin{solution}
 	
 \end{solution}
