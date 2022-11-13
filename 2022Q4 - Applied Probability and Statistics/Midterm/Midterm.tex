@@ -59,6 +59,8 @@ A foundry ships a lot of 20 engine blocks of which five contain internal flaws. 
 \setcounter{question}{4}
 %\end{ Question 4}
 
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 5}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -109,6 +111,8 @@ Consider telegraph signals "dot" and "dash" sent in the proportion 3:4, where er
 \end{solution}
 %\end{ Question 6}
 
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 7}   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -120,12 +124,12 @@ with time measured in minutes. Find $P(Y_1<2,Y_2>1)$.
 \begin{solution}
 	\begin{align*}
 		\int_{1}^{2}\int_{1}^{y_1}e^{-y_1}dy_2dy_1 
-		= \int_{1}^{2}\bigg.\bigg(-y_2e^{-y_1}\bigg)\bigg|_1^{y_1} dy_1
-		= \int_{1}^{2} -y_1e^{-y_1} + e^{-y_1} dy_1
-		= \bigg. \frac{1}{2}y_1^2e^{-y_1}-e^{-y_1} \bigg|_1^2
-		= \bigg(\frac{1}{2}(2^2)e^{-2}-e^{-2}\bigg)-\bigg(\frac{1}{2}(1^2)e^{-1}-e^{-1}\bigg)
-		= 2e^{-2}-e^{-2}-\frac{1}{2}e^{-1}+e^{-1}
-		= e^{-2}+\frac{1}{2}e^{-1}
+		&= \int_{1}^{2}\bigg.\bigg(-y_2e^{-y_1}\bigg)\bigg|_1^{y_1} dy_1 \\
+		&= \int_{1}^{2} -y_1e^{-y_1} + e^{-y_1} dy_1 \\
+		&= \bigg. \frac{1}{2}y_1^2e^{-y_1}-e^{-y_1} \bigg|_1^2 \\
+		&= \bigg(\frac{1}{2}(2^2)e^{-2}-e^{-2}\bigg)-\bigg(\frac{1}{2}(1^2)e^{-1}-e^{-1}\bigg) \\
+		&= 2e^{-2}-e^{-2}-\frac{1}{2}e^{-1}+e^{-1} \\
+		&= e^{-2}+\frac{1}{2}e^{-1}
 		= 0.319275003822334
 	\end{align*}
 \end{solution}
@@ -155,13 +159,13 @@ What is $P(Y_1>Y_2)$?
 \begin{solution}
 	\begin{align*}
 		P(Y_2<Y_1)
-		= \int_{0}^{1}\int_{0}^{1-y_1} 30y_1y_2^2 dy_2 dy_1
-		= 30\int_{0}^{1}y_1\int_{0}^{1-y_1} y_2^2 dy_2 dy_1
-		= 30\int_{0}^{1}y_1 \bigg.\bigg( \frac{1}{3}y_2^3 \bigg)\bigg|_{0}^{1-y_1} dy_1
-		= 30\int_{0}^{1}y_1 \bigg( \frac{1}{3}(1-y_1)^3 \bigg) dy_1
-		= 10\int_{0}^{1}y_1(1-y_1)^3 dy_1
-		= 10\int_{0}^{1} y_1-y_1^2+3y_1^3-y_1^4 dy_1
-		= 10( \frac{1}{2}y_1^2-y_1^3+\frac{3}{4}y_1^4-\frac{1}{5}y_1^5 )
+		&= \int_{0}^{1}\int_{0}^{1-y_1} 30y_1y_2^2 dy_2 dy_1 \\
+		&= 30\int_{0}^{1}y_1\int_{0}^{1-y_1} y_2^2 dy_2 dy_1 \\
+		&= 30\int_{0}^{1}y_1 \bigg.\bigg( \frac{1}{3}y_2^3 \bigg)\bigg|_{0}^{1-y_1} dy_1 \\
+		&= 30\int_{0}^{1}y_1 \bigg( \frac{1}{3}(1-y_1)^3 \bigg) dy_1 \\
+		&= 10\int_{0}^{1}y_1(1-y_1)^3 dy_1 
+		= 10\int_{0}^{1} y_1-y_1^2+3y_1^3-y_1^4 dy_1 \\
+		&= 10( \frac{1}{2}y_1^2-y_1^3+\frac{3}{4}y_1^4-\frac{1}{5}y_1^5 )
 		= 10(1/4 - 1/5) = 10(1/20) = \frac{1}{2}
 	\end{align*}
 \end{solution}
@@ -188,10 +192,9 @@ Evaluate the probability that less than 1/2 gallon will be sold, given that the 
 		&= \int_{0}^{0.5}\frac{1/2}{y_2/2} dy_1 \\
 		&= \int_{0}^{0.5}\frac{1}{1.5} dy_1 \\
 		&= \int_{0}^{0.5}\frac{2}{3} dy_1 \\
-		&= \bigg. \frac{2}{3}y_1 \bigg|_{0}^{0.5} \\
-		&= \frac{1}{3}
+		&= \bigg. \frac{2}{3}y_1 \bigg|_{0}^{0.5}
+		= \frac{1}{3}
 	\end{align*}
-	
 \end{solution}
 %\end{ Question 11}
 
@@ -239,7 +242,56 @@ A random variable $X$ has a probability density function of the form
 \[ f(x) = \frac{1}{\theta} e^{\frac{-(x-\gamma)}{\theta}};\hspace{5ex} x>\gamma\]
 where defines the lower bound of the random variable $X$. Derive the expectation and variance of $X$ in whatever way you see fit; there are many ways to complete this problem. In your work, show this is a valid density. Select "True" as your answer for this question.
 \begin{solution}
-	
+	First, find the $M_x(t)$ \\
+	\begin{align*}
+		M_x(t) = E[e^{tx}]
+		&= \int_{0}^{\infty} \frac{1}{\theta} e^{tx}e^{\frac{-(x-\gamma)}{\theta}} dx \\
+		&= \frac{1}{\theta}  \int_{0}^{\infty} e^{tx-\frac{(x-\gamma)}{\theta}} dx \\
+		\intertext{substitute $y=x-\gamma$}
+		&= \frac{1}{\theta}  \int_{0}^{\infty} e^{t(y+\gamma)-\frac{y}{\theta}} dy \\
+		&= \frac{e^{t\gamma}}{\theta}  \int_{0}^{\infty} e^{ty-\frac{y}{\theta}} dy \\
+		&= \frac{e^{t\gamma}}{\theta}  \int_{0}^{\infty} e^{y(t-\frac{1}{\theta})} dy \\
+		&= \frac{e^{t\gamma}}{\theta(t-\frac{1}{\theta})}  \bigg. e^{y(t-\frac{1}{\theta})} \bigg|_{0}^{\infty} \\
+		&= \frac{e^{t\gamma}}{\theta(t-\frac{1}{\theta})} [0-1] \\
+		&= \frac{e^{t\gamma}}{1-t\theta}.
+	\end{align*}
+	This can be shown to be a valid distribution via 
+	\begin{align*}
+		M_x(0) = \frac{e^{0\gamma}}{1-0\theta} = \frac{1}{1} = 1.
+	\end{align*}
+	Find the expected value:
+	\begin{align*}
+		E[X] = M^(1)_X(t)|_{t=0} 
+		&= \frac{e^{\gamma t}}{1-\theta t} d/dt\\
+		&= \bigg. \frac{(1-\theta t)\gamma-e^{\gamma t}(-\theta)}{(1-\theta t)^2} \bigg|_{t=0} \\
+		&= \frac{(\gamma-0)-(0-\theta)}{(1-0)^2} \\
+		&= \gamma + \theta.
+	\end{align*}
+	Next, to find Var$[X]$ first find:
+	\begin{align*}
+		E[X^2] = M^(2)_X(t)|_{t=0} 
+		&= \frac{(1-\theta t)\gamma-e^{\gamma t}(-\theta)}{(1-\theta t)^2} d/dt \\
+		&= \bigg( \frac{(1-\theta t)\gamma}{(1-\theta t)^2} - \frac{c^{\gamma t}(-\theta)}{(1-\theta t)^2} \bigg) d/dt \\
+		&= \frac{\gamma}{(1-\theta t)}d/dt + \frac{\theta e^{\gamma t}}{(1-\theta t)^2} d/dt \\
+		&= \bigg. \frac{\gamma^2(1-\theta t)+\gamma\theta}{(1-\theta t)^2} + 
+			\frac{(1-\theta t)^2\theta\gamma -
+				\theta e^{\gamma t}2\theta(\theta t-1)   }{(1-\theta t)^2} \bigg|_{t=0} \\
+		&= \bigg. \frac{\gamma^2(1-\theta t)+\gamma\theta}{(1-\theta t)^2} + 
+			\frac{(1-\theta t)^2\theta\gamma -
+				2\theta^2 e^{\gamma t}(\theta t-1)   }{(1-\theta t)^2} \bigg|_{t=0} \\
+		&= \bigg. \frac{\gamma^2(1-\theta t)+\gamma\theta}{(1-\theta t)^2} + 
+		\frac{(1-\theta t)^2\theta\gamma +
+			2\theta^2 e^{\gamma t}-2\theta^3 te^{\gamma t}   }{(1-\theta t)^2} \bigg|_{t=0} \\
+		&= \gamma^2 +\gamma\theta + \gamma\theta + 2\theta^2
+	\end{align*}
+	finally, solve for Var
+	\begin{align*}
+		\operatorname{Var}[X]
+		&= E[X^2] - E[X]^2 \\
+		&= (\gamma^2 + 2\gamma\theta +2\theta^2)-(\gamma+\theta)^2 \\
+		&= (\gamma^2 + 2\gamma\theta +2\theta^2)-(\gamma^2+2\gamma\theta+\theta^2) \\
+		&= \theta^2.
+	\end{align*}
 \end{solution}
 %\end{ Question 14}
 	
@@ -247,7 +299,10 @@ where defines the lower bound of the random variable $X$. Derive the expectation
 % 	\begin{ Question 15}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+A quality control plan calls for randomly selecting three items from the daily production of a certain machine and observing the number of defectives (assume that the probability of defective remains constant on a single day). However, the proportion $p$ of defectives produced by the machine \textbf{varies from day to day} and is assumed to have a uniform distribution on the interval (0, 1). For a randomly chosen day, find the unconditional (marginal) probability that exactly two defectives are observed in the sample.
+For this problem, you need to know the following result:
+\[ \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} = \int_{0}^{1}x^{\alpha-1}(1-x)^{\beta-1}dx \]
+Input your numerical answer to this question below.
 \begin{solution}
 	
 \end{solution}
