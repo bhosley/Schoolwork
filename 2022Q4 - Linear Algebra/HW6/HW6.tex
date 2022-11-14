@@ -1,0 +1,121 @@
+\documentclass[12pt]{amsart}
+
+
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancybox}
+
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newcounter{Theorem}
+\newcounter{Definition}
+\numberwithin{equation}{section}
+\numberwithin{Theorem}{section}
+
+\theoremstyle{plain} %% This is the default, anyway
+\newtheorem{thm}[Theorem]{Theorem}
+\newtheorem{cor}[Theorem]{Corollary}
+\newtheorem{lem}[Theorem]{Lemma}
+\newtheorem{prop}[Theorem]{Proposition}
+%\usepackage{upgreek}
+
+\theoremstyle{definition}
+\newtheorem{defn}[Theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{ex}[Theorem]{Example}
+\newtheorem{nota}[Theorem]{Notation}
+
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent{\Large Homework 6 (Due November 18 at 8am)}\bigskip
+
+
+\begin{enumerate}[1.]
+
+\item For each \(n\in\mathbb{N}\cup\{0\}\) let \(p_{n}:\mathbb{R}\to\mathbb{R}\) where \(p_{n}(x) = x^{n}\) for all \(x\in\mathbb{R}\). The functions \(\{p_{n}\}_{n=0}^{\infty}\) are called the \textit{power functions}. Consider the real vector space 
+\[\mathbb{P}_{N}:=\operatorname{span}\{p_{n}\}_{n=0}^{N} = \left\{\sum_{n=0}^{N}a_{n}p_{n} : a_{0},a_{1},\ldots,a_{N}\in\mathbb{R}\right\}.\]
+Define the operator \(\mathbf{F}:\mathbb{P}_{N}\to\mathbb{P}_{N}\) by \[[\mathbf{F}f](x) = (x+1)f'(x)\quad\text{for all }x\in\mathbb{R}\]
+
+\medskip
+
+\begin{enumerate}[(a)]
+
+\item Show that \(\mathbf{F}\) is linear.\medskip
+
+\item When \(N=2\) find the matrix representation of \(\mathbf{F}\) with respect to the basis \(\{p_{n}\}_{n=0}^{2}\).\medskip
+
+\item Find a basis for \(\mathbb{P}_{2}\) consisting of eigenvectors of \(\mathbf{F}:\mathbb{P}_{2}\to\mathbb{P}_{2}\).\medskip
+
+\item Find the matrix representation of \(\mathbf{F}\) with respect to the eigenbasis you found in part (c).\medskip
+
+\end{enumerate}\bigskip
+
+
+\item Suppose that \(\mathcal{V}\) is a finite-dimensional vector space over \(\mathbb{F}\). Assume \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) is a linear map such that every nonzero vector \(\mathbf{v}\in\mathcal{V}\) is an eigenvector of \(\mathbf{L}\). Show that \(\mathbf{L}\) is a scalar multiple of the identity map. Give an example of a linear map \(\mathbf{L}:\mathbb{R}^{2}\to\mathbb{R}^{2}\) and a basis for \(\mathbb{R}^{2}\) such that every element of the basis is an eigenvector of \(\mathbf{L}\), but \(\mathbf{L}\) is NOT a scalar multiple of the identity operator.
+
+\bigskip
+
+\item Let \(\mathcal{V}\) be a finite-dimensional vector space over a field \(\mathbb{F}\), and let \(\{\mathbf{v}_{n}\}_{n=1}^{N}\) be a basis for \(\mathcal{V}\). For each \(m\in[N]\) define the function \(\boldsymbol{\varphi}_{m}:\mathcal{V}\to\mathbb{F}\) by
+\[\boldsymbol{\varphi}_{m}\left(\sum_{n=1}^{N}\mathbf{x}(n)\mathbf{v}_{n}\right) = \mathbf{x}(m)\quad\text{for each }\mathbf{x}\in\mathbb{F}^{N}.\]
+Equivalently, let \(\boldsymbol{\varphi}_{m}:\mathcal{V}\to\mathbb{F}\) be the unique linear map such that
+\[\boldsymbol{\varphi}_{m}(\mathbf{v}_{n}) = \begin{cases} 1 & n=m,\\ 0 & n\neq m.\end{cases}\]
+
+\begin{enumerate}[(a)]
+
+\item Show that \(\{\boldsymbol{\varphi}_{m}\}_{m=1}^{N}\) is a basis for \(\operatorname{Hom}(\mathcal{V},\mathbb{F})\).\medskip
+
+\item Find the matrix representation of \(\boldsymbol{\varphi}_{1}\) with respect to the basis \(\{\mathbf{v}_{n}\}_{n=1}^{N}\) for \(\mathcal{V}\) and the standard basis for \(\mathbb{F}\).\medskip
+
+\end{enumerate}
+
+\noindent Let \(\mathbf{\Phi}:\mathcal{V}\to\operatorname{Hom}(\mathcal{V},\mathbb{F})\) be the unique linear map such that \(\mathbf{\Phi}(\mathbf{v}_{n}) = \boldsymbol{\varphi}_{n}\) for each \(n\in[N]\).\medskip
+
+\begin{enumerate}[(a)]
+
+\addtocounter{enumii}{2}
+
+\item In the case that \(\mathcal{V}=\mathbb{R}^{N}\) and \(\mathbf{v}_{m}=\boldsymbol{\delta}_{m}\) for each \(m\in[N]\) find \(\big(\mathbf{\Phi}(\mathbf{v})\big)(\mathbf{v})\) for \(\mathbf{v}\in\mathbb{R}^{N}\). \medskip
+
+\bigskip
+
+\end{enumerate}
+
+\item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a501177. Upload a completion certificate for this activity to your homework folder.
+
+\end{enumerate}
+
+\end{document}
