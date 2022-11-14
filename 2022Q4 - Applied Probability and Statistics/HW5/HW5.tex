@@ -58,7 +58,12 @@ Let \(Z \sim N(0,1)\). Find \(P[Z^2<3.84]\) using tabled values of the chi-squar
 %	\begin{ Question 5}	  %
 %%%%%%%%%%%%%%
 \question 
-Q
+In reliability studies, the cumulative hazard function is defined as
+\[H(t)=\int_{0}^{t}\frac{f(t)}{1-F(t)} \ dt\]
+What distribution does the transformation \(Y=H(T)\), 
+follow when is \(T\) a continuous random variable with support on the positive real line?
+
+(Hint: Find a more concise function to describe \(H(t)\) and then use the CDF method.)
 \begin{solution}
 	S
 \end{solution}
@@ -68,7 +73,11 @@ Q
 %	\begin{ Question 6}	  %
 %%%%%%%%%%%%%%
 \question 
-Q
+Let \(X_1,X_2,\ldots,X_n\) be a random sample of size \(n\) from a normal distribution, 
+\(X_i \sim N(\mu,\sigma^2)\)and define \(U=\sum_{i=1}^{n}X_i\) and \(W=\sum_{i=1}^{n}X_i^2\). 
+Let \(c\) be a constant, and define \(Y_i=1\) if \(X_i\leq c\) and zero otherwise. 
+Find a statistic that is a function of \(Y_1,Y_2,\ldots,Y_n\) and also unbiased for 
+\(F_X(c)=\Phi\bigg(\frac{c-\mu}{\sigma}\bigg)\).
 \begin{solution}
 	S
 \end{solution}
@@ -78,7 +87,9 @@ Q
 %	\begin{ Question 7}	  %
 %%%%%%%%%%%%%%
 \question 
-Q
+Let a random variable \(Y=\frac{2}{\beta}X\), where 
+\(X \sim \operatorname{GAMMA}(\alpha,\beta)\) for \(\beta\neq2\). 
+What distribution does \(Y\) follow?
 \begin{solution}
 	S
 \end{solution}
@@ -88,7 +99,15 @@ Q
 %	\begin{ Question 8}	  %
 %%%%%%%%%%%%%%
 \question 
-Q
+Suppose we have two sets of random samples 
+\(X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} N(\mu_1,\sigma_1^2)\) and 
+\(Y_1,\ldots,Y_n \stackrel{\text{iid}}{\sim} N(\mu_2,\sigma_21^2)\). 
+Let \(T\) be a statistic such that
+	\[T = \frac{S_1^2}{S_2^2}  \hspace{0.8\linewidth}\]
+where \(S_1^2\) and \(S_2^2\) are the sample variances associated with the first and second random samples, respectively. 
+Using the CDF method, construct the cumulative distribution function for \(T\), 
+in terms of the cumulative distribution function for the \(F\) distribution 
+with degrees of freedom \(v_1\) and \(v_2\), denoted as \(F_{F,v_1,v_2}(x)\).
 \begin{solution}
 	S
 \end{solution}
@@ -98,7 +117,9 @@ Q
 %	\begin{ Question 9}	  %
 %%%%%%%%%%%%%%
 \question 
-Q
+Let \(X\) be a random variable that is uniformly distributed, 
+\(X\sim\operatorname{UNIF}(0,1)\). 
+Use the CDF technique to determine the pdf of \(Z=1-e^{-X}\).
 \begin{solution}
 	S
 \end{solution}
@@ -108,7 +129,7 @@ Q
 %	\begin{ Question 10}	  %
 %%%%%%%%%%%%%%
 \question 
-Q
+Suppose you have random variables \(X_1,\ldots,X_n \sim \operatorname{BINOM}(k,p)\). Derive the distribution associated with \(T=\sum_{i=1}^{n}X_i\).
 \begin{solution}
 	S
 \end{solution}
