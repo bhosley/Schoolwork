@@ -12,51 +12,81 @@
 \maketitle
 \begin{questions}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 1}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 Let X and Y have joint pdf \(f(x,y)=4e^{-2(x+y)}\) for \(0<x,0<y\), and zero otherwise. 
 Find the pdf of \(U=X/Y\).
 \begin{solution}
-	S
+	Let \(U = \frac{X}{Y}\) and \(V=Y\),
+	\begin{align*}
+		f_{U,V}(u,v) &= f_{X,Y}(uv,v) = 4e^{-2(uv+v)} \\
+		f_U(u) &= \int_{0}^{\infty} 4e^{-2(uv+v)} \ dv \\
+		&= 4 \int_{0}^{\infty} e^{-2(u+1)v} \ dv \\
+		\intertext{integrand is the kernel of exponential pdf with $\beta=1/2(u+1)$} 
+		%b161 in Statistical inference text
+		&= \frac{2}{u+1} \hspace{3em}\text{for }0<u
+	\end{align*}
 \end{solution}
 %\end{ Question 1}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 2}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 The measured radius of a circle, \(R\), has pdf \(f(r)=6r(1-r)\) for \(0<r<1\). 
 Find the distribution of the circumference.
-\begin{solution}
-	S
+\begin{solution} \\
+	\(f_R(r)=6r(1-r) \quad c=2\pi r \Rightarrow r=\frac{c}{2\pi}\) \\ 
+	\(0 < c < 2\pi\)
+	\[f_C(c) 
+	= f_R(\frac{c}{2\pi})
+	= 6\frac{c}{2\pi}(1-\frac{c}{2\pi})
+	= \frac{6c}{2\pi}-\frac{6c^2}{(2\pi)^2}
+	= \frac{6c(2\pi)^2-6c^2(2\pi)}{(2\pi)^3}
+	= \frac{6c(2\pi)(2\pi-c)}{(2\pi)^3}
+	= \frac{6c(2\pi-c)}{(2\pi)^2}
+	\]
+	
 \end{solution}
 %\end{ Question 2}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 3}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 If \(X \sim \operatorname{BETA}(p,q)\), derive \(E[X^n]\).
 \begin{solution}
-	S
+	Using Pochhammer notation where:
+	\[ a^{(b)} = \frac{\Gamma(a+b)}{\Gamma(a)}\]
+	Then,
+	\begin{align*}
+		E[X^n]
+		= \frac{p^{(n)}}{(p+q)^{(n)}}
+		= \frac{\Gamma(p+n)}{\Gamma(p)(p+q)^{(n)}}
+		= \frac{\Gamma(p+n)\Gamma(p+q)}{\Gamma(p)\Gamma(p+q+n)}.
+	\end{align*}
 \end{solution}
 %\end{ Question 3}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 4}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 Let \(Z \sim N(0,1)\). Find \(P[Z^2<3.84]\) using tabled values of the chi-square distribution.
 \begin{solution}
-	S
+	\(Z \sim N(0,1)\) \\
+	\(Z^2 = Q\) \\
+	\(Q \sim \chi^2_1\) \\
+	Table: \(\chi^2=3.84,df=1: \quad P=0.05\) \\
+	Positive z: 1-p = 0.095
 \end{solution}
 %\end{ Question 4}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 5}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 In reliability studies, the cumulative hazard function is defined as
 \[H(t)=\int_{0}^{t}\frac{f(t)}{1-F(t)} \ dt\]
@@ -65,13 +95,15 @@ follow when is \(T\) a continuous random variable with support on the positive r
 
 (Hint: Find a more concise function to describe \(H(t)\) and then use the CDF method.)
 \begin{solution}
-	S
+	Reference: https://web.stanford.edu/~lutian/coursepdf/unit1.pdf \\
+	\(h(t) = f(t)/F(t)\)
+	$Y = H(t) \sim Exp(1)$
 \end{solution}
 %\end{ Question 5}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 6}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 Let \(X_1,X_2,\ldots,X_n\) be a random sample of size \(n\) from a normal distribution, 
 \(X_i \sim N(\mu,\sigma^2)\)and define \(U=\sum_{i=1}^{n}X_i\) and \(W=\sum_{i=1}^{n}X_i^2\). 
@@ -79,25 +111,33 @@ Let \(c\) be a constant, and define \(Y_i=1\) if \(X_i\leq c\) and zero otherwis
 Find a statistic that is a function of \(Y_1,Y_2,\ldots,Y_n\) and also unbiased for 
 \(F_X(c)=\Phi\bigg(\frac{c-\mu}{\sigma}\bigg)\).
 \begin{solution}
-	S
+	For \(F_X(c) = \Phi\bigg(\frac{c-\mu}{\sigma}\bigg)\),
+	\(c-\mu\) moves the c to the 'middle' Arithmetic mean of the distribution.
+	Division by $\sigma$ with modify the kurtosis, but for the purposes of the $Y_i$
+	function, the spread is not a concern. \\
+	Because the values of \(Y_i\) are binary the estimator will be
+	\[\frac{1}{n}\sum_{i=1}^{n}Y_i\]
 \end{solution}
 %\end{ Question 6}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 7}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 Let a random variable \(Y=\frac{2}{\beta}X\), where 
 \(X \sim \operatorname{GAMMA}(\alpha,\beta)\) for \(\beta\neq2\). 
 What distribution does \(Y\) follow?
 \begin{solution}
-	S
+	\(Y=\frac{2}{\beta}X \sim Gamma(\alpha,\beta) = 
+	\bigg(\frac{2}{\beta}\bigg)\frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{\beta x}\)
+	
+	\(\chi^2_{2\alpha} = \frac{1}{2^\alpha\Gamma(\alpha)}x^{\alpha-1}e^{-x/2}\)
 \end{solution}
 %\end{ Question 7}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 8}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 Suppose we have two sets of random samples 
 \(X_1,\ldots,X_n \stackrel{\text{iid}}{\sim} N(\mu_1,\sigma_1^2)\) and 
@@ -109,29 +149,44 @@ Using the CDF method, construct the cumulative distribution function for \(T\),
 in terms of the cumulative distribution function for the \(F\) distribution 
 with degrees of freedom \(v_1\) and \(v_2\), denoted as \(F_{F,v_1,v_2}(x)\).
 \begin{solution}
-	S
+	\begin{align*}
+		T &= \frac{S_1^2}{S_2^2} \\
+		\intertext{In terms of F-Distro}
+		CDF of F_{F,v_1,v_2}(x)
+		&= I(\frac{v_1}{2},\frac{v_2}{2}) \\
+		&= \int_{0}^{1}t^{v_1/2-1}(1-t)^{v_2/2-1} \ dt \\
+		&= \frac{\Gamma(v_1/2)\Gamma(v_2/2)}{\Gamma(\frac{v_1+v_2}{2})}
+	\end{align*}
 \end{solution}
 %\end{ Question 8}
 
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 9}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 Let \(X\) be a random variable that is uniformly distributed, 
 \(X\sim\operatorname{UNIF}(0,1)\). 
 Use the CDF technique to determine the pdf of \(Z=1-e^{-X}\).
-\begin{solution}
-	S
+\begin{solution} \\
+	\(e^-X=1-z\)\\
+	\(x=-\ln(1-z)\) \\
+	\begin{align*}
+		F_Z(z) &= F_X(-\ln(1-z)) = -\ln(1-z) \\
+		f_Z(z) &= -\ln(1-z) \ dz = \frac{-1}{(1-z)}
+		\quad 0<z<(1-e)^-(x=1) = (1-e)^-1
+	\end{align*}
 \end{solution}
 %\end{ Question 9}
 
-%%%%%%%%%%%%%%
-%	\begin{ Question 10}	  %
-%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  \begin{ Question 10}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
 Suppose you have random variables \(X_1,\ldots,X_n \sim \operatorname{BINOM}(k,p)\). Derive the distribution associated with \(T=\sum_{i=1}^{n}X_i\).
 \begin{solution}
-	S
+	Sums of binomial distributions of the same probability are also 
+	binomial distributions with that probability.
+	In this case, \[Binom(nk,p)\].
 \end{solution}
 %\end{ Question 10}
 
