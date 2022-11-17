@@ -1,0 +1,140 @@
+\documentclass[12pt]{amsart}
+
+\usepackage{amsfonts}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{mathtools}
+\usepackage{fancybox}
+
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+
+
+\usepackage[final]{pdfpages}
+\usepackage{comment}
+\usepackage{enumitem}
+
+\begin{document}
+\includepdf[pages=-]{Midterm1Makeup.pdf}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1}	  %	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[label=\arabic*.]
+	\item
+\begin{proof}
+	To see that $\mathbf{T}$ is linear, 
+	let \(c_1,c_2\in\mathbb{R}\) and 
+	\(\mathbf{x}_1, \mathbf{x}_2 \in \mathbb{R}^N\) be arbitrary. Then,
+	\begin{align*}
+		\mathbf{T}(c_1\mathbf{x}_1 + c_2\mathbf{x}_2)(n)
+		&= \sum_{k=n}^{N}(c_1\mathbf{x}_1 + c_2\mathbf{x}_2)(k) \\
+		&= \sum_{k=n}^{N}((c_1\mathbf{x}_1)(k) + (c_2\mathbf{x}_2)(k)) \\
+		&= \sum_{k=n}^{N}c_1\mathbf{x}_1(k) + \sum_{k=n}^{N}c_2\mathbf{x}_2(k) \\
+		&= c_1\sum_{k=n}^{N}\mathbf{x}_1(k) + c_2\sum_{k=n}^{N}\mathbf{x}_2(k) \\
+		&= c_1(\mathbf{T}\mathbf{x}_1)(k) + c_2(\mathbf{T}\mathbf{x}_2)(k) \\
+		&= (c_1(\mathbf{T}\mathbf{x}_1) + c_2(\mathbf{T}\mathbf{x}_2))(k) \\
+	\end{align*}
+\end{proof}
+When \(N=4\), $\mathbf{T}\mathbf{x}$ may be represented as a matrix by
+\begin{align*}
+	\mathbf{T}\mathbf{x}
+	= \begin{bmatrix} \mathbf{T}\mathbf{x}(1) \\ \mathbf{T}\mathbf{x}(2) \\ \mathbf{T}\mathbf{x}(3) \\ \mathbf{T}\mathbf{x}(4) \end{bmatrix}
+	= \begin{bmatrix} \sum_{k=1}^{4}\mathbf{x}(k) \\ \sum_{k=2}^{4}\mathbf{x}(k) \\ \sum_{k=3}^{4}\mathbf{x}(k) \\ \sum_{k=4}^{4}\mathbf{x}(k) \end{bmatrix}
+	= \begin{bmatrix} 1&1&1&1 \\ 0&1&1&1 \\ 0&0&1&1 \\ 0&0&0&1 \end{bmatrix} 
+	\begin{matrix} \\ \\ \\ . \end{matrix}
+\end{align*}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 1}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{2.5em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2}	  %	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\item
+\begin{proof}
+	Since $\mathcal{V}$ is finite dimensional, let \(N=Dim(\mathbf{V})\).
+	Then let \(\{\mathbf{v}_n\}_{n=1}^N\) and \(\{\mathbf{w}_n\}_{n=1}^N\) be distinct bases for $\mathcal{V}$. 
+	Then because \(\{\mathbf{v}_n\}_{n=1}^N\) is a basis there exists a
+	set of scalars \(\{c_n\}_{n=1}^N\) such that
+	\[		\mathbf{w} = \sum_{n=1}^{N}c_n\mathbf{v}_n	\]
+	for each $\mathbf{w}\in\{\mathbf{w}_n\}_{n=1}^N$.
+	Define \(\boldsymbol{\Phi}\) to be the operation that performs this change of basis.
+	Because \(\boldsymbol{\Phi}(\mathcal{V})\) is a linear combination of basis elements \(\operatorname{ker}(\boldsymbol{\Phi})=0\) and since \(\boldsymbol{\Phi}(\mathcal{V})=\mathcal{V}\) by theorem 4.7 \(\boldsymbol{\Phi}\) is invertible.
+	
+	Thus \(\boldsymbol{\Phi}:\mathbf{V}\rightarrow\mathcal{V}\) is an isomorphism such that \(\boldsymbol{\Phi}(\mathbf{v}_1)=\mathbf{w}_1\).
+\end{proof}
+\begin{comment}
+	A vector space mapped to itself is implicitely isomorphic.
+	Therefore there exists an isomorphism, which is by definition bijective.
+	
+\end{comment}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 2}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{2.5em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 3}	  %	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\item 
+\begin{proof}
+	Assuming that there exists \(\mathbf{v}\in\mathcal{V}\)
+	such that \(\mathbf{v}\in\mathbf{L}(\mathcal{V})\)
+	implies that \(\mathbf{L}(\mathcal{V}) \neq \mathcal{V}\).
+	By Theorem 5.9(c) this implies that \(\dim(\mathbf{L}(\mathcal{V})) < \dim(\mathcal{V})\).
+	By Rank-Nullity theorem, and in particular the part outlined in Theorem 6.1(c),
+	because \(\dim(\mathbf{L}(\mathcal{V})) < \dim(\mathcal{V})\)
+	then it must be true that \(\ker(\mathbf{L}) \neq {\mathbf{0}}\).
+	Because \(\ker(\mathbf{L}) \neq {\mathbf{0}}\)
+	there exists a \(\mathbf{w}\in\mathcal{V}\)
+	such that \(\mathbf{w}\in\ker(\mathbf{L})\),
+	that is, \(\mathbf{L}\mathbf{w}=\mathbf{0}\).
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 3}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{2.5em}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 4}	  %	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\item 
+\begin{proof}
+	Let \(\la_1,\la_2,\la_3\in\mathbb{F}\) 
+	be scalars such that
+	\(\mathbf{L}\mathbf{v} = \la_1\mathbf{v}\),
+	\(\mathbf{L}\mathbf{w} = \la_2\mathbf{w}\), and
+	\(\mathbf{L}(\mathbf{v}\mathbf{w}) = \la_3(\mathbf{v}+\mathbf{w})\).
+	Then observe that because \(\mathbf{L}\) is linear 
+	\[
+	\la_1\mathbf{v} + \la_2\mathbf{w} 
+	= \mathbf{L}(\mathbf{v} + \mathbf{L}(\mathbf{w}) 
+	= \mathbf{L}(\mathbf{v}+\mathbf{w}) 
+	= \la_3(\mathbf{v}+\mathbf{w})
+	= \la_3\mathbf{v}+\la_3\mathbf{w}
+	\]
+	Thus \(\la_1=\la_3=\la_2\), and is the \(\la\) associated with the eigenspace formed by the \(\operatorname{span}{\mathbf{v},\mathbf{w}}\).
+\end{proof}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\end{ Question 4}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{enumerate}
+\end{document}
