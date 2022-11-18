@@ -83,24 +83,132 @@ Define the operator \(\mathbf{F}:\mathbb{P}_{N}\to\mathbb{P}_{N}\) by \[[\mathbf
 
 \item Find the matrix representation of \(\mathbf{F}\) with respect to the eigenbasis you found in part (c).\medskip
 
-\end{enumerate}\bigskip
+\end{enumerate}
 
+\bigskip
+\hrule
+\bigskip
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 1 }	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{enumerate}[(a)]
 	\item % (a)
 	\begin{proof}
-		Let \(f_1,f_2\in\mathbb{P}_N\) and \(c_1,c_2\in\\)
-	\end{proof}
+		Let \(f_1,f_2\in\mathbb{P}_N\) and \(c_1,c_2\in\mathbb{R}\).
+		Then,
+		\begin{align*}
+			\mathbf{F}[c_1f_1+c_2f_2](x)
+			&= (x+1)(c_1f'_1+c_2f'_2)(x) \\
+			&= (x+1)(c_1f'_1(x)+c_2f'_2(x)) \\
+			&= (x+1)c_1f'_1(x)+(x+1)c_2f'_2(x) \\
+			&= c_1[(x+1)f'_1(x)]+c_2[(x+1)f'_2(x)] \\
+			&= c_1\mathbf{F}(f_1)(x)+c_2\mathbf{F}(f_2)(x) \\
+			&= c_1(\mathbf{F}f_1)(x)+c_2(\mathbf{F}f_2)(x).
+		\end{align*}
+	\end{proof} \bigskip
+
+	\item 
+	Let $A$ be the matrix representation of $\mathbf{F}$ when \(N=2\). Then,
+	\[A = \begin{bmatrix}
+		0 & 1 & 0 \\
+		0 & 1 & 2 \\
+		0 & 0 & 2
+	\end{bmatrix}\begin{matrix}\\ \\.\end{matrix}\] \bigskip
+
+	\item
+	The eigenvalues associated $A$ are \(\la=0,1,2\). An eigenvector from each will form a basis for \(\mathbb{P}_2\). One such basis, drawn from each respectively, is
+	\[
+	v_1 = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix},
+	v_2 = \begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix},
+	v_3 = \begin{bmatrix} 1 \\ 2 \\ 1 \end{bmatrix}
+	\begin{matrix}  \\  \\ . \end{matrix} 
+	\] \bigskip
 	
-	
-	
+	\item 
+	The matrix representation of $\mathbf{F}$ with respect to the eigenbasis found in part (c) is
+	\begin{comment}
+	\begin{align*}
+		\mathbf{F}(a\mathbf{v}_0+b\mathbf{v}_1+c\mathbf{v}_2)
+		&= \mathbf{F}(a+b+c +bx+2cx +cx^2) \\
+		&= \mathbf{F}((a+b+c) +(b+2c)x +(c)x^2) \\
+		&= (x+1)(b+2c +2cx) \\
+		&= b+2c +2cx + (b+2c)x +2cx^2 \\
+		&= a(0+0x+0x^2) + b(1+x+0x^2) + 2c(1+2x+x^2) \\
+		&= a\mathbf{v}_0 + b\mathbf{v}_1 + 2c\mathbf{v}_2 \\
+		&= \begin{bmatrix}	0 \\ b \\ 2c \end{bmatrix}
+		%This seems incorrect
+		\Rightarrow
+	\end{align*}
+	\end{comment}
+	\[\begin{bmatrix}
+		0 & 0 & 0 \\
+		0 & 1 & 0 \\
+		0 & 0 & 2
+	\end{bmatrix}
+	\begin{matrix}  \\  \\ . \end{matrix}\]
+
 \end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	 \end{ Question 1 }	 	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
 
 \item Suppose that \(\mathcal{V}\) is a finite-dimensional vector space over \(\mathbb{F}\). Assume \(\mathbf{L}:\mathcal{V}\to\mathcal{V}\) is a linear map such that every nonzero vector \(\mathbf{v}\in\mathcal{V}\) is an eigenvector of \(\mathbf{L}\). Show that \(\mathbf{L}\) is a scalar multiple of the identity map. Give an example of a linear map \(\mathbf{L}:\mathbb{R}^{2}\to\mathbb{R}^{2}\) and a basis for \(\mathbb{R}^{2}\) such that every element of the basis is an eigenvector of \(\mathbf{L}\), but \(\mathbf{L}\) is NOT a scalar multiple of the identity operator.
 
 \bigskip
+\hrule
+\bigskip
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{proof}
+	Let \(\{\mathbf{v}_n\}_{n=1}^N\) be as basis for $\mathcal{V}$ where \(N=\dim(\mathcal{V})\). 
+	Then, since \(\{\mathbf{v}_n\}_{n=1}^N\) is an eigenbasis for 
+	\(\mathbf{L}\) by assumption let
+	\(\la_n\) be the eigenvalue for each corresponding \(\mathbf{v}_n\).
+	Then note that for any \(\mathbf{v}_1,\mathbf{v}_2,\mathbf{v}_3 \in\mathcal{V}\) such that
+	\(\mathbf{v}_1+\mathbf{v}_2=\mathbf{v}_3\)
+	\[
+	\mathbf{L}(\mathbf{v}_3)
+	= \mathbf{L}(\mathbf{v}_1+\mathbf{v}_2)
+	= \mathbf{L}\mathbf{v}_1+\mathbf{L}\mathbf{v}_2
+	= \la_1\mathbf{v}_1+\la_2\mathbf{v}_2
+	= \la_3(\mathbf{v}_1+\mathbf{v}_2)
+	.\]
+	Since L is assumed to be linear \(\la_1=\la_2=\la_3\).
+	Next let \(\boldsymbol{\Lambda}\) be a diagonal matrix where each non-zero entry is an eigenvalue of $\mathbf{L}$, in this case, all the same \(\la_n\).
+	Then for some invertible $\mathbf{V}:\mathbb{F}^N\to\mathcal{V}$ we see that
+	\[
+	\mathbf{L}
+	=\mathbf{V}\boldsymbol{\Lambda}\mathbf{V}^{-1}
+	=\mathbf{V}\la\mathbf{I}\mathbf{V}^{-1}
+	=\la\mathbf{V}\mathbf{I}\mathbf{V}^{-1}
+	=\la\mathbf{V}\mathbf{V}^{-1}
+	=\la\mathbf{I}.
+	\]
+	By theorem 8.4, L is diagonalizable, 
+	and in this case equivalent to the identity matrix multiplied by the scalar \(\la\).		
+\end{proof}
+
+\vspace{2em}
+
+Consider a linear map \(\mathbf{L}:\mathbb{R}^{2}\to\mathbb{R}^{2}\) 
+represented by
+\[ A = \begin{bmatrix} 1 & 1 \\	0 & 3 \end{bmatrix}
+\begin{matrix}  \\ . \end{matrix}\]
+Next, consider the vectors $\mathbf{b}_1$ and $\mathbf{b}_2$ 
+that form a basis for \(\mathbb{R}^2\) where
+\[ \mathbf{b}_1 = \begin{bmatrix} 1 \\ 0 \end{bmatrix}
+\text{ and }
+\mathbf{b}_2 = \begin{bmatrix} 2 \\ 4 \end{bmatrix}
+\begin{matrix}  \\ . \end{matrix}\]
+A is not a scalar multiple of the identity operator
+and has \(\mathbf{b}_1\) and \(\mathbf{b}_2\) as eigenvectors.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	 \end{ Question 2 }	 	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
 
 \item Let \(\mathcal{V}\) be a finite-dimensional vector space over a field \(\mathbb{F}\), and let \(\{\mathbf{v}_{n}\}_{n=1}^{N}\) be a basis for \(\mathcal{V}\). For each \(m\in[N]\) define the function \(\boldsymbol{\varphi}_{m}:\mathcal{V}\to\mathbb{F}\) by
 \[\boldsymbol{\varphi}_{m}\left(\sum_{n=1}^{N}\mathbf{x}(n)\mathbf{v}_{n}\right) = \mathbf{x}(m)\quad\text{for each }\mathbf{x}\in\mathbb{F}^{N}.\]
@@ -123,9 +231,58 @@ Equivalently, let \(\boldsymbol{\varphi}_{m}:\mathcal{V}\to\mathbb{F}\) be the u
 
 \item In the case that \(\mathcal{V}=\mathbb{R}^{N}\) and \(\mathbf{v}_{m}=\boldsymbol{\delta}_{m}\) for each \(m\in[N]\) find \(\big(\mathbf{\Phi}(\mathbf{v})\big)(\mathbf{v})\) for \(\mathbf{v}\in\mathbb{R}^{N}\). \medskip
 
-\bigskip
-
 \end{enumerate}
+
+\bigskip
+\hrule
+\bigskip
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 3 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{enumerate}[(a)]
+	\item % (a)
+	\begin{proof}
+		Let \(\mathbf{H}\in\hom((\mathcal{V},\mathbb{F})\) be arbitrary.
+		Note that the matrix representation of $\mathbf{H}$ will be a 
+		\(1\times N\) matrix 
+		and that \(\boldsymbol{\varphi}_{m}(\mathbf{x})\) evaluates to the 
+		\(m^{\text{th}}\) value of any \(\mathbf{x}\).
+		Then observe for that for any $\mathbf{H}$ or indeed any 
+		\(1\times N\) matrix there exists scalars \(\{c_m\}^N_{m=1}\)
+		such that
+		\[
+			\mathbf{H} = \sum_{m=1}^{N}c_m\boldsymbol{\varphi}_{m} .
+		\]
+		Thus \(\{\boldsymbol{\varphi}_{m}\}_{m=1}^{N}\) spans 
+		\(\hom((\mathcal{V},\mathbb{F})\). Next, note that for 
+		\[
+			 \mathbf{0}^T = \sum_{m=1}^{N}c_m\boldsymbol{\varphi}_{m}
+		\]
+		all \(c\in\{c_m\}^N_{m=1}\) must be zero and therefore 
+		\(\{\boldsymbol{\varphi}_{m}\}_{m=1}^{N}\) is a basis for \(\operatorname{Hom}(\mathcal{V},\mathbb{F})\). 
+	\end{proof}
+	\bigskip \medskip
+
+	\item
+	The matrix representation of \(\boldsymbol{\varphi}_{1}\)
+	is a \(1\times N\) matrix with a 1 as the first element and
+	zeroes for elements 2 through \(N\). \\
+	
+	\item
+	In the case described, for each \(\mathbf{v}_n\in\mathbb{R}^N\) \(\big(\mathbf{\Phi}(\mathbf{v})\big)(\mathbf{v})\)
+	may be evaluated as
+	\[
+	\big(\mathbf{\Phi}(\mathbf{v}_n)\big)(\mathbf{v}_n)
+	= \big(\boldsymbol{\varphi}_{n}\big)(\boldsymbol{\delta}_{n})
+	= 1.
+	\]
+	
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	 \end{ Question 3 }	 	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{\fill}
 
 \item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a501177. Upload a completion certificate for this activity to your homework folder.
 
