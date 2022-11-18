@@ -28,7 +28,7 @@
 \usepackage{enumitem}
 
 \begin{document}
-\includepdf[pages=-]{Midterm1Makeup.pdf}
+\includepdf[pages=-]{Midterm1Makeup1.pdf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 1}	  %	
@@ -46,7 +46,7 @@
 		&= \sum_{k=n}^{N}c_1\mathbf{x}_1(k) + \sum_{k=n}^{N}c_2\mathbf{x}_2(k) \\
 		&= c_1\sum_{k=n}^{N}\mathbf{x}_1(k) + c_2\sum_{k=n}^{N}\mathbf{x}_2(k) \\
 		&= c_1(\mathbf{T}\mathbf{x}_1)(k) + c_2(\mathbf{T}\mathbf{x}_2)(k) \\
-		&= (c_1(\mathbf{T}\mathbf{x}_1) + c_2(\mathbf{T}\mathbf{x}_2))(k) \\
+		&= (c_1(\mathbf{T}\mathbf{x}_1) + c_2(\mathbf{T}\mathbf{x}_2))(k).
 	\end{align*}
 \end{proof}
 When \(N=4\), $\mathbf{T}\mathbf{x}$ may be represented as a matrix by
@@ -75,14 +75,14 @@ When \(N=4\), $\mathbf{T}\mathbf{x}$ may be represented as a matrix by
 	\[		\mathbf{w} = \sum_{n=1}^{N}c_n\mathbf{v}_n	\]
 	for each $\mathbf{w}\in\{\mathbf{w}_n\}_{n=1}^N$.
 	Define \(\boldsymbol{\Phi}\) to be the operation that performs this change of basis.
-	Because \(\boldsymbol{\Phi}(\mathcal{V})\) is a linear combination of basis elements \(\operatorname{ker}(\boldsymbol{\Phi})=0\) and since \(\boldsymbol{\Phi}(\mathcal{V})=\mathcal{V}\) by theorem 4.7 \(\boldsymbol{\Phi}\) is invertible.
+	Because \(\boldsymbol{\Phi}(\mathcal{V})\) is a linear combination of basis elements \(\operatorname{ker}(\boldsymbol{\Phi})\) is trivial
+	and since \(\boldsymbol{\Phi}(\mathcal{V})=\mathcal{V}\) by theorem 4.7 \(\boldsymbol{\Phi}\) is invertible.
 	
 	Thus \(\boldsymbol{\Phi}:\mathbf{V}\rightarrow\mathcal{V}\) is an isomorphism such that \(\boldsymbol{\Phi}(\mathbf{v}_1)=\mathbf{w}_1\).
 \end{proof}
 \begin{comment}
 	A vector space mapped to itself is implicitely isomorphic.
 	Therefore there exists an isomorphism, which is by definition bijective.
-	
 \end{comment}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 2}	  %
@@ -131,7 +131,7 @@ When \(N=4\), $\mathbf{T}\mathbf{x}$ may be represented as a matrix by
 	= \la_3(\mathbf{v}+\mathbf{w})
 	= \la_3\mathbf{v}+\la_3\mathbf{w}
 	\]
-	Thus \(\la_1=\la_3=\la_2\), and is the \(\la\) associated with the eigenspace formed by the \(\operatorname{span}{\mathbf{v},\mathbf{w}}\).
+	Thus in order for linearity to hold \(\la_1=\la_3=\la_2\). Additionally, this \(\la\) is associated with the eigenspace formed by the \(\operatorname{span}\{\mathbf{v},\mathbf{w}\}\).
 \end{proof}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\end{ Question 4}	  %
