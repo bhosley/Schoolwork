@@ -18,9 +18,9 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
-
 \usepackage{tikz}
 \usepackage[final]{pdfpages}
+\usepackage{forest}
 
 \begin{document}
 \maketitle
@@ -52,19 +52,21 @@ Three plants, A, B, C produce 850, 730, and 820 BDU uniforms per week, respectiv
 	\end{tikzpicture} \\
 	\begin{tikzpicture}[remember picture]
 		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=2,width=0.8\linewidth]{Problem1.pdf}};
-	\end{tikzpicture} 
+	\end{tikzpicture} \\
 	\begin{tikzpicture}[remember picture]
 		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=3,width=0.8\linewidth]{Problem1.pdf}};
 	\end{tikzpicture} 
-
-	
 	
 	\part
-	Answer 2
+	\textbf{Summary: }
+	Plant A should ship 400 uniform units to depots 3 and 4 and 50 units to depot 2.
+	Plant B should ship 400 uniform units to depot 1 and 330 units to depot 6.
+	Plant C should ship 350 uniform units to depot 2, 400 units to depot 5 and 70 units to depot 6.
+	This allocation of shipments will have a shipping cost of approximately \$32,420.00.
 \end{parts}
 \end{solution}
 
-
+\clearpage
 
 \question
 During the Second Punic War, Hannibal crossed the Alps into Liguria in what is now Italy. In planning this campaign Hannibal decided to procure 250 elephants to carry supplies and for use in battle against the Romans. Hannibal required 100 of these elephants for his own phalanx. Hasdrubal, the brother of Hannibal, also required 100 elephants. The remaining 50 were to be put at the disposal of Mago, a younger brother of Hannibal, who was given 200,000 gold florins and was told to procure all the elephants required for the campaign. Mago realized that if he could economize on elephants, he could pocket the difference to spend on his anticipated R\&R when they reached Rome. (Clearly, this was Mago's first campaign and he did not fully understand the "benefits" due the victors in wars at that time.) He contacted an elephant dealer in Alexandria, and received a firm quotation of 900, 875, and 910 florins as the delivered cost per elephant to Hannibal, Hasdrubal, and Mago, respectively. Tusk and Trunk, the elephant trader in Bengasi, quoted Mago prices of 750, 790, and 820 florins, respectively, but told Mago that he could not deliver any elephants to Hasdrubal for some time after the start of the campaign because of a previous commitment of transports to another buyer in Carthage. The dealers in Cairo and Damascus quoted Mago prices of 800, 900, and 740 florins and 740, 525, and 600 florins, respectively. The four dealers each indicated that they could supply up to 100 elephants.
@@ -72,8 +74,34 @@ During the Second Punic War, Hannibal crossed the Alps into Liguria in what is n
 If Mago bought his elephants in an optimal fashion, how much would they cost, who would supply whom, and how much will Mago have available for his planned R\&R in Rome?
 
 \begin{solution}
+	\noindent \\
+	\begin{centering}
+	
+	\begin{tikzpicture}[remember picture]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=1,width=0.6\linewidth]{Problem2.pdf}};
+	\end{tikzpicture} \\
+	\begin{tikzpicture}[remember picture]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=2,width=0.6\linewidth]{Problem2.pdf}};
+	\end{tikzpicture} \\
+	\begin{tikzpicture}[remember picture]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=3,width=0.6\linewidth]{Problem2.pdf}};
+	\end{tikzpicture} \\
+	\begin{tikzpicture}[remember picture]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=4,width=0.6\linewidth]{Problem2.pdf}};
+	\end{tikzpicture}
 
+	\end{centering}
+	
+	\textbf{Summary: }
+	Mago's intent will be best served by purchasing 
+	Hannibal's 100 Elephants from Tusk and Trunk in Bengasi,
+	Hasbrudal's 100 Elephants from the dealer in Damascus,
+	and his own 50 from the dealer in Cairo.
+	This plan of procurement should cost 164,500 Florins, 
+	leaving Mago with approximately 35,500 Florins for morale purposes in Rome.
 \end{solution}
+
+\clearpage
 
 \question
 \textit{Do Problem 1 on page 524 in Winston} \\
@@ -85,6 +113,55 @@ Use the branch-and-bound method to solve the following IP:
 	4x_1 + \ x_2 &\leq 7 & \\
 	x_1, x_2 \geq 0;& \ \ x_2 \text{ integer} &
 \end{flalign*}
+
+\begin{solution}
+	To find initial LP solution, compare the nodes for max values
+	\begin{align*}
+		\text{min}
+		\bigg(
+		\begin{bmatrix} 2 \\ 0 \end{bmatrix}
+		\begin{bmatrix} 7/4 \\ 0 \end{bmatrix}
+		\bigg),
+		\text{min}
+		\bigg(
+		\begin{bmatrix} 0 \\ 5 \end{bmatrix}
+		\begin{bmatrix} 0 \\ 7 \end{bmatrix}
+		\bigg),
+		\begin{bmatrix} 4/3 \\ 5/3 \end{bmatrix}
+	\end{align*}
+	Giving $z$ values of 5, 5.25, and 5\nicefrac{2}{3}. 
+	The intersection gives the highest objective value, 
+	and will be our starting optimal.
+	
+	\begin{forest}
+		for tree={
+			draw,
+			minimum height=2cm,
+			anchor=north,
+			align=center,
+			child anchor=north,
+			l sep+=2em
+		},
+		[{Subproblem 1 \\ 
+			\(z=5\nicefrac{2}{3}\) \\ 
+			\(x_1=\nicefrac{1}{4}\) \\ 
+			\(x_2 = \nicefrac{5}{3}\)}, align=center,
+			[{Subproblem 2\\ 
+				\(z=5\nicefrac{1}{2}\) \\ 
+				\(x_1=\nicefrac{3}{2}\) \\ 
+				\(x_2 = 1\)}, edge label={node[midway,left]{$x_2\leq1$}}]
+			[{Subproblem 3\\ 
+				\(z=5\nicefrac{3}{5}\) \\ 
+				\(x_1=\nicefrac{6}{5}\) \\ 
+				\(x_2 = 2\)}, edge label={node[midway,right]{$x_2\geq2$}}]
+		]
+	\end{forest} \\
+	\textbf{Summary: }
+	Subproblem 3 provides the optimal partial integer solution with 
+	\(x_1=1.2\) and \(x_2=2\) resulting in \(z=5.6\).
+\end{solution}
+
+\clearpage
 
 \question
 \textit{Do Problem 2 on page 549 in Winston} \\
@@ -139,7 +216,7 @@ $e_1$ to enter basis.
 	0   & 0     & 0     & 1     & 2     & -5    & 3  
 \end{tabular}
 
-\textbf{Summary: } the optimal integer solution for this system is 
+\textbf{Summary: } The optimal integer solution for this system is 
 \(x_1=2\) and \(x_2=2\) resulting in \(z=20\).
 
 
