@@ -1,0 +1,147 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+
+\title{OPER 510 - Introduction to Mathematical Programming%
+	\\ Assignment 4}
+\author{Brandon Hosley}
+\date{\today}
+
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{nicefrac}
+\usepackage{enumitem}
+\renewcommand{\subpartlabel}{}
+\usepackage{multicol}
+\usepackage{setspace}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+\usepackage{tikz}
+\usepackage[final]{pdfpages}
+
+\begin{document}
+\maketitle
+\unframedsolutions
+
+\begin{questions}
+\question
+Three plants, A, B, C produce 850, 730, and 820 BDU uniforms per week, respectively. These are to be distributed equally to six depots for future distribution. The shipping costs in dollars per unit is as follows:
+
+\begin{tabularx}{.8\textwidth}{XXXXXXX}
+	\multicolumn{7}{c}{Depot}       \\
+	& 1  & 2  & 3  & 4  & 5  & 6  \\ \midrule
+	A & 13 & 14 & 12 & 10 & 17 & 27 \\
+	B & 12 & 20 & 17 & 14 & 33 & 13 \\
+	C & 18 & 24 & 21 & 18 & 12 & 22
+\end{tabularx}
+
+\begin{parts}
+	\part Find an initial solution to this problem using i) the Northwest Comer Approach, ii) the Minimum Cell Cost Method, and iii) Vogel's Approximation Method.
+	\part Determine the allocation that will result in the minimum shipping cost per week. \\
+\end{parts}
+
+\begin{solution}
+\begin{parts}
+	\part 
+	\noindent \\
+	\begin{tikzpicture}[remember picture]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=1,width=0.8\linewidth]{Problem1.pdf}};
+	\end{tikzpicture} \\
+	\begin{tikzpicture}[remember picture]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=2,width=0.8\linewidth]{Problem1.pdf}};
+	\end{tikzpicture} 
+	\begin{tikzpicture}[remember picture]
+		\node[inner sep=0pt] at (current page.center) {\includegraphics[page=3,width=0.8\linewidth]{Problem1.pdf}};
+	\end{tikzpicture} 
+
+	
+	
+	\part
+	Answer 2
+\end{parts}
+\end{solution}
+
+
+
+\question
+During the Second Punic War, Hannibal crossed the Alps into Liguria in what is now Italy. In planning this campaign Hannibal decided to procure 250 elephants to carry supplies and for use in battle against the Romans. Hannibal required 100 of these elephants for his own phalanx. Hasdrubal, the brother of Hannibal, also required 100 elephants. The remaining 50 were to be put at the disposal of Mago, a younger brother of Hannibal, who was given 200,000 gold florins and was told to procure all the elephants required for the campaign. Mago realized that if he could economize on elephants, he could pocket the difference to spend on his anticipated R\&R when they reached Rome. (Clearly, this was Mago's first campaign and he did not fully understand the "benefits" due the victors in wars at that time.) He contacted an elephant dealer in Alexandria, and received a firm quotation of 900, 875, and 910 florins as the delivered cost per elephant to Hannibal, Hasdrubal, and Mago, respectively. Tusk and Trunk, the elephant trader in Bengasi, quoted Mago prices of 750, 790, and 820 florins, respectively, but told Mago that he could not deliver any elephants to Hasdrubal for some time after the start of the campaign because of a previous commitment of transports to another buyer in Carthage. The dealers in Cairo and Damascus quoted Mago prices of 800, 900, and 740 florins and 740, 525, and 600 florins, respectively. The four dealers each indicated that they could supply up to 100 elephants.
+
+If Mago bought his elephants in an optimal fashion, how much would they cost, who would supply whom, and how much will Mago have available for his planned R\&R in Rome?
+
+\begin{solution}
+
+\end{solution}
+
+\question
+\textit{Do Problem 1 on page 524 in Winston} \\
+Use the branch-and-bound method to solve the following IP:
+\begin{flalign*}
+	\text{Max } z = 3x_1 + \ x_2 & & \\
+	\text{s.t.} \hspace{2em} \ 
+	5x_1 + 2x_2 &\leq 10  & \\
+	4x_1 + \ x_2 &\leq 7 & \\
+	x_1, x_2 \geq 0;& \ \ x_2 \text{ integer} &
+\end{flalign*}
+
+\question
+\textit{Do Problem 2 on page 549 in Winston} \\
+Consider the following IP:
+\begin{flalign*}
+	\text{Min } z = 6x_1 + 8x_2 & &\\
+	\text{s.t.} \hspace{6ex} 
+	3x_1+ \ x_2 &\geq 4 &\\
+	x_1 + 2x_2 &\geq 4 & \\
+	x_1, x_2 \geq 0;& \ \ x_1, x_2 \text{ integer} &
+\end{flalign*}
+The optimal tableau for this IP’s linear programming relaxation is given in Table 87. Use the cutting plane algorithm to find the optimal solution.
+
+\setlength{\aboverulesep}{0pt}
+\setlength{\belowrulesep}{0pt}
+\setlength{\extrarowheight}{.75ex}
+\begin{tabularx}{.4\textwidth}{XXXXXc}
+	\arrayrulecolor{MidnightBlue}
+	\toprule[1pt] \rowcolor{gray!25}
+	$z$ & $x_1$ & $x_2$ & $e_1$ & $e_2$ & rhs \\ \midrule[1pt]
+	1 & 0 & 0 & \(-\frac{4}{5}\) & \(-\frac{18}{5}\) & \(\frac{88}{5}\) \\
+	0 & 1 & 0 & \(-\frac{2}{5}\)  & \(\hspace{0.8em} \frac{1}{5}\) & \(\frac{4}{5}\) \\
+	0 & 0 & 1 & \(\hspace{0.8em} \frac{1}{5}\) & \(-\frac{3}{5}\) & \(\frac{8}{5}\) \\
+	\bottomrule[2pt]
+\end{tabularx}
+
+First cut using $x_2$
+\begin{align*}
+	x_2+ (1/5)e_1-(3/5)e_2 &= 8/5 \\
+	x_2+ 0e_1 + (1/5)e_1-e_2+(2/5)e_2 &= 1+ (3/5) \\
+	x_2+ 0e_1 -e_2 -1 &= (3/5)-(1/5)e_1- (2/5)e_2 \\
+	-(1/5)e_1 -(2/5)e_2 +s_1 &= -(3/5)
+\end{align*}
+
+Adding the cut to the tableau:
+
+\begin{tabular}{ccccccc}
+	$z$ & $x_1$ & $x_2$ & $e_1$ & $e_2$ & $s_1$ & res  \\ \hline
+	1   & 0     & 0     & -4/5  & -18/5 & 0     & 88/5 \\
+	0   & 1     & 0     & -2/5  & 1/5   & 0     & 4/5  \\
+	0   & 0     & 1     & 1/5   & -3/5  & 0     & 8/5  \\
+	0   & 0     & 0     & -1/5  & -2/5  & 1     & -3/5
+\end{tabular}
+
+$e_1$ to enter basis.
+
+\begin{tabular}{ccccccc}
+	$z$ & $x_1$ & $x_2$ & $e_1$ & $e_2$ & $s_1$ & res \\ \hline
+	1   & 0     & 0     & 0     & -2    & -4    & 20  \\
+	0   & 1     & 0     & 0     & 1     & -2    & 2   \\
+	0   & 0     & 1     & 0     & -1    & 1     & 1   \\
+	0   & 0     & 0     & 1     & 2     & -5    & 3  
+\end{tabular}
+
+\textbf{Summary: } the optimal integer solution for this system is 
+\(x_1=2\) and \(x_2=2\) resulting in \(z=20\).
+
+
+\end{questions}
+\end{document}
