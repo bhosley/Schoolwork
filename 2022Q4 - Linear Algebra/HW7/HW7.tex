@@ -79,6 +79,21 @@
 
 \end{enumerate}\bigskip
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hrule
+\bigskip
+\begin{enumerate}[(a)]
+	\item
+	
+
+\end{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	 \end{ Question 1 }	 	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\clearpage
 
 \item Let \(\mathcal{V}\) be a finite-dimensional inner product space, and let \(\mathcal{W}\subset \mathcal{V}\) be a subspace. Let \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) be a basis for \(\mathcal{W}\), and define the map \(\mathbf{B}:\mathcal{V}\to\mathcal{V}\) by
 \[\mathbf{B}\mathbf{v} = \sum_{n=1}^{M}\langle \mathbf{w}_{n},\mathbf{v}\rangle \mathbf{w}_{n}.\]\medskip
@@ -98,6 +113,38 @@
 
 \end{enumerate}\bigskip
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hrule
+\bigskip
+\begin{enumerate}[(a)]
+\item 
+Let \(c_1,c_2\in\mathbb{R}\) and \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) be arbitrary. Then, linearity can be shown by
+\begin{align*}
+	\mathbf{B}(c_1\mathbf{v}_1+c_2\mathbf{v}_2)
+	&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1+c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1 \rangle\mathbf{w}_n + \langle \mathbf{w}_n,c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	&= \sum_{n=1}^{M} c_1\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	&=  c_1\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	&= c_1\mathbf{B}\mathbf{v}_1 + c_2\mathbf{B}\mathbf{v}_2 .
+\end{align*}
+
+\item 
+Let \({\mathbf{u}_n}_{n=1}^N\) be a basis for for \(\mathcal{W}^\perp\). Then, for arbitrary \(\mathbf{u}\) 
+
+\begin{align*}
+	\mathbf{B}(\mathbf{u})
+	&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1+c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
+\end{align*}
+	
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	 \end{ Question 2 }	 	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\vspace{\fill}
 \item No eigenquiz this week.
 
 \end{enumerate}
