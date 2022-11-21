@@ -1,0 +1,106 @@
+\documentclass[12pt]{amsart}
+
+
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancybox}
+
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newcounter{Theorem}
+\newcounter{Definition}
+\numberwithin{equation}{section}
+\numberwithin{Theorem}{section}
+
+\theoremstyle{plain} %% This is the default, anyway
+\newtheorem{thm}[Theorem]{Theorem}
+\newtheorem{cor}[Theorem]{Corollary}
+\newtheorem{lem}[Theorem]{Lemma}
+\newtheorem{prop}[Theorem]{Proposition}
+%\usepackage{upgreek}
+
+\theoremstyle{definition}
+\newtheorem{defn}[Theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{ex}[Theorem]{Example}
+\newtheorem{nota}[Theorem]{Notation}
+
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent{\Large Homework 7 (Due November 23 at 8am)}\bigskip
+
+
+\begin{enumerate}[1.]
+
+\item For \(N\in\mathbb{N}\cup\{0\}\) let \(\mathbb{P}_{N}\) be the real vector space defined in Homework 6, Problem 1. For \(f,g\in\mathbb{P}_{N}\) set
+\[\langle f,g\rangle = \int_{-1}^{1}f(x)g(x)\,dx.\]
+
+\begin{enumerate}[(a)]
+\item Show that \(\langle\cdot,\cdot\rangle:\mathbb{P}_{N}\times\mathbb{P}_{N}\to\mathbb{R}\) is an inner product.\medskip
+
+\item In the case \(N=3\), find a basis for 
+\[\operatorname{span}\{p_{0}\}^{\bot}:=\{f\in\mathbb{P}_{N} : \langle p_{0},f\rangle = 0\}.\]
+
+\item Consider the linear map \(\mathbf{E}:\mathbb{P}_{3}\to\mathbb{R}\) given by \(\mathbf{E}f = f(0)\). Find a vector \(g\in\mathbb{P}_{2}\) such that \(\mathbf{E}f = \langle g,f\rangle\) for every \(f\in\mathbb{P}_{3}\).
+
+\end{enumerate}\bigskip
+
+
+\item Let \(\mathcal{V}\) be a finite-dimensional inner product space, and let \(\mathcal{W}\subset \mathcal{V}\) be a subspace. Let \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) be a basis for \(\mathcal{W}\), and define the map \(\mathbf{B}:\mathcal{V}\to\mathcal{V}\) by
+\[\mathbf{B}\mathbf{v} = \sum_{n=1}^{M}\langle \mathbf{w}_{n},\mathbf{v}\rangle \mathbf{w}_{n}.\]\medskip
+
+\begin{enumerate}[(a)]
+
+\item Show that \(\mathbf{B}\) is linear.\medskip
+
+\item Show that \(\operatorname{ker}(\mathbf{B}) = \mathcal{W}^{\bot}\).\medskip
+
+\item Show that \(\mathcal{W}\cap\mathcal{W}^{\bot}=\{\mathbf{0}\}\).\medskip
+
+\item Show that \(\{\mathbf{B}(\mathbf{w}_{n})\}_{n=1}^{M}\) is linearly independent. Use this to determine \(\operatorname{rank}\mathbf{B}\).\medskip
+
+\item Use the Rank-Nullity Theorem to show that
+\[\dim\mathcal{W} + \dim\mathcal{W}^{\bot} = \dim\mathcal{V}.\]
+
+\end{enumerate}\bigskip
+
+\item No eigenquiz this week.
+
+\end{enumerate}
+
+\end{document}
+
