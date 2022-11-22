@@ -131,12 +131,17 @@ Let \(c_1,c_2\in\mathbb{R}\) and \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) be 
 \end{align*}
 
 \item 
-Let \({\mathbf{u}_n}_{n=1}^N\) be a basis for for \(\mathcal{W}^\perp\). Then, for arbitrary \(\mathbf{u}\) 
-
+Let \(\{\mathbf{u}_n\}_{n=1}^N\) be a basis for for \(\mathcal{W}^\perp\). Then, for arbitrary \(\mathbf{u}\in\mathcal{W}^\perp\)
 \begin{align*}
-	\mathbf{B}(\mathbf{u})
-	&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1+c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	\mathbf{B}\mathbf{u}
+	= \sum_{n=1}^{M} \langle \mathbf{w}_n,\mathbf{u} \rangle\mathbf{w}_n
+	= \sum_{n=1}^{M} 0 \, \mathbf{w}_n
+	= 0 .
 \end{align*}
+Because every \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) is linearly independent, the inner product must be zero for \(\mathbf{B}\mathbf{u}=0\). 
+
+
+Thus every \(mathbf{u}\)
 	
 \end{enumerate}
 
