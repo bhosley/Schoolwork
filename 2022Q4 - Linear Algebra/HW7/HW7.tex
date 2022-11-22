@@ -86,6 +86,29 @@
 \bigskip
 \begin{enumerate}[(a)]
 	\item
+	Let \(f,f_1,f_2,f_3\in\mathbb{P}_N\) and \(x,c\in\mathbb{R}\) be arbitrary.
+	Then, per the definition of inner product space:
+	\begin{enumerate}[i.]
+		\item 
+		\begin{align*}
+			\langle f_1(x), f_2(x)+f_3(x) \rangle
+			&= \int_{-1}^{1}f_1(x) (f_2(x)+f_3(x))\,dx \\
+			&= \int_{-1}^{1}f_1(x)f_2(x)+ f_1(x)f_3(x)\,dx \\
+			&= \int_{-1}^{1}f_1(x)f_2(x)+ \int_{-1}^{1}f_1(x)f_3(x)\,dx \\
+			&= \langle f_1(x)f_2(x)\rangle + \langle f_1(x)f_3(x)\rangle \\
+		\end{align*}
+		
+		\item
+		\begin{align*}
+			\langle f_1(x),cf_2(x)\rangle
+			= \int_{-1}^{1}f_1(x) cf_3(x)\,dx 
+			= c\int_{-1}^{1}f_1(x)f_3(x)\,dx 
+		\end{align*}
+		
+		\item 
+		
+		\item 
+	\end{enumerate}
 	
 
 \end{enumerate}
@@ -153,7 +176,8 @@ Let \(\mathbf{v}\in\mathcal{W}\cap\mathcal{W}^\perp\)
 \end{align*}
 for each \(\mathbf{B}(\mathbf{w}_{n})\) there exists a 
 \(\mathbf{w}_{m}\) such that \(\mathbf{w}_{n}=\mathbf{w}_{m}\)
-whereby \(\langle \mathbf{w}_{m},\mathbf{w}_{n}\rangle > 0\)
+whereby \(\langle \mathbf{w}_{m},\mathbf{w}_{n}\rangle > 0\).
+
 
 
 \item 
