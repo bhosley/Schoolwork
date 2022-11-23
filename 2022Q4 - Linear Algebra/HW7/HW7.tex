@@ -86,29 +86,63 @@
 \bigskip
 \begin{enumerate}[(a)]
 	\item
+	\begin{proof}
 	Let \(f,f_1,f_2,f_3\in\mathbb{P}_N\) and \(x,c\in\mathbb{R}\) be arbitrary.
 	Then, per the definition of inner product space:
 	\begin{enumerate}[i.]
-		\item 
+		\item Additive in the second part,
 		\begin{align*}
 			\langle f_1(x), f_2(x)+f_3(x) \rangle
 			&= \int_{-1}^{1}f_1(x) (f_2(x)+f_3(x))\,dx \\
 			&= \int_{-1}^{1}f_1(x)f_2(x)+ f_1(x)f_3(x)\,dx \\
 			&= \int_{-1}^{1}f_1(x)f_2(x)+ \int_{-1}^{1}f_1(x)f_3(x)\,dx \\
-			&= \langle f_1(x)f_2(x)\rangle + \langle f_1(x)f_3(x)\rangle \\
+			&= \langle f_1(x),f_2(x)\rangle + \langle f_1(x),f_3(x)\rangle .
 		\end{align*}
 		
-		\item
+		\item Multiplicative in the second part,
 		\begin{align*}
 			\langle f_1(x),cf_2(x)\rangle
-			= \int_{-1}^{1}f_1(x) cf_3(x)\,dx 
-			= c\int_{-1}^{1}f_1(x)f_3(x)\,dx 
+			= \int_{-1}^{1}f_1(x) cf_2(x)\,dx 
+			= c\int_{-1}^{1}f_1(x)f_2(x)\,dx 
+			= c\langle f_1(x),f_2(x)\rangle .
 		\end{align*}
 		
-		\item 
+		\item Conjugate symmetry,
+		\begin{align*}
+			\langle f_1(x),f_2(x)\rangle
+			= \int_{-1}^{1}f_1(x)f_2(x)\,dx 
+			&= \int_{-1}^{1}f_2(x)f_1(x)\,dx 
+			= \langle f_2(x),f_1(x)\rangle
+			\intertext{and since the domain is $\mathbb{R}$, }
+			\langle f_2(x),f_1(x)\rangle
+			&= \overline{\langle f_2(x),f_1(x)\rangle} .
+		\end{align*}
 		
-		\item 
-	\end{enumerate}
+		\item Positive definiteness,
+		\begin{align*}
+			\langle f(x),f(x)\rangle
+			= \int_{-1}^{1}(f(x))^2\,dx 
+			= \int_{-1}^{1}\bigg(\sum_{n=0}^{N}a_np_n(x)\bigg)^2\,dx 
+		\end{align*}
+		Because \((f(x))^2\) is positive on the 
+		interval \([-1,1]\) when \(f(x)\neq0\) 
+		the integral is also positive on that interval. 
+		\vspace{-1.4em}
+	\end{enumerate} 	
+	\end{proof}
+
+	\item
+	A basis for \(\operatorname{span}\{p_{0}\}^\perp\)
+	is \(\{b_{n}\}_{n=1}^{3}\) in which
+	\begin{align*}
+		b_1(x) = x, \quad
+		b_2(x) = x^3, \quad
+		\text{and} \quad
+		b_3(x) = 3x^2-1 \quad
+		\text{for all } x\in\mathbb{R}.
+	\end{align*}
+	
+	\item
 	
 
 \end{enumerate}
@@ -142,27 +176,31 @@
 \hrule
 \bigskip
 \begin{enumerate}[(a)]
-\item 
-Let \(c_1,c_2\in\mathbb{R}\) and \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) be arbitrary. Then, linearity can be shown by
-\begin{align*}
-	\mathbf{B}(c_1\mathbf{v}_1+c_2\mathbf{v}_2)
-	&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1+c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
-	&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1 \rangle\mathbf{w}_n + \langle \mathbf{w}_n,c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
-	&= \sum_{n=1}^{M} c_1\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
-	&=  c_1\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
-	&= c_1\mathbf{B}\mathbf{v}_1 + c_2\mathbf{B}\mathbf{v}_2 .
-\end{align*}
+	\item 
+	\begin{proof}
+	Let \(c_1,c_2\in\mathbb{R}\) and \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) be arbitrary. Then, linearity can be shown by
+	\begin{align*}
+		\mathbf{B}(c_1\mathbf{v}_1+c_2\mathbf{v}_2)
+		&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1+c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
+		&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1 \rangle\mathbf{w}_n + \langle \mathbf{w}_n,c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
+		&= \sum_{n=1}^{M} c_1\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
+		&=  c_1\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
+		&= c_1\mathbf{B}\mathbf{v}_1 + c_2\mathbf{B}\mathbf{v}_2 .
+	\end{align*}
+	\end{proof}
 
-\item 
-Let \(\{\mathbf{u}_n\}_{n=1}^N\) be a basis for for \(\mathcal{W}^\perp\). Then, for arbitrary \(\mathbf{u}\in\mathcal{W}^\perp\)
-\begin{align*}
-	\mathbf{B}\mathbf{u}
-	= \sum_{n=1}^{M} \langle \mathbf{w}_n,\mathbf{u} \rangle\mathbf{w}_n
-	= \sum_{n=1}^{M} 0 \, \mathbf{w}_n
-	= 0 .
-\end{align*}
-Because every \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) is linearly independent, \(\mathbf{B}\mathbf{u}=0\) is only true if the inner product is zero for every
-\(\mathbf{w}_{n}\). 
+	\item 
+	\begin{proof}
+	Let \(\{\mathbf{u}_n\}_{n=1}^N\) be a basis for for \(\mathcal{W}^\perp\). Then, for arbitrary \(\mathbf{u}\in\mathcal{W}^\perp\)
+	\begin{align*}
+		\mathbf{B}\mathbf{u}
+		= \sum_{n=1}^{M} \langle \mathbf{w}_n,\mathbf{u} \rangle\mathbf{w}_n
+		= \sum_{n=1}^{M} 0 \, \mathbf{w}_n
+		= 0 .
+	\end{align*}
+	Because every \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) is linearly independent, \(\mathbf{B}\mathbf{u}=0\) is only true if the inner product is zero for every
+	\(\mathbf{w}_{n}\). 
+	\end{proof}
 
 \item
 Let \(\mathbf{v}\in\mathcal{W}\cap\mathcal{W}^\perp\)
@@ -171,8 +209,9 @@ Let \(\mathbf{v}\in\mathcal{W}\cap\mathcal{W}^\perp\)
 \item 
 
 \begin{align*}
-	\{\mathbf{B}(\mathbf{w}_{n})\}_{n=1}^{M}
-	= \sum_{m=1}^{M}\langle \mathbf{w}_{m},\mathbf{w}_{n}\rangle \mathbf{w}_{m}
+	0
+	= \sum_{n=1}^{M} c_n\mathbf{B}(\mathbf{w}_{n})
+	= \sum_{n=1}^{M}\sum_{m=1}^{M} c_n\langle \mathbf{w}_{m},\mathbf{w}_{n}\rangle \mathbf{w}_{m}
 \end{align*}
 for each \(\mathbf{B}(\mathbf{w}_{n})\) there exists a 
 \(\mathbf{w}_{m}\) such that \(\mathbf{w}_{n}=\mathbf{w}_{m}\)
