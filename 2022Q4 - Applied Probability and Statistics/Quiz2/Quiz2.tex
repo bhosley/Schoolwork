@@ -16,7 +16,26 @@
 %	\begin{ Question 1}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
+Suppose \(X_1,\ldots,X_n \overset{iid}{\sim} Normal(\mu,\sigma^2)\) with density,
+\[
+f(x) =\frac{1}{\sigma\sqrt{2\pi}}e^{\frac{-(x-\mu)^2}{2\sigma^2}} 
+\quad x\in(-\infty,\infty).
+\]
+Recall that an unbiased estimator for \(\sigma^2\),
+\[
+S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2,
+\]
+has the variance \(\operatorname{Var}(S^2) = \frac{2\sigma^2}{n-1}\).
 
+a\( )\) Does \(S^2\) attain the Cramer-Rao Lower Bound for \(\sigma^2\)?
+
+b\( )\) Would the MLE for \(\sigma^2\),
+\[
+\hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n} (X_i-\bar{X})^2,
+\]
+be the UMVUE if it attained the Cramer-Rao Lower Bound?
+
+\textit{Show your work!}
 \begin{solution}
 
 \end{solution}
@@ -26,6 +45,18 @@
 %	\begin{ Question 2}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
+Suppose \(X_1,\ldots,X_n \overset{iid}{\sim} \text{Shifted Exponential}(\theta,\gamma) \ (x>\gamma)\),
+where \(E(X)=\theta+\gamma\) and \(\text{Var}(X_1)=\theta^2\).
+We have observed the following data:
+\begin{flalign*}
+	X_1 &= 5.31 && \\
+	X_2 &= 8.76 && \\
+	X_3 &= 8.61 && \\
+	X_4 &= 6.67 && \\
+	X_5 &= 7.45 &&
+\end{flalign*}
+Derive the method of moments estimators for $\theta$ and $\gamma$. 
+Are the estimates associated with the observed data reasonable, under the assumed distribution? \textit{Show your work!}
 
 \begin{solution}
 
