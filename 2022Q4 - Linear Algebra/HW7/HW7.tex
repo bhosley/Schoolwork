@@ -20,6 +20,7 @@
 \usepackage{epstopdf}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{fancybox}
+\usepackage{comment}
 
 \newcommand{\1}{\mathbbm{1}}
 
@@ -61,7 +62,9 @@
 
 \thispagestyle{empty}
 
-\noindent{\Large Homework 7 (Due November 23 at 8am)}\bigskip
+\noindent{\Large Homework 7 (Due November 23 at 8am)}
+\hspace{\fill} {\Large B. Hosley}
+\bigskip
 
 
 \begin{enumerate}[1.]
@@ -85,65 +88,100 @@
 \hrule
 \bigskip
 \begin{enumerate}[(a)]
-	\item
-	\begin{proof}
-	Let \(f,f_1,f_2,f_3\in\mathbb{P}_N\) and \(x,c\in\mathbb{R}\) be arbitrary.
-	Then, per the definition of inner product space:
-	\begin{enumerate}[i.]
-		\item Additive in the second part,
-		\begin{align*}
-			\langle f_1(x), f_2(x)+f_3(x) \rangle
-			&= \int_{-1}^{1}f_1(x) (f_2(x)+f_3(x))\,dx \\
-			&= \int_{-1}^{1}f_1(x)f_2(x)+ f_1(x)f_3(x)\,dx \\
-			&= \int_{-1}^{1}f_1(x)f_2(x)+ \int_{-1}^{1}f_1(x)f_3(x)\,dx \\
-			&= \langle f_1(x),f_2(x)\rangle + \langle f_1(x),f_3(x)\rangle .
-		\end{align*}
-		
-		\item Multiplicative in the second part,
-		\begin{align*}
-			\langle f_1(x),cf_2(x)\rangle
-			= \int_{-1}^{1}f_1(x) cf_2(x)\,dx 
-			= c\int_{-1}^{1}f_1(x)f_2(x)\,dx 
-			= c\langle f_1(x),f_2(x)\rangle .
-		\end{align*}
-		
-		\item Conjugate symmetry,
-		\begin{align*}
-			\langle f_1(x),f_2(x)\rangle
-			= \int_{-1}^{1}f_1(x)f_2(x)\,dx 
-			&= \int_{-1}^{1}f_2(x)f_1(x)\,dx 
-			= \langle f_2(x),f_1(x)\rangle
-			\intertext{and since the domain is $\mathbb{R}$, }
-			\langle f_2(x),f_1(x)\rangle
-			&= \overline{\langle f_2(x),f_1(x)\rangle} .
-		\end{align*}
-		
-		\item Positive definiteness,
-		\begin{align*}
-			\langle f(x),f(x)\rangle
-			= \int_{-1}^{1}(f(x))^2\,dx 
-			= \int_{-1}^{1}\bigg(\sum_{n=0}^{N}a_np_n(x)\bigg)^2\,dx 
-		\end{align*}
-		Because \((f(x))^2\) is positive on the 
-		interval \([-1,1]\) when \(f(x)\neq0\) 
-		the integral is also positive on that interval. 
-		\vspace{-1.4em}
-	\end{enumerate} 	
-	\end{proof}
-
-	\item
-	A basis for \(\operatorname{span}\{p_{0}\}^\perp\)
-	is \(\{b_{n}\}_{n=1}^{3}\) in which
+\item
+\begin{proof}
+Let \(f,f_1,f_2,f_3\in\mathbb{P}_N\) and \(x,c\in\mathbb{R}\) be arbitrary.
+Then, per the definition of inner product space:
+\begin{enumerate}[i.]
+	\item Additive in the second part,
 	\begin{align*}
-		b_1(x) = x, \quad
-		b_2(x) = x^3, \quad
-		\text{and} \quad
-		b_3(x) = 3x^2-1 \quad
-		\text{for all } x\in\mathbb{R}.
+		\langle f_1(x), f_2(x)+f_3(x) \rangle
+		&= \int_{-1}^{1}f_1(x) (f_2(x)+f_3(x))\,dx \\
+		&= \int_{-1}^{1}f_1(x)f_2(x)+ f_1(x)f_3(x)\,dx \\
+		&= \int_{-1}^{1}f_1(x)f_2(x)+ \int_{-1}^{1}f_1(x)f_3(x)\,dx \\
+		&= \langle f_1(x),f_2(x)\rangle + \langle f_1(x),f_3(x)\rangle .
 	\end{align*}
 	
-	\item
+	\item Multiplicative in the second part,
+	\begin{align*}
+		\langle f_1(x),cf_2(x)\rangle
+		= \int_{-1}^{1}f_1(x) cf_2(x)\,dx 
+		= c\int_{-1}^{1}f_1(x)f_2(x)\,dx 
+		= c\langle f_1(x),f_2(x)\rangle .
+	\end{align*}
 	
+	\item Conjugate symmetry,
+	\begin{align*}
+		\langle f_1(x),f_2(x)\rangle
+		= \int_{-1}^{1}f_1(x)f_2(x)\,dx 
+		&= \int_{-1}^{1}f_2(x)f_1(x)\,dx 
+		= \langle f_2(x),f_1(x)\rangle
+		\intertext{and since the domain is $\mathbb{R}$, }
+		\langle f_2(x),f_1(x)\rangle
+		&= \overline{\langle f_2(x),f_1(x)\rangle} .
+	\end{align*}
+	
+	\item Positive definiteness,
+	\begin{align*}
+		\langle f(x),f(x)\rangle
+		= \int_{-1}^{1}(f(x))^2\,dx 
+		= \int_{-1}^{1}\bigg(\sum_{n=0}^{N}a_np_n(x)\bigg)^2\,dx 
+	\end{align*}
+	Because \((f(x))^2\) is positive on the 
+	interval \([-1,1]\) when \(f(x)\neq0\) 
+	the integral is also positive on that interval. 
+	\vspace{-1.4em}
+\end{enumerate} 	
+\end{proof}
+
+\item
+A basis for \(\operatorname{span}\{p_{0}\}^\perp\)
+is \(\{q_{n}\}_{n=1}^{3}\) in which
+\begin{align*}
+	q_1(x) = x, \quad
+	q_2(x) = x^3, \quad
+	\text{and} \quad
+	q_3(x) = 3x^2-1 \quad
+	\text{for all } x\in\mathbb{R}.
+\end{align*}
+
+\item
+If there was a typo, then a vector \(g\in\mathbb{P}_{3}\)such that \(\mathbf{E}f = \langle g,f\rangle = f(0)\) is
+\[g_0(x) = \frac{9}{8}-\frac{15}{8}x^2.\]
+If there was no typo, then a vector \(g\in\mathbb{P}_{2}\) such that \(\mathbf{E}f = \langle g,f\rangle = f(0)\) is
+\[g_0(x) = \frac{9}{8}-\frac{15}{8}x^2.\]
+
+Even though it wasn't asked, this may be found by
+\begin{align*}
+	\left\langle g, p_0\right\rangle &= 1 
+	=\int_{-1}^1\left(b_0 p_0+b_1 p_1+b_2 p_2+b_3 p_3\right)(t) dt 
+	&= b_0 t+b_1 \frac{1}{2} t^2+\left.b_2 \frac{1}{3} t^3\right|_{-1}^1
+	&=2 b_0 + \frac{2}{3}b_2\\
+	%
+	\left\langle g, p_1\right\rangle&= 0 
+	=\int_{-1}^1 p_1(t)\left(b_0 p_0+b_1 p_1+b_2 p_2+b_3 p_3\right)(t) dt 
+	&= b_0 t^2+b_1 \frac{1}{3} t^3+b_2 \frac{1}{4} t^4+\left.b_3 \frac{1}{5} t^5\right|_{-1} ^1
+	&=\frac{2}{3} b_1+\frac{2}{5} b_3 \\
+	%
+	\left\langle g, p_2\right\rangle&=0
+	=\int_{-1}^1 p_2(t)\left(b_0 p_0+b_1 p_1+b_2 p_2+b_3 p_3\right)(t) dt 
+	&=b_0 \frac{1}{3} t^3+b_1 \frac{1}{4} t^4+b_2 \frac{1}{5} t^5+\left.b_3 \frac{1}{6} t^6\right|_{-1} ^1
+	&=\frac{2}{3} b_0+\frac{2}{5} b_2 \\
+	%
+	\left\langle g, p_3\right\rangle&=0
+	=\int_{-1}^1 p_3(t)\left(b_0 p_0+b_1 p_1+b_2 p_2+b_3 p_3\right)(t) dt 
+	&=b_0 \frac{1}{4} t^4+b_1 \frac{1}{5} t^5+b_2 \frac{1}{6} t^6+\left.b_3 \frac{1}{7} t^7\right|_{-1} ^1
+	&=\frac{2}{5} b_1+\frac{2}{7} b_3
+\end{align*}
+clearly,
+\[b_1 = 0 \quad \text{and} \quad b_3 = 0\]
+and slightly less clearly, by solving the first and third equations,
+\[
+b_0 + \frac{2}{3}b_2 = 1 \quad \text{and} \quad 
+\frac{2}{3} b_0+\frac{2}{5} b_2 = 0
+\]
+elucidates
+\[b_0 = \frac{9}{8} \quad \text{and} \quad b_2 = -\frac{15}{8}.\]
 
 \end{enumerate}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -176,50 +214,87 @@
 \hrule
 \bigskip
 \begin{enumerate}[(a)]
-	\item 
-	\begin{proof}
-	Let \(c_1,c_2\in\mathbb{R}\) and \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) be arbitrary. Then, linearity can be shown by
-	\begin{align*}
-		\mathbf{B}(c_1\mathbf{v}_1+c_2\mathbf{v}_2)
-		&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1+c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
-		&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1 \rangle\mathbf{w}_n + \langle \mathbf{w}_n,c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
-		&= \sum_{n=1}^{M} c_1\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
-		&=  c_1\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
-		&= c_1\mathbf{B}\mathbf{v}_1 + c_2\mathbf{B}\mathbf{v}_2 .
-	\end{align*}
-	\end{proof}
-
-	\item 
-	\begin{proof}
-	Let \(\{\mathbf{u}_n\}_{n=1}^N\) be a basis for for \(\mathcal{W}^\perp\). Then, for arbitrary \(\mathbf{u}\in\mathcal{W}^\perp\)
-	\begin{align*}
-		\mathbf{B}\mathbf{u}
-		= \sum_{n=1}^{M} \langle \mathbf{w}_n,\mathbf{u} \rangle\mathbf{w}_n
-		= \sum_{n=1}^{M} 0 \, \mathbf{w}_n
-		= 0 .
-	\end{align*}
-	Because every \(\{\mathbf{w}_{n}\}_{n=1}^{M}\) is linearly independent, \(\mathbf{B}\mathbf{u}=0\) is only true if the inner product is zero for every
-	\(\mathbf{w}_{n}\). 
-	\end{proof}
-
-\item
-Let \(\mathbf{v}\in\mathcal{W}\cap\mathcal{W}^\perp\)
-
+	\itemsep1em 
+\item 
+\begin{proof}
+Let \(c_1,c_2\in\mathbb{R}\) and \(\mathbf{v}_1,\mathbf{v}_2\in\mathcal{V}\) be arbitrary. Then, linearity can be shown by
+\begin{align*}
+	\mathbf{B}(c_1\mathbf{v}_1+c_2\mathbf{v}_2)
+	&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1+c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	&= \sum_{n=1}^{M} \langle \mathbf{w}_n, c_1\mathbf{v}_1 \rangle\mathbf{w}_n + \langle \mathbf{w}_n,c_2\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	&= \sum_{n=1}^{M} c_1\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	&=  c_1\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_1 \rangle\mathbf{w}_n + c_2\sum_{n=1}^{M}\langle \mathbf{w}_n,\mathbf{v}_2 \rangle\mathbf{w}_n \\
+	&= c_1\mathbf{B}\mathbf{v}_1 + c_2\mathbf{B}\mathbf{v}_2 .
+\end{align*}
+\end{proof}
 
 \item 
-
+\begin{proof}
+\begin{comment}
+Let \(\{\mathbf{u}_n\}_{n=1}^N\) be a basis for for \(\mathcal{W}^\perp\). Then, for arbitrary \(\mathbf{u}\in\mathcal{W}^\perp\)
+	\mathbf{B}\mathbf{u}
+	= \sum_{n=1}^{M} \langle \mathbf{w}_n,\mathbf{u} \rangle\mathbf{w}_n
+	= \sum_{n=1}^{M} 0 \, \mathbf{w}_n
+	= 0 .
+\end{comment}
+Let \(\mathbf{u}\in\ker(\mathbf{B})\), then 
 \begin{align*}
 	0
-	= \sum_{n=1}^{M} c_n\mathbf{B}(\mathbf{w}_{n})
-	= \sum_{n=1}^{M}\sum_{m=1}^{M} c_n\langle \mathbf{w}_{m},\mathbf{w}_{n}\rangle \mathbf{w}_{m}
+	= \mathbf{B}\mathbf{u}
+	= \sum_{n=1}^{M} \langle \mathbf{w}_n,\mathbf{u} \rangle\mathbf{w}_n
+	= \sum_{n=1}^{M} \langle \mathbf{w}_n,\mathbf{u} \rangle
 \end{align*}
-for each \(\mathbf{B}(\mathbf{w}_{n})\) there exists a 
-\(\mathbf{w}_{m}\) such that \(\mathbf{w}_{n}=\mathbf{w}_{m}\)
-whereby \(\langle \mathbf{w}_{m},\mathbf{w}_{n}\rangle > 0\).
+Thus every non-trivial element of \(\ker(\mathbf{B})\) is \(\mathbf{u}\)
+such that \(\langle \mathbf{w}_n,\mathbf{u} \rangle = 0\)
+which is by definition \(\mathcal{W}^\perp\).
+\end{proof}
 
+
+\item
+\begin{proof}
+Let \(\mathbf{v}\in\mathcal{W}\cap\mathcal{W}^\perp\)
+then note that 
+\begin{align*}
+	\langle \mathbf{v},\mathbf{v} \rangle = 0.
+\end{align*}
+By the contraposition of Definition 9.3(iv),
+\(\langle \mathbf{v},\mathbf{v} \rangle \ngtr 0\)
+implies that \(\mathbf{v} = \mathbf{0}\).
+\end{proof}
+
+\clearpage
+
+\item 
+\begin{proof}
+Let \(\{c_n\}_{n=1}^{M}\in\mathbb{F}\) be a set of scalars such that
+\begin{align*}
+0
+= \sum_{n=1}^{M} c_n\mathbf{B}(\mathbf{w}_{n})
+= \sum_{n=1}^{M}\sum_{m=1}^{M} c_n\langle \mathbf{w}_{m},\mathbf{w}_{n}\rangle \mathbf{w}_{m}
+= \sum_{m=1}^{M} \langle \mathbf{w}_{m},\sum_{n=1}^{M}c_n\mathbf{w}_{n}\rangle \mathbf{w}_{m}.
+\end{align*}
+Because \(\mathbf{w}\) is independent, 
+\(c_n=0\) for each \(c\in\{c_n\}_{n=1}^{M}\),
+and therefore \(\{\mathbf{B}(\mathbf{w}_{n})\}_{n=1}^{M}\)
+is also independent.
+Additionally, since any \(\langle \mathbf{w}_{m},\mathbf{w}_{n}\rangle\)
+is a scalar, \(\mathbf{B}\mathbf{v}\)
+is necessarily a scalar multiple of \(\mathbf{w}\)
+thus rank\(\,\mathbf{B}=M\).
+
+\end{proof}
 
 
 \item 
+\begin{proof}
+Using the rank nullity theorem applied to \(\mathbf{B}\) we see that
+\[ \text{Rank } \mathbf{B} + \text{Nullity } \mathbf{B} = \dim (\text{Domain } \mathbf{B}). \]
+Part (c) showed that \(\operatorname{ker}(\mathbf{B}) = \mathcal{W}^{\bot}\)
+and (d) showed \(\operatorname{rank}\mathbf{B}=M\), 
+which is \(\dim\mathcal{W}\), thus
+
+\[\dim\mathcal{W} + \dim\mathcal{W}^{\bot} = \dim\mathcal{V}.\]
+\end{proof}
 
 	
 \end{enumerate}
