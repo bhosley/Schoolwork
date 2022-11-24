@@ -25,21 +25,77 @@ Recall that an unbiased estimator for \(\sigma^2\),
 \[
 S^2 = \frac{1}{n-1}\sum_{i=1}^{n}(X_i-\bar{X})^2,
 \]
-has the variance \(\operatorname{Var}(S^2) = \frac{2\sigma^2}{n-1}\).
-
-a\( )\) Does \(S^2\) attain the Cramer-Rao Lower Bound for \(\sigma^2\)?
-
-b\( )\) Would the MLE for \(\sigma^2\),
-\[
-\hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n} (X_i-\bar{X})^2,
-\]
-be the UMVUE if it attained the Cramer-Rao Lower Bound?
-
+has the variance \(\operatorname{Var}(S^2) = \frac{2\sigma^4}{n-1}\).
+\begin{parts}
+	\part Does \(S^2\) attain the Cramer-Rao Lower Bound for \(\sigma^2\)?
+	\part Would the MLE for \(\sigma^2\),
+	\[
+	\hat{\sigma}^2 = \frac{1}{n}\sum_{i=1}^{n} (X_i-\bar{X})^2,
+	\]
+	be the UMVUE if it attained the Cramer-Rao Lower Bound?
+\end{parts}
 \textit{Show your work!}
-\begin{solution}
 
+\begin{solution}
+\begin{parts}
+	\part
+	First find the LLF
+	\begin{align*}
+		\ln f(x)
+		= \ln\bigg(\frac{1}{\theta\sqrt{2\pi}}\bigg)
+			-\bigg(\frac{(x-\mu)^2}{2\theta^2}\bigg) 
+		= -\frac{1}{2}\ln(2\pi)-\ln(\sigma)-\frac{(x-\mu)^2}{2\sigma^2} .
+	\end{align*}
+	Next, the second partial of the LLF,
+	\begin{align*}
+		\frac{\partial^2}{\partial(\sigma^2)^2} \bigg(
+			-\frac{1}{2}\ln(2\pi)-\ln(\sigma)-\frac{(x-\mu)^2}{2\sigma^2} \bigg)
+		&= \frac{\partial^2}{\partial(\sigma^2)^2} \bigg(
+			-\ln(\sigma)-\frac{(x-\mu)^2}{2\sigma^2} \bigg) \\
+		&= \frac{\partial^2}{\partial(\sigma^2)^2} \bigg(
+			-\frac{1}{2}\ln(\sigma^2)-\frac{(x-\mu)^2}{2\sigma^2} \bigg) \\
+		&= \frac{\partial}{\partial(\sigma^2)} \bigg(-\frac{1}{2(\sigma^2)}\bigg) -
+			\frac{\partial^2}{\partial(\sigma^2)^2} \bigg(\frac{(x-\mu)^2}{2(\sigma^2)} \bigg) \\
+		&= \frac{1}{2(\sigma^2)^2} - \frac{\partial}{\partial(\sigma^2)} 			 
+			\bigg(\frac{(x-\mu)^2}{2(\sigma^2)^2} \bigg) \\
+		&= \frac{1}{2\sigma^4} + \frac{(x-\mu)^2}{(\sigma^2)^3} \\
+		&= \frac{1}{2\sigma^4} + \frac{(x-\mu)^2}{\sigma^6} .
+	\end{align*}
+	Find the first component of the CRLB,
+	\begin{align*}
+		E\bigg[\bigg(\frac{1}{2(\sigma^2)^2}\ln f(x)\bigg)^2\bigg]
+		&= -E\bigg[\frac{1}{2\sigma^4} + \frac{(x-\mu)^2}{\sigma^6}\bigg] \\
+		&= -\frac{1}{2\sigma^4} + \frac{E[(x-\mu)^2]}{\sigma^6} \\
+		&= -\frac{1}{2\sigma^4} + \frac{(\sigma)^2}{\sigma^6} \\
+		&= \frac{(\sigma)^2}{\sigma^6} - \frac{1}{2\sigma^4} \\
+		&= \frac{1}{2\sigma^4} .
+	\end{align*}
+	Insert into CRLB function to complete,
+	\begin{align*}
+		\text{CLRB } 
+		= \frac{1}{n\,E\bigg[\bigg(\frac{1}{2(\sigma^2)^2}\ln f(x)\bigg)^2\bigg]}
+		= \frac{2\sigma^4}{n} .
+	\end{align*}
+	Comparing this bound with \(\operatorname{Var}(S^2)\)
+	\begin{align*}
+		\operatorname{Var}(S^2)
+		= \frac{2\sigma^4}{n-1}
+		= \bigg(\frac{n}{n-1}\bigg)\frac{2\sigma^4}{n}
+		> \frac{2\sigma^4}{n} \quad \text{for all }n>1.
+	\end{align*}
+
+\part
+	Finally,
+	\begin{align*}
+		\hat{\sigma^2} 
+		= \frac{2\sigma^4}{n}
+	\end{align*}
+	showing that \(\hat{\sigma^2}\) is equal to the CRLB and is thus the UMVUE.
+\end{parts}
 \end{solution}
 %\end{ Question 1}
+
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 2}	  %
@@ -59,7 +115,17 @@ Derive the method of moments estimators for $\theta$ and $\gamma$.
 Are the estimates associated with the observed data reasonable, under the assumed distribution? \textit{Show your work!}
 
 \begin{solution}
-
+	First to find \(E[X]\).
+	\[E(X)=\theta+\gamma=\frac{1}{n}\sum_{i=1}^{n}X_i
+	=\frac{1}{5}\sum_{i=1}^{5}X_i = 7.36\,.\]
+	Second,
+	\[\text{Var}(X)=\theta^2=\frac{1}{n}\sum_{i=1}^{n}(X_i-\bar{X})^2
+	=1.64184\,.\]
+	Next, solve for \(\theta\),
+	\[\hat{\theta}=\sqrt{\theta^2}=\sqrt{1.64184}=1.28134\,.\]
+	And finally, for \(\gamma\)
+	\[\hat{\gamma}=E(X)-\theta=7.36-1.28134=6.08\,.\]
+	These estimates are not reasonable, as the lower bound \((\gamma)\) has a value higher than the lowest observation. Clearly, the range would need to be adjusted in order ot be useful.
 \end{solution}
 %\end{ Question 2}
 
