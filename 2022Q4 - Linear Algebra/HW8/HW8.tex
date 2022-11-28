@@ -1,0 +1,107 @@
+\documentclass[12pt]{amsart}
+
+
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancybox}
+
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newcounter{Theorem}
+\newcounter{Definition}
+\numberwithin{equation}{section}
+\numberwithin{Theorem}{section}
+
+\theoremstyle{plain} %% This is the default, anyway
+\newtheorem{thm}[Theorem]{Theorem}
+\newtheorem{cor}[Theorem]{Corollary}
+\newtheorem{lem}[Theorem]{Lemma}
+\newtheorem{prop}[Theorem]{Proposition}
+%\usepackage{upgreek}
+
+\theoremstyle{definition}
+\newtheorem{defn}[Theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{ex}[Theorem]{Example}
+\newtheorem{nota}[Theorem]{Notation}
+
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent{\Large Homework 8 (Due December 2 at 8am)}\bigskip
+
+
+\begin{enumerate}[1.]
+
+\item Let \(\mathcal{V}\) be a finite-dimensional inner product space. Suppose \(\{\mathbf{v}_{n}\}_{n=1}^{N}\) is a linearly independent sequence in \(\mathcal{V}\).
+For \(k\in[N]\) set
+\[\mathbf{e}_{k} = \begin{cases} \mathbf{v}_{1} & k=1\\ \displaystyle{\mathbf{v}_{k} - \sum_{n=1}^{k-1}\frac{\langle \mathbf{e}_{n},\mathbf{v}_{k}\rangle}{\|\mathbf{e}_{n}\|^{2}} \mathbf{e}_{n}} & k=2,3,\ldots,N.\end{cases}\]
+We shall see that \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is an independent sequence with the same span as \(\{\mathbf{v}_{n}\}_{n=1}^{N}\), but the vectors \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) are all orthogonal to each other. Computing the vectors \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is called the \textit{Gram-Schmidt orthogonalization procedure}.\bigskip
+
+\begin{enumerate}[(a)]
+
+\item In the case that \(\mathcal{V} = \mathbb{R}^{3}\) with the standard inner product, apply the Gram-Schmidt orthogonalization procedure to the vectors 
+\[\begin{bmatrix} 1\\1\\1\end{bmatrix},\ \begin{bmatrix} 1\\1\\0\end{bmatrix},\ \begin{bmatrix} 1\\0\\0\end{bmatrix}.\]
+\bigskip
+
+\item Show that \(\langle \mathbf{e}_{1},\mathbf{e}_{2}\rangle = 0\) and \(\operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\} = \operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\}\).\bigskip
+
+\item Use induction on \(N\) to show that \(\langle \mathbf{e}_{n},\mathbf{e}_{m}\rangle = 0\) for \(n\neq m\) and \(\operatorname{span} \{\mathbf{e}_{n}\}_{n=1}^{N} = \operatorname{span}\{\mathbf{v}_{n}\}_{n=1}^{N}\).\bigskip
+
+\end{enumerate}\bigskip
+
+
+
+\item\label{gsp} Use the Gram-Schmidt orthogonalization procedure on the basis \(\{p_{0},p_{1},p_{2}\}\) for \(\mathbb{P}_{2}\) to find an orthogonal basis for \(\mathbb{P}_{2}\).\bigskip
+
+\item Find a quadratic polynomial \(q\in\mathbb{P}_{2}\) such that \(\langle p_{3}-q,p\rangle = 0\) for all \(p\in\mathbb{P}_{2}\). Is \(q\) unique? (Hint: You might find it useful to use the orthogonal basis for \(\mathbb{P}_{2}\) that you found in Problem \ref{gsp}.) \bigskip
+
+\item Let \(\mathbb{Z}_{N}\) be the set \(\{0,1,2,\ldots,N-1\}\) with addition modulo \(N\). Let \(\mathbf{T}:\mathbb{C}^{\mathbb{Z}_{N}}\to\mathbb{C}^{\mathbb{Z}_{N}}\) be given by \[(\mathbf{Tx})(n) = \mathbf{x}(n-1).\]
+Find \(\mathbf{T}^{\ast}\) and show that \(\mathbf{TT}^{\ast}=\mathbf{T}^{\ast}\mathbf{T}\), that is, \(\mathbf{T}\) commutes with its adjoint. Operators that commute with their adjoint are called \textit{normal}.\bigskip
+
+
+
+
+
+\item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a279595. Upload a completion certificate for this activity to your homework folder.
+
+\end{enumerate}
+
+\end{document}
+
+
+\end{proof}
+
