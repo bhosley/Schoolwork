@@ -64,39 +64,32 @@ Five employees are available to perform four jobs. The time it takes each person
 
 
 % Problem 2
-\question \textit{Page 459, Problem 2 in Winston}
-
+\question \textit{Page 459, Problem 2 in Winston} \\
+The city of Smalltown consists of five subdivisions. Mayor John Lion wants to build telephone lines to ensure that all the subdivisions can communicate with each other. The distances between the subdivisions are given in Figure 50. What is the minimum length of telephone line required? Assume that no telephone line can be built between subdivisions 1 and 4.
 
 \begin{figure}[H]
 	\centering
 	\begin{tikzpicture}[node distance=2.5cm]
 		\node[roundnode] (three) [] {3};
-		\node[roundnode] (one) [above left of=three] {1};
-		\node[roundnode] (two) [above right of=three, yshift=-0.5cm] {2};
-		\node[roundnode] (four) [below right of=three] {4};
-		\node[roundnode] (five) [below left of=three] {5};
+		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
+		\node[roundnode] (two) [above right of=three, yshift=0.25cm] {2};
+		\node[roundnode] (four) [below right of=three, yshift=-0.25cm] {4};
+		\node[roundnode] (five) [below left of=three, yshift=0.5cm] {5};
 		
+		\path[bid] (one) edge [] node [above] {5} (two);
+		\path[bid] (one) edge [] node [above right] {3} (three);
+		\path[bid] (one) edge [] node [left] {5} (five);
 		
+		\path[bid] (two) edge [] node [above left] {5} (three);
+		\path[bid] (two) edge [] node [below right] {7} (four);
+		\path[bid] (two) edge [bend left=40] node [below left, yshift=-15pt, xshift=-11pt] {7} (five);
 		
-
+		\path[bid] (three) edge [] node [above right] {4} (four);
+		\path[bid] (three) edge [] node [above left] {3} (five);
 		
-		\path[pt] (one) edge [] node [above left] {2} (two);
-		\path[pt] (one) edge [] node [below left] {8} (three);
-		
-		\path[pt] (two) edge [bend right] node [left] {5} (three);
-		\path[pt] (three) edge [bend right] node [right, yshift=8pt] {6} (two);
-		
-		\path[pt] (two) edge [] node [above] {3} (four);
-		\path[pt] (three) edge [] node [below] {0} (five);
-		
-		\path[pt] (four) edge [bend right] node [left, yshift=-8pt] {7} (five);
-		\path[pt] (five) edge [bend right] node [right] {4} (four);
-		
-		\path[pt] (four) edge [] node [above right] {6} (six);
-		\path[pt] (four) edge [] node [below, yshift=-2pt] {1} (three);
-		\path[pt] (five) edge [] node [below right] {2} (six);
+		\path[bid] (four) edge [] node [below] {5} (five);
 	\end{tikzpicture}
-	% \caption{}
+	\caption[50]{}
 \end{figure}
 
 \begin{solution}	
