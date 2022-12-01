@@ -135,7 +135,7 @@ We shall see that \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is an independent sequence wi
 			&= c_1\mathbf{e}_1+ c_2\mathbf{e}_2 + c_2\left( \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2}\mathbf{e}_1 \right) \\
 			&= \left(c_1 + c_2 \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2} \right)\mathbf{e}_1 + c_2\mathbf{e}_2.
 		\end{align*}
-		Thus \(\operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\} \subset \operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\}\). Similarly, 
+		Thus \(\operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\} \subseteq \operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\}\). Similarly, 
 		\begin{align*}
 			c_1\mathbf{e}_1+c_2\mathbf{e}_2
 			&= c_1\mathbf{v}_1+c_2\left( \mathbf{v}_2 - \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2}\mathbf{e}_1 \right) \\
@@ -144,9 +144,9 @@ We shall see that \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is an independent sequence wi
 			&= c_1\mathbf{v}_1- c_2\left( \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2}\mathbf{v}_1 \right) + c_2\mathbf{v}_2 \\
 			&= \left(c_1- c_2 \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2} \right)\mathbf{v}_1 + c_2\mathbf{v}_2.
 		\end{align*}
-		Thus \(\operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\} \subset  \operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\}\). Because both spans include the other we can conclude \(\operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\} = \operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\}\).
+		Thus \(\operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\} \subseteq \operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\}\). Because each span is a subset of the other we can conclude \(\operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\} = \operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\}\).
 	\end{proof}
-
+	
 
 \end{enumerate}
 
@@ -161,6 +161,9 @@ We shall see that \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is an independent sequence wi
 \hrule
 \bigskip
 
+
+
+\(\varrho_0=p_0\)
 
 % \end{ Question 2 }
 
