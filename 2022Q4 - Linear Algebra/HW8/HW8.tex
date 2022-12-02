@@ -61,7 +61,9 @@
 
 \thispagestyle{empty}
 
-\noindent{\Large Homework 8 (Due December 2 at 8am)}\bigskip
+\noindent{\Large Homework 8 (Due December 2 at 8am)}
+\hspace{\fill} {\Large B. Hosley}
+\bigskip \raggedbottom
 
 
 \begin{enumerate}[1.]
@@ -178,7 +180,7 @@ We shall see that \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is an independent sequence wi
 			&= \sum_{n=1}^{N}b_n\mathbf e_n + c_{N+1}\mathbf v_{N+1} \\
 			%
 			&= \sum_{n=1}^{N}b_n\mathbf e_n + c_{N+1} \left( \mathbf{e}_{N+1}+\sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right) \\
-			&= \sum_{n=1}^{N}b_n\mathbf e_n + c_{N+1} \mathbf{e}_{N+1}+c_{N+1}\left( \sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right) \\
+			&= \sum_{n=1}^{N}b_n\mathbf e_n + c_{N+1} \mathbf{e}_{N+1}+c_{N+1}\left( \sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right).
 		\end{align*}
 		Since \(\mathbf w\) was arbitrary, any element in \(\operatorname{span} \{\mathbf{v}_{n}\}_{n=1}^{N+1}\) can be expressed as a 
 		linear combination of elements in 
@@ -189,22 +191,21 @@ We shall see that \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is an independent sequence wi
 			&= \sum_{n=1}^{N}b_n\mathbf e_n + b_{N+1}\mathbf e_{N+1} \\
 			&= \sum_{n=1}^{N}c_n\mathbf v_n + b_{N+1}\mathbf e_{N+1} \\
 			&= \sum_{n=1}^{N}c_n\mathbf v_n + b_{N+1} \left( \mathbf{v}_{N+1}-\sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right) \\
-			&= \sum_{n=1}^{N}c_n\mathbf v_n + b_{N+1} \mathbf{v}_{N+1}+b_{N+1}\left( \sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right) \\
+			&= \sum_{n=1}^{N}c_n\mathbf v_n + b_{N+1} \mathbf{v}_{N+1}+b_{N+1}\left( \sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right).
 		\end{align*}
 		Since \(\mathbf u\) was arbitrary, any element in \(\operatorname{span} \{\mathbf{e}_{n}\}_{n=1}^{N+1}\) can be expressed as a 
 		linear combination of elements in 
 		\(\{\mathbf{v}_{n}\}_{n=1}^{N+1}\);
 		Thus, \( \operatorname{span} \{\mathbf{v}_{n}\}_{n=1}^{N+1} =
-		\operatorname{span} \{\mathbf{e}_{n}\}_{n=1}^{N+1}\)
+		\operatorname{span} \{\mathbf{e}_{n}\}_{n=1}^{N+1}\).
 	\end{proof}
-
-	
-
 
 \end{enumerate}
 
 
 % \end{ Question 1 }
+
+\clearpage
 
 \item\label{gsp} Use the Gram-Schmidt orthogonalization procedure on the basis \(\{p_{0},p_{1},p_{2}\}\) for \(\mathbb{P}_{2}\) to find an orthogonal basis for \(\mathbb{P}_{2}\).\bigskip
 
