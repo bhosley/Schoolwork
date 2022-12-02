@@ -119,7 +119,6 @@ We shall see that \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is an independent sequence wi
 		\langle \mathbf{e}_1,\mathbf{e}_2 \rangle
 		&= \langle \mathbf{v}_1, \mathbf{v}_2 - \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2}\mathbf{e}_1 \rangle  \\
 		&= \langle \mathbf{v}_1, \mathbf{v}_2 \rangle - \langle \mathbf{v}_1, \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2}\mathbf{e}_1 \rangle  \\
-		&= \langle \mathbf{v}_1, \mathbf{v}_2 \rangle - \langle \mathbf{v}_1, \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2}\mathbf{e}_1 \rangle  \\
 		&= \langle \mathbf{v}_1, \mathbf{v}_2 \rangle - \frac{\langle\mathbf{e}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2} \langle \mathbf{v}_1, \mathbf{e}_1 \rangle  \\
 		&= \langle \mathbf{v}_1, \mathbf{v}_2 \rangle - \frac{\langle\mathbf{v}_1,\mathbf{v}_2\rangle}{\|\mathbf{e}_1\|^2} \langle \mathbf{e}_1, \mathbf{e}_1 \rangle  \\
 		&= \langle \mathbf{v}_1, \mathbf{v}_2 \rangle - 
@@ -146,7 +145,61 @@ We shall see that \(\{\mathbf{e}_{n}\}_{n=1}^{N}\) is an independent sequence wi
 		\end{align*}
 		Thus \(\operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\} \subseteq \operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\}\). Because each span is a subset of the other we can conclude \(\operatorname{span}\{\mathbf{e}_{1},\mathbf{e}_{2}\} = \operatorname{span}\{\mathbf{v}_{1},\mathbf{v}_{2}\}\).
 	\end{proof}
+
+	\item 
+	\begin{proof}
+		Clearly, the case \(N=1\) is exclusive to the condition \(n\neq m\). 
+		The base case of \(N=2\) is shown to be true in part b.
+		Assume that \(\langle \mathbf{e}_{n},\mathbf{e}_{m}\rangle = 0\) 
+		for \(n\neq m\) and \(n,m\leq N\).
+		Then observe that for \(N+1\)
+		\begin{align*}
+			\langle \mathbf{e}_{m},\mathbf{e}_{N+1}\rangle
+			&= \langle \mathbf{e}_{m}, \mathbf{v}_{N+1}-\sum_{n=1}^{N}\frac{\langle\mathbf{e}_n,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_n\|^2}\mathbf{e}_n\rangle \\
+			&= \langle \mathbf{e}_{m}, \mathbf{v}_{N+1}\rangle- \langle \mathbf{e}_{m},\sum_{n=1}^{N}\frac{\langle\mathbf{e}_n,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_n\|^2}\mathbf{e}_n\rangle \\
+			&= \langle \mathbf{e}_{m}, \mathbf{v}_{N+1}\rangle- \sum_{n=1}^{N}\frac{\langle\mathbf{e}_n,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_n\|^2}\langle \mathbf{e}_{m},\mathbf{e}_n\rangle
+		\intertext{then, because \(\langle \mathbf{e}_{n},\mathbf{e}_{m}\rangle = 0\) 
+				for all \(n\neq m\) only \(\mathbf e_m\) remains}
+			&= \langle \mathbf{e}_{m}, \mathbf{v}_{N+1}\rangle- \frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\langle \mathbf{e}_{m},\mathbf{e}_m\rangle \\
+			&= \langle \mathbf{e}_{m}, \mathbf{v}_{N+1}\rangle- \langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle \\
+			&= 0.
+		\end{align*}
+		Thus \(\langle \mathbf{e}_{n},\mathbf{e}_{m}\rangle = 0\) 
+		where \(n\neq m\) holds for all \(N\geq2\).
 	
+		Similarly, that \(\operatorname{span} \{\mathbf{e}_{n}\}_{n=1}^{N} = \operatorname{span}\{\mathbf{v}_{n}\}_{n=1}^{N}\) holds for \(N=2\)
+		was shown in part b. Assume that it holds for \(n,m\leq N\), 
+		and let \(\{c_{n}\}_{n=1}^{N+1}, \{b_{n}\}_{n=1}^{N+1} \in \mathbb F\), 
+		then we will see that for any 
+		\(\mathbf w\in\operatorname{span} \{\mathbf{v}_{n}\}_{n=1}^{N+1}\)
+		\begin{align*} \mathbf w
+			&= \sum_{n=1}^{N+1}c_n\mathbf v_n \\
+			&= \sum_{n=1}^{N}c_n\mathbf v_n + c_{N+1}\mathbf v_{N+1} \\
+			&= \sum_{n=1}^{N}b_n\mathbf e_n + c_{N+1}\mathbf v_{N+1} \\
+			%
+			&= \sum_{n=1}^{N}b_n\mathbf e_n + c_{N+1} \left( \mathbf{e}_{N+1}+\sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right) \\
+			&= \sum_{n=1}^{N}b_n\mathbf e_n + c_{N+1} \mathbf{e}_{N+1}+c_{N+1}\left( \sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right) \\
+		\end{align*}
+		Since \(\mathbf w\) was arbitrary, any element in \(\operatorname{span} \{\mathbf{v}_{n}\}_{n=1}^{N+1}\) can be expressed as a 
+		linear combination of elements in 
+		\(\{\mathbf{e}_{n}\}_{n=1}^{N+1}\).
+		Then for arbitrary \(\mathbf u\in\operatorname{span} \{\mathbf{e}_{n}\}_{n=1}^{N+1}\)
+		\begin{align*} \mathbf u
+			&= \sum_{n=1}^{N+1}b_n\mathbf e_n \\
+			&= \sum_{n=1}^{N}b_n\mathbf e_n + b_{N+1}\mathbf e_{N+1} \\
+			&= \sum_{n=1}^{N}c_n\mathbf v_n + b_{N+1}\mathbf e_{N+1} \\
+			&= \sum_{n=1}^{N}c_n\mathbf v_n + b_{N+1} \left( \mathbf{v}_{N+1}-\sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right) \\
+			&= \sum_{n=1}^{N}c_n\mathbf v_n + b_{N+1} \mathbf{v}_{N+1}+b_{N+1}\left( \sum_{m=1}^{N}\frac{\langle\mathbf{e}_m,\mathbf{v}_{N+1}\rangle}{\|\mathbf{e}_m\|^2}\mathbf{e}_m \right) \\
+		\end{align*}
+		Since \(\mathbf u\) was arbitrary, any element in \(\operatorname{span} \{\mathbf{e}_{n}\}_{n=1}^{N+1}\) can be expressed as a 
+		linear combination of elements in 
+		\(\{\mathbf{v}_{n}\}_{n=1}^{N+1}\);
+		Thus, \( \operatorname{span} \{\mathbf{v}_{n}\}_{n=1}^{N+1} =
+		\operatorname{span} \{\mathbf{e}_{n}\}_{n=1}^{N+1}\)
+	\end{proof}
+
+	
+
 
 \end{enumerate}
 
@@ -165,20 +218,18 @@ Let \(\varrho_n\) represent the orthogonalized basis element corresponding to \(
 The first element remains the same, \(\varrho_0=p_0\). 
 Applied to the second element we see
 \begin{align*}
-	\varrho_1(x)
-	&=p_1(x)-\frac{\langle\varrho_0(x),p_1(x)\rangle}{\|\varrho_0(x)\|^2}\varrho_0(x) \\
-	&=p_1(x)-\frac{\int_{-1}^{1}\varrho_0(x)p_1(x)\,dx}{\int_{-1}^{1}\varrho_0(x)\varrho_0(x)\,dx}\varrho_0(x) \\
-	&=p_1(x)-\frac{\int_{-1}^{1}1\cdot x\,dx}{\int_{-1}^{1}1\cdot1\,dx}\cdot1 \\
-	&=p_1(x)-\frac{\left.\nicefrac{x^2}{2}\right|_{-1}^1}{2} \\
-	&=p_1(x)-\frac{0}{2} \\
-	&=p_1(x) \\
+	\varrho_1
+	&=p_1-\frac{\langle\varrho_0,p_1\rangle}{\|\varrho_0\|^2}\varrho_0 \\
+	&=p_1-\frac{\int_{-1}^{1}1\cdot x\,dx}{\int_{-1}^{1}1\cdot1\,dx}\cdot1 \\
+	&=p_1-\frac{\left.\nicefrac{x^2}{2}\right|_{-1}^1}{2} \\
+	&=p_1-\frac{0}{2} \\
+	&=p_1 \\
 \intertext{and to the third element}
 	\varrho_2(x)
-	&=p_2(x)-\frac{\langle\varrho_0(x),p_2(x)\rangle}{\|\varrho_0(x)\|^2}\varrho_0(x) -\frac{\langle\varrho_1(x),p_2(x)\rangle}{\|\varrho_1(x)\|^2}\varrho_1(x) \\
-	&=p_2(x)-\frac{\int_{-1}^{1}\varrho_0(x)p_2(x)\,dx}{\int_{-1}^{1}\varrho_0(x)^2\,dx}\varrho_0(x) -\frac{\int_{-1}^{1}\varrho_1(x)p_2(x)}{\int_{-1}^{1}\varrho_1(x)^2}\varrho_1(x) \\
-	&=p_2(x)-\frac{\int_{-1}^{1}x^2\,dx}{\int_{-1}^{1}1\,dx}\varrho_0(x) -\frac{\int_{-1}^{1}x^3}{\int_{-1}^{1}x^2}\varrho_1(x) \\
-	&=p_2(x)-\frac{\nicefrac{2}{3}}{2}\varrho_0(x) -\frac{0}{2}\varrho_1(x) \\
-	&=p_2(x)-\frac{1}{3}p_0(x) \\
+	&=p_2-\frac{\langle\varrho_0,p_2\rangle}{\|\varrho_0\|^2}\varrho_0 -\frac{\langle\varrho_1(x),p_2\rangle}{\|\varrho_1(x)\|^2}\varrho_1 \\
+	&=p_2-\frac{\int_{-1}^{1}x^2\,dx}{\int_{-1}^{1}1\,dx}\varrho_0 -\frac{\int_{-1}^{1}x^3}{\int_{-1}^{1}x^2}\varrho_1 \\
+	&=p_2-\frac{\nicefrac{2}{3}}{2}\varrho_0 -\frac{0}{2}\varrho_1 \\
+	&=p_2-\frac{1}{3}p_0. \\
 \end{align*}
 
 Thus the orthoganalized basis corresponding to \(\{p_0,p_1,p_2\}\) is \(\{p_0,p_1,p_2-\frac{p_0}{3}\}\).
@@ -194,17 +245,44 @@ Thus the orthoganalized basis corresponding to \(\{p_0,p_1,p_2\}\) is \(\{p_0,p_
 \hrule
 \bigskip
 
-First extend the orthogonalized basis from problem 2.
-
+First extending the orthogonalized basis from problem 2, we see
 \begin{align*}
-	\varrho_3(x)
-	&=p_3(x)-\frac{\langle\varrho_0(x),p_3(x)\rangle}{\|\varrho_0(x)\|^2}\varrho_0(x) -\frac{\langle\varrho_1(x),p_3(x)\rangle}{\|\varrho_1(x)\|^2}\varrho_1(x)
-	-\frac{\langle\varrho_2(x),p_3(x)\rangle}{\|\varrho_2(x)\|^2}\varrho_2(x) \\
+	\varrho_3
+	&=p_3-\frac{\langle\varrho_0,p_3\rangle}{\|\varrho_0\|^2}\varrho_0 -\frac{\langle\varrho_1,p_3\rangle}{\|\varrho_1\|^2}\varrho_1
+	-\frac{\langle\varrho_2,p_3\rangle}{\|\varrho_2\|^2}\varrho_2 \\
+	&=p_3-\frac{\int_{-1}^{1}x^3\,dx}{\|\varrho_0\|^2}\varrho_0 -\frac{\int_{-1}^{1}x^4\,dx}{\|\varrho_1\|^2}\varrho_1
+	-\frac{\int_{-1}^{1}x^5-\frac{1}{3}x^3\,dx}{\|\varrho_2\|^2}\varrho_2 \\
+	&=p_3-\frac{0}{\|\varrho_0\|^2}\varrho_0 -\frac{\frac{2}{5}}{\|\varrho_1\|^2}\varrho_1
+	-\frac{0}{\|\varrho_2(x)\|^2}\varrho_2 \\
+	&=p_3-\frac{2}{5\int_{-1}^{1}x^2\,dx}p_1 \\
+	&=p_3-\frac{2\cdot3}{5\cdot2}p_1 \\
+	&=p_3-\frac{3}{5}p_1. \\
 \end{align*}
-
-
+Since \(p_0=\varrho_0\) and \(p_1=\varrho_1\) then 
+\(q=\frac{3}{5}p_1\) for \(p_0\) and \(p_1\). 
+Since \(p_2\neq\varrho_2\) the same value for \(q\) may not hold.
+On inspection we see that
+\[
+\langle p_3-\frac{3}{5}p_1, p_2 \rangle
+= \int_{-1}^{1} (x^3-\frac{3}{5}x)x^2\,dx
+= \int_{-1}^{1} x^5-\frac{3}{5}x^3\,dx
+= \left. \frac{1}{5}x^6-\frac{1}{5}x^4\right|_{-1}^{1}
+= 0.
+\]
+Thus \(q=\frac{3}{5}p_1\) holds for all \(p\in\mathbb P\). 
+To evaluate the uniqueness of \(q=\frac{3}{5}p_1\) let \(c\in\mathbb{F}\) then we may evaluate \(\langle p_{3}-cq,p\rangle = 0\), for \(p_1\)
+\begin{align*}
+	0= \langle p_3-cp_1, p_1 \rangle
+	= \int_{-1}^{1} x^4-cx^2 \,dx
+	= \left. \frac{1}{5}x^5-\frac{c}{3}x^3 \right|_{-1}^{1}
+	= (\frac{1}{5}-\frac{c}{3})-(-\frac{1}{5}+\frac{c}{3})
+	= \frac{2}{5}-\frac{2c}{3}
+	= \frac{3}{5}-c.
+\end{align*}
+Thus \(q\) is uniquely \(\frac{3}{5}p_1\). \\
 % \end{ Question 3 }
 
+\clearpage
 
 \item Let \(\mathbb{Z}_{N}\) be the set \(\{0,1,2,\ldots,N-1\}\) with addition modulo \(N\). Let \(\mathbf{T}:\mathbb{C}^{\mathbb{Z}_{N}}\to\mathbb{C}^{\mathbb{Z}_{N}}\) be given by \[(\mathbf{Tx})(n) = \mathbf{x}(n-1).\]
 Find \(\mathbf{T}^{\ast}\) and show that \(\mathbf{TT}^{\ast}=\mathbf{T}^{\ast}\mathbf{T}\), that is, \(\mathbf{T}\) commutes with its adjoint. Operators that commute with their adjoint are called \textit{normal}.\bigskip
@@ -214,9 +292,32 @@ Find \(\mathbf{T}^{\ast}\) and show that \(\mathbf{TT}^{\ast}=\mathbf{T}^{\ast}\
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \hrule
 \bigskip
+% Example 10.4 in notes
 
-Example 10.4 in notes
 
+Let \(\mathbf{x},\mathbf{y}\in\mathbb{C}^{\mathbb{Z}_{N}}\)
+be arbitrary and and let \(n'=n-1\).
+Then,
+\begin{align*}
+	\langle \mathbf{y},\mathbf{Tx} \rangle
+	&= \sum_{n\in\mathbb{Z}_N} \overline{\mathbf{y}(n)}(\mathbf{Tx})(n) \\
+	&= \sum_{n\in\mathbb{Z}_N} \overline{\mathbf{y}(n)}\mathbf{x}(n-1)  \\
+	&= \sum_{n\in\mathbb{Z}_N} \overline{\mathbf{y}(n'+1)}\mathbf{x}(n') \\
+	&= \sum_{n\in\mathbb{Z}_N} \overline{(\mathbf{T}^{-1}\mathbf{y})(n')}\mathbf{x}(n') \\
+	&= \langle \mathbf{T}^{-1}\mathbf{y},\mathbf{x} \rangle
+\end{align*}
+
+Thus we see that \(\mathbf{T}^{-1}=\mathbf{T^*}\).
+Additionally, from this relationship we can see
+\begin{align*}
+	\mathbf{TT^*}
+	= \mathbf{TT}^{-1}
+	= \mathbf{I}
+	= \mathbf{T}^{-1}\mathbf{T}
+	= \mathbf{T^*T}.
+\end{align*}
+
+Showing that \(\mathbf T\) is a \textit{normal} operator.
 
 % \end{ Question 4 }
 
