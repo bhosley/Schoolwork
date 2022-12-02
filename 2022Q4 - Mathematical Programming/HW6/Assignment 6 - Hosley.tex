@@ -21,10 +21,13 @@
 \usetikzlibrary{shapes,arrows,positioning,backgrounds}
 \tikzset{%
 roundnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40},
+unnode/.style={circle, draw, thick},
 pt/.style={draw=MidnightBlue, thick,->,>=stealth',shorten >=1pt},
-bid/.style={draw=MidnightBlue, thick,-}
+bid/.style={draw=MidnightBlue, thick,-},
+unbid/.style={draw,-}
 }
-
+\newcommand{\tikzmark}[2][]{\tikz[remember picture, overlay]\node[#1,inner sep=0pt,xshift=-0.75\tabcolsep](#2){};\ignorespaces}
+\newcommand{\tm}[2][]{\tikzmark[yshift=#1]{#2}}
 
 
 \usepackage{float}
@@ -60,6 +63,42 @@ Five employees are available to perform four jobs. The time it takes each person
 \end{center}
 
 \begin{solution}
+	
+	
+	\begin{tabular}{ccccc}
+		22                        & 18                        & 30                        & 18                        & {\color[HTML]{C0C0C0} } \\
+		18                        & -                         & 27                        & 22                        & {\color[HTML]{C0C0C0} } \\
+		26                        & 20                        & 28                        & 28                        & {\color[HTML]{C0C0C0} } \\
+		16                        & 22                        & -                         & 14                        & {\color[HTML]{C0C0C0} } \\
+		21                        & -                         & 25                        & 28                        & {\color[HTML]{C0C0C0} } \\
+		{\color[HTML]{C0C0C0} 16} & {\color[HTML]{C0C0C0} 18} & {\color[HTML]{C0C0C0} 25} & {\color[HTML]{C0C0C0} 14} & {\color[HTML]{C0C0C0} }
+	\end{tabular} \\
+
+	Subtract column minimum from each column; assign minimum number of crosses to cover the zeroes.
+	\begin{table}[H]
+		\begin{tabular}{ccccc}
+			           6            &    0 \tm[1.9ex]{B1}    &    5 \tm[1.9ex]{C1}    &            4            & {\color[HTML]{C0C0C0} } \\
+			           2            &            -            &            2            &            8            & {\color[HTML]{C0C0C0} } \\
+			          10            &            2            &            3            &           14            & {\color[HTML]{C0C0C0} } \\
+			   \tm[1ex]{A1} 0    &            4            &            -            &    0     & \tm[1ex]{A2}{\color[HTML]{C0C0C0} } \\
+			           5            &    - \tm[-0.9ex]{B2}    &    0 \tm[-0.9ex]{C2}    &           14            & {\color[HTML]{C0C0C0} } \\
+			{\color[HTML]{C0C0C0} } & {\color[HTML]{C0C0C0} } & {\color[HTML]{C0C0C0} } & {\color[HTML]{C0C0C0} } & {\color[HTML]{C0C0C0} }
+		\end{tabular}
+		\tikz[remember picture, overlay]\draw[] (A1)--(A2);
+		\tikz[remember picture, overlay]\draw[] (B1)--(B2);
+		\tikz[remember picture, overlay]\draw[] (C1)--(C2);
+	\end{table} \vspace{-2em}
+	Subtract 2 from the uncovered areas, add two to the twice-covered.
+	
+	\begin{tabular}{ccccc}
+		4                       & 0                       & 5                       & 2                       & {\color[HTML]{C0C0C0} } \\
+		0                       & -                       & 2                       & 6                       & {\color[HTML]{C0C0C0} } \\
+		8                       & 2                       & 3                       & 12                      & {\color[HTML]{C0C0C0} } \\
+		0                       & 6                       & -                       & 0                       & {\color[HTML]{C0C0C0} } \\
+		3                       & -                       & 0                       & 12                      & {\color[HTML]{C0C0C0} } \\
+	\end{tabular}
+	
+	\textbf{Summary: } The minimum-time assignment will be: Job 1 performed by Person 2, Job 2 performed by Person 1, Job 3 performed by Person 5, and Job 4 performed by Person 4. Completion of all tasks will occur by 25 hours, and the jobs will take a total estimated, 75 person-hours. Person 3 is unassigned and available for other taskings under this plan.
 \end{solution}
 
 
@@ -67,6 +106,7 @@ Five employees are available to perform four jobs. The time it takes each person
 \question \textit{Page 459, Problem 2 in Winston} \\
 The city of Smalltown consists of five subdivisions. Mayor John Lion wants to build telephone lines to ensure that all the subdivisions can communicate with each other. The distances between the subdivisions are given in Figure 50. What is the minimum length of telephone line required? Assume that no telephone line can be built between subdivisions 1 and 4.
 
+\setcounter{figure}{49}
 \begin{figure}[H]
 	\centering
 	\begin{tikzpicture}[node distance=2.5cm]
@@ -89,12 +129,97 @@ The city of Smalltown consists of five subdivisions. Mayor John Lion wants to bu
 		
 		\path[bid] (four) edge [] node [below] {5} (five);
 	\end{tikzpicture}
-	\caption[50]{}
+	\caption[]{Smalltown}
 \end{figure}
-
 \begin{solution}	
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[node distance=2.5cm]
+		\node[roundnode] (three) [] {3};
+		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
+		\node[unnode] (two) [above right of=three, yshift=0.25cm] {2};
+		\node[unnode] (four) [below right of=three, yshift=-0.25cm] {4};
+		\node[unnode] (five) [below left of=three, yshift=0.5cm] {5};
+		
+		\path[unbid] (one) edge [] node [above] {5} (two);
+		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
+		\path[unbid] (one) edge [] node [left] {5} (five);
+		
+		\path[unbid] (two) edge [] node [above left] {5} (three);
+		\path[unbid] (two) edge [] node [below right] {7} (four);
+		\path[unbid] (two) edge [bend left=40] node [below left, yshift=-15pt, xshift=-11pt] {7} (five);
+		
+		\path[unbid] (three) edge [] node [above right] {4} (four);
+		\path[unbid] (three) edge [] node [above left] {3} (five);
+		
+		\path[unbid] (four) edge [] node [below] {5} (five);
+	\end{tikzpicture}
+	\begin{tikzpicture}[node distance=2.5cm]
+		\node[roundnode] (three) [] {3};
+		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
+		\node[roundnode] (two) [above right of=three, yshift=0.25cm] {2};
+		\node[unnode] (four) [below right of=three, yshift=-0.25cm] {4};
+		\node[unnode] (five) [below left of=three, yshift=0.5cm] {5};
+		
+		\path[unbid] (one) edge [] node [above] {5} (two);
+		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
+		\path[unbid] (one) edge [] node [left] {5} (five);
+		
+		\path[bid] (two) edge [very thick] node [above left] {\textbf{5}} (three);
+		\path[unbid] (two) edge [] node [below right] {7} (four);
+		\path[unbid] (two) edge [bend left=40] node [below left, yshift=-15pt, xshift=-11pt] {7} (five);
+		
+		\path[unbid] (three) edge [] node [above right] {4} (four);
+		\path[unbid] (three) edge [] node [above left] {3} (five);
+		
+		\path[unbid] (four) edge [] node [below] {5} (five);
+	\end{tikzpicture}
+	\begin{tikzpicture}[node distance=2.5cm]
+		\node[roundnode] (three) [] {3};
+		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
+		\node[roundnode] (two) [above right of=three, yshift=0.25cm] {2};
+		\node[roundnode] (four) [below right of=three, yshift=-0.25cm] {4};
+		\node[unnode] (five) [below left of=three, yshift=0.5cm] {5};
+		
+		\path[unbid] (one) edge [] node [above] {5} (two);
+		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
+		\path[unbid] (one) edge [] node [left] {5} (five);
+		
+		\path[bid] (two) edge [very thick] node [above left] {\textbf{5}} (three);
+		\path[unbid] (two) edge [] node [below right] {7} (four);
+		\path[unbid] (two) edge [bend left=40] node [below left, yshift=-15pt, xshift=-11pt] {7} (five);
+		
+		\path[bid] (three) edge [very thick] node [above right] {\textbf{4}} (four);
+		\path[unbid] (three) edge [] node [above left] {3} (five);
+		
+		\path[unbid] (four) edge [] node [below] {5} (five);
+	\end{tikzpicture}
+	\begin{tikzpicture}[node distance=2.5cm]
+		\node[roundnode] (three) [] {3};
+		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
+		\node[roundnode] (two) [above right of=three, yshift=0.25cm] {2};
+		\node[roundnode] (four) [below right of=three, yshift=-0.25cm] {4};
+		\node[roundnode] (five) [below left of=three, yshift=0.5cm] {5};
+		
+		\path[unbid] (one) edge [] node [above] {5} (two);
+		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
+		\path[unbid] (one) edge [] node [left] {5} (five);
+		
+		\path[bid] (two) edge [very thick] node [above left] {\textbf{5}} (three);
+		\path[unbid] (two) edge [] node [below right] {7} (four);
+		\path[unbid] (two) edge [bend left=40] node [below left, yshift=-15pt, xshift=-11pt] {7} (five);
+		
+		\path[bid] (three) edge [very thick] node [above right] {\textbf{4}} (four);
+		\path[bid] (three) edge [very thick] node [above left] {\textbf{3}} (five);
+		
+		\path[unbid] (four) edge [] node [below] {5} (five);
+	\end{tikzpicture}
+\end{figure}
+\textbf{Summary: } Using node subdivision 3 as a central node, 
+	the network can be constructed with 15 unit lengths of telephone wire.
 \end{solution}
 
+\clearpage
 
 % Problem 3
 \question
