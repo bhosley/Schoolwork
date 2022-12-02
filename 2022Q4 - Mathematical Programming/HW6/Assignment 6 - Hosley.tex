@@ -29,7 +29,6 @@ unbid/.style={draw,-}
 \newcommand{\tikzmark}[2][]{\tikz[remember picture, overlay]\node[#1,inner sep=0pt,xshift=-0.75\tabcolsep](#2){};\ignorespaces}
 \newcommand{\tm}[2][]{\tikzmark[yshift=#1]{#2}}
 
-
 \usepackage{float}
 
 \begin{document}
@@ -284,6 +283,18 @@ Solve the shortest path problem for the networks below using Dijkstra’s algori
 As Dijkstra’s algorithm is a dynamic program, identify the stages, states and recursive relation used in the approach.
 
 \begin{solution}
+	\begin{enumerate}
+		\item Start at initial node, node 1, mark visited.
+		\subitem Update weights of node 2: \(2<\infty\), and node 3: \(8<\infty\).
+		\subitem Advance to the lower of the two, node 2.
+		
+		\item Mark node 2 as visited.
+		\subitem Update destination weights, node 3:\(7<8\), node 4\(5<\infty\).
+		\subitem Advance to the lower weight, node 4.
+		
+		\item  Mark node 4 as visited.
+		\subitem Update destination weights
+	\end{enumerate}
 \end{solution}
 
 
