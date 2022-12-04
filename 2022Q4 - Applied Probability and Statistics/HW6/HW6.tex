@@ -20,7 +20,7 @@ Let \(X_1,\dots,X_n\) be a random sample of size \(n\) from an exponential distr
 \(X_i\sim\operatorname{Shifted Exponential}(\beta=1,\eta)\). 
 A test of \(H_0\ :\,\eta\leq\eta_0\) vs. \(H_a\ :\,\eta>\eta_0\)
 is desired, based on \(X_{(1)}\). 
-Find a critical region of size \(\alpha\) of the form \(\{x_{(1)\geq c}\}\).
+Find a critical region of size \(\alpha\) of the form \(\{x_{(1)}\geq c\}\).
 \begin{solution}
 	S
 \end{solution}
@@ -78,6 +78,26 @@ Consider a random sample of size \(n\) from a Binomial distribution,
 Find the CRLB for the variances of unbiased estimators of \(p\).
 \begin{solution}
 	S
+	
+	\begin{align*}
+		\ln f(x) &= \ln\binom{n}{x}p^y(1-p)^{n-x} \\
+		\intertext{using Sterling approximation}
+			&= y \ln(p) + (n-x)ln(1-p) \\
+	\intertext{First partial,}
+		\frac{\partial}{\partial(p)}\ln f(x) &= \frac{x}{p} -\frac{(n-x)}{(1-p)} \\
+	\intertext{then the second partial}
+		\frac{\partial^2}{\partial(p)^2}\ln f(x)
+			&= \frac{-x}{p^2} -\frac{(n-x)}{(1-p)^2} \\
+	\intertext{Expected value}
+		E\left[\frac{\partial^2}{\partial(p)^2}\ln f(x)\right]
+		&= \frac{-np}{p^2} -\frac{(n-np)}{(1-p)^2}
+		= \frac{-n}{p} -\frac{n}{(1-p)} 
+		= \frac{-n}{p(1-p)} \\
+	\intertext{insert into CRLB}
+		\frac{1}{nE\left[\frac{\partial^2}{\partial(p)^2}\ln f(x)\right]}
+		&= \frac{1}{-n\left(\frac{-n}{p(1-p)}\right)}
+		= \frac{p(1-p)}{n^2}
+	\end{align*}
 \end{solution}
 %\end{ Question 5}
 
@@ -118,9 +138,13 @@ Consider the biased coin discussed in Example 9.2.5, where the probability of a 
 The coin is tossed repeatedly, 
 and we let \(X\) be the number of tosses required to obtain the first head. 
 For a test of \(H_0\ :\,p=0.30\), suppose we use a rejection region of the form
-\(\{1,14,15,\ldots\}\). Find \(P\left[TI\right]=\alpha=\)
+\(\{1,14,15,\ldots\}\). Find \(P\left[\text{TI}\right]=\alpha=\)
 \begin{solution}
 	S
+	
+	%
+	%  P[TI] = Probability Type 1 error
+	%
 \end{solution}
 %\end{ Question 8}
 
@@ -128,10 +152,19 @@ For a test of \(H_0\ :\,p=0.30\), suppose we use a rejection region of the form
 %	\begin{ Question 9}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Let \(X_1,\ldots,X_n\) be a random sample from \(\operatorname{EXP}(\theta)\) where \(\hat{\theta}_1=\bar{X}\) and \(\hat{\theta}_2=\frac{n\bar{X}}{(n+1)}\). 
-Compare the MSEs of \(\hat{\theta_1}\) and \(\hat{\theta_1}\) for \(n=2\).
+Let \(X_1,\ldots,X_n\) be a random sample from \(\operatorname{EXP}(\theta)\) where \(\hat{\theta_1}=\bar{X}\) and \(\hat{\theta_2}=\frac{n\bar{X}}{(n+1)}\). 
+Compare the MSEs of \(\hat{\theta_1}\) and \(\hat{\theta_2}\) for \(n=2\).
 \begin{solution}
-	S
+	\begin{align}
+		\hat{\theta_1} &= \bar{X} \\
+		\hat{\theta_2} & = \frac{n\bar{X}}{(n+1)} 
+		= \frac{2}{3}\bar{X} \quad \text{for } n=2 \\
+		\Rightarrow \bar{X} &> \frac{2}{3}\bar{X} \\
+		\intertext{thus,}
+		\hat{\theta_1} &> \hat{\theta_2}
+	\end{align}
+	
+	
 \end{solution}
 %\end{ Question 9}
 
@@ -144,9 +177,13 @@ head, \(p\), is known to be 0.2, 0.30, or 0.80.
 The coin is tossed repeatedly, and we let \(X\) be the number of tosses 
 required to obtain the first head. For a test of \(H_0\ :\,p=0.30\), 
 suppose we use a rejection region of the form \(\{1,14,15,\ldots\}\). 
-Find \(P\left[TII\right]\) for \(p=0.2\).
+Find \(P\left[\text{TII}\right]\) for \(p=0.2\).
 \begin{solution}
 	S
+	
+	%
+	%  P[TII] = Probability Type 2 error
+	%
 \end{solution}
 %\end{ Question 10}
 
