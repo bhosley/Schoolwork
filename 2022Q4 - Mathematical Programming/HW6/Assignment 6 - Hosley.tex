@@ -11,7 +11,8 @@
 \usepackage[table,dvipsnames,xcdraw]{xcolor}
 \usepackage{graphicx}
 \usepackage{enumitem}
-
+\setlist[enumerate, 2]{label*=\arabic*.}
+\usepackage{outlines}
 \usepackage{booktabs}
 
 \usepackage{tabularx,makecell,diagbox}
@@ -23,6 +24,8 @@
 roundnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40},
 unnode/.style={circle, draw, thick},
 pt/.style={draw=MidnightBlue, thick,->,>=stealth',shorten >=1pt},
+unpt/.style={draw,->,>=stealth',shorten >=1pt},
+fwd/.style={preaction={draw=YellowOrange,-, line width=3pt}},
 bid/.style={draw=MidnightBlue, thick,-},
 unbid/.style={draw,-}
 }
@@ -30,6 +33,7 @@ unbid/.style={draw,-}
 \newcommand{\tm}[2][]{\tikzmark[yshift=#1]{#2}}
 
 \usepackage{float}
+\usepackage{listings}
 
 \begin{document}
 \maketitle
@@ -141,7 +145,7 @@ The city of Smalltown consists of five subdivisions. Mayor John Lion wants to bu
 		\node[unnode] (five) [below left of=three, yshift=0.5cm] {5};
 		
 		\path[unbid] (one) edge [] node [above] {5} (two);
-		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
+		\path[bid] (one) edge [very thick,fwd] node [above right] {\textbf{3}} (three);
 		\path[unbid] (one) edge [] node [left] {5} (five);
 		
 		\path[unbid] (two) edge [] node [above left] {5} (three);
@@ -245,8 +249,94 @@ You are building a shift schedule for the Air Operations Center with required ai
 \end{parts}
 
 \begin{solution}
+\begin{parts}
+	\part
+	Shifts:
+	\begin{tabular}{cccccc}
+		\(x_1\): & 0000 - 0800 &
+		\(x_2\): & 0400 - 1200 &
+		\(x_3\): & 0800 - 1600 \\
+		\(x_4\): & 1200 - 2000 &
+		\(x_5\): & 1600 - 0000 &
+		\(x_6\): & 2000 - 0400 
+	\end{tabular}
+	
+	Linear program:
+	\begin{flalign*}
+		\text{Min }z= x_1+ x_2+ x_3+ x_4+ x_5+ x_6 & & && \hspace{10em}\\
+		\text{s.t.} \hspace{5.75ex} 
+		x_1 \hspace{21ex} +x_6 &\geq 4 & \text{2400-0400 hours} &&  \\
+		x_1  +x_2 \hspace{21ex} &\geq 8 & \text{0400-0800 hours} && \\
+		x_2  +x_3 \hspace{15.5ex} &\geq 10 & \text{0800-1200 hours} && \\
+		x_3  +x_4 \hspace{10.25ex} &\geq 7 & \text{1200-1600 hours} && \\
+		x_4  +x_5 \hspace{5.125ex} &\geq 12 & \text{1600-2000 hours} && \\
+		x_5  +x_6 \hspace{0ex} &\geq 4 & \text{2000-2400 hours} && \\
+		x_i &\geq 0 & &&
+	\end{flalign*}
+	
+	\part
+	The solver used was GLPK implemented in Pyomo.
+	The solver took 6 iterations and provided the following output.
+	\lstset{frame=single, backgroundcolor=\color{lightgray!25}}
+	\begin{lstlisting}
+The objective value is = 26.0
+Model AOC Schedule
+
+Variables:
+x1 : Size=1, Index=None
+Key  : Lower : Value : Upper : Fixed : Stale : Domain
+None :     0 :   4.0 :  None : False : False : NonNegativeReals
+x2 : Size=1, Index=None
+Key  : Lower : Value : Upper : Fixed : Stale : Domain
+None :     0 :   4.0 :  None : False : False : NonNegativeReals
+x3 : Size=1, Index=None
+Key  : Lower : Value : Upper : Fixed : Stale : Domain
+None :     0 :   6.0 :  None : False : False : NonNegativeReals
+x4 : Size=1, Index=None
+Key  : Lower : Value : Upper : Fixed : Stale : Domain
+None :     0 :   8.0 :  None : False : False : NonNegativeReals
+x5 : Size=1, Index=None
+Key  : Lower : Value : Upper : Fixed : Stale : Domain
+None :     0 :   4.0 :  None : False : False : NonNegativeReals
+x6 : Size=1, Index=None
+Key  : Lower : Value : Upper : Fixed : Stale : Domain
+None :     0 :   0.0 :  None : False : False : NonNegativeReals
+
+Objectives:
+objective : Size=1, Index=None, Active=True
+Key  : Active : Value
+None :   True :  26.0
+
+Constraints:
+constraints : Size=6
+Key : Lower : Body : Upper
+1 :   4.0 :  4.0 :  None
+2 :   8.0 :  8.0 :  None
+3 :  10.0 : 10.0 :  None
+4 :   7.0 : 14.0 :  None
+5 :  12.0 : 12.0 :  None
+6 :   4.0 :  4.0 :  None
+	\end{lstlisting}
+	
+	\textbf{Summary: } 26 airmen will be needed to staff the AOC 
+	while maintaining compliance with crew-rest standards. 
+	The number of airmen should be allocated into the following shifts:
+	
+	\begin{tabular}{r|l}
+		Shift & Amn \\
+		\midrule
+		0000 - 0800 : & 4 \\ 
+		0400 - 1200 : & 4 \\ 
+		0800 - 1600 : & 6 \\
+		1200 - 2000 : & 8 \\ 
+		1600 - 0000 : & 4 \\ 
+		2000 - 0400 : & 0 \\ 	
+	\end{tabular}
+
+\end{parts}
 \end{solution}
 
+\clearpage
 
 % Problem 4
 \question
@@ -283,18 +373,215 @@ Solve the shortest path problem for the networks below using Dijkstra’s algori
 As Dijkstra’s algorithm is a dynamic program, identify the stages, states and recursive relation used in the approach.
 
 \begin{solution}
-	\begin{enumerate}
-		\item Start at initial node, node 1, mark visited.
-		\subitem Update weights of node 2: \(2<\infty\), and node 3: \(8<\infty\).
-		\subitem Advance to the lower of the two, node 2.
+	At each stage the algorithm will mark the current node as visited, precluding it from being revisited. It will then evaluate the weight of each neighbor by adding the path weight to the current node's own weight. If the new tentative weight is lower, it will update the neighbors weight to the new, lower value. Then the algorithm will proceed by calling itself on the neighbor with the lowest weight.
+	\begin{outline}[enumerate]
+		\1 Start at initial node, node 1, mark visited.
+		\2 Update weights of node 2: \(2<\infty\), and node 3: \(8<\infty\).
+		\2 Advance to the lowest weight neighbor, node 2.
 		
-		\item Mark node 2 as visited.
-		\subitem Update destination weights, node 3:\(7<8\), node 4\(5<\infty\).
-		\subitem Advance to the lower weight, node 4.
+		\1 Mark node 2 as visited.
+		\2 Update destination weights; node 3: \(7<8\), node 4: \(5<\infty\).
+		\2 Advance to the lowest weight neighbor, node 4.
 		
-		\item  Mark node 4 as visited.
-		\subitem Update destination weights
-	\end{enumerate}
+		\begin{figure}[H]
+			\centering
+			\resizebox{0.45\linewidth}{!}{
+			\begin{tikzpicture}[node distance=3cm, 
+				roundnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40, align= center, text width =5ex},
+				unnode/.style={circle, draw, thick, align= center, text width =5ex}
+				]
+				\node[roundnode] (one) {1};
+				\node[unnode] (two) [above right of=one, yshift=-0.75cm] {2(2)};
+				\node[unnode] (three) [below right of=one, yshift=0.75cm] {3(8)};
+				\node[unnode] (four) [right of=two] {4($\infty$)};
+				\node[unnode] (five) [right of=three] {5($\infty$)};
+				\node[unnode] (six) [above right of=five, yshift=-0.75cm] {6($\infty$)};
+				
+				\path[pt] (one) edge [] node [above left] {2} (two);
+				\path[pt] (one) edge [] node [below left] {8} (three);
+				
+				\path[unpt] (two) edge [bend right] node [left] {5} (three);
+				\path[unpt] (three) edge [bend right] node [right, yshift=8pt] {6} (two);
+				
+				\path[unpt] (two) edge [] node [above] {3} (four);
+				\path[unpt] (three) edge [] node [below] {0} (five);
+				
+				\path[unpt] (four) edge [bend right] node [left, yshift=-8pt] {7} (five);
+				\path[unpt] (five) edge [bend right] node [right] {4} (four);
+				
+				\path[unpt] (four) edge [] node [above right] {6} (six);
+				\path[unpt] (four) edge [] node [below, yshift=-2pt] {1} (three);
+				\path[unpt] (five) edge [] node [below right] {2} (six);
+			\end{tikzpicture}}
+			% \caption{}
+			\resizebox{0.45\linewidth}{!}{
+			\begin{tikzpicture}[node distance=3cm,
+				roundnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40, align= center, text width =5ex},
+				unnode/.style={circle, draw, thick, align= center, text width =5ex}
+				]
+				\node[roundnode] (one) {1};
+				\node[roundnode] (two) [above right of=one, yshift=-0.75cm] {2(2)};
+				\node[unnode] (three) [below right of=one, yshift=0.75cm] {3(7)};
+				\node[unnode] (four) [right of=two] {4(5)};
+				\node[unnode] (five) [right of=three] {5($\infty$)};
+				\node[unnode] (six) [above right of=five, yshift=-0.75cm] {6($\infty$)};
+				
+				\path[pt] (one) edge [] node [above left] {2} (two);
+				\path[unpt] (one) edge [] node [below left] {8} (three);
+				
+				\path[pt] (two) edge [bend right] node [left] {5} (three);
+				\path[unpt] (three) edge [bend right] node [right, yshift=8pt] {6} (two);
+				
+				\path[pt] (two) edge [] node [above] {3} (four);
+				\path[unpt] (three) edge [] node [below] {0} (five);
+				
+				\path[unpt] (four) edge [bend right] node [left, yshift=-8pt] {7} (five);
+				\path[unpt] (five) edge [bend right] node [right] {4} (four);
+				
+				\path[unpt] (four) edge [] node [above right] {6} (six);
+				\path[unpt] (four) edge [] node [below, yshift=-2pt] {1} (three);
+				\path[unpt] (five) edge [] node [below right] {2} (six);
+			\end{tikzpicture}}
+		\end{figure}
+		
+		\1  Mark node 4 as visited.
+		\2 Update destination weights; node 3: \(6<7\), node 5: \(12<\infty\), node 6: \(11<\infty\).
+		\2 Advance to the lowest weight neighbor, node 3.
+		
+		\1  Mark node 3 as visited.
+		\2 Update destination weights; \textcolor{red}{node 2: \(12\nless2\)}, node 5: \(6<12\).
+		\2 Advance to the lowest weight neighbor, node 5.
+		
+		\begin{figure}[H]
+			\centering
+			\resizebox{0.45\linewidth}{!}{
+				\begin{tikzpicture}[node distance=3cm,
+					roundnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40, align= center, text width =5ex},
+					unnode/.style={circle, draw, thick, align= center, text width =5ex}
+					]
+					\node[roundnode] (one) {1};
+					\node[roundnode] (two) [above right of=one, yshift=-0.75cm] {2(2)};
+					\node[unnode] (three) [below right of=one, yshift=0.75cm] {3(6)};
+					\node[roundnode] (four) [right of=two] {4(5)};
+					\node[unnode] (five) [right of=three] {5(12)};
+					\node[unnode] (six) [above right of=five, yshift=-0.75cm] {6(11)};
+					
+					\path[pt] (one) edge [] node [above left] {2} (two);
+					\path[unpt] (one) edge [] node [below left] {8} (three);
+					
+					\path[unpt] (two) edge [bend right] node [left] {5} (three);
+					\path[unpt] (three) edge [bend right] node [right, yshift=8pt] {6} (two);
+					
+					\path[pt] (two) edge [] node [above] {3} (four);
+					\path[unpt] (three) edge [] node [below] {0} (five);
+					
+					\path[pt] (four) edge [bend right] node [left, yshift=-8pt] {7} (five);
+					\path[unpt] (five) edge [bend right] node [right] {4} (four);
+					
+					\path[pt] (four) edge [] node [above right] {6} (six);
+					\path[pt] (four) edge [] node [below, yshift=-2pt] {1} (three);
+					\path[unpt] (five) edge [] node [below right] {2} (six);
+			\end{tikzpicture}}
+		\resizebox{0.45\linewidth}{!}{
+			\begin{tikzpicture}[node distance=3cm,
+				roundnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40, align= center, text width =5ex},
+				unnode/.style={circle, draw, thick, align= center, text width =5ex}
+				]
+				\node[roundnode] (one) {1};
+				\node[roundnode] (two) [above right of=one, yshift=-0.75cm] {2(2)};
+				\node[roundnode] (three) [below right of=one, yshift=0.75cm] {3(6)};
+				\node[roundnode] (four) [right of=two] {4(5)};
+				\node[unnode] (five) [right of=three] {5(6)};
+				\node[unnode] (six) [above right of=five, yshift=-0.75cm] {6(11)};
+				
+				\path[pt] (one) edge [] node [above left] {2} (two);
+				\path[unpt] (one) edge [] node [below left] {8} (three);
+				
+				\path[unpt] (two) edge [bend right] node [left] {5} (three);
+				\path[unpt] (three) edge [bend right] node [right, yshift=8pt] {6} (two);
+				
+				\path[pt] (two) edge [] node [above] {3} (four);
+				\path[pt] (three) edge [] node [below] {0} (five);
+				
+				\path[pt] (four) edge [bend right] node [left, yshift=-8pt] {7} (five);
+				\path[unpt] (five) edge [bend right] node [right] {4} (four);
+				
+				\path[pt] (four) edge [] node [above right] {6} (six);
+				\path[pt] (four) edge [] node [below, yshift=-2pt] {1} (three);
+				\path[unpt] (five) edge [] node [below right] {2} (six);
+		\end{tikzpicture}}
+		\end{figure}
+	
+		\1  Mark node 5 as visited.
+		\2 Update destination weights; \textcolor{red}{node 4: \(10\nless5\)}, node 6: \(8<11\).
+		\2 Advance to the lowest weight neighbor, node 6.
+		
+		\1 Mark node 6 as visited.
+		\2 6 is the destination node, path is complete.
+		\2 Return path.
+		
+		\begin{figure}[H]
+			\centering
+			\resizebox{0.45\linewidth}{!}{
+				\begin{tikzpicture}[node distance=3cm,
+					roundnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40, align= center, text width =5ex},
+					unnode/.style={circle, draw, thick, align= center, text width =5ex}
+					]
+					\node[roundnode] (one) {1};
+					\node[roundnode] (two) [above right of=one, yshift=-0.75cm] {2(2)};
+					\node[roundnode] (three) [below right of=one, yshift=0.75cm] {3(6)};
+					\node[roundnode] (four) [right of=two] {4(5)};
+					\node[roundnode] (five) [right of=three] {5(6)};
+					\node[unnode] (six) [above right of=five, yshift=-0.75cm] {6(8)};
+					
+					\path[pt] (one) edge [] node [above left] {2} (two);
+					\path[unpt] (one) edge [] node [below left] {8} (three);
+					
+					\path[unpt] (two) edge [bend right] node [left] {5} (three);
+					\path[unpt] (three) edge [bend right] node [right, yshift=8pt] {6} (two);
+					
+					\path[pt] (two) edge [] node [above] {3} (four);
+					\path[pt] (three) edge [] node [below] {0} (five);
+					
+					\path[unpt] (four) edge [bend right] node [left, yshift=-8pt] {7} (five);
+					\path[unpt] (five) edge [bend right] node [right] {4} (four);
+					
+					\path[pt] (four) edge [] node [above right] {6} (six);
+					\path[pt] (four) edge [] node [below, yshift=-2pt] {1} (three);
+					\path[pt] (five) edge [] node [below right] {2} (six);
+			\end{tikzpicture}}
+			\resizebox{0.45\linewidth}{!}{
+				\begin{tikzpicture}[node distance=3cm,
+					roundnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40, align= center, text width =5ex},
+					unnode/.style={circle, draw, thick, align= center, text width =5ex}
+					]
+					\node[roundnode] (one) {1};
+					\node[roundnode] (two) [above right of=one, yshift=-0.75cm] {2(2)};
+					\node[roundnode] (three) [below right of=one, yshift=0.75cm] {3(6)};
+					\node[roundnode] (four) [right of=two] {4(5)};
+					\node[roundnode] (five) [right of=three] {5(6)};
+					\node[roundnode] (six) [above right of=five, yshift=-0.75cm] {6(8)};
+					
+					\path[pt] (one) edge [] node [above left] {2} (two);
+					\path[unpt] (one) edge [] node [below left] {8} (three);
+					
+					\path[unpt] (two) edge [bend right] node [left] {5} (three);
+					\path[unpt] (three) edge [bend right] node [right, yshift=8pt] {6} (two);
+					
+					\path[pt] (two) edge [] node [above] {3} (four);
+					\path[pt] (three) edge [] node [below] {0} (five);
+					
+					\path[unpt] (four) edge [bend right] node [left, yshift=-8pt] {7} (five);
+					\path[unpt] (five) edge [bend right] node [right] {4} (four);
+					
+					\path[unpt] (four) edge [] node [above right] {6} (six);
+					\path[pt] (four) edge [] node [below, yshift=-2pt] {1} (three);
+					\path[pt] (five) edge [] node [below right] {2} (six);
+			\end{tikzpicture}}
+		\end{figure}
+	\end{outline}
+
+	\textbf{Summary: } The final path is $1\rightarrow 2\rightarrow 4\rightarrow 3\rightarrow 5\rightarrow 6$ for a final distance of 8 units.
 \end{solution}
 
 
