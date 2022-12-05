@@ -22,7 +22,21 @@ A test of \(H_0\ :\,\eta\leq\eta_0\) vs. \(H_a\ :\,\eta>\eta_0\)
 is desired, based on \(X_{(1)}\). 
 Find a critical region of size \(\alpha\) of the form \(\{x_{(1)}\geq c\}\).
 \begin{solution}
-	S
+	% Bain and Engelhardt Example 12.7.3
+	Referencing Theorem 12.7.1: \\
+	Test for \(\alpha \rightarrow H_0:\eta\leq\eta_0\) and \(H_1: \eta>\eta_0\) 
+	rejection of \(H_0\) if \(x_{(1)\geq c}\):
+	\begin{align*}
+		\alpha = 
+		P[x_1\geq c|\eta_0] &= 
+		e^{-n(c-\eta_0)} 
+		\intertext{then,}
+		\ln(\alpha) &= -n(c-\eta_0) 
+		\intertext{next,}
+		\frac{-\ln(\alpha)}{n} &= c-\eta_0 
+		\intertext{finally,}
+		\frac{-\ln(\alpha)}{n}+\eta_0 &= c.
+	\end{align*}
 \end{solution}
 %\end{ Question 1}
 
@@ -40,7 +54,7 @@ Find a one-sided lower 95\% confidence limit for
 % 
 
 \begin{solution}
-	S
+	\(\theta\) drawn from Problem 4.
 \end{solution}
 %\end{ Question 2}
 
@@ -65,7 +79,14 @@ Let \(X_1,\ldots,X_n\) be a random sample from an exponential distribution,
 If \(\bar{x}=17.9\) with \(n=50\), then find a one-sided lower 95\%
 confidence limit for \(\theta\).
 \begin{solution}
-	S
+	CL\((\theta_{(-)})\):
+	\begin{align*}
+		\bar{x} + Z_{0.05}\sqrt{\frac{\bar{x}^2}{n}} 
+		= 17.9 - 1.645\sqrt{\frac{17.9^2}{50}} 
+		= 17.9 - 1.645(2.53144)
+		= 17.9 - 4.164%2188
+		= 13.7357812
+	\end{align*}
 \end{solution}
 %\end{ Question 4}
 
@@ -112,6 +133,9 @@ Find constant \(c\) such that \((x_{(n)},cx_{(n)})\) is a \(100(1-\alpha)\%\)
 confidence interval for \(\theta\).
 \begin{solution}
 	S
+	%
+	% Ike struggling on this one
+	%
 \end{solution}
 %\end{ Question 6}
 
@@ -125,7 +149,19 @@ The average number of accidents per worker is \(\bar{x}=1.7\).
 Find an approximate one-sided lower 90\% confidence limit for \(\mu\) 
 using eq (11.3.20).
 \begin{solution}
-	S
+	Eq. (11.3.20) = \(\frac{\bar{X}-\mu}{\sqrt{\mu/n}}\overset{d}{\rightarrow} Z\sim N(0,1)\); 
+	which by theorem 7.7.4 is 
+	\(\frac{\bar{X}-\mu}{\sqrt{\bar{X}/n}}\overset{d}{\rightarrow} Z\sim N(0,1)\).
+	
+	90\% CI $\rightarrow Z = 1.285$ 
+	
+	\begin{align}
+		\frac{1.7-\mu}{\sqrt{\mu/45}} &\rightarrow 1.285 \\
+		\mu &< 1.7-1.285(\sqrt{1.7/45}) \\
+		&< 1.7-1.285(\sqrt{0.194}) \\
+		&< 1.7-1.285(0.24975) \\
+		&< 1.45024
+	\end{align}
 \end{solution}
 %\end{ Question 7}
 
@@ -155,14 +191,14 @@ For a test of \(H_0\ :\,p=0.30\), suppose we use a rejection region of the form
 Let \(X_1,\ldots,X_n\) be a random sample from \(\operatorname{EXP}(\theta)\) where \(\hat{\theta_1}=\bar{X}\) and \(\hat{\theta_2}=\frac{n\bar{X}}{(n+1)}\). 
 Compare the MSEs of \(\hat{\theta_1}\) and \(\hat{\theta_2}\) for \(n=2\).
 \begin{solution}
-	\begin{align}
+	\begin{align*}
 		\hat{\theta_1} &= \bar{X} \\
 		\hat{\theta_2} & = \frac{n\bar{X}}{(n+1)} 
 		= \frac{2}{3}\bar{X} \quad \text{for } n=2 \\
 		\Rightarrow \bar{X} &> \frac{2}{3}\bar{X} \\
 		\intertext{thus,}
 		\hat{\theta_1} &> \hat{\theta_2}
-	\end{align}
+	\end{align*}
 	
 	
 \end{solution}
