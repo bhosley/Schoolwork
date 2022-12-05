@@ -137,6 +137,7 @@ The city of Smalltown consists of five subdivisions. Mayor John Lion wants to bu
 \begin{solution}	
 \begin{figure}[H]
 	\centering
+	\resizebox{0.23\linewidth}{!}{
 	\begin{tikzpicture}[node distance=2.5cm]
 		\node[roundnode] (three) [] {3};
 		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
@@ -145,7 +146,7 @@ The city of Smalltown consists of five subdivisions. Mayor John Lion wants to bu
 		\node[unnode] (five) [below left of=three, yshift=0.5cm] {5};
 		
 		\path[unbid] (one) edge [] node [above] {5} (two);
-		\path[bid] (one) edge [very thick,fwd] node [above right] {\textbf{3}} (three);
+		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
 		\path[unbid] (one) edge [] node [left] {5} (five);
 		
 		\path[unbid] (two) edge [] node [above left] {5} (three);
@@ -156,47 +157,50 @@ The city of Smalltown consists of five subdivisions. Mayor John Lion wants to bu
 		\path[unbid] (three) edge [] node [above left] {3} (five);
 		
 		\path[unbid] (four) edge [] node [below] {5} (five);
-	\end{tikzpicture}
+	\end{tikzpicture}}
+	\resizebox{0.23\linewidth}{!}{
 	\begin{tikzpicture}[node distance=2.5cm]
 		\node[roundnode] (three) [] {3};
 		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
-		\node[roundnode] (two) [above right of=three, yshift=0.25cm] {2};
+		\node[unnode] (two) [above right of=three, yshift=0.25cm] {2};
 		\node[unnode] (four) [below right of=three, yshift=-0.25cm] {4};
-		\node[unnode] (five) [below left of=three, yshift=0.5cm] {5};
+		\node[roundnode] (five) [below left of=three, yshift=0.5cm] {5};
 		
 		\path[unbid] (one) edge [] node [above] {5} (two);
-		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
+		\path[bid] (one) edge [] node [above right] {\textbf{3}} (three);
 		\path[unbid] (one) edge [] node [left] {5} (five);
 		
-		\path[bid] (two) edge [very thick] node [above left] {\textbf{5}} (three);
+		\path[unbid] (two) edge [] node [above left] {5} (three);
 		\path[unbid] (two) edge [] node [below right] {7} (four);
 		\path[unbid] (two) edge [bend left=40] node [below left, yshift=-15pt, xshift=-11pt] {7} (five);
 		
 		\path[unbid] (three) edge [] node [above right] {4} (four);
-		\path[unbid] (three) edge [] node [above left] {3} (five);
+		\path[bid] (three) edge [very thick] node [above left] {3} (five);
 		
 		\path[unbid] (four) edge [] node [below] {5} (five);
-	\end{tikzpicture}
+	\end{tikzpicture}}
+	\resizebox{0.23\linewidth}{!}{
 	\begin{tikzpicture}[node distance=2.5cm]
 		\node[roundnode] (three) [] {3};
 		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
-		\node[roundnode] (two) [above right of=three, yshift=0.25cm] {2};
+		\node[unnode] (two) [above right of=three, yshift=0.25cm] {2};
 		\node[roundnode] (four) [below right of=three, yshift=-0.25cm] {4};
-		\node[unnode] (five) [below left of=three, yshift=0.5cm] {5};
+		\node[roundnode] (five) [below left of=three, yshift=0.5cm] {5};
 		
 		\path[unbid] (one) edge [] node [above] {5} (two);
-		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
+		\path[bid] (one) edge [] node [above right] {\textbf{3}} (three);
 		\path[unbid] (one) edge [] node [left] {5} (five);
 		
-		\path[bid] (two) edge [very thick] node [above left] {\textbf{5}} (three);
+		\path[unbid] (two) edge [] node [above left] {5} (three);
 		\path[unbid] (two) edge [] node [below right] {7} (four);
 		\path[unbid] (two) edge [bend left=40] node [below left, yshift=-15pt, xshift=-11pt] {7} (five);
 		
-		\path[bid] (three) edge [very thick] node [above right] {\textbf{4}} (four);
-		\path[unbid] (three) edge [] node [above left] {3} (five);
+		\path[bid] (three) edge [very thick] node [above right] {4} (four);
+		\path[bid] (three) edge [] node [above left] {3} (five);
 		
 		\path[unbid] (four) edge [] node [below] {5} (five);
-	\end{tikzpicture}
+	\end{tikzpicture}}
+	\resizebox{0.23\linewidth}{!}{
 	\begin{tikzpicture}[node distance=2.5cm]
 		\node[roundnode] (three) [] {3};
 		\node[roundnode] (one) [above left of=three, yshift=-0.5cm] {1};
@@ -205,19 +209,28 @@ The city of Smalltown consists of five subdivisions. Mayor John Lion wants to bu
 		\node[roundnode] (five) [below left of=three, yshift=0.5cm] {5};
 		
 		\path[unbid] (one) edge [] node [above] {5} (two);
-		\path[bid] (one) edge [very thick] node [above right] {\textbf{3}} (three);
+		\path[bid] (one) edge [] node [above right] {\textbf{3}} (three);
 		\path[unbid] (one) edge [] node [left] {5} (five);
 		
-		\path[bid] (two) edge [very thick] node [above left] {\textbf{5}} (three);
+		\path[bid] (two) edge [very thick] node [above left] {5} (three);
 		\path[unbid] (two) edge [] node [below right] {7} (four);
 		\path[unbid] (two) edge [bend left=40] node [below left, yshift=-15pt, xshift=-11pt] {7} (five);
 		
-		\path[bid] (three) edge [very thick] node [above right] {\textbf{4}} (four);
-		\path[bid] (three) edge [very thick] node [above left] {\textbf{3}} (five);
+		\path[bid] (three) edge [] node [above right] {4} (four);
+		\path[bid] (three) edge [] node [above left] {3} (five);
 		
 		\path[unbid] (four) edge [] node [below] {5} (five);
-	\end{tikzpicture}
+	\end{tikzpicture}}
 \end{figure}
+Steps:\\
+\begin{enumerate}
+	\item Arbitrarily selecting Node 1.
+	\item Shortest path is 3 to Node 3, add Node 3.
+	\item Shortest path from networks is 3 to Node 5, add Node 5.
+	\item Shortest path from networks is 4 to Node 4, add Node 4.
+	\item Shortest path from networks is 5 to Node 2, add Node 2.
+	\item All nodes are connected, network is complete.
+\end{enumerate}
 \textbf{Summary: } Using node subdivision 3 as a central node, 
 	the network can be constructed with 15 unit lengths of telephone wire.
 \end{solution}
