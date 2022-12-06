@@ -1,0 +1,129 @@
+\documentclass[12pt]{amsart}
+
+
+%\usepackage[notref,notcite]{showkeys}
+\usepackage{verbatim}
+\usepackage{fullpage}
+\usepackage{amsfonts}
+\usepackage{bbm}
+\usepackage{wrapfig}
+\usepackage{enumerate}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\setlength{\parindent}{0pt}
+
+
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{fancybox}
+
+\newcommand{\1}{\mathbbm{1}}
+
+\newcommand{\eps}{\varepsilon}
+\newcommand{\la}{\lambda}
+\newcommand{\Contradiction}{\Rightarrow\Leftarrow}
+\DeclareMathOperator{\lspan}{span}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\diag}{diag}
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{(\theenumi)}
+
+\newcounter{Theorem}
+\newcounter{Definition}
+\numberwithin{equation}{section}
+\numberwithin{Theorem}{section}
+
+\theoremstyle{plain} %% This is the default, anyway
+\newtheorem{thm}[Theorem]{Theorem}
+\newtheorem{cor}[Theorem]{Corollary}
+\newtheorem{lem}[Theorem]{Lemma}
+\newtheorem{prop}[Theorem]{Proposition}
+%\usepackage{upgreek}
+
+\theoremstyle{definition}
+\newtheorem{defn}[Theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[section]
+\newtheorem{ex}[Theorem]{Example}
+\newtheorem{nota}[Theorem]{Notation}
+
+
+
+\begin{document}
+
+\thispagestyle{empty}
+
+\noindent{\Large Homework 9 (Due December 9 at 8am)}\bigskip
+
+
+\begin{enumerate}[1.]
+
+\item An \textit{orthogonal projection} is a linear map \(\mathbf{P}:\mathcal{V}\to\mathcal{V}\) on an inner product space \(\mathcal{V}\) such that \(\mathbf{P}\) has an adjoint and \(\mathbf{P}^{\ast} = \mathbf{P} = \mathbf{P}^{2}\). (Recall that \(\mathbf{P}^{2}\) is notation for the composition \(\mathbf{PP}.\)). See Definition 13.1 in the notes.
+
+
+\bigskip
+
+\noindent For this problem, we will assume that \(\mathcal{V}\) is a finite-dimensional inner product space over \(\mathbb{F}=(\mathbb{R}\text{ or }\mathbb{C})\). Thus, by Theorem 10.6 (b) any linear operator with domain \(\mathcal{V}\) has an adjoint. The goal of this exercise is to show that for every subspace \(\mathcal{W}\subset\mathcal{V}\) there is a unique orthogonal projection with image \(\mathcal{W}\). Fix an arbitrary orthogonal projection \(\mathbf{P}:\mathcal{V}\to\mathcal{V}\) for this problem.\bigskip
+
+\begin{enumerate}
+
+\item Show that \(\mathbf{I}-\mathbf{P}\) is an orthgonal projection.\bigskip
+
+\item Show that \(\langle \mathbf{Pu},(\mathbf{I}-\mathbf{P})\mathbf{v}\rangle = 0\) for any \(\mathbf{u},\mathbf{v}\in\mathcal{V}\).\bigskip
+
+\item Show that \((\mathbf{I}-\mathbf{P})(\mathcal{V}) = \mathbf{P}(\mathcal{V})^{\bot} = \operatorname{ker}(\mathbf{P})\).\bigskip
+
+\end{enumerate}
+
+\noindent Let \(\mathcal{W}\subset\mathcal{V}\) be a subspace, and let \(\{\mathbf{e}_{n}\}_{n=1}^{M}\) be an orthonormal basis for \(\mathcal{W}\). The map \(\mathbf{Q}:\mathcal{V}\to\mathcal{V}\) given by
+\[\mathbf{Qv} = \sum_{n=1}^{M}\langle \mathbf{e}_{n},\mathbf{v}\rangle\mathbf{e}_{n},\]
+is called an \textit{orthogonal projection onto }\(\mathcal{W}\).\bigskip
+
+\begin{enumerate}
+\addtocounter{enumii}{3}
+
+\item  Let \(\mathbf{Q}\) be an orthogonal projection onto the subspace \(\mathcal{W}\subset\mathcal{V}\). Show that \(\mathbf{Q}\) is an orthogonal projection, \(\mathbf{Q}(\mathcal{V}) = \mathcal{W}\), and \(\operatorname{ker}\mathbf{Q} = \mathcal{W}^{\bot}\). (Hint: Can you relate \(\mathbf{Q}\) to the synthesis and analysis operators of the above orthonormal basis for \(\mathcal{W}\)?)\bigskip
+
+\item Suppose \(\mathbf{x}\in\mathcal{W}\) and \(\mathbf{y}\in\mathcal{W}^{\bot}\) such that \(\mathbf{x}+\mathbf{y}=\mathbf{0}\). Show that \(\mathbf{x}=\mathbf{y}=\mathbf{0}\).\bigskip
+
+\item Let \(\mathcal{W}\subset\mathcal{V}\) be a subspace and let \(\mathbf{v}\in\mathcal{V}\). Show that there exist unique vectors \(\mathbf{x}\in\mathcal{W}\) and \(\mathbf{y}\in\mathcal{W}^{\bot}\) such that \(\mathbf{v} = \mathbf{x}+\mathbf{y}\).
+
+(Hint: Consider the vectors \(\mathbf{Qv}\) and \((\mathbf{I}-\mathbf{Q})\mathbf{v} = \mathbf{v} -\mathbf{Qv}\), where \(\mathbf{Q}\) is an orthogonal projection onto \(\mathcal{W}\). They sum to \(\mathbf{v}\), but are they in the desired subspaces, and are they unique?)\bigskip
+
+\item Let \(\mathbf{Q}\) be an orthogonal projection onto the subspace \(\mathbf{P}(\mathcal{V})\). Show that \(\mathbf{Q}=\mathbf{P}\).\bigskip
+
+
+
+\end{enumerate}
+
+\item Let \(\mathbf{L}:\mathbb{R}^{2}\to\mathbb{R}^{3}\) be
+\[\mathbf{L}:=\begin{bmatrix} 2 & 0\\ -1 & 1\\ -1 & -1\end{bmatrix}\quad\text{ and }\quad \mathbf{y} = \begin{bmatrix}1\\2\\-1\end{bmatrix}.\]
+Note that \(\mathbf{y}\) is not in the image of \(\mathbf{L}\), and hence the linear inverse problem \(\mathbf{Lx}=\mathbf{y}\) has no solution. \bigskip
+
+\begin{enumerate}
+
+\item Use Gram--Schmidt to find an orthonormal basis for \(\mathbf{L}(\mathbb{R}^{2})\subset\mathbb{R}^{3}\).\bigskip
+
+\item Find the matrix representation of the orthogonal projection onto \(\mathbf{L}(\mathbb{R}^{2})\).\bigskip
+
+\item Let \(\mathbf{Q}\) be the orthogonal projection onto \(\mathbf{L}(\mathbb{R}^{2})\). Find all solutions to the linear inverse problem \(\mathbf{Lx}=\mathbf{Qy}\). As we proved in class, the solutions to this linear inverse problem are the least squares solutions to \(\mathbf{Lx}=\mathbf{y}\).\bigskip
+
+\end{enumerate}
+
+\item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a029303. Upload a completion certificate for this activity to your homework folder.
+
+\end{enumerate}
+
+\end{document}
+
+
+\end{proof}
+
