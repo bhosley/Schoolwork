@@ -75,7 +75,7 @@ Let \(X\sim\operatorname{BIN}(n,p)\) and \(\hat{p}=X/n\).
 Find a constant \(c\) so that
 \(E\left[c\hat{p}(1-\hat{p})\right]=p(1-p)\).
 \begin{solution}
-	S
+	
 \end{solution}
 %\end{ Question 3}
 
@@ -88,13 +88,16 @@ Let \(X_1,\ldots,X_n\) be a random sample from an exponential distribution,
 If \(\bar{x}=17.9\) with \(n=50\), then find a one-sided lower 95\%
 confidence limit for \(\theta\).
 \begin{solution}
-	\(\mathcalligra u(t)\):
+	% cite example 11.2.1 Engelhardt, Bain pg 361
 	\begin{align*}
-		\bar{x} + Z_{0.05}\sqrt{\frac{\bar{x}^2}{n}} 
-		= 17.9 - 1.645\sqrt{\frac{17.9^2}{50}} 
-		= 17.9 - 1.645(2.53144)
-		= 17.9 - 4.164%2188
-		= 13.7357812 
+		\(\mathcalligra u(x)\) 
+		&= \frac{2n\bar{x}}{\chi^2_{1-\alpha}(2n)} \\
+		&= \frac{2\cdot50(17.9)}{\chi^2_{0.05}(2\cdot50)} \\
+		&= \frac{1790}{124.34} \\
+		% Bain and Engelhard 124.34 for gamma =.9, 77.93 for 0.05
+		% Chi-square table.com	124.342 
+		% Scribbr.com		113.145
+		&= 14.3960
 	\end{align*}
 \end{solution}
 %\end{ Question 4}
@@ -107,8 +110,6 @@ Consider a random sample of size \(n\) from a Binomial distribution,
 \(X_i\sim\operatorname{BIN}(1,p)\). 
 Find the CRLB for the variances of unbiased estimators of \(p\).
 \begin{solution}
-	S
-	
 	\begin{align*}
 		\ln f(x) &= \ln\binom{n}{x}p^y(1-p)^{n-x} \\
 		\intertext{using Sterling approximation}
@@ -234,8 +235,6 @@ Compare the MSEs of \(\hat{\theta}_1\) and \(\hat{\theta}_2\) for \(n=2\).
 		\intertext{thus,}
 		\text{MSE}[\hat{\theta}_1] &> \text{MSE}[\hat{\theta}_2]
 	\end{align*}
-	
-	
 \end{solution}
 %\end{ Question 9}
 
