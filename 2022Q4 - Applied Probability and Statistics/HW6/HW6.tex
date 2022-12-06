@@ -5,6 +5,13 @@
 \usepackage{booktabs}
 \usepackage{diagbox}
 
+\usepackage{calligra}
+
+\DeclareMathAlphabet{\mathcalligra}{T1}{calligra}{m}{n}
+\DeclareFontShape{T1}{calligra}{m}{n}{<->s*[2.2]callig15}{}
+
+\usepackage[scr=rsfs]{mathalpha}
+
 \title{STAT 587 - Introduction to Probability and Statistics%
 	\\ Homework 6}
 \author{Brandon Hosley}
@@ -81,13 +88,13 @@ Let \(X_1,\ldots,X_n\) be a random sample from an exponential distribution,
 If \(\bar{x}=17.9\) with \(n=50\), then find a one-sided lower 95\%
 confidence limit for \(\theta\).
 \begin{solution}
-	CL\((\theta_{(-)})\):
+	\(\mathcalligra u(t)\):
 	\begin{align*}
 		\bar{x} + Z_{0.05}\sqrt{\frac{\bar{x}^2}{n}} 
 		= 17.9 - 1.645\sqrt{\frac{17.9^2}{50}} 
 		= 17.9 - 1.645(2.53144)
 		= 17.9 - 4.164%2188
-		= 13.7357812
+		= 13.7357812 
 	\end{align*}
 \end{solution}
 %\end{ Question 4}
