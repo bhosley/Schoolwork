@@ -61,7 +61,9 @@
 
 \thispagestyle{empty}
 
-\noindent{\Large Homework 9 (Due December 9 at 8am)}\bigskip
+\noindent{\Large Homework 9 (Due December 9 at 8am)}
+\hspace{\fill} {\Large B. Hosley}
+\bigskip \raggedbottom
 
 
 \begin{enumerate}[1.]
@@ -83,6 +85,103 @@
 
 \end{enumerate}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hrule \bigskip
+\begin{enumerate}[(a)]
+	\item 
+	\begin{proof}
+		Let \(\mathbf{I}\) be the identity matrix, 
+		\(\mathbf{P}\) be the orthogonal projection defined above,
+		and \(\mathbf{u},\mathbf{v}\in\mathcal{V}\) be arbitrary.
+		To show that \(\mathbf{I}-\mathbf{P}\)
+		is an orthogonal project we will show that
+		\((\mathbf{I}-\mathbf{P})^* = \mathbf{I}-\mathbf{P} = (\mathbf{I}-\mathbf{P})^2\).
+		First, observe that
+		\begin{align*}
+			\langle \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle
+			&= \langle \mathbf{u}, \mathbf{I} \mathbf{v} \rangle - \langle \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= \langle \mathbf{I^*} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P^*} \mathbf{u},  \mathbf{v} \rangle \\
+			%\intertext{and because \(\mathbf{I}\) is its own adjoint and \(\mathbf{P}\) is assumed to be an orthogonal projection,}
+			&= \langle \mathbf{I} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u},  \mathbf{v} \rangle \\
+			&= \langle (\mathbf{I}-\mathbf{P}) \mathbf{u}, \mathbf{v} \rangle \\
+			\intertext{thus,}
+			\langle \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle
+			&= \langle (\mathbf{I}-\mathbf{P}) \mathbf{u}, \mathbf{v} \rangle
+			\intertext{and,}
+			(\mathbf{I}-\mathbf{P})^* &= (\mathbf{I}-\mathbf{P}). 
+		\end{align*}
+		Next, observe that
+		\begin{align*}
+			(\mathbf{I}-\mathbf{P})^2 \
+			=\ \mathbf{I}^2 - 2\mathbf{I}\mathbf{P} + \mathbf{P}^2 \
+			% \intertext{and because \(\mathbf{I}^2 = \mathbf{I}\) and \(\mathbf{P}\) is assumed to be an orthogonal projection,}
+			=\ \mathbf{I} - 2\mathbf{P} + \mathbf{P} \
+			=\ \mathbf{I} - \mathbf{P}.
+		\end{align*}
+		Combining both results we conclude that 
+		\(\mathbf{I}-\mathbf{P}\) is an orthogonal projection.
+	\end{proof}
+	\bigskip
+	
+	\item 
+	\begin{proof}
+		Let \(\mathbf{u},\mathbf{v}in\mathcal{V}\) be arbitrary.
+		Then,
+		\begin{align*}
+			\langle \mathbf{P} \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{I} \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= \langle \mathbf{I^*} \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P^*} \mathbf{P} \mathbf{u},  \mathbf{v} \rangle \\
+			\intertext{and using the results of part (a),}
+			&= \langle \mathbf{I} \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P}^2 \mathbf{u},  \mathbf{v} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u},  \mathbf{v} \rangle \\
+			&= 0.
+		\end{align*}
+	\end{proof}
+	
+	\item 
+	\begin{proof}
+		Let 
+		
+		\(\mathbf{x}\in\mathbf{P}(\mathcal{V})^\perp\)
+		\(\mathbf{u},\mathbf{v}in\mathcal{V}\)
+		
+		
+		Then,
+		\begin{align*}
+			\langle \mathbf{u}, \mathbf{x} \rangle &= 0 \\
+			\langle \mathbf{Pv}, \mathbf{x} \rangle &= 0 \\
+			\langle \mathbf{v}, \mathbf{Px} \rangle &= 0 \\
+			\langle \mathbf{Px}, \mathbf{Px} \rangle &= 0 \\
+			\|\mathbf{Px}\|^2 &= 0.
+		\end{align*}
+		Thus, \(\mathbf{x}\in\operatorname{ker}(P)\).
+		
+		Let
+		
+		\(\mathbf{x}\in(\mathbf{I}-\mathbf{P})(\mathcal{V})\)
+		
+		\begin{align*}
+			\langle \mathbf{P}\mathbf{u}, \mathbf{z} \rangle
+			&= \langle \mathbf{P} \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{I} \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= \langle \mathbf{u}, \mathbf{P^*}\mathbf{I} \mathbf{v} \rangle - \langle \mathbf{u}, \mathbf{P}^2 \mathbf{v} \rangle \\
+			&= \langle \mathbf{u}, \mathbf{P^*} \mathbf{v} \rangle - \langle \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= 0.
+		\end{align*}
+		\(\mathbf{z}\in\operatorname{ker}(P)\).
+		
+		Shows (I-P)(V)  contained in P(V) perp
+		
+		
+	\end{proof}
+	
+\end{enumerate}
+
+% End Q1: A,B,C
+\clearpage
+
 \noindent Let \(\mathcal{W}\subset\mathcal{V}\) be a subspace, and let \(\{\mathbf{e}_{n}\}_{n=1}^{M}\) be an orthonormal basis for \(\mathcal{W}\). The map \(\mathbf{Q}:\mathcal{V}\to\mathcal{V}\) given by
 \[\mathbf{Qv} = \sum_{n=1}^{M}\langle \mathbf{e}_{n},\mathbf{v}\rangle\mathbf{e}_{n},\]
 is called an \textit{orthogonal projection onto }\(\mathcal{W}\).\bigskip
@@ -100,9 +199,36 @@ is called an \textit{orthogonal projection onto }\(\mathcal{W}\).\bigskip
 
 \item Let \(\mathbf{Q}\) be an orthogonal projection onto the subspace \(\mathbf{P}(\mathcal{V})\). Show that \(\mathbf{Q}=\mathbf{P}\).\bigskip
 
-
-
 \end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hrule \bigskip
+
+\begin{enumerate}[(d)]
+	\item 
+	\begin{proof}
+		
+		\begin{align*}
+			\langle \mathbf{u}, \mathbf{Q}\mathbf{v} \rangle
+			&= 
+		\end{align*}
+	\end{proof}
+
+	\item
+	\begin{proof}
+		content...
+	\end{proof}
+	
+	\item
+	\begin{proof}
+		content...
+	\end{proof}
+\end{enumerate}
+
+% End Q1: D,E,F,G
+\clearpage
 
 \item Let \(\mathbf{L}:\mathbb{R}^{2}\to\mathbb{R}^{3}\) be
 \[\mathbf{L}:=\begin{bmatrix} 2 & 0\\ -1 & 1\\ -1 & -1\end{bmatrix}\quad\text{ and }\quad \mathbf{y} = \begin{bmatrix}1\\2\\-1\end{bmatrix}.\]
