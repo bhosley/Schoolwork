@@ -1,0 +1,339 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+
+\title{STAT 587 - Introduction to Probability and Statistics%
+	\\ Midterm}
+\author{Brandon Hosley}
+\date{\today}
+
+\usepackage{comment}
+\begin{comment}
+	Choose two of questions 1 through 3 to complete 
+	Choose two of questions 4 through 6 to complete 
+	Choose two of questions 7 through 10 to complete
+	Choose two of questions 11 through 13 to complete
+	Complete questions 14 and 15
+\end{comment}
+
+\begin{document}
+\maketitle
+\begin{questions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 1}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+A local organization is conducting a raffle where 50 tickets are to be sold—one per customer. There are three prizes to be awarded. If the four organizers of the raffle each buy one ticket, what is the probability that the four organizers win none of the prizes?
+\begin{solution}
+	Probability that only non-organizer tickets are drawn:
+	\begin{equation*}
+		(46/50)(45/49)(44/48) = 0.774489795918367
+	\end{equation*}
+\end{solution}
+%\end{ Question 1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 2}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{question}{2}
+%\end{ Question 2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 3}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+A foundry ships a lot of 20 engine blocks of which five contain internal flaws. The purchaser will select three blocks at random and test them for hardness. The lot will be accepted if no flaws are found. What is the probability that this lot will be accepted?
+\begin{solution}
+	Probability that only quality engine block are selected:
+	\begin{equation*}
+		(15/20)(14/19)(14/18) = 0.491228070175439.
+	\end{equation*}
+\end{solution}
+%\end{ Question 3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 4}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{question}{4}
+%\end{ Question 4}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 5}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Your mom and dad take turns driving you to and from your STAT 587 class. Your mom drives you 60\% of the time, while your dad drives you 40\% of the time. After class they sometimes pick up cookies or ice cream, but never both. Your mother prefers cookies, so given she drives, she gets cookies 54\% of the time and ice cream 25\% of the time. You come home with cookies 33\% of the time and ice cream 52\% of the time. \\
+Given you come home with cookies or ice cream, what is the probability your dad drove you?
+\begin{solution} \\
+	\begin{tabular}{cc|ccc}
+		&  & $T_0$ & $T_c$ & $T_i$ \\
+		& 1 & 0.15 & 0.33 & 0.52 \\
+		\hline
+		$D_m$ & 0.6 & 0.21 & 0.54 & 0.25 \\
+		$D_d$ & 0.4 & 0.06 & 0.015 & 0.925 \\
+		\hline
+	\end{tabular}
+	\begin{equation*}
+		P(T_c\cup T_i|D_d) = \frac{P(T_c\cup T_i)(1-P(D_m)P(T_c\cup T_i))}{P(D_d)}
+		= 0.94
+	\end{equation*}
+	\begin{align*}
+		P(D_d|T_c\cup T_i) &= \frac{P(D_d)(P(T_c\cup T_i|D_d))}{P(T_c\cup T_i)} \\
+		&= \frac{(0.4)(0.94)}{(0.85)} \\
+		&= 0.442352941176471
+	\end{align*}
+		
+\end{solution}
+%\end{ Question 5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 6}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Consider telegraph signals "dot" and "dash" sent in the proportion 3:4, where erratic transmissions cause a dot to become a dash with probability 1/4 and a dash to become a dot with probability 1/3. If a dash is received, what is the probability that a dash has been sent?
+\begin{solution} \\
+	\begin{tabular}{cc|cc}
+		\multicolumn{1}{l}{$\cdot$} & -    & \multicolumn{1}{l}{Sent} & \multicolumn{1}{l}{} \\
+		3/7                         & 4/7  & \multicolumn{2}{r}{Received}                    \\ \hline
+		9/28                        & 4/21 & 43/84                    & $\cdot$              \\
+		3/28                        & 8/21 & 41/84                    & -                   
+	\end{tabular}
+	\begin{align*}
+		P(S_-|R_-)
+		= \frac{P(S_-\cap R_-)}{P(R_-)}
+		= \frac{(8/21)}{(41/84)}
+		= \frac{8(84)}{21(41)}
+		= 0.780487804878049
+	\end{align*}
+\end{solution}
+%\end{ Question 6}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 7}   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+The management at a fast-food outlet is interested in the joint behavior of the random variables $Y_1$, defined as the total time between a customer’s arrival at the store and departure from the service window, and $Y_2$, the time a customer waits in line before reaching the service window. Because $Y_1$ includes the time a customer waits in line, we must have $Y_1\geq Y_2$. The relative frequency distribution of observed values of $Y_1$ and $Y_2$ can be modeled by the probability density function
+$$ f(y_1,y_2)=\begin{cases} e^{-y_1} & \text{for } 0\leq y_2\leq y_1 \\
+	0 & \text{elsewhere} \end{cases} $$
+with time measured in minutes. Find $P(Y_1<2,Y_2>1)$.
+\begin{solution}
+	\begin{align*}
+		\int_{1}^{2}\int_{1}^{y_1}e^{-y_1}dy_2dy_1 
+		&= \int_{1}^{2}\bigg.\bigg(-y_2e^{-y_1}\bigg)\bigg|_1^{y_1} dy_1 \\
+		&= \int_{1}^{2} -y_1e^{-y_1} + e^{-y_1} dy_1 \\
+		&= \bigg. \frac{1}{2}y_1^2e^{-y_1}-e^{-y_1} \bigg|_1^2 \\
+		&= \bigg(\frac{1}{2}(2^2)e^{-2}-e^{-2}\bigg)-\bigg(\frac{1}{2}(1^2)e^{-1}-e^{-1}\bigg) \\
+		&= 2e^{-2}-e^{-2}-\frac{1}{2}e^{-1}+e^{-1} \\
+		&= e^{-2}+\frac{1}{2}e^{-1}
+		= 0.319275003822334
+	\end{align*}
+\end{solution}
+%\end{ Question 7} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 8}   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\end{ Question 8}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 9}   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{question}{9}
+%\end{ Question 9}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 10}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Let $Y_1$ and $Y_2$ have joint density function
+\[ f(y_1,y_2) = \begin{cases}
+	30y_1y_2^2 & \text{for } y_1-1\leq y_2\leq1-y_1 \text{ and } 0\leq y_1\leq1 \\
+	0 & \text{elsewhere}
+\end{cases} \]
+What is $P(Y_1>Y_2)$?
+\begin{solution}
+	\begin{align*}
+		P(Y_2<Y_1)
+		&= \int_{0}^{1}\int_{0}^{1-y_1} 30y_1y_2^2 dy_2 dy_1 \\
+		&= 30\int_{0}^{1}y_1\int_{0}^{1-y_1} y_2^2 dy_2 dy_1 \\
+		&= 30\int_{0}^{1}y_1 \bigg.\bigg( \frac{1}{3}y_2^3 \bigg)\bigg|_{0}^{1-y_1} dy_1 \\
+		&= 30\int_{0}^{1}y_1 \bigg( \frac{1}{3}(1-y_1)^3 \bigg) dy_1 \\
+		&= 10\int_{0}^{1}y_1(1-y_1)^3 dy_1 
+		= 10\int_{0}^{1} y_1-y_1^2+3y_1^3-y_1^4 dy_1 \\
+		&= 10( \frac{1}{2}y_1^2-y_1^3+\frac{3}{4}y_1^4-\frac{1}{5}y_1^5 )
+		= 10(1/4 - 1/5) = 10(1/20) = \frac{1}{2}
+	\end{align*}
+\end{solution}
+%\end{ Question 10}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 11}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+A soft-drink machine has a random amount $Y_2$ in supply at the beginning of a given day and dispenses a random amount $Y_1$ during the day (with measurements in gallons). It is not resupplied during the day, and hence $Y_1\leq Y_2$. It has been observed that $Y_1$ and $Y_2$ have a joint density given by
+\[ f(y_1,y_2) = \begin{cases}
+	1/2 & \text{for } 0\leq y_1\leq y_2\leq2 \\ 0 & \text{elsewhere}
+\end{cases}\]
+Evaluate the probability that less than 1/2 gallon will be sold, given that the machine contains 1.5 gallons at the start of the day.
+\begin{solution}
+	$P(Y_1<0.5|y_2=1.5)$ \\
+	First we find marginal density for $Y_2$
+	\begin{align*}
+		f_{Y_2} = \int_{0}^{y_2} \frac{1}{2} dy_1 =\frac{y_2}{2}
+	\end{align*}
+	Next, substitute into conditional probability,
+	\begin{align*}
+		P(Y_1<0.5|y_2=1.5) 
+		&= \int_{0}^{0.5}\frac{1/2}{y_2/2} dy_1 \\
+		&= \int_{0}^{0.5}\frac{1}{1.5} dy_1 \\
+		&= \int_{0}^{0.5}\frac{2}{3} dy_1 \\
+		&= \bigg. \frac{2}{3}y_1 \bigg|_{0}^{0.5}
+		= \frac{1}{3}
+	\end{align*}
+\end{solution}
+%\end{ Question 11}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 12}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{question}{12}
+%\end{ Question 12}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 13}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Suppose $Y_1$ and $Y_2$ are uniformly distributed over the area of a triangle bound by the points {(-1,0), (1,0),(0,1)}. Find $P(Y_2\geq1/2|Y_1=1/4)$.
+\begin{solution}
+	Parameters: $0\leq y_2\leq1$, $-1\leq y_1\leq1$ 
+	\[f_{Y_1,Y_2}(y_1,y_2) = \begin{cases}
+		y_2\leq 1+y_1 & for -1\leq y_1\leq0 \\
+		y_2\leq 1-y_1 & for 0\leq y_1\leq1 
+	\end{cases}\]
+	Find Marginal density for $Y_1$:
+	\begin{align*}
+		f(y_1)
+		&= \int_{-1}^{0} 1+y_1 dy_2 + \int_{0}^{1} 1-y_1 dy_2 \\
+		&= \bigg. y_2(1+y_1) \bigg|_{-1}^{0} + \bigg. y_2(1-y_1) \bigg|_{0}^{1} \\
+		&= (1+y_1) + (1-y_1) = 2
+	\end{align*}
+	Then substitute for conditional probability:
+	\begin{align*}
+		P(Y_2\geq1/2|Y_1=1/4)
+		&= \int_{1/2}^{1}\frac{f_{Y_1,Y_2}(y_1,y_2)}{f_{Y_1}(y_1)} dy_2 \\
+		&= \int_{1/2}^{1}\frac{1-y_1}{2} dy_2 \\
+		&= \int_{1/2}^{1}\frac{3}{8} dy_2 \\
+		&= \bigg. \frac{3}{8}y_2 \bigg|_{1/2}^{1} \\
+		&= \frac{3}{8} - \frac{3}{16} = \frac{3}{16} = 0.1875
+	\end{align*}
+\end{solution}
+%\end{ Question 13} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 14}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+A random variable $X$ has a probability density function of the form
+\[ f(x) = \frac{1}{\theta} e^{\frac{-(x-\gamma)}{\theta}};\hspace{5ex} x>\gamma\]
+where defines the lower bound of the random variable $X$. Derive the expectation and variance of $X$ in whatever way you see fit; there are many ways to complete this problem. In your work, show this is a valid density. Select "True" as your answer for this question.
+\begin{solution}
+	First, find the $M_x(t)$ \\
+	\begin{align*}
+		M_x(t) = E[e^{tx}]
+		&= \int_{0}^{\infty} \frac{1}{\theta} e^{tx}e^{\frac{-(x-\gamma)}{\theta}} dx \\
+		&= \frac{1}{\theta}  \int_{0}^{\infty} e^{tx-\frac{(x-\gamma)}{\theta}} dx \\
+		\intertext{substitute $y=x-\gamma$}
+		&= \frac{1}{\theta}  \int_{0}^{\infty} e^{t(y+\gamma)-\frac{y}{\theta}} dy \\
+		&= \frac{e^{t\gamma}}{\theta}  \int_{0}^{\infty} e^{ty-\frac{y}{\theta}} dy \\
+		&= \frac{e^{t\gamma}}{\theta}  \int_{0}^{\infty} e^{y(t-\frac{1}{\theta})} dy \\
+		&= \frac{e^{t\gamma}}{\theta(t-\frac{1}{\theta})}  \bigg. e^{y(t-\frac{1}{\theta})} \bigg|_{0}^{\infty} \\
+		&= \frac{e^{t\gamma}}{\theta(t-\frac{1}{\theta})} [0-1] \\
+		&= \frac{e^{t\gamma}}{1-t\theta}.
+	\end{align*}
+	This can be shown to be a valid distribution via 
+	\begin{align*}
+		M_x(0) = \frac{e^{0\gamma}}{1-0\theta} = \frac{1}{1} = 1.
+	\end{align*}
+	Find the expected value:
+	\begin{align*}
+		E[X] = M^(1)_X(t)|_{t=0} 
+		&= \frac{e^{\gamma t}}{1-\theta t} d/dt\\
+		&= \bigg. \frac{(1-\theta t)\gamma-e^{\gamma t}(-\theta)}{(1-\theta t)^2} \bigg|_{t=0} \\
+		&= \frac{(\gamma-0)-(0-\theta)}{(1-0)^2} \\
+		&= \gamma + \theta.
+	\end{align*}
+	Next, to find Var$[X]$ first find:
+	\begin{align*}
+		E[X^2] = M^(2)_X(t)|_{t=0} 
+		&= \frac{(1-\theta t)\gamma-e^{\gamma t}(-\theta)}{(1-\theta t)^2} d/dt \\
+		&= \bigg( \frac{(1-\theta t)\gamma}{(1-\theta t)^2} - \frac{c^{\gamma t}(-\theta)}{(1-\theta t)^2} \bigg) d/dt \\
+		&= \frac{\gamma}{(1-\theta t)}d/dt + \frac{\theta e^{\gamma t}}{(1-\theta t)^2} d/dt \\
+		&= \bigg. \frac{\gamma^2(1-\theta t)+\gamma\theta}{(1-\theta t)^2} + 
+			\frac{(1-\theta t)^2\theta\gamma -
+				\theta e^{\gamma t}2\theta(\theta t-1)   }{(1-\theta t)^2} \bigg|_{t=0} \\
+		&= \bigg. \frac{\gamma^2(1-\theta t)+\gamma\theta}{(1-\theta t)^2} + 
+			\frac{(1-\theta t)^2\theta\gamma -
+				2\theta^2 e^{\gamma t}(\theta t-1)   }{(1-\theta t)^2} \bigg|_{t=0} \\
+		&= \bigg. \frac{\gamma^2(1-\theta t)+\gamma\theta}{(1-\theta t)^2} + 
+		\frac{(1-\theta t)^2\theta\gamma +
+			2\theta^2 e^{\gamma t}-2\theta^3 te^{\gamma t}   }{(1-\theta t)^2} \bigg|_{t=0} \\
+		&= \gamma^2 +\gamma\theta + \gamma\theta + 2\theta^2
+	\end{align*}
+	finally, solve for Var
+	\begin{align*}
+		\operatorname{Var}[X]
+		&= E[X^2] - E[X]^2 \\
+		&= (\gamma^2 + 2\gamma\theta +2\theta^2)-(\gamma+\theta)^2 \\
+		&= (\gamma^2 + 2\gamma\theta +2\theta^2)-(\gamma^2+2\gamma\theta+\theta^2) \\
+		&= \theta^2.
+	\end{align*}
+\end{solution}
+%\end{ Question 14}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	\begin{ Question 15}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+A quality control plan calls for randomly selecting three items from the daily production of a certain machine and observing the number of defectives (assume that the probability of defective remains constant on a single day). However, the proportion $p$ of defectives produced by the machine \textbf{varies from day to day} and is assumed to have a uniform distribution on the interval (0, 1). For a randomly chosen day, find the unconditional (marginal) probability that exactly two defectives are observed in the sample.
+For this problem, you need to know the following result:
+\[ \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} = \int_{0}^{1}x^{\alpha-1}(1-x)^{\beta-1}dx \]
+Input your numerical answer to this question below.
+\begin{solution}
+	\begin{tabular}{rl}
+		Probability of part being defective: & $p=p$ \\
+		Sample size: & $n=3$ \\
+		Target defective in sample size: & $k=2$
+	\end{tabular}
+	\begin{align*}
+		\text{BINOM: } f(k,n,p)
+		&= P(2;3,p) \\
+		&= P(X=2) \\
+		&= \binom{3}{2}(p)^2(1-p)^1 \\
+		&= 3(p)^2(1-p)^1 
+		\intertext{thus,}
+		P_p(p)
+		&= \int_{0}^{1} 3(p)^2(1-p)^1 dp \\
+		&= 3\int_{0}^{1} (p)^2(1-p)^1 dp \hspace{3ex} * \\
+		&= 3\int_{0}^{1} p^2-p^3 dp \\
+		&= 3\int_{0}^{1} p^2-p^3 dp \\
+		&= 3\bigg. \frac{1}{3}p^3-\frac{1}{4}p^4 \bigg|_{0}^{1} \\
+		&= 3\bigg(\frac{1}{3}-\frac{1}{4}\bigg) \\
+		&= 3\frac{1}{12}
+		= 1/4.
+		\intertext{Additionally, taking from the * marked integral above }
+		3\int_{0}^{1} (p)^2(1-p)^1 dp
+		&= 3\bigg(\frac{\Gamma(3)\Gamma(2)}{\Gamma(5)}\bigg) \\
+		&= 3\bigg(\frac{(2)!(1)!}{(4)!}\bigg) \\
+		&= 3\bigg(\frac{1}{12}\bigg)
+		= 1/4.
+	\end{align*}
+\end{solution}
+%\end{ Question 15}
+
+\end{questions}
+\end{document}
