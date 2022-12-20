@@ -20,6 +20,7 @@
 \usepackage{epstopdf}
 \usepackage{amsmath, amsthm, amssymb}
 \usepackage{fancybox}
+\usepackage{nicefrac}
 
 \newcommand{\1}{\mathbbm{1}}
 
@@ -103,7 +104,6 @@
 			\langle \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle
 			&= \langle \mathbf{u}, \mathbf{I} \mathbf{v} \rangle - \langle \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
 			&= \langle \mathbf{I^*} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P^*} \mathbf{u},  \mathbf{v} \rangle \\
-			%\intertext{and because \(\mathbf{I}\) is its own adjoint and \(\mathbf{P}\) is assumed to be an orthogonal projection,}
 			&= \langle \mathbf{I} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u},  \mathbf{v} \rangle \\
 			&= \langle (\mathbf{I}-\mathbf{P}) \mathbf{u}, \mathbf{v} \rangle \\
 			\intertext{thus,}
@@ -116,7 +116,6 @@
 		\begin{align*}
 			(\mathbf{I}-\mathbf{P})^2 \
 			=\ \mathbf{I}^2 - 2\mathbf{I}\mathbf{P} + \mathbf{P}^2 \
-			% \intertext{and because \(\mathbf{I}^2 = \mathbf{I}\) and \(\mathbf{P}\) is assumed to be an orthogonal projection,}
 			=\ \mathbf{I} - 2\mathbf{P} + \mathbf{P} \
 			=\ \mathbf{I} - \mathbf{P}.
 		\end{align*}
@@ -127,54 +126,73 @@
 	
 	\item 
 	\begin{proof}
-		Let \(\mathbf{u},\mathbf{v}in\mathcal{V}\) be arbitrary.
-		Then,
+		Let \(\mathbf{u},\mathbf{v}\in\mathcal{V}\) be arbitrary.
+		Then, using the fact that \(\mathbf{I}\) is self-adjoint,
+		and the results from part (a) showing that \(\mathbf{P}\) is also self-adjoint, 
+		we see that
 		\begin{align*}
 			\langle \mathbf{P} \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle
 			&= \langle \mathbf{P} \mathbf{u}, \mathbf{I} \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
 			&= \langle \mathbf{I^*} \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P^*} \mathbf{P} \mathbf{u},  \mathbf{v} \rangle \\
-			\intertext{and using the results of part (a),}
+			%\intertext{and using the results of part (a),}
 			&= \langle \mathbf{I} \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P}^2 \mathbf{u},  \mathbf{v} \rangle \\
-			&= \langle \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u},  \mathbf{v} \rangle \\
+			&= \langle \mathbf{P}\mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P}\mathbf{u}, \mathbf{v} \rangle \\
 			&= 0.
 		\end{align*}
 	\end{proof}
 	
 	\item 
 	\begin{proof}
-		Let 
-		
-		\(\mathbf{x}\in\mathbf{P}(\mathcal{V})^\perp\)
-		\(\mathbf{u},\mathbf{v}in\mathcal{V}\)
-		
-		
-		Then,
+		That
+		\((\mathbf{P}(\mathcal{V})^{\bot} = \operatorname{ker}(\mathbf{P}))\)
+		can be shown by
 		\begin{align*}
-			\langle \mathbf{u}, \mathbf{x} \rangle &= 0 \\
-			\langle \mathbf{Pv}, \mathbf{x} \rangle &= 0 \\
-			\langle \mathbf{v}, \mathbf{Px} \rangle &= 0 \\
-			\langle \mathbf{Px}, \mathbf{Px} \rangle &= 0 \\
-			\|\mathbf{Px}\|^2 &= 0.
-		\end{align*}
-		Thus, \(\mathbf{x}\in\operatorname{ker}(P)\).
-		
-		Let
-		
-		\(\mathbf{x}\in(\mathbf{I}-\mathbf{P})(\mathcal{V})\)
-		
-		\begin{align*}
-			\langle \mathbf{P}\mathbf{u}, \mathbf{z} \rangle
-			&= \langle \mathbf{P} \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle \\
-			&= \langle \mathbf{P} \mathbf{u}, \mathbf{I} \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
-			&= \langle \mathbf{u}, \mathbf{P^*}\mathbf{I} \mathbf{v} \rangle - \langle \mathbf{u}, \mathbf{P}^2 \mathbf{v} \rangle \\
-			&= \langle \mathbf{u}, \mathbf{P^*} \mathbf{v} \rangle - \langle \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			[\mathbf{P}(\mathcal{V})]^\perp
+			&= \{\mathbf{x}\in\mathcal{V} : \langle \mathbf{u},\mathbf{x} \rangle =0, \ 
+				\forall\mathbf{u}\in \mathbf{P}(\mathcal{V}) \} \\
+			&= \{\mathbf{x}\in\mathcal{V} : \langle \mathbf{Pv}, \mathbf{x} \rangle =0, \ 
+				\forall\mathbf{v}\in \mathcal{V} \} \\
+			&= \{\mathbf{x}\in\mathcal{V} : \langle \mathbf{v}, \mathbf{Px} \rangle =0, \ 
+				\forall\mathbf{v}\in \mathcal{V} \} \\
+			&= \langle \mathbf{Px}, \mathbf{Px} \rangle  \\
+			&= \|\mathbf{Px}\|^2 \\
 			&= 0.
 		\end{align*}
-		\(\mathbf{z}\in\operatorname{ker}(P)\).
-		
-		Shows (I-P)(V)  contained in P(V) perp
-		
-		
+		Next, for arbitrary \(\mathbf{y}\in(\mathbf{I}-\mathbf{P})(\mathcal{V})\)
+		and \(\mathbf{u}\in\mathcal{V}\) there is \(\mathbf{v}\in\mathcal{V}\)
+		such that	
+		\begin{align*}
+			\langle \mathbf{P}\mathbf{u}, \mathbf{y} \rangle
+			&= \langle \mathbf{P} \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{I} \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P^*} \mathbf{P} \mathbf{u}, \mathbf{v} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P}^2 \mathbf{u}, \mathbf{v} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{v} \rangle - \langle \mathbf{P} \mathbf{u}, \mathbf{v} \rangle \\
+			&= 0.
+		\end{align*}
+		Thus
+		\((\mathbf{I}-\mathbf{P})(\mathcal{V}) \subseteq \mathbf{P}(\mathcal{V})^{\bot} \).
+%
+		Similarly, for arbitrary \(\mathbf{z}\in\mathbf{P}(\mathcal{V})^{\bot}\) 
+		and \(\mathbf{u}\in\mathcal{V}\) there is \(\mathbf{v}\in\mathcal{V}\)
+		such that	
+		\begin{align*}
+			0 &= \langle \mathbf{Pu}, \mathbf{z} \rangle \\
+			&= \langle \mathbf{Pu}, \mathbf{z} \rangle - \langle \mathbf{Pu}, \mathbf{z} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle 
+				- \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= \langle \mathbf{P^*}\mathbf{P} \mathbf{u}, \mathbf{v} \rangle 
+				- \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= \langle \mathbf{P}^2 \mathbf{u}, \mathbf{I} \mathbf{v} \rangle 
+				- \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, \mathbf{I} \mathbf{v} \rangle 
+				- \langle \mathbf{P} \mathbf{u}, \mathbf{P} \mathbf{v} \rangle \\
+			&= \langle \mathbf{P} \mathbf{u}, (\mathbf{I}-\mathbf{P}) \mathbf{v} \rangle .
+		\end{align*}
+		Thus,
+		\(\mathbf{P}(\mathcal{V})^{\bot} \subseteq (\mathbf{I}-\mathbf{P})(\mathcal{V})\),
+		and we conclude that 
+		\(\mathbf{P}(\mathcal{V})^{\bot} = (\mathbf{I}-\mathbf{P})(\mathcal{V})\).
 	\end{proof}
 	
 \end{enumerate}
@@ -206,24 +224,167 @@ is called an \textit{orthogonal projection onto }\(\mathcal{W}\).\bigskip
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \hrule \bigskip
 
-\begin{enumerate}[(d)]
+\begin{enumerate}[(a)]
+	\addtocounter{enumii}{3}
 	\item 
 	\begin{proof}
-		
+		We show that \(\mathbf{Q}\) is an orthogonal projection, first by showing
 		\begin{align*}
 			\langle \mathbf{u}, \mathbf{Q}\mathbf{v} \rangle
-			&= 
+			&= \langle \mathbf{u}, \sum_{n=1}^{M} \langle \mathbf{e}_n, \mathbf{v} \rangle \mathbf{e}_n \rangle \\
+			&= \sum_{n=1}^{M} \langle \mathbf{e}_n, \mathbf{v} \rangle \langle \mathbf{u}, \mathbf{e}_n \rangle \\
+			&=  \langle \sum_{n=1}^{M}\overline{\langle \mathbf{u}, \mathbf{e}_n \rangle} \mathbf{e}_n, \mathbf{v} \rangle \\
+			&= \langle \sum_{n=1}^{M}\langle \mathbf{e}_n, \mathbf{u} \rangle \mathbf{e}_n, \mathbf{v} \rangle \\
+			&= \langle \mathbf{Q} \mathbf{u}, \mathbf{v} \rangle
+		\end{align*}
+		and second, that because 
+		\(\langle \mathbf{e}_n, \mathbf{e}_m \rangle = 0\)
+		when \(n\neq m\) we see that
+		\begin{align*}
+			\mathbf{Q}^2\mathbf{v}
+			&= \sum_{n=1}^{M} \langle \mathbf{e}_n, \sum_{m=1}^{M} \langle \mathbf{e}_m, \mathbf{v} \rangle \mathbf{e}_m \rangle \mathbf{e}_n \\
+			&= \sum_{n=1}^{M} \sum_{m=1}^{M} \langle \mathbf{e}_m, \mathbf{v} \rangle \langle \mathbf{e}_n,  \mathbf{e}_m \rangle \mathbf{e}_n \\
+			&= \sum_{n=1}^{M} \langle \mathbf{e}_n, \mathbf{v} \rangle \langle \mathbf{e}_n, \mathbf{e}_n \rangle \mathbf{e}_n \\
+			&= \sum_{n=1}^{M} \langle \mathbf{e}_n, \mathbf{v} \rangle \mathbf{e}_n \\
+			&= \mathbf{Q}\mathbf{v}.
+		\end{align*}
+		Thus $\mathbf{Q}$ is an orthogonal projection.
+		
+		% 5.5.b -> 10.2.5 -> 10.2.4 -> 10.5a
+		Let \(\mathbf{S}\) be the synthesis operator of 
+		\(\{\mathbf{e}_{n}\}_{n=1}^{M}\)	
+		where for arbitrary \(\mathbf{x}\in\mathbb{F}^\mathcal{N}\)
+		\begin{align*}
+			\mathbf{S}\mathbf{x} = \sum_{n=1}^{M}\mathbf{x}(n)\mathbf{e}_n.
+		\end{align*}
+		Let \(\mathbf{A}\) be an analysis operator of 
+		\(\{\mathbf{e}_{n}\}_{n=1}^{M}\)
+		where for arbitrary \(\mathbf{v}\in\mathcal{V}\)
+		and \(n\in[M]\)
+		\begin{align*}
+			\mathbf{A}\mathbf{v}(n) = \langle \mathbf{e}_n,\mathbf{v} \rangle.
+		\end{align*}
+		Then observe that
+		\begin{align*}
+			\mathbf{Qv} 
+			= \sum_{n=1}^{M}\langle \mathbf{e}_{n},\mathbf{v}\rangle\mathbf{e}_{n}
+			= \sum_{n=1}^{M} \mathbf{A}\mathbf{v}(n) \mathbf{e}_{n}
+			= \mathbf{S}\mathbf{A}\mathbf{v}.
+		\end{align*}
+		Note that the image
+		\(\mathbf{S}(\mathbb{F}^\mathcal{N}) = \operatorname{span}\{\mathbf{e}_{n}\}_{n=1}^{M}\)
+		and that the image
+		\(\mathbf{A}(\mathcal{V})\in\mathbb{F}^\mathcal{N}\).
+		Then we see that
+		\begin{align*}	
+			\mathbf{Q}(\mathcal{V})
+			= \mathbf{S}\mathbf{A}(\mathcal{V})
+			= \mathbf{S}(\mathbb{F}^\mathcal{N})
+			= \operatorname{span}\{\mathbf{e}_{n}\}_{n=1}^{M}
+			= \mathcal{W}.
+		\end{align*}
+		And finally, leveraging theorem 10.2.a parts 4 and 5 we see that 
+		\begin{align*}
+			\operatorname{ker}(\mathbf{Q})
+			= \operatorname{ker}(\mathbf{SA})
+			= \operatorname{ker}(\mathbf{S})
+			= [\operatorname{span}\{\mathbf{e}_{n}\}_{n=1}^{M}]^\perp
+			= \mathcal{W}^\perp.
 		\end{align*}
 	\end{proof}
 
 	\item
 	\begin{proof}
-		content...
+		Because \(\mathbf{x}\in\mathcal{W}\)
+		and \(\mathbf{y}\in\mathcal{W}^\perp\)
+		then \(\langle\mathbf{x},\mathbf{y}\rangle=0\)
+		and therefor(e) we can use the Pythagorean Theorem to show that
+		\begin{align*}
+			\|x+y\|^2 &= \|\mathbf{x}\|^2 + \|\mathbf{y}\|^2
+			\intertext{and}
+			\|0\| &= \|\mathbf{x}\| + \|\mathbf{y}\|
+			\intertext{which implies}
+			\|\mathbf{x}\| &= \|\mathbf{y}\| = 0.
+		\end{align*}
+		Thus \(\mathbf{x} = \mathbf{y} = 0\). \\
 	\end{proof}
 	
 	\item
 	\begin{proof}
-		content...
+		Using a property of orthogonal projections shown in part (c), note that
+		\(\mathbf{I}-\mathbf{Q}(\mathcal{V}) = \mathbf{Q}(\mathcal{V})^\perp\).
+		Combined with the result in part (d) in which we showed that 
+		\(\mathbf{Q}(\mathcal{V})=\mathcal{W}\),
+		we can see that
+		\[\mathbf{I}-\mathbf{Q}(\mathcal{V}) = \mathbf{Q}(\mathcal{V})^\perp = \mathcal{W}^\perp.\]
+		
+		Next, let
+		\(\mathbf{v}\in\mathcal{V}\) be arbitrary
+		and 
+		\(\mathbf{x}\in\mathcal{W}\) and
+		\(\mathbf{y}\in\mathcal{W}^\perp\) 
+		be such that
+		\(\mathbf{x}=\mathbf{Q}\mathbf{v}\) and
+		\(\mathbf{y}=(\mathbf{I}-\mathbf{Q})\mathbf{v}\).
+		%then define
+		%\(\mathbf{x}_1,\mathbf{x}_2\in\mathcal{W}\) and
+		%\(\mathbf{y}_1,\mathbf{y}_2\in\mathcal{W}^\perp\) 
+		%such that 
+		%\(\mathbf{x}_1+\mathbf{y}_1=\mathbf{v}\),
+		%\(\mathbf{x}_2=\mathbf{Qv}\), and
+		%\(\mathbf{y}_2=(\mathbf{I}-\mathbf{Q})\mathbf{v}\).
+		%\begin{align*}
+		%	\mathbf{x} + \mathbf{y}
+		%	= \mathbf{Q}\mathbf{v} + (\mathbf{I}-\mathbf{Q})\mathbf{v}
+		%	= \mathbf{Q}\mathbf{v} + \mathbf{I}\mathbf{v}-\mathbf{Q}\mathbf{v}
+		%	= \mathbf{I}\mathbf{v} + \mathbf{Q}\mathbf{v}-\mathbf{Q}\mathbf{v}
+		%	= \mathbf{I}\mathbf{v}
+		%	= \mathbf{v}.
+		%\end{align*}
+		Then,
+		\begin{align*}
+			\mathbf{v}
+			= \mathbf{I}\mathbf{v}
+			= \mathbf{I}\mathbf{v} + (\mathbf{Q}\mathbf{v}-\mathbf{Q}\mathbf{v})
+			= \mathbf{Q}\mathbf{v} + \mathbf{I}\mathbf{v}-\mathbf{Q}\mathbf{v}
+			= \mathbf{Q}\mathbf{v} + (\mathbf{I}-\mathbf{Q})\mathbf{v}
+			= \mathbf{x} + \mathbf{y}.
+		\end{align*}
+		Thus we see not only that there exists 
+		\(\mathbf{x}\in\mathcal{W}\) and
+		\(\mathbf{y}\in\mathcal{W}^\perp\) 
+		such that
+		\(\mathbf{x} + \mathbf{y} = \mathbf{v}\)
+		but that they are uniquely
+		\(\mathbf{x}=\mathbf{Q}\mathbf{v}\) and
+		\(\mathbf{y}=(\mathbf{I}-\mathbf{Q})\mathbf{v}\). \\
+	\end{proof}
+
+	\item
+	\begin{proof}
+		%As shown in part (d) \(\mathbf{Q}(\mathcal{V})=\mathcal{W}\),
+		%and since \(\mathbf{P}(\mathcal{V})\in\mathcal{V}\),
+		%\(\mathbf{Q}(\mathbf{P}(\mathcal{V}))=\mathcal{W}\)
+		%\begin{align*}
+		%	\mathbf{Q}(\mathcal{V}) &= \mathbf{Q}(\mathbf{P}(\mathcal{V})) \\
+		%	\mathbf{Q^*}\mathbf{Q}(\mathcal{V}) &= \mathbf{Q^*}\mathbf{Q}(\mathbf{P}(\mathcal{V})) \\
+		%	\mathbf{Q}\mathbf{Q}(\mathcal{V}) &= \mathbf{P}(\mathcal{V}) \\
+		%	\mathbf{Q}^2(\mathcal{V}) &= \mathbf{P}(\mathcal{V}) \\
+		%	\mathbf{Q}(\mathcal{V}) &= \mathbf{P}(\mathcal{V}) \\
+		%\end{align*}
+		As shown in part (d) the image of \(\mathbf{Q}\)projection 
+		will be \(\mathbf{P}(\mathcal{V})\)
+		thus, \(\mathbf{Q}(\mathcal{V}) = \mathbf{P}(\mathcal{V})\)
+		
+		And as shown in parts (c) and (e) arbitrary \(\mathbf{v}\in\mathcal{V}\)
+		can be written as either
+		\[\mathbf{v}=\mathbf{Q}(\mathbf{v})+(\mathbf{I}-\mathbf{Q})\mathbf{v}\]
+		or
+		\[\mathbf{v}=\mathbf{P}(\mathbf{v})+(\mathbf{I}-\mathbf{P})\mathbf{v}.\]
+		Combining these two results, 
+		\(\mathbf{Q}(\mathbf{v})=\mathbf{P}(\mathbf{v})\)
+		and since \(\mathbf{v}\) was arbitrary
+		\(\mathbf{Q}=\mathbf{P}\).
 	\end{proof}
 \end{enumerate}
 
@@ -243,12 +404,83 @@ Note that \(\mathbf{y}\) is not in the image of \(\mathbf{L}\), and hence the li
 \item Let \(\mathbf{Q}\) be the orthogonal projection onto \(\mathbf{L}(\mathbb{R}^{2})\). Find all solutions to the linear inverse problem \(\mathbf{Lx}=\mathbf{Qy}\). As we proved in class, the solutions to this linear inverse problem are the least squares solutions to \(\mathbf{Lx}=\mathbf{y}\).\bigskip
 
 \end{enumerate}
+\bigskip
+\hrule
+\bigskip
+
+\begin{enumerate}[(a)]
+	\item 
+	Let
+	\begin{align*}
+		\ell_1 = \begin{bmatrix}2\\-1\\-1\end{bmatrix}
+		\quad \text{and} \quad
+		\ell_2 = \begin{bmatrix}0\\1\\-1\end{bmatrix}.
+	\end{align*}
+	Then we may calculate an orthonormal basis for \(\mathbf{L}\),
+	\(\{\mathbf{e}_1,\mathbf{e}_2\}\) using Graham-Schmidt Orthonormalization,
+	\begin{align*}
+		\mathbf{e}_1 
+		= \frac{ \ell_1 }{ \left\|\ell_1\right\| } 
+		&= \frac{1}{\sqrt{6}}\ell_1
+		= \begin{bmatrix}\nicefrac{2}{\sqrt{6}}\\-\nicefrac{1}{\sqrt{6}}\\-\nicefrac{1}{\sqrt{6}}\end{bmatrix}
+	\intertext{and}
+		\mathbf{e}_2 
+		= \frac{\ell_2-\langle\mathbf{e}_1,\ell_2\rangle\mathbf{e}_1}%
+			{\|\ell_2-\langle\mathbf{e}_1,\ell_2\rangle\mathbf{e}_1}
+		&= \frac{\ell_2-0\mathbf{e}_1}{\|\ell_2-0\mathbf{e}_1\|}
+		= \frac{1}{\sqrt{2}}\ell_2
+		= \begin{bmatrix}0\\\nicefrac{1}{\sqrt{2}}\\\nicefrac{1}{\sqrt{2}}\end{bmatrix}.
+	\end{align*}
+	
+	\item 
+	Let \(\mathbf{Q}\) be the orthogonal projection onto \(\mathbf{L}(\mathbb{R}^2)\)
+	and \(\mathbf{A}\) be the matrix representation of of \(\mathbf{Q}\).
+	Using the definition of orthogonal projection from part one we can see
+	\begin{align*}
+		\mathbf{Qv}&= \langle\mathbf{e}_1,\mathbf{v}\rangle\mathbf{e}_1 + 
+			\langle\mathbf{e}_2,\mathbf{v}\rangle\mathbf{e}_2
+	\intertext{and by theorem 3.3}
+		\mathbf{A}(m,n) &:= [\mathbf{Q}(\boldsymbol{\delta}_n)](m)
+	\intertext{therefore}
+		\mathbf{A}(m,n) &:= \langle\mathbf{e}_1,\boldsymbol{\delta}_n\rangle\mathbf{e}_1(m) + 
+		\langle\mathbf{e}_2,\boldsymbol{\delta}_n\rangle\mathbf{e}_2(m) \\
+		 	&:= \mathbf{e}_1(n)\mathbf{e}_1(m) + \mathbf{e}_2(n)\mathbf{e}_2(m).
+	\end{align*}
+	Using the basis found in part (a) \(\mathbf{A}\) may be calculated as
+	\begin{align*}
+		\mathbf{A}
+		=
+		\begin{bmatrix}
+			\nicefrac{2}{3}&-\nicefrac{1}{3}&-\nicefrac{1}{3}\\
+			-\nicefrac{1}{3}&\nicefrac{2}{3}&-\nicefrac{1}{3}\\
+			-\nicefrac{1}{3}&-\nicefrac{1}{3}&\nicefrac{2}{3}
+		\end{bmatrix}.
+	\end{align*}
+	
+	\item 
+	To solve \(\mathbf{Lx}=\mathbf{Qy}\) as a system of linear equations
+	let \(\mathbf{x}\in\mathbb{R}^2\) such that 
+	\(\mathbf{x}=\begin{bmatrix}x_1\\x_2\end{bmatrix}\).
+	Then solving
+	\begin{align*}
+		 2x_1 + 0x_2 &= 1/3 \\
+		-1x_1 + 1x_2 &= 4/3 \\
+		-1x_1 - 1x_2 &= -5/3
+	\end{align*}
+	shows that 
+	\(\mathbf{x}=\begin{bmatrix}\nicefrac{1}{6}\\\nicefrac{3}{2}\end{bmatrix}\).
+	
+\end{enumerate}
 
 \vspace{\fill}
 
 \item Go to \href{https://eigenquiz.app/}{Eigenquiz.app} and complete activity a029303. Upload a completion certificate for this activity to your homework folder.
 
 \end{enumerate}
+
+\clearpage
+
+
 
 \end{document}
 
