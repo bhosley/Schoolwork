@@ -75,7 +75,18 @@ Let \(X\sim\operatorname{BIN}(n,p)\) and \(\hat{p}=X/n\).
 Find a constant \(c\) so that
 \(E\left[c\hat{p}(1-\hat{p})\right]=p(1-p)\).
 \begin{solution}
-	
+	\begin{align*}
+		p(1-p) &= E[c\hat{p}(1-\hat{p})] \\
+		&= cE[\hat{p}]-cE[\hat{p}^2] \\
+		\frac{p(1-p)}{c} &= E[\hat{p}]-E[\hat{p}^2] \\
+		&= p(1-p)+\frac{p^2}{n} \\
+		&= \frac{np(1-p)+p^2}{n} \\
+		&= \frac{np-np^2+p^2}{n} \\
+		&= \frac{p(n-np+p)}{n} \\
+		\frac{(1-p)}{c} &= \frac{(1-p)(n-1)}{n} \\
+		\frac{1}{c} &= \frac{n-1}{n} \\
+		c &= \frac{n}{n-1}
+	\end{align*}
 \end{solution}
 %\end{ Question 3}
 
@@ -90,14 +101,14 @@ confidence limit for \(\theta\).
 \begin{solution}
 	% cite example 11.2.1 Engelhardt, Bain pg 361
 	\begin{align*}
-		\(\mathcalligra u(x)\) 
+		\mathcalligra u(x)
 		&= \frac{2n\bar{x}}{\chi^2_{1-\alpha}(2n)} \\
 		&= \frac{2\cdot50(17.9)}{\chi^2_{0.05}(2\cdot50)} \\
 		&= \frac{1790}{124.34} \\
 		% Bain and Engelhard 124.34 for gamma =.9, 77.93 for 0.05
 		% Chi-square table.com	124.342 
 		% Scribbr.com		113.145
-		&= 14.3960
+		&= 14.3960.
 	\end{align*}
 \end{solution}
 %\end{ Question 4}
@@ -142,9 +153,21 @@ and let \(X_{(n)}\) be the largest order statistic.
 Find constant \(c\) such that \((x_{(n)},cx_{(n)})\) is a \(100(1-\alpha)\%\) 
 confidence interval for \(\theta\).
 \begin{solution}
-	S
+	\begin{align*}
+		(1-\alpha) &= P(x_{(n)}<\theta<cx_{(n)}) \\
+		&= P(\theta<cx_{(n)}) \\
+		&= P(\frac{\theta}{c}<x_{(n)}) \\
+		&= 1-P(x<\frac{\theta}{c})^n \\
+		&= 1-(\frac{\theta}{\theta c})^n \\
+		\alpha	&= (\frac{\theta}{\theta c})^n \\
+		\alpha	&= (\frac{1}{c})^n \\
+		\alpha^{\frac{1}{n}}	&= \frac{1}{c} \\
+		\alpha^{\frac{-1}{n}}	&= c \\
+	\end{align*}
 	%
-	% Ike struggling on this one
+	% Ike also struggling on this one
+	% https://math.stackexchange.com/questions/190436/confidence-interval-for-uniform
+	% http://math.furman.edu/~dcs/courses/math47/lectures/lecture-16.pdf
 	%
 \end{solution}
 %\end{ Question 6}
