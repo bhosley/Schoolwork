@@ -2,9 +2,11 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{hyperref}
 
 \title{STAT 587 - Introduction to Probability and Statistics%
-	\\ Midterm}
+	\\ Final Exam}
 \author{Brandon Hosley}
 \date{\today}
 
@@ -24,11 +26,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 1}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
 
-\begin{solution}
-
-\end{solution}
 %\end{ Question 1}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -41,55 +39,141 @@
 % 	\begin{ Question 3}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
+The speed of a molecule in a uniform gas at equilibrium is a random variable
+\(V\) whose density function is given by
+\[f(v)=av^2e^{-bv^2}\text{ for } v>0,\]
+where \(a=\sqrt{\frac{2}{\pi}}\left(\frac{m}{kT}\right)^{3/2}\), \(b=\frac{m}{2kT}\) 
+and \(k\), \(T\), and \(m\) denote Boltzmann’s constant, the absolute temperature, 
+and the mass of the molecule, respectively. 
+Find \(E[W]\) the expected value of the kinetic energy of the molecule defined as the 
+random variable \(W=mV^2/2\).
 
 \begin{solution}
+	\(E[W]=\frac{m}{2}E[V^2]\)
+	First, find \(E[V^2]\)
+	\begin{align*}
+		E[V^2]
+		&= \int_{0}^{\infty} v^2\, av^2e^{-bv^2}\, dv \\
+		&= a\int_{0}^{\infty} v^4e^{-bv^2}\, dv \\
+		\intertext{using an identity from link below,}
+			%
+		&= a\frac{(3)!!}{2^3b^2}\sqrt{\frac{\pi}{b}} \\
+		&= \sqrt{\frac{2}{\pi}}\left(\frac{m}{kT}\right)^{3/2}  \frac{3}{8} \left(\frac{2kT}{m}\right)^2 \sqrt{\pi} \sqrt{\frac{2kT}{m}} \\
+		&= 3 \sqrt{\frac{2kT}{m}} \left(\frac{m}{kT}\right)^{3/2} \left(\frac{kT}{m}\right)^2 \\
+		&= 3 \left(\frac{m}{kT}\right) \left(\frac{kT}{m}\right)^2 \\
+		&= 3 \frac{kT}{m}.
+		\intertext{Then substitute, this back in,}
+		E[W]
+		&= \frac{m}{2}E[V^2] \\
+		&= \frac{m}{2} 3 \frac{kT}{m}\\
+		&= \frac{3}{2}kT.
+	\end{align*}
 
+\href{https://en.wikipedia.org/wiki/List_of_integrals_of_exponential_functions#Definite_integrals}{Referenced link.}
 \end{solution}
 %\end{ Question 3}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 4}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{question}{4}
+\question 
+A process for refining sugar yields up to 1 ton of pure sugar per day, 
+but the actual amount produced, \(Y\), is a random variable 
+because of machine breakdowns and other slowdowns. 
+Suppose that \(Y\) has density function given by
+\[ f(y) = \begin{cases} 2y & \text{for } 0\leq y\leq1\\ 0 & \text{otherwise} \end{cases}\]
+The company is paid at the rate of \$300 per ton for the refined sugar, 
+but it also has a fixed overhead cost of \$100 per day. 
+Thus, the daily profit, in hundreds of dollars, is \(U=3Y-1\). 
+Find the probability density function for \(U\).
+\begin{solution}
+	\begin{align*}
+		U &= 3Y-1 \\
+		3Y &= U+1 \\
+		Y &= (U+1)/3 \\
+		f(u) &= (u+1)/3
+	\end{align*}
+	Checking to confirm that it is a valid distribution,
+	\begin{align*}
+		\int_{0}^{1} \frac{2}{3}(u+1)\, du 
+		= \left. \frac{u^2}{3}+\frac{2u}{3} \right|_{0}^{1}
+		= 1.
+	\end{align*}
+\end{solution}
 %\end{ Question 4}
 
-\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 5}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
 
-\begin{solution} \\
-
-\end{solution}
 %\end{ Question 5}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 6}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
 
-\begin{solution} 
-
-\end{solution}
 %\end{ Question 6}
 
-\clearpage
-
+\setcounter{question}{6}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 7}   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+Suppose that \(X_1,\ldots,X_5\overset{iid}{\sim}Uniform(5,\theta_U)\)
+and you observe the following values:
+\begin{flalign*}
+	X_1 = 5.31 && \\
+	X_2 = 8.76 && \\
+	X_3 = 8.61 && \\
+	X_4 = 6.67 && \\
+	X_5 = 7.45 && 
+\end{flalign*}
+The method of moments estimator for \(\theta_U\) is reasonable 
+(find the estimator and use it to construct an estimate for \(\theta_U\)
 \begin{solution}
+	\begin{align*}
+		E[X] = \frac{5+\theta_U}{2} =\frac{1}{5}\sum_{i=1}^{5}x_i = 7.36
+	\end{align*}
+	\begin{align*}
+		\operatorname{Var}[X]= \frac{(5+\theta_U)^2}{12} =\frac{1}{5}\sum_{i=1}^{5}(x_i-\bar{x}) =1.64184
+	\end{align*}
+	Solved by \(E[X]\) we get \(\theta_U=9.72\).
+	However, solved by \(\operatorname{Var}[X]\) we get \(\theta_U=9.438703\).
 
 \end{solution}
 %\end{ Question 7} 
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 8}   %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Suppose you have iid random variables from a \(Gamma(\alpha=3,\beta)\)
+distribution. Find the CRLB for \(\beta\).
+\begin{solution}
+	\begin{align*}
+		E[X^2] = E[X]^2 -\operatorname{Var}[X] = (3\beta)^2 -3\beta^2 = 6\beta^2
+	\end{align*}
+	\begin{align*}
+		\text{LLF} 
+		= 2\ln(x)-\left(\frac{x}{\beta}\right)\ln(e) -\ln(\Gamma(3)\beta^3)
+		= 2\ln x -\frac{x}{\beta}-\ln(2\beta^3)
+	\end{align*}
+
+	\begin{align*}
+		\frac{\partial^2}{\partial\beta^2} \left( 2\ln x -\frac{x}{\beta}-\ln(2\beta^3) \right)
+		&= \frac{\partial^2}{\partial\beta^2} \left( -\frac{x}{\beta}-\ln(2\beta^3) \right) \\
+		&= \frac{\partial}{\partial\beta} \left( \frac{2x}{\beta^2}-\frac{1}{2\beta^3} \right) \\
+		&= -\frac{6x}{\beta^3}+\frac{2}{\beta^4}
+	\end{align*}
+
+	\begin{align*}
+		\frac{1}{nE[LLF]}
+		= n\frac{6\beta^2}{2\beta^4}
+		= \frac{\beta^2}{3n}
+	\end{align*}
+\end{solution}
 %\end{ Question 8}
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -102,9 +186,14 @@
 % 	\begin{ Question 10}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+Suppose that the random variable \(Y\) is an observation from a 
+normal distribution with unknown mean \(\mu\) and variance 1. 
+Find a 95\% confidence interval for \(\mu\). If \(Y=8.33\)
+8.33, what is the upper bound of this interval?
 \begin{solution}
-
+	\(95\% \Rightarrow \mu \pm Z_{0.975} \sigma = \mu \pm 1.96 \). \\
+	\(Y=8.33 \Rightarrow (6.37,10.29)\). \\
+	The upper interval is 10.29
 \end{solution}
 %\end{ Question 10}
 
@@ -112,9 +201,17 @@
 % 	\begin{ Question 11}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+In laboratory work, it is desirable to run careful checks on the variability of readings 
+produced on standard samples. In a study of the amount of calcium in drinking 
+water undertaken as part of a water quality assessment, the same standard 
+sample was run through the laboratory six times at random intervals. The six 
+readings, in parts per million, were 9.54, 9.61, 9.32, 9.48, 9.70, and 9.26. Estimate 
+the population variance \(\sigma^2\) for readings on this standard, using a 90\% confidence 
+interval. What is the lower bound of this interval?
 \begin{solution}
-
+	\(\sigma^2 = \frac{1}{6}\sum_{i=1}^{6}(x_i-9.485)^2 = 0.02379\). \\
+	\(\sigma=\sqrt{\sigma^2}= \sqrt{0.02379} =0.154245\). \\
+	90\% CI \(\Rightarrow 9.485\pm 0.1542445 Z_{0.95} = 9.485 \pm 0.2573 = (9.2277,9.7423)\).
 \end{solution}
 %\end{ Question 11}
 
@@ -124,12 +221,46 @@
 \setcounter{question}{12}
 %\end{ Question 12}
 
+\clearpage
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 13}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+Consider the biased coin discussed in Example 9.2.5, 
+where the probability of a head, \(p\), is known to be 0.2, 0.30, or 0.80. 
+The coin is tossed repeatedly, and we let \(X\) be the 
+number of tosses required to obtain the first head. For a test of
+\(H_0 : p=0.20\), suppose we use a rejection region of the form
+\(\{1,2,3,17,\ldots\}\). Find \(P[\text{TI}]=\alpha=\)
 \begin{solution}
+	\(1-\sum_{n\in RR}(p)(1-p)^{(1-n)} = 1-\sum_{n\in RR}(0.2)(0.80)^{(1-n)}\) \\
+	
+	Constructing a table similar to Example 9.2.5: \\
+	\begin{center}
+		\begin{tabular}{c|rrr}
+			& \multicolumn{3}{c}{\(p\)} \\ \toprule
+			\(n\) & 0.2000 & 0.3000 &  0.8000 \\ \midrule
+			1   & 0.2000 & 0.3000 &  0.8000 \\
+			2   & 0.1600 & 0.2100 &  0.1600 \\
+			3   & 0.1280 & 0.1470 &  0.0320 \\
+			4   & 0.1024 & 0.1029 &  0.0064 \\
+			5   & 0.0819 & 0.0720 &  0.0013 \\
+			6   & 0.0655 & 0.0504 &  0.0003 \\
+			7   & 0.0524 & 0.0353 &  0.0001 \\
+			8   & 0.0419 & 0.0247 &  0.0000 \\
+			9   & 0.0336 & 0.0173 &  0.0000 \\
+			10   & 0.0268 & 0.0121 &  0.0000 \\
+			11   & 0.0215 & 0.0085 &  0.0000 \\
+			12   & 0.0172 & 0.0059 &  0.0000 \\
+			13   & 0.0137 & 0.0042 &  0.0000 \\
+			14   & 0.0110 & 0.0029 &  0.0000 \\
+			15   & 0.0088 & 0.0020 &  0.0000 \\
+			16   & 0.0070 & 0.0014 &  0.0000 \\ \bottomrule
+		\end{tabular}
+	\end{center}
+
+	\(\alpha=0.6185\)
 
 \end{solution}
 %\end{ Question 13} 
@@ -137,29 +268,54 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 14}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-
-\begin{solution}
-
-\end{solution}
+\setcounter{question}{14}
 %\end{ Question 14}
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 15}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+We are interested in testing whether or not a coin is balanced based
+ on the number of heads \(Y\) on 36 tosses of the coin. 
+ (\(H_0 : p=.5\) versus \(H_a:p\neq.5\)). 
+ If we use the rejection region \(|y-18|\geq4\), 
+ what is the value of \(\beta\) if \(p=.7\)?
 \begin{solution}
-
-\end{solution}
+	\(p=0.7\)\\
+	\(\bar{x}=np=36(0.7)=25.2\) \\
+	\(\sigma^2=npq=36(0.21)=7.56\) \\
+	\(\frac{24.2-14}{2.75}=4.072\) and \(\frac{24.2-22}{2.75}=1.163\) \\
+	\(Z_{4.072}=0.50\) and \(Z_{1.163}=0.377\) \\
+	\(0.123\).
+\end{solution} 
 %\end{ Question 15}
+
+\clearpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 	\begin{ Question 16}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-
+Recall that for a collection iid of \(Poisson(\gamma)\) random variables
+\(X_1,\ldots,X_n\), we rejected the null hypothesis for the likelihood ratio test,
+\begin{align*}
+	H_0 &: \gamma = \gamma_0 \\
+	H_a &: \gamma \neq \gamma_0
+\end{align*}
+when \(\hat{\gamma}=\frac{1}{n}\sum_{i=1}^{n}X_i\) was such that \(2n(\gamma_0\hat{\gamma}+\hat{\gamma}\log(\frac{\hat{\gamma}}{\gamma_0}))\geq\chi^2_{1-\alpha,1}\).
+Using the likelihood ratio, select an analogous rejection region result for 
+\(\hat{p}=\frac{1}{n}\sum_{i=1}^{n}X_i/k\), when our observations are instead iid
+\(Binom(k,p)\) where the number of trials \(k\) is known and \(n=1\). Please, show your work!
 \begin{solution}
+	The provided rejection region is \(2n\) times the log likelihood of the gamma function.
+	\begin{align*}
+		\text{LLF(Binom)}
+		&= \ln\left(p^{X_1}(1-p)^{(k-X_1)}\right) \\
+		&= \ln\left( \left(\frac{p_0}{\hat{p}}\right)^{X_1} \left(\frac{1-p_0}{1-\hat{p}}\right)^{(k-X_1)}\right) \\
+		&= \ln\left(\frac{p_0}{\hat{p}}\right)^{X_1} \ln\left(\frac{1-p_0}{1-\hat{p}}\right)^{(k-X_1)} \\
+		&= X_1\ln\left(\frac{p_0}{\hat{p}}\right) + (k-X_1)\ln\left(\frac{1-p_0}{1-\hat{p}}\right) \\
+		&\Rightarrow 2\left(X_1\ln\left(\frac{p_0}{\hat{p}}\right) + (k-X_1)\ln\left(\frac{1-p_0}{1-\hat{p}}\right)\right) \\
+	\end{align*}
 	
 \end{solution}
 %\end{ Question 16}
@@ -168,9 +324,25 @@
 % 	\begin{ Question 17}  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
+For the following hypothesis test,
+\begin{align*}
+	H_0 &: \frac{\sigma_1^2}{\sigma_2^2} = 1 \\
+	H_a &: \frac{\sigma_1^2}{\sigma_2^2} \neq 1 
+\end{align*}
+calculate the probability of Type II error at a significance level \(\alpha=0.1\) 
+with an alternative variance ratio \(\sigma_a^2=\frac{\sigma_1^2}{\sigma_2^2}=1.5\),
+when \(n_1=n_2=42\), where \(n_1\) and \(n_2\) are the number of observations associated 
+with sample 1 and sample 2, respectively. Please, show your work!
 
-\begin{solution}
-	
+\begin{solution} \\
+	Rejection region with \(\alpha=0.1\): \bigskip\\
+	\begin{tabular}{rcl}
+		$\leq F_{0.05,41,41}$& & $\geq F_{0.95,41,41}$ \\
+		0.59466 & & 1.68164 \\
+		x1.5 & & x1.5 \\
+		\(p=0.64193\) & & \(p=0.00190\) \\
+	\end{tabular} \bigskip\\
+	\(p=0.64\)
 \end{solution}
 %\end{ Question 17}
 
