@@ -49,7 +49,6 @@
 *.rhistory
 *npm*
 *mocha*
-*.md
 
 # TeX
 *.aux
@@ -68,18 +67,11 @@
 *rails*
 *Gemfile*
 *rspec
-*.rb
-*.ru
 
 # JS
 *eslintrc
 *.js*
 *.json
-
-# HTML/CSS
-*.erb
-*.html
-*.css
 
 # Other - Named
 *.csv
