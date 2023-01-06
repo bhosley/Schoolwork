@@ -1,0 +1,54 @@
+<html>
+    <head></head>
+    <body>
+        <!-- key = 0bc6a6aae61016ef91a22ecd27cf44cc -->
+        <!-- https://api.towerdata.com/v5/ev?email=jennifer.grandel@gmail.com&api_key=0bc6a6aae61016ef91a22ecd27cf44cc&format=html -->
+      <script>
+        function dorapleaf(email)
+        {
+          key = '0bc6a6aae61016ef91a22ecd27cf44cc';
+          location.href = ('https://api.towerdata.com/v5/ev?email=' + email 
+            + '&api_key=' + key
+            + '&format=html' );
+        }
+      </script>
+      <form onsubmit="dorapleaf(this.raf2.value); return false;">
+      <input type="email" name="raf2" size="40" value="Email Address" />
+      <input type="submit" />
+      </form>
+    </body>
+</html>
+
+<!--
+jennifer.grandel@gmail.com
+    {
+    "marital_status": "Single",
+    "net_worth": "0-5k",
+    "education": "Completed High School",
+    "home_market_value": "500k-1mm",
+    "gender": "Female",
+    "length_of_residence": "Less than 1 year",
+    "email_validation": {
+        "domain_type": "freeisp",
+        "status_code": 50,
+        "address": "jennifer.grandel@gmail.com",
+        "status": "valid"
+    },
+    "age": "25-34",
+    "presence_of_children": "Yes"
+    }
+
+bluey8812@live.com
+{
+  "email_validation": {
+    "domain_type": "freeisp",
+    "status_code": 50,
+    "address": "bluey8812@live.com",
+    "status": "valid"
+  }
+}
+
+
+
+
+-->
