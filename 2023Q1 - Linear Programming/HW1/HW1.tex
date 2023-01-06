@@ -12,7 +12,7 @@
 \begin{document}
 
 \noindent{OPER 610 - Linear Programming %
-	Homework 1 %
+	% Homework 1 %
 	(Due Jan 6 at 10am)}
 \hspace{\fill} { B. Hosley}
 \bigskip
@@ -36,7 +36,8 @@ Problem 1.2
 	\item Change the last restriction to read, "... they must exceed 25 percent and 30 percent, respectively..."
 \end{enumerate}
 \hrule
-A manufacturer of plastics is planning to blend a new product from four chemical compounds. These compounds are mainly composed of three elements: A, B, and C. The composition and unit cost of these chemicals are shown in the following table:
+\bigskip
+[1.2] A manufacturer of plastics is planning to blend a new product from four chemical compounds. These compounds are mainly composed of three elements: A, B, and C. The composition and unit cost of these chemicals are shown in the following table: \\
 \begin{tabular}{lcccc}
 	\toprule
 	CHEMICAL COMPOUND & 1 & 2 & 3 & 4 \\
@@ -46,9 +47,9 @@ A manufacturer of plastics is planning to blend a new product from four chemical
 	Percentage C  & 40 & 15 & 25 & 30 \\
 	Cost/kilogram & 20 & 30 & 20 & 15 \\
 	\bottomrule 
-\end{tabular}
+\end{tabular} \\
 The new product consists of 25 percent element A, at least 35 percent element B, and at least 20 percent element C. Owing to side effects of compounds 1 and 2, they must not exceed 25 percent and 30 percent, respectively, of the content of the new product. Formulate the problem of finding the least costly way of blending as a linear program.
-\begin{solution}
+\begin{solution} \\
 	\textbf{\underline{Sets}} \\
 	\(K\) Chemical compounds \(k\in{1,2,3,4}\) \\
 	\(E\) Element (percentage) \(e\in{a,b,c}\) \\
@@ -61,7 +62,7 @@ The new product consists of 25 percent element A, at least 35 percent element B,
 	
 	\textbf{\underline{Explicit Formulation}} \\
 	\begin{flalign*}
-		\operatorname{min} r_x = 20k_1 + 30k_2 + 20k_3 + 15k_4 & && \\
+		\operatorname{min} r_x = 20k_1 + 30k_2 + 20k_3 + 15k_4 & && \\ \text{s.t.} \hspace{6.5ex}
 		 35k_1 + 15k_2 + 35k_3 + 25k_4 &=  25  && \\
 		 40k_1 + 65k_2 + 35k_3 + 40k_4 &\geq 35 && \\
 		 20k_1 + 15k_2 + 25k_3 + 30k_4 &\geq 20 && \\
@@ -80,13 +81,13 @@ The new product consists of 25 percent element A, at least 35 percent element B,
 
 	\textbf{\underline{Compact Formulation}} \\
 	\begin{flalign*}
-		\operatorname{min} r_x = \sum_{k=1}^{4} r_k\,x_k & && \\
-		\sum_{k=1}^{4} p_{a,k}\,x_k &=  25   \quad\text{Percentage of Compound a} && \\
-		\sum_{k=1}^{4} p_{b,k}\,x_k &\geq 35 \quad\text{Percentage of Compound b} && \\
-		\sum_{k=1}^{4} p_{c,k}\,x_k &\geq 20 \quad\text{Percentage of Compound c} && \\
+		\operatorname{min} r_x = \sum_{k=1}^{4} r_k\,x_k & && \\ \text{s.t.} \hspace{4.5ex}
+		\sum_{k=1}^{4} p_{a,k}\,x_k &=  25   \hspace{10ex}\text{(Percentage of Compound a)} && \\
+		\sum_{k=1}^{4} p_{b,k}\,x_k &\geq 35 \hspace{10ex}\text{(Percentage of Compound b)} && \\
+		\sum_{k=1}^{4} p_{c,k}\,x_k &\geq 20 \hspace{10ex}\text{(Percentage of Compound c)} && \\
 		k_1 &> 25 && \\
 		k_2 &> 30 && \\
-		k_i &\geq 0 && \\
+		k &\geq 0 \hspace{10ex} \forall\ k\in K &&.
 	\end{flalign*} \\
 
 \end{solution} 
