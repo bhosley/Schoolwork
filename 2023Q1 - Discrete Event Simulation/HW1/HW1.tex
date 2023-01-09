@@ -1,0 +1,167 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+
+\begin{document}
+	
+\noindent{\large OPER 561 - Discrete-Event Simulation - %
+	Homework 1 }
+\hspace{\fill} {\large B. Hosley}
+\bigskip
+
+\begin{questions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Describe what you think would be the most effective way to study each of the following systems, in terms of Figure 1, and discuss why.
+\begin{parts}
+	\part A small section of an existing factory
+	\part A freeway interchange that has experienced severe congestion
+	\part An emergency room in an existing hospital
+	\part A pizza-delivery operation
+	\part The shuttle-bus operation for a rental-car agency at an airport
+	\part A battlefield communications network during operations
+\end{parts}
+\begin{solution}
+	\begin{parts}
+		\part% A small section of an existing factory
+		A physical model may be the best option, 
+		especially if the machines used in the manufacturing process have 
+		redundant systems that the new process can be tested with.
+		If the changes can be assured not to cause damage to the equipment
+		that is currently in use and the factory has scheduled down time,
+		an experiment with the actual system will provide the most accurate data
+		for examining changes within that system.
+		\part% A freeway interchange that has experienced severe congestion
+		Because the agents in this system are (relatively) predictable and (generally) self-correcting,
+		a simulation may be the best choice.
+		A simulation can capture the effects under different volumes of usage, 
+		to include unusually high traffic-volumes without having to wait for one to occur naturally.
+		The generally consistent behavior of operating a motor vehicle should make it easier
+		to produce accurate simulations.
+		\part% An emergency room in an existing hospital
+		Since emergency departments in hospitals are chaotic, unpredictable, 
+		and the cost of introducing error is potentially very high, it would probably
+		be best to use an analytical solution.
+		\part% A pizza-delivery operation
+		Pizza delivery has some room for error and since the agents involved will most likely  be
+		employees of the pizza manufacturer they will be able to report additional information,
+		and perform corrective actions very quickly if there is an error in the experiment.
+		As a result, experimentation with the actual system would be viable, 
+		and likely more cost effective than modeling or simulating.
+		\part% The shuttle-bus operation for a rental-car agency at an airport
+		The best method to study the shuttle bus will depend on what information is sought.
+		Because many of the company's customers are likely to be on time constraints,
+		experimentation with the actual system may have detrimental effects on the
+		company's reputation.
+		The analytical solution would be sufficiently informative if the desired information
+		is within or may be derived from basic statistics around ridership 
+		(i.e. utilization of the service, average wait time of a customer, 
+		travel time during different days or times of day).
+		\part% A battlefield communications network during operations
+		If similar equipment is available, be better to test changes to the system on either
+		spare equipment in the case of analyzing physical components, or in	simulation if changes 
+		are digital (i.e. a virtual test environment for network changes).
+		If operations are occurring there is likely a Period of Non-Disruption in effect that 
+		would preclude experimentation within the actual system.
+	\end{parts}
+\end{solution}
+%\end{ Question 1}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+For each of the systems in problem 1, suppose that it has been decided to make a study via a simulation model.  Discuss whether the simulation should be static or dynamic, deterministic or stochastic, and continuous or discrete.
+\begin{solution} % Static v dynamic;  deterministic v stochastic;  continuous v discrete 
+	\begin{parts}
+		\part% A small section of an existing factory
+		Simulating a small portion of a factory is likely to be a dynamic, deterministic, and continuous.
+		While the simulation could be discrete, the whole process of an individual operation would
+		probably yield more useful results than the information provided at certain states or 
+		specific points of the process.
+		\part% A freeway interchange that has experienced severe congestion
+		Simulation a freeway interchange is likely to be dynamic, stochastic, and continuous.
+		Assuming that the investigator's wish to understand the cause of congestion and best possible
+		solution to implement to resolve that congestion, the above type of model would replicate
+		usage by various numbers of drivers, while they take predictable (but not prescriptive) actions
+		in using the interchange. Continuous simulation will more accurately and realistically
+		 model how the situation evolves over time.
+		\part% An emergency room in an existing hospital
+		Simulating an emergency department is likely to be dynamic, stochastic, and continuous.
+		This is because an emergency department experiences irregular arrivals and departures from the system,
+		unknown treatment durations, and process prioritization subject to rapid changes based on triage.
+		Similarly, capacity for workload and the speed at which tasks are performed are highly variable between
+		actors in the system (medical personnel), where factor increasing stress felt by that actor may improve the performance in some it may degrade the performance of others and how this performance changes over time is also extremely variable.
+		\part% A pizza-delivery operation
+		Simulating a pizza delivery operation is likely to be dynamic, deterministic, and discrete.
+		
+		\part% The shuttle-bus operation for a rental-car agency at an airport
+		Simulating the shuttle-but operation is likely to be static, deterministic, and discrete.
+		The shuttle-bus is expected to have no changes in passengers between departure and arrival,
+		and provided that the routes are known, 
+		the fuel usage should be predictable within a certain range,
+		with some variation induced by environmental factors.
+		With the primary variable being the number of customers attempting to utilize the service
+		the demands on the system can be modeled as states upon arrival and departure of shuttles 
+		from route stops.
+		\part% A battlefield communications network during operations
+		Simulating a battlefield network during operations is likely to be dynamic, stochastic, and continuous.
+		Events and operation of a network can be simulated within test environments or
+		virtual environments representing the subject network. 
+		The inputs into that network should be simulated stochastically 
+		to represent unpredictable changes in usage.
+		The traffic on the network can be abridged while still accurately representing the usage of the
+		modeled system.
+		Because of this, it is possible to replicate the network in a scaled down manner,
+		which would provide a more thorough simulation of the system than using static or discrete methods.
+	\end{parts}
+\end{solution}
+%\end{ Question 2} 
+
+\clearpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 3}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Name several (at least two of each) entities, attributes, activities, events, and state variables for the following systems (a table is useful in recording your responses – columns for above items requested and rows for different systems listed below):
+\begin{parts}
+	\part A small appliance repair shop
+	\part A hospital emergency room
+	\part A battlefield communication system
+\end{parts}
+\begin{solution} \bigskip\\ 
+	\begin{tabular}{l|lllll}
+		System                & Entities   & Attributes   & Activities   & Events    & State Vars  \\ \hline
+		(a) A small appliance & Appliances & Device Owner & Repairing    & Drop-off  & Broken      \\
+		repair shop           & Personnel  & Repair fee   & Testing      & Pick-up   & Repaired    \\
+		                      &            &              &              &           &             \\
+		(b) A hospital        & Patients   & Capacity     & Triage       & Arrival   & Rm Number   \\
+		emergency room        & Personnel  &              & Treatment    & Departure & Diagnoses   \\
+		                      &            &              &              &           &             \\
+		(c) A battlefield     & Clients    & Location     & Transmitting & Arrival   & Operability \\
+		communication system  & Router     & Throughput   & Receiving    & Departure & Queue
+	\end{tabular}
+\end{solution}
+%\end{ Question 3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 4}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+What would you like to be able to do as a result of taking this course? Skills, techniques, types of problems to solve, …  If you’ve no idea what the course might offer, review the syllabus, skim the text book, or ask someone who already took this course. This is an opportunity to get acquainted with the big ideas of the course and start finding meaning and relevance in the material to you.
+\begin{solution}
+	I am looking forward to learning about agent-based simulation.
+	The problems I am most interested in solving with this are behavioral modeling and different types of Schelling problems.
+	If time allows, I would also like to explore comparative tools for simulation in a more open source environment; 
+	in particular, implementation with Python libraries comes to mind.
+\end{solution}
+%\end{ Question 4}
+
+\end{questions}
+\end{document}
