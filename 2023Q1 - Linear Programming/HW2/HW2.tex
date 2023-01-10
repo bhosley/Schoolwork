@@ -1,0 +1,112 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+
+\begin{document}
+
+\noindent{OPER 610 - Linear Programming %
+	% Homework 2 %
+	(Due Jan 10 at 10am)}
+\hspace{\fill} { B. Hosley}
+\bigskip
+
+\begin{questions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 31}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{question}{30}
+\question 
+Consider the following problem:
+\begin{flalign*}
+	\operatorname{Maximize} \hspace{4ex} x_1 \ - \ x_2 &&& \\ \text{subject to} \hspace{2ex}
+	-x_1 + 3x_2 &\leq  0  && \\
+	-3x_1 +2x_2 &\geq 35 && \\
+	x_1, \ \quad x_2 &\geq 0 && \\
+\end{flalign*}
+\begin{parts}
+	\part Sketch the feasible region in the \((x_1, x_2 )\) space.
+	\part Identify the regions in the \((x_1, x_2)\) space where the slack variables \(x_3\) and \(x_4\) , say, are equal to zero.
+	\part Solve the problem geometrically.
+	\part Draw the requirement space and interpret feasibility.
+\end{parts}
+
+	
+
+\begin{solution}
+	\begin{parts}
+		\part		
+			The feasible region is the (greyish) area bound by the red, blue, orange triangle
+			\\ \includegraphics[width=0.7\linewidth]{"images/screen1"}
+		\part
+			If a slack \(x_3\) is added to the first constraint, then \(x_3=0\) along the red line.
+			\\ \includegraphics[width=0.7\linewidth]{"images/Screenshot 2023-01-07 at 6.38.18 PM"} \\
+			If a slack \(x_4\) is added to the second constraint, then \(x_4=0\) along the blue line.
+			\\ \includegraphics[width=0.7\linewidth]{"images/Screenshot 2023-01-07 at 6.38.37 PM"}
+		\part
+			The maximum value is 1, obtained by the right-most iso-contribution line. 
+			Which gives the solution \((x_1=1,x_2=0)\).
+			\\ \includegraphics[width=0.9\linewidth]{"images/Screenshot 2023-01-07 at 8.26.43 PM"}
+		\part
+			The requirement space is shown below. (Due to graphing tool limitation the arrows are rendered as dots)
+			Because \(a_1\) and \(a_2\) are in opposite quadrants, together they span the whole 2D space.
+			\\ \includegraphics[width=0.4\linewidth]{"images/Screenshot 2023-01-07 at 10.17.35 PM"}
+	\end{parts}
+\end{solution}
+%\end{ Question 31}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 41}  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Consider the problem: Minimize \(cx\) subject to 
+\(Ax \geq b, x \geq 0\) Suppose that a new constraint is added to the problem.
+\begin{parts}
+	\part What happens to the feasible region?
+	\part What happens to the optimal objective value \(z*\)?
+\end{parts}
+\begin{solution}
+	\begin{parts}
+		\part
+			Adding a new constraint will either:
+			do nothing, if the constraint's region overlaps the original feasible region;
+			shrink the feasible region, if the constraint crosses the original feasible region;
+			or make the problem infeasible, if the new constraint's region does not intersect with the original feasible region at all.
+		\part
+			If the new constraint's region overlaps original optimal objective,
+			then the optimal objective value will remain the same.
+			If the new constraint's region intersects with the original feasible region,
+			but does not include the original optima, then the new optimal objective
+			will shift to be within the new feasible region.
+			If the new constraint's region does not intersect with the original feasible region,
+			then the problem becomes infeasible.
+	\end{parts}
+\end{solution}
+%\end{ Question 41}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 42}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Consider the problem: Minimize \(cx\) subject to 
+\(Ax \geq b, x \geq 0\) Suppose that a new variable is added to the problem.
+\begin{parts}
+	\part What happens to the feasible region?
+	\part What happens to the optimal objective value \(z*\)?
+\end{parts}
+\begin{solution}
+	\begin{parts}
+		\part
+			The addition of another variable increases the dimensionality of constraints and the feasible region by one.
+		\part
+			The optimal objective value may improve if the new higher dimension feasible region containsa more optimal point.
+			If it does not, the optimal will remain the same.
+			The problem will not be made infeasible with the addition of another variable, it is sufficient to set the new variable's value to zero to retain the original optimal value.	
+	\end{parts}
+\end{solution}
+%\end{ Question 42}
+
+\end{questions}
+\end{document}
