@@ -1,0 +1,96 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+
+\title{OPER 610 - Linear Programming%
+	\\ Homework 3}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+
+\noindent{OPER 610 - Linear Programming %
+	% Homework 1 %
+	(Due Jan 17 at 10am)}
+\hspace{\fill} { B. Hosley}
+\bigskip
+
+\begin{questions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+Problem 1.2
+\begin{enumerate}
+	\item First, write an explicit formulation
+	\begin{enumerate}
+		\item Define sets, parameters, DVs, assumptions!
+	\end{enumerate}
+\item Second, use set-based notation and indexing of DVs and constraints to present a compact formulation
+\end{enumerate}
+\underline{Note}:
+\begin{enumerate}
+	\item Change the last restriction to read, "... they must exceed 25 percent and 30 percent, respectively..."
+\end{enumerate}
+\hrule
+\bigskip
+[1.2] A manufacturer of plastics is planning to blend a new product from four chemical compounds. These compounds are mainly composed of three elements: A, B, and C. The composition and unit cost of these chemicals are shown in the following table: \bigskip \\ 
+\begin{tabular}{lcccc}
+	\toprule
+	CHEMICAL COMPOUND & 1 & 2 & 3 & 4 \\
+	\midrule
+	Percentage A  & 35 & 15 & 35 & 25 \\
+	Percentage B  & 20 & 65 & 35 & 40 \\
+	Percentage C  & 40 & 15 & 25 & 30 \\
+	Cost/kilogram & 20 & 30 & 20 & 15 \\
+	\bottomrule 
+\end{tabular} \bigskip \\ 
+The new product consists of 25 percent element A, at least 35 percent element B, and at least 20 percent element C. Owing to side effects of compounds 1 and 2, they must not exceed 25 percent and 30 percent, respectively, of the content of the new product. Formulate the problem of finding the least costly way of blending as a linear program.
+\begin{solution} \\
+	\textbf{\underline{Sets}} \\
+	\(K\) Chemical compounds \(k\in{1,2,3,4}\) \\
+	\(E\) Element (percentage) \(e\in{a,b,c}\) \\
+	\(p_{e,k}\) Blending coefficients \\
+	\(r_{k}\) Cost of reagents \\
+	\(r_{x}\) Cost of the new plastic \\
+	
+	\textbf{\underline{Decision Variables}} \\
+	\(x_{k}\) Amount of compound \(k\) used to make the plastic \\
+	
+	\textbf{\underline{Explicit Formulation}} \\
+	\begin{flalign*}
+		\operatorname{min} r_x = 20x_1 + 30x_2 + 20x_3 + 15x_4 & && \\ \text{s.t.} \hspace{6.5ex}
+		 35x_1 + 15x_2 + 35x_3 + 25x_4 &=  25  && \\
+		 40x_1 + 65x_2 + 35x_3 + 40x_4 &\geq 35 && \\
+		 20x_1 + 15x_2 + 25x_3 + 30x_4 &\geq 20 && \\
+		 x_1 &\geq 25 && \\
+		 x_2 &\geq 30 && \\
+		 x_1, x_2, x_3, x_4 &\geq 0 && \\
+	\end{flalign*}
+
+	\textbf{\underline{Assumptions}} \\
+	\begin{enumerate}
+		\item  That the cost per unit of each compound is fixed
+		(there are no volume discounts or delivery costs).
+		\item  Products can be purchased by a continuous measurement
+		(orders aren't bound to integer or rational units).
+	\end{enumerate}
+
+	\textbf{\underline{Compact Formulation}} \\
+	\begin{flalign*}
+		\operatorname{min} r_x = \sum_{k=1}^{4} r_k\,x_k & && \\ \text{s.t.} \hspace{4.5ex}
+		\sum_{k=1}^{4} p_{a,k}\,x_k &=  25   \hspace{10ex}\text{(Percentage of Compound a)} && \\
+		\sum_{k=1}^{4} p_{b,k}\,x_k &\geq 35 \hspace{10ex}\text{(Percentage of Compound b)} && \\
+		\sum_{k=1}^{4} p_{c,k}\,x_k &\geq 20 \hspace{10ex}\text{(Percentage of Compound c)} && \\
+		k_1 &\geq 25 && \\
+		k_2 &\geq 30 && \\
+		k &\geq 0 \hspace{10ex} \forall\ k\in K &&.
+	\end{flalign*} \\
+
+\end{solution} 
+%\end{ Question 1}
+\end{questions}
+\end{document}
