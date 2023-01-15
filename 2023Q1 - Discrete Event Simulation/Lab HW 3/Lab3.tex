@@ -16,9 +16,11 @@
 %	\begin{ Question 1}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+Now that you have raw arrival and interarrival times to the Adjust server, you can do more math than just the min/mean/max that Simio otherwise provides. Suggest two measures or analyses you might perform.
 \begin{solution}
-	S
+	Standard Deviation and Variance are classics,
+	
+	but we may also fit a distribution to the dataset.
 \end{solution}
 %\end{ Question 1}
 
@@ -26,9 +28,10 @@ Q
 %	\begin{ Question 2}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+The Adjust server is the first place new entities go. Why does the mean time between arrivals to Input@Adjust differ from the interarrival time at the entity Source block?
 \begin{solution}
-	S
+	The source only instantiates new entities (radar components)
+	whereas, Input@Adjust receives both the new entities and the repeat adjustment entities.
 \end{solution}
 %\end{ Question 2}
 
@@ -36,81 +39,18 @@ Q
 %	\begin{ Question 3}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+Try to analytically estimate the mean interarrival time at Input@Adjust. (As in, using just your model inputs, logic, and rules of probability, but no simulation output data.)
 \begin{solution}
-	S
+	\begin{align*}
+		&3   \text{minutes} \\
+		&- 2 \text{minutes} \times 0.2   \text{(first round rejects)}  \\
+		&- 2 \text{minutes} \times 0.2^2 \text{(second round rejects)} \\
+		&- 2 \text{minutes} \times 0.2^3 \text{(third round rejects)}  \\
+		&= 2.504
+	\end{align*}
+	
 \end{solution}
 %\end{ Question 3}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\begin{ Question 4}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 4}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\begin{ Question 5}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 5}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\begin{ Question 6}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 6}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\begin{ Question 7}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 7}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\begin{ Question 8}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 8}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\begin{ Question 9}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 9}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  \begin{ Question 10}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 10}
 
 \end{questions}
 \end{document}
