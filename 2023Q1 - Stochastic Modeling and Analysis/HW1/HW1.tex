@@ -161,7 +161,7 @@ A machine with two components is subject to a series of shocks that occur determ
 \question 
 Develop a DTMC model of a military-oriented stochastic process. If possible, leverage your own past military experiences.
 \begin{solution}
-	S
+	Using a CTO strike package example.
 \end{solution}
 %\end{ Question 4}
 
@@ -301,7 +301,11 @@ A machine can be either up (i.e., working) or down (i.e., failed). If a machine 
 		\item 
 		\begin{enumerate}[i.]
 			\item 
+			The state variable \(X_n\) is the number of machines down on at the end of day \(n\).
+			The state space is \(S=\{0,1,2,3,4,5\}\).
+			
 			\item 
+			
 			\item 
 			\[\begin{bmatrix}
 				0.59049 & 0.32805 & 0.0729 & 0.0081 & 0.00045 & 0.00001 \\
@@ -311,8 +315,35 @@ A machine can be either up (i.e., working) or down (i.e., failed). If a machine 
 				0       & 0       & 0.324  & 0.468  & 0.192   & 0.016   \\
 				0       & 0       & 0      & 0.36   & 0.48    & 0.16    
 			\end{bmatrix}\]
+		
 			\item 
+			The periods measured in this model are a hypothetical work day, 
+			it is assumed that these work days are always the same length,
+			providing time homogeneity.
+			The Markov property can be seen by the assumption that the potential end of day results
+			are dependent only upon the number at the beginning of the day.
 		\end{enumerate}
+	
+		\item 
+		\includegraphics[width=0.7\linewidth]{prob8b} \\	
+		The system starts with all of the machines down,
+		but because the probabilities of repair success and machines remaining operable are higher than the alternatives,
+		the system trends over time towards a lower number of inoperable machines.
+		By day 8 this probability distribution is shown.
+		
+		\item 
+		\includegraphics[width=0.7\linewidth]{prob8c}
+		
+		\item 
+		After 7 days of operation, under the original starting condition, the shop can expect 
+		approximately 1.9008422292147165 days with 4 or more machines operating.
+		
+		If the starting condition is with all machines up then the shop can expect
+		approximately 5.315905535705816  with 4 or more machines operating.
+		
+		\item 
+
+		\item 
 	\end{enumerate}
 \end{solution}
 %\end{ Question 8}
