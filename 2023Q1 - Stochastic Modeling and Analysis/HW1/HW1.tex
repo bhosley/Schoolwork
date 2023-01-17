@@ -13,6 +13,7 @@
 	fwd/.style={preaction={draw=YellowOrange,-, line width=2pt,shorten >=3pt}}
 }
 \usepackage{float}
+\usepackage{enumerate}
 
 \begin{document}
 
@@ -158,7 +159,7 @@ A machine with two components is subject to a series of shocks that occur determ
 %	\begin{ Question 4}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+Develop a DTMC model of a military-oriented stochastic process. If possible, leverage your own past military experiences.
 \begin{solution}
 	S
 \end{solution}
@@ -168,9 +169,32 @@ Q
 %	\begin{ Question 5}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+\textit{Computational Exercise 2.2 (page 51).}
+
+Let \(\{X_n, n \geq 0\}\) be a DTMC with state-space \(\{1, 2, 3, 4, 5\}\) and the following
+transition probability matrix:
+\[\begin{bmatrix}
+	0.1 & 0.0 & 0.2 & 0.3 & 0.4 \\
+	0.0 & 0.6 & 0.0 & 0.4 & 0.0 \\
+	0.2 & 0.0 & 0.0 & 0.4 & 0.4 \\
+	0.0 & 0.4 & 0.0 & 0.5 & 0.1 \\
+	0.6 & 0.0 & 0.3 & 0.1 & 0.0 
+\end{bmatrix}.\]
+
+Suppose the initial distribution is \(a = [0.5, 0, 0, 0, 0.5]\). Compute the following:
+\begin{enumerate}[1.]
+	\item The pmf of \(X_2\),
+	\item \(P(X_2 = 2, X_4 = 5)\),
+	\item \(P(X_7 = 3|X_3 = 4)\),
+	\item \(P(X_1 \in \{1,2,3\},X_2 \in \{4,5\})\).
+\end{enumerate}
 \begin{solution}
-	S
+	\begin{enumerate}[1.]
+		\item \(a^{(2)} = \begin{bmatrix} 0.205 & 0.08 & 0.13 & 0.325 & 0.26 \end{bmatrix}\)
+		\item \(aP^{(2)}(2) \times aP^{(4)}(5) = 0.01296\) 
+		\item \( \begin{bmatrix} 0 & 0 & 0 & 1 & 0 \end{bmatrix} \times aP^{(7-3)}(3) = 0.0318 \)
+		\item \(\sum_{i=1}^{3} a^{(1)}(i) \times \sum_{j=4}^{5} a^{(2)}(j) = 0.351\)
+	\end{enumerate}
 \end{solution}
 %\end{ Question 5}
 
@@ -178,9 +202,29 @@ Q
 %	\begin{ Question 6}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+\textit{Computational Exercise 2.8 (page 52).}
+
+Let \(\{X_n,n\geq0\}\) be a DTMC with state-space \(\{1,2,3,4\}\) and transition probability matrix given below:
+\[P=\begin{bmatrix}
+	0.4 & 0.3 & 0.2 & 0.1 \\
+	0.5 & 0.0 & 0.0 & 0.5 \\
+	0.5 & 0.0 & 0.0 & 0.5 \\ 
+	0.1 & 0.2 & 0.3 & 0.4
+\end{bmatrix}.\]
+Suppose \(X_0 = 1\) with probability 1. Compute:
+\begin{enumerate}[1.]
+	\item \(P(X_2 = 4)\),
+	\item \(P(X_1 = 2, X_2 = 4, X_3 = 1)\), 
+	\item \(P(X_7 = 4|X_5 = 2)\),
+	\item \(E(X_3)\).
+\end{enumerate}
 \begin{solution}
-	S
+	\begin{enumerate}[1.]
+		\item \(aP^{(2)}(4)  =  0.33\)
+		\item \(aP^{(1)}(2) \times aP^{(2)}(4) \times aP^{(3)}(1)  =  0.032274\)
+		\item \(\begin{bmatrix} 0 & 1 & 0 & 0 \end{bmatrix} \times aP^{(7-5)}(4)  =  0.25\)
+		\item \(\sum_{i=1}^{4}aP^{(2)}(i) = 2.455\)
+	\end{enumerate}
 \end{solution}
 %\end{ Question 6}
 
@@ -188,9 +232,39 @@ Q
 %	\begin{ Question 7}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+\textit{Computational Exercise 2.12 (page 52).}
+
+Consider the weather forecasting model of Modeling Exercise 2.5. 
+What is the probability distribution of the length of the rainy 
+spell predicted by this model? Do the same for the length of the sunny spell.
+
 \begin{solution}
-	S
+	Let the state space be \{RR, RS, SR, SS\} 
+	where the letters correspond to \(n-1,n\) respectively.
+	Then the forecasting matrix with indexes corresponding to
+	order of the state space above will be:
+	\[F= \begin{bmatrix}
+		0.6 & 0.4 & 0.0 & 0.0 \\
+		0.0 & 0.0 & 0.25 & 0.75 \\
+		0.5 & 0.5 & 0.0 & 0.0 \\
+		0.0 & 0.0 & 0.2 & 0.8 
+	\end{bmatrix}\]
+	
+	Let \(P_r(l)\) be the probability of a rainy spell consisting of \(l\) days and
+	\(P_s(l)\) be the probability of a sunny spell consisting of \(l\) days.
+	Then, because a spell always begins when \(n-1\neq n\), the initial states are given:
+	\[
+	a_r = \begin{bmatrix} 0 & 0 & 1 & 0 \end{bmatrix}, \quad
+	a_s = \begin{bmatrix} 0 & 1 & 0 & 0 \end{bmatrix}.
+	\]
+	And because the last day of a spell is also transitional,
+	the index of the end will be the opposite of the start, thus:	
+	\begin{align*}
+	P_r(l) = a_rF^{(l)}(2) \\
+	P_s(l) = a_sF^{(l)}(3).
+	\end{align*}
+	
+	
 \end{solution}
 %\end{ Question 7}
 
@@ -198,31 +272,52 @@ Q
 %	\begin{ Question 8}	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \question 
-Q
+Consider a workshop with five identical machines. 
+A machine can be either up (i.e., working) or down (i.e., failed). If a machine is up on day n, it will be up on day n + 1 with probability 0.9. If a machine is down on day n and a repair is attempted, it will be up on day n + 1 with probability 0.6. The five machines behave independently of each other. The workshop can attempt to repair no more than two down machines on a single day. Initially, all five machines are down.
+
+\begin{enumerate}[(a)]
+	\item Model this system as a DTMC.
+	\begin{enumerate}[i.]
+		\item Specify the state variable \(X_n\) and the state space S.
+		\item Specify the transition probability function \(p_{i,j}\). (Hint: use a convolution of the pmfs of two binomial random variables.)
+		\item Specify the transition probability matrix numerically.
+		\item Confirm the Markov property and time homogeneity.
+	\end{enumerate}
+	\item  Compute and display (as separate vertical bar charts) the pmfs of the state variable on days 2, 4, and 8. 
+	Label figures appropriately. What do you observe?
+	
+	\item On one figure, plot the probability the number of up machines is 4 or more and the probability the number of up machines is 1 or fewer for days 0, 1, . . . , 10. Include dashed lines between points. Label the figure appropriately.
+	
+	\item After seven days of operations (i.e., at the end of Day 6), how many days can the workshop expect to have operated with four or more machines up? What would happen if the workshop began operations with all five machines up?
+	
+	\item Compute and display the expected value and variance of the system state over time. Plot the expected value of the system state on days 0, 1, . . . , 10 as a solid line with circle markers. Also indicate the standard deviation of the system state (i.e., \(\pm \sqrt{Var(X_n)}\)) by plotting \(\pm 1\)-standard deviation offsets (both higher and lower) from the solid expected value line. These two lines should be dashed.
+	
+	\item Suppose each machine generates \$1 of revenue per day when it is up. Compute and plot the expected total revenue as of Day 0, 1, . . . , 10.
+	(Ensure all figures are appropriately labeled with legends included as required. Ensure the grid of each figure is shown, so detailed information can be discerned.)
+
+\end{enumerate}
 \begin{solution}
-	S
+	\begin{enumerate}[(a)]
+		\item 
+		\begin{enumerate}[i.]
+			\item 
+			\item 
+			\item 
+			\[\begin{bmatrix}
+				0.59049 & 0.32805 & 0.0729 & 0.0081 & 0.00045 & 0.00001 \\
+				0.39366 & 0.4374  & 0.1458 & 0.0216 & 0.0015  & 0.00004 \\
+				0.26244 & 0.4374  & 0.243  & 0.0522 & 0.0048  & 0.00016 \\
+				0       & 0.2916  & 0.4536 & 0.2196 & 0.0336  & 0.0016  \\
+				0       & 0       & 0.324  & 0.468  & 0.192   & 0.016   \\
+				0       & 0       & 0      & 0.36   & 0.48    & 0.16    
+			\end{bmatrix}\]
+			\item 
+		\end{enumerate}
+	\end{enumerate}
 \end{solution}
 %\end{ Question 8}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%	\begin{ Question 9}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 9}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  \begin{ Question 10}	  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\question 
-Q
-\begin{solution}
-	S
-\end{solution}
-%\end{ Question 10}
 
 \end{questions}
 \end{document}
