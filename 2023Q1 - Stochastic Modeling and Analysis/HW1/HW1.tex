@@ -305,6 +305,19 @@ A machine can be either up (i.e., working) or down (i.e., failed). If a machine 
 			The state space is \(S=\{0,1,2,3,4,5\}\).
 			
 			\item 
+			\begin{align*}
+				p_{i,j} =
+				\begin{cases}
+					\sum_{k=0}^{j} \left[\binom{2}{j-k}0.6^{(j-k)}0.4^{(2-j+k)}\right]
+					& i \in \{0\} \\
+					\sum_{k=0}^{j}  \left[\binom{2}{j-k}0.6^{(j-k)}0.4^{(2-j+k)}\right] \left[\binom{i}{k}0.9^{(k)}0.1^{(i-k)}\right]
+					& i \in \{1,2,3\} \\
+					\sum_{k=0}^{j}  \left[\binom{2}{j-k}0.6^{(j-k)}0.4^{(2-j+k)}\right] \left[\binom{i}{k}0.9^{(k)}0.1^{(i-k)}\right]
+					& i \in \{4\} \\
+					\sum_{k=0}^{j}  \left[\binom{i}{k}0.9^{(k)}0.1^{(i-k)}\right]
+					& i \in \{5\}
+				\end{cases}
+			\end{align*}
 			
 			\item 
 			\[\begin{bmatrix}
