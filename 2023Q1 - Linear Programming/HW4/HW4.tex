@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
+\usepackage{nicefrac}
 
 \begin{document}
 
@@ -26,24 +27,23 @@ Find all basic solutions of the following system:
 \end{align*}
 
 % Begin Answer
+\hrule \smallskip
+Solution:
 
 \begin{align*}
-	\left[
-	\begin{array}{ccccc|c}
-		-1 &  2 & 1 & 3 & -2 & 4 \\
-		 1 & -2 & 0 & 2 &  1 & 2  
-	\end{array}
-	\right]
-	\left[
-	\begin{array}{ccccc|c}
-		-1 & 2 & 1 & 3 & -2 & 4 \\
-		 0 & 0 & 1 & 5 & -1 & 6  
-	\end{array}
-	\right]
+	(2,1,0,0,0)\ ,\
+	(\nicefrac{1}{3},0,1,0,0)\ &,\
+	(-\nicefrac{1}{3},0,0,1,0)\ ,\
+	(-\nicefrac{4}{3},0,0,0,1)
+\intertext{or}
+	(1,0,3,0,0)\ ,\
+	(0,1,-6,0,0)\ &,\
+	(0,0,1,1,0)\ ,\
+	(0,0,4,0,1)
 \end{align*}
 
 
-
+\smallskip \hrule
 %%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{subsection}{39}
 \subsection{}
@@ -56,7 +56,21 @@ inequalities:
 \end{align*}
 (\textit{Hint}: Consider n = 3 intersecting defining hyperplanes at a time.)
 
+% Begin Answer
+\hrule \smallskip
+Solution:
 
+
+
+(5,0,0)
+(0,2\nicefrac{1}{2},0)
+(0, 0, 3)
+
+(0,2\nicefrac{1}{3},2\nicefrac{1}{3})
+(3,0,2)
+(-2\nicefrac{1}{3},3\nicefrac{2}{3},0)
+
+\smallskip \hrule
 %%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{section}{3}
 \setcounter{subsection}{0}
@@ -84,6 +98,10 @@ Consider the following linear programming problem:
 	Is the procedure described in Parts (b) and (c) practical for solving larger problems? Discuss.
 \end{enumerate}
 
+% Begin Answer
+\hrule \smallskip
+Solution:
+
 \begin{enumerate}[a.]
 	\item 
 	\includegraphics[width=0.7\linewidth]{"Screenshot 2023-01-16 at 2.58.20 PM"}
@@ -107,12 +125,12 @@ Consider the following linear programming problem:
 	Among these, only \(x_3\) is degenerate, as it is an extreme point with three, or \(n+1\) meeting constraints.
 	
 	\item 
-	\includegraphics[width=0.7\linewidth]{"Screenshot 2023-01-17 at 4.13.44 PM"}
+	
 	\begin{align*}
 		x_1 = \begin{bmatrix} 0 \\ 0 \end{bmatrix} \quad
 		x_2 = \begin{bmatrix} 0 \\ 2 \end{bmatrix} \quad
 		x_3 = \begin{bmatrix} 4 \\ 0 \end{bmatrix} \quad
-		d_1 = \begin{bmatrix} 1 \\ 1 \end{bmatrix} \quad
+		d_1 = \begin{bmatrix} 4 \\ 1 \end{bmatrix} \quad
 		d_2 = \begin{bmatrix} 4 \\ 3 \end{bmatrix}.
 	\end{align*}
 	
