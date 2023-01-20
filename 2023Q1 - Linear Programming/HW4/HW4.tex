@@ -8,7 +8,7 @@
 
 \usepackage{nicefrac}
 \usepackage{xcolor,cancel}
-\newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
+\newcommand\hcancel[2][red]{\setbox0=\hbox{$#2$}%
 	\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2} 
 
 \begin{document}
@@ -52,7 +52,7 @@ Then breaking this matrix into sub-problems we get,
 		-1 &  2  \\
 		 1 & -2 
 	\end{bmatrix} (x_1 , x_2 ) = \begin{bmatrix} 4 \\ 2 \end{bmatrix}
-		&\rightarrow \text{N/A Hyperplanes are (Hyper?)parallel} \\
+		&\rightarrow \text{N/A these segments do not intersect.} \\
 	%
 	\begin{bmatrix}
 		-1 & 1 \\
@@ -136,20 +136,25 @@ The extreme points in this system are located at:
 
 At the origin \((0,0,0)\)
 
-Along the axes:
+Intersections along the axes and each multi-variable constraint individually:
 \begin{align*}
-	(x_1=0,x_2=0) \rightarrow \hcancel{(0,0,2.5)}, (0,0,3)
+	(x_1=0,x_2=0) &\rightarrow \hcancel{(0,0,5)}, (0,0,3) \\
+	(x_1=0,x_3=0) &\rightarrow (0,\nicefrac{5}{2},0), \hcancel{(0,6,0)} \\
+	(x_2=0,x_3=0) &\rightarrow (5,0,0), \hcancel{(-6,0,0)} \\
 \end{align*}
 
+Along the Cartesian planes and both multi-variable constraints:
 \begin{align*}
-	(5,0,0)\ ,\
-	(0,2\nicefrac{1}{2},0)\ ,\
-	(0, 0, 3)\ ,\
-	(0,2\nicefrac{1}{3},2\nicefrac{1}{3})\ ,\
-	(3,0,2)\ ,\
-	(-2\nicefrac{1}{3},3\nicefrac{2}{3},0)\ .
+	(x_1=0) &\rightarrow (0,\nicefrac{4}{3},\nicefrac{7}{3}) \\
+	(x_2=0) &\rightarrow (\nicefrac{4}{3},0,\nicefrac{11}{3}) \\
+	(x_3=0) &\rightarrow \hcancel{(-\nicefrac{7}{3},\nicefrac{11}{3},0)}.
 \end{align*}
 
+Grouped together, the points are,
+\[
+(0,0,0), \ (0,0,3), \ (0,\nicefrac{5}{2},0), \  (5,0,0), \
+(0,\nicefrac{4}{3},\nicefrac{7}{3}), \  (\nicefrac{4}{3},0,\nicefrac{11}{3}).
+\]
 
 
 \clearpage
@@ -213,13 +218,22 @@ Solution:
 		cx_4 &= (1,2)\begin{bmatrix} \nicefrac{4}{5} \\ \nicefrac{18}{5} \end{bmatrix} \quad = 8 \\
 		cx_5 &= (1,2)\begin{bmatrix}\nicefrac{20}{11}\\ \nicefrac{48}{11} \end{bmatrix} = 10 \,\nicefrac{6}{11} \ . 
 	\end{align*}
+
+	Reformulated this is:
+	\begin{align*}
+		\text{max} \quad 0\lambda_1 + 4\lambda_2 + \nicefrac{116}{11}\lambda_3 + 8\lambda_4 + 4\lambda_5 && \\
+		\text{s.t.} \hspace{13ex} \lambda_1 + \lambda_2 + \lambda_3 + \lambda_4 + \lambda_5 &= 1 & \\
+					\lambda_1, \lambda_2, \lambda_3, \lambda_4, \lambda_5 &\geq 0 & \\
+	\end{align*}
 	
-	\item 
+	\item \phantom{text} \\
+	\includegraphics[width=0.7\linewidth]{"Screenshot 2023-01-19 at 8.10.28 PM"} \\
 	Dropping the fourth constraint changes the extreme points and directions to:
 	\begin{align*}
 		x_1 = \begin{bmatrix} 0 \\ 0 \end{bmatrix} \quad
 		x_2 = \begin{bmatrix} 0 \\ 2 \end{bmatrix} \quad
 		x_3 = \begin{bmatrix} 4 \\ 0 \end{bmatrix} \quad
+		x_4 = \begin{bmatrix} \nicefrac{4}{5} \\ \nicefrac{18}{5} \end{bmatrix} \quad
 		d_1 = \begin{bmatrix} 4 \\ 1 \end{bmatrix} \quad
 		d_2 = \begin{bmatrix} 4 \\ 3 \end{bmatrix}.
 	\end{align*}
@@ -228,11 +242,20 @@ Solution:
 		cx_1 &= (1,2)\begin{bmatrix} 0 \\ 0 \end{bmatrix}  = 0 \\
 		cx_2 &= (1,2)\begin{bmatrix} 0 \\ 2 \end{bmatrix}  = 4 \\
 		cx_3 &= (1,2)\begin{bmatrix} 4 \\ 0 \end{bmatrix}  = 4 \\
-		cd_1 &= (1,2)\begin{bmatrix} 4 \\ 1 \end{bmatrix}  = 8 \\
+		cx_4 &= (1,2)\begin{bmatrix} \nicefrac{4}{5} \\ \nicefrac{18}{5} \end{bmatrix} \quad = 8 \\
+		cd_1 &= (1,2)\begin{bmatrix} 4 \\ 1 \end{bmatrix}  = 6 \\
 		cd_2 &= (1,2)\begin{bmatrix} 4 \\ 3 \end{bmatrix}  = 10 \ . 
 	\end{align*}
+
 	And from this we can see that the objective function increases indefinitely along the \(d_2\) direction;
 	in this case, the slope of the third constraint (\(-3x+4y\leq12\)).
+	
+	Reformulated this is:
+	\begin{align*}
+		\text{max} \quad 0\lambda_1 + 4\lambda_2 + 4\lambda_3 +8\lambda_4 + 6\mu_1 + 10\mu_2 && \\
+		\text{s.t.} \hspace{21ex} \lambda_1 + \lambda_2 + \lambda_3 +\lambda_4 &= 1 & \\
+		\lambda_1, \lambda_2, \lambda_3, \lambda_4, \mu_1, \mu_2 &\geq 0 & \\
+	\end{align*}
 	
 	\item 
 	While this method does not feel practical being done by hand, 
