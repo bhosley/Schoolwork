@@ -51,27 +51,28 @@ Problem 1.2
 The new product consists of 25 percent element A, at least 35 percent element B, and at least 20 percent element C. Owing to side effects of compounds 1 and 2, they must not exceed 25 percent and 30 percent, respectively, of the content of the new product. Formulate the problem of finding the least costly way of blending as a linear program.
 \begin{solution} \\
 	\textbf{\underline{Sets}} \\
-	\(K\) Chemical compounds \(k\in{1,2,3,4}\) \\
-	\(E\) Element (percentage) \(e\in{a,b,c}\) \\
+	\(K\) Chemical compounds \(k\in\{1,2,3,4\}\) \\
+	\(E\) Element (percentage) \(e\in\{a,b,c\}\) \\
 	\(p_{e,k}\) Blending coefficients \\
 	\(r_{k}\) Cost of reagents \\
-	\(r_{x}\) Cost of the new plastic \\
+	\(r_{x}\) Cost of the new plastic
 	
 	\textbf{\underline{Decision Variables}} \\
-	\(x_{k}\) Amount of compound \(k\) used to make the plastic \\
+	\(x_{k}\) Amount of compound \(k\) used to make the plastic
 	
-	\textbf{\underline{Explicit Formulation}} \\
+	\textbf{\underline{Explicit Formulation}}
 	\begin{flalign*}
 		\operatorname{min} r_x = 20x_1 + 30x_2 + 20x_3 + 15x_4 & && \\ \text{s.t.} \hspace{6.5ex}
-		 35x_1 + 15x_2 + 35x_3 + 25x_4 &=  25  && \\
-		 40x_1 + 65x_2 + 35x_3 + 40x_4 &\geq 35 && \\
-		 20x_1 + 15x_2 + 25x_3 + 30x_4 &\geq 20 && \\
-		 x_1 &\geq 25 && \\
-		 x_2 &\geq 30 && \\
+		 0.35x_1 + 0.15x_2 + 0.35x_3 + 0.25x_4 &=  0.25  && \\
+		 0.40x_1 + 0.65x_2 + 0.35x_3 + 0.40x_4 &\geq 0.35 && \\
+		 0.20x_1 + 0.15x_2 + 0.25x_3 + 0.30x_4 &\geq 0.20 && \\
+		 x_1 + x_2 + x_3 + x_4 &=  1  && \\
+		 x_1 &\geq 0.25 && \\
+		 x_2 &\geq 0.30 && \\
 		 x_1, x_2, x_3, x_4 &\geq 0 && \\
 	\end{flalign*}
 
-	\textbf{\underline{Assumptions}} \\
+	\textbf{\underline{Assumptions}}
 	\begin{enumerate}
 		\item  That the cost per unit of each compound is fixed
 		(there are no volume discounts or delivery costs).
@@ -79,14 +80,15 @@ The new product consists of 25 percent element A, at least 35 percent element B,
 		(orders aren't bound to integer or rational units).
 	\end{enumerate}
 
-	\textbf{\underline{Compact Formulation}} \\
+	\textbf{\underline{Compact Formulation}}
 	\begin{flalign*}
-		\operatorname{min} r_x = \sum_{k=1}^{4} r_k\,x_k & && \\ \text{s.t.} \hspace{4.5ex}
-		\sum_{k=1}^{4} p_{a,k}\,x_k &=  25   \hspace{10ex}\text{(Percentage of Compound a)} && \\
-		\sum_{k=1}^{4} p_{b,k}\,x_k &\geq 35 \hspace{10ex}\text{(Percentage of Compound b)} && \\
-		\sum_{k=1}^{4} p_{c,k}\,x_k &\geq 20 \hspace{10ex}\text{(Percentage of Compound c)} && \\
-		k_1 &\geq 25 && \\
-		k_2 &\geq 30 && \\
+		\operatorname{min} r_x = \sum_{k=1}^{4} r_k\,x_k & && \\ \text{s.t.} \hspace{7ex}
+		\sum_{k=1}^{4} x_k &=  1  \hspace{13ex}\text{(Is a valid Percentage)} && \\
+		\sum_{k=1}^{4} p_{a,k}\,x_k &=  0.25   \hspace{10ex}\text{(Percentage of Compound a)} && \\
+		\sum_{k=1}^{4} p_{b,k}\,x_k &\geq 0.35 \hspace{10ex}\text{(Percentage of Compound b)} && \\
+		\sum_{k=1}^{4} p_{c,k}\,x_k &\geq 0.20 \hspace{10ex}\text{(Percentage of Compound c)} && \\
+		k_1 &\geq 0.25 && \\
+		k_2 &\geq 0.30 && \\
 		k &\geq 0 \hspace{10ex} \forall\ k\in K &&.
 	\end{flalign*} \\
 
