@@ -1,0 +1,156 @@
+\documentclass[answers]{exam}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+\begin{document}
+
+\noindent{\large OPER 640 - Stochastic Modeling and Analysis I%
+	% Homework 2 % (Due Jan X at 10am)
+	}
+\hspace{\fill} {\large B. Hosley}
+\bigskip
+
+% \unframedsolutions
+
+\begin{questions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+\textit{Computational Exercise 3.2 (page 79).}
+
+Let \(T =\text{min}\{n\geq0:X_n =0\}\).Compute
+\begin{enumerate}
+	\item \(P(T \geq 3|X_0 = 1)\), 
+	\item \(\text{E}(T|X_0 =1)\),
+	\item \(\text{Var}(T |X_0 = 1)\).
+\end{enumerate}
+
+
+\textbf{3.2} Do the above problem with the following transition probability matrix:
+\[\begin{bmatrix}
+	0.0 & 1.0 & 0.0 & 0.0 \\
+	0.2 & 0.0 & 0.8 & 0.0 \\
+	0.0 & 0.8 & 0.0 & 0.2 \\
+	0.0 & 0.0 & 1.0 & 0.0 
+\end{bmatrix}.\]
+
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+\textit{Computational Exercise 3.4 (page 80). 
+	Compute variance and coefficient of variation as well. 
+	(Assume game time is measured in rounds, 
+	and each player tosses one die per round.)}
+
+
+\textbf{3.4} If two players are playing the game in Computational Exercise 3.3, 
+compute the probability distribution of the time until the game ends 
+(that is, when one of the two players lands on 16.) 
+Assume that there is no interaction among the two players, 
+except that they take turns. Compute the mean time until the game terminates.
+
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 3}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question
+\textit{Computational Exercise 3.18 (page 81). 
+	Ensure the rows in the transition probability matrix sum to 1. 
+	If not, normalize the necessary rows so that they do. 
+	Compute variance and coefficient of variation as well.}
+
+\textbf{3.18} Suppose a DNA sequence is appropriately modeled by a 
+4-state DTMC with transition probability matrix P(1) given on page 22. 
+Suppose the first base is A. 
+Compute the expected length of the sequence until we see the triplet ACT .
+
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 4}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+\textit{Computational Exercise 3.22 (page 82). 
+	Ensure the rows in the transition probability matrix sum to 1. 
+	If not, normalize the necessary rows so that they do.}
+
+\textbf{3.22} In Computational Exercise 3.18 compute the probability 
+that we see the triplet ACT before the triplet GCT.
+
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 4}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 5}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+\textit{Computational Exercise 3.24 (page 82).}
+
+\textbf{3.24} Consider the discrete time queue with 
+Bernoulli arrivals and departures as described in Example 2.12 on page 17. 
+Suppose the queue has i customers in it initially. 
+Compute the probability that the system will eventually become empty.
+
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 6}	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\question 
+	Consider the maze shown in Figure {\color{red} 1}. 
+	At time 0 a mouse is placed in Cell 1 and food in Cell 25. 
+	The mouse stays in the current cell for one unit of time and 
+	then chooses to move to an adjacent cell at random in a uniform manner 
+	(no diagonal movement, cardinal directions only). 
+	Its successive moves are independent and completely uninfluenced by the food.
+	
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{"Screenshot 2023-01-27 at 10.42.23 AM"}
+		\\ Figure 1: Mouse Maze
+	\end{center}
+	
+	
+	\begin{enumerate}[label=(\alph*)]
+		\item What is the expected time required for the mouse to reach the food? 
+		Compute variance and coefficient of variation as well.
+		
+		\item What is the probability that the mouse will reach the food in 50 time-steps or less?
+		
+		\item Suppose a cat is placed in cell 5. 
+		The cat moves like the mouse but in an independent fashion. 
+		When the cat and mouse occupy the same cell, the cat promptly eats the mouse. 
+		What is the probability that the mouse will reach the cheese before the cat consumes the mouse? 
+		(Assume that, if the cat and mouse arrive at the cheese at the same time, the mouse gets to eat the cheese.)
+	\end{enumerate}
+\begin{solution}
+	S
+\end{solution}
+%\end{ Question 6}
+
+\end{questions}
+\end{document}
