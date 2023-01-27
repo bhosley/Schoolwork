@@ -1,0 +1,86 @@
+\documentclass{beamer}
+\usetheme{CambridgeUS}
+
+\title{Federated Optimization - Distributed Optimization Beyond the Datacenter}
+\subtitle{}
+\author{Brandon Hosley}
+\institute{}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+%\begin{frame}
+%	\frametitle{Outline}
+%	\tableofcontents
+%\end{frame}
+
+
+\begin{frame}
+	\frametitle{Problem Addressed/Identified}
+	\begin{itemize}
+		\item Want: Centralized model trained with all available data
+		\item Have: Very decentralized data
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Research Contribution}
+	Motivated by a connection between:
+	\begin{itemize}
+		\item SVRG (Stochastic Variance Reduced Gradient)
+		\item Used as the single node solver
+		\item High compute use, lower storage need
+		\item DANE (Distributed Approximate NEwton)
+		\item Solves sub-problems on nodes
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Research Contribution}
+	Algorithm 1. Distributed version of SVRG
+	\begin{enumerate}
+		\item Parameterization
+		\item Compute objective gradient as arithmetic mean of sub-function gradients
+		\item Init weights on each node
+		\item Update weights on node using SVRG
+		\item Aggregate updates as original weights + Arithmetic Mean of node weight-server weights
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Novelty/Rationale/Significance}
+	\begin{enumerate}
+		\item Stepsize on each node is inversely proportional to size of local data
+		\item Node updates are scaled by a diagonal matrix - elements defined as the ratios of the features' appearance globally and locally (on node).
+		\item Aggregation elements are scaled by another diagonal matrix - Number of nodes / number with the feature.
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Experimental Methodology}
+	Binary classification of if a social media post would receive at least one comment. \\
+	3:1 Training, Testing Split
+\end{frame}
+
+\begin{frame}
+	\frametitle{Limitations and Weaknesses}
+	Non-existence of a large, naturally user-clustered dataset
+\end{frame}
+
+\begin{frame}
+	\frametitle{Findings and Conclusions}
+	The referenced prior attempts at communication-efficient algorithms were limiting in their implementation.\\
+	"Inefficient" - Did not converge in a reasonable time on disparate data.
+\end{frame}
+
+\begin{frame}
+	\frametitle{Areas for Improvement/Future Directions}
+	"Currently, there is no proper theoretical justification of the method, which would surely drive further improvements."\\
+	Concerns with privacy, and how that fits within ML pipelines
+\end{frame}
+
+\end{document}
