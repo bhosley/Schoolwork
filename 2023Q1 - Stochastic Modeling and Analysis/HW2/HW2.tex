@@ -42,7 +42,23 @@ Let \(T =\text{min}\{n\geq0:X_n =0\}\).Compute
 \end{bmatrix}.\]
 
 \begin{solution}
-	S
+\begin{enumerate}
+	\item \(P(T \geq 3|X_0 = 1)\)
+	
+	
+	\item \(\text{E}(T|X_0 =1)\)
+	\begin{align*}
+		\begin{bmatrix}
+			0.0 & 0.8 & 0.0 \\
+			0.8 & 0.0 & 0.2 \\
+			0.0 & 1.0 & 0.0 
+		\end{bmatrix}
+	\end{align*}
+	
+	
+	\item \(\text{Var}(T |X_0 = 1)\)
+	
+\end{enumerate}
 \end{solution}
 %\end{ Question 1}
 
@@ -62,8 +78,26 @@ compute the probability distribution of the time until the game ends
 Assume that there is no interaction among the two players, 
 except that they take turns. Compute the mean time until the game terminates.
 
+\begin{center}
+	\includegraphics[width=0.45\linewidth]{"Screenshot 2023-01-28 at 2.05.59 PM"}
+	\\ Figure 3.4 \textit{The 4 by 4 chutes and ladders.}
+\end{center}
+
 \begin{solution}
-	S
+
+[[0.0, 1/3, 1/3, 1/3,   0,   0,   0,   0,   0,   0,   0,   0],
+[   0, 0.0, 1/3, 2/3,   0,   0,   0,   0,   0,   0,   0,   0],
+[   0,   0, 0.0, 1/3, 1/3, 1/3,   0,   0,   0,   0,   0,   0],
+[   0,   0,   0, 0.0, 1/3, 1/3, 1/3,   0,   0,   0,   0,   0],
+[   0,   0,   0,   0, 0.0, 1/3, 1/3, 1/3,   0,   0,   0,   0],
+[   0,   0,   0,   0,   0, 0.0, 1/3, 1/3,   0, 1/3,   0,   0],
+[   0, 1/3,   0,   0,   0,   0, 0.0, 1/3,   0, 1/3,   0,   0],
+[   0, 1/3,   0,   0,   0,   0,   0, 1/3, 1/3,   0,   0,   0],
+[   0,   0,   0,   0,   0,   0, 1/3,   0, 0.0, 1/3, 1/3,   0],
+[   0,   0,   0,   0,   0,   0, 1/3,   0,   0, 0.0, 1/3, 1/3],
+[   0,   0,   0,   0,   0,   0, 1/3,   0,   0,   0, 1/3, 1/3],
+[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0, 1.0]]
+
 \end{solution}
 %\end{ Question 2}
 
