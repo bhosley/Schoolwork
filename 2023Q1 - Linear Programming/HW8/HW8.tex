@@ -1,0 +1,56 @@
+\documentclass[12pt]{amsart}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+\begin{document}
+\raggedbottom
+
+\noindent{\large OPER 610 - Linear Programming %
+	% Lesson X %
+	(Due Jan X at 10am)}
+\hspace{\fill} {\large B. Hosley}
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{section}{5}
+\setcounter{subsection}{34}
+\subsection{}
+Let \(\mathbf{A} = \begin{bmatrix} 1 & 1 \\ 0 & 2 \\ -1 & 4 \end{bmatrix}\)
+and \(\mathbf{c} = (-1,5) \).
+Which of the following two systems has a solution?
+\begin{align*}
+	System\ 1: \mathbf{Ax}\leq\mathbf{0},& \qquad \mathbf{cx}>0; \\
+	System\ 2: \mathbf{wA}=\mathbf{c}& \qquad \mathbf{w}\geq\mathbf{0}.
+\end{align*}
+
+
+\setcounter{subsection}{40}
+\subsection{}
+Write the KKT optimality conditions for each of the following problems:
+\begin{enumerate}
+	\item[a.] \begin{align*}
+		\text{Maximize }\,\,\ \mathbf{cx} & \hspace{75ex}\\
+		\text{subject to  } \mathbf{Ax} &\leq \mathbf{b} \\
+		\mathbf{x} &\geq \mathbf{0}.
+	\end{align*}
+	\item[d.]\begin{align*}
+		\text{Maximize }\quad \mathbf{cx} & \hspace{75ex}\\
+		\text{subject to  } \mathbf{A_1x} &= \mathbf{b_1} \\
+		\mathbf{A_2x} &\geq \mathbf{b_2} \\
+		\mathbf{x} &\geq \mathbf{0}.
+	\end{align*}
+	\item[e.] \begin{align*}
+		\text{Maximize }\,\ \mathbf{cx} & \hspace{75ex}\\
+		\text{subject to  } \mathbf{Ax} &= \mathbf{b} \\
+		\mathbf{x} &\leq \mathbf{u} \\
+		\mathbf{x} &\geq \boldsymbol{\ell}.
+	\end{align*}
+\end{enumerate}
+
+
+\end{document}
