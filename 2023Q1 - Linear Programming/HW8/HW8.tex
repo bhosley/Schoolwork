@@ -58,7 +58,7 @@ Evaluating system 2:
 By inspection, one feasible solution is
 \(w_1 = 0, \ w_2 = 1/2, \text{ and, } w_3 = 1\).
 
-
+\clearpage
 \setcounter{subsection}{40}
 \subsection{}
 Write the KKT optimality conditions for each of the following problems:
@@ -87,13 +87,76 @@ Write the KKT optimality conditions for each of the following problems:
 
 \begin{enumerate}
 	\item[a.]
-	
+	\underline{Primal:}
+	\begin{align*}
+		\mathbf{Ax} &\leq \mathbf{b} \hspace{25ex}\\
+		\mathbf{x} &\geq \mathbf{0}.
+	\end{align*}
+	\underline{Dual:}
+	\begin{align*}
+		\mathbf{wA} - \mathbf{v} &\geq \mathbf{c} \hspace{25ex}\\
+		\mathbf{w} &\geq \mathbf{0} \\
+		\mathbf{w} &\geq \mathbf{0}.
+	\end{align*}
+	\underline{Complementary Slackness:}
+	\begin{align*}
+		\mathbf{Ax} \leq \mathbf{b} \ , \ \ \mathbf{w} \geq \mathbf{0} &\Rightarrow
+		\mathbf{wAx} \leq \mathbf{wb} \\
+		\mathbf{wA} \geq \mathbf{c} \ , \ \ \mathbf{x} \geq \mathbf{0} &\Rightarrow
+		\mathbf{wAx} \geq \mathbf{cx}
+	\intertext{Assuming strong duality:}
+		\mathbf{cx} &= \mathbf{wb} 
+	\intertext{thus,}
+		\mathbf{w}(\mathbf{b}-\mathbf{Ax}) &=0,
+	\intertext{and}
+		(\mathbf{wA}-\mathbf{c})\mathbf{x} &=0,
+	\intertext{and}
+		\mathbf{vx} = 0.
+	\end{align*}
 	
 	\item[d.]
-	
+	\underline{Primal:}
+	\begin{align*}
+		\text{Maximize }\quad \mathbf{cx} & \hspace{55ex}\\
+		\text{subject to  } \mathbf{A_1x} &= \mathbf{b_1} \\
+		\mathbf{A_2x} &\geq \mathbf{b_2} \\
+		\mathbf{x} &\geq \mathbf{0}.
+	\end{align*}
+	\underline{Dual:}
+	\begin{align*}
+		\text{Minimize }\qquad \mathbf{w}_1\mathbf{b}_1 + \mathbf{w}_2\mathbf{b}_2 & \hspace{55ex}\\
+		\text{subject to  } \ \mathbf{w}_1\mathbf{A}_1 + \mathbf{w}_2\mathbf{A}_2 &\geq \mathbf{c} \\
+		\mathbf{w}_1 &\text{: unrestricted} \\
+		\mathbf{w}_2 &\leq \mathbf{0}.
+	\end{align*}
+	\underline{Complementary Slackness:}
+	\begin{align*}
+		(\mathbf{w}_1\mathbf{A}_1 + \mathbf{w}_2\mathbf{A}_2 - \mathbf{c})\mathbf{x} = \mathbf{0} \\
+		\mathbf{w}_1(\mathbf{b}_1 - \mathbf{A}_1\mathbf{x}) + \mathbf{w}_2(\mathbf{b}_2 - \mathbf{A}_2\mathbf{x})  = \mathbf{0}
+	\end{align*}
 	
 	\item[e.]
-	
+	\underline{Primal:}
+	\begin{align*}
+		\text{Maximize }\,\ \mathbf{cx} & \hspace{55ex}\\
+		\text{subject to  } \mathbf{Ax} &= \mathbf{b} \\
+		\mathbf{x} &\leq \mathbf{u} \\
+		\mathbf{x} &\geq \boldsymbol{\ell}.
+	\end{align*}
+	\underline{Dual:}
+	\begin{align*}
+		\text{Minimize }\,\ \mathbf{wB} & \hspace{55ex}\\
+		\text{subject to  } 
+		\mathbf{wA}- \mathbf{u} &\leq \mathbf{c} ?\\
+		\mathbf{wA}- \boldsymbol{\ell} &\geq \mathbf{c} ?\\
+		\mathbf{w} &:\text{ unrestricted}.
+	\end{align*}
+	\underline{Complementary Slackness:}
+	\begin{align*}
+		\mathbf{w}(\mathbf{b}-\mathbf{Ax}) &=0 \\
+		(\mathbf{wA}-\mathbf{c}-\mathbf{u})\mathbf{x} &=0 ? \\
+		(\mathbf{wA}-\mathbf{c}+\boldsymbol{\ell})\mathbf{x} &=0 ?
+	\end{align*}
 	
 \end{enumerate}
 
