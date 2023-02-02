@@ -28,6 +28,36 @@ Which of the following two systems has a solution?
 	System\ 2: \mathbf{wA}=\mathbf{c}& \qquad \mathbf{w}\geq\mathbf{0}.
 \end{align*}
 
+\bigskip
+\textit{Solution:}
+
+Evaluating system 1:
+\begin{align*}
+\intertext{From $\mathbf{Ax}\leq\mathbf{0}$ we get}
+	x_1 + x_2 &\leq 0 \\
+	  2x_2 & \leq 0 \\
+	-x_1 + 4x_2 &\leq 0, \\
+\intertext{and from $\mathbf{cx}>0$ we get}
+	-x_1 + 5x_2 &> 0. \\
+\intertext{Combining the third and fourth inequality we see}
+	-x_1 + 4x_2 < -x_1 + 5x_2
+\intertext{which simplifies to}
+	x_2 > 0
+\intertext{which is in direct contradiction to the second inequality above, namely,}
+	2x_2 & \leq 0.
+\end{align*}
+
+Evaluating system 2:
+\begin{align*}
+\intertext{From $\mathbf{wA}=\mathbf{c}$ we get}
+	w_1 \begin{bmatrix} 1 \\ 1\end{bmatrix} + 
+	w_2 \begin{bmatrix} 0 \\ 2\end{bmatrix} + 
+	w_3 \begin{bmatrix} -1 \\ 4\end{bmatrix} &= 
+	\begin{bmatrix} -1 \\ 5\end{bmatrix}.
+\end{align*}
+By inspection, one feasible solution is
+\(w_1 = 0, \ w_2 = 1/2, \text{ and, } w_3 = 1\).
+
 
 \setcounter{subsection}{40}
 \subsection{}
@@ -50,6 +80,21 @@ Write the KKT optimality conditions for each of the following problems:
 		\mathbf{x} &\leq \mathbf{u} \\
 		\mathbf{x} &\geq \boldsymbol{\ell}.
 	\end{align*}
+\end{enumerate}
+
+\bigskip
+\textit{Solution:}
+
+\begin{enumerate}
+	\item[a.]
+	
+	
+	\item[d.]
+	
+	
+	\item[e.]
+	
+	
 \end{enumerate}
 
 
