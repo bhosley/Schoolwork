@@ -5,6 +5,10 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat = newest}
+\usepgfplotslibrary{fillbetween}
 
 \begin{document}
 \raggedbottom
@@ -58,6 +62,89 @@ Evaluating system 2:
 By inspection, one feasible solution is
 \(w_1 = 0, \ w_2 = 1/2, \text{ and, } w_3 = 1\).
 
+\begin{center}
+\begin{tikzpicture}
+	\begin{axis}[
+		title=System 1,
+		xmin = -6, xmax = 6, xtick distance = 10,
+		ymin = -6, ymax = 6, ytick distance = 10,
+		grid = both,
+		axis lines = center,
+		ticks = none,
+		major grid style = {},
+		width = 0.35\textwidth,
+		height = 0.35\textwidth,
+		axis line style={-}
+		]
+		\draw[transparent, fill=gray, fill opacity=0.5] (0,0) -- (-4,-1) arc (202.5:315:5) --cycle;
+		\addplot [
+		black, line width=2pt,
+		quiver={u=\thisrow{u},v=\thisrow{v}},
+		stealth-,
+		nodes near coords,
+		point meta=explicit symbolic,
+		coordinate style/.from= \thisrow{style},
+		] table [meta=label] {
+			x y u v label	style
+			1 1 -1 -1 $a^1$	right
+			0 2 0 -2 $a^2$	right
+		   -1 4 1 -4 $a^3$	left
+		};
+		\addplot [
+		blue, line width=2pt,
+		quiver={u=\thisrow{u},v=\thisrow{v}},
+		stealth-,
+		nodes near coords,
+		point meta=explicit symbolic,
+		coordinate style/.from= \thisrow{style},
+		] table [meta=label] {
+			x y u v label	style
+			-1 5 1 -5 $c$	right
+		};
+	\end{axis}
+\end{tikzpicture} \hspace{5em}
+\begin{tikzpicture}
+	\begin{axis}[
+		title=System 2,
+		xmin = -6, xmax = 6, xtick distance = 10,
+		ymin = -6, ymax = 6, ytick distance = 10,
+		grid = both,
+		axis lines = center,
+		ticks = none,
+		major grid style = {},
+		width = 0.35\textwidth,
+		height = 0.35\textwidth,
+		axis line style={-}
+		]
+		\draw[transparent, fill=gray, fill opacity=0.5] (0,0) -- (4,4) arc (45:111:5) --cycle;
+		\addplot [
+		black, line width=2pt,
+		quiver={u=\thisrow{u},v=\thisrow{v}},
+		stealth-,
+		nodes near coords,
+		point meta=explicit symbolic,
+		coordinate style/.from= \thisrow{style},
+		] table [meta=label] {
+			x y u v label	style
+			1 1 -1 -1 $a^1$	right
+			0 2 0 -2 $a^2$	right
+			-1 4 1 -4 $a^3$	left
+		};
+		\addplot [
+		blue, line width=2pt,
+		quiver={u=\thisrow{u},v=\thisrow{v}},
+		stealth-,
+		nodes near coords,
+		point meta=explicit symbolic,
+		coordinate style/.from= \thisrow{style},
+		] table [meta=label] {
+			x y u v label	style
+			-1 5 1 -5 $c$	right
+		};
+	\end{axis}
+\end{tikzpicture}
+\end{center}
+
 \clearpage
 \setcounter{subsection}{40}
 \subsection{}
@@ -67,19 +154,24 @@ Write the KKT optimality conditions for each of the following problems:
 		\text{Maximize }\,\,\ \mathbf{cx} & \hspace{75ex}\\
 		\text{subject to  } \mathbf{Ax} &\leq \mathbf{b} \\
 		\mathbf{x} &\geq \mathbf{0}.
-	\end{align*}
+	\end{align*} \vspace{-5ex}
+	\item[c.] \begin{align*}
+		\text{Minimize }\,\,\ \mathbf{cx} & \hspace{75ex}\\
+		\text{subject to  } \mathbf{Ax} &\leq \mathbf{b} \\
+		\mathbf{x} &\geq \mathbf{0}.
+	\end{align*} \vspace{-5ex}
 	\item[d.]\begin{align*}
-		\text{Maximize }\quad \mathbf{cx} & \hspace{75ex}\\
+		\text{Minimize }\quad \mathbf{cx} & \hspace{75ex}\\
 		\text{subject to  } \mathbf{A_1x} &= \mathbf{b_1} \\
 		\mathbf{A_2x} &\geq \mathbf{b_2} \\
 		\mathbf{x} &\geq \mathbf{0}.
-	\end{align*}
+	\end{align*} \vspace{-5ex}
 	\item[e.] \begin{align*}
-		\text{Maximize }\,\ \mathbf{cx} & \hspace{75ex}\\
+		\text{Minimize }\,\ \mathbf{cx} & \hspace{75ex}\\
 		\text{subject to  } \mathbf{Ax} &= \mathbf{b} \\
 		\mathbf{x} &\leq \mathbf{u} \\
 		\mathbf{x} &\geq \boldsymbol{\ell}.
-	\end{align*}
+	\end{align*} \vspace{-5ex}
 \end{enumerate}
 
 \bigskip
@@ -94,19 +186,12 @@ Write the KKT optimality conditions for each of the following problems:
 	\end{align*}
 	\underline{Dual:}
 	\begin{align*}
-		\mathbf{wA} - \mathbf{v} &\geq \mathbf{c} \hspace{25ex}\\
+		\mathbf{wA} - \mathbf{v} &= \mathbf{c} \hspace{25ex}\\
 		\mathbf{w} &\geq \mathbf{0} \\
-		\mathbf{w} &\geq \mathbf{0}.
+		\mathbf{v} &\geq \mathbf{0}.
 	\end{align*}
 	\underline{Complementary Slackness:}
 	\begin{align*}
-		\mathbf{Ax} \leq \mathbf{b} \ , \ \ \mathbf{w} \geq \mathbf{0} &\Rightarrow
-		\mathbf{wAx} \leq \mathbf{wb} \\
-		\mathbf{wA} \geq \mathbf{c} \ , \ \ \mathbf{x} \geq \mathbf{0} &\Rightarrow
-		\mathbf{wAx} \geq \mathbf{cx}
-	\intertext{Assuming strong duality:}
-		\mathbf{cx} &= \mathbf{wb} 
-	\intertext{thus,}
 		\mathbf{w}(\mathbf{b}-\mathbf{Ax}) &=0,
 	\intertext{and}
 		(\mathbf{wA}-\mathbf{c})\mathbf{x} &=0,
@@ -114,48 +199,64 @@ Write the KKT optimality conditions for each of the following problems:
 		\mathbf{vx} = 0.
 	\end{align*}
 	
+	\item[c.]
+	\underline{Primal:}
+	\begin{align*}
+		\mathbf{Ax} &\leq \mathbf{b} \hspace{25ex}\\
+		\mathbf{x} &\geq \mathbf{0}.
+	\end{align*}
+	\underline{Dual:}
+	\begin{align*}
+		\mathbf{wA} + \mathbf{v} &= \mathbf{c} \hspace{25ex}\\
+		\mathbf{w} &\leq \mathbf{0} \\
+		\mathbf{v} &\leq \mathbf{0}.
+	\end{align*}
+	\underline{Complementary Slackness:}
+	\begin{align*}
+		\mathbf{w}(\mathbf{b}-\mathbf{Ax}) &=0,
+		\intertext{and}
+		(\mathbf{wA}-\mathbf{c})\mathbf{x} &=0,
+		\intertext{and}
+		\mathbf{vx} = 0.
+	\end{align*}
+	
 	\item[d.]
 	\underline{Primal:}
 	\begin{align*}
-		\text{Maximize }\quad \mathbf{cx} & \hspace{55ex}\\
-		\text{subject to  } \mathbf{A_1x} &= \mathbf{b_1} \\
+		\mathbf{A_1x} &= \mathbf{b_1} \hspace{25ex}\\
 		\mathbf{A_2x} &\geq \mathbf{b_2} \\
 		\mathbf{x} &\geq \mathbf{0}.
 	\end{align*}
 	\underline{Dual:}
 	\begin{align*}
-		\text{Minimize }\qquad \mathbf{w}_1\mathbf{b}_1 + \mathbf{w}_2\mathbf{b}_2 & \hspace{55ex}\\
-		\text{subject to  } \ \mathbf{w}_1\mathbf{A}_1 + \mathbf{w}_2\mathbf{A}_2 &\geq \mathbf{c} \\
+		\mathbf{w}_1\mathbf{A}_1 + \mathbf{w}_2\mathbf{A}_2 - \mathbf{v} &= \mathbf{c} \hspace{25ex} \\
 		\mathbf{w}_1 &\text{: unrestricted} \\
-		\mathbf{w}_2 &\leq \mathbf{0}.
+		\mathbf{w}_2 &\geq \mathbf{0} \\
+		\mathbf{v} &\geq \mathbf{0}.
 	\end{align*}
 	\underline{Complementary Slackness:}
 	\begin{align*}
-		(\mathbf{w}_1\mathbf{A}_1 + \mathbf{w}_2\mathbf{A}_2 - \mathbf{c})\mathbf{x} = \mathbf{0} \\
-		\mathbf{w}_1(\mathbf{b}_1 - \mathbf{A}_1\mathbf{x}) + \mathbf{w}_2(\mathbf{b}_2 - \mathbf{A}_2\mathbf{x})  = \mathbf{0}
+		\mathbf{w}_2(\mathbf{A}_2\mathbf{x} - \mathbf{b}_2)  = \mathbf{0} \\
+		\mathbf{vx} = 0
 	\end{align*}
 	
 	\item[e.]
 	\underline{Primal:}
 	\begin{align*}
-		\text{Maximize }\,\ \mathbf{cx} & \hspace{55ex}\\
-		\text{subject to  } \mathbf{Ax} &= \mathbf{b} \\
+		\mathbf{Ax} &= \mathbf{b} \hspace{35ex}\\
 		\mathbf{x} &\leq \mathbf{u} \\
 		\mathbf{x} &\geq \boldsymbol{\ell}.
 	\end{align*}
 	\underline{Dual:}
 	\begin{align*}
-		\text{Minimize }\,\ \mathbf{wB} & \hspace{55ex}\\
-		\text{subject to  } 
-		\mathbf{wA}- \mathbf{u} &\leq \mathbf{c} ?\\
-		\mathbf{wA}- \boldsymbol{\ell} &\geq \mathbf{c} ?\\
+		\mathbf{wA}- \mathbf{u} + \mathbf{v} &= \mathbf{c} \hspace{35ex}\\
+		\mathbf{wA}- \boldsymbol{\ell} - \mathbf{v} &= \mathbf{c} \\
 		\mathbf{w} &:\text{ unrestricted}.
 	\end{align*}
 	\underline{Complementary Slackness:}
 	\begin{align*}
-		\mathbf{w}(\mathbf{b}-\mathbf{Ax}) &=0 \\
-		(\mathbf{wA}-\mathbf{c}-\mathbf{u})\mathbf{x} &=0 ? \\
-		(\mathbf{wA}-\mathbf{c}+\boldsymbol{\ell})\mathbf{x} &=0 ?
+		\mathbf{w}(\mathbf{Ax}-\mathbf{b}) &=0 \hspace{35ex}\\
+		\mathbf{vx} &= 0
 	\end{align*}
 	
 \end{enumerate}
