@@ -20,14 +20,30 @@
 \setcounter{section}{6}
 \setcounter{subsection}{1}
 \subsection{}
-Find the dual of the following
+Find the dual of the following problem:
 \begin{flalign*}
-	\text{Maximize }   -2x_1 + 3x_2 + 5x_3 &
-	\text{subject to } -2x_1 +  x_2 + 3x_3 + x_4 &\geq 5 \\
-	2x_1  + x_3 &= 4 \\
-	  -2x_2 + x_3 + x_4 &\leq
+	\text{Maximize }   -2x_1 + 3x_2 + 5x_3 \qquad\ & \\
+	\text{subject to } -2x_1 +\;\ x_2 + 3x_3 + x_4 &\geq\ 5 \\
+	2x_1 \qquad\,\ \ +\ x_3 \qquad\ &=\ 4 \\
+	    -2x_2 +\,\ x_3 + x_4 &\leq\ 6 \\
+	x_1 &\leq\ 0 \\
+	x_2, x_3 &\geq\ 0 \\
+	x_4 &: \text{ unrestricted}  
 \end{flalign*}
 
+\textit{Solution:} Dual:
+\begin{flalign*}
+	\text{Minimize }\quad 5w_1 + 4w_2 + 6w_3 & \\
+	\text{subject to } -2w_1 + 2w_2\hspace{6.25ex} &\leq \negthinspace -2 \\
+	w_1 \hspace{6.35ex} -\,\ w_3 &\geq\ \ 3 \\
+	3w_1 +\,\: w_2 +\,\ w_3 &\geq\ \ 5 \\
+	w_1 +\hspace{7.35ex} w_3 &=\ \ 5 \\
+	w_1 &\leq\ \ 0 \\
+	w_2 &: \text{unrestricted} \\
+	w_3 &\geq\ \ 0
+\end{flalign*}
+
+\bigskip
 
 \setcounter{section}{6}
 \setcounter{subsection}{9}
@@ -39,7 +55,22 @@ Consider the problem: Minimize \(z\) subject to
 \begin{enumerate}[a.]
 	\item State the dual.
 	\item At optimality, what will be the value of the first dual variable? Explain.
-\end{enumerate}
+\end{enumerate} \medskip
 
+\textit{Solution:}
+\begin{enumerate}[a.]
+	\item Dual:
+	\begin{flalign*}
+		\text{Max }\qquad\ \mathbf{wb} & \hspace{30em}\\
+		\text{st }\quad z - \mathbf{wb} &= 0 \\
+		\mathbf{wA} &< \mathbf{c} \\
+		\mathbf{w} &: \text{unrestricted}
+	\end{flalign*}
+	\item 
+	Because \(z - \mathbf{cx}=0\), and using strong duality, at optimality we will have
+	\begin{align*}
+		z = \mathbf{cx} = \mathbf{wb}.
+	\end{align*}
+\end{enumerate}
 
 \end{document}
