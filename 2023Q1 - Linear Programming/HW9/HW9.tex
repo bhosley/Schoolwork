@@ -28,7 +28,7 @@ Find the dual of the following problem:
 	    -2x_2 +\,\ x_3 + x_4 &\leq\ 6 \\
 	x_1 &\leq\ 0 \\
 	x_2, x_3 &\geq\ 0 \\
-	x_4 &: \text{ unrestricted}  
+	x_4 &\quad\text{ unrestricted}  
 \end{flalign*}
 
 \textit{Solution:} Dual:
@@ -37,9 +37,9 @@ Find the dual of the following problem:
 	\text{subject to } -2w_1 + 2w_2\hspace{6.25ex} &\leq \negthinspace -2 \\
 	w_1 \hspace{6.35ex} -\,\ w_3 &\geq\ \ 3 \\
 	3w_1 +\,\: w_2 +\,\ w_3 &\geq\ \ 5 \\
-	w_1 +\hspace{7.35ex} w_3 &=\ \ 5 \\
+	w_1 +\hspace{7.35ex} w_3 &=\ \ 0 \\
 	w_1 &\leq\ \ 0 \\
-	w_2 &: \text{unrestricted} \\
+	w_2 &:\quad\text{unrestricted} \\
 	w_3 &\geq\ \ 0
 \end{flalign*}
 
@@ -50,7 +50,7 @@ Find the dual of the following problem:
 \subsection{}
 Consider the problem: Minimize \(z\) subject to 
 \(z - \mathbf{cx} = 0\), 
-\(\mathbf{Ax} = \mathbf b, \mathbf x > \mathbf 0\).
+\(\mathbf{Ax} = \mathbf b, \mathbf x \geq \mathbf 0\).
 %
 \begin{enumerate}[a.]
 	\item State the dual.
@@ -59,18 +59,28 @@ Consider the problem: Minimize \(z\) subject to
 
 \textit{Solution:}
 \begin{enumerate}[a.]
-	\item Dual:
+	\item Primal:
 	\begin{flalign*}
-		\text{Max }\qquad\ \mathbf{wb} & \hspace{30em}\\
-		\text{st }\quad z - \mathbf{wb} &= 0 \\
-		\mathbf{wA} &< \mathbf{c} \\
-		\mathbf{w} &: \text{unrestricted}
+		\text{Max }\qquad z + \mathbf{0x} & \hspace{30em}\\
+		\text{st }\qquad z - \mathbf{cx} &= 0 \\
+		0z + \mathbf{Ax} &= \mathbf{b} \\
+		\mathbf{x} &\geq \mathbf{0} \\
+		z &:\quad\text{unrestricted}
 	\end{flalign*}
-	\item 
-	Because \(z - \mathbf{cx}=0\), and with respect to strong duality; at optimality we will have
-	\begin{align*}
-		z = \mathbf{cx} = \mathbf{wb}.
-	\end{align*}
+	Dual:
+	\begin{flalign*}
+		\text{Max }\qquad 0y + \mathbf{wb} & \hspace{30em}\\
+		\text{st }\qquad\ y - \mathbf{w0} &= 1 \\
+		-\mathbf{c}y + \mathbf{wA} &\leq 0 \\
+		y,\ \mathbf{w} &:\quad\text{unrestricted}
+	\end{flalign*}
+	\item  The value of the first variable is \(1\) as a result of the 
+	coefficient of the explicit \(z\) in the objective function. 
+	By imputing the \(z\) explicitly into the remaining 
+	primal constraints with a \(0\) coefficient, 
+	that \(0\) coefficient is reflected in the dual's coefficient
+	in a way that, while \(y\) is unrestricted by duality,
+	the value is given by constraint.
 \end{enumerate}
 
 \end{document}
