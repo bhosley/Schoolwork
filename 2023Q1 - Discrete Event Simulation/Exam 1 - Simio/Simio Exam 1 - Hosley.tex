@@ -2,6 +2,8 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs}
 
 \begin{document}
 
@@ -87,11 +89,28 @@ Typed summary report (no more than 4 pages) containing:
 		\end{enumerate}
 	\end{solution}
 	\item[2b.] (10\%) Results table summarizing response variables requested
-	\begin{solution}
-		S
+	\begin{solution} \\ \phantom{text} \\
+		\begin{tabular}{c|cccc}
+			\footnotesize InstanceName & \footnotesize NumServiceTeams & \footnotesize bool\_MnxrFlexUtil & 
+			\footnotesize AvgDailySorties & \footnotesize AvgDailyUnschedMnx \\
+			\midrule
+			Baseline   & 3 & TRUE  & 21.665 & 1.4233 \\
+			Scenario A & 2 & TRUE  & 18.995 & 1.2333 \\
+			Scenario B & 3 & FALSE & 19.92  & 1.2983 \\
+		\end{tabular} \phantom{text}
+		\bigskip \\
+		\begin{tabular}{c|cccc}
+			\footnotesize InstanceName & \footnotesize AvgMnxQueueTime & \footnotesize CrewChiefUtilization & 
+			\footnotesize MaintainerUtilization & \footnotesize ServiceUtilization  \\
+			\midrule
+			Baseline   & 5.7636 & 101.9728 & 96.7755  & 84.5981  \\
+			Scenario A & 5.3157 & 89.3185  & 104.5866 & 101.1766 \\
+			Scenario B & 1.6274 & 93.6741  & 23.2738  & 99.5249  \\
+		\end{tabular} \bigskip
+		
 	\end{solution}
 	\item[2c.] (20\%) Analysis of scenarios
-	\begin{solution}
+	\begin{solution} 
 	\begin{enumerate}
 		\item[2ci.] Individual scenario analysis (what do the numbers mean?)\\
 			Average Daily Sorties, Average Daily Unscheduled Maintenance, and Average Maintenance Queue Time
@@ -112,6 +131,19 @@ Typed summary report (no more than 4 pages) containing:
 			reduces the maintenance queue time and drastically reduced the team's utilization.
 			This hints to a possible strategy that could retain this low maintenance
 			queue time and improve the sortie throughput.
+			
+			Examination of the SMORE plots further shows that Scenario B
+			offers the benefit of a lower variance.
+			If leadership values consistency more than a higher number of
+			sorties this may be a significant factor.
+			
+			
+			
+			\begin{center}
+				\includegraphics[width=0.6\linewidth]{AvgDailySorties} \bigskip
+				\includegraphics[width=0.6\linewidth]{AvgDailyUnschedMnx} \bigskip
+				\includegraphics[width=0.6\linewidth]{AvgMnxQueueTime}
+			\end{center}
 		
 		\item[2ciii.] Recommendations based on statistical and practical differences between scenario responses. \\
 			Based on the tested scenarios, the baseline provides the greatest sortie capabilities.
