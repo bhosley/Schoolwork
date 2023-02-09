@@ -8,7 +8,7 @@
 \begin{document}
 
 \noindent{\large OPER 561 - Discrete-Event Simulation - %
-	Homework X }
+	Simio Exam 1 }
 \hspace{\fill} {\large B. Hosley}
 \bigskip
 
@@ -31,22 +31,39 @@ You have room for creativity while still accurately modeling the described syste
 Typed summary report (no more than 4 pages) containing:
 \begin{enumerate}
 	\item[2a.] (30\%) Conceptual modeling description:
-	\begin{enumerate}
-		\item[2ai.] Entities/Components
-		\item[2aii.] Assumptions
-		\item[2aiii.] Inputs required
-		\item[2aiv.] Measures of performance 
-		\item[2av.] Experimental controls required
-	\end{enumerate}
 	\begin{solution}
 		\begin{enumerate}
-			\item[2ai.] 
+			\item[2ai.] Entities/Components
 				Entities needed:
+				\begin{enumerate}
+					\item Workers: Crew Chief, Maintenance Crew, Service Crew 
+					\item Model Entities: Jet, Flight (Parent Object for 4 fighters)
+					\item Resources: Runway
+				\end{enumerate}
+				Components needed:
+				\begin{enumerate}
+					\item Servers: Mission Prep, Preflight, Takeoff, Sortie, Landing, Servicing, Unscheduled Maintenance
+					\item Combiner: To form flight of 4
+					\item Separator: To dissolve the flight
+				\end{enumerate}
+			\item[2aii.] Assumptions
+				\begin{enumerate}
+					\item Travel time is either included in activity distributions or ignored
+					\item Workers travel instantaneously
+					\item We do not care about pilots.
+					\item Any breaks are accounted for within the times of the other tasks
+					\item Supplies, tools, fuel, etc. are always readily available in necessary amounts
+					\item 10 minutes covers the take-off of all 4 jets, with no variation
+					\item Same for landing
+				\end{enumerate}
+			\item[2aiii.] Inputs required \\
+				The inputs 
 				
-			\item[2aii.] 
-			\item[2aiii.] 
-			\item[2aiv.]  
-			\item[2av.] 
+			\item[2aiv.] Measures of performance \\
+				
+			\item[2av.] Experimental controls required \\
+				Whether or not the maintenance crew can do service crew work 
+				and how many service crews are available.
 		\end{enumerate}
 	\end{solution}
 	\item[2b.] (10\%) Results table summarizing response variables requested
@@ -54,17 +71,12 @@ Typed summary report (no more than 4 pages) containing:
 		S
 	\end{solution}
 	\item[2c.] (20\%) Analysis of scenarios
-	\begin{enumerate}
-		\item[2ci.] Individual scenario analysis (what do the numbers mean?)
-		\item[2cii.] Comparative analysis of scenarios using SMORE plots of response variables.
-		\item[2ciii.] Recommendations based on statistical and practical differences between scenario responses. 
-	\end{enumerate}
 	\begin{solution}
-		\begin{enumerate}
-			\item[2ci.] 
-			\item[2cii.] 
-			\item[2ciii.] 
-		\end{enumerate}
+	\begin{enumerate}
+		\item[2ci.] Individual scenario analysis (what do the numbers mean?)\\
+		\item[2cii.] Comparative analysis of scenarios using SMORE plots of response variables.\\
+		\item[2ciii.] Recommendations based on statistical and practical differences between scenario responses. \\
+	\end{enumerate}	
 	\end{solution}
 \end{enumerate}
 
