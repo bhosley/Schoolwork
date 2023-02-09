@@ -3,8 +3,6 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath,amssymb,amsthm}
 
-
-
 \begin{document}
 
 \noindent{\large OPER 561 - Discrete-Event Simulation - %
@@ -46,6 +44,7 @@ Typed summary report (no more than 4 pages) containing:
 					\item Combiner: To form flight of 4
 					\item Separator: To dissolve the flight
 				\end{enumerate}
+			
 			\item[2aii.] Assumptions
 				\begin{enumerate}
 					\item Travel time is either included in activity distributions or ignored
@@ -56,14 +55,35 @@ Typed summary report (no more than 4 pages) containing:
 					\item 10 minutes covers the take-off of all 4 jets, with no variation
 					\item Same for landing
 				\end{enumerate}
+			
 			\item[2aiii.] Inputs required \\
-				The inputs 
+				The inputs required to construct this model are the
+				statistics provided by the table in the assignment.
+				The value of the model is fundamentally reliant
+				on the quality of the data (or in this case, the fit
+				of the distributions) provided.
 				
 			\item[2aiv.] Measures of performance \\
+				The most natural measure of performance for this model 
+				will be the number of sorties flown.
+				A contributing aspect of this performance are also
+				the statistics related to times spent at each stage
+				of the process.
+				Rather than gathering this information individually,
+				measuring the utilization of the resources/workers
+				required to perform the task could give a more nuanced look
+				at bottle necks that can occur in a very irregular manner as
+				the shared resources are deficit from different tasks
+				at different times.
 				
 			\item[2av.] Experimental controls required \\
-				Whether or not the maintenance crew can do service crew work 
+				The controls explicitly required by the assignment outline are
+				whether or not the maintenance crew can do service crew work 
 				and how many service crews are available.
+				Because failure rate is referenced in more than one logic
+				expression this model stores it as a referenced variable.
+				As an unintended result, the Simio environment makes it trivial
+				to execute addition experiments with variations on this failure rate.
 		\end{enumerate}
 	\end{solution}
 	\item[2b.] (10\%) Results table summarizing response variables requested
@@ -74,8 +94,37 @@ Typed summary report (no more than 4 pages) containing:
 	\begin{solution}
 	\begin{enumerate}
 		\item[2ci.] Individual scenario analysis (what do the numbers mean?)\\
+			Average Daily Sorties, Average Daily Unscheduled Maintenance, and Average Maintenance Queue Time
+			are exactly as their names describe.
+			The various crew utilizations are not as self-explanatory; 
+			these numbers represent the ratio of time worked over
+			time scheduled to work.
+			Utilization over 100\% is the result of overtime causing the numerator
+			to exceed their scheduled time.
+		
 		\item[2cii.] Comparative analysis of scenarios using SMORE plots of response variables.\\
+			The baseline shows strong utilization of all personnel, 
+			with a slight overtaxing of the crew chiefs.
+			Scenario B shows us that dropping one of the four teams
+			changes the likely limiting factor to the teams, and reduces the overall throughput.
+			Scenario B surprisingly performs better than A in terms of sortie average.
+			Having the maintenance team stand-by for only unplanned maintenance drastically 
+			reduces the maintenance queue time and drastically reduced the team's utilization.
+			This hints to a possible strategy that could retain this low maintenance
+			queue time and improve the sortie throughput.
+		
 		\item[2ciii.] Recommendations based on statistical and practical differences between scenario responses. \\
+			Based on the tested scenarios, the baseline provides the greatest sortie capabilities.
+			From this it appears that Crew Chiefs are the most taxed part of the system.
+			If their roles in servicing/debriefing and unscheduled maintenance can be abridged
+			it may increase the overall throughput of the system, and should increase the morale
+			of the crew chiefs.
+			If more acquisitions can be made, it should be an additional crew chief if their tasks
+			cannot be abridged, but if they can, then the additional acquisition should be a maintenance
+			team, and it may be beneficial if only one of those teams were
+			able to perform a dual role as a service team at a time.
+			This may capture both benefits.
+		
 	\end{enumerate}	
 	\end{solution}
 \end{enumerate}
