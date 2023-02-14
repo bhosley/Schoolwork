@@ -11,7 +11,7 @@
 \raggedbottom
 
 \noindent{\large OPER 561 - Discrete-Event Simulation - %
-	Homework X }
+	Homework 3 }
 \hspace{\fill} {\large B. Hosley}
 \bigskip
 
@@ -20,41 +20,77 @@
 \setcounter{section}{9}
 \setcounter{subsection}{5}
 \subsection{} % BCNN: 9.6;
-	\textit{Prepare four theoretical normal density functions, 
-		all on the same ﬁgure, each distribution having mean zero,
-		 but let the standard deviations be 1/4, 1/2, 1, and 2.}	
+\textit{Prepare four theoretical normal density functions, 
+		all on the same figure, each distribution having mean zero, 
+		but let the standard deviations be 1/4, 1/2, 1, and 2.}
 		(ensure you label/indicate which curve is for which standard deviation.)
 		
 		\bigskip
 		\textbf{Solution:}
 	
+	\includegraphics[width=0.85\linewidth]{"Screenshot 2023-02-13 at 5.43.00 PM"}\\
+	
+	\noindent
+	Red: \(\sigma=1/4\) \\
+	Blue: \(\sigma=1/2\) \\
+	Green: \(\sigma=1\) \\
+	Orange: \(\sigma=2\) \\
 	
 \setcounter{subsection}{15}
 \subsection{} % BCNN: 9.16
 	\textit{Records pertaining to the monthly number of job-related injuries 
 		at an underground coal mine were being studied by a federal agency. 
-		The values for the past 100 months were as follows:}
-	\begin{tabular}{cc}
-		\toprule
-		\textit{Injuries per Month} & \textit{Frequency of Occurrence} \\
-		\midrule
-		0 & 35 \\
-		1 & 40 \\
-		2 & 13 \\
-		3 & 6 \\
-		4 & 4 \\
-		5 & 1 \\
-		6 & 1 \\
-		\bottomrule
-	\end{tabular}
+		The values for the past 100 months were as follows:} \\
+	\begin{center}
+		\begin{tabular}{cc}
+			\toprule
+			\textit{Injuries per Month} & \textit{Frequency of Occurrence} \\
+			\midrule
+			0 & 35 \\
+			1 & 40 \\
+			2 & 13 \\
+			3 & 6 \\
+			4 & 4 \\
+			5 & 1 \\
+			6 & 1 \\
+			\bottomrule
+		\end{tabular}
+	\end{center}
 	\begin{enumerate}[(a)]
-		\item Apply the chi-square test to these data to test the hypothesis that the underlying distribution is Poisson. Use the level of signiﬁcance α = 0.05.
-		\item Apply the chi-square test to these data to test the hypothesis that the distribution is Poisson with mean 1.0. Again let α = 0.05.
-		\item What are the differences between parts (a) and (b), and when might each case arise?
+		\item \textit{Apply the chi-square test to these data to test the hypothesis that the underlying distribution is Poisson. Use the level of significance \(\alpha\) = 0.05.}
+		\item \textit{Apply the chi-square test to these data to test the hypothesis that the distribution is Poisson with mean 1.0. Again let \(\alpha\) = 0.05.}
+		\item \textit{What are the differences between parts (a) and (b), and when might each case arise?}
 	\end{enumerate}
 
+	\clearpage
+	
+	\textbf{Solution:} \\
+
+	\begin{center}
+	\begin{tabular}{cccccc}
+		\toprule
+	 & Obs & \(E_1(A)\) & \((O_i-E_i)^2/E_i\) & \(E_1(B)\) & \((O_i-E_i)^2/E_i\) \\
+	    \midrule
+	 0  &  35 &  32.9558  &  0.12678  &  36.7879  &  0.08689 \\
+	 1  &  40 &  36.5810  &  0.31954  &  36.7879  &  0.28045 \\
+	 2  &  13 &  20.3024  &  2.62658  &  18.3939  &  1.58176 \\
+	 3  &  6  &  7.51191  &  0.30430  &  6.13132  &  0.00281 \\
+	 4  &  4  &  2.08455  &  1.76004  &  1.53283  &  3.97103 \\
+	 5  &  1  &  0.46277  &  0.62366  &  0.30656  &  1.56850 \\
+	 6  &  1  &  0.08561  &  9.76611  &  0.05109  &  17.6227 \\
+	 \midrule
+	Sum & 100 &  99.9842  &  15.5270  &  99.9916  &  25.1141 \\
+	\bottomrule
+	\end{tabular} 
+	\end{center} 
 	\bigskip
-	\textbf{Solution:}
 	
-	
+	\begin{enumerate}[(a)]
+		\item In this case, with a \(\chi^2_0=9.4877\) we will reject the null hypothesis.
+		\item In this case, with a \(\chi^2_0=11.07050\) we will reject the null hypothesis.
+		\item The degrees of freedom are different in each case, with the first problem 
+		requiring an expected mean derived from the sample data, where the second part 
+		provided a suspect mean, thus having one greater degree of freedom.
+	\end{enumerate}
+
 \end{document}
