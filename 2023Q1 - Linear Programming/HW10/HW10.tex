@@ -72,10 +72,29 @@ Suppose that a trainee receives the same full salary as an experienced worker. F
 
 \textbf{\underline{Decision Variables}:} \\
 \(x_{c,w}\) Employee allocation to cheese c during week w
-\(n_w\) Number of trainees starting in week w
+\(t_w\) Number of trainees starting in week w
 
 \textbf{\underline{Parameters}:} \\
 
+\(\tau\) Table of demand
+\(\rho\) lbs/hr
+\(\omega\) hours/work week
+\(\alpha\) initial starting employees
+\(\gamma\) desired employee growth
 
+e experienced employees
+d demand in work week
+i inventory
+
+\textbf{\underline{Program}:} \\
+\begin{align*}
+	\min \hspace{25ex}   \sum_{w\in W}c_w & & & \\
+	\text{s.t.} \qquad \left\lceil\frac{1}{3}n_w \right\rceil + \left\lceil\frac{1}{3}n_{w-1} \right\rceil 
+	+ \sum_{c\in C}w_{c,w} &\leq e_w & &\forall w\in W & &\text{\footnotesize(Labor availability)} \\
+	e_{w-1} + t_{w-2} &= e_w & &\forall w\in W\backslash\{1,2\} & &\text{\footnotesize(Trainees become experienced)} \\
+	\sum_{w\in W}t_w &= \gamma && & &\text{\footnotesize(Meeting hiring goal)} \\
+	x_{c,w} + i_{c,w-1} - i_{c,w} &= d_{c,w} & &\forall c\in C, w\in W & &\text{\footnotesize(Production, inventory, and demand)} \\
+	i_{c,w-1} &\leq d_{c,w} & &\forall c\in C, w\in W & &\text{\footnotesize(Prevent production of wasted cheese)} \\
+\end{align*}
 
 \end{document}
