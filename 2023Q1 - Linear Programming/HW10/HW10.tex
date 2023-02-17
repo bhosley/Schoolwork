@@ -12,22 +12,27 @@
 
 \noindent{\large OPER 610 - Linear Programming %
 	% Lesson X %
-	(Due Feb X at 10am)}
+	(Due Feb 17 at 10am)}
 \hspace{\fill} {\large B. Hosley}
 \bigskip
 
+% Note the textbook errata.
+% Define sets, parameters, DVs, assumptions!
+% When formulating your math program, do account for inventory levels of each cheese that can be stored from week-to-week.  
+% Use set-based notation and indexing of DVs and constraints to present a compact formulation
 
 %%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{section}{1}
 \setcounter{subsection}{5}
 \subsection{}
 
-A cheese firm produces two types of cheese: swiss cheese and sharp cheese. The firm has 60 experienced workers and would like to increase its working force to 90 workers during the next eight weeks. Each experienced worker can train three new employees in a period of two weeks during which the workers involved virtually produce nothing. It takes one man-hour to produce 10 pounds of Swiss cheese and one man-hour to produce 6 pounds of sharp cheese. A work week is 40 hours. The weekly demands (in 1000 pounds) are summarized below:
+A cheese firm produces two types of cheese: swiss cheese and sharp cheese. The firm has 60 experienced workers and would like to increase its working force to 90 workers during the next eight weeks. Each experienced worker can train three new employees in a period of two weeks during which the workers involved virtually produce nothing. It takes one man-hour to produce 12 pounds of Swiss cheese and one man-hour to produce 10 pounds of sharp cheese. A work week is 40 hours. The weekly demands (in 1000 pounds) are summarized below: \\
 
 \begin{center}
-	\begin{tabular}
+	\begin{tabular}{ccccccccc}
 		\toprule
-		WEEK 
+		 & \multicolumn{8}{c}{WEEK} \\
+		\cmidrule(lr){2-9}
 		CHEESE TYPE  & 1  & 2  & 3  & 4  & 5  & 6  & 7  & 8  \\
 		\midrule
 		Swiss cheese & 11 & 12 & 13 & 18 & 14 & 18 & 20 & 20 \\ 
@@ -35,7 +40,42 @@ A cheese firm produces two types of cheese: swiss cheese and sharp cheese. The f
 		\bottomrule
 	\end{tabular}
 \end{center}
+\bigskip
 
 Suppose that a trainee receives the same full salary as an experienced worker. Further suppose that overaging destroys the flavor of the cheese, so that inventory is limited to one week. How should the company hire and train its new employees so that the labor cost is minimized over this 8-week period? Formulate the problem as a linear program.
+
+\bigskip\bigskip
+
+\textbf{\underline{Assumptions}:}
+\begin{itemize}
+	\item All of the normal LP assumptions. 
+	There is potentially a problem with divisibility regarding training scheduling and instructor ratio,
+	but there should be an implementable work-around. 
+	\item All thirty new hires must be fully trained by the end of week 8.
+	\item All costs associated with supplies are ignored.
+	\item As salaried employees they provide 40 hours of labor even when it is unneeded.
+	\item All employees work at the same efficiency regardless of experience after being fully trained.
+	\item Cheese can be sold in the same week that it was produced.
+	\item Cheese is sent out in a first-in first-out.
+	\item Starting inventory is 0.
+	\item Producing virtually nothing means nothing produced during training contributes to meeting demand.
+	\item Since all employees and trainees are paid the same and the final desired count of employees is defined, 
+	the objective function is simplified to minimizing the week-on-week employee count.
+\end{itemize}
+
+
+\textbf{\underline{Sets}:}
+\begin{align*}
+	W &= \{1,2,\ldots,8\}\hspace{19ex} :\  \text{Week } w \\
+	C &= \{\text{Making Swiss},\, \text{Making Sharp}\}\ :\  \text{Cheese } c
+\end{align*}
+
+\textbf{\underline{Decision Variables}:} \\
+\(x_{c,w}\) Employee allocation to cheese c during week w
+\(n_w\) Number of trainees starting in week w
+
+\textbf{\underline{Parameters}:} \\
+
+
 
 \end{document}
