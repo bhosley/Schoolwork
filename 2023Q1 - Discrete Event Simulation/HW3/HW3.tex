@@ -88,11 +88,20 @@
 	\bigskip
 	
 	\begin{enumerate}[(a)]
-		\item In this case, with a \(\chi^2_0=9.4877\) we will reject the null hypothesis.
-		\item In this case, with a \(\chi^2_0=11.07050\) we will reject the null hypothesis.
+		\item In this case, with a \(\chi^2_0=3.41216\) we fail reject the null hypothesis, 
+		and conclude that based on the available data that the underlying distribution may be accurately
+		represented by a Poisson distribution. \\ % 9.48773
+		\item In this case, with a \(\chi^2_0=3.92198\) we fail reject the null hypothesis.,
+		and conclude that based on the available sample a Poisson distribution with a mean of 1
+		may accurately represent this data. \\ % 7.81473
 		\item The degrees of freedom are different in each case, with the first problem 
 		requiring an expected mean derived from the sample data, where the second part 
-		provided a suspect mean, thus having one greater degree of freedom.
+		provided a suspected mean, thus having one greater degree of freedom.
+		The former situation is more likely to represent a situation in which the sample is the only
+		dataset and there is a suspected distribution.
+		The latter case may represent a situation in which there is previous information,
+		such as mean and distribution from previous samples, and we wish to examine another sample to 
+		evaluate if it fits or is representative of the previous observations.
 	\end{enumerate}
 
 \end{document}
