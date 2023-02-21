@@ -20,6 +20,99 @@
 \setcounter{section}{6}
 \setcounter{subsection}{26} % Note Errata
 \subsection{}
+Two players are involved in a competitive game. One player, called the 
+row player, has two strategies available; the other player, called the column 
+player, has three strategies available. If the row player selects strategy \(i\) and the 
+column player selects strategy  \(j\) , the payoff to the row player is \(c_{ij}\) and the 
+payoff to the column player is \(-c_{ij}\). Thus, the column player loses what the row 
+player wins and vice versa; this is a \textit{two—person zero-sum game}. The following 
+matrix gives the payoffs to the row player: 
 
+\bigskip
+\begin{center}
+	\begin{tabular}{cccc}
+		& 1                       & 2                       & 3                      \\ \cline{2-4} 
+		\multicolumn{1}{c|}{1} & \multicolumn{1}{c|}{2}  & \multicolumn{1}{c|}{-1} & \multicolumn{1}{c|}{0} \\ \cline{2-4} 
+		\multicolumn{1}{c|}{2} & \multicolumn{1}{c|}{-3} & \multicolumn{1}{c|}{2}  & \multicolumn{1}{c|}{1} \\ \cline{2-4} 
+	\end{tabular}
+\end{center}
+\bigskip
+
+Let \(x_1, x_2\), and \(x_3\) be probabilities with which the column player will select the 
+various strategies over many plays of the game. Thus \(x_1 + x_2 + x_3 = 1, x_1, x_2, 
+x_3 > 0\). If the column player applies these probabilities to the selection of her 
+strategy for any play of the game, consider the row player's options. If the row 
+player selects row 1, then her expected payoff is \(2x_1 - x_2\). If the row player 
+selects row 2, her payoff is \(-3x_1 + 2x_2 + x_3\). Wishing to minimize the maximum 
+expected payoff to the row player, the column player should solve the following 
+linear program: 
+
+\begin{alignat*}{6}
+	\text{Minimize}\quad\ z\ \ & {} {} &\qquad& {} {} &\qquad& {} {} &\qquad&{}\qquad    {}  &   & \\
+	\text{subject to}\quad\,\ 
+	  x_1& {}+{} &  x_2& {}+{} & x_3  &{} =  {}  & 1 & \\
+	 2x_1& {}-{} &  x_2& {} {} &      &{}\leq{}  & z & \\
+	-3x_1& {}+{} & 2x_2& {}+{} & x_3  &{}\leq{}  & z & \\
+	  x_1&,{} {} &  x_2&,{} {} & x_3  &{}\geq{}  & 0 & \\
+	     & {} {} &     & {} {} &   z  &{}    {}  &   & \text{unrestricted}. 
+\end{alignat*}
+
+Transposing the variable z to the left-hand-side, we get the column player's 
+problem: 
+
+\begin{alignat*}{6}
+\text{Minimize}\quad   z  & {} {} &\qquad& {} {} &\qquad& {} {} &\qquad&{}\qquad    {}  &   & \\
+\text{subject to}\quad\,\ & {} {} &  x_1& {}+{} &  x_2& {}+{} & x_3  &{} =  {}  & 1 & \\
+	                   z  & {}-{} & 2x_1& {}+{} &  x_2& {} {} &      &{}\geq{}  & 0 & \\
+	                   z  & {}+{} & 3x_1& {}-{} & 2x_2& {}-{} & x_3  &{}\geq{}  & 0 & \\
+	                      & {} {} &  x_1&,{} {} &  x_2&,{} {} & x_3  &{}\geq{}  & 0 & \\
+	                      & {} {} &     & {} {} &     & {} {} &   z  &{}    {}  &   & \text{unrestricted}. 
+\end{alignat*}
+
+\begin{enumerate}[a.]
+	\item Give the dual of this linear program. 
+	\item Interpret the dual problem in Part (a). (\textit{Hint}: Consider the row player's problem.) 
+	\item Solve the dual problem of Part (a). (\textit{Hint}: This problem may be solved graphically.) 
+	\item Use the optimal dual solution of Part (c) to compute the column player's probabilities. 
+	\item Interpret the complementary slackness conditions for this two person zero-sum game.
+\end{enumerate}
+
+\clearpage
+\textbf{Solution:}
+\begin{enumerate}[a.]
+	\item
+		\begin{alignat*}{6}
+			\text{Maximize}\quad\ w & {} {} &\qquad& {} {} &\qquad& {} {} &\qquad&{}\qquad    {}  &   & \\
+			\text{subject to}\qquad\,
+		 	  & {} {} &  y_1& {}+{} &  y_2 &{} =  {}  & 1 & \\
+			w & {}-{} & 2y_1& {}+{} & 3y_2 &{}\leq{}  & 0 & \\
+			w & {}-{} &  y_1& {}-{} & 2y_2 &{}\leq{}  & 0 & \\
+			w & {} {} &     & {}-{} & y_2  &{}\leq{}  & 0 & \\
+			  & {} {} &  y_1&,{} {} & y_2  &{}\geq{}  & 0 & \\
+			  & {} {} &     & {} {} &   w  &{}    {}  &   & \text{unrestricted}. 
+		\end{alignat*} \\
+	
+	\item 
+		The dual represents the optimal moves for the column player to take,
+		if the column player wishes to maximize the row player's score
+		and minimize their own score. \\
+		
+	\item
+		\(\quad y_1 = \frac{2}{3},\quad y_2 = \frac{1}{3},\quad w = \frac{1}{3}\) \\
+		
+	\item 
+		\(\quad x_1 = \frac{1}{6},\quad x_2 = 0,\quad x_3 = \frac{5}{6},\quad z = \frac{1}{3}\) \\
+	
+	\item
+		Although the slack variables are only implied above, let the subscript \(_s\) 
+		represent the corresponding slack variables for both systems.
+		Then we have
+		\[x_iy_{si}=0, \quad\text{and}\quad x_{si}yi = 0.\]		
+		
+		These represent that the strategy is optimal,
+		the slack variables represent the expected points that the opponent may gain 
+		through the implementation of the suboptimal strategy.
+		
+\end{enumerate}
 
 \end{document}
