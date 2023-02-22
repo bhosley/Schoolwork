@@ -16,9 +16,70 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{section}{}
-\setcounter{subsection}{}
-\subsection{}
+\begin{enumerate}[1.]
+\item (Law 9.7) For the following systems, state whether you think a terminating or nonterminating
+simulation would be more appropriate. In the terminating cases, state the terminating event, \(E\). \\
+
+\begin{enumerate}[a.]
+	\item Consider a telephone system for which an arriving call may experience a delay before
+	obtaining a line. Suppose that the goal is to estimate the mean delay of the 100th arriving
+	call. \\
 	
+	\textit{Many replications of a terminating simulation, 
+		with the simulations terminating after collecting 
+		the weight time of the 100\textsuperscript{th} call.} \\
+	
+	\item Consider a military inventory system during peacetime, which is assumed to have a long
+	duration. Assume that system parameters (e.g., the inter-demand time distribution) do not
+	change over time and we are interested in the output process \(C_1 , C_2 ,\ldots,\) where \(C_i\) is the
+	total cost in the \(i\)th month. Suppose further that we want a measure of mean cost. \\
+	
+	\textit{Non-terminating simulation; as worded, it seems that the months need not be repeated simulated.}\\
+	
+	\item Consider a manufacturing system for food products. A production schedule is issued, the
+	system produces product for 13 days, and then the system is completely cleaned out on the
+	fourteenth day. Then a new production schedule is issued, and the 2-week cycle is
+	repeated, etc. The goal is to estimate the mean throughput over a cycle. \\
+	
+	\textit{Non-terminating simulation; as the problem is described, it appears that 
+	the information desired is obtainable through the cyclic repetition of the cycles,
+	without a functional need to restart the simulation.}\\
+	
+	\item Consider an air freight company that provides overnight delivery of packages. Aircraft
+	loaded with packages start arriving at the hub operations at approximately 11 P.M. The
+	packages are unloaded and then sorted in a warehouse according to the destination zip code.
+	Packages with similar zip codes are placed on one aircraft, and the last plane departs at
+	approximately 5 A.M. It is desired to estimate the mean (across departing planes) amount
+	of time that planes are late in departing. \\
+	
+	\textit{}\\
+	
+\end{enumerate}
+
+\item You have made four independent runs of 2-hour duration for the Able-Baker carhop problem.
+The purpose of the simulation is to estimate Able’s utilization, \(\rho\) , and the mean time spent in
+the system per customer, \(\epsilon\) , over the first 2 hours of the workday. Each run of the model is for
+a 2-hour period, with the system being empty and idle at time 0. Four statistically independent
+runs were made by using four distinct streams of random numbers to generate the interarrival
+and service times. Abe’s utilization results for each run are: \(0.78, 0.86, 0.79\), and \(0.81\). The
+results for the average system time for each run (in minutes) are: \(3.74, 4.53, 3.84,\) and \(3.98\). \\
+
+\begin{enumerate}
+	\item Suppose that management desires a 95\% confidence interval on the average system time
+	with an absolute error less than or equal to 0.4 minutes. Estimate the required number of
+	additional runs needed from the sample data given. DO NOT use BCNN Simulation Tools
+	for this question. Use a \(Z\) for initial estimate like done in the text, but your final answer
+	should be based on a t-statistic. \\
+	
+	\item Suppose that management wants a confidence interval on Able’s utilization in addition to a
+	confidence interval on the average system time. Construct these confidence intervals to
+	ensure both are met at the 95\% confidence level. \\
+	
+	
+\end{enumerate}
+
+
+
+\end{enumerate}
 	
 \end{document}
