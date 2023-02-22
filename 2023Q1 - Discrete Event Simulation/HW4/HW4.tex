@@ -35,7 +35,25 @@ independent replications, for average time spent in the shop:
 
 \begin{enumerate}[(a)]
 	\item 
+	Comparing \(t_0\) to \(t\) first we calculate
+	\[t_0 = \frac{\bar X - \mu_0}{S/\sqrt n} = \frac{4.0843-4}{0.24412/\sqrt{7}} = \frac{0.0843}{0.0923} = 0.9133.\]
+	Next we look up the \(t\) value,
+	\[t_{0.005,6} = 3.707.\]
+	Since \(t_0 < t\) we fail to reject the hypothesis and 
+	conclude that this model output is consistent with the observed system behavior. \\
+	
 	\item 
+	First we calculate the \(\hat\delta\) from the desired sensitivity of \(0.5\) 
+	days and the standard deviation used in part (a),
+	
+	\[\hat\delta = \frac{0.5}{0.24412} = 2.0482.\] 
+	
+	Then, we consult the A.10 table with the values of \(\alpha=0.01\) and \(\beta=0.10\) 
+	to determine that the sample should be approximately \(n=8\).
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{"Screenshot 2023-02-21 at 9.24.14 PM"}
+	\end{center}
+	
 \end{enumerate}
 	
 	
