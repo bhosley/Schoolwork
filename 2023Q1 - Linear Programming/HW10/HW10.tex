@@ -111,7 +111,7 @@ The unit conversion based on the above table is,
 \begin{align*}
 	\min \hspace{27ex}   \sum_{w\in W}e_w & & & \\
 	\text{s.t.} \qquad \left\lceil\frac{1}{3}t_w \right\rceil + \left\lceil\frac{1}{3}t_{w-1} \right\rceil 
-	+ \sum_{c\in C}w_{c,w} &\leq e_w & &\forall\ w\in W & &\text{\footnotesize(Labor availability)} \\
+	+ \sum_{c\in C}x_{c,w} &\leq e_w & &\forall\ w\in W & &\text{\footnotesize(Labor availability)} \\
 	e_{w-1} + t_{w-2} &= e_w & &\forall\ w\in W\backslash\{1,2\} & &\text{\footnotesize(Trainees become experienced)} \\
 	\sum_{w\in W}t_w &= \gamma && & &\text{\footnotesize(Meeting hiring goal)} \\
 	x_{c,w} + i_{c,w-1} - i_{c,w} &= d_{c,w} & &\forall\ c\in C, w\in W & &\text{\scriptsize(Production, inventory, and demand)} \\
