@@ -1,0 +1,28 @@
+set C := sharp swiss;
+set W := 1 2 3 4 5 6 7 8;
+
+param d :=
+sharp 1 8
+sharp 2 8
+sharp 3 10
+sharp 4 8
+sharp 5 12
+sharp 6 13
+sharp 7 12
+sharp 8 12
+swiss 1 11
+swiss 2 12
+swiss 3 13
+swiss 4 18
+swiss 5 14
+swiss 6 18
+swiss 7 20
+swiss 8 20
+;
+param lbs_hour := 
+sharp 10
+swiss 12
+;
+param hours_week := 40;
+param initial_staff := 60;
+param desired_growth := 30;
