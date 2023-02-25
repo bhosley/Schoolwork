@@ -76,20 +76,34 @@ results for the average system time for each run (in minutes) are: \(3.74, 4.53,
 	\textbf{Solution}:\\
 	
 	First, we find an initial estimate $R$,
-	\[R \geq \left(\frac{z_{\alpha/2}S_0}{\epsilon}\right)^2 = \left(\frac{(1.96)(0.35236)}{0.4}\right)^2 = 2.981 \]
+	\[R \geq \left(\frac{z_{\alpha/2}S_0}{\epsilon}\right)^2 = \left(\frac{(1.96)(0.35236)}{0.4}\right)^2 = 2.981. \]
 	
-	
+	Next, because that was not terribly helpful, we will try with an incrementing t-statistic. 
+	In effort to pick a good starting point we will round the previous answer and add it to the initial sample size.
+	Testing with \(R=7\) we see,
+	\[R \geq \left(\frac{t_{\alpha/2,R-1}S_0}{\epsilon}\right)^2 
+	= \left(\frac{(t_{0.025,6})(0.35236)}{0.4}\right)^2
+	= \left(\frac{(2.96865)(0.35236)}{0.4}\right)^2 = 6.83869.  \]
+	This value is feasible. For verification, testing with \(R=6\) gives a right hand side of \(7.7634413\)
+	which shows that \(R=7\) is the lowest value where this inequality holds. \\
 	
 	\item Suppose that management wants a confidence interval on Able’s utilization in addition to a
 	confidence interval on the average system time. Construct these confidence intervals to
 	ensure both are met at the 95\% confidence level. \\
 	
-	\textit{}\\
+	Using the information from part a we can construct a confidence interval using the half-length criterion,
+	\[H = t_{\alpha/2,R-1}\frac{S_0}{\sqrt R}.\]
+	For Abe's utilization this can be calculated by
+	\[H = t_{0.025,6}\frac{0.03559}{\sqrt 7} = 0.03822.\]
+	For the average system time the half-length is
+	\[H = t_{0.025,6}\frac{0.35236}{\sqrt 7} = 0.37839.\]
+	Combining these half-widths with the respective means, we can get a 95\% confidence interval;
+	for Abe's utilization
+	\[0.81 \pm 0.03822 \quad\text{ or }\quad (0.77178<\rho<0.84822)\]
+	and the average system utilization
+	\[4.0225 \pm 0.37839 \quad\text{ or }\quad (3.64411<\omega<4.40089) .\]
+	
 	
 \end{enumerate}
-
-
-
 \end{enumerate}
-	
 \end{document}
