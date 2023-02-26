@@ -2,8 +2,16 @@ import numpy as np
 from scipy.stats import binom
 import time
 
+# Define utility functions to access state indices and vectors
+def state_to_index(S,state):
+    return np.were((S == tuple(state)).all(axis=1))[0][0]
+
+def index_to_state(S,index):
+    return S[index]
+
+# Creation of P-matrix and State Space
 def createOneStepPMatrix(
-        # Returns np.array of P-matrix, and State spaces.
+        # Returns np.array of P-matrix, and State spaces
         # Define DTMC Model Parameters
         NUM_ACFT = 12,
         MAX_SORTIES = 8,
@@ -24,20 +32,13 @@ def createOneStepPMatrix(
     S= np.array(S)
     cardS = len(S)
 
-    # Define utility functions to access state indices and vectors
-    def state_to_index(state):
-        return np.were((S == tuple(state)).all(axis=1))[0][0]
-
-    def index_to_state(index):
-        return S[index]
-
     ## Compute 1-step transition probability matrix
     # with timer
     tic = time.perf_counter()
     P = np.matrix(np.zeros((cardS,cardS)))
     for i_index in range(cardS):
         # Obtain State Variable
-        X_n = index_to_state(i_index)
+        X_n = index_to_state(S,i_index)
 
         ### Compute pmf of X_np1[1], Front Shop first,
         ##  compute pmfs of intermediate random variables,
@@ -70,11 +71,11 @@ def createOneStepPMatrix(
         #         pmf_Xnpl_FS[X_npl[1]]*pmf_Xnpl_BS1[X_npl[2]]*pmf_Xnpl_BS2[X_npl[3]]*pmf_Xnpl_BS3[X_npl[4]]
         ## FASTER METHOD:
         for j_index in (j_index_filtered for j_index_filtered in range(cardS) if \
-                        index_to_state(j_index_filtered)[4]==X_n[3] and
-                        index_to_state(j_index_filtered)[3]==X_n[2] and
-                        index_to_state(j_index_filtered)[2]<=X_n[1] and
-                        index_to_state(j_index_filtered)[1]<=num_acft_fly+num_BS3):
-            X_npl = index_to_state(j_index)
+                        index_to_state(S,j_index_filtered)[4]==X_n[3] and
+                        index_to_state(S,j_index_filtered)[3]==X_n[2] and
+                        index_to_state(S,j_index_filtered)[2]<=X_n[1] and
+                        index_to_state(S,j_index_filtered)[1]<=num_acft_fly+num_BS3):
+            X_npl = index_to_state(S,j_index)
             P[i_index,j_index] = \
                 pmf_Xnpl_FS[X_npl[1]]*pmf_Xnpl_BS1[X_npl[2]]*pmf_Xnpl_BS2[X_npl[3]]*pmf_Xnpl_BS3[X_npl[4]]
 
