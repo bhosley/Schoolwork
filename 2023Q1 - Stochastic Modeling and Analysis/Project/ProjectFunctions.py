@@ -4,13 +4,13 @@ import time
 
 # Define utility functions to access state indices and vectors
 def state_to_index(S,state):
-    return np.were((S == tuple(state)).all(axis=1))[0][0]
+    return np.where((S == tuple(state)).all(axis=1))[0][0]
 
 def index_to_state(S,index):
     return S[index]
 
 # Creation of P-matrix and State Space
-def createOneStepPMatrix(
+def create_one_step_P_matrix(
         # Returns np.array of P-matrix, and State spaces
         # Define DTMC Model Parameters
         NUM_ACFT = 12,
