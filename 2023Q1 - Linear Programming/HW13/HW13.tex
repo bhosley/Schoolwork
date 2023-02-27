@@ -25,11 +25,47 @@ Solve the problem to minimize  \(3x_1 + 2x_2\), subject to \(x_1 + 2x_2 \geq 2\)
 the form (8.4) that satisfies Assumptions (A1) and (A2). Plot the iterates you 
 generate in the \(( x_1 ,x_2 )\) space.
 
+\bigskip
+\textbf{Solution:}
 
+Due to the unfortunate \(\geq2\) we must convert the system into something else to meet 
+assumptions A1 and A2.
 
+First, we determine that the dual of the original problem is
+to maximize \(2w_1\) subject to \(w_1\leq3\), \(2w_1\leq2\), and \(w_1\geq0\).
+We can eliminate \(w_1\leq3\) as a redundant constraint.
+Then, we add slack variables;
+\begin{align*}
+	x_1 + 2x_2 - x_3 &= 2 & 2w_1 + w_2 &= 2 \\
+	3x_1 + 2x_2 &= 2w_1 & \mathbf{x}, \mathbf{w} &\geq \mathbf{0}.
+\end{align*}
+Next we add a bounding constraint \(Q\) and corresponding slack variables, 
+wherein it is assumed that \(s_2=1\);
+\begin{align*}
+	x_1 + 2x_2 - x_3 - 2s_2 &= 0 & 2w_1 + w_2 -2s_2 &= 0 \\
+	3x_1 + 2x_2 - 2w_1 &= 0   \\
+	\sum_{i}x_i + \sum_{i}w_i + s_1 - Qs_2 &= 0 & \sum_{i}x_i+\sum_{i}w_i + s_1 + s_2 &= Q-1 \\
+	\mathbf{x}, \mathbf{w}, \mathbf{s} &\geq \mathbf{0}.
+\end{align*}
+Next we use a variable change to get,
+\begin{align*}
+	y_1 + 2y_2 - y_3 - 2y_7 &= 0 & 2y_4 + y_5 -2y_7 &= 0 \\
+	3y_1 + 2y_2 - 2y_4 &= 0   \\
+	\sum_i^6y_i - Qy_7 &= 0 & \sum_{i}^7y_i &= 1 \\
+	\mathbf{y} &\geq 0.
+\end{align*}
+Which is equivalent to 
+\begin{alignat*}{8}
+	\min\quad\,\ y_8 \\
+	\text{subject to}\quad\,\ 
+	 y_1& {}+{} & 2x_2& {}-{} & y_3 &  { }  &  {}  &  { }  & {}  & {}-{} & 2y_7 &  { }  & {}  & {}={} & 0 \\
+	 {} &  { }  &  {} &  { }  & {}  &  { }  & 2y_4 & {}+{} & y_5 & {}-{} & y_7  & {}-{} & 2y_8& {}={} & 0 \\
+	3y_1& {}+{} & 2y_2&  { }  & {}  & {}-{} & 2y_4 &  { }  & {}  &  { }  & {}   & {}-{} & 3y_8& {}={} & 0 
+\end{alignat*}
+\[ \hspace{25ex} \sum_i^6y_i - Qy_7 + (Q-5)y_8  {}={} 0 \]
+\[ \hspace{30ex} \sum_i^8y_i = 1,\quad \text{and} \quad \mathbf{y} \geq \mathbf{0} .\]
 
-Show convergence (in the original x-space) via a plot for full credit
-Experiment with algorithmic settings (i.e., one factor at-a-time sensitivity analysis) for 11/10 points
+This equation satisfies assumptions A1 and A2.
 
 
 \end{document}
