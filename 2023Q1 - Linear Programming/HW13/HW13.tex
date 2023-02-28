@@ -1,3 +1,4 @@
+% !TeX document-id = {55d02458-03a5-4a4f-9108-fc2af123bd39}
 \documentclass[12pt]{amsart}
 \usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
 \usepackage[english]{babel}
@@ -5,6 +6,11 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
+
+\usepackage{minted}
+\usepackage{xcolor}
+\definecolor{LightGray}{gray}{0.92}
+% !TeX TXS-program:compile = txs:///pdflatex/[--shell-escape]
 
 \begin{document}
 \raggedbottom
@@ -67,5 +73,173 @@ Which is equivalent to
 
 This equation satisfies assumptions A1 and A2.
 
+\clearpage
+
+Since calculating Karmarkar's algorithm by hand seemed very tedious, 
+I have written a script based on the text book to perform to implement the algorithm.
+It may be seen in the appendix. \\
+
+Under the original  the regular solution may be examined as
+\begin{minted}
+[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=LightGray,
+fontsize=\footnotesize,
+linenos
+]
+{python}
+# Regular Solution
+A = np.array([
+	[ 1, 2,-1, 0, 0, 0,-2, 0],
+	[ 0, 0, 0, 2, 1, 0,-1,-2],
+	[ 3, 2, 0,-2, 0, 0, 0,-3]])
+
+y_n,D_n,x_n,history = solveA(A,verbose=True)
+printSolution(A,history)
+\end{minted}
+\begin{center}
+	\includegraphics[width=0.5\linewidth]{output1}
+\end{center}
+
+Here it can be seen that in \(\mathbb R^2\) space \(x_1\) and \(x_2\) 
+converge near \((0,1)\) which is the optimal solution.
+
+In my first attempt, I forgot to remove the redundant constraint,
+I have included it as well below. Strangely, this seems to have created a small
+region of multiple optima.
+
+\begin{minted}
+[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=LightGray,
+fontsize=\footnotesize,
+linenos
+]
+{python}
+# Incorrect First Attempt
+A = np.array([
+	[1, 2,-1, 0, 0, 0, 0,-2, 0],
+	[0, 0, 0, 1, 1, 0, 0,-3, 1],
+	[0, 0, 0, 2, 0, 1, 0,-2,-1],
+	[3, 2, 0,-2, 0, 0, 0, 0,-3]])
+
+y_n,D_n,x_n,h = solveA(A)
+printSolution(A,h)
+\end{minted}
+\begin{center}
+	\includegraphics[width=0.5\linewidth]{output2}
+\end{center}
+
+Next, I manipulated the constant in \(\alpha\),
+by doubling it to \(6\) it is equivalent to halving
+the value, and halving the rate of change.
+This can be seen in the gradients shown for each point.
+Interestingly, the slower rate of convergence
+also had the effect of my implementation
+exited earlier than would be expected. Likely due to my 
+computationally and algorithmically simplified calculation of \(L\).
+
+\begin{minted}
+[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=LightGray,
+fontsize=\footnotesize,
+linenos
+]
+{python}
+# Halved rate of change
+A = np.array([
+	[ 1, 2,-1, 0, 0, 0,-2, 0],
+	[ 0, 0, 0, 1, 1, 0,-1,-1],
+	[ 3, 2, 0,-2, 0, 0, 0,-3]])
+
+y_n,D_n,x_n,history = solveA(A,6)
+printSolution(A,history)
+\end{minted}
+\begin{center}
+	\includegraphics[width=0.5\linewidth]{output3}
+\end{center}
+
+\clearpage
+{\Large\centering \textbf{Appendix}} 
+\vspace{10ex}
+
+\begin{minted}
+[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+bgcolor=LightGray,
+fontsize=\footnotesize,
+linenos
+]{python}
+import matplotlib.pyplot as plt
+import numpy as np
+from math import sqrt, log, ceil
+
+def karmarkar(y_i,D_i,A,c,n,r,alpha,close_enough,history,verbose):
+	P = np.concatenate((np.matmul(A,D_i),np.ones((1,n))))
+	c_bar = np.matmul(c,D_i)
+	c_p = np.matmul((np.eye(n)-np.matmul(np.matmul( \
+			P.T,np.linalg.inv(np.matmul(P,P.T))),P)),c_bar.T)
+	y_new = y_i.T - ((alpha*r)*(np.divide(c_p,np.linalg.norm(c_p))))
+	D_new = np.eye(n)*y_i
+	Dy_new = np.matmul(D_new,y_new.T)
+	x_new = np.divide(Dy_new,np.matmul(np.ones((1,n)),Dy_new))
+	history = np.concatenate(( history,x_new ), axis=1)
+	if(verbose): print(float((c@x_new).item()))
+	if ( abs(float((c@x_new).item())) <= close_enough ):   
+	if(verbose): print(history)
+	return y_new, D_new, x_new, history
+	else: 
+	if(verbose): print(np.shape(y_new),np.shape(y_i),np.shape(D_new), \
+			np.shape(D_i),np.shape(x_new),np.shape(history)) 
+	return karmarkar(y_new.T,D_new,A,c,n,r,alpha,close_enough,history,verbose)
+
+def solveA(A,alphaConstant=3,verbose=False):
+	n = len(A[0])
+	r = 1/sqrt(n*(n-1))
+	alpha = (n-1)/(alphaConstant*n)
+	L = 1+ceil(log(len(A)*n)*2)*2
+	Q = 2**L
+	close_enough = 2**(-L)
+	
+	q = np.ones((1,n))
+	q[0][-2] = Q
+	q[0][-1] = Q-5
+	A = np.concatenate((A,q))
+	
+	y_0 = np.ones((n,1)) * 1/n
+	D_0 = np.eye(n) * 1/n
+	c = np.concatenate((np.zeros((n-1)),np.array([1/n])))
+	history = np.full((n,1),fill_value=1/n)
+	y_n,D_n,x_n,history = karmarkar(y_0,D_0,A,c,n,r,alpha,close_enough,history,verbose)
+	print(x_n)
+	return y_n,D_n,x_n,history
+	
+def printSolution(A,history):
+	n = len(A[0])
+	x1, x2 = history.T[:,0], history.T[:,1]
+	x1 = x1.flatten()*(n)
+	x2 = x2.flatten()*(n)
+	
+	fig, ax = plt.subplots()
+	
+	u = np.diff(x1)
+	v = np.diff(x2)
+	norm = np.sqrt(u**2+v**2) 
+	ax.plot(x1,x2)
+	ax.quiver(x1[:-1], x2[:-1], u/norm, v/norm, angles="xy", pivot="mid")
+	ax.set(xlabel='', ylabel='',
+	title='')
+	ax.grid()
+	plt.show()
+\end{minted}
 
 \end{document}
