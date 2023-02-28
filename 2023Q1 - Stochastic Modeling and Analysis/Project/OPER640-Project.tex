@@ -6,6 +6,18 @@
 \usepackage{enumerate}
 \usepackage{graphicx}
 
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{pgf,tikz,tikz-3dplot}
+\usetikzlibrary{shapes,arrows,positioning,backgrounds}
+\tikzset{%
+	goodnode/.style={circle, draw=MidnightBlue!90, thick, fill=gray!40},
+	okaynode/.style={circle, draw=Orange!90, thick, fill=gray!40},
+	badnode/.style={circle, draw=Red!90, thick, fill=gray!40},
+	togood/.style={draw=MidnightBlue, thick,->,>=stealth',shorten >=1pt},
+	tookay/.style={draw=Orange, thick,->,>=stealth',shorten >=1pt},
+	tobad/.style={draw=Red, thick,->,>=stealth',shorten >=1pt}}
+
+\usepackage{float}
 
 \title{OPER 640 - Stochastic Modeling and Analysis}
 \author{B. Hosley}
@@ -34,6 +46,32 @@
 % 	Formulate state transition function (X_n+1 as a function of X_n)
 % 	Draw a Transition Diagram.
 % 	Define a cost or reward function.
+
+Figure \ref{DTMC} shows the life-cycle of an individual aircraft.
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[node distance=2.5cm]		
+		\node[goodnode] (FMC) {FMC};
+		\node[okaynode] (FS) [right of=FMC] {\(\ \)FS\(\ \)};
+		\node[badnode] (BS1) [above right of=FS] {BS1};
+		\node[badnode] (BS2) [right of=FS] {BS2};
+		\node[badnode] (BS3) [below right of=FS] {BS3};
+		
+		\path[togood] (FMC) 	edge [loop left, min distance=12mm, out=145, in=215]  node [left] 	{\(0.8\)} (FMC);
+		\path[togood] (FS)  	edge [bend left]  node [below] 	{\(0.7\)} (FMC);
+		\path[togood] (BS3) 	edge [bend left, in=120]  node [below] 	{\(0.8\)} (FMC);
+		
+		\path[tookay] (FMC) 	edge [bend left]  node [above] 	{\(0.2\)} (FS);
+		\path[tookay] (BS3) 	edge []  node [below left] 	{\(0.2\)} (FS);
+		
+		\path[tobad]  (FS) 		edge []  node [above left] 	{\(0.3\)} (BS1);
+		\path[tobad]  (BS1) 	edge [bend left=25]  node [above right] 	{\(1.0\)} (BS2);
+		\path[tobad]  (BS2) 	edge [bend left=25]  node [below right] 	{\(1.0\)} (BS3);
+	\end{tikzpicture}
+	\caption{Single Entity DTMC.}
+	\label{DTMC}
+\end{figure}
 
 
 
