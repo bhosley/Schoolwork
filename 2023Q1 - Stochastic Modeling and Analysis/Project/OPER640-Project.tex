@@ -1,42 +1,58 @@
 \documentclass[12pt]{amsart}
-\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
 \usepackage[english]{babel}
+\usepackage[left=0.75in, right=0.75in, bottom=0.75in, top=0.75in]{geometry}
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
 
+
+\title{OPER 640 - Stochastic Modeling and Analysis}
+\author{B. Hosley}
+\date{\today}
+
 \begin{document}
-\raggedbottom
+	\maketitle
+	\raggedbottom
 
-\noindent{\large OPER 640 - Stochastic Modeling and Analysis }%
-	% Lesson X %	(Due Feb 28 at 10am) }
-\hspace{\fill} {\large B. Hosley}
-\bigskip
+\section{Description}
+
+% Problem description
+% 	Paraphrase project description,
+% 	formulate analysis questions of interest to leadership
+
+\section{Modeling the Situation}
+
+%DTMC model formulation (Lesson2 slide 18 (with single entity transition diagram))
+
+% Define Xn as the state of the system at time n or the n-th observation (or event)
+% Define the state space S as the set of all possible outcomes for Xn
+% Verify the Markov Property is satisfied.
+% Verify Time-Homogeneity
+% Construct the Transition Probability Matrix. Or specify probability function p_ij.
+% As needed:
+% 	Formulate state transition function (X_n+1 as a function of X_n)
+% 	Draw a Transition Diagram.
+% 	Define a cost or reward function.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{section}{1}
-\setcounter{subsection}{0}
-\subsection{}
 
+\section{Baseline Analysis}
 
-Problem description
-	Paraphrase project description,
-	formulate analysis questions of interest to leadership
-	
-DTMC model formulation (Lesson2 slide 18 (with single entity transition diagram))
+% Baseline analysis - primary analysis questions
+% 	How often will the squadron be able to achieve mission success, meeting 8-orbit mission requirements
+% 	How long will it take for the squadron become FMC >= 8 aircraft
+% 	What is the long-term sortie generation rate?
+% 	What is the long-term mission capable aircraft availability rate?
 
-Baseline analysis - primary analysis questions
-	How often will the squadron be able to achieve mission success, meeting 8-orbit mission requirements
-	How long will it take for the squadron become FMC >= 8 aircraft
-	What is the long-term sortie generation rate?
-	What is the long-term mission capable aircraft availability rate?
+\section{Exploratory Analysis}
 
-Sensitivity (excursion) analyses - the what-if questions, 
-	explore possible solutions by modifying parameter values
-	
-Conclusions and recommendations
+% Sensitivity (excursion) analyses - the what-if questions, 
+% 	explore possible solutions by modifying parameter values
+
+\section{Conclusions and Recommendations}
+
+% Conclusions and recommendations
 
 
 \end{document}
