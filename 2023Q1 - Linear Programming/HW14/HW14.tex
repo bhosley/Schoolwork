@@ -52,7 +52,6 @@ be \(1\) if transfer station \(k\) is selected and \(0\) otherwise.) \\ \bigskip
 	otherwise the problem is will necessarily change to a multi-objective problem.
 	\item That the value of the processes that generate the waste produces equal revenue
 	per units.
-	\item i
 \end{itemize} \bigskip
 
 \textbf{\underline{Sets}:} 
@@ -80,28 +79,30 @@ and \(y_k=0\) that facility \(k\) is not being used. \\
 \(f_k\quad\) the cost of utilizing processing facility \(k\). \\
 \(q_k\quad\) the capacity for processing at facility \(k\). \\
 
+\clearpage
 
 \textbf{\underline{Instantiation Parameters}:} \\
 
+\noindent
 To be valid under a single objective the following must be true
 \begin{align*}
 	\sum_{i\in I}a_j \leq \sum_{k\in K}q_k \quad\text{and}\quad
 	\sum_{i\in I}a_j \leq \sum_{j\in J}b_j .
 \end{align*}
 It will likely be best to consider these when developing the
-constraint instantiation functions.
+constraint instantiation functions. \\
 
 \textbf{\underline{Program}:} \\
 
-\[ \min \quad \sum_{k\in K} \left[ y_kf_k + \sum_{i\in I} x_{i,k}c_{i,k} + \sum_{j\in J} x_{k,j}c_{k,j} \right]
-	\hspace{10ex} \]
+\[ \min \qquad \sum_{k\in K} \left[ y_kf_k + \sum_{i\in I} x_{i,k}c_{i,k} + \sum_{j\in J} x_{k,j}c_{k,j} \right]
+ 	\hspace{45ex} \]
 \begin{align*} 
-	\text{s.t.}\quad
-	\sum_{k\in K} x_{i,k} &= a_i & & \forall\ i\in I & & \text{All generated waste flows out}  \\
-	\sum_{i\in I} x_{i,k} &= q_k & & \forall\ k\in K & & \text{All waste leaving sources arrive at a processing facility.}  \\
-	\sum_{k\in K} x_{k,j} &= b_j & & \forall\ j\in J & & \text{All generated waste flows out}  \\
-	\mathbf{a,b,c,f} &\geq 0 \\
-	y_i \in \{0,&1\}
+	\text{s.t.}\qquad
+	\sum_{k\in K} x_{i,k} &= a_i & & \forall\ i\in I & & \text{\footnotesize(All generated waste flows out),}  \\
+	\sum_{i\in I} x_{i,k} &= q_k & & \forall\ k\in K & & \text{\scriptsize(All waste leaving sources arrive at a processing facility),}  \\
+	\sum_{k\in K} x_{k,j} &= b_j & & \forall\ j\in J & & \text{\footnotesize(All waste in processing are shipped for disposal),}  \\
+	\mathbf{a,b,c,f,q} &\geq 0 & & & & \text{\footnotesize(Non-negativity),} \\
+	y_k \in \{0,&1\} & &\forall\ k\in K & & (y\text{ \footnotesize must be binary}).
 \end{align*}
 
 
