@@ -19,7 +19,90 @@
 %%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{section}{1}
 \setcounter{subsection}{24}
-\subsection{} (Phase 1)
+\subsection{} 
+
+Suppose that there are \(m\) sources that generate waste and \(n\) disposal sites. 
+The amount of waste generated at source \(i\) is \(a_i\) and the capacity of site \(j\) is \(b_j\). 
+It is desired to select appropriate transfer facilities from among \(K\) candidate 
+facilities. Potential transfer facility \(k\) has a fixed cost \(f_k\), capacity \(q_k\), and unit 
+processing cost \(a_k\) per ton of waste. Let \(c_{ik}\) and \(\bar c_{kj}\) be the unit shipping costs 
+from source \(i\) to transfer station \(k\) and from transfer station \(k\) to disposal site  \(j\), 
+respectively. The problem is to choose the transfer facilities and the shipping 
+pattern that minimize the total capital and operating costs of the transfer stations 
+plus the transportation costs. Formulate this \textit{distribution problem}. (Hint: Let \(y_k\) 
+be \(1\) if transfer station \(k\) is selected and \(0\) otherwise.) \\ \bigskip
+
+% Define sets, parameters, DVs, assumptions!
+% 	Note: you will need binary decision variables in addition to 
+% 	non-negative decision variables.  See the authors’ hint.
+% Second, use set-based notation and indexing of DVs and constraints to present a compact formulation
+
+\textbf{(Phase 1) Solution:} \\
+
+\textbf{\underline{Assumptions}:}
+
+\begin{itemize}
+	\item The normal LP assumptions, and;
+	\item The whole cost of a processing facility is incurred even at minimal usage.
+	\item It is assumed that while the facilities are bound by capacity, the transportation
+	between facilities is not.
+	\item That the cost of transport is always the same on each route.
+	\item That the cost of transportation scales perfectly linearly.
+	\item Capacity of disposal and processing must be greater than what is produced, 
+	otherwise the problem is will necessarily change to a multi-objective problem.
+	\item That the value of the processes that generate the waste produces equal revenue
+	per units.
+	\item i
+\end{itemize} \bigskip
+
+\textbf{\underline{Sets}:} 
+\begin{alignat*}{2}
+	I &= \{1,2,\ldots,m\}\ & &:\ m \text{ sources } i \hspace{30ex} \\
+	J &= \{1,2,\ldots,n\}\ & &:\ n \text{ disposal sites } j  \\
+	K &= \{1,2,\ldots,o\}\ & &:\ o \text{ transfer facilities } k 
+\end{alignat*} 
+
+\textbf{\underline{Decision Variables}:} \\ 
+
+\noindent
+\(x_{i,k}\quad\) units of waste transferred from source \(m\) to processing facility \(k\). \\
+\(x_{k,j}\quad\) units of waste transferred from processing facility \(k\) to disposal site \(j\). \\
+\(y_k\qquad\!\) wherein \(y_k=1\) implies that facility \(k\) is being used,
+and \(y_k=0\) that facility \(k\) is not being used. \\
+
+\textbf{\underline{Parameters}:} \\
+
+\noindent
+\(a_i\quad\) units of waste generated at source \(i\). \\
+\(b_j\quad\) units of waste disposal site \(j\) can accept. \\
+\(c_{i,k}\quad\) shipping cost to transfer waste from source \(i\) to processing facility \(k\). \\
+\(c_{k,j}\quad\) shipping cost to transfer waste from processing facility \(k\) to disposal site \(j\). \\
+\(f_k\quad\) the cost of utilizing processing facility \(k\). \\
+\(q_k\quad\) the capacity for processing at facility \(k\). \\
+
+
+\textbf{\underline{Instantiation Parameters}:} \\
+
+To be valid under a single objective the following must be true
+\begin{align*}
+	\sum_{i\in I}a_j \leq \sum_{k\in K}q_k \quad\text{and}\quad
+	\sum_{i\in I}a_j \leq \sum_{j\in J}b_j .
+\end{align*}
+It will likely be best to consider these when developing the
+constraint instantiation functions.
+
+\textbf{\underline{Program}:} \\
+
+\[ \min \quad \sum_{k\in K} \left[ y_kf_k + \sum_{i\in I} x_{i,k}c_{i,k} + \sum_{j\in J} x_{k,j}c_{k,j} \right]
+	\hspace{10ex} \]
+\begin{align*} 
+	\text{s.t.}\quad
+	\sum_{k\in K} x_{i,k} &= a_i & & \forall\ i\in I & & \text{All generated waste flows out}  \\
+	\sum_{i\in I} x_{i,k} &= q_k & & \forall\ k\in K & & \text{All waste leaving sources arrive at a processing facility.}  \\
+	\sum_{k\in K} x_{k,j} &= b_j & & \forall\ j\in J & & \text{All generated waste flows out}  \\
+	\mathbf{a,b,c,f} &\geq 0 \\
+	y_i \in \{0,&1\}
+\end{align*}
 
 
 \end{document}
