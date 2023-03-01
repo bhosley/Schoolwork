@@ -97,10 +97,11 @@ constraint instantiation functions. \\
 \[ \min \qquad \sum_{k\in K} \left[ y_kf_k + \sum_{i\in I} x_{i,k}c_{i,k} + \sum_{j\in J} x_{k,j}c_{k,j} \right]
  	\hspace{45ex} \]
 \begin{align*} 
-	\text{s.t.}\qquad
-	\sum_{k\in K} x_{i,k} &= a_i & & \forall\ i\in I & & \text{\footnotesize(All generated waste flows out),}  \\
-	\sum_{i\in I} x_{i,k} &= q_k & & \forall\ k\in K & & \text{\scriptsize(All waste leaving sources arrive at a processing facility),}  \\
-	\sum_{k\in K} x_{k,j} &= b_j & & \forall\ j\in J & & \text{\footnotesize(All waste in processing are shipped for disposal),}  \\
+	\text{s.t.}\
+	\sum_{i\in I}x_{i,k} &= \sum_{j\in J} x_{k,j} & & \forall k\in K & & \text{\footnotesize(Conservation of waste mass),}  \\
+	\sum_{k\in K} x_{i,k} &= a_i & & \forall\ i\in I & & \text{\footnotesize(All generated waste flows out of source),}  \\
+	\sum_{i\in I} x_{i,k} &\leq y_kq_k & & \forall\ k\in K & & \text{\scriptsize(Waste leaving sources does not exced processing facility capacity),}  \\
+	\sum_{k\in K} x_{k,j} &\leq b_j & & \forall\ j\in J & & \text{\footnotesize(Waste arriving at disposal does not exceed capacity),}  \\
 	\mathbf{a,b,c,f,q} &\geq 0 & & & & \text{\footnotesize(Non-negativity),} \\
 	y_k \in \{0,&1\} & &\forall\ k\in K & & (y\text{ \footnotesize must be binary}).
 \end{align*}
