@@ -9,6 +9,22 @@ def state_to_index(S,state):
 def index_to_state(S,index):
     return S[index]
 
+def lowest_sortie_capable_state(S,NUM_ACFT,MAX_SORTIES):
+    state = [MAX_SORTIES,0,0,0,NUM_ACFT-MAX_SORTIES]
+    return state
+
+def sortie_capable_indices(S,NUM_ACFT,MAX_SORTIES):
+    state = [MAX_SORTIES,0,0,0,NUM_ACFT-MAX_SORTIES]
+    start_index = state_to_index(S,state)
+    end_index = len(S)
+    indices = range(start_index, end_index)
+    return indices
+
+def sortie_capable_probability(aN,S,NUM_ACFT,MAX_SORTIES):
+    state = lowest_sortie_capable_state(S,NUM_ACFT,MAX_SORTIES)
+    prob = [sum(aN[state:])]
+    return prob
+
 # Creation of P-matrix and State Space
 def create_one_step_P_matrix(
         # Returns np.array of P-matrix, and State spaces
