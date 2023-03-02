@@ -24,7 +24,7 @@ def sortie_capable_indices(S,NUM_ACFT,MAX_SORTIES):
 
 def sortie_capable_probability(aN,S,NUM_ACFT,MAX_SORTIES):
     state = lowest_sortie_capable_state(S,NUM_ACFT,MAX_SORTIES)
-    prob = [sum(aN[state:])]
+    prob = np.sum(aN[0,state:])
     return prob
 
 # Creation of P-matrix and State Space
@@ -133,7 +133,7 @@ def get_pi(P):
 
     # Solve
     pi = np.linalg.solve(A,b)
-    return pi
+    return pi.T
 
 bake = get_pi
 
@@ -148,24 +148,33 @@ def first_passage_times(P,S,NUM_ACFT,MAX_SORTIES):
     return m
 
 # Display Functions
-def display_behavior(a,P,S,NUM_ACFT,MAX_SORTIES,  n=10):
-    pi = get_pi(P)
-    pi = sortie_capable_probability(pi,S,NUM_ACFT,MAX_SORTIES)
-    x,y = [],[]
+def display_behavior(a,P,S,NUM_ACFT,MAX_SORTIES,n=10,condition = 'Baseline',pi=None):
+    pi = pi or get_pi(P)
+    pie = 1-sortie_capable_probability(pi,S,NUM_ACFT,MAX_SORTIES)
+    x,y,f = np.empty(0),np.empty(0),np.empty(0)
     i=0
-    aN = a
-    x.append(i)
-    y.append(sortie_capable_probability(aN,S,NUM_ACFT,MAX_SORTIES))
-    while (i<=n):
+    aN = a*P
+    x = np.append(x,i*1200)
+    f = np.append(f,pie)
+    y = np.append(y,1-sortie_capable_probability(aN,S,NUM_ACFT,MAX_SORTIES))
+    while (i<n):
         i+=1
         aN = aN*P
-        x.append(i)
-        y.append(sortie_capable_probability(aN,S,NUM_ACFT,MAX_SORTIES))
-    
+        x = np.append(x,i*1200)
+        f = np.append(f,pie)
+        y = np.append(y,1-sortie_capable_probability(aN,S,NUM_ACFT,MAX_SORTIES))
+
     fig, ax = plt.subplots()
-    ax.plot(x,y)
-    ax.plot(x,pi)
-    ax.set(xlabel='', ylabel='',
-        title='')
+    ax.plot(x,f, color='black', label='Long-term')
+    ax.annotate('{}%'.format('%.3f'%(pie*100)) ,xy=(x[-1],f[0]),xytext=(x[-1]+100,f[0]+0.01))
+    ax.fill_between(x, 0, y, alpha=0.5, color='red', label='Unmet')
+    ax.fill_between(x, 1, y, alpha=0.5, label='Met')
+    ax.set_xlim(x[0], x[-1])
+    ax.set_ylim(0, 1)
+    ax.set(xlabel='T+ hours', xticks=x, ylabel='',
+        title='Probability of Meeting Sortie Requirement: {}'.format(condition))
+    ax.legend(loc='upper right')
     ax.grid()
-    plt.show()
+
+
+
