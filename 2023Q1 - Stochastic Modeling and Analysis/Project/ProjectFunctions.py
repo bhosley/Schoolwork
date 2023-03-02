@@ -89,3 +89,30 @@ def create_one_step_P_matrix(
     print(f"\nNumber of non-zero elements is {np.count_nonzero(P)}.") # Exp 30856
 
     return P, S
+
+# Long term (pi) calculations
+def getPi(P):
+    # Define the p-matrix
+    cardS, _ = np.shape(P)
+    I = np.matrix(np.eye(cardS))
+
+    # Construct system of linear equations, Ax=b
+    # LHS
+    A_bal = I-P.T
+    A_norm = np.matrix(np.ones(cardS))
+
+    # RHS
+    b_bal = np.matrix(np.zeros((cardS,1)))
+    b_norm = np.matrix(1)
+
+    # vertically stack
+    A = np.vstack((A_bal,A_norm))
+    b = np.vstack((b_bal,b_norm))
+
+    # Remove an overdetermining member equation
+    A = np.delete(A,0,0)
+    b = np.delete(b,0,0)
+
+    # Solve
+    pi = np.linalg.solve(A,b)
+    return pi
