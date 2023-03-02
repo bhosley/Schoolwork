@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import binom
+import matplotlib.pyplot as plt
 import time
 
 # Define utility functions to access state indices and vectors
@@ -11,7 +12,8 @@ def index_to_state(S,index):
 
 def lowest_sortie_capable_state(S,NUM_ACFT,MAX_SORTIES):
     state = [MAX_SORTIES,0,0,0,NUM_ACFT-MAX_SORTIES]
-    return state
+    index = state_to_index(S,state)
+    return index
 
 def sortie_capable_indices(S,NUM_ACFT,MAX_SORTIES):
     state = [MAX_SORTIES,0,0,0,NUM_ACFT-MAX_SORTIES]
@@ -107,7 +109,7 @@ def create_one_step_P_matrix(
     return P, S
 
 # Long term (pi) calculations
-def getPi(P):
+def get_pi(P):
     # Define the p-matrix
     cardS, _ = np.shape(P)
     I = np.matrix(np.eye(cardS))
@@ -132,3 +134,38 @@ def getPi(P):
     # Solve
     pi = np.linalg.solve(A,b)
     return pi
+
+bake = get_pi
+
+# First Passage Calculation
+def first_passage_times(P,S,NUM_ACFT,MAX_SORTIES):
+    cardS, _ = np.shape(P)
+    I = np.matrix(np.eye(cardS))
+    s = lowest_sortie_capable_state(S,NUM_ACFT,MAX_SORTIES)
+    B = P[:s,:s]
+    e = np.ones((cardS,1))
+    m = np.linalg.solve(I-B,e)
+    return m
+
+# Display Functions
+def display_behavior(a,P,S,NUM_ACFT,MAX_SORTIES,  n=10):
+    pi = get_pi(P)
+    pi = sortie_capable_probability(pi,S,NUM_ACFT,MAX_SORTIES)
+    x,y = [],[]
+    i=0
+    aN = a
+    x.append(i)
+    y.append(sortie_capable_probability(aN,S,NUM_ACFT,MAX_SORTIES))
+    while (i<=n):
+        i+=1
+        aN = aN*P
+        x.append(i)
+        y.append(sortie_capable_probability(aN,S,NUM_ACFT,MAX_SORTIES))
+    
+    fig, ax = plt.subplots()
+    ax.plot(x,y)
+    ax.plot(x,pi)
+    ax.set(xlabel='', ylabel='',
+        title='')
+    ax.grid()
+    plt.show()
