@@ -151,6 +151,7 @@ def first_passage_times(P,S,NUM_ACFT,MAX_SORTIES):
 def display_behavior(a,P,S,NUM_ACFT,MAX_SORTIES,n=10,condition = 'Baseline',pi=None):
     pi = pi or get_pi(P)
     pie = 1-sortie_capable_probability(pi,S,NUM_ACFT,MAX_SORTIES)
+    print('The long term probability of meeting sortie requirement is {}%'.format('%.4f'%((1-pie)*100)))
     x,y,f = np.empty(0),np.empty(0),np.empty(0)
     i=0
     aN = a*P
@@ -171,6 +172,7 @@ def display_behavior(a,P,S,NUM_ACFT,MAX_SORTIES,n=10,condition = 'Baseline',pi=N
     ax.fill_between(x, 1, y, alpha=0.5, label='Met')
     ax.set_xlim(x[0], x[-1])
     ax.set_ylim(0, 1)
+    ax.set_box_aspect(1/2)
     ax.set(xlabel='T+ hours', xticks=x, ylabel='',
         title='Probability of Meeting Sortie Requirement: {}'.format(condition))
     ax.legend(loc='upper right')
