@@ -72,10 +72,10 @@ def create_one_step_P_matrix(
         ### Compute PMF of X_npl[2], Back Shop 1
         num_FS = X_n[1]
         pmf_Xnpl_BS1 = [binom.pmf(y,num_FS,1-PROB_REPAIR_FRONTSHOP) for y in range(NUM_ACFT+1)]
-        ### Compute PMF of X_npl[3], Back Chop 2
+        ### Compute PMF of X_npl[3], Back Shop 2
         pmf_Xnpl_BS2 = np.zeros((NUM_ACFT+1))
         pmf_Xnpl_BS2[X_n[2]] = 1
-        ### Compute PMF of X_npl[4], Back Chop 3
+        ### Compute PMF of X_npl[4], Back Shop 3
         pmf_Xnpl_BS3 = np.zeros((NUM_ACFT+1))
         pmf_Xnpl_BS3[X_n[3]] = 1
         ### PMF of X_npl[0], FMC aircraft is implicit as the 
@@ -138,20 +138,23 @@ def get_pi(P):
 bake = get_pi
 
 # First Passage Calculation
-def first_passage_times(P,S,NUM_ACFT,MAX_SORTIES):
-    cardS, _ = np.shape(P)
-    I = np.matrix(np.eye(cardS))
+def first_passage_times(a,P,S,NUM_ACFT,MAX_SORTIES):
     s = lowest_sortie_capable_state(S,NUM_ACFT,MAX_SORTIES)
+    I = np.matrix(np.eye(s))
     B = P[:s,:s]
-    e = np.ones((cardS,1))
+    e = np.ones((s,1))
     m = np.linalg.solve(I-B,e)
+    a = a[:s]
+    m= np.matmul(a,m)
     return m
 
 # Display Functions
 def display_behavior(a,P,S,NUM_ACFT,MAX_SORTIES,n=10,condition = 'Baseline',pi=None):
+    exp = first_passage_times(a,P,S,NUM_ACFT,MAX_SORTIES).item()
     pi = pi or get_pi(P)
     pie = 1-sortie_capable_probability(pi,S,NUM_ACFT,MAX_SORTIES)
-    print('The long term probability of meeting sortie requirement is {}%'.format('%.4f'%((1-pie)*100)))
+    print('Under the {} condition, the squadron is expected to meet minimum operating requirements within {} ATO cycles.'.format(condition, exp),
+          'The long term probability of meeting sortie requirement is {}%'.format('%.4f'%((1-pie)*100)))
     x,y,f = np.empty(0),np.empty(0),np.empty(0)
     i=0
     aN = a*P
