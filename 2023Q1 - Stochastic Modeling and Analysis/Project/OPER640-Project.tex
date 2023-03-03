@@ -8,6 +8,7 @@
 \usepackage{booktabs}
 
 \usepackage[table,dvipsnames]{xcolor}
+\usepackage{caption}
 \usepackage{pgf,tikz,tikz-3dplot}
 \usetikzlibrary{shapes,arrows,positioning,backgrounds}
 \tikzset{%
@@ -70,52 +71,83 @@ will have the greatest return on investment.
 
 Based on the information provided, this system will lend itself well to being modeled 
 by a discrete-time Markov chain.
-This system will be 
+This system will be represented as \(\{X_n : n\geq0\}\) where 
+\(X_n = \{X_n^1,X_n^2,X_n^3,X_n^4,X_n^5\}\) such that
+\(X_n^i\) represents the number of aircraft in condition \(i\) at time \(n\).
+Each of the conditions \(i\) are classified explicitly in Table \ref{states}. \\
 
-\(\{X_n : n\geq0\}\)
+\begin{table}[H]
+	\begin{tabular}{rcl}
+		\toprule
+		\(i\) & & \textit{Condition Description} \\
+		\midrule
+		1 & FMC & Fully mission capable \\
+		2 & FS  & In the front shop for inspection or minor repair \\
+		3 & BS1 & First ATO cycle in backshop \\
+		4 & BS2 & Second ATO cycle in backshop \\
+		5 & BS3 & Last ATO cycle in backshop \\
+		\bottomrule
+	\end{tabular}
+	\caption{Aircraft States.}
+	\label{states}
+\end{table}
 
-\(X_n = \{X_n^1,X_n^2,X_n^3,X_n^4,X_n^5\}\)
-Where \(X_n^i\) represents the number of aircraft in state \(i\) at time \(n\)
-the states are classified as
+\subsubsection{State Space}
 
+The state space, or the list of every possible configuration of this model is every
+combination of aircraft in each condition.
+Further, in adherence to standardization we have relied on the perfect interchangeability 
+of each aircraft, as a result each state concerns only how many aircraft are in each condition,
+and does not make any distinctions regarding which specific aircraft comprise the count.
+Therefore, the state space is comprised of every combination of aircraft in each of the
+conditions such that
+\begin{align}
+	\sum_{i=1}^{5}X_n^i = 12.
+\end{align}
 
-\begin{tabular}{rl}
-	\toprule
-	\(i\) & \textit{State Description} \\
-	\midrule
-	1 & Fully mission capable \\
-	2 & In the front shop for inspection or minor repair \\
-	3 & First ATO cycle in backshop \\
-	4 & Second ATO cycle in backshop \\
-	5 & Last ATO cycle in backshop \\
-	\bottomrule
-\end{tabular}
+The state space will not be further enumerated here, analytically the 
+number of unique states is a multiset which can be calculated as
+\begin{align}
+	\left( \hspace{-0.4em} \binom{5}{12} \hspace{-0.4em} \right) 
+	=\binom{5+12-1}{12}
+	=\frac{16!}{12!\ 4!}
+	= 1820
+\end{align}
+distinct states.
 
-The state space, or the list of every possible configuration of this model
+For the sake of brevity we will generally focus only on the states in which
+\(X_n^1\geq8\) representing the ATO cycles where the minimum aircraft
+needed to meet the sortie requirement are operationally capable.
+Within this state space there are 70 such states,
 
-\(\sum_{i=1}^{5}X_n^i = 12\)
+\subsubsection{Markov Property}
 
-The state space will not be further enumerated here, as it can be seen
+Remarkably, the data show that there is no correlation between past failed
+inspections or major maintenance and future occurrences of the same.
+The maintainers of this squadron are so skilled it is as if the 
+aircraft have no memory of past conditions.
+This observation is extremely significant as it simplifies the manner 
+in which we can model the expected conditions of the aircraft in the squadron.
 
-\(\left( \hspace{-0.4em} \binom{n}{k} \hspace{-0.4em} \right) \)
+\subsubsection{Time Homogeneity}
 
-%DTMC model formulation (Lesson2 slide 18 (with single entity transition diagram))
+The strict adherence to doctrine and training has made it such that 
+even in the face of significant unpredictability,
+the squadron's maintainers perform their work with the exact
+same quality in each ATO cycle.
+Consequently, the changes to the condition of each aircraft have the 
+same probability between each ATO cycle. 
+For example, after every sortie completed there is a 20\% chance that
+the aircraft will need to undergo inspection, and during each 
+cycle in which an aircraft undergoes inspection and minor repairs
+it is cleared to fly in the next ATO 70\% of the time, every time.
 
+\subsubsection{Transition Probability}
 
-% Define the state space S as the set of all possible outcomes for Xn
-
-
-% Verify the Markov Property is satisfied.
-
-
-% Verify Time-Homogeneity
 
 
 % Construct the Transition Probability Matrix. Or specify probability function p_ij.
-% As needed:
-% 	Formulate state transition function (X_n+1 as a function of X_n)
-% 	Draw a Transition Diagram.
-% 	Define a cost or reward function.
+
 
 Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 
@@ -153,10 +185,75 @@ Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 % 	What is the long-term sortie generation rate?
 % 	What is the long-term mission capable aircraft availability rate?
 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/baseline}
+	\caption{}
+	\label{fig:baseline}
+\end{figure}
+
+
 \section{Exploratory Analysis}
 
 % Sensitivity (excursion) analyses - the what-if questions, 
 % 	explore possible solutions by modifying parameter values
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/BackshopImpairment}
+	\caption{}
+	\label{fig:backshopimpairment}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/BackshopImprovement}
+	\caption{}
+	\label{fig:backshopimprovement}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/FrontShopImpairment}
+	\caption{}
+	\label{fig:frontshopimpairment}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/FrontShopImprovement}
+	\caption{}
+	\label{fig:frontshopimprovement}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/PostflightImpairment}
+	\caption{}
+	\label{fig:postflightimpairment}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/PostflightImprovement}
+	\caption{}
+	\label{fig:postflightimprovement}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/DecreasedSortieRequirement}
+	\caption{}
+	\label{fig:decreasedsortierequirement}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/AdditionalAircraft}
+	\caption{}
+	\label{fig:additionalaircraft}
+\end{figure}
+
+
+
 
 \section{Conclusions and Recommendations}
 
