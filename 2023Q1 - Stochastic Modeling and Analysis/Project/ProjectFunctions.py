@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import binom
+from math import sqrt
 import matplotlib.pyplot as plt
 import time
 
@@ -139,22 +140,45 @@ bake = get_pi
 
 # First Passage Calculation
 def first_passage_times(a,P,S,NUM_ACFT,MAX_SORTIES):
+    # The state(s) of interest are all where FMC is >8
     s = lowest_sortie_capable_state(S,NUM_ACFT,MAX_SORTIES)
     I = np.matrix(np.eye(s))
+
+    # B is P with the states of interest removed
     B = P[:s,:s]
     e = np.ones((s,1))
+
+    # m is the expected time from other states to Sortie capable
     m = np.linalg.solve(I-B,e)
+
+    # Starting probabilities 
     a = a[:s]
-    m= np.matmul(a,m)
-    return m
+    exp= np.matmul(a,m)
+
+    # Calculating the second moment
+    m2 = np.linalg.inv(I-B) * (2*B*m)
+    v = m2 + m - m**2
+    var = np.matmul(a,v)
+    return exp.item(), var.item()
+
+# Expected Number of Functional Aircraft
+def functional_count(S,pi):
+    exp = np.matmul(pi,S[:,0])
+    var = np.var(np.asarray(pi)*S[:,0])
+    return exp.item(), var #var.item()
 
 # Display Functions
 def display_behavior(a,P,S,NUM_ACFT,MAX_SORTIES,n=10,condition = 'Baseline',pi=None):
-    exp = first_passage_times(a,P,S,NUM_ACFT,MAX_SORTIES).item()
+    exp,var = first_passage_times(a,P,S,NUM_ACFT,MAX_SORTIES)
     pi = pi or get_pi(P)
     pie = 1-sortie_capable_probability(pi,S,NUM_ACFT,MAX_SORTIES)
-    print('Under the {} condition, the squadron is expected to meet minimum operating requirements within {} ATO cycles.'.format(condition, exp),
-          'The long term probability of meeting sortie requirement is {}%'.format('%.4f'%((1-pie)*100)))
+    gE, gV = functional_count(S,pi)
+    print('Under the {} condition, '.format(condition),
+          '\nexpected time to meet minimum requirements {} ATO cycles,'.format(exp),
+          '\nwith variance and standard deviation of {} and {}.'.format(var, sqrt(var)),
+          '\nThe expected number of aircraft in operational condition is {},'.format(gE), 
+          '\nwith a variance and standard deviation of {} and {}.'.format(gV,sqrt(gV)),
+          '\nThe long term probability of meeting sortie requirement is {}%'.format('%.4f'%((1-pie)*100)))
     x,y,f = np.empty(0),np.empty(0),np.empty(0)
     i=0
     aN = a*P
