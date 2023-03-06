@@ -1,18 +1,38 @@
-\documentclass[12pt]{IEEEtran}
-\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+%\documentclass[12pt]{journal}
+\documentclass[sigplan,screen]{acmart}
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{enumerate}
-\usepackage{graphicx}
-
+%\usepackage{amsmath,amssymb,amsthm}
+\usepackage{cite}
+\bibliographystyle{IEEE}
+%\usepackage{enumerate}
+%\usepackage{graphicx}
 
 
 \begin{document}
-	
+\title{Title}
+%\author{Brandon Hosley,Student,Air Force Institute of Technology}
+\author{Brandon Hosley}
+
+
 	\begin{abstract}
-		Test
+		The purpose of this paper is to demonstrate competency in the learning 
+		objectives of OPER 561-Discrete Event Simulation.
+		Simultaneously, it will be used to practice writing in a format
+		common within the field.
+		Lastly it will be used to explore a topic that has been interesting
+		to the author for some time, but had not yet been feasible to explore.
+		The subject of the simulations in this paper will be the well-studied
+		Schelling models. The simulations performed will not necessarily be
+		novel, but are intended to take advantage of improvements in computation
+		to explore some of Schelling original analysis in a simulated, experimental manner.
 	\end{abstract}
+	
+	% Note that keywords are not normally used for peerreview papers.
+
+% make the title area
+\maketitle
+
 
 % TODO
 
@@ -28,9 +48,9 @@ Presentation
 
 \section{Introduction}
 
-In 1971, while working for the RAND Corporation, Thomas C. Schelling began investigating
+ 1971, while working for the RAND Corporation, Thomas C. Schelling began investigating
 the manner in which segregation occurs in the absence of 
-\cite{Schelling_1971}
+%\cite{Schelling_1971}
 
 \subsection{Background and Motivation}
 
@@ -74,7 +94,10 @@ different distros, two teams
 
 
 
-\bibliographystyle{IEEEtran}
-\bibliography{bibliography.bib}
-	
+
+\bibliography{./bibliography}
+
+%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
+%\end{IEEEbiography}
+
 \end{document}
