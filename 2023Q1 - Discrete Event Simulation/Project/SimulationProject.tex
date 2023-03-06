@@ -1,4 +1,4 @@
-\documentclass[12pt]{amsart}
+\documentclass[12pt]{IEEEtran}
 \usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
@@ -6,20 +6,13 @@
 \usepackage{enumerate}
 \usepackage{graphicx}
 
+
+
 \begin{document}
-\raggedbottom
-
-\noindent{\large OPER 561 - Discrete-Event Simulation - %
-	Homework 6 }
-\hspace{\fill} {\large B. Hosley}
-\bigskip
-
-
-%%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{section}{}
-\setcounter{subsection}{}
-\subsection{}
-
+	
+	\begin{abstract}
+		Test
+	\end{abstract}
 
 % TODO
 
@@ -33,6 +26,55 @@ Write report
 
 Presentation
 
-	
+\section{Introduction}
+
+In 1971, while working for the RAND Corporation, Thomas C. Schelling began investigating
+the manner in which segregation occurs in the absence of 
+\cite{Schelling_1971}
+
+\subsection{Background and Motivation}
+
+\section{Related Work}
+
+\section{System Models and Problem Formulation}
+\subsection{Optimization}
+
+Original model was too slow, clocking an average of 18.1 seconds.
+
+replacing indexed iterations with enumerations and 
+removing redundant addition in the check happy routine shaved this to 6.8
+
+Removing gridsize+1 had no improvement, likely that the interpreter handled that.
+
+Changed the way that new zones are selected for movement of unhappy agents got to 5.8 seconds
+discovered that new agents moved randomly to zones empty in the first grid, but there was no accounting
+of where agents moved this time, as such multiple agents could move to the same zone
+
+removed random int just before figure (purpose uknown possibly to advance the rng, but only once...)
+removed the accounting on the old grid for moving agents
+
+
+did the same for placing agents, shortened to 3.8 sec
+
+
+\section{Simulation Results and Discussion}
+
+different numbers of teams
+
+different distros, two teams
+
+
+
+\section{Conclusion}
+
+
+
+
+
+
+
+
+\bibliographystyle{IEEEtran}
+\bibliography{bibliography.bib}
 	
 \end{document}
