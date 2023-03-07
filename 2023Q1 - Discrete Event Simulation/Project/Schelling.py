@@ -1,41 +1,27 @@
-# -*- coding: utf-8 -*-
-"""
-@author: Hosley
-"""
 import numpy as np 
 import matplotlib.pyplot as plt  
 import matplotlib.animation as animation 
 # Uncomment to display in .ipynb
 from IPython.display import HTML
 
-#set animation update interval
-updateInterval = 50
 
-#set simulation parameters
-nMajority = 5000
-nMinority = 1000
-fracHappy = 0.3
-gridSize = 100
-  
 class Agent:
-    def __init__(self, r=1, i=0, j=0):
-       self.race = r
+    def __init__(self, membership, numTeams, h=0.3, i=0, j=0):
+       self.team = membership
+       self.homophily = h
        self.unhappy = False
-       if (self.race==1):
-           self.color = 0.5
-       elif (self.race==2): 
-           self.color = 1.0
-       else:
-           self.color = 0.0
+       self.color = membership/numTeams
        self.i = i
        self.j = j
-           
-def initAgents(a,nMajority,nMinority):
-    for _ in range(nMajority):
-        a.append(Agent(1))
-    for _ in range(nMinority):
-        a.append(Agent(2))
+
+
+def initAgents(a,demographic):
+    numTeams = len(demographic)
+    for key,value in demographic.items():
+        for _ in range(value['population']):
+            a.append(Agent(key,numTeams,h=value['tolerance']))
     return a
+
 
 def placeAgents(agents,grid,gridSize,):
     open = np.argwhere(grid[1:gridSize+1,1:gridSize+1]==0)
@@ -51,7 +37,8 @@ def placeAgents(agents,grid,gridSize,):
         open = np.delete(open,o,0)
     return [agents,grid]
 
-def checkHappy(agents,grid,fracHappy):
+
+def checkHappy(agents,grid):
     uha = []
     numberUnhappy = 0
     for agent in agents:
@@ -67,18 +54,18 @@ def checkHappy(agents,grid,fracHappy):
                     nDifferent = nDifferent+1
         # correct for self counting
         nSame = nSame - 1
-        if(nSame+nDifferent == 0):
+        nBoth = nSame + nDifferent
+        if(nBoth == 0):
             agent.unhappy = False
-        elif(fracHappy>=(((nSame)/(nSame+nDifferent)))):
+        elif(agent.homophily >=(((nSame)/(nBoth)))):
             agent.unhappy = True
             numberUnhappy = numberUnhappy + 1
         else:
             agent.unhappy = False
-    # print(numberUnhappy)
-    return uha
-                
-def update(frameNum, img, grid, gridSize, agents): 
-  
+    return uha, numberUnhappy
+
+
+def update(frameNum, img, grid, gridSize, agents,x,y,line):  
     # copy grid since we require 8 neighbors  
     # for calculation and we go line by line  
     newGrid = np.zeros([gridSize+2,gridSize+2]) 
@@ -97,33 +84,65 @@ def update(frameNum, img, grid, gridSize, agents):
         newGrid[agent.i,agent.j] = agent.color
         
     # check for unhappy agents
-    checkHappy(agents,newGrid,fracHappy)
+    _,n = checkHappy(agents,newGrid)
     # update data 
     img.set_data(newGrid) 
     grid[:] = newGrid[:] 
-    return img, 
-  
-#initialize grid
-grid = np.zeros([gridSize+2,gridSize+2])
 
-agents = []
-unhappyAgents = []
+    x.append(frameNum)
+    y.append(n)
+    line.set_data(x,y)
+    return img, line
 
-#instantiate agents
-agents = initAgents(agents,nMajority,nMinority)
 
-#place agents
-[agents,grid]= placeAgents(agents,grid,gridSize)
-           
-# set up animation 
-fig, ax = plt.subplots() 
-img = ax.imshow(grid, interpolation='nearest') 
-ani = animation.FuncAnimation(fig, update, fargs=(img, grid,gridSize, agents, ), 
-                              frames = 50, 
-                              interval=updateInterval, 
-                              save_count=50) 
-  
-plt.show() 
+def run_experiment(demographic=None,gridSize=100,withAnimation=False):
+    demographics = demographic or {
+        1:{'population':5000,'tolerance':0.3},
+        2:{'population':1000,'tolerance':0.3}}
+    #initialize grid
+    grid = np.zeros([gridSize+2,gridSize+2])
 
-# uncomment to display in .ipynb
-HTML(ani.to_jshtml())
+    #instantiate agents
+    agents = []
+    agents = initAgents(agents,demographics)
+
+    #place agents
+    [agents,grid]= placeAgents(agents,grid,gridSize)
+    #data collection
+    move,unhappiness =[],[]
+    #run trials without animations
+    if not withAnimation:
+        _ =+ 1
+    #run trials with animation
+    else:   
+        # set up animation 
+        updateInterval = 50
+        fig, (ax1,ax2) = plt.subplots(1,2) 
+        img = ax1.imshow(grid, interpolation='nearest') 
+        line, = ax2.plot([], [], lw=3)
+        ax2.set(xlim=(0,50), ylim=(0,200), aspect='0.25')
+        ax1.set_title('Field')
+        ax2.set_title('Total Unhappiness')
+        ani = animation.FuncAnimation(fig, update, fargs=(img, grid,gridSize, agents,move,unhappiness,line, ), 
+                                    frames = 50, 
+                                    interval=updateInterval, 
+                                    save_count=50) 
+    
+        #plt.show() 
+
+        # uncomment to display in .ipynb
+        return HTML(ani.to_jshtml())
+
+# demographic -> label: [population,tolerance]
+demographics = {
+    1:{
+    'population':4000,
+    'tolerance':0.3},
+    2:{
+    'population':1000,
+    'tolerance':0.3},
+    3:{
+    'population':1000,
+    'tolerance':0.3}
+}
+run_experiment(demographics,withAnimation=True)
