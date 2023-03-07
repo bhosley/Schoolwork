@@ -1,103 +1,166 @@
 %\documentclass[12pt]{journal}
-\documentclass[sigplan,screen]{acmart}
+\documentclass[sigplan,nonacm]{acmart}
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 %\usepackage{amsmath,amssymb,amsthm}
-\usepackage{cite}
-\bibliographystyle{IEEE}
+
 %\usepackage{enumerate}
 %\usepackage{graphicx}
 
+%\citestyle{acmauthoryear}
 
 \begin{document}
-\title{Title}
-%\author{Brandon Hosley,Student,Air Force Institute of Technology}
+\title{Revisiting Schelling's Games}
+
 \author{Brandon Hosley}
+\orcid{0000-0002-2152-8192}
+%\authornotemark[1]
+%\authornote{text}
+\email{brandon.hosley.1@us.af.mil}
+\affiliation{%
+	\institution{Air Force Institute of Technology}
+	\streetaddress{1751 11th St.}
+	\city{Wright-Patterson Air Force Base}
+	\state{Ohio}
+	\country{USA}
+	\postcode{45433}
+}
 
 
-	\begin{abstract}
-		The purpose of this paper is to demonstrate competency in the learning 
-		objectives of OPER 561-Discrete Event Simulation.
-		Simultaneously, it will be used to practice writing in a format
-		common within the field.
-		Lastly it will be used to explore a topic that has been interesting
-		to the author for some time, but had not yet been feasible to explore.
-		The subject of the simulations in this paper will be the well-studied
-		Schelling models. The simulations performed will not necessarily be
-		novel, but are intended to take advantage of improvements in computation
-		to explore some of Schelling original analysis in a simulated, experimental manner.
-	\end{abstract}
-	
-	% Note that keywords are not normally used for peerreview papers.
+\begin{abstract}
+	The purpose of this paper is to demonstrate competency in the learning 
+	objectives of OPER 561-Discrete Event Simulation.
+	Simultaneously, it will be used to practice writing in a format
+	common within the field.
+	Lastly it will be used to explore a topic that has been interesting
+	to the author for some time, but had not yet been feasible to explore.
+	The subject of the simulations in this paper will be the well-studied
+	Schelling models. The simulations performed will not necessarily be
+	novel, but are intended to take advantage of improvements in computation
+	to explore some of Schelling original analysis in a simulated, experimental manner.
+\end{abstract}
+
+% Note that keywords are not normally used for peerreview papers.
+
+\received{10 March 2023}
 
 % make the title area
 \maketitle
 
-
-% TODO
-
-Modify Schelling Game Set-up
-
-Build Output methods
-
-Analysis
-
-Write report
-
-Presentation
-
 \section{Introduction}
 
- 1971, while working for the RAND Corporation, Thomas C. Schelling began investigating
-the manner in which segregation occurs in the absence of 
-%\cite{Schelling_1971}
+In this paper we will revisit the well-known Schelling Models\cite{Schelling1971}.
+As an exercise, first we will explore the available tools to emulate his original
+simulation but at a larger scale.
+Afterward we will simulate the conditions that he investigated analytically.
+Lastly we will extend the investigation to encompass scenarios that he had not
+written about.
 
 \subsection{Background and Motivation}
 
+In 1971, while working for the RAND Corporation, Thomas C. Schelling began investigating
+the manner in which segregation occurs in the absence of external enforcement.
+To this end, Schelling proposed that groups of agents with similar objectives in their relations
+with other agents would arrange themselves in a manner that resembled a directing hand.
+While acknowledging that there are a multitude of contributing and compounding factors that can amplify these effects, 
+for simplicity's sake Schelling chose to abstract the net prejudices, biases, and presences into a simple number.
+
+
+In direct relevance to the civil rights movement in full swing at the time of his writing, Schelling chose to 
+tie the intuition of his model to one of the most obvious traits that could classify differences between agents,
+which was race. He did write about situations in which age could have a similar effect; as when groups of young people
+begin spending a lot of time in certain areas displacing older persons that may find the teenage presence objectionable.
+
+Schelling concluded his paper describing what he called tipping points, wherein fragile equilibrium breaks and send a local
+demographic towards an extreme or even homogeneous outcome.
+
 \section{Related Work}
+
+Schelling's model offers a lot of opportunity to extend to a large variety of different conditions
+and is very simple to understand, as such it has been the subject of numerous studies and experiments.
+Here we will examine just a few of them, first several with interesting conditions that will not be considered
+followed by several that have conditions similar to those that we wish to implement for this paper.
+
+
+Bullinger et al. \cite{Bullinger2021} describe an analytical method to seek a pareto optimal
+condition within a single assignment on arbitrary networks. 
+This can become a fairly difficult task very rapidly,
+if a feasible solution exists at all; but most importantly for this paper,
+it does not make for compelling simulation.
+
+Elkind et al.\cite{Elkind2021} utilize an approach in which agents occupy nodes on a graph rather than sectors on a grid.
+In this way, many nodes have oppotunities to be less volatile as they have fewer neighbors, whereas
+some nodes may have more than the eight connections associated with grid spacing.
+While this dimension may prove interesting in that paper they never examine a node with greater than five connections.
+
+Kreisel et al. \cite{Kreisel2022} also examined methods of analytically calculating equilibrium.
+In their work they focus on the computational complexity of evaluating equilibrium,
+and stick to the agents-on-graph type of models.
+
+Gretha et al.\cite{Gretha2018} applied the Schelling model to social networks. The observed clustering similar,
+though not as well defined delineations as most models. This type of model offers the opportunity to generate
+far more connections than most implementations, and greatly changes the manner in which these connections 
+affect the utility of the agents.
+
+Bilo et al.\cite{Bilo2022} added a cost associated with moving, that scaled with distance.
+While this did not change the probability of achieving equilibrium it did increase the amount
+of time for the system to find equilibrium.
+Additionally, it had the effect of increasing the probability of reaching an equilibrium with
+smaller neighborhoods, which was not unusual in other implementations, just less common.
+
+Kanellopoulos et al.\cite{Kanellopoulos2021} implement a model in which there are more than the typical two classes of agent.
+Additionally, they differing levels of tolerance between different groups. T
+his work is highly related to Liu et al.\cite{Liu2019} who also add a larger number of classifications of agents,
+however, rather than using different levels of tolerance defined specifically between each pair of classes,
+they provide multiple traits for each class with a utility associated positively with agents that share
+like traits. They observed that agents still formed neighborhoods with their own classification and were far
+more likely to share borders with classes of agents that shared traits.
+They also examined changes in density and increasing the levels of tolerance; where increased tolerance
+and decreased system density both (unsurprisingly) had the effect of dissolving neighborhoods such that
+the graphic representation resembled a multicolored Perlin noise.
+
 
 \section{System Models and Problem Formulation}
 \subsection{Optimization}
 
-Original model was too slow, clocking an average of 18.1 seconds.
 
+
+
+
+Original model was too slow, clocking an average of 18.1 seconds.
+%
 replacing indexed iterations with enumerations and 
 removing redundant addition in the check happy routine shaved this to 6.8
-
+%
 Removing gridsize+1 had no improvement, likely that the interpreter handled that.
-
+%
 Changed the way that new zones are selected for movement of unhappy agents got to 5.8 seconds
 discovered that new agents moved randomly to zones empty in the first grid, but there was no accounting
 of where agents moved this time, as such multiple agents could move to the same zone
-
-removed random int just before figure (purpose uknown possibly to advance the rng, but only once...)
+%
+removed random int just before figure (purpose unknown possibly to advance the rng, but only once...)
 removed the accounting on the old grid for moving agents
-
-
+%
 did the same for placing agents, shortened to 3.8 sec
+
+\subsection{Conditions to be Examined}
+
+different numbers of teams
+%
+different distros, two teams
+
 
 
 \section{Simulation Results and Discussion}
 
-different numbers of teams
-
-different distros, two teams
 
 
 
 \section{Conclusion}
 
 
+\bibliographystyle{ACM-Reference-Format}
+\bibliography{SimulationProject}
 
-
-
-
-
-
-
-\bibliography{./bibliography}
-
-%\begin{IEEEbiography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
-%\end{IEEEbiography}
 
 \end{document}
