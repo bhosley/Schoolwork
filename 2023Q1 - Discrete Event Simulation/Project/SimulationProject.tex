@@ -2,7 +2,10 @@
 \documentclass[sigplan,nonacm]{acmart}
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
+
 %\usepackage{amsmath,amssymb,amsthm}
+\usepackage{tcolorbox}
+\newtcbox{\inlinecode}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
 
 %\usepackage{enumerate}
 %\usepackage{graphicx}
@@ -123,25 +126,46 @@ the graphic representation resembled a multicolored Perlin noise.
 \section{System Models and Problem Formulation}
 \subsection{Optimization}
 
+The simulation model was based on a previous implementation provided by Dr. Lance Champagne.
+However, the original model was not optimized.
+The run time for a \(100\times100\) generating \(50\) frames executed in a visual studio code python notebook run
+on a 2021 M1 macbook pro was consistently \(18.1\pm1\) seconds.
+While this is not necessarily problematic for running this simulation a small number of times,
+we determined that the run time would only get worse as we adding complexity by modeling more complex behaviors,
+before long, this would have a profound negative effect for iterative development and gathering data from a large number of runs
+and this was determined to be unacceptable, and thus the base model would need to be optimized.
+
+First, we changed all of the functions using indexed iterations by passing an iterative object instead,
+we changed the manner in which each agent checks its neighbors.
+Rather than calculating the combination of the agent's coordinates by subtracting one, adding zero, and adding one,
+we calculated a range based on the agent's coordinate once and iterated over that instead.
+Finally, there was an extra checking happiness routine prior to passing all the functions to matplotlib's
+animation generator, determining this to be redundant we removed it.
+These actions reduced the run time to \(6.8\pm1\) seconds.
+This was a good improvement; but inspired by the Icarus statue in the courtyard of the AFIT campus we decided to continue.
 
 
+We changed all of the occurrences in which the \inlinecode{gridsize+1} was called with a variable calculated once.
+But this did not improve the time, likely because that simple of a call was likely already simplified by the python interpreter.
+Next, focus was given to the manner in which agent chose their next destination, first, agents were randomly picking 
+a set of coordinates and checking the prior grid to see if that sector was occupied and then moving there.
+The problem was that there was no accounting on the original grid so multiple agents could choose to move to the same empty zone.
+We adding an update to the old grid so that this behavior wouldn't occur. Additionally, at the movement
+step we chose to make a list of all unoccupied zones at the beginning, then unhappy agents would randomly pick an opening from
+this list rather than using an acceptance-rejection technique.
+The chosen coordinates were then removed from that choice list so that there would not be multiple agents moving into the same zone.
+These changes reduced the run time to \(5.8\pm1\) seconds.
 
-
-Original model was too slow, clocking an average of 18.1 seconds.
-%
-replacing indexed iterations with enumerations and 
-removing redundant addition in the check happy routine shaved this to 6.8
-%
-Removing gridsize+1 had no improvement, likely that the interpreter handled that.
-%
-Changed the way that new zones are selected for movement of unhappy agents got to 5.8 seconds
-discovered that new agents moved randomly to zones empty in the first grid, but there was no accounting
-of where agents moved this time, as such multiple agents could move to the same zone
-%
-removed random int just before figure (purpose unknown possibly to advance the rng, but only once...)
-removed the accounting on the old grid for moving agents
-%
-did the same for placing agents, shortened to 3.8 sec
+Next, we discovered a call for a random integer that did not seem to serve a purpose.
+While it may have been used to advance the random number generator to increase the entropy of the system,
+the python random package has a cycle large enough that this should have a negligible benefit.
+We also removed the system for updating the old grid to account for agents moving,
+since choosing from the openings list had this effect anyway.
+We implemented the same accounting system for placing the agents the first time,
+wherein at the first iteration the openings list comprised the coordinates of for the entire grid.
+While the initial usage of this is relatively inefficient, as the grid gets larger and more agents must be placed,
+this drastically improves the time it takes to place the agents by eliminating one more acceptance-rejection scenario.
+All of this brought the baseline scenario's run time to \(3.8\pm1\) seconds.
 
 \subsection{Conditions to be Examined}
 
