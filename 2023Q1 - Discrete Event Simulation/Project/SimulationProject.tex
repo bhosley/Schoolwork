@@ -225,7 +225,11 @@ unwrapped the first function call which would assign a variable parameter to the
 \subsection{Experiment Design}
 
 For each of the scenarios examined we will run 10 simulations with 100 rounds of movement and collect the metric
-of aggregate dissatisfaction among agents.
+of aggregate dissatisfaction among agents, these parameters were chosen because they had reasonable run time
+and were stable in the kernel on the hardware that we were using. 
+Running additional simulations frequently caused the kernel to seize.
+It was decided that these number should be sufficient for an exploratory analysis.
+
 We will then to one additional run to output an animated visualization of that scenario.
 Schelling put particular emphasis on the qualitative patterning of the visual representation of his models,
 we will also primarily use qualitative to seek generalize insight into the scenarios, with the goal of 
@@ -237,6 +241,7 @@ continuous movement, and stable equilibrium will occur if dissatisfaction conver
 Dissatisfaction curves will also provide a tool with which to compare scenarios.
 
 \section{Simulation Results and Discussion}
+
 
 
 
