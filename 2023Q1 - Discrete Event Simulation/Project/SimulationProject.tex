@@ -169,11 +169,60 @@ All of this brought the baseline scenario's run time to \(3.8\pm1\) seconds.
 
 \subsection{Conditions to be Examined}
 
-different numbers of teams
-%
-different distros, two teams
+Schelling's initial model had an equal homophily for all agents across both demographics.
+This is also the case for the baseline model, so we will examine this condition as a 
+control by which to compare the other conditions.
 
 
+
+
+Unequal homophily between the groups
+Differences in population density
+
+Size of neighborhoods considered
+Integrationist preference
+
+
+Tolerance schedules
+
+-linearly decreasing distribution
+-Subnormal distribution
+
+
+Limitations are only relevant to the open system version./Users/brandonhosley/Documents/GitHub/Schoolwork/2023Q1 - Discrete Event Simulation/Project/Lab.ipynb
+
+-irregular tolerance schedule
+
+Tipping only works works within an open system or a small segment of the simulated area
+
+=
+
+as above but with more than 2 groups
+multiple traits?
+
+\subsection{Building the Model}
+
+The process of actually building the model occurred iteratively.
+Each additional feature or condition added ot the scenario added some complexity to building the model.
+The intent being that once the model is build that the one would be able to simulate all of the above.
+
+The easiest and first add was to abstract the the number of agents.
+This led to the restructuring of the initiation template, now a dictionary will be used to pass
+features into the model.
+Initiation consists of iterating over the dictionary when building all of the agents.
+Within this data structure we add a population definition to let us control the population of each type of agent.
+This definition is the way for a user to control the types of agents, the populations of each type, 
+and by extension can control the population density.
+
+To vary the levels of tolerance each agent type was assigned a tolerance value within the dictionary,
+this allowed different agents to express different levels of tolerance.
+The remaining conditions involved more complex implementations of tolerance.
+In order to achieve this it was decided to replace the tolerance trait with a utility function instead.
+The change to utility function allowed an easier definition of differing tolerance levels of other out-groups.
+
+The last set of conditions involved agents within groups having different levels of tolerance than their peers.
+To achieve this anonymous function casting was leveraged so that instantiation instantiation of each agent
+unwrapped the first function call which would assign a variable parameter to the utility function assigned to the agent.
 
 \section{Simulation Results and Discussion}
 
