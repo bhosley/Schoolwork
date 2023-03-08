@@ -122,7 +122,7 @@ def run_experiment(demographic=None,gridSize=100,nbrhd=3,frames=50,reps=10,filen
     
 
 #run single trial with animation
-def run_animation(demographic=None,gridSize=100,frames=50,nbrhd=3):
+def run_animation(demographic=None,gridSize=100,frames=50,nbrhd=3,filename='test'):
     demographics = demographic or {
         1:{'population':5000,'tolerance':0.3},
         2:{'population':1000,'tolerance':0.3}}
@@ -140,22 +140,22 @@ def run_animation(demographic=None,gridSize=100,frames=50,nbrhd=3):
     x,y =[],[]
     # set up animation 
     fig, (ax1,ax2) = plt.subplots(1,2) 
+    fig.tight_layout(h_pad=4)
     img = ax1.imshow(grid, interpolation='nearest') 
     line, = ax2.plot([], [], lw=3)
     height = sum([demo['population'] for demo in demographics.values()])
     width = frames
     ax2.set(xlim=(0,width), ylim=(0,height), aspect=width/height)
     #ax2.set_yscale('log')
-    ax1.set_title('Field')
-    ax2.set_title('Total Unhappiness')
+    ax1.set_title('Field', pad=20)
+    ax2.set_title('Total Unhappiness', pad=20)
     ani = animation.FuncAnimation(fig,update,
                                 fargs=(grid,gridSize,agents,x,y,nbrhd,img,line,), 
                                 frames = frames, 
                                 interval=100, 
                                 repeat_delay = 9000,
-                                save_count=50) 
-
-    #plt.show() 
-    
-    # uncomment to display in .ipynb
-    return HTML(ani.to_jshtml())
+                                save_count=50)  
+    ani = HTML(ani.to_jshtml())
+    extent = ax1.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
+    fig.savefig('images/{}.png'.format(filename), bbox_inches=extent.expanded(1.22,1.15).translated(-0.17,-0.1))
+    return ani
