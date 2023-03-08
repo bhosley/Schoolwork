@@ -44,23 +44,40 @@ def checkHappy(agents,grid,nbrhd=3):
     uha = []
     numberUnhappy = 0
     dim = floor(nbrhd/2)
-    for agent in agents:
-        neighbors = []
-        i = agent.i
-        j = agent.j
-        for m in range(int(i-dim),int(i+dim+1)):
-            for n in range(int(j-dim),int(j+dim+1)):
-                neighbors.append(grid[m,n])
-        
-        tally = Counter(neighbors)
-        like = tally[agent.color]
-        # correct for self counting
-        like = like-1
-        if(agent.ufunc(like)):
-            agent.unhappy = False
-        else:
-            agent.unhappy = True
-            numberUnhappy = numberUnhappy + 1
+    if nbrhd==3:
+        for agent in agents:
+            neighbors = []
+            i = agent.i
+            j = agent.j
+            for m in range(int(i-dim),int(i+dim+1)):
+                for n in range(int(j-dim),int(j+dim+1)):
+                    neighbors.append(grid[m,n])
+            
+            tally = Counter(neighbors)
+            if(agent.ufunc(tally,agent)):
+                agent.unhappy = False
+            else:
+                agent.unhappy = True
+                numberUnhappy = numberUnhappy + 1
+    else:
+        for agent in agents:
+            neighbors = []
+            i = agent.i
+            j = agent.j
+            try:
+                for m in range(int(i-dim),int(i+dim+1)):
+                    for n in range(int(j-dim),int(j+dim+1)):
+                        neighbors.append(grid[m,n])
+                
+                tally = Counter(neighbors)
+                if(agent.ufunc(tally,agent)):
+                    agent.unhappy = False
+                else:
+                    agent.unhappy = True
+                    numberUnhappy = numberUnhappy + 1
+            except IndexError:
+                agent.unhappy = True
+                numberUnhappy = numberUnhappy + 1
     return uha, numberUnhappy
 
 
@@ -71,7 +88,7 @@ def update(frameNum,grid,gridSize,agents,x,y,nbrhd=3,img=None,line=None):
     # find the list of open cells
     open = np.argwhere(grid[1:gridSize+1,1:gridSize+1]==0)
     for agent in agents:
-        if(agent.unhappy):
+        if(agent.unhappy and len(open)>0):
             # select a random opening and move
             o = np.random.randint(0,len(open))
             i = open[o][0]+1    # index correction
@@ -95,7 +112,7 @@ def update(frameNum,grid,gridSize,agents,x,y,nbrhd=3,img=None,line=None):
 
 
 #run trials without animations
-def run_experiment(demographic=None,gridSize=100,nbrhd=3,frames=50,reps=10,filename='test'):
+def run_experiment(demographic=None,gridSize=100,nbrhd=3,frames=50,reps=5,filename='test'):
     demographics = demographic or {
         1:{'population':5000,'tolerance':0.3},
         2:{'population':1000,'tolerance':0.3}}
@@ -153,8 +170,7 @@ def run_animation(demographic=None,gridSize=100,frames=50,nbrhd=3,filename='test
                                 fargs=(grid,gridSize,agents,x,y,nbrhd,img,line,), 
                                 frames = frames, 
                                 interval=100, 
-                                repeat_delay = 9000,
-                                save_count=50)  
+                                repeat_delay = 9000)  
     ani = HTML(ani.to_jshtml())
     extent = ax1.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
     fig.savefig('images/{}.png'.format(filename), bbox_inches=extent.expanded(1.22,1.15).translated(-0.17,-0.1))
