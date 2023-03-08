@@ -173,32 +173,30 @@ Schelling's initial model had an equal homophily for all agents across both demo
 This is also the case for the baseline model, so we will examine this condition as a 
 control by which to compare the other conditions.
 
+We are interested in examining effects of asymmetric utility, differences in population density,
+and larger numbers of group types. Additionally, we will investigate effects of changes in
+the size of what agents consider their neighbors and add integrationist utility.
 
+The preceding are all scenarios that Schelling modeled physically, we will be able to compare
+results to those originally described; what Schelling was unable to do was model what he described
+as tolerance schedules or distributions of differences in tolerance among the agents.
+He did provide an analytic claim to what behavior would occur, 
+we wish to examine how this behavior manifests in simulation.
 
+One aspect that we will depart with from Schelling's conceptualization is the openness of the system,
+in his analysis he focused on a limited area with access to an arbitrary external population
+and where the entire area is treated as a singular neighborhood. Without an open system with 
+a smaller segment of interest it may tipping will not likely happen in the manner that he described.
+However, we wish to investigate how the agents of his analytical models will behave in a closed system.
 
-Unequal homophily between the groups
-Differences in population density
+Finally, we will extend our model to include some of the traits shown by other researchers,
+with emphasis on different numbers of groups, and nonstandard utility functions.
 
-Size of neighborhoods considered
-Integrationist preference
+\subsection{Assumptions}
 
-
-Tolerance schedules
-
--linearly decreasing distribution
--Subnormal distribution
-
-
-Limitations are only relevant to the open system version./Users/brandonhosley/Documents/GitHub/Schoolwork/2023Q1 - Discrete Event Simulation/Project/Lab.ipynb
-
--irregular tolerance schedule
-
-Tipping only works works within an open system or a small segment of the simulated area
-
-=
-
-as above but with more than 2 groups
-multiple traits?
+Assumptions used in this set of experiments are the same as those used in most implementations.
+Specifically, we eschew the cost of moving, we assume that the agents play the game with perfect information,
+that geographic limitations do not exist beyond occupation, and that all neighborhoods are arranged ortholinearly.
 
 \subsection{Building the Model}
 
@@ -221,8 +219,10 @@ In order to achieve this it was decided to replace the tolerance trait with a ut
 The change to utility function allowed an easier definition of differing tolerance levels of other out-groups.
 
 The last set of conditions involved agents within groups having different levels of tolerance than their peers.
-To achieve this anonymous function casting was leveraged so that instantiation instantiation of each agent
+To achieve this, anonymous function casting was leveraged so that instantiation of each agent
 unwrapped the first function call which would assign a variable parameter to the utility function assigned to the agent.
+
+\subsection{Experiment Design}
 
 \section{Simulation Results and Discussion}
 
