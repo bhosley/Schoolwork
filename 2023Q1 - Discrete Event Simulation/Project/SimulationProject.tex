@@ -223,6 +223,11 @@ unwrapped the first function call which would assign a variable parameter to the
 
 \subsection{Experiment Design}
 
+The scenarios we simulate will be a 100 by 100 grid, with 6000 agents, except in the cases where population density
+is decreased. The agent will consider the eight squares immediately surrounding it's position when evaluating its happiness.
+Unless otherwise stated, the default utility function will be 0.3; an agent is happy when the ratio of like agents
+to adjacent zones is 0.3.
+
 For each of the scenarios examined we will run 10 simulations with 100 rounds of movement and collect the metric
 of aggregate dissatisfaction among agents, these parameters were chosen because they had reasonable run time
 and were stable in the kernel on the hardware that we were using. 
@@ -243,10 +248,15 @@ Dissatisfaction curves will also provide a tool with which to compare scenarios.
 
 Enough testing was performed that it would be somewhat tedious for the reader to place every result here,
 instead we will highlight results that produced interesting or unexpected results.
+First we will examine the qualitative results to examine the emergent behavior and patterning of the systems,
+then we will examine the time series utilities of the scenarios to compare the dynamic behavior of the systems as they progress.
+
+All of the images presented are after 100 move cycles, in some cases the systems have achieved equilibrium or pareto efficiency,
+but some still have a trajectory of improvement at that time the simulation concluded and are depicted in that state.
 
 \subsection{Qualitative Results}
 
-The baseline followed the same specifications as the first model Schelling proposes and exhibits the same type of results,
+The baseline (figure \ref{fig:baseline}) followed the same specifications as the first model Schelling proposes and exhibits the same type of results,
 and converged relatively quickly.
 
 \begin{figure}
@@ -256,6 +266,130 @@ and converged relatively quickly.
 	\label{fig:baseline}
 \end{figure}
 
+\subsubsection{Single Variable Analysis}
+
+Asymmetric populations (figure \ref{fig:largemajority}) produced patterning similar to baseline for the majority, 
+with the minority group forming smaller, discontinuous communities. 
+The same occurred when the population density was 20\% lower, and likely due to the random movement of the agents,
+the rate at which the system converged on equilibrium was very similar.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/LargeMajority}
+	\caption{}
+	\label{fig:largemajority}
+\end{figure}
+
+In the case of asymmetric utility (figure \ref{fig:lessasymmetricutility}) the group with a lower homophilic utility
+would achieve happiness earlier and then cease moving. For the agents with a higher threshold, many would continue searching for a long time,
+but when groups did form they would become large and with less empty space within their 'territory'. 
+If the gap of asymmetry is made larger, the more tolerant agents settle in earlier and in smaller, sparser groups with the secondary effect
+of preventing the less tolerant group from settling in an area, with most stay nomadic.
+Lower population density had a similar effect to reduced asymmetry in the utility functions.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/LessAsymmetricUtility}
+	\caption{}
+	\label{fig:lessasymmetricutility}
+\end{figure}
+
+Schelling's original observation of equilibrium always being achievable when the utility was 0.3 or lower continued to hold 
+with three (figure \ref{fig:threegroups}) and six (figure \ref{fig:sixgroups}) groups. 
+It appears that the increasing number of groups increases the convergence time, at least under the random movement
+scenario by way of increasing the entropy in the system.
+We suspect the convergence rate would be much closer regardless of the number of groups when the agents have intentional movement.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/ThreeGroups}
+	\caption{}
+	\label{fig:threegroups}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/SixGroups}
+	\caption{}
+	\label{fig:sixgroups}
+\end{figure}
+
+When Schelling examined agents with integration desire within their utility, 
+e.g. having a minimum of the other group as neighbors in order to achieve happiness.,
+he observed that the agents would form lines where his 'in-demand' minority group would be thinly laid out to maximize the 
+surface area that the majority party could share with them.
+
+This is a pattern that requires intentional movement, however, 
+even under random movements a different type of linear pattern does emerge as seen in figure \ref{fig:integrationist}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Integrationist}
+	\caption{}
+	\label{fig:integrationist}
+\end{figure}
+
+Increasing the size of what is considered a neighborhood to \(5\times5\) behaves in a manner very similar to the baseline,
+but with each group's 'territory' being thicker, seen in figure \ref{fig:fivebyneighboorhoods}, a change that continues
+as the neighborhood size increases; figure \ref{fig:sevenbyneighboorhoods} depicts \(7\times7\) neighborhoods.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/FiveByNeighboorhoods}
+	\caption{}
+	\label{fig:fivebyneighboorhoods}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/SevenByNeighboorhoods}
+	\caption{}
+	\label{fig:sevenbyneighboorhoods}
+\end{figure}
+
+\subsubsection{Distribution Utility Functions}
+
+In this section we examine the effects of assigning utility functions by utilizing random variate generation.
+Each variate used is provided by the \inlinecode{scipy} statistics library.
+Where a normal distribution was desired we instead used a binomial distribution with a \(p=0.5\),
+this method served the need that the distribution could be truncated so that outliers would not occur
+outside of the possible range, and had the added benefit of providing an integer, which could be compared 
+to the neighbor count without needing any mathematical operations to determine ratios.
+
+A symmetric binomial distribution with a mean of 3, and a range of 0 to 6 (inclusive), resulted in an equilibrium indistinguishable from the baseline.
+Suggesting that the aggregate behavior is the same between a uniform utility ratio of a certain value and a distribution 
+with an equivalent mean.
+
+When the mean value was shifted to 4 with range of 0 to 8, results in a slow convergence with large, filled territories forming,
+we believe that agents with lower thresholds settle in a space and members with higher homophilic needs coalescing around
+them, in a manner similar to crystal formation. Figure \ref{fig:binomsym4} shows this, of note, at this point the system 
+still appeared to be improving. Additionally, it was observed that this condition was highly probabilistic, where some replications did not
+produce any notable patterns, resembling noise for the duration.
+In at least one replication, several territories formed, then grew, then shrunk, and eventually dissolved. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/BinomSym4}
+	\caption{}
+	\label{fig:binomsym4}
+\end{figure}
+
+A uniform distribution formed some clusters, but further growth was blocked by agents with very low or non-existent needs 
+that were immediately satisfied and never moved. Green agents of this type can be seen on the periphery of the yellow 
+clusters in figure \ref{fig:uniform0to6}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/uniform0to6}
+	\caption{}
+	\label{fig:uniform0to6}
+\end{figure}
+
+With a bimodal distribution, agents close to the lower mode settle early, and agents possessing the utility functions
+closer to the higher mode moved into the areas filling in gaps or occupying edges. 
+The end result is similar to baseline but with slightly thinner clustering.
+
+\subsection{Quantitative Results}
+
+\section{Conclusion and Future Work}
 
 
 
@@ -264,13 +398,9 @@ in this scenario agents searching for new places to move would not be able to lo
 attempt to get a random coordinate from an empty list, throwing an error. Interestingly, this behavior did not manifest until the three groups condition.
 
 
-\section{Conclusion and Future Work}
-
-
 
 Observed, that higher demand had the effect of small numbers of agents clustering, and forming insular bubbles in which even like agent had a difficult time
 attaching, further complicated by the movement of the other agents.
-
 
 
 
