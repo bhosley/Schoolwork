@@ -8,9 +8,8 @@
 \newtcbox{\inlinecode}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
 
 %\usepackage{enumerate}
-%\usepackage{graphicx}
+\usepackage{graphicx}
 
-%\citestyle{acmauthoryear}
 
 \begin{document}
 \title{Revisiting Schelling's Games}
@@ -242,10 +241,36 @@ Dissatisfaction curves will also provide a tool with which to compare scenarios.
 
 \section{Simulation Results and Discussion}
 
+Enough testing was performed that it would be somewhat tedious for the reader to place every result here,
+instead we will highlight results that produced interesting or unexpected results.
 
+\subsection{Qualitative Results}
+
+The baseline followed the same specifications as the first model Schelling proposes and exhibits the same type of results,
+and converged relatively quickly.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/Baseline}
+	\caption{Baseline}
+	\label{fig:baseline}
+\end{figure}
+
+
+
+
+Discovered that the opening accounting system had a weakness in that it was possible for the number of unhappy agent to exceed the number of open spaces
+in this scenario agents searching for new places to move would not be able to locate the recently vacated cells and would
+attempt to get a random coordinate from an empty list, throwing an error. Interestingly, this behavior did not manifest until the three groups condition.
 
 
 \section{Conclusion and Future Work}
+
+
+
+Observed, that higher demand had the effect of small numbers of agents clustering, and forming insular bubbles in which even like agent had a difficult time
+attaching, further complicated by the movement of the other agents.
+
 
 
 
