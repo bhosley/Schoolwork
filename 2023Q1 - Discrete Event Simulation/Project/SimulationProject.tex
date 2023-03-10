@@ -11,6 +11,7 @@
 \usepackage{graphicx}
 \usepackage{booktabs,tabularx}
 \usepackage{caption}
+\usepackage{float}
 
 
 \begin{document}
@@ -467,12 +468,12 @@ When observing the behavior over time we have chosen to examine the total utilit
 we measure the unhappiness, and convergence at 0 represents equilibrium in which every agent is happy.
 Figure \ref{fig:baseline-graph} shows the baseline behavior for reference.
 
-\begin{figure}
+\begin{figure*}
 	\centering
-	\includegraphics[width=\linewidth]{"images/Baseline Graph"}
+	\includegraphics[width=0.7\linewidth]{"images/Baseline Graph"}
 	\caption{}
 	\label{fig:baseline-graph}
-\end{figure}
+\end{figure*}
 
 
 Under the integrationist scenario we obtained results that were quite surprising in that their approximate
@@ -480,25 +481,34 @@ equilibrium was a higher unhappiness than the starting state;
 where the individual agents seeking to improve their own utility reduce the overall utility.
 This trend can be seen in figure \ref{fig:integrationist-graph}.
 
-\begin{figure}
+\begin{figure*}
 	\centering
-	\includegraphics[width=\linewidth]{"images/integrationist graph"}
+	\includegraphics[width=0.7\linewidth]{"images/integrationist graph"}
 	\caption{}
 	\label{fig:integrationist-graph}
-\end{figure}
+\end{figure*}
 
 In most cases, the systems reach their convergent state within the first 50 moves, however, some systems took much longer.
 In particular the six group scenario did eventually reach a full happiness equilibrium, but it consistently takes
 close to 200 rounds (figure \ref{fig:long-run-6}).
 
-\begin{figure}
+\begin{figure*}
 	\centering
-	\includegraphics[width=\linewidth]{"images/Long Run 6"}
+	\includegraphics[width=0.7\linewidth]{"images/Long Run 6"}
 	\caption{}
 	\label{fig:long-run-6}
-\end{figure}
+\end{figure*}
 
-The longest run was the sparse system with integrationist sentiments, the complex pattern from figure \ref{fig:integrationistsparse} 
+The longest run was the sparse system with integrationist sentiments, the complex pattern from figure \ref{fig:integrationistsparse}.
+Figure \ref{fig:int-very-long} shows the unhappiness after 10,000 cycles. Even to that point it appears that the system is improving,
+albeit increasingly slowly.
+
+\begin{figure*}
+	\centering
+	\includegraphics[width=0.7\linewidth]{"images/Int Very Long"}
+	\caption{}
+	\label{fig:int-very-long}
+\end{figure*}
 
 
 \section{Conclusion and Future Work}
@@ -539,5 +549,29 @@ and better quantify the qualitative observations made here.
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{SimulationProject}
+
+\clearpage
+
+\section{Epilogue}
+
+Curious to see if we could find how many rounds the sparse integrationist scenario would take to converge
+we wrote a separate script. Unfortunately, due to external constraint we ran out of time to allow the simulation to run.
+When it was interrupted it had performed 470,310 rounds, running got 375 minutes, and leaving 89 agents still yet to find happiness
+The final field can be seen in figure \ref{fig:integrationistsparseverylong2}
+and the record of unhappiness in figure \ref{fig:intsparsevlong2}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{images/IntegrationistSparseVeryLong2}
+	\caption{}
+	\label{fig:integrationistsparseverylong2}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{images/IntSparseVLong2}
+	\caption{}
+	\label{fig:intsparsevlong2}
+\end{figure}
+
 
 \end{document}
