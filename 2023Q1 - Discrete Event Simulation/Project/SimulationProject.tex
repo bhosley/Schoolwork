@@ -9,6 +9,8 @@
 
 %\usepackage{enumerate}
 \usepackage{graphicx}
+\usepackage{booktabs,tabularx}
+\usepackage{caption}
 
 
 \begin{document}
@@ -39,7 +41,7 @@
 	The subject of the simulations in this paper will be the well-studied
 	Schelling models. The simulations performed will not necessarily be
 	novel, but are intended to take advantage of improvements in computation
-	to explore some of Schelling original analysis in a simulated, experimental manner.
+	to explore some of Schelling original analysis on a larger scale.
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
@@ -242,7 +244,7 @@ In an effort to add some objective measurements as well, we will leverage that a
 to determine if the system is able to reach a Pareto efficiency, where the value of the convergence represents
 continuous movement, and stable equilibrium will occur if dissatisfaction converges to zero.
 
-Dissatisfaction curves will also provide a tool with which to compare scenarios.
+Dissatisfaction curves will also provide a tool with which to compare scenarios in a quantitative manner.
 
 \section{Simulation Results and Discussion}
 
@@ -261,7 +263,7 @@ and converged relatively quickly.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Baseline}
+	\includegraphics[width=0.8\linewidth]{images/Baseline}
 	\caption{Baseline}
 	\label{fig:baseline}
 \end{figure}
@@ -275,7 +277,7 @@ the rate at which the system converged on equilibrium was very similar.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/LargeMajority}
+	\includegraphics[width=0.8\linewidth]{images/LargeMajority}
 	\caption{}
 	\label{fig:largemajority}
 \end{figure}
@@ -289,7 +291,7 @@ Lower population density had a similar effect to reduced asymmetry in the utilit
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/LessAsymmetricUtility}
+	\includegraphics[width=0.8\linewidth]{images/LessAsymmetricUtility}
 	\caption{}
 	\label{fig:lessasymmetricutility}
 \end{figure}
@@ -302,13 +304,13 @@ We suspect the convergence rate would be much closer regardless of the number of
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/ThreeGroups}
+	\includegraphics[width=0.8\linewidth]{images/ThreeGroups}
 	\caption{}
 	\label{fig:threegroups}
 \end{figure}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/SixGroups}
+	\includegraphics[width=0.8\linewidth]{images/SixGroups}
 	\caption{}
 	\label{fig:sixgroups}
 \end{figure}
@@ -321,12 +323,24 @@ surface area that the majority party could share with them.
 This is a pattern that requires intentional movement, however, 
 even under random movements a different type of linear pattern does emerge as seen in figure \ref{fig:integrationist}.
 
+If, however, the system is made sparse a pattern similar to what Schelling described does form.
+The necessary factor to observe this behavior is time, unlike the other images in this section 
+figure \ref{fig:integrationistsparse} was taken after 200 rounds of moves. 
+This is further discussed in the next section.
+
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/Integrationist}
+	\includegraphics[width=0.8\linewidth]{images/Integrationist}
 	\caption{}
 	\label{fig:integrationist}
 \end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{images/IntegrationistSparse}
+	\caption{}
+	\label{fig:integrationistsparse}
+\end{figure}
+
 
 Increasing the size of what is considered a neighborhood to \(5\times5\) behaves in a manner very similar to the baseline,
 but with each group's 'territory' being thicker, seen in figure \ref{fig:fivebyneighboorhoods}, a change that continues
@@ -334,13 +348,13 @@ as the neighborhood size increases; figure \ref{fig:sevenbyneighboorhoods} depic
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/FiveByNeighboorhoods}
+	\includegraphics[width=0.8\linewidth]{images/FiveByNeighboorhoods}
 	\caption{}
 	\label{fig:fivebyneighboorhoods}
 \end{figure}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/SevenByNeighboorhoods}
+	\includegraphics[width=0.8\linewidth]{images/SevenByNeighboorhoods}
 	\caption{}
 	\label{fig:sevenbyneighboorhoods}
 \end{figure}
@@ -367,7 +381,7 @@ In at least one replication, several territories formed, then grew, then shrunk,
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/BinomSym4}
+	\includegraphics[width=0.8\linewidth]{images/BinomSym4}
 	\caption{}
 	\label{fig:binomsym4}
 \end{figure}
@@ -378,7 +392,7 @@ clusters in figure \ref{fig:uniform0to6}.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/uniform0to6}
+	\includegraphics[width=0.8\linewidth]{images/uniform0to6}
 	\caption{}
 	\label{fig:uniform0to6}
 \end{figure}
@@ -389,23 +403,136 @@ The end result is similar to baseline but with slightly thinner clustering.
 
 \subsection{Quantitative Results}
 
+
+
+\subsubsection{Consistency of Behavior}
+
+We are interested in determining which conditions results in consistent emergent behavior
+and which exhibit very different behavior depending on the initial state of the system.
+Similarly, we wish to consider trend lines that are translations of other to be considered similar,
+For example, two constant lines with different intersections would be considered to have the same behavior.
+
+To accomplish this we have decided to take the arithmetic mean of all of the pairwise 
+Pearson correlation coefficient, represented as \(\rho\) in
+
+\begin{equation}
+	\frac{\sum_{i,j}\rho(i,j)}{\frac 1 2 (n^2-n)}.
+\end{equation}
+
+We also considered using Kullback-Leibler divergence and pairwise mutual information calculations,
+but discovered that the information returned was not sufficiently better than the one we used to 
+justify the added computational complexity.
+
+The results of the average cross-correlation can be seen in table \ref{tab:corr}.
+
+\begin{table*}
+	\centering
+	\caption{}
+	\label{tab:corr}
+	\begin{tabular}{c|l}
+		\toprule
+		Scenario & Mean Sample Cross Correlation \\
+		\midrule
+		Baseline &   0.9993653593508636  \\
+		Large Majority &   0.9981457559336203  \\
+		Large Majority and Low Density System &   0.9973101095131449  \\
+		Asymmetric Utility (0.5 and 0.2) &   0.9793917826311105  \\
+		Asymmetric Utility (0.5 and 0.3) &   0.9959356131499515  \\
+		Three Groups &   0.9998012895522678  \\
+		Six Groups &   0.9995279887239704  \\
+		Integrationist &   0.9041819060924364  \\
+		Integrationist and Low Density System &   0.9552039638356898  \\
+		Integrationist but okay with empty spaces & 0.8227803567267047 \\
+		One Integrationist, One Baseline  &   0.9987941147621255  \\
+		5x5 Neighboorhoods &   0.9992804607818385  \\
+		7x7 Neighboorhoods &   0.9987265936770766  \\
+		Symmetric Binomial Utility Distribution \((\mu=3)\) &   0.9996786194708911  \\
+		Symmetric Binomial Utility Distribution \((\mu=4)\) &   0.9984692796627254  \\
+		Uniform Utility Distribution (0 to 6) &   0.9924352614933506  \\		
+		Bimodal Distribution with modes at 3 and 6 &   0.8929659057777041  \\
+		\bottomrule
+	\end{tabular}
+\end{table*}
+
+While the results from this analysis validated some anecdotal observations,
+it provided some surprised by contradicting some anecdotal observations from some
+runs in which the behavior appeared to be very different between different replications.
+
+In particular, the integrationist utility with a sparse system produced visually very different behavior during early testing. 
+While it is one of the lower results in table \ref{tab:corr}; \(\rho=0.90\) is notably higher than we would had predicted.
+
+\subsubsection{Contradictory Behavior}
+
+When observing the behavior over time we have chosen to examine the total utility, specifically,
+we measure the unhappiness, and convergence at 0 represents equilibrium in which every agent is happy.
+Figure \ref{fig:baseline-graph} shows the baseline behavior for reference.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{"images/Baseline Graph"}
+	\caption{}
+	\label{fig:baseline-graph}
+\end{figure}
+
+
+Under the integrationist scenario we obtained results that were quite surprising in that their approximate
+equilibrium was a higher unhappiness than the starting state;
+where the individual agents seeking to improve their own utility reduce the overall utility.
+This trend can be seen in figure \ref{fig:integrationist-graph}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{"images/integrationist graph"}
+	\caption{}
+	\label{fig:integrationist-graph}
+\end{figure}
+
+In most cases, the systems reach their convergent state within the first 50 moves, however, some systems took much longer.
+In particular the six group scenario did eventually reach a full happiness equilibrium, but it consistently takes
+close to 200 rounds (figure \ref{fig:long-run-6}).
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\linewidth]{"images/Long Run 6"}
+	\caption{}
+	\label{fig:long-run-6}
+\end{figure}
+
+The longest run was the sparse system with integrationist sentiments, the complex pattern from figure \ref{fig:integrationistsparse} 
+
+
 \section{Conclusion and Future Work}
 
+\subsection{Lessons Learned}
 
+This project proved to be a optimization challenge and a great exercise in agent based modeling.
 
-Discovered that the opening accounting system had a weakness in that it was possible for the number of unhappy agent to exceed the number of open spaces
+We discovered that the open space accounting system that we introduced had a weakness in that it was possible 
+for the number of unhappy agents to exceed the number of open spaces,
 in this scenario agents searching for new places to move would not be able to locate the recently vacated cells and would
-attempt to get a random coordinate from an empty list, throwing an error. Interestingly, this behavior did not manifest until the three groups condition.
+attempt to get a random coordinate from an empty list, throwing an error. Interestingly, this behavior did not manifest until testing the three groups condition.
 
-
-
-Observed, that higher demand had the effect of small numbers of agents clustering, and forming insular bubbles in which even like agent had a difficult time
+We observed that, in general, higher demand had the effect of small numbers of agents clustering, and forming insular bubbles in which even like agent had a difficult time
 attaching, further complicated by the movement of the other agents.
 
+\subsection{Conclusion}
 
+In our exploratory analysis there were not enough replications performed to definitively make conclusions, however, from our results
+we have observed that Schelling's original models hold at a larger scale; that his predictions, when he made them, were accurate;
+and that many of the scenarios that he described but did not experiment with himself, behaved in the manner often resembling
+the baseline behavior but occasionally with a nonzero convergence.
+
+It appears that symmetric distributions with a mean at the 0.3 ratio utility behaved nearly identically to baseline if
+the distribution had a central tendency, but not when uniform. 
+What range of kurtosis this holds for may be an interesting question for future work.
+
+\subsection{Future Work}
 
 There are several other metrics that may provide some insight into the system state, in particular we believe that 
-counts of contiguous groups and a metric evaluating the irregularity of borders between clusters may provide some interesting insight.
+counts of contiguous groups and a metric evaluating the irregularity of borders between clusters may provide some interesting insight
+and better quantify the qualitative observations made here.
+
+
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{SimulationProject}
