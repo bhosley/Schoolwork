@@ -336,7 +336,7 @@ This is further discussed in the next section.
 \end{figure}
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{images/IntegrationistSparse}
+	\includegraphics[width=0.8\linewidth]{images/IntegrationistSparse}
 	\caption{}
 	\label{fig:integrationistsparse}
 \end{figure}
@@ -503,17 +503,20 @@ The longest run was the sparse system with integrationist sentiments, the comple
 
 \section{Conclusion and Future Work}
 
-\subsection{Lessons Learned}
-
 This project proved to be a optimization challenge and a great exercise in agent based modeling.
+
+Additionally, it proved to be an excellent opportunity to sate the curiosity we had regarding how Schelling's models behave
+under the different conditions described in the 1971 paper and with regard to distribution based 'tolerance schedules'.
+
+\subsection{Lessons Learned}
 
 We discovered that the open space accounting system that we introduced had a weakness in that it was possible 
 for the number of unhappy agents to exceed the number of open spaces,
 in this scenario agents searching for new places to move would not be able to locate the recently vacated cells and would
 attempt to get a random coordinate from an empty list, throwing an error. Interestingly, this behavior did not manifest until testing the three groups condition.
 
-We observed that, in general, higher demand had the effect of small numbers of agents clustering, and forming insular bubbles in which even like agent had a difficult time
-attaching, further complicated by the movement of the other agents.
+We observed that, in general, higher demand had the effect of small numbers of agents clustering, 
+and forming insular bubbles in which even like agent had a difficult time attaching, further complicated by the movement of the other agents.
 
 \subsection{Conclusion}
 
