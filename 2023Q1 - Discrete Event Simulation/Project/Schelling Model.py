@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt  
 import matplotlib.animation as animation 
 # Uncomment to display in .ipynb
-from IPython.display import HTML
+# from IPython.display import HTML
 
 #set animation update interval
 updateInterval = 50
@@ -126,4 +126,4 @@ ani = animation.FuncAnimation(fig, update, fargs=(img, grid,gridSize, agents, ),
 plt.show() 
 
 # uncomment to display in .ipynb
-HTML(ani.to_jshtml())
+# HTML(ani.to_jshtml())
