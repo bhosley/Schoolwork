@@ -1,0 +1,121 @@
+\documentclass[12pt]{amsart}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+\usepackage{booktabs}
+\usepackage{ragged2e}
+\def\labelitemi{-}
+
+\begin{document}
+\raggedbottom
+
+\noindent{\large OPER 610 - Linear Programming %
+	% Lesson 5 %
+	(Due Jan 24 at 10am)}
+\hspace{\fill} {\large B. Hosley}
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{section}{1}
+\setcounter{subsection}{12}
+\subsection{}
+A production manager is planning the scheduling of three products on four machines. 
+Each product can be manufactured on each of the machines. 
+The unit production costs (in \$) are summarized below. \\
+
+\begin{center}
+	\begin{tabular}{c|cccc}
+		& \multicolumn{4}{c}{Machine} \\
+		\midrule
+		PRODUCT & 1 & 2 & 3 & 4 \\
+		\midrule
+		1 & 4 & 4 & 5 & 7 \\
+		2 & 6 & 7 & 5 & 6 \\
+		3 &12 &10 & 8 &11 
+	\end{tabular}
+\end{center} \phantom{text}
+
+The time (in hours) required to produce a unit of each product on each of the machines is summarized below.
+
+\begin{center}
+	\begin{tabular}{c|cccc}
+		& \multicolumn{4}{c}{Machine} \\
+		\midrule
+		PRODUCT & 1 & 2 & 3 & 4 \\
+		\midrule
+		1 & 0.3 & 0.25 & 0.2 & 0.2 \\
+		2 & 0.2 & 0.3 & 0.2 & 0.25 \\
+		3 & 0.8 & 0.6 & 0.6 & 0.5  
+	\end{tabular} 
+\end{center} \phantom{text}
+
+Suppose that 3000, 6000, and 4000 units of the products are required, 
+and that the available machine-hours are 1500, 1200, 1500, and 2000, respectively. 
+Formulate the scheduling problem as a linear program. \\
+
+\hrule
+\medskip
+
+\textit{Solution:} \\
+
+\begin{enumerate}[a)]
+\item Assumptions:
+	\begin{itemize}
+		\item The objective is to meet (not exceed) demand while minimizing operating costs.
+		\item Non-negativity for all variables.
+		\item Linearity of the functional output of the machines.
+	\end{itemize}
+	
+\item Sets:
+	\begin{itemize}
+		\item Products: \(P = \{1,2,3\}\)
+		\item Machines: \(M = \{1,2,3,4\}\)
+	\end{itemize}
+	
+\item Parameters:
+	\begin{itemize}
+		\item \(c_{pm}\): Production Cost (a matrix drawn from the first table)
+		\item \(t_{pm}\): Hours to produce units of product (a matrix drawn from the second table)
+		\item \(u_p\)   : Units of product \(p\) required
+		\item \(h_m\)   : Hours machines \(m\) available
+	\end{itemize}
+	
+\item Decision variables:
+	\begin{itemize}
+		\item Number of products \(p\) manufactured on machine \(m\): \(x_{pm}\)
+	\end{itemize}
+
+\item Explicit Formulation
+	\begin{flalign*}
+		\operatorname{min} \quad
+		 4x_{11} +\,\ 4x_{12} + 5x_{13} +\,\ 7x_{14} +    & \\
+		 6x_{21} +\,\ 7x_{22} + 5x_{23} +\,\ 6x_{24} +    & \\
+		12x_{31} +   10x_{32} + 8x_{33} +   11x_{34} \ \  &\\
+		\text{s.t.} \hspace{12ex}
+		x_{11} + x_{12} + x_{13} + x_{14} &= 3000 \\
+		x_{21} + x_{22} + x_{23} + x_{24} &= 6000 \\
+		x_{31} + x_{32} + x_{33} + x_{34} &= 4000 \\
+		0.3x_{11}  +\,\ 0.2x_{21}  + 0.8x_{31} &\leq 1500 \\
+		0.25x_{12} +\,\ 0.3x_{22}  + 0.6x_{32} &\leq 1200 \\
+		0.2x_{13}  +\,\ 0.2x_{23}  + 0.6x_{33} &\leq 1500 \\
+		0.2x_{14}  +   0.25x_{24}  + 0.5x_{34} &\leq 2000 \\
+		x_{pm} &\geq 0
+	\end{flalign*}
+
+\item Compact Formulation
+	\begin{flalign*}
+		\operatorname{min}\quad \sum_{p\in P} &\sum_{m\in M} c_{pm}x_{pm}  \\
+		\text{s.t. } \hspace{6ex} &\sum_{m\in M} x_{pm} = u_p  \qquad \text{for } p\in P \\
+		&\sum_{p\in P} t_{pm}x_{pm}  \leq h_m  \quad \text{for } m\in M \\
+		& x_{pm} \geq 0 \hspace{11ex} \text{for } p\in P  \text{ and } m\in M
+	\end{flalign*}
+
+
+\end{enumerate}
+
+\end{document}
