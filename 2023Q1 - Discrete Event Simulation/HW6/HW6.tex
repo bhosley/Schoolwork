@@ -5,6 +5,8 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
+\usepackage{booktabs}
+
 
 \begin{document}
 \raggedbottom
@@ -16,9 +18,62 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{section}{}
-\setcounter{subsection}{}
-\subsection{}
+\begin{enumerate}[1.]
+	\item Go to the “Response Results” tab for the experiment and select “Export Details” at far
+	right of the top ribbon. From the created Excel spreadsheet construct the following six
+	separate two population confidence intervals for each response: \\
 	
+	\textbf{Solution:} Using excel's built in t-test:\bigskip\\
+	\begin{tabular}{c|cc|cc|cc} 
+		\toprule 
+		& \multicolumn{2}{|c}{Independent} & \multicolumn{2}{|c}{CRN} & \multicolumn{2}{|c}{\(\Delta\)} \\
+		Pair & Response Time & Max Hold & Response Time & Max Hold & RT & MH \\
+		\midrule
+		Cur/CT6 & \(0.12885\pm0.09541\) & \(0.70\pm2.08015\) & \(0.11488\pm0.04208\) & \(0.2\pm0.87937\) & \(0.55892\) & \(0.55773\) \\ [3pt]
+		Cur/CT7 & \(0.24648\pm0.08452\) & \(2.10\pm1.83000\) & \(0.23662\pm0.06071\) & \(1.8\pm1.15840\) & \(0.28170\) & \(0.36701\) \\ [3pt]
+		CT6/CT7 & \(0.11763\pm0.06246\) & \(1.40\pm1.39855\) & \(0.12173\pm0.02801\) & \(1.6\pm0.50018\) & \(0.57207\) & \(0.64236\) \\ [3pt]
+		\bottomrule
+	\end{tabular}\bigskip\\
+	These results suggest that both new methods are statistically better than the current method with regard to response time,
+	because the confidence interval on the the first pairing does intersect with 0 there is room within that level of confidence
+	that the two scenarios are not different. This doubt is alleviated in the 7 member cross-training model. \\
+
+	\item Reference BCNN 11.6 and 12.2. You have been provided a Simio model of the system
+	described in 11.6 using common random numbers with an experiment set up using
+	Max\_Inventory (M) and Reorder\_Level (L) controls.
+	\begin{enumerate}[a.]
+		\item Set up 4 scenarios matching the 4 (M, L) systems listed in 12.2 [(50,30); (50,40);
+		(100,30); (100,40)].
+		
+		\item Run 10 replications for each scenario. \textbf{Look at your response results and see if you
+		can pick out the “best” (lowest average total cost) system.}
+	
+	\bigskip
+	\textbf{Solution:}
+	Scenario (50,40) has the lowest total cost at 207.127.
+	\bigskip
+	
+		\item Now choose the “Select the Best using KN” add-in procedure with following settings
+		under properties: Primary Response: AvgTC (NOTE: must select Minimize as Objective for 
+		AvgTC response); Confidence Level: .90; Indifference Zone: 5; and Replication
+		Limit: 500. Open up properties for the AvgTC response and set Objective to Minimize.
+		
+		\item Now select run from the Experiment Design tab and \textbf{report the number of total
+		replications Simio ran for each of the scenarios and which scenario was selected as
+		best} (that scenario will be checked)
+		
+	\bigskip
+	\textbf{Solution:}
+	Interestingly, this run contradicted the previous simulation in that (50,30) appears to have the best results.\\
+	\bigskip
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.7\linewidth]{ScreenCap}
+		\caption{}
+		\label{fig:screencap}
+	\end{figure}
+		
+	\end{enumerate}
+\end{enumerate}
 	
 \end{document}
