@@ -1,0 +1,20 @@
+set I := weight cost;
+set J := hammer wrench screwdriver;
+
+param value := 
+hammer 8 
+wrench 6 
+screwdriver 4;
+
+param resourceuse:=
+weight hammer 5 
+weight wrench 7 
+weight screwdriver 4
+cost hammer 6 
+cost wrench 4 
+cost screwdriver 8
+;
+
+param resourcebounds := 
+weight 28 
+cost 20 ;
