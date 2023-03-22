@@ -6,6 +6,7 @@
 \usepackage{enumerate}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{lscape} 
 
 \usepackage[table,dvipsnames]{xcolor}
 \usepackage{caption}
@@ -144,14 +145,19 @@ it is cleared to fly in the next ATO 70\% of the time, every time.
 
 \subsubsection{Transition Probability}
 
-
-
 % Construct the Transition Probability Matrix. Or specify probability function p_ij.
 
+Generally simple DTMC models can be represented by a matrix that enumerates the probabilities
+if transitioning from any one state to any other.
+In our case this would be a \(1820\times1820\) matrix; far too large to provide here,
+but these transition probabilities are the basis for the following analysis.
+This large of a space is necessary to represent the relationships between all of the
+possible states, however, the probabilities associated with condition changes for individual
+aircraft can be more intuitively explained by examining a transition diagram.
+Figure \ref{DTMC} shows the condition-cycle of an individual aircraft.
 
-Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 
-\begin{figure}[H]
+\begin{figure}
 	\centering
 	\begin{tikzpicture}[node distance=2.5cm]		
 		\node[goodnode] (FMC) {FMC};
@@ -176,7 +182,6 @@ Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 \end{figure}
 
 
-
 \section{Baseline Analysis}
 
 % Baseline analysis - primary analysis questions
@@ -184,6 +189,24 @@ Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 % 	How long will it take for the squadron become FMC >= 8 aircraft
 % 	What is the long-term sortie generation rate?
 % 	What is the long-term mission capable aircraft availability rate?
+
+Under the baseline conditions, the squadron can expect to have 8 aircraft fully mission capable
+just over 81\% of the time, after resuming normal operating posture.
+The changing probability of the squadron being able to fulfill a sortie during the regeneration 
+period can be seen in figure \ref{fig:baseline}.
+Our model suggests that the expected time for the squadron to be ready to fly its first sortie
+is just over 36 hours. This is the middle estimate; for a more risk-conscious time-line
+we have assumed that the extraneous factors effecting the differences in set-up time to 
+cause time variations to be approximately normal.
+With this assumption, we use the first passage time and variance to examine the next two 
+ATO cycles after the third, and determine that there is a probability of
+81\% that the squadron will fly its first sortie in or before the fourth
+and a 97\% by the end of the fifth.
+
+Using the long term probabilities of each of the states, we estimate that the 
+squadron will average 8.88 FMC aircraft for any given ATO, and ultimately
+that once expected ops tempo has been reached, the squadron should average
+8 sorties in a five day period.
 
 \begin{figure}
 	\centering
@@ -198,6 +221,23 @@ Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 % Sensitivity (excursion) analyses - the what-if questions, 
 % 	explore possible solutions by modifying parameter values
 
+In this section we examine the expected effects of changes to different
+parts of the system.
+Impacts of both positive and negative effects on each part of the squadron's 
+maintenance cycles to inform which offer the greatest improvement, 
+and which are the greatest liability if disrupted.
+Because we do not have access to the costs of improvements, 
+it is left to leadership to determine which courses of action will provide
+the greatest return on investment.
+The requested statistics are consolidated in table \ref{statsTable}.
+
+\subsection{Backshop}
+Here we examine the effect of \(\pm\) 10\% to the probability of aircraft 
+being approved to return to flight duty as opposed to needed a follow up in the
+front shop. Figure \ref{backshopimpairment} shows the effect of a 30\% return 
+to the frontshop (up from 20\%). Figure \ref{fig:frontshopimprovement} shows the
+effect of only 10\% returning to the frontshop.
+This analysis shows that these changes have fairly small effects overall.
 
 \begin{figure}
 	\centering
@@ -212,6 +252,12 @@ Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 	\label{fig:backshopimprovement}
 \end{figure}
 
+\subsection{Frontshop}
+Figures \ref{fig:frontshopimpairment} and \ref{fig:frontshopimprovement}
+examine the effects of a 10\% decrease and increase in positive 
+frontshop outcomes, respectively. Here, it can be seen that this effect is more
+pronounced than that of the backshop.
+
 \begin{figure}
 	\centering
 	\includegraphics[width=0.7\linewidth]{Images/FrontShopImpairment}
@@ -224,6 +270,16 @@ Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 	\caption{}
 	\label{fig:frontshopimprovement}
 \end{figure}
+
+\subsection{Post-flight Impairment}
+
+Figures \ref{fig:postflightimpairment} and \ref{fig:postflightimprovement}
+show the effects of 10\% decrease and increase in positive outcomes
+from the post-flight inspection respectively.
+Here, we may see that there is a very pronounced effect.
+It seems intuitive that preventing necessary maintenance and 
+inspections has a profound effect by avoiding all of the possible
+outcomes that may follow.
 
 \begin{figure}
 	\centering
@@ -238,12 +294,18 @@ Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 	\label{fig:postflightimprovement}
 \end{figure}
 
+\subsection{Number of Aircraft}
+Figures \ref{fig:lostaircraft} and \ref{fig:additionalaircraft}
+show the effects of losing an aircraft or if the squadron gained another.
+From these analyses we can see that the effective change in number of
+aircraft in the squadron (perhaps surprisingly) halve or nearly double the number
+of missed sorties.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.7\linewidth]{Images/DecreasedSortieRequirement}
+	\includegraphics[width=0.7\linewidth]{Images/LostAircraft}
 	\caption{}
-	\label{fig:decreasedsortierequirement}
+	\label{fig:lostaircraft}
 \end{figure}
 \begin{figure}
 	\centering
@@ -252,12 +314,96 @@ Figure \ref{DTMC} shows the state-cycle of an individual aircraft.
 	\label{fig:additionalaircraft}
 \end{figure}
 
+\subsection{Aircraft Requirement}
+Finally, figures \ref{fig:increasedsortierequirement} and \ref{fig:decreasedsortierequirement}
+show the effects of changing the requirement to execute a sortie by one,
+increasing and decreasing respectively.
+Here we see a similar, but more pronounced effect to changing the number
+of aircraft in the squadron as a whole.
 
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/IncreasedSortieRequirement}
+	\caption{}
+	\label{fig:increasedsortierequirement}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Images/DecreasedSortieRequirement}
+	\caption{}
+	\label{fig:decreasedsortierequirement}
+\end{figure}
 
 
 \section{Conclusions and Recommendations}
+From the sensitivity analysis performed on the different parts of the
+squadron's operations, we have determined the relative effects on the 
+total long-term sortie generation.
 
-% Conclusions and recommendations
+\subsubsection{Resiliency of Operations}
+The three largest threats to accomplishing the sorties as described
+are losing an aircraft, increasing the number required to sortie,
+and increased failure of post-flight inspections.
 
+While mission requirements are likely to control the number of aircraft required 
+for each ATO, the other two may be more within the control of the squadron.
+Avoidance of loss of the aircraft is obvious and already the standard.
+Therefore, the most likely place to find improvements to the resilience within 
+the squadron will be related to the rates in which aircraft pass or fail the post-flight inspection.
+Investigation into possible changes in operating procedures or best practices at this 
+point will likely have the most profound effect on improving the squadron's effectiveness,
+and may avert the need for costly (in time and money) repairs.
+
+\subsubsection{Improving Sortie Generation}
+Improving the post-flight inspections outcomes will improve resilience for the squadron,
+and will also have the effect of increasing the number of sorties that can be completed.
+
+The requirement of aircraft to perform sorties should also be examined.
+If some ATOs can be accomplished with fewer than eight aircraft, leveraging this
+would result in substantial increases in the squadron's ability to accomplish sorties,
+likely even higher than if it could acquire additional aircraft,
+and would be much more cost effective.
+
+That said, if additional aircraft could be requisitioned it is the third most beneficial action.
+Understanding that this is also likely the most expensive course, the third recommendation is to 
+evaluate the processes of the front shop with the intention of improving outcomes there.
+If there are tools that the maintainers could use to increase the probability of success,
+these would likely be significant value added.
+However, the most important thing that could be done here is to collect data on which types of
+failure send aircraft to the backshop most often.
+If the replacement parts for the most common failures can be pre-emptively provisioned
+the squadron should have significant increases in sortie generation.
+
+\newcommand\rowHeight{7pt}
+\begin{landscape}
+\begin{table}[H]
+	\begin{tabular}{c|c|c|c|c}
+		           Scenario             & Avg. First Sortie (ATO) & Variance & Long Term \% Success & Long-Term Acft FMC per ATO \\ \midrule
+		           Baseline             &          3.109          &  0.948   &       81.126\%       &           8.883            \\
+		[\rowHeight]
+		 Backshop -10\%  &          3.350          &  1.347   &       79.417\%       &           8.794            \\
+		[\rowHeight]
+		 Backshop +10\%  &          2.300          &  0.650   &       82.699\%       &           8.969            \\
+		[\rowHeight]
+		Frontshop -10\%  &          3.424          &  1.739   &       71.429\%       &           8.402            \\
+		[\rowHeight]
+		Frontshop +10\%  &          2.871          &  0.544   &       89.376\%       &           9.383            \\
+		[\rowHeight]
+		Postlfight -10\% &          3.640          &  2.670   &       54.833\%       &           7.662            \\
+		[\rowHeight]
+		Postlfight +10\% &          2.785          &  0.439   &       98.053\%       &           10.388           \\
+		 [\rowHeight]
+		  11 Aircraft   &          3.687          &  2.052   &       64.643\%       &           8.004            \\
+		 [\rowHeight]
+		  13 Aircraft   &          2.790          &  0.602   &       91.468\%       &           9.816            \\
+		 [\rowHeight]
+		  9 per Sortie  &          3.990          &  3.233   &       56.384\%       &           9.198            \\
+		 [\rowHeight]
+		  7 per Sortie  &          2.584          &  0.449   &       95.033\%       &           8.679
+	\end{tabular}
+	\caption{Consolidated Statistics}
+	\label{statsTable}
+\end{table}
+\end{landscape}
 
 \end{document}
