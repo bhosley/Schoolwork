@@ -1,0 +1,27 @@
+---
+title: Test
+subtitle: Evaluation of the R environment
+output: pdf_document
+---
+
+This is a test of the Markdown protion of the file.
+
+```{r}
+lm.bayes <- function(y, x, tau.a, tau.b, alpha = 0.001, beta = 0.001, niter = 5000) {
+n <- length(y)
+a <- mean(y)
+b <- 0
+tau <- 1
+result <- matrix(nrow = niter, ncol = 3)
+```
+
+Here tests the tex rendering portion.
+
+$$
+f(t|\mu,\sigma) = \Phi_{_{SEV}}\left(\frac{\log[t]-\mu}{\sigma}\right).
+$$
+
+```{r}
+print('Hello World')
+```
+
