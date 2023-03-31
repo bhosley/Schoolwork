@@ -1,0 +1,114 @@
+---
+title: 'Shockabsorber Example Chapter 8'
+subtitle: 'Statistical Methods for Reliability Data'
+output: 
+  html_document:
+    toc: yes
+    toc_float: yes
+    df_print: paged
+---
+
+This example walks through the analysis of the `shockabsorber` data set from the SMRD text, and shown in the table below.  
+
+```{r, echo=2}
+library(SMRD)
+shockabsorber
+```
+
+The goal of this example is to outline the methods for constructing confidence intervals for the CDF $F(t|\mu,\sigma)$, the quantile function $F^{-1}(p|\mu,\sigma)$, and the hazard function $h(t|\mu,\sigma)$.  For simplicity, we will assume that the data can be aduquately modeled using a Weibulll distribution with pdf
+
+$$
+f(t|\mu,\sigma) = \Phi_{_{SEV}}\left(\frac{\log[t]-\mu}{\sigma}\right).
+$$
+
+Each of the functions for which we want to compute confidence intervals are themselves functions of the parameters $(\mu,\sigma)$.  Thus, we will be required to find the covariance matrix of the parameters. This can be easily done using the SMRD package by first creating a `life.data` object.  Note that we have ignored column 2 for this example as it is not important to model each failure mode separately.  
+
+```{r}
+shock.ld <- frame.to.ld(shockabsorber, 
+                        response.column = 1, 
+                        censor.column = 3)
+```
+
+Once the `life.data` object has been created, we need only invole the `mlest` function to create a list of maximum likelihood output.
+
+```{r}
+shock.ml <- print(mlest(shock.ld, 
+                        distribution = 'weibull'))
+shock.ml
+```
+
+Now we see that the maximum likelihood estimate $\widehat{\mu}_{_{MLE}}, \widehat{\sigma}_{_{MLE}}$ is captured as
+
+```{r}
+shock.ml$mle.table
+```
+
+And the covariance matrix is stored as
+
+```{r}
+shock.ml$vcv.matrix
+```
+
+## Computing Confidence Intervals for $F^{-1}(p|\mu,\sigma)$
+
+The quantile function can be found by inverting the cdf.  For any log-location scale distribution the quantile function is expressed as 
+
+$$
+F^{-1}(p) = t_{p} = \exp\left[\Phi^{-1}(p)\sigma +\mu\right]
+$$
+
+In general the confidence intervals for $t_p$ are computed as
+
+$$
+\left[\underset{\sim}{t_p}, \overset{\sim}{t_p}\right]=\widehat{t_p}_{_{MLE}}\pm z_{_{(1-\alpha/2)}}se_{t_p}
+$$
+
+<small>
+$$
+\begin{aligned}
+\widehat{se}_{\hat{g}_1}&=\sqrt{\widehat{Var}(\hat{g}_1)}\\
+&=\left[\left(\frac{\partial g_1}{\partial\mu}\right)^2\widehat{Var}(\hat{\mu})+2\left(\frac{\partial g_1}{\partial\mu}\right)\left(\frac{\partial g_1}{\partial\sigma}\right)\widehat{Cov}(\hat{\mu},\hat{\sigma})+\left(\frac{\partial g_1}{\partial\sigma}\right)^2\widehat{Var}(\hat{\sigma})\right]^{1/2}
+\end{aligned}
+$$
+</small>
+
+```{r}
+exp1 <- qsev(0.05)
+exp2 <- shock.ml$mle[2,1]
+exp3 <- shock.ml$mle[1,1]
+exp.term <- (exp(exp1 * exp2 + exp3)) ^ 2
+
+inner.term <- shock.ml$vcv[1,1] + 2 * qsev(0.05) * shock.ml$vcv[1,2] + qsev(0.05)^2 * shock.ml$vcv[2,2]
+
+se.tp <- sqrt(inner.term * exp.term)
+
+tp.mle <- exp(qsev(0.05) * shock.ml$mle[2,1] + shock.ml$mle[1,1])
+
+tp.ci_low  <- tp.mle - qnorm(1-0.05/2) * se.tp
+tp.ci_high <- tp.mle + qnorm(1-0.05/2) * se.tp
+
+tp.ci <- c(tp.ci_low, tp.ci_high)
+
+tp.ci
+```
+
+## Log transformed CI
+
+```{r}
+se.tp_log <- sqrt(inner.term * exp.term)/tp.mle
+
+tp.mle_log <- log(tp.mle)
+
+tp.ci_low_log  <- tp.mle_log - qnorm(1-0.05/2) * se.tp_log
+tp.ci_high_log <- tp.mle_log + qnorm(1-0.05/2) * se.tp_log
+
+tp.ci_log <- exp(c(tp.ci_low_log, tp.ci_high_log))
+
+tp.ci_log
+```
+
+```{r}
+exp(qnorm(1-0.05/2)*se.tp/tp.mle) -> w
+log.ci <- c(tp.mle / w, tp.mle * w)
+
+```
