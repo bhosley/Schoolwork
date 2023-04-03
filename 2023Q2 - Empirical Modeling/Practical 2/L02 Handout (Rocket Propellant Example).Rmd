@@ -1,0 +1,128 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "L2 Practical Exercise"
+footer: `r paste('L2 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+## a) Read data from data-ex-2-1.xlsx using the read.xlsx() command.
+
+```{r, echo=T}
+df <- read.xlsx('../Practical 1/data-ex-2-1.xlsx', sheetIndex = 1)
+```
+
+## b) Give names to columns using names() command and attach to the dataframe using attach(). Output data to make sure it reads properly using print(xtable(\textit{dataname}))
+```{r, echo=T}
+names(df)
+```
+
+## c) Output data structure and dimensions using the str() and dim() commands.
+```{r, echo=T}
+sprintf('The data structure is a %s', typeof(df) )
+sprintf('The dimensions are %i by %i', dim(df)[1], dim(df)[2])
+```
+
+# 2. Example 2.1 (p. 15-18)
+## a) Create scatterplot using plot().
+```{r, echo=T}
+plot(df[2:3])
+```
+
+## b) Create linear model "by hand".
+### (1) First, perform intermediary calculations - $S_{yy}$, $S_{xx}$, $S_{xy}$, $\bar{x}$, $\bar{y}$, N.
+```{r, echo=T}
+x_bar <- mean(df[,2])
+y_bar <- mean(df[,3])
+Sxx <- sum((df[,2]-x_bar)**2)
+Syy <- sum((df[,3]-y_bar)**2)
+Sxy <- sum(df[,3]*(df[,2]-x_bar))
+sprintf('%a, %a, %a, %a, %a',x_bar, y_bar, Sxx, Sxy, Syy)
+```
+
+### (2) Determine estimates for slope and intercept.
+```{r, echo=T}
+B_1 <- Sxy/Sxx
+B_0 <- y_bar - B_1*x_bar
+sprintf('%a, %a',B_0, B_1)
+```
+
+## c) Create linear model using lm() command and display output using the summary() command.
+```{r, echo=T}
+mod <- lm(formula = df[,3]~df[,2], df)
+summary(mod)
+```
+
+# 3. Example 2.2 (p.21-22)
+## a) Obtain ANOVA table elements (by hand) - $SS_T$, $SS_R$, $SS_{Res}$.
+```{r, echo=T}
+SS_T <- sum(df[,3]**2-length(df)*(y_bar**2))
+SS_R <- -B_1*Sxy
+SS_Res <- SS_R - SS_T
+```
+## b) Define degrees of freedom (by hand).
+```{r, echo=T}
+DegFree = length(df[,1])-2
+```
+
+## c) Obtain residual degrees of freedom automatically using df.residual().
+```{r, echo=T}
+res <- df.residual(mod)
+print(res)
+```
+
+## d) Obtain estimated error variance (MS_Residual).
+```{r, echo=T}
+
+```
+
+## e)Obtain ANOVA table using aov() command or anova() command and display output.
+```{r, echo=T}
+A <- anova(mod)
+print(A)
+```
+
+# 4. Example 2.3 (p.25)
+## a) Test significance of slope parameter (by hand) using the qt() and pt() commands for critical value and p-value for the t-distribution.
+```{r, echo=T}
+
+```
+
+# 5. Example 2.4 (p. 28) 
+## a) Test for significance of Regression (F-test) at .01 significance level.
+
+### (1) By hand:
+```{r, echo=T}
+
+```
+
+### (2) Using anova command:
+```{r, echo=T}
+
+```
