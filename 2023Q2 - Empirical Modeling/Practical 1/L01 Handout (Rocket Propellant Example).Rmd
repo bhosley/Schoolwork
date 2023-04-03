@@ -1,0 +1,51 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 1 Practical Exercise"
+footer: `r paste('Lesson 1 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+# 1. Preliminaries
+## a) Read data from data-ex-2-1.xlsx using the read.xlsx() command.
+
+```{r, echo=T}
+df <- read.xlsx('./data-ex-2-1.xlsx', sheetIndex = 1)
+```
+
+## b) Give names to columns using names() command and attach to the dataframe using attach(). Output data to make sure it reads properly using print(xtable(\textit{dataname}))
+```{r, echo=T}
+names(df)
+attach(df)
+```
+
+## c) Output data structure and dimensions using the str() and dim() commands.
+```{r, echo=T}
+sprintf('The data structure is a %s', typeof(df) )
+sprintf('The dimensions are %i by %i', dim(df)[1], dim(df)[2])
+```
+
