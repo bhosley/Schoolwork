@@ -1,0 +1,162 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Solution to Lesson 2 Practical Exercise"
+footer: `r paste('Solution to Lesson 2 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('C:/Users/natha/OneDrive/Documents/R/scripts/R/setup.R')
+shiny::includeCSS('C:/Users/natha/OneDrive/Documents/R/scripts/css/flat-slidy.css')
+shiny::includeScript("C:/Users/natha/OneDrive/Documents/R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('C:/Users/natha/OneDrive/Documents/R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('C:/Users/natha/OneDrive/Documents/R/scripts','js','hideout.js'))
+library(xlsx)
+#library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+## a) Read data from data-ex-2-1.xlsx using the read.xlsx() command.
+
+```{r, echo=T}
+rp_data <- read.xlsx("C:/Users/natha/OneDrive/Documents/Teaching/OPER679/WI23/Practical Exercises/Examples/data-ex-2-1.xlsx", 
+                     sheetIndex = 1, sheetName=NULL, rowIndex=NULL,
+                     startRow=NULL, endRow=NULL, colIndex= NULL, as.data.frame=TRUE, 
+                     header=TRUE, colClasses=NA, keepFormulas=FALSE,
+                     encoding="unknown")
+```
+
+## b) Give names to columns using names() command and attach to the dataframe using attach(). Output data to make sure it reads properly.
+```{r, echo=T}
+names(rp_data) <- c("Observation", "ShearStrength","Age")
+attach(rp_data)
+print(xtable(rp_data), floating=F, justify='center')
+```
+
+## c) Output data structure and dimensions using the str() and dim() commands.
+```{r, echo=T}
+str(rp_data)
+dim(rp_data)
+```
+
+
+# 2. Example 2.1 (p. 15-18)
+## a) Create scatterplot using plot().
+```{r, echo=T}
+plot(rp_data[,3],rp_data[,2], xlab="Age", ylab="Shear Strength")
+plot(Age, ShearStrength, xlab="Age", ylab="Shear Strength")
+```
+
+## b) Create linear model "by hand".
+### (1) First, perform intermediary calculations - $S_{yy}$, $S_{xx}$, $S_{xy}$, $\bar{x}$, $\bar{y}$, N.
+```{r, echo=T}
+Syy = sum(rp_data[,2]^2)-sum(rp_data[,2])^2/dim(rp_data)[1] # This is the shortcut SST formula
+Sxx = sum(rp_data[,3]^2)-sum(rp_data[,3])^2/dim(rp_data)[1] # Same thing, just for independent variable
+Sxy = sum(rp_data[,2]*rp_data[,3]) - (sum(rp_data[,2])*sum(rp_data[,3]))/dim(rp_data)[1]
+x_bar = mean(rp_data[,3])
+y_bar = mean(rp_data[,2])
+N = dim(rp_data)[1]
+```
+
+We have: $S_{yy}$ = `r Syy`, $S_{xx}$ = `r Sxx`, $S_{xy}$ = `r Sxy`, $\bar{x}$ = `r x_bar`,
+$\bar{y}$ = `r y_bar` and $N$ = `r N`.
+
+### (2) Determine estimates for slope and intercept.
+```{r, echo=T}
+SlopeEstimate = Sxy/Sxx
+InterceptEstimate = y_bar - SlopeEstimate*x_bar
+```
+
+We have $\beta_0$ = `r InterceptEstimate`
+
+## c) Create linear model using lm() command and display output using the summary() command.
+```{r, echo=T}
+rp_model <- lm(ShearStrength ~ Age)
+print(xtable(summary(rp_model)))
+```
+
+# 3. Example 2.2 (p.21-22)
+## a) Obtain ANOVA table elements (by hand) - $SS_T$, $SS_R$, $SS_{Res}$.
+```{r, echo=T}
+SST = Syy # Calculated above
+SS_Regression = SlopeEstimate*Sxy
+SS_Residual = SST - SlopeEstimate*Sxy
+```
+## b) Define degrees of freedom (by hand).
+```{r, echo=T}
+dfT = N - 1
+df_Regression = 1 # Equal to number of regressors
+df_Residual = dfT - df_Regression
+```
+
+## c) Obtain residual degrees of freedom automatically using df.residual().
+```{r, echo=T}
+print(df.residual(rp_model))
+
+```
+
+## d) Obtain estimated error variance (MS_Residual).
+```{r, echo=T}
+VarianceEstimate = SS_Residual / df_Residual
+print(VarianceEstimate)
+```
+
+## e)Obtain ANOVA table using aov() command or anova() command and display output.
+```{r, echo=T}
+aov.out <- aov(ShearStrength~Age, data=rp_data)
+print(xtable(summary(aov.out)))
+
+print(xtable(anova(rp_model)))
+```
+
+# 4. Example 2.3 (p.25)
+## a) Test significance of slope parameter (by hand) using the qt() and pt() commands for critical value and p-value for the t-distribution.
+```{r, echo=T}
+significanceLevel = 0.05
+significanceLevel
+standardError_SlopeEstimate = sqrt(VarianceEstimate / Sxx)
+standardError_SlopeEstimate
+testStatistic = SlopeEstimate / standardError_SlopeEstimate
+testStatistic
+t_critical = qt(1 - significanceLevel/2, df_Residual)
+t_critical
+p_val = 2*pt(testStatistic, df_Residual)
+p_val
+```
+
+# 5. Example 2.4 (p. 28) 
+## a) Test for significance of Regression (F-test) at .01 significance level.
+
+### (1) By hand:
+```{r, echo=T}
+significanceLevel = 0.01
+F_testStatistic = (SS_Regression / df_Regression) / VarianceEstimate
+F_testStatistic
+F_critical = qf(1-significanceLevel, df_Regression, df_Residual)
+F_critical
+p_val = 1 - pf(F_testStatistic, df_Regression, df_Residual)
+p_val
+```
+
+### (2) Using anova command:
+```{r, echo=T}
+print(xtable(anova(rp_model)))
+```
+
+Observing the F-statistic of `r F_testStatistic` and the small p-value of `r p_val`, we can conclude that there is significant evidence that the slope parameter is not equal to zero.
