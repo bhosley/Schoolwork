@@ -1,0 +1,71 @@
+---
+title: "Homework 1"
+output: pdf_document
+date: "2023-04-05"
+---
+---
+title: "Homework 1"
+footer: `HW 1`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+```{r setup, include=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+## Problem 1.
+
+Analyze the relationship between a team’s offensive capabilities ($x_1$ and $x_2$) and total team
+wins ($y$).
+
+```{r, echo=TRUE}
+df <- read.xlsx('./1989 NFL Season Data (Handout).xlsx', sheetIndex = 1)
+attach(df)
+```
+
+### (a)
+
+ Create two simple linear regression models, one using $x_1$ as the independent variable and the other
+using $x_2$. The dependent variable is games won ($y$). Report the estimated regression equation for each
+model and test each model for significance of the slope parameter. The hypothesis test should contain
+your test statistic, critical value, p-value, decision, and conclusion (in the context of the problem).
+
+```{r, echo=TRUE}
+mod_1 <- lm(y ~ x1)
+mod_2 <- lm(y ~ x2)
+```
+
+### (b)
+
+### (c)
+
+### (d)
+
+### (e)
+
+## Problem 2.
+
+### (a)
+
+### (b)
+
+### (c)
+
+### (d)
