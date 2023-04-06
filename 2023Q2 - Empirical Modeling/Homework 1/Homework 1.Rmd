@@ -1,6 +1,8 @@
 ---
 title: "Homework 1"
-output: pdf_document
+output:
+  pdf_document: default
+  html_document: default
 date: "2023-04-05"
 ---
 ---
@@ -42,30 +44,78 @@ attach(df)
 
 ### (a)
 
- Create two simple linear regression models, one using $x_1$ as the independent variable and the other
-using $x_2$. The dependent variable is games won ($y$). Report the estimated regression equation for each
-model and test each model for significance of the slope parameter. The hypothesis test should contain
-your test statistic, critical value, p-value, decision, and conclusion (in the context of the problem).
+*Create two simple linear regression models, one using $x_1$ as the independent variable and the other using $x_2$. The dependent variable is games won ($y$). Report the estimated regression equation for each model and test each model for significance of the slope parameter. The hypothesis test should contain your test statistic, critical value, p-value, decision, and conclusion (in the context of the problem).*
 
 ```{r, echo=TRUE}
 mod_1 <- lm(y ~ x1)
 mod_2 <- lm(y ~ x2)
+anova(mod_1)
+anova(mod_2)
 ```
+For these statistics our null hypothesis is that the independent variable is unrelated to the dependent variable, with a critical value of $0.05$.
+
+In the prior case ($x_1$) the P value is well below the $0.05$ threshold one would need for a 95% confidence, for this reason we reject the null hypothesis.
+
+In the latter case ($x_2$) the P value is greater than the critical value, and for this reason we fail to reject the null hypothesis.
+
 
 ### (b)
 
+*What is the relationship between SST in each model? Why is this true?*
+
+The SSTs are the same for both models as the value is calculated from the dependent variable and sample count, which is the same for both models.
+
 ### (c)
 
+*What proportion of total variation is explained by each model? What do the two $R^2$ values tell you about the usefulness of the models created in Part (a)?*
+
+
+
 ### (d)
+
+*Two students are discussing ways to compare the two models. Student A claims that a good approach would be to pick a common value and see how many wins each model predicts. Whichever model is closer to the actual wins is the superior model. Student B disagrees and argues that Student A is making a logical error.*
+
+*Why is Student B correct? Explain your reasoning.*
+
+Using a singular value will not be very informative due to variation, moreover, by picking a common value this implies that there will be many actual values at or near that common value. It is probable that there will be a dispersion of values in that area, rather than a tight concentration of values. As a result it is not unlikely that this test will highlight the model that would otherwise underperform.
 
 ### (e)
 
+*In 1990, the Green Bay Packers rushed for a total of 1369 yards and passed for a total of 3306 yards. How many wins does each model predict for the Packers to earn that season? How does this data point inform the discussion as to which model is more useful?*
+
+```{r, echo=TRUE}
+predict(mod_1, data.frame(x1 = 1369))
+predict(mod_2, data.frame(x2 = 3306))
+```
+
+In this case the second model returns as value closer to the actual value of 10. This is a positive case of the potential problem discussed in part d.
+
 ## Problem 2.
+
+*Continue to analyze the offense variables of rushing yards and passing yards in a season.*
 
 ### (a)
 
+*Based on the models you created in Problem 1, should your preferred team draft a highly-touted
+prospect at running back (contributes to rushing yards) or wide receiver (contributes to passing yards)?
+Explain your reasoning.*
+
 ### (b)
+
+*Assuming that rushing yards (x1) and passing yards (x2) are jointly normally distributed, create a
+correlation model between the two regressors and test the hypothesis that the population correlation (𝜌)
+equals zero. Your correlation model is a regression model that regresses one variable against the other; it
+is not simply calculating the sample correlation between the two variables. The hypothesis test should
+report test statistic, critical value, p-value, decision, and conclusion (in the context of the problem).*
 
 ### (c)
 
+*Fit a no-intercept model using rushing yards to predict games won. Compare to the with-intercept
+model created in Problem 1(a). Which model would you conclude is superior? Explain your reasoning.*
+
 ### (d)
+
+*Without referencing model results, provide intuitive reasoning for why a no-intercept model would or
+would not be suitable for independent variables associated with the offense (rushing yards, passing yards).
+Does your reasoning hold for independent variables associated with the defense (rushing yards allowed,
+passing yards allowed)?*
