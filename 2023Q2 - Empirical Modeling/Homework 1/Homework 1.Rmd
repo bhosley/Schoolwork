@@ -1,13 +1,14 @@
 ---
-title: "Homework 1"
+title: 'Homework 1'
 output:
   pdf_document: default
   html_document: default
 date: "2023-04-05"
+author: 'Brandon Hosley'
 ---
 ---
 title: "Homework 1"
-footer: `HW 1`
+footer: 'HW 1'
 output:
   pdf_document:
     df_print: kable
@@ -69,7 +70,13 @@ The SSTs are the same for both models as the value is calculated from the depend
 
 *What proportion of total variation is explained by each model? What do the two $R^2$ values tell you about the usefulness of the models created in Part (a)?*
 
+```{r, echo=TRUE}
+summary(mod_1)
+summary(mod_2)
+```
 
+Model 1 has an $R^2$ and explanability of 0.2664, Model 2 has 0.0765.
+This suggests that Model 1 has significantly greater prediction accuracy compared to model 2.
 
 ### (d)
 
@@ -96,26 +103,44 @@ In this case the second model returns as value closer to the actual value of 10.
 
 ### (a)
 
-*Based on the models you created in Problem 1, should your preferred team draft a highly-touted
-prospect at running back (contributes to rushing yards) or wide receiver (contributes to passing yards)?
-Explain your reasoning.*
+*Based on the models you created in Problem 1, should your preferred team draft a highly-touted prospect at running back (contributes to rushing yards) or wide receiver (contributes to passing yards)? Explain your reasoning.*
+
+```{r, echo=TRUE}
+print(mod_1)
+print(mod_2)
+```
+
+The slope of model one is higher, suggesting a larger contribution of rushing yards to the number of winning games.
+Additionally, that model appears to be more significant, giving greater confidence in choosing that feature.
 
 ### (b)
 
-*Assuming that rushing yards (x1) and passing yards (x2) are jointly normally distributed, create a
-correlation model between the two regressors and test the hypothesis that the population correlation (𝜌)
-equals zero. Your correlation model is a regression model that regresses one variable against the other; it
-is not simply calculating the sample correlation between the two variables. The hypothesis test should
-report test statistic, critical value, p-value, decision, and conclusion (in the context of the problem).*
+*Assuming that rushing yards (x1) and passing yards (x2) are jointly normally distributed, create a correlation model between the two regressors and test the hypothesis that the population correlation ($\rho$) equals zero. Your correlation model is a regression model that regresses one variable against the other; it is not simply calculating the sample correlation between the two variables. The hypothesis test should report test statistic, critical value, p-value, decision, and conclusion (in the context of the problem).*
+
+We test the hypothesis that $$H_0 : \rho = 0, \quad H_1 : \rho \neq 0$$
+using a critical value of 0.05, and correspondingly a $p$ value of 0.95.
+
+```{r, echo=TRUE}
+mod_joint <- lm(x1 ~ x2)
+summary(mod_joint)
+```
+
+From this we fail to reject the null hypothesis and conclude that the two statistics are not independent.
 
 ### (c)
 
-*Fit a no-intercept model using rushing yards to predict games won. Compare to the with-intercept
-model created in Problem 1(a). Which model would you conclude is superior? Explain your reasoning.*
+*Fit a no-intercept model using rushing yards to predict games won. Compare to the with-intercept model created in Problem 1(a). Which model would you conclude is superior? Explain your reasoning.*
+
+```{r, echo=TRUE}
+mod_1_no_int <- lm(y~ 0 + x1)
+summary(mod_1_no_int)
+```
+This model demonstrates significant increases in $R^2$, suggesting that the prediction of this model is significantly improved as well.
 
 ### (d)
 
-*Without referencing model results, provide intuitive reasoning for why a no-intercept model would or
-would not be suitable for independent variables associated with the offense (rushing yards, passing yards).
-Does your reasoning hold for independent variables associated with the defense (rushing yards allowed,
-passing yards allowed)?*
+*Without referencing model results, provide intuitive reasoning for why a no-intercept model would or would not be suitable for independent variables associated with the offense (rushing yards, passing yards). Does your reasoning hold for independent variables associated with the defense (rushing yards allowed, passing yards allowed)?*
+
+No-intercept models make a lot of sense, as a team that performs zero of any or all of the offensive independent variables is not likely to have won any games, with the underlying causation likely to be that without any offensive performance the team could only have a tie, at best.
+
+This scenario does not necessarily hold for defensive performance. However unlikely, a team could theoretically have no performance on defense but have an overwhelmingly high performance on offense resulting in a win.
