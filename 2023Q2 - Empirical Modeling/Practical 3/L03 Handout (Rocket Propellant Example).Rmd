@@ -1,0 +1,113 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 3 Practical Exercise"
+footer: `r paste('Lesson 3 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+## a) Read data from data-ex-2-1.xlsx using the read.xlsx() command.
+
+```{r, echo=T}
+df <- read.xlsx('../Practical 1/data-ex-2-1.xlsx', sheetIndex = 1)
+```
+
+## b) Give names to columns using names() command and attach to the dataframe using attach(). Output data to make sure it reads properly using print(xtable(\textit{dataname}))
+```{r, echo=T}
+names(df) <- c("Observation", "ShearStrength","Age")
+attach(df)
+```
+
+## c) Output data structure and dimensions using the str() and dim() commands.
+```{r, echo=T}
+sprintf('The data structure is a %s', typeof(df) )
+sprintf('The dimensions are %i by %i', dim(df)[1], dim(df)[2])
+```
+
+## d) Create any baseline model(s) necessary to complete Examples 2.5, 2.6, and 2.7
+```{r, echo=T}
+mod <- lm(ShearStrength ~ Age)
+summary(mod)
+print(anova(mod))
+```
+
+# 2. Example 2.5 (p. 30)
+## a) Construct a 95% confidence interval for the slope parameter (by hand)
+```{r, echo=T}
+H <- sqrt(997.94/(4.060311**2))
+CI_lower <- 65.097647 - H
+CI_upper <- 65.097647 + H
+
+sprintf('Upper: %f   Lower: %f', CI_upper, CI_lower)
+```
+
+## b) Check using Confint command
+```{r, echo=T}
+confint(mod)
+```
+
+# 3. Example 2.6 (p.31-32)
+## a) Construct 95% C.I. for the point $x_0$ = 13.3625.
+```{r, echo=T}
+x_0_upper = 73.62804500+ 13.3625*-0.02030779
+x_0_lower = 56.56724954- 13.3625*-0.02823887
+
+sprintf('Upper: %f   Lower: %f', x_0_upper, x_0_lower)
+```
+
+# 4. Example 2.7 (p.34-35)
+## a) Construct a 95% prediction interval for $x_0$ = 10 weeks.
+```{r, echo=T}
+x_0_upper = 73.62804500+ 10*-0.02030779
+x_0_lower = 56.56724954- 10*-0.02823887
+
+sprintf('Upper: %f   Lower: %f', x_0_upper, x_0_lower)
+```
+
+## b) Reproduce Figure 2.5. First, create the scatterplot using plot(). Then add a line for the predicted values using lines(). Finally, add prediction interval lines and confidence interval lines using lines() and predict().
+```{r, echo=T}
+x <- df[,3]
+y <- df[,2]
+
+
+plot(x[order(x)],y[order(x)])
+
+predict.fit <- predict(mod, interval="prediction", level=0.95)
+confidence.fit  <- predict(mod, interval="confidence", level=0.95)
+
+lines(x[order(x)], predict.fit[,1][order(x)])
+
+
+lines(x[order(x)],predict.fit[,2][order(x)])
+lines(x[order(x)],predict.fit[,3][order(x)])
+
+lines(x[order(x)],confidence.fit[,2][order(x)])
+lines(x[order(x)],confidence.fit[,3][order(x)])
+```
+
