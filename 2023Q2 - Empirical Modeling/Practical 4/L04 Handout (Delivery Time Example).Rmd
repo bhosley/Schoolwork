@@ -1,0 +1,186 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 4 Practical Exercise"
+footer: `r paste('Lesson 4 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('C:/Users/natha/OneDrive/Documents/R/scripts/R/setup.R')
+shiny::includeCSS('C:/Users/natha/OneDrive/Documents/R/scripts/css/flat-slidy.css')
+shiny::includeScript("C:/Users/natha/OneDrive/Documents/R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('C:/Users/natha/OneDrive/Documents/R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('C:/Users/natha/OneDrive/Documents/R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+## a) Read data from data-ex-3-1.xlsx using the read.xlsx() command.
+
+```{r, echo=T}
+
+```
+
+## b) Give names to columns using names() command and attach to the dataframe using attach(). Output data to make sure it reads properly using print(xtable(\textit{dataname}))
+```{r, echo=T}
+
+```
+
+## c) Output data structure and dimensions using the str() and dim() commands.
+```{r, echo=T}
+
+```
+
+
+# 2. Example 3.1 (p. 75-77)
+## a) Create pairwise scatterplots using pairs() command
+```{r, echo=T}
+
+```
+
+## b) Create pairwise scatterplots using the scatterplotMatrix() command from the "car" package
+```{r, echo=T}
+
+```
+
+## c) Create 3D scatterplot using scatterplot3d() command from "scatterplot3d" package
+```{r, echo=T}
+
+```
+
+## d) Obtain regression estimators using matrix algebra ("by hand")
+
+### Define X matrix of regressor observations (don't forget to include column for intercept). Display X to make sure that it is correct (compare to p.75).
+```{r, echo=T}
+
+```
+
+### Calculate $X^TX$; display to make sure it is correct (compare to p.76).
+```{r, echo=T}
+
+```
+
+### Invert the matrix you just created using each of four R functions: solve(), inv(), ginv(), and Inverse().
+Note that the four approaches may or may not give the same answer. An easy explanation is that each uses a different rounding routine. The question is if that rounding will cause trouble down the line. One way to quickly check the equivalence of the different functions is to invert the $(X^TX)^{-1}$ and see if you get $X^TX$ back or if there is rounding error. In most cases this will not be a problem, but we will see a case where the rounding will have a noticeable effect on the results.
+```{r, echo=T}
+
+```
+
+Back to the example... for the sake of consistency, use ginv() for matrix inverse calculations from here out.
+
+### Calculate $X^Ty$, where $y$ is the vector of dependent variable observations. Compare to p. 77.
+```{r, echo=T}
+
+```
+
+### Calculate $\beta$ coefficients. Compare to p. 77.
+```{r, echo=T}
+
+```
+
+### Check your work by building the model using lm() and printing the summary using print(xtable(summary(model_name))).
+```{r, echo=T}
+
+```
+
+# 3. Example 3.2 (p.81)
+## a) Calculate $SS_{Res}$ (by hand) using the definition of a residual on p.80.
+```{r, echo=T}
+
+```
+
+## b) Calculate $SS_{Res}$ using matrix alebra formula on p. 81.
+
+Learning point: Using different functions to calculate the inverse will give very different $SS_{Res}$ results. Using ginv() and solve() will give results that match the textbook. Using others will not. Try a few to verify for yourself.
+
+```{r, echo=T}
+
+```
+
+## c) Calculate SST and SS_Regression (by hand). Compare to ANOVA table on p. 78.
+```{r, echo=T}
+
+```
+
+## d) Calculate ANOVA table using anova() and display the output.
+```{r, echo=T}
+
+```
+
+# 4. Example 3.3 (p. 87) 
+
+Test for significance of regression using F-test (by hand).
+
+## a) Calculate degrees of freedom. Output to make sure it is correct; compare to ANOVA table p. 87
+```{r, echo=T}
+
+```
+
+## b) Calculate Mean-Square for Regression and Residual
+```{r, echo=T}
+
+```
+
+## c) Calculate F-test algebraically and F-critical using qf() command
+```{r, echo=T}
+
+```
+
+# Example 3.4 (p. 88-89) 
+
+Test the significance of the individual regression coefficients (by hand).
+
+## a) Define C matrix for use in computing se($B_j$)
+```{r, echo=T}
+
+```
+
+## b) Compute t-test algebraically and t-critical using qt() command. Calculate p-value using pt() command.
+```{r, echo=T}
+
+```
+
+# Example 3.5 (p. 92-93)
+
+Perform partial F-test on the significance of the contribution of Distance to the full model.
+
+## a) Create full model using lm() command
+```{r, echo=T}
+
+```
+
+## b) Create reduced model using lm() command
+```{r, echo=T}
+
+```
+
+## c) Create F-test algebraically and F-critical using qf() command
+```{r, echo=T}
+
+```
+
+## d) Faster way with R - Use anova() command
+```{r, echo=T}
+
+```
+
+
+
+
