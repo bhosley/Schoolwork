@@ -1,0 +1,172 @@
+---
+title: 'Homework 2'
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-04-12"
+author: 'Brandon Hosley'
+---
+---
+title: "Homework 1"
+footer: 'HW 1'
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+```{r setup, include=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+## Problem 1.
+
+*Analyze the relationship between total team wins ($y$) and a set of regressors consisting of an offense metric ($x_{10} = x_1 + x_2$), a defense metric ($x_{11} = x_8 + x_9$), and two special teams metrics ($x_3, x_4$).*
+
+```{r, echo=TRUE}
+df <- read.xlsx('../Homework 1/1989 NFL Season Data (Handout).xlsx', sheetIndex = 1)
+
+df['x10'] <- df$x1 + df$x2
+df['x11'] <- df$x8 + df$x9
+```
+
+### (a)
+
+*Create a multiple regression model. Report the estimated regression equation. Interpret the result of the test for significance of the regression parameter associated with field goal percentage ($x_4$).*
+
+```{r, echo=TRUE}
+mod <- lm(y~ x3 + x4 + x10 + x11, data = df)
+summary(mod)
+```
+
+The estimated regression is
+$$ y = -0.6359208 + 0.2646381 x_{3} + 6.1126422 x_{4} + 0.0018844 x_{10} - 0.0031425 x_{11} $$
+
+### (b)
+
+*What is the interpretation of the regression parameter associated with total yards allowed ($x_{11}$)?*
+
+Yards allowed has an inverse relationship to wins, which makes intuitive sense, as preventing an opponent from moving down the field should decrease their likelihood of scoring and consequently reducing their likelihood of winning.
+
+### (c)
+
+*Is a no-intercept model suitable for this situation? Fully explain your reasoning why or why not.*
+
+No, a no-intercept model would not be suitable for this situation, while it makes intuitive sense that zero yardage gained would result in zero wins, and simultaneously, opponent's gained zero yardage would imply a tie at best but more realistically implies that the teams did not play.
+
+### (d)
+
+*Can $x_3$ and $x_4$ be dropped from the model? Explain why or why not. Justify your answer with the appropriate Partial F-test.*
+
+Let the $H_0$ be that $x_3$ and $x_4$ can be dropped from the model.
+
+```{r, echo=TRUE}
+R2_1 <- summary(mod)$r.squared
+p_1 <- 4
+
+mod_2 <- lm(y~ x10 + x11, data = df)
+R2_2 <- summary(mod_2)$r.squared
+p_2 <- 2
+
+n <- colSums(!is.na(df))[3]
+
+F_0 <- ((R2_1 - R2_2)/(p_1 - p_2)) / ((1-R2_1)/(n -p_1-1))
+F_crit <- qf(0.95, p_1-p_2, n-p_1-1)
+
+cat(sprintf('F_0:     %f %sF_crit:  %f', F_0, '\n', F_crit))
+```
+
+From this we can see that $F_0 < F_\text{crit}$ and thus fail to reject the null hypothesis.
+
+### (e)
+
+*Student A and Student B are discussing the implications of this model. Student A claims that the regression coefficients for $x_{10}$ and $x_{11}$ are so close to zero that they can be dropped from the model because they are essentially modeling noise. Student B disagrees.*
+
+*Why is Student B correct? Fully explain your reasoning.*
+
+The magnitude of a coefficient does not indicate the significance of that factor. This is often the case with correlated items with units expressed in signifcantly different magnitudes.
+
+```{r, echo=TRUE}
+df$y[1]
+df$x10[1]
+df$x11[1]
+```
+
+For example, if we look at row one, we can see that $x_{10}$ and $x_{11}$ are measured in the thousands, whereas the wins are in single or low double digits. This implies a very small coefficient, especially when they are correlated.
+
+## Problem 2.
+
+### (a)
+
+*Repeat Problem 1(a) using unit normal scaling of all regressors. Compare and contrast the model results in Problem 1(a) and Problem 2(a).*
+
+```{r, echo=TRUE}
+mod_scaled <- lm(scale(na.exclude(df$y))~scale(na.exclude(df$x3))+scale(na.exclude(df$x4))+scale(na.exclude(df$x10))+scale(na.exclude(df$x11)))
+summary(mod_scaled)
+```
+
+Normalization did not effect the significance of each factor, however, it did change the coefficients; they are much closer to 1 which should come as a relief to Student A.
+
+### (b)
+
+*Consider a multiple regression model with $x_1$, $x_2$, and $x_{10}$ as regressors with $y$ as the response. What is the VIF associated with $x_2$? Is this a good regressor set? Why or why not?*
+
+```{r, echo=TRUE}
+
+```
+
+No, this is not a good regressor set, there is not much captured information as 
+$x_{10} = x_1 + x_2 $ and thus
+$x_1 + x_2 + x_{10} = 2(x_1 + x_2) = 2x_{10} $
+
+### (c)
+
+*Consider a multiple regression model with $x_1, x_2, x_3, x_4, x_8,$ and $x_9$ as the regressors. What Adjusted R-Square value does this model produce? Why is it different from the Adjusted R-Square in Problem 1(a)?*
+
+```{r, echo=TRUE}
+
+```
+
+
+### (d)
+
+*Consider a multiple regression model with the entire dataset: x1, x2, x3, x4, x5, x6, x7, x8, and x9. Without performing any calculations, explain why the p-values associated with the individual regression coefficients are different as compared to the multiple regression models produced in Problem 1(a) and Problem 1(c).*
+
+```{r, echo=TRUE}
+
+```
+
+## Problem 3.
+
+*Student A and Student B are having another lively discussion, this time about simple linear regression parameters and derivations. The students observe in their textbook the following relationship:*
+$$S_{xy} = \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)$$
+*However, the students also see an equivalent relationship:*
+$$S_{xy}= \sum_{i=1}^n y_i(x_i-\bar x)$$
+*Student A claims that the second expression must be a mistake in the book because this can only be true if $\bar y = 0$, but that is clearly not always the case. Student B disagrees and claims that the two expressions are equivalent. Show that Student B is correct – Algebraically verify the equivalence of the two expressions.*
+
+First, recall that $\bar x = \frac{\sum^n_{i=1}x_i}{n}$ and therefore $n\bar x = \sum^n_{i=1}x_i$
+Then the equivalence can be shown by,
+$$\begin{align}
+S_{xy} &= \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y) \\
+&= \sum_{i=1}^ny_i(x_i-\bar x)- \sum_{i=1}^n\bar y(x_i-\bar x) \\
+&= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- \sum_{i=1}^n \bar x) \\
+&= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- n\bar x) \\
+&= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(0) \\
+&= \sum_{i=1}^ny_i(x_i-\bar x).
+\end{align}$$
+
+
