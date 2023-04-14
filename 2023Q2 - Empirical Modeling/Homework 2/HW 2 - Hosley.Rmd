@@ -126,8 +126,21 @@ Normalization did not effect the significance of each factor, however, it did ch
 *Consider a multiple regression model with $x_1$, $x_2$, and $x_{10}$ as regressors with $y$ as the response. What is the VIF associated with $x_2$? Is this a good regressor set? Why or why not?*
 
 ```{r, echo=TRUE}
+mod_2b <- lm(y~ x1 + x2 + x10, data = df)
+summary
+X <- as.matrix(na.exclude(df[c('x1','x2','x10')]))
+W <- matrix(nrow=nrow(X), ncol=ncol(X))
 
+for(row in 1:nrow(X)) {
+  for(col in 1:ncol(X)){
+    W[row,col] <- (X[row,col]-mean(X[,col]))/sqrt(sum((X[,col]-mean(X[,col]))**2))
+  }
+}
+VIF <- ginv(t(W) %*% W)
+diag(VIF)
 ```
+
+The VIF associated with $x_2$ is 0.4307401.
 
 No, this is not a good regressor set, there is not much captured information as 
 $x_{10} = x_1 + x_2 $ and thus
@@ -138,17 +151,16 @@ $x_1 + x_2 + x_{10} = 2(x_1 + x_2) = 2x_{10} $
 *Consider a multiple regression model with $x_1, x_2, x_3, x_4, x_8,$ and $x_9$ as the regressors. What Adjusted R-Square value does this model produce? Why is it different from the Adjusted R-Square in Problem 1(a)?*
 
 ```{r, echo=TRUE}
-
+mod_2c <- lm(y ~ x1 + x2 + x3 + x4 + x8 + x9, data = df)
+summary(mod_2c)
 ```
-
+The $R^2$ for this model is slightly higher, suggesting that this model is slightly better at explaining the variation in the outcomes. This appears to be a result of being able to weight the constituent factors independantly, particularly in the case of $x_{10}$ where $x_2$ performs significantly better than $x_2$.
 
 ### (d)
 
 *Consider a multiple regression model with the entire dataset: x1, x2, x3, x4, x5, x6, x7, x8, and x9. Without performing any calculations, explain why the p-values associated with the individual regression coefficients are different as compared to the multiple regression models produced in Problem 1(a) and Problem 1(c).*
 
-```{r, echo=TRUE}
 
-```
 
 ## Problem 3.
 
