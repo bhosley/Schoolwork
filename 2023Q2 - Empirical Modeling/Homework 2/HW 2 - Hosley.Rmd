@@ -160,7 +160,8 @@ The $R^2$ for this model is slightly higher, suggesting that this model is sligh
 
 *Consider a multiple regression model with the entire dataset: x1, x2, x3, x4, x5, x6, x7, x8, and x9. Without performing any calculations, explain why the p-values associated with the individual regression coefficients are different as compared to the multiple regression models produced in Problem 1(a) and Problem 1(c).*
 
-
+The individual factors may have increased explanatory power separately when compared to rote addition.
+However, when the factors are added to the model distinctly, it is possible that the explanatory power is increased relative to the individual factors taken alone. This is less likely to be the case if the two factors are not independent. 
 
 ## Problem 3.
 
