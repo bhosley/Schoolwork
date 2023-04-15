@@ -126,6 +126,7 @@ Normalization did not effect the significance of each factor, however, it did ch
 *Consider a multiple regression model with $x_1$, $x_2$, and $x_{10}$ as regressors with $y$ as the response. What is the VIF associated with $x_2$? Is this a good regressor set? Why or why not?*
 
 ```{r, echo=TRUE}
+library(MASS)
 mod_2b <- lm(y~ x1 + x2 + x10, data = df)
 summary
 X <- as.matrix(na.exclude(df[c('x1','x2','x10')]))
@@ -173,13 +174,15 @@ $$S_{xy}= \sum_{i=1}^n y_i(x_i-\bar x)$$
 
 First, recall that $\bar x = \frac{\sum^n_{i=1}x_i}{n}$ and therefore $n\bar x = \sum^n_{i=1}x_i$
 Then the equivalence can be shown by,
-$$\begin{align}
-S_{xy} &= \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y) \\
-&= \sum_{i=1}^ny_i(x_i-\bar x)- \sum_{i=1}^n\bar y(x_i-\bar x) \\
-&= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- \sum_{i=1}^n \bar x) \\
-&= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- n\bar x) \\
-&= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(0) \\
-&= \sum_{i=1}^ny_i(x_i-\bar x).
-\end{align}$$
+$$
+\begin{aligned}
+  S_{xy} &= \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x)- \sum_{i=1}^n\bar y(x_i-\bar x) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- \sum_{i=1}^n \bar x) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- n\bar x) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(0) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x).
+\end{aligned}
+$$
 
 
