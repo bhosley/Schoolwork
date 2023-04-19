@@ -1,0 +1,133 @@
+---
+title: 'Homework 3'
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-04-18"
+author: 'Brandon Hosley'
+---
+---
+title: "Homework 3"
+footer: 'HW 3'
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+```{r setup, include=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+## Problem 1.
+
+*Analyze the relationship between total team wins (y) and a set of regressors consisting of passing yards (x_2), turnover differential (x_5), and percent rushing plays (x_7)*
+
+```{r, echo=TRUE}
+df <- read.xlsx('../Homework 1/1989 NFL Season Data (Handout).xlsx', sheetIndex = 1)
+```
+
+### (a)
+
+*Create a multiple regression model. Report the estimated regression equation. Interpret the result of the hypothesis test for significance of the regression parameter associated with the percentage of rushing plays (x_7).*
+
+```{r, echo=TRUE}
+
+```
+
+
+
+### (b)
+
+*Interpret $\hat\beta_7$. Does this interpretation make sense in the context of the real-world system under study? What could be done to fix the issue?*
+
+### (c)
+
+*Construct the normal probability plot of the appropriate residuals and the plot of the appropriate residuals versus the fitted values. Based on the plots, is this model a candidate for a transformation on the response?*
+
+### (d)
+
+*Student A and Student B are having another lively discussion. Student A is certain that R-Student residuals are always superior to raw residuals. Student B claims that R-Student residuals are not appropriate for partial regression plots and that raw residuals must be used instead.*
+
+Adjudicate the dispute using the partial regression plot for x5:
+1. Create two plots, one using raw residuals and one using R-Student residuals.
+2. Comment on the effect of residual type on the graphs.
+3. For each plot, give the slope parameter of the simple linear regression model fit to the scatter plot.
+4. Which student is correct? Fully justify your answer.
+
+
+## Problem 2.
+
+*Continue to analyze the same multiple regression model as in Problem 1.*
+
+### (a)
+
+*Plot the appropriate residuals versus each of the regressors. Based on the plots, is any regressor a candidate for a transformation?*
+
+```{r, echo=TRUE}
+
+```
+
+
+
+### (b)
+
+*Provide a table with the predicted values, Studentized residuals, R-Student residuals, and PRESS values. Discuss what these values might suggest to you analytically*
+
+```{r, echo=TRUE}
+
+```
+
+
+### (c)
+
+*Consider a multiple regression model with $x_1, x_2, x_3, x_4, x_8,$ and $x_9$ as the regressors. What Adjusted R-Square value does this model produce? Why is it different from the Adjusted R-Square in Problem 1(a)?*
+
+```{r, echo=TRUE}
+
+```
+The $R^2$ for this model is slightly higher, suggesting that this model is slightly better at explaining the variation in the outcomes. This appears to be a result of being able to weight the constituent factors independantly, particularly in the case of $x_{10}$ where $x_2$ performs significantly better than $x_2$.
+
+### (d)
+
+*Consider a multiple regression model with the entire dataset: x1, x2, x3, x4, x5, x6, x7, x8, and x9. Without performing any calculations, explain why the p-values associated with the individual regression coefficients are different as compared to the multiple regression models produced in Problem 1(a) and Problem 1(c).*
+
+The individual factors may have increased explanatory power separately when compared to rote addition.
+However, when the factors are added to the model distinctly, it is possible that the explanatory power is increased relative to the individual factors taken alone. This is less likely to be the case if the two factors are not independent. 
+
+## Problem 3.
+
+*Student A and Student B are having another lively discussion, this time about simple linear regression parameters and derivations. The students observe in their textbook the following relationship:*
+$$S_{xy} = \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)$$
+*However, the students also see an equivalent relationship:*
+$$S_{xy}= \sum_{i=1}^n y_i(x_i-\bar x)$$
+*Student A claims that the second expression must be a mistake in the book because this can only be true if $\bar y = 0$, but that is clearly not always the case. Student B disagrees and claims that the two expressions are equivalent. Show that Student B is correct – Algebraically verify the equivalence of the two expressions.*
+
+First, recall that $\bar x = \frac{\sum^n_{i=1}x_i}{n}$ and therefore $n\bar x = \sum^n_{i=1}x_i$
+Then the equivalence can be shown by,
+$$
+\begin{aligned}
+  S_{xy} &= \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x)- \sum_{i=1}^n\bar y(x_i-\bar x) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- \sum_{i=1}^n \bar x) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- n\bar x) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(0) \\
+    &= \sum_{i=1}^ny_i(x_i-\bar x).
+\end{aligned}
+$$
+
+
