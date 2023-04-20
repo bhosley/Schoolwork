@@ -46,28 +46,63 @@ df <- read.xlsx('../Homework 1/1989 NFL Season Data (Handout).xlsx', sheetIndex 
 *Create a multiple regression model. Report the estimated regression equation. Interpret the result of the hypothesis test for significance of the regression parameter associated with the percentage of rushing plays (x_7).*
 
 ```{r, echo=TRUE}
-
+mod <- lm(df$y ~ df$x2 + df$x5 + df$x7)
+summary(mod)
 ```
 
+The estimated regression equation is $$y = -0.1552 + 0.002625x_2 + 0.1009x_5 + 31.95x_7.$$
 
+The $p$ value associated with $x_7$ is extremely low, suggesting that there is a very significant correlation between rushing plays and number of games won in the season.
 
 ### (b)
 
 *Interpret $\hat\beta_7$. Does this interpretation make sense in the context of the real-world system under study? What could be done to fix the issue?*
 
+The coefficient suggests that if $x_7=1$, and it is taken alone, the team may be expected to win approximately 32 games in the season (which I have been told is almost double the number of games in a normal season).
+
+Perhaps normalization could fix this discrepancy, as it appears that this coefficient is compensating for a magnitude difference, and/or there is compensation for the other variables through some amount of covariance.
+
 ### (c)
 
 *Construct the normal probability plot of the appropriate residuals and the plot of the appropriate residuals versus the fitted values. Based on the plots, is this model a candidate for a transformation on the response?*
+
+```{r, echo=T}
+qqnorm(resid(mod), main = 'Normal Probability Plot', xlab = 'Normal', ylab = 'Data')
+qqline(resid(mod))
+plot(fitted.values(mod), resid(mod))
+abline(h=0, mod)
+```
 
 ### (d)
 
 *Student A and Student B are having another lively discussion. Student A is certain that R-Student residuals are always superior to raw residuals. Student B claims that R-Student residuals are not appropriate for partial regression plots and that raw residuals must be used instead.*
 
-Adjudicate the dispute using the partial regression plot for x5:
+*Adjudicate the dispute using the partial regression plot for $x_5$:*
 1. Create two plots, one using raw residuals and one using R-Student residuals.
 2. Comment on the effect of residual type on the graphs.
 3. For each plot, give the slope parameter of the simple linear regression model fit to the scatter plot.
 4. Which student is correct? Fully justify your answer.
+
+```{r, echo=T}
+d_partial <- lm(df$y ~ df$x2 + df$x7)
+d_regressor <- lm(df$x5 ~ df$x2 + df$x7)
+
+plot(resid(d_partial), resid(d_regressor))
+d_res = lm(resid(d_partial) ~ resid(d_regressor))
+abline(d_res)
+
+plot(rstudent(d_partial), rstudent(d_regressor))
+d_stu = lm(rstudent(d_partial) ~ rstudent(d_regressor))
+abline(d_stu)
+```
+
+The r-studentized version of the plot has a higher slope, this seems to indicate that 
+
+```{r, echo=T}
+sprintf('The slope parameter (beta_1) for the standard residuals is: %f', coef(d_res)[2])
+sprintf('The slope parameter (beta_1) for the studentized residuals is: %f', coef(d_stu)[2])
+```
+
 
 
 ## Problem 2.
@@ -83,7 +118,6 @@ Adjudicate the dispute using the partial regression plot for x5:
 ```
 
 
-
 ### (b)
 
 *Provide a table with the predicted values, Studentized residuals, R-Student residuals, and PRESS values. Discuss what these values might suggest to you analytically*
@@ -95,39 +129,34 @@ Adjudicate the dispute using the partial regression plot for x5:
 
 ### (c)
 
-*Consider a multiple regression model with $x_1, x_2, x_3, x_4, x_8,$ and $x_9$ as the regressors. What Adjusted R-Square value does this model produce? Why is it different from the Adjusted R-Square in Problem 1(a)?*
+*Consider the following three proposed transformations on $x_5$:*
+
+$$\begin{align}
+T_1:\quad x_5^\prime &= \begin{cases} \sqrt x_5 &\ (x_5 \geq 0) \\ -\sqrt{-x_5} &\ (x_5 < 0) \end{cases}\\
+T_2:\quad x_5^\prime &= \begin{cases} \sqrt x_5 &\qquad (x_5 \geq 0) \\ 0 &\qquad (x_5 < 0) \end{cases}\\
+T_3:\quad x_5^\prime &= \begin{cases} 0 &\ (x_5 > 0) \\ -\sqrt{-x_5} &\ (x_5 \leq 0) \end{cases}
+\end{align}$$
+
+*Create three models, one for each of the possible transformations on $x_5$. Which of the three models is best in terms of Adjusted R2? Display a table with the predicted values for each model. Which of the three models is best in terms of win predictions? Give a possible explanation for your results.*
 
 ```{r, echo=TRUE}
 
 ```
-The $R^2$ for this model is slightly higher, suggesting that this model is slightly better at explaining the variation in the outcomes. This appears to be a result of being able to weight the constituent factors independantly, particularly in the case of $x_{10}$ where $x_2$ performs significantly better than $x_2$.
-
-### (d)
-
-*Consider a multiple regression model with the entire dataset: x1, x2, x3, x4, x5, x6, x7, x8, and x9. Without performing any calculations, explain why the p-values associated with the individual regression coefficients are different as compared to the multiple regression models produced in Problem 1(a) and Problem 1(c).*
-
-The individual factors may have increased explanatory power separately when compared to rote addition.
-However, when the factors are added to the model distinctly, it is possible that the explanatory power is increased relative to the individual factors taken alone. This is less likely to be the case if the two factors are not independent. 
 
 ## Problem 3.
 
-*Student A and Student B are having another lively discussion, this time about simple linear regression parameters and derivations. The students observe in their textbook the following relationship:*
-$$S_{xy} = \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y)$$
-*However, the students also see an equivalent relationship:*
-$$S_{xy}= \sum_{i=1}^n y_i(x_i-\bar x)$$
-*Student A claims that the second expression must be a mistake in the book because this can only be true if $\bar y = 0$, but that is clearly not always the case. Student B disagrees and claims that the two expressions are equivalent. Show that Student B is correct – Algebraically verify the equivalence of the two expressions.*
+*Complete Problem 5.13 on p. 206-207 in the course textbook.*
 
-First, recall that $\bar x = \frac{\sum^n_{i=1}x_i}{n}$ and therefore $n\bar x = \sum^n_{i=1}x_i$
-Then the equivalence can be shown by,
-$$
-\begin{aligned}
-  S_{xy} &= \sum_{i=1}^n(x_i-\bar x)(y_i-\bar y) \\
-    &= \sum_{i=1}^ny_i(x_i-\bar x)- \sum_{i=1}^n\bar y(x_i-\bar x) \\
-    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- \sum_{i=1}^n \bar x) \\
-    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(\sum_{i=1}^nx_i- n\bar x) \\
-    &= \sum_{i=1}^ny_i(x_i-\bar x)- \bar y(0) \\
-    &= \sum_{i=1}^ny_i(x_i-\bar x).
-\end{aligned}
-$$
+*Schubert et al. ( “ The Catapult Problem: Enhanced Engineering Modeling Using Experimental Design, ” Quality Engineering, 4, 463 – 473, 1992) conducted an experiment with a catapult to determine the effects of hook (x_1), arm length (x_2), start angle (x_3), and stop angle (x_4) on the distance that the catapult throws a ball. They threw the ball three times for each setting of the factors. The following table summarizes the experimental results.*
 
+### (a)
 
+*Fit a first - order regression model to the data and conduct the residual analysis.*
+
+### (b)
+
+*Use the sample variances as the basis for weighted least - squares estimation of the original data (not the sample means).*
+
+### (c)
+
+*Fit an appropriate model to the sample variances (note: you will require an appropriate transformation!). Use this model to develop the appropriate weights and repeat part b.*
