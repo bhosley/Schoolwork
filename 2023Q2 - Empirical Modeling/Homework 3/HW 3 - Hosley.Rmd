@@ -30,7 +30,12 @@ shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
 shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
 library(xlsx)
 library(xtable)
+library(MASS)
+library(readxl)
 options(xtable.comment = FALSE, xtable.type="latex")
+options(rgl.useNULL=TRUE)
+#.rs.restartR()
+library(qpcR)
 ```
 
 ## Problem 1.
@@ -38,7 +43,7 @@ options(xtable.comment = FALSE, xtable.type="latex")
 *Analyze the relationship between total team wins (y) and a set of regressors consisting of passing yards (x_2), turnover differential (x_5), and percent rushing plays (x_7)*
 
 ```{r, echo=TRUE}
-df <- read.xlsx('../Homework 1/1989 NFL Season Data (Handout).xlsx', sheetIndex = 1)
+df <- read_excel('../Homework 1/1989 NFL Season Data (Handout).xlsx', range = cell_rows(1:29))
 ```
 
 ### (a)
@@ -52,7 +57,7 @@ summary(mod)
 
 The estimated regression equation is $$y = -0.1552 + 0.002625x_2 + 0.1009x_5 + 31.95x_7.$$
 
-The $p$ value associated with $x_7$ is extremely low, suggesting that there is a very significant correlation between rushing plays and number of games won in the season.
+The $p$ value associated with $x_7$ is extremely low, suggesting that there is a very confidence with regard to the correlation between rushing plays and number of games won in the season.
 
 ### (b)
 
@@ -87,21 +92,25 @@ abline(h=0, mod)
 d_partial <- lm(df$y ~ df$x2 + df$x7)
 d_regressor <- lm(df$x5 ~ df$x2 + df$x7)
 
-plot(resid(d_partial), resid(d_regressor))
-d_res = lm(resid(d_partial) ~ resid(d_regressor))
-abline(d_res)
+d_part_res <- resid(d_partial)
+d_reg_res <- resid(d_regressor)
 
-plot(rstudent(d_partial), rstudent(d_regressor))
-d_stu = lm(rstudent(d_partial) ~ rstudent(d_regressor))
-abline(d_stu)
+d_part_stu <- rstudent(d_partial)
+d_reg_stu <- rstudent(d_regressor)
+
+plot(d_reg_res, d_part_res)
+abline(lm(d_part_res ~ d_reg_res))
+
+plot(d_reg_stu, d_part_stu)
+abline(lm(d_part_stu ~ d_reg_stu))
+
+sprintf('The slope parameter (beta_1) for the standard residuals is: %f', coef(lm(d_part_res ~ d_reg_res))[2])
+sprintf('The slope parameter (beta_1) for the studentized residuals is: %f', coef(lm(d_part_stu ~ d_reg_stu))[2])
 ```
 
-The r-studentized version of the plot has a higher slope, this seems to indicate that 
 
-```{r, echo=T}
-sprintf('The slope parameter (beta_1) for the standard residuals is: %f', coef(d_res)[2])
-sprintf('The slope parameter (beta_1) for the studentized residuals is: %f', coef(d_stu)[2])
-```
+
+
 
 
 
@@ -115,33 +124,80 @@ sprintf('The slope parameter (beta_1) for the studentized residuals is: %f', coe
 
 ```{r, echo=TRUE}
 
+x2_given_not_x2 <- lm(df$x2 ~ df$x5 + df$x7)
+y_given_not_x2 <- lm(df$y ~ df$x5 + df$x7)
+
+x5_given_not_x5 <- lm(df$x5 ~ df$x2 + df$x7)
+y_given_not_x5 <- lm(df$y ~ df$x2 + df$x7)
+
+x7_given_not_x7 <- lm(df$x7 ~ df$x2 + df$x5)
+y_given_not_x7 <- lm(df$y ~ df$x2 + df$x5)
+
+plot(predict(y_given_not_x2), rstudent(x2_given_not_x2), ylab= 'Games Won', xlab='Passing Yards')
+plot(predict(y_given_not_x5), rstudent(x5_given_not_x5), ylab= 'Games Won', xlab='Turnover Differential')
+plot(predict(y_given_not_x7), rstudent(x7_given_not_x7), ylab= 'Games Won', xlab='Percent Rushing Plays')
 ```
 
+Variable $x_2$ - passing yards - appears to be have a fairly loose parabolic curve. It is possible that this may benefit from a transformation
+
+There may be some heteroscedasticity in $x_5$ - Percent Rushing Plays - however, it is not clear if this is genuinely the case.
+
+Finally, $x_7$ may also have some nonlinearity, but this may be a case of pattern seeking.
 
 ### (b)
 
 *Provide a table with the predicted values, Studentized residuals, R-Student residuals, and PRESS values. Discuss what these values might suggest to you analytically*
 
 ```{r, echo=TRUE}
+library(mltools)
+N <- dim(df)[1]
+X <- matrix(c(rep(1, N), df$x2, df$x5, df$x7), ncol = 4, byrow = FALSE)
+H <- lm.influence(mod)$hat
 
+tbl <- df[c('Index','Team')]
+tbl['Prediction'] <- predict(mod)
+tbl['Studentized Residuals'] <- resid(mod)/sqrt(mse(predict(mod),df$y) * (1 - H)) # (Internally Studentized)
+tbl['R-Student Residuals'] <- resid(mod)/sqrt((lm.influence(mod)$sigma**2) * (1 - H)) # (Externally Studentized)
+tbl['PRESS'] <- resid(mod)/sqrt(mse(predict(mod),df$y) * (1 - H))
+
+tbl
 ```
 
+The table shows that the identical nature of studentized and PRESS, additionally it shows that the R-studentized numbers all appear to be closer to zero, this would be consistent with producing a $t$ distribution where the others would be normally distributed.
 
 ### (c)
 
 *Consider the following three proposed transformations on $x_5$:*
 
-$$\begin{align}
+$$\begin{aligned}
 T_1:\quad x_5^\prime &= \begin{cases} \sqrt x_5 &\ (x_5 \geq 0) \\ -\sqrt{-x_5} &\ (x_5 < 0) \end{cases}\\
 T_2:\quad x_5^\prime &= \begin{cases} \sqrt x_5 &\qquad (x_5 \geq 0) \\ 0 &\qquad (x_5 < 0) \end{cases}\\
 T_3:\quad x_5^\prime &= \begin{cases} 0 &\ (x_5 > 0) \\ -\sqrt{-x_5} &\ (x_5 \leq 0) \end{cases}
-\end{align}$$
+\end{aligned}$$
 
 *Create three models, one for each of the possible transformations on $x_5$. Which of the three models is best in terms of Adjusted R2? Display a table with the predicted values for each model. Which of the three models is best in terms of win predictions? Give a possible explanation for your results.*
 
 ```{r, echo=TRUE}
+T_1 <- lm(df$y ~ df$x2 + ifelse(df$x5 < 0, -sqrt(-df$x5), sqrt(df$x5)) + df$x7)
+T_2 <- lm(df$y ~ df$x2 + ifelse(df$x5 < 0, 0, sqrt(df$x5)) + df$x7)
+T_3 <- lm(df$y ~ df$x2 + ifelse(df$x5 > 0, 0, -sqrt(-df$x5)) + df$x7)
+
+print('Adjusted R-Squared:')
+summary(T_1)$adj.r.squared
+summary(T_2)$adj.r.squared
+summary(T_3)$adj.r.squared
+
+predictions <- df[c('Index','Team')]
+
+predictions['T_1'] <- predict(T_1)
+predictions['T_2'] <- predict(T_2)
+predictions['T_3'] <- predict(T_3)
+
+predictions
 
 ```
+
+At a cursory glance it can be seen that the estimated wins are fairly similar between each of the models, however, on the basis of the adjusted $R^2$ measurement the second model has the best performance. While this was initially surprising as it eliminates some of the data by changing it to 0; based on this result, it would seem that the explanatory power of the positive $x_5$ is not only higher than the negative, it is improved when that feature does not need to minimize error on the negative values as well.
 
 ## Problem 3.
 
@@ -149,14 +205,66 @@ T_3:\quad x_5^\prime &= \begin{cases} 0 &\ (x_5 > 0) \\ -\sqrt{-x_5} &\ (x_5 \le
 
 *Schubert et al. ( “ The Catapult Problem: Enhanced Engineering Modeling Using Experimental Design, ” Quality Engineering, 4, 463 – 473, 1992) conducted an experiment with a catapult to determine the effects of hook (x_1), arm length (x_2), start angle (x_3), and stop angle (x_4) on the distance that the catapult throws a ball. They threw the ball three times for each setting of the factors. The following table summarizes the experimental results.*
 
+```{r, echo=TRUE}
+pult <- data.frame (x1  = c(-1, -1, -1, -1, 1, 1, 1, 1),
+                    x2  = c(-1, -1, 1, 1, -1, -1, 1, 1),
+                    x3  = c(-1, 1, -1, 1, -1, 1, -1, 1),
+                    x4  = c(-1, 1, 1, -1, 1, -1, -1, 1),
+                    y1  = c(28.0, 46.3, 21.9, 52.9, 75.0, 127.7, 86.2, 195.0),
+                    y2  = c(27.1, 43.5, 21.0, 53.7, 73.1, 126.9, 86.5, 195.9),
+                    y3  = c(26.2, 46.5, 20.1, 52.0, 74.3, 128.7, 87.0, 195.7))
+```
+
 ### (a)
 
 *Fit a first - order regression model to the data and conduct the residual analysis.*
+
+```{r, echo=TRUE}
+pult['y_bar'] <- (pult$y1 + pult$y2 + pult$y3)/3
+mod3 <- lm(pult$y_bar  ~ pult$x1 + pult$x2 + pult$x3 + pult$x4)
+
+summary(mod3)
+
+qqnorm(resid(mod3), main = 'Normal Probability Plot', xlab = 'Normal', ylab = 'Data')
+qqline(resid(mod3))
+plot(fitted.values(mod3), resid(mod3))
+```
 
 ### (b)
 
 *Use the sample variances as the basis for weighted least - squares estimation of the original data (not the sample means).*
 
+```{r, echo=TRUE}
+pult['y_var'] <- ((pult$y1-pult$y_bar)**2 + (pult$y2-pult$y_bar)**2 + (pult$y3-pult$y_bar)**2)/3
+reg_on_var <- lm(pult$y_var  ~ pult$x1 + pult$x2 + pult$x3 + pult$x4)
+summary(reg_on_var)
+```
+
+The least squares coefficients can be seen in the summary above, though on the basis of the $p$ values these are far from good measures.
+
 ### (c)
 
 *Fit an appropriate model to the sample variances (note: you will require an appropriate transformation!). Use this model to develop the appropriate weights and repeat part b.*
+
+```{r, echo=TRUE}
+mod4 <- lm(log(pult$y_bar) ~ (pult$x1) + (pult$x2) + (pult$x3) + (pult$x4))
+
+summary(mod4)
+
+qqnorm(resid(mod4), main = 'Normal Probability Plot', xlab = 'Normal', ylab = 'Data')
+qqline(resid(mod4))
+plot(fitted.values(mod4), resid(mod4))
+```
+
+```{r, echo=TRUE}
+wt <- 1 / lm(abs(mod3$residuals) ~ mod3$fitted.values)$fitted.values^2
+mod5 <- lm((pult$y_bar) ~ (pult$x1) + (pult$x2) + (pult$x3) + (pult$x4), weights = wt)
+
+summary(mod5)
+
+qqnorm(resid(mod5), main = 'Normal Probability Plot', xlab = 'Normal', ylab = 'Data')
+qqline(resid(mod5))
+plot(fitted.values(mod5), resid(mod5))
+```
+
+It would appear that the log transform is more effective than the weighted regression as performed above.
