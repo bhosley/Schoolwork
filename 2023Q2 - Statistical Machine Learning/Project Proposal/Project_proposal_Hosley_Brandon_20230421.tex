@@ -3,9 +3,9 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 
-\usepackage{amsmath,amssymb,amsthm}
+%\usepackage{amsmath,amssymb,amsthm}
 \usepackage{tcolorbox}
-\newtcbox{\inlinecode}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
+%\newtcbox{\inlinecode}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
 
 %\usepackage{enumerate}
 \usepackage{graphicx}
@@ -55,39 +55,94 @@ To conclude this proposal we will discuss what the intended contribution of this
 to the body of Computer Vision writ large will be.
 
 
-\subsection{Background and Motivation}
+\subsection{Motivation}
 
-The motivation behind this work is to explore possible data transformations that may
-advance a larger project of wide-angle homographic transformations
+The CMP facade dataset 
+
+\cite{}
+
+is a collection of images of building facades which have been rectified and
+have a number of distinct architectural features manually labeled.
+One use of this dataset is shown in 
+
+\cite{}
+
+where the authors use the labeled building data to train a generative adversarial network
+to produce realistic, synthetic images of building facades.
+Other potential applications of this type of model will be left to the imagination of the reader.
+
+The objective of this project is to attempt to produce similar feature labeling but
+via an application of unsupervised salient object detection.
+Or to identify groups of three dimensional primitives using a histogram of gradients technique.
+
+Additionally, due to external constraints this is to be done without using any sort of neural network.
+
 
 \section{Data Science Trajectory}
 
 
 
+
 \section{Data Acquisition and Preparation}
 
-The dataset to be used was made 
+The dataset to be used is comprised of approximately 20GB of images of consumer motor vehicles.
+It has generously been made available by
+
+\cite{}
+
+and has several aspects that we expect will be very useful towards our goals.
+
+Additionally, this data has been sanitized and will be ready for use immediately.
+The sizes of images are consistent among the types of image groups within the dataset.
+Conveniently, this set includes a set of labeled features that may be useful in 
+attempting to identify if produced groups of primitives can be correlated with
+features typically recognized by humans.
 
 \section{Data Exploration}
 
-approximately 20GB of
+The
 
-%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%
-In particular, the web-nature data contains 161 car makes with 1,687 car models, covering most of the commercial car models in the recent ten years. There are a total of 136, 727 images capturing the entire cars and 27, 618 images capturing the car parts, where most of them are labeled with attributes and viewpoints. The surveillance-nature data contains 50, 000 car images captured in the front view.
+\cite{}
 
-Car Hierarchy - Make, model, year
+dataset contains 136,727 images of motor vehicle bodies with several labels attached to the images; 
+some of which will be immediately useful.
+Each vehicle has a hierarchical set of labels constituting the make, model, and year.
+Specifically, the set includes 161 makes and 1,687 models spread approximately across
+the years 2005 to 2015.
+The vehicles are further divided by class of body-type; MPV, SUV, hatchback, sedan, minibus, fastback, estate, pickup, sports, crossover, convertible, and hardtop convertible.
+There are five different points of view; front, rear, side, side-front, side-rear.
 
-For example, we define twelve types of cars, which are MPV, SUV, hatchback, sedan, minibus, fastback, estate, pickup, sports, crossover, convertible, and hardtop convertible,
+The 
 
-Viewpoints We also label five viewpoints for each car model, including front (F), rear (R), side (S), front-side (FS), and rear-side (RS).
+\cite{}
 
-eight car parts for each car model, including four exterior parts (i.e. headlight, taillight, fog light, and air intake) and four interior parts (i.e. console, steering wheel, dashboard, and gear lever).
-%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%
+dataset also contains 27,618 images capturing parts
+of the vehicles such as headlight, taillight, fog light, and air intake; which will be used and
+console, steering wheel, dashboard, and gear lever; which will not be used.
+
+The final class of images are surveillance-nature data containing 50,000 images capturing
+the vehicle front view from an elevated perspective.
 
 \section{Expected Contributions}
 
+Over the last decade computer vision has improved at an incredible pace.
+Particularly within the areas of object detection, classification, and identification.
+The flexibility of various models to perform these tasks has proven to be very effective.
+
+One of the tasks that remains difficult for computers to do is to infer traits about unseen portions
+of objects that it is built to identify.
+Similarly, there are limits on the effectiveness of models when it comes to significant
+changes in perspective when compared to the training data provided.
+This problem will be significantly exacerbated when the training data set has few samples
+or the samples all occur from a narrow perspective.
+
+With this project we wish to increase the flexibility of performing identification of objects in spite
+of an extremely small reference set.
+Additionally, we hope that the deconstruction of objects in the manner presented in this paper will allow
+us to create a larger synthetic training set using information about features extracted from minority
+samples and inference based on information provided by a larger set so that other training tasks can be performed.
+Among these tasks we intend to evaluate the implementation of lighter and smaller object identification models, 
+and improving the reconstruction of three dimensional models of the objects depicted in limited view. 
 
 %\section{Publication Venues}
 %\section{Additional Methods}
