@@ -1,0 +1,210 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 7 Practical Exercise"
+footer: `r paste('Lesson 7 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(printr)
+library(xtable)
+library(formatR)
+library(ggplot2)
+library(psych)
+options(xtable.comment = FALSE, xtable.type="latex")
+options(rgl.useNULL=TRUE)
+#.rs.restartR()
+library(qpcR)
+```
+
+# Perform data housekeeping - upload data for Example 5.1 and Example 5.2, name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df <- read.xlsx('./data-ex-5-1.xlsx', sheetIndex = 1)
+names(df) <- c('Customer', 'x (kWh)', 'y (kW)')
+```
+
+# 2. Example 5.1 (p. 173-175)
+
+## a) Create scatterplot of data
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(x=df$`x (kWh)` , y=df$`y (kW)`)
+```
+
+## b) Create linear model and display ANOVA table. Compare to least squares fit on p. 173 and ANOVA table on p. 175
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod <- lm(df$`y (kW)`~df$`x (kWh)`)
+summary(mod)
+anova(mod)
+```
+
+## c) Create plot of R-Student values versus fitted values
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(resid(mod))
+```
+
+## d) Transform and regress on y* = sqrt(y).Compare to least squares fit on p. 173
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_root <- lm(sqrt(df$`y (kW)`)~df$`x (kWh)`)
+summary(mod_root)
+anova(mod_root)
+```
+
+## e) Create plot of R-Student values versus fitted values of transformed model
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(resid(mod_root))
+```
+
+# 3. Example 5.3 (p. 184)
+
+## a) Perform Box-Cox transformation of Electric Utility data using boxcox() function
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+bc <- boxcox(df$`y (kW)`~df$`x (kWh)`)
+```
+
+## b) The boxcox() function outputs a range of x and y values. Plot those values and compare to p. 185. Why are the plots different?
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(bc)
+```
+
+Page 185 show residuals, whereas the plot above is a plot of the transformed values without a new regression.
+
+## c) Find value of lambda ("y" in R's boxcox notation) using which() and max() functions
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+lambda <- bc$x[which.max(bc$y)]
+```
+
+## d) Transform y (Demand) using Box-Cox transformation Equation 5.1 on p. 182. Vary lambda values and compare SS_Residual to Table 5.7 on p. 185
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_bc <- lm(((df$`y (kW)`^lambda-1)/lambda) ~ df$`x (kWh)`)
+plot(resid(mod_bc))
+```
+
+# 4. Example 5.2 (p. 178-181)
+
+## a) Create scatterplot to visualize data
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df2 <- read.xlsx('./data-ex-5-2.xlsx', sheetIndex = 1)
+names(df2) <- c('Observation', 'Wind', 'Output')
+plot(df2$Wind, df2$Output)
+```
+
+## b) Fit linear model first; compare results to p. 178
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod2 <- lm(df2$Output~df2$Wind)
+summary(mod2)
+anova(mod2)
+```
+
+## c) Create residual plots - R-Student and raw residuals versus fitted values
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(resid(mod2))
+```
+
+## d) Residual plots show clear nonlinearity. Attempt to rectify through transformation: x' = 1/x
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_inv <- lm(df2$Output ~ 1/df2$Wind)
+```
+
+## e) Create scatterplot and model using transformed data; compare to p. 180 and 181
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+ggplot(df2, aes(1/df2$Wind, df2$Output)) +
+  geom_point() +
+  geom_smooth(method='lm', se=FALSE) 
+```
+
+Appears to be essentially the same as the graph on page 181.
+
+## f) Plot residuals versus fitted values; compare to p. 182
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(resid(mod_inv))
+```
+
+# 5. Example 5.4 (p. 187)
+
+## Determine alpha value to transform independent variable using Box-Tidwell Procedure
+
+### Step 1.0: Define alpha_0 = 1 and run simple regression model (performed in Example 5.2 above)
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+alpha_0 <- 1
+mod_bt <- lm(df2$Output ~ df2$Wind)
+summary(mod_bt)
+```
+
+### Step 1.1: Define w = x ln x and add to model as an independent variable; compare output to p. 187
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df2['w'] <- df2$Wind * log(df2$Wind)
+mod_bt2 <- lm(df2$Output ~ df2$Wind + df2$w)
+summary(mod_bt2)
+```
+
+### Step 1.2: Using  Equation 5.10, calculate alpha_1; compare to p. 187 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+alpha_1 = -0.46260/0.24115 + 1
+alpha_1
+```
+
+### Step 2.0: Define x' = x^alpha_1 and regress model with alpha_0 = 0; compare to p. 187
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df2["x_p"] <- df2$Wind**alpha_1
+mod_bt3 <- lm(df2$Output ~ df2$x_p)
+summary(mod_bt3)
+```
+
+### Step 2.1: Define w' = x' ln x', add as independent variable, and run model
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df2['w_p'] <- df2$x_p * log(df2$x_p)
+mod_bt4 <- lm(df2$Output ~ df2$x_p + df2$w_p)
+summary(mod_bt4)
+```
+
+### Step 2.2: Using equation 5.10, calculate alpha_2; compare to value on p. 187. Pretty close to -1, which was the transformation in Example 5.2. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+alpha_2  =  0.5995 /  -6.67844 + alpha_1
+alpha_2
+```
+
+Very close to the textbook answer.
