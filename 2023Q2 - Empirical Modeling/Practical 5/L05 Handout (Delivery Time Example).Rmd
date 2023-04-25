@@ -1,0 +1,106 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 5 Practical Exercise"
+footer: `r paste('Lesson 5 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+One or more models from the Lesson 4 practical exercise will be necessary to complete the following requirements. If you so desire, you may add this material to the end of your .Rmd file from Lesson 4.
+
+## a) Read data from data-ex-3-1.xlsx using the read.xlsx() command.
+```{r, echo=T}
+df <- read.xlsx('../Practical 4/data-ex-3-1.xlsx', sheetIndex = 1)
+```
+
+## b) Give names to columns using names() command and attach to the dataframe using attach(). Output data to make sure it reads properly using print(xtable(\textit{dataname}))
+```{r, echo=T}
+names(df) <- c("Observation", "Time","Cases", "Distance")
+attach(df)
+```
+
+## c) Output data structure and dimensions using the str() and dim() commands.
+```{r, echo=T}
+sprintf('The data structure is a %s', typeof(df) )
+sprintf('The dimensions are %i by %i', dim(df)[1], dim(df)[2])
+```
+
+```{r, echo=T}
+mod <- lm(Time~Cases+Distance, data=df)
+print(xtable(summary(mod)))
+```
+
+
+# 2. Example 3.8 (p. 98) 
+## Calculate 95% confidence intervals for the regression parameters.
+
+```{r, echo=T}
+N <- dim(df)[1]
+X <- matrix(c(rep(1, N), df[, "Cases"], df[, "Distance"]), ncol = 3, byrow = FALSE)
+beta <- diag(t(X) %*% X )
+beta_hat <- c(2.3412, 1.6159, 0.0144)
+std_error <- c(1.0967, 0.1707, 0.0036)
+t_vals <- c(2.13, 9.46, 3.98)
+low_betas <- beta_hat - t_vals * std_error
+high_betas <- beta_hat + t_vals * std_error
+
+print(low_betas)
+print(high_betas)
+```
+
+# 3. Example 3.9 (p.99)
+## Calculate confidence interval for mean response about some point $x_0$.
+
+```{r, echo=T}
+x_0 = data.frame(Cases=c(1),
+                 Distance=c(1))
+conf = 0.95
+alpha = 1 - conf
+df = dim(df)[1] - dim(df)[2]
+
+lower_mr <- predict(mod, x_0) - ( qt(alpha/2, df) * var(Time) )
+upper_mr <- predict(mod, x_0) + ( qt(alpha/2, df) * var(Time) )
+
+print(lower_mr)
+print(upper_mr)
+```
+
+# 4. Example 3.12 (p. 104)
+## Create prediction interval on a new observation. Use same $x_0$.
+
+```{r, echo=T}
+
+```
+
+# 5. Example 3.14 (p.115-116)
+## Create a model with standardized regression coefficients. Scale using the scale() function
+
+```{r, echo=T}
+
+```
