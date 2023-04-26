@@ -1,0 +1,152 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 9 Practical Exercise"
+footer: `r paste('Lesson 9 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(printr)
+library(xtable)
+library(formatR)
+library(nlme)
+library(MASS)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+# Perform data housekeeping - upload data for the Delivery Time example (we will use Example 5.7); name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df <- read.xlsx('./data-ex-5-7.xlsx', sheetIndex = 1)
+names(df) <- c('observation', 'time', 'cases', 'distance', 'city')
+df
+```
+
+# 2. Example 6.1 (p.213-214) 
+## a) Calculate hat matrix values
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+N <- dim(df)[1]
+X <- matrix(c(df$cases, df$distance, rep(1, N)), ncol = 3, byrow = FALSE)
+H <- X%*%ginv(t(X)%*%X)%*%t(X)
+diag(H)
+```
+
+## b) Create data frame to reproduce Table 6.1 on p. 214 - start with column for Observation and $h_{ii}$
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+table_6_1 <- data.frame(df$observation)
+table_6_1['h_ii'] <- diag(H)
+mod <- lm(df$time~df$cases+df$distance)
+```
+
+## c) Create shell of unnamed table on p. 213
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+unnamed <- data.frame(Run = c('9 and 22 in', '9 out', '22 out', '9 and 22 out'))
+```
+
+## d) Create models for the four scenarios in the unnamed table on p. 213. Note: Deletions using subset= are done sequentially. So, subset=(1:N)[-1][-2] removes the first observation and then the second of the remaining observations.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod1 <- lm(df$time ~ df$cases + df$distance)
+mod2 <- lm(df[c(-9),]$time ~ df[c(-9),]$cases + df[c(-9),]$distance)
+mod3 <- lm(df[c(-22),]$time ~ df[c(-22),]$cases + df[c(-22),]$distance)
+mod4 <- lm(df[c(-9,-22),]$time ~ df[c(-9,-22),]$cases + df[c(-9,-22),]$distance)
+
+unnamed['BetaHat0'] <- c(coef(mod1)[1], coef(mod2)[1], coef(mod3)[1], coef(mod4)[1])
+unnamed['BetaHat1'] <- c(coef(mod1)[2], coef(mod2)[2], coef(mod3)[2], coef(mod4)[2])
+unnamed['BetaHat2'] <- c(coef(mod1)[3], coef(mod2)[3], coef(mod3)[3], coef(mod4)[3])
+unnamed['MS_Res'] <- c(anova(mod1)[3,3], anova(mod2)[3,3], anova(mod3)[3,3], anova(mod4)[3,3])
+unnamed['R2'] = c(summary(mod1)$r.squared, summary(mod2)$r.squared, summary(mod3)$r.squared, summary(mod4)$r.squared)
+```
+
+## e)Display completed (unnamed) table on bottom of p. 213
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+unnamed
+```
+
+# 3. Example 6.2 (p.216)
+
+## a) Calculate Cook's D using Equation 6.5
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+((rstudent(mod)^2)/2)*(table_6_1$h_ii/(1-table_6_1$h_ii))
+
+```
+
+## b) Calculate Cook's D using cooks.distance(). Does this give the same answer as the "by hand" approach?
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+cooks.distance(mod)
+```
+
+## c) Add Cook's D to the Table 6.1 dataframe
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+table_6_1['D_i'] <- cooks.distance(mod)
+```
+
+# 4. Example 6.3 (p.218-219)
+
+## a) Calculate DFFITS and DFBETAS using R
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+R <- ginv(t(X)%*%X)%*%t(X)
+DFFITS <- sqrt(table_6_1$h_ii/(1-table_6_1$h_ii))*rstudent(mod)
+DFBETAS <- dfbetas(mod)
+colnames(DFBETAS) <- c('Intercept DFBETAS','Cases DFBETAS','Distance DFBETAS')
+```
+
+## b) Update Table 6.1
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+table_6_1['DFFITS'] <- DFFITS
+table_6_1 <- cbind(table_6_1, DFBETAS)
+```
+
+# 5. Example 6.4 (p. 219)
+
+## a) Calculate Covariance Ratio using R
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+CR <- covratio(mod)
+```
+
+## b) Update Table 6.1
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+table_6_1['COVRATIO'] <- CR
+table_6_1
+```
+
+## c) Identify observations that exceed limits of $1 \pm 3\frac{p}{n}$ for COVRATIO using which() and the "or" logical operator (|). Are these the same points identified in the textbook?
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+which(table_6_1$COVRATIO > (1+(9/25)) | table_6_1$COVRATIO < (1-(9/25)))
+```
+
+The same, but with the addition of entry 16.
