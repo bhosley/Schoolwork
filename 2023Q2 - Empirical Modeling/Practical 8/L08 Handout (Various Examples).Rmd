@@ -1,0 +1,126 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 8 Practical Exercise"
+footer: `r paste('Lesson 8 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(printr)
+library(xtable)
+library(formatR)
+library(nlme)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+# Perform data housekeeping - upload data for Example 5.6, Example 5.7, and Printing Ink; name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df6 <- read.xlsx('./data-ex-5-6.xlsx', sheetIndex = 1)
+df7 <- read.xlsx('./data-ex-5-7.xlsx', sheetIndex = 1)
+names(df7) <- c('observation', 'time', 'cases', 'distance', 'city')
+dfI <- read.xlsx('./data-ex-PrintingInk.xlsx', sheetIndex = 1)
+```
+
+# 2. Example 5.5 Method (using Printing Ink data) 
+
+## a) Create a linear model relating the regressors to the standard deviation ('s' in th data file)
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+I_reg_s_mod <- lm(dfI$s ~ dfI$x1 + dfI$x2 + dfI$x3)
+summary(I_reg_s_mod)
+```
+
+## b) Define model weights
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+dfI['w'] <- 1/ sqrt(abs(residuals(I_reg_s_mod)))
+#dfI['w'] <- 1 / dfI$s**2
+#dfI$w <- replace(dfI$w, dfI$w>1, 0)
+#interp <- mean(dfI$w)
+#dfI$w <- replace(dfI$w, dfI$w==0, interp)
+```
+
+Our weights are estimated using the inverse of each entry's variance
+Since division by zero would otherwise happen, resulting in infinite weight, those are replace with average.
+
+## c) Solve weighted least squares using matrices
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+library(MASS)
+N <- dim(dfI)[1]
+X <- matrix(c(rep(1, N), dfI$x1, dfI$x2, dfI$x3), ncol = 4, byrow = FALSE)
+B <- X * c(sqrt(dfI$w))
+z <- matrix(dfI$y_bar) * c(sqrt(dfI$w))
+beta <- ginv(t(B) %*% B) %*% t(B) %*% z
+print(beta)
+```
+
+## d) Solve weighted least squares using lm() and entering weights
+
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+I_reg_mod <- lm(dfI$y_bar ~ dfI$x1 + dfI$x2 + dfI$x3)
+summary(I_reg_mod)
+```
+
+## e) Display both sets of coefficients - should be the same (minor differences possible due to rounding)
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+t(beta)
+coef(I_reg_mod)
+```
+
+These values are hand grenade close rather than horseshoe close.
+
+# 3. Example 5.6 (p. 196-199)
+
+## a) Create a linear model predicting time as a function of aspect, paper,and the interaction. Results should match Table 5.11.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_6 <- lm(df6$Time ~ df6$Aspect + df6$Paper + df6$Interaction)
+summary(mod_6)
+```
+
+## b) Create a linear model of groups, with the response being the group average (i.e. use Table 5.14 as input data). Results should match Table 5.15.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df6_avg <- df6
+df6_avg$Time <- NULL
+df6_avg <- unique(df6_avg)
+df6_avg$Time <- tapply(df6$Time, df6$Helicopter, mean)
+df6_avg
+```
+
+# 4. Example 5.7 (p.201-202)
+
+## a) Run regression model using City as a random factor using lme(). Compare StdDev for (Intercept) and Residual to variances in Figure 5.12.
+
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_7 <- lme(time ~ cases + distance, random = ~ 1|city, data = df7)
+
+summary(mod_7)
+```
