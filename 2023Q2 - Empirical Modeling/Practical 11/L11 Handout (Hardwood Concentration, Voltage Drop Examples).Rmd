@@ -1,0 +1,159 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-05-01"
+author: 'Brandon Hosley'
+---
+---
+title: "Lesson 11 Practical Exercise"
+footer: `r paste('Lesson 11 Practical Exercise')`
+date: "`r format(as.Date(c('2021/05/03')), '%d %B %Y')`"
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(printr)
+library(xtable)
+library(formatR)
+library(nlme)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+# Perform data housekeeping - upload data for Example 7.1 and Example 7.2; name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df_7.1 <- read.xlsx('./data-ex-7-1.xlsx', sheetIndex = 1)
+names(df_7.1) <- c('Hardwood Concentration', 'Tensile Strength (psi)')
+
+df_7.2 <- read.xlsx('./data-ex-7-2.xlsx', sheetIndex = 1)
+names(df_7.2) <- c('Observation', 'Time (s)', 'Voltage Drop')
+```
+
+# 2. Example 7.1 (p.227-229) 
+## a) Create scatterplot
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(df_7.1$`Hardwood Concentration`, df_7.1$`Tensile Strength (psi)`)
+```
+
+## b) Fit a quadratic model on centered data; compare to p. 227
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df_7.1$hw_con2 <- df_7.1$`Hardwood Concentration`**2
+qmod_7.1 <- lm(df_7.1$`Tensile Strength (psi)` ~ 
+                 df_7.1$`Hardwood Concentration` + df_7.1$hw_con2)
+summary(qmod_7.1)
+
+vals <- seq(0, 14, 0.2)
+preds_7.1 <- predict(qmod_7.1, list(vals))
+
+plot(df_7.1$`Hardwood Concentration`, df_7.1$`Tensile Strength (psi)`)
+lines(df_7.1$`Hardwood Concentration`, preds_7.1)
+```
+
+## c) Create ANOVA table (by hand and with R); compare to Table 7.2 on p. 228
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+anova(qmod_7.1)
+```
+
+## d) Test significance of quadradic term using Partial F-test. Use alpha = 0.01 as the significance level. Compare to p. 229
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+qmod_7.1_partial <- lm(df_7.1$`Tensile Strength (psi)` ~ df_7.1$hw_con2)
+anova(qmod_7.1_partial)
+```
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+(415.07-312.64)/(17-16)/(312.64/1)
+```
+
+
+
+## e) Create residuals versus fits plot
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(df_7.1$`Hardwood Concentration`, residuals(qmod_7.1))
+```
+
+## f) Create normal probability plot of residuals
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+qqplot(df_7.1$`Hardwood Concentration`, residuals(qmod_7.1))
+```
+
+# 3. Example 7.2 (p.231-234)
+
+## a) Create scatterplot
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(df_7.2$`Time (s)`, df_7.2$`Voltage Drop`)
+```
+
+## b) Fit a cubic spline using two knots, one at  $t_1$ = 6.5 and one at $t_2$ = 13
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+library(splines)
+csmod_7.2 <- lm(df_7.2$`Voltage Drop` ~ ns(df_7.2$`Time (s)`, knots = c(6.5,13)) )
+summary(csmod_7.2)
+
+vals <- seq(0, 21, 0.2)
+preds_7.2 <- predict(csmod_7.2, list(vals))
+
+plot(df_7.2$`Time (s)`, df_7.2$`Voltage Drop`)
+lines(df_7.2$`Time (s)`, preds_7.2)
+```
+
+## c) Create indicator functions for the two knots
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+## d) Add columns to dataframe for the higher-order terms and spline terms
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+## e) Fit model; compare to values in Table 7.4, p. 233
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+## f) Reproduce ANOVA table on p. 233
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+## g) Test significance of spline terms using Partial F-test. Use alpha = 0.01 as the significance level
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+## h) Create residuals versus fits plot for each model
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
