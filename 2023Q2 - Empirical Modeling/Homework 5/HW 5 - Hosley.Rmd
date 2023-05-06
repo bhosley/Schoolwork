@@ -1,14 +1,14 @@
 ---
-title: 'Homework 4'
+title: 'Homework 5'
 output:
   pdf_document: default
   html_document: default
-date: "2023-04-18"
+date: "2023-05-04"
 author: 'Brandon Hosley'
 ---
 ---
-title: "Homework 4"
-footer: 'HW 4'
+title: "Homework 5"
+footer: 'HW 5'
 output:
   pdf_document:
     df_print: kable
@@ -37,107 +37,147 @@ options(rgl.useNULL=TRUE)
 #.rs.restartR()
 library(qpcR)
 library(kableExtra)
+
+library(splines)
+library(ggplot2)
 ```
 
 ## Problem 1.
 
-*Analyze the relationship between total team wins (y) and a set of regressors consisting of passing yards (x_2), turnover differential (x_5), and percent rushing plays (x_7)*
+*Analyze the relationship between a team’s rushing yards ($x_1$) and wins.*
 
 ```{r, echo=TRUE}
-df <- read_excel('../Homework 1/1989 NFL Season Data (Handout).xlsx', range = cell_rows(1:29))
+df <- read_excel('./1989 NFL Season Data (HW5 Handout).xlsx', range = cell_rows(1:29))
+names(df) = c('Index', 'Team', 'Games won', 'Rushing yards (season)', 'Passing yards (season)', 'Punting average (yards/punt)', 'Field goal percentage', 'Turnover differential', 'Penalty yards', 'Percent rushing plays', 'Opponent rushing yards (season)', 'Opponent passing yards (season)', 'Conference', 'Division', 'Playoffs')
 ```
 
 ### (a)
 
-*Create a multiple regression model and perform a thorough influence analysis. Provide a table containing the predicted values, R-Student residuals, hat values, Cook’s D values, DFBETA values, DFFITS values, and COVRATIO values.*
+*Visualize the data using a scatter plot. What does this suggest about the relationship with the data?*
 
 ```{r, echo=TRUE}
-mod <- lm(y ~ x2 + x5 + x7, df)
-p <- length(coef(mod))
-table = data.frame('obs' = df$Team,
-                   'y_hat' = mod[['fitted.values']],
-                   't_i' = rstudent(mod),
-                   'h_ii' = hatvalues(mod),
-                   'D_i' = cooks.distance(mod),
-                   'DFBETAS_int' = dfbetas(mod)[,'(Intercept)'],
-                   'DFBETAS_x2' = dfbetas(mod)[,'x2'],
-                   'DFBETAS_x5' = dfbetas(mod)[,'x5'],
-                   'DFBETAS_x7' = dfbetas(mod)[,'x7'],
-                   'DFFITS' = dffits(mod),
-                   'COVRATIO' = covratio(mod))
-
-names(table) <- c('Team','$\\hat{y}$','$t_i$','$h_{ii}$','$D_i$', '$DFBETAS$',
-                  '$DFBETAS$','$DFBETAS$','$DFBETAS$','$DFFITS_i$','$COVRATIO_i$')
-
-landscape(kable(table, escape = FALSE, booktabs = TRUE, digits = 3) 
-          %>% add_header_above(c(" " = 5,
-                                 "Intercept" = 1,
-                                 "Passing Yards" = 1,
-                                 "Turnover Differential" = 1,
-                                 "Rush Percentage" = 1, ' ' = 2 )) 
-          %>% kable_styling(latex_options = "scale_down"))
+plot(x=df$`Rushing yards (season)`, y=df$`Games won`)
 ```
 
-
+There appears to be an inverted quadratic relationship, peaking in the 1900 to 2000 yard range, and with a somewhat sizable variance.
 
 ### (b)
 
-*Give the thresholds for determining whether an observation is influential according to each metric.*
+*Create two models. The first model is a simple linear regression model with the lone regressor. The second model is a second order model with a linear term and a quadratic term. Compare and contrast the two models in terms of $R^2$ (or Adjusted $R^2$), $MS_\text{Residual}$, and model adequacy.*
 
 ```{r, echo=T}
-n <- length(df$Index)
-h_ii <- 2*p/n
-dfbet <- 2/sqrt(n)
-dffit <- 2*sqrt(p/n)
-cov_low <- 1 - 3*p/n
-cov_high <- 1 + 3*p/n
+mod_fo <-lm(df$`Games won` ~ df$`Rushing yards (season)`)
+mod_so <-lm(df$`Games won` ~ poly(df$`Rushing yards (season)`, 2))
+summary(mod_fo)
+summary(mod_so)
+
+plot(x=df$`Rushing yards (season)`, y=residuals(mod_fo), col=NULL)
+points(x=df$`Rushing yards (season)`, y=residuals(mod_fo), col='green') 
+points(x=df$`Rushing yards (season)`, y=residuals(mod_so), col='red')
+
+ggplot() + 
+  stat_qq(aes(sample = residuals(mod_fo)), colour = "green") + 
+  stat_qq(aes(sample = residuals(mod_so)), colour = "red") +
+  geom_abline(aes(slope = 1, intercept = 0), linetype = 2)
 ```
 
-$h_{ii} > \frac{2p}{n} = `r h_ii[1]`$  
 
-$D_i > 1$
+In both cases the $R^2$ and adjusted $R^2$ values are not particularly high and likely not good enough to meet any realistic standards. However, the second order regression does perform better by this metric. The second order regression also has a lower mean squared error.
 
-$|\text{DFBETAS}_{j,i}| > \frac{2}{\sqrt{n}} = `r dfbet`$
-
-$|\text{DFFITS}_{i}| > 2\sqrt{\frac{p}{n}} = `r dffit`$
-
-$`r cov_low` = 1-\frac{3p}{n} < \text{COVRATIO} < 1+\frac{3p}{n} = `r cov_high`$
+Finally, as can be seen in the qqplot, the second order (red) is mildly closer to linear than the first order (green).
 
 ### (c)
 
-*Identify and discuss which observations are influential according to which influence measure.*
-
-## Influence of $h_{ii}$
-```{r, echo=T}
-kable(table[c(abs(table$`$h_{ii}$`)>h_ii),c('Team','$h_{ii}$')], 
-      escape = FALSE, booktabs = TRUE, digits = 3)
-```
-
-## Influence of $D_{i}$
+*Instead of a quadratic model, create a linear spline model with the knot at 1900 rushing yards. Ensure that there is no discontinuity at the knot point. Compare to the two models from Part (b) using the same criteria (Adjusted $R^2$, $MS_\text{Residual}$, and model adequacy).*
 
 ```{r, echo=T}
-kable(table[c(abs(table$`$D_i$`)>1),c('Team','$D_i$')], escape = FALSE, booktabs = TRUE, digits = 3)
+knt <- 1900
+mod_spline <- lm(`Games won` ~ `Rushing yards (season)` 
+                 + I((`Rushing yards (season)`-knt)*(`Rushing yards (season)`>=knt)), data=df )
+summary(mod_spline)
+
+plot(x=df$`Rushing yards (season)`, y=residuals(mod_fo), col=NULL)
+points(x=df$`Rushing yards (season)`, y=residuals(mod_fo), col='green') 
+points(x=df$`Rushing yards (season)`, y=residuals(mod_spline), col='red')
+
+ggplot() + 
+  stat_qq(aes(sample = residuals(mod_fo)), colour = "green") + 
+  stat_qq(aes(sample = residuals(mod_spline)), colour = "red") +
+  geom_abline(aes(slope = 1, intercept = 0), linetype = 2)
+
+coords <- data.frame(seq(1200, 2400, length.out = nrow(df))) 
+names(coords) <- 'Rushing yards (season)'
+
+plot(x=df$`Rushing yards (season)`, y=df$`Games won`)
+lines(x=coords$`Rushing yards (season)`, y=predict.lm(mod_spline, newdata= coords) )
 ```
 
-## Influence of DFBETAS
+The two-spline model also outperforms the single order regression, in all of the above tests. The spline regression seems to also perform slightly better than the second order regression. The visual check shows that the model is continuous. 
+
+## Problem 2 
+
+*Analyze the relationship between a team’s offensive capabilities ($x_1$ and $x_2$), defensive capabilities ($x_8$ and $x_9$), Conference, and Division on total team wins ($y$).*
+
+### (a)
+
+*Create a multiple regression model. Use the software’s default settings for the indicator variable convention. Comment on the results of the hypothesis tests for significance of the regression coefficients. What is the default reference level that the software uses for each categorical variable? What is the interpretation of the estimated regression coefficient associated with Conference?*
 
 ```{r, echo=T}
-kable(table[c(abs(table[6]) > dfbet | 
-              abs(table[7]) > dfbet | 
-              abs(table[8]) > dfbet | 
-              abs(table[9]) > dfbet), c(1,6,7,8,9)], escape = FALSE, booktabs = TRUE, digits = 3)
+df['NFC'] <- with(df, ifelse(df$Conference == 'NFC',1, 0) )
+df['East'] <- with(df, ifelse(df$Division == 'East',1, 0) )
+df['West'] <- with(df, ifelse(df$Division == 'West',1, 0) )
+
+mod_mult <- lm(df$`Games won` ~ df$`Rushing yards (season)` + df$`Passing yards (season)`
+               + df$`Opponent passing yards (season)` + df$`Opponent rushing yards (season)`
+               + df$NFC + df$East + df$West)
+
+mod_mult2 <- lm(df$`Games won` ~ df$`Rushing yards (season)` + df$`Passing yards (season)`
+               + df$`Opponent passing yards (season)` + factor(df$Conference) + factor(df$Division) ) 
+
+anova(mod_mult)
+anova(mod_mult2)
 ```
 
-## Influence of DFFITS
+The default reference level is the first factor value in the dataframe, and the remaining order is the order of first occurence of each level. From the above results it shows that the one-hot version performs better than the factorized version in which division is not split, this is because, as an indicator variable there will exist values 0, 1, and 2 causing scaling issues.
 
 ```{r, echo=T}
-kable(table[c(abs(table$`$DFFITS_i$`)>dffit), c('Team','$DFFITS_i$')], escape = FALSE, booktabs = TRUE, digits = 3)
+summary(mod_mult)
 ```
 
-## Influence of COVRATIO
+The conference coefficient suggests that being in the NFC comes with and average of 1/3 fewer winning games. This is made with a large $p$ value and is therefore not a very significant result.
+
+### (b)
+
+*Can the offensive regressors ($x_1$ and $x_2$) be removed from the model? Justify your answer with the appropriate partial $F$-test.*
+
+Using a critical value of 0.05 we will use a partial $F$-test to determine if $H_0$: the removed variables are insignificant to the accuracy of the model or $H_a$: the regressors removed are significant and removal diminishes the predictive power of the full model.
 
 ```{r, echo=T}
-kable(table[c(table$`$COVRATIO_i$` > cov_high | table$`$COVRATIO_i$` < cov_low), c('Team','$COVRATIO_i$')], escape = FALSE, booktabs = TRUE, digits = 3)
+mod_mult_less_offense <- lm(df$`Games won` ~ df$`Opponent passing yards (season)` 
+                            + df$`Opponent rushing yards (season)` + df$NFC + df$East + df$West)
+
+anova(mod_mult_less_offense, mod_mult)
 ```
 
-From these results we can see that several teams meet the influential thresholds for most of the features, except $D_i$. The Seahawks and Falcons both occur in these results in multiple instances. What this suggests is that these teams are highly influential on the regression as a whole. In the case of the Falcons' underperformance and the Seahawks' overperformance is exceptional relative to several of the measurements listed above.
+Because $p=0.1663>0.05$ we fail to reject the null hypothesis and removal of the offensive statistics may not effect the overall performance of the model.
+
+### (c)
+
+*Can the independent variables associated with Conference and Division be removed from the model? Justify your answer with the appropriate partial $F$-test.*
+
+```{r, echo=T}
+mod_mult_less_con_div <- lm(df$`Games won` ~ df$`Rushing yards (season)` + df$`Passing yards (season)` 
+                            +df$`Opponent passing yards (season)` + df$`Opponent rushing yards (season)`)
+
+anova(mod_mult_less_con_div, mod_mult)
+```
+Using the same parameters as the Hypothesis in part (b) we get an overwhelmingly high $p=0.9541$ in which we confidently fail to reject the null hypothesis and we can probably drop the conference and division encodings safely.
+
+### (d)
+
+*Student A and Student B are discussing how to model team wins with only Conference and Division as the regressors. The crux of the debate is whether an interaction term is appropriate. Student A claims that any of the six divisions can be adequately accounted for using the Conference and Division variables with no interaction. Student B thinks that there should be an interaction term.*
+
+*Adjudicate the dispute. Why is Student B _probably_ correct? What would need to be true for Student A’s position to be correct?*
+
+Because the divisions are each lower echelons within their own conferences it is probable that student B is correct with regards to the interaction term, this will allow for accounting of that level of organization. In order for student A to be _probably_ correct the divisions would have to be independent features that perhaps corresponded to geography alone rather than being assigned to different conferences.
+
