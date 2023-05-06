@@ -1,0 +1,126 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-05-03"
+author: 'Brandon Hosley'
+---
+---
+title: "Lesson 12 Practical Exercise"
+footer: `r paste('Lesson 12 Practical Exercise')`
+date: "`r format(as.Date(c('2021/05/05')), '%d %B %Y')`"
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(printr)
+library(xtable)
+library(formatR)
+library(nlme)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+# Perform data housekeeping - upload data for Example 8.1; name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df_8.1 <- read.xlsx('./data-ex-8-1.xlsx', sheetIndex = 1, colIndex = c(2,3,4))
+names(df_8.1) <- c('Hours', 'RPM', 'Tool Type')
+```
+
+# 2. Example 8.1 (p.262-264) 
+## a) Create scatterplot to look at the data - all points look the same
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(df_8.1)
+scatterplot3d::scatterplot3d(df_8.1)
+```
+
+## b)  Create scatterplot - distinguish between Tool Type using points() command to make Tool Type A green and Tool Type B red.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(x=df_8.1$RPM, y=df_8.1$Hours, col=NULL)
+points(y=df_8.1[df_8.1$`Tool Type`=='A',]$Hours, x=df_8.1[df_8.1$`Tool Type`=='A',]$RPM, col='green')  
+points(y=df_8.1[df_8.1$`Tool Type`=='B',]$Hours, x=df_8.1[df_8.1$`Tool Type`=='B',]$RPM, col='red')  
+```
+
+## c) Define indicator variables for Tool Type and add to dataframe
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df_8.1['Tool B'] = with(df_8.1, ifelse(df_8.1$`Tool Type` == 'B',1, 0) )
+```
+
+## d) Create linear model; compare to Table 8.2 on p. 264
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_81_d <- lm(df_8.1$Hours ~ df_8.1$RPM + df_8.1$`Tool B`)
+summary(mod_81_d)
+anova(mod_81_d)
+```
+
+The coefficients are the same, but I am not seeing the exact method that they used to derive their first half summary statistics.
+
+## e) Check model adequacy with residual plots
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(df_8.1$RPM, residuals(mod_81_d))
+qqplot(df_8.1$RPM, residuals(mod_81_d))
+```
+
+# 3. Example 8.2 (p.267-268)
+# Fit a model were ToolType is expected to influence both slope and intercept; compare the two models using the Partial F-test
+
+## a) Add column to dataframe for Interaction
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df_8.1['x1x2'] <- df_8.1$RPM * df_8.1$`Tool B`
+```
+
+## b) Create full model; compare to p. 267
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_full <- lm(df_8.1$Hours ~ df_8.1$RPM + df_8.1$`Tool B` + df_8.1$x1x2)
+summary(mod_full)
+```
+
+## c) Calculate SS and df for Regression and Residual for full model; compare to Table 8.3, p. 268
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+print(sum(anova(mod_full)[-4,2])) # SSR
+print(sum(anova(mod_full)[,2])) # SS
+```
+
+## d) Test significance of interaction term using Partial F-test. Use alpha = 0.05 as the significance level; compare to values on p. 268
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+anova(mod_81_d, mod_full)
+```
+
+Because 0.1955 > 0.05 we fail to reject the null hypothesis.
+
+## e) Test hypothesis that the regression lines for each tool type are identical; compare to p. 268
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_red_A <- lm(df_8.1[df_8.1$`Tool Type`=='A',]$Hours ~ df_8.1[df_8.1$`Tool Type`=='A',]$RPM)
+mod_red_B <- lm(df_8.1[df_8.1$`Tool Type`=='B',]$Hours ~ df_8.1[df_8.1$`Tool Type`=='B',]$RPM)
+summary(mod_red_A)
+summary(mod_red_B)
+```
+
