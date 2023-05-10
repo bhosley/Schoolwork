@@ -1,0 +1,73 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 14 Practical Exercise"
+footer: `r paste('Lesson 14 Practical Exercise')`
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(printr)
+library(xtable)
+library(formatR)
+library(lmSubsets)
+library(leaps)
+library(gtools)
+library(car)
+library(dplyr)
+library(broom)
+library(MuMIn)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+# Perform data housekeeping - upload data for the Jet Turbine example; name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+# 2. Jet Turbine Example
+## a) Use dredge() function to automatically perform all regressors regression
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+## b) Analyze Model A (p. 15 in Vining Lecture Video notes). Reproduce the results shown in pages 16-20.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+## c) Analyze Model B (p. 15 in Vining Lecture Video notes). Reproduce the results shown in pages 21-26.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
+
+## d) Analyze Model C (p. 15 in Vining Lecture Video notes). Reproduce the results shown in pages 27-32.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+
+```
