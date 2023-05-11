@@ -23,11 +23,11 @@ graphics: yes
 # 1. Preliminaries
 
 ```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
-source('C:/Users/placasse1/Desktop/LaCasse/OPER 679/scripts/R/setup.R')
-shiny::includeCSS('C:/Users/placasse1/Desktop/LaCasse/OPER 679/scripts/css/flat-slidy.css')
-shiny::includeScript("C:/Users/placasse1/Desktop/LaCasse/OPER 679/scripts/js/jquery.min.js")
-shiny::includeScript(system.file('C:/Users/placasse1/Desktop/LaCasse/OPER 679/scripts','js','tpt-scroll.js'))
-shiny::includeScript(system.file('C:/Users/placasse1/Desktop/LaCasse/OPER 679/scripts','js','hideout.js'))
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript('../R/scripts/js/jquery.min.js')
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
 library(xlsx)
 library(printr)
 library(xtable)
@@ -36,26 +36,30 @@ library(ridge)
 library(pls)
 library(MASS)
 library(car)
+library(broom)
 options(xtable.comment = FALSE, xtable.type="latex")
 ```
 
 # Perform data housekeeping - upload data for Example 9.1; name columns, display to make sure it reads properly, etc. 
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+df_9.1 <- read.xlsx('./data-ex-9-1.xlsx', sheetIndex = 1, colIndex = c(2,3,4,5))
+names(df_9.1) <- c('C7H16_to_C2H2', 'Reactor_Temp', 'H2_to_C7H16', 'Contact_Time')
 ```
 
 # 2. Example 9.1 (p. 290-292)
 ## a) Create scatterplot of ContactTime versuse ReactorTemperature.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+plot(df_9.1[c('Reactor_Temp', 'Contact_Time')])
 ```
 
 ## b) Scale regressor variables using unit normal scaling.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+df_9.1_scaled <- df_9.1
+df_9.1_scaled[c('Reactor_Temp', 'H2_to_C7H16', 'Contact_Time')] <- 
+  data.frame( scale(df_9.1[c('Reactor_Temp', 'H2_to_C7H16', 'Contact_Time')]) )
 ```
 
 ## c) Fit second order model using scaled regressors, to include two-way interaction terms. Compare to Table 9.2 on p. 293.
@@ -65,13 +69,16 @@ Model output for the polym() shortcut uses a particular notation. Don't get conf
 Model both ways and use each model to decipher the polum() output.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+attach(df_9.1_scaled)
+pmod_9.1 <- lm(C7H16_to_C2H2~ polym(Reactor_Temp, H2_to_C7H16, Contact_Time, degree = 2, raw = TRUE) )
+summary(pmod_9.1)
+detach(df_9.1_scaled)
 ```
 
 ## d) Reproduce Table 9.3 on p. 295.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+kable(tidy(pmod_9.1))
 ```
 
 ## e) Using Table 9.3 data, define an X matrix and perform eigensystem analysis of X'X. Compare to Table 9.10 on p. 316.
