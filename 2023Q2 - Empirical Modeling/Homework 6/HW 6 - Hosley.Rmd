@@ -1,14 +1,14 @@
 ---
-title: 'Homework 4'
+title: 'Homework 6'
 output:
   pdf_document: default
   html_document: default
-date: "2023-04-18"
+date: "2023-05-11"
 author: 'Brandon Hosley'
 ---
 ---
-title: "Homework 4"
-footer: 'HW 4'
+title: "Homework 6"
+footer: 'HW 6'
 output:
   pdf_document:
     df_print: kable
@@ -37,11 +37,22 @@ options(rgl.useNULL=TRUE)
 #.rs.restartR()
 library(qpcR)
 library(kableExtra)
+library(modelsummary)
+library(car)
 ```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., booktabs = TRUE, digits = 4, align = 'c') %>% 
+    kable_styling(latex_options =c("striped", "hold_position"))
+}
+```
+
+*The purpose of this homework assignment is to assess your ability to perform and explain operations and concepts associated with lesson objectives for Lessons 4, 5, 11, and 13. The file 1989 NFL Season Data (Handout).xlsx contains team statistics from the 1989 National Football League (NFL) season.*
 
 ## Problem 1.
 
-*Analyze the relationship between total team wins (y) and a set of regressors consisting of passing yards (x_2), turnover differential (x_5), and percent rushing plays (x_7)*
+*Analyze the relationship between the nine numeric regressors* $(x_1, x_2, \ldots, x_9)$ *and total team wins.*
 
 ```{r, echo=TRUE}
 df <- read_excel('../Homework 1/1989 NFL Season Data (Handout).xlsx', range = cell_rows(1:29))
@@ -49,95 +60,97 @@ df <- read_excel('../Homework 1/1989 NFL Season Data (Handout).xlsx', range = ce
 
 ### (a)
 
-*Create a multiple regression model and perform a thorough influence analysis. Provide a table containing the predicted values, R-Student residuals, hat values, Cook’s D values, DFBETA values, DFFITS values, and COVRATIO values.*
+*Create the correlation matrix. What does this tell us about the multicollinearity risk in this dataset?*
 
 ```{r, echo=TRUE}
-mod <- lm(y ~ x2 + x5 + x7, df)
-p <- length(coef(mod))
-table = data.frame('obs' = df$Team,
-                   'y_hat' = mod[['fitted.values']],
-                   't_i' = rstudent(mod),
-                   'h_ii' = hatvalues(mod),
-                   'D_i' = cooks.distance(mod),
-                   'DFBETAS_int' = dfbetas(mod)[,'(Intercept)'],
-                   'DFBETAS_x2' = dfbetas(mod)[,'x2'],
-                   'DFBETAS_x5' = dfbetas(mod)[,'x5'],
-                   'DFBETAS_x7' = dfbetas(mod)[,'x7'],
-                   'DFFITS' = dffits(mod),
-                   'COVRATIO' = covratio(mod))
-
-names(table) <- c('Team','$\\hat{y}$','$t_i$','$h_{ii}$','$D_i$', '$DFBETAS$',
-                  '$DFBETAS$','$DFBETAS$','$DFBETAS$','$DFFITS_i$','$COVRATIO_i$')
-
-landscape(kable(table, escape = FALSE, booktabs = TRUE, digits = 3) 
-          %>% add_header_above(c(" " = 5,
-                                 "Intercept" = 1,
-                                 "Passing Yards" = 1,
-                                 "Turnover Differential" = 1,
-                                 "Rush Percentage" = 1, ' ' = 2 )) 
-          %>% kable_styling(latex_options = "scale_down"))
+X <- data.matrix(df[c('x1','x2','x3','x4','x5','x6','x7','x8','x9')])
+kable(cor(X))
 ```
 
-
+The correlation matrix provides some insight into the risk of pairwise multicollinearity risk.
+Using 0.5 as an arbitrary threshold we can identify the highest pairwise risks to be between x1, x7, and x8.
 
 ### (b)
 
-*Give the thresholds for determining whether an observation is influential according to each metric.*
+*Calculate the relevant eigenvalues and condition number. Evaluate the evidence for multicollinearity.*
 
 ```{r, echo=T}
-n <- length(df$Index)
-h_ii <- 2*p/n
-dfbet <- 2/sqrt(n)
-dffit <- 2*sqrt(p/n)
-cov_low <- 1 - 3*p/n
-cov_high <- 1 + 3*p/n
+X.eig <- eigen(t(X) %*% X)
+k <- max(X.eig$values) / min(X.eig$values)
+sprintf('The condition is %f', k)
+k_j <- max(X.eig$values) /X.eig$values
+kable(k_j, col.names='$\\kappa_j$')
 ```
 
-$h_{ii} > \frac{2p}{n} = `r h_ii[1]`$  
-
-$D_i > 1$
-
-$|\text{DFBETAS}_{j,i}| > \frac{2}{\sqrt{n}} = `r dfbet`$
-
-$|\text{DFFITS}_{i}| > 2\sqrt{\frac{p}{n}} = `r dffit`$
-
-$`r cov_low` = 1-\frac{3p}{n} < \text{COVRATIO} < 1+\frac{3p}{n} = `r cov_high`$
+The condition number is large enough to indicate severe multicolinearity and upon further investigation,
+the last five conditions indicate severe multicolinearity.
 
 ### (c)
 
-*Identify and discuss which observations are influential according to which influence measure.*
-
-## Influence of $h_{ii}$
-```{r, echo=T}
-kable(table[c(abs(table$`$h_{ii}$`)>h_ii),c('Team','$h_{ii}$')], 
-      escape = FALSE, booktabs = TRUE, digits = 3)
-```
-
-## Influence of $D_{i}$
+*State and interpret the linear dependence relationship associated with the most relevant eigenvalue.*
 
 ```{r, echo=T}
-kable(table[c(abs(table$`$D_i$`)>1),c('Team','$D_i$')], escape = FALSE, booktabs = TRUE, digits = 3)
+kable(X.eig$vectors[,9], col.names='Eigenvector 9')
 ```
 
-## Influence of DFBETAS
+The relationship associated with the most significant relevant eigenvalue, after dropping the factors that that are $<0.01$ we get:
+$$ 0 \approx -0.0111167\ x_3 + 0.0390763\ x_4 + 0.9991744\ x_7 $$
+
+### (d)
+
+*Create the full model, regressing y against all nine regressors. What do the variance inflation factors tell us about possible multicollinearity?*
 
 ```{r, echo=T}
-kable(table[c(abs(table[6]) > dfbet | 
-              abs(table[7]) > dfbet | 
-              abs(table[8]) > dfbet | 
-              abs(table[9]) > dfbet), c(1,6,7,8,9)], escape = FALSE, booktabs = TRUE, digits = 3)
+mod = lm(y ~ x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9, data = df)
+kable(t(vif(mod)))
 ```
 
-## Influence of DFFITS
+From these results we see that the highest VIF values are associated with $x_1$ and $x_7$. Looking at the names of the variables in the original spread sheet, it seems fairly intuitive that percentage of rushing plays would be highly correlated to the number of rushing yards during the season.
+
+## Problem 2.
+
+*Explore the effects of centering variables on multicollinearity. Create a model containing linear, interaction, and quadratic terms for both x1 and x2. Create a second model by centering the two regressors first and then multiplying/squaring them to create the interaction/quadratic terms.*
 
 ```{r, echo=T}
-kable(table[c(abs(table$`$DFFITS_i$`)>dffit), c('Team','$DFFITS_i$')], escape = FALSE, booktabs = TRUE, digits = 3)
+# mod_quad <- lm(y~ polym(x1, x2, degree = 2, raw=TRUE), data=df )
+# mod_cent_quad <- lm(y~ polym(scale(x1, scale = FALSE), scale(x2, scale = FALSE), 
+#                              degree = 2, raw=TRUE), data=df )
+mod_quad <- lm(y~ x1 + x2 + x1*x2 + I(x1^2) + I(x2^2), data=df )
+x1s <- scale(df$x1, scale = FALSE)
+x2s <- scale(df$x2, scale = FALSE)
+mod_cent_quad <- lm(y~ x1s + x2s + x1s*x2s + I(x1s^2) + I(x2s^2), data=df )
 ```
 
-## Influence of COVRATIO
+### (a) 
+
+*Compare the summary outputs of the two models. Is there a noticeable effect between the two models?*
 
 ```{r, echo=T}
-kable(table[c(table$`$COVRATIO_i$` > cov_high | table$`$COVRATIO_i$` < cov_low), c('Team','$COVRATIO_i$')], escape = FALSE, booktabs = TRUE, digits = 3)
+summary(mod_quad)
+summary(mod_cent_quad)
 ```
 
-From these results we can see that several teams meet the influential thresholds for most of the features, except $D_i$. The Seahawks and Falcons both occur in these results in multiple instances. What this suggests is that these teams are highly influential on the regression as a whole. In the case of the Falcons' underperformance and the Seahawks' overperformance is exceptional relative to several of the measurements listed above.
+It appears that the two models are statistically (almost) identical. The evaluation statistics are the same and the non-linear term coefficients remain the same. The intercept and linear term coefficients do change. All of this seems to a translation of the features in an $\mathbb R^2$ space.
+
+### (b) 
+
+*Calculate and interpret the variance inflation factors for the two models.*
+
+```{r, echo=T}
+kable(cbind(vif(mod_quad), vif(mod_cent_quad)), col.names = c('Regular', 'Mean-centered'))
+```
+
+These results would seem to imply that mean-centering could address multicollinearity, which seems nonsensical.
+
+### (c) 
+
+*Create a table with two columns, one containing the predicted values from the first model and the other containing the predicted values from the second model. What conclusions can you draw about the effects of multicollinearity?*
+
+```{r, echo=T}
+kable(cbind(mod_quad$fitted.values, mod_cent_quad$fitted.values), 
+      col.names = c('Regular', 'Mean-centered'))
+```
+
+This demonstrates that the two models predict identically. This makes sense, as a linear translation of the regressor values should have no effect on the model's prediction ability.
+
+All of this seems very unusual, I had some difficulty in understanding why this would be the case, but the chapter at the site https://study.sagepub.com/sites/default/files/gurnsey_onlineapp17.pdf outlined some helpful clarifications about how changing the mean to 0 has the effect of data points on either side mostly balancing eachother out and resulting in a typically significantly lower VIF.
