@@ -38,21 +38,33 @@ library(car)
 library(dplyr)
 library(broom)
 library(MuMIn)
+library(kableExtra)
+library(stringr)
 options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., 'latex', booktabs = TRUE, digits = 5, align = 'c') %>% 
+    kable_styling( latex_options =c("hold_position","scale_down"))
+}
 ```
 
 # Perform data housekeeping - upload data for the Jet Turbine example; name columns, display to make sure it reads properly, etc. 
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+df_B13 <- read.xlsx('./data-table-B13.xlsx', sheetIndex = 1)
 ```
 
 # 2. Jet Turbine Example
 ## a) Use dredge() function to automatically perform all regressors regression
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+lmod <- lm(y~., data = df_B13, na.action = "na.fail")
+kable(summary(dredge(lmod)))
 ```
+
+Unfortunately I could not find an effective way to make this table look decent and readable at the same time.
 
 ## b) Analyze Model A (p. 15 in Vining Lecture Video notes). Reproduce the results shown in pages 16-20.
 
