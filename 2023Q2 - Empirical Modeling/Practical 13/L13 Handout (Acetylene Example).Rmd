@@ -1,7 +1,6 @@
 ---
 output:
   pdf_document: default
-  html_document: default
 ---
 ---
 title: "Lesson 13 Practical Exercise"
@@ -37,7 +36,16 @@ library(pls)
 library(MASS)
 library(car)
 library(broom)
+library(dplyr)
+library(kableExtra)
 options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., 'latex', booktabs = TRUE, digits = 5, align = 'c') %>% 
+    kable_styling( latex_options =c("hold_position"))
+}
 ```
 
 # Perform data housekeeping - upload data for Example 9.1; name columns, display to make sure it reads properly, etc. 
@@ -59,7 +67,7 @@ plot(df_9.1[c('Reactor_Temp', 'Contact_Time')])
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 df_9.1_scaled <- df_9.1
 df_9.1_scaled[c('Reactor_Temp', 'H2_to_C7H16', 'Contact_Time')] <- 
-  data.frame( scale(df_9.1[c('Reactor_Temp', 'H2_to_C7H16', 'Contact_Time')]) )
+  data.frame( scale( df_9.1[c('Reactor_Temp', 'H2_to_C7H16', 'Contact_Time')] ) )
 ```
 
 ## c) Fit second order model using scaled regressors, to include two-way interaction terms. Compare to Table 9.2 on p. 293.
@@ -69,28 +77,55 @@ Model output for the polym() shortcut uses a particular notation. Don't get conf
 Model both ways and use each model to decipher the polum() output.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-attach(df_9.1_scaled)
-pmod_9.1 <- lm(C7H16_to_C2H2~ polym(Reactor_Temp, H2_to_C7H16, Contact_Time, degree = 2, raw = TRUE) )
-summary(pmod_9.1)
-detach(df_9.1_scaled)
+pmod_9.1 <- lm(C7H16_to_C2H2~ polym(Reactor_Temp, H2_to_C7H16, Contact_Time, degree = 2, raw = TRUE), 
+               data=df_9.1_scaled )
+landscape(kable(xtable(summary(pmod_9.1), floating = F, scalebox = 0.5, justify = "center")))
 ```
+
+I would appear that the price paid for the easier scripting with the poly() function is paid in the unfriendly output notation.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+names(pmod_9.1$coefficients) <- c('Intercept','$T$','$T^2$','$H$','$TH$','$H^2$','$C$','$TC$','$HC$','$C^2$')
+kable(tidy(pmod_9.1), col.names = c('Term','Regression Coefficient', 'Standard Error', '$t_0$', '$p$ value') )
+```
+
+This matches the reference table.
 
 ## d) Reproduce Table 9.3 on p. 295.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-kable(tidy(pmod_9.1))
+
+
+standardized <- sweep(scale(df_9.1, scale=FALSE), 2, sqrt(diag(var(df_9.1))*(nrow(df_9.1)-1)), '/' ) #Stand
+tbl_9.3 <- data.frame(standardized)
+names(tbl_9.3) <- c('$y$','$x_1$','$x_2$','$x_3$')
+
+poly_exp <- data.frame(c( tbl_9.3['$x_1$']*tbl_9.3['$x_2$'], tbl_9.3['$x_1$']*tbl_9.3['$x_3$'],
+                          tbl_9.3['$x_2$']*tbl_9.3['$x_3$'], tbl_9.3['$x_1$']*tbl_9.3['$x_1$'],
+                          tbl_9.3['$x_2$']*tbl_9.3['$x_2$'], tbl_9.3['$x_3$']*tbl_9.3['$x_3$']))
+
+tbl_9.3[c('$x_1x_2$', '$x_1x_3$', '$x_2x_3$','$x_1^2$','$x_2^2$','$x_3^2$')] <-
+  sweep(scale(poly_exp, scale=FALSE), 2, sqrt(diag(var(poly_exp))*(nrow(df_9.1)-1)), '/' )
+
+kable(tbl_9.3) %>% kable_styling(latex_options = c("hold_position","scale_down"))
 ```
 
 ## e) Using Table 9.3 data, define an X matrix and perform eigensystem analysis of X'X. Compare to Table 9.10 on p. 316.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+X <- as.matrix( cbind(1, subset(tbl_9.3, select = -`$y$`)) )
+e = eigen(t(X)%*%X)
+eigvals = e$values[-1]
+eigvecs = e$vectors[-1,-1]
+kable(as.data.frame(cbind(eigvecs,eigvals)), col.names = NULL) %>% 
+  add_header_above(c(' ' = 3, 'Eigenvectors' = 3, ' ' = 3, 'Eigenvalues  $\\lambda_j$')) %>% 
+  kable_styling(latex_options = c("hold_position","scale_down"))
 ```
 
 ## f) Calculate kappa values and compare to p. 298.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+max(eigvals)/eigvals
 ```
 
 # 3. Example 9.2 (p.307-308)
@@ -100,13 +135,18 @@ kable(tidy(pmod_9.1))
 Note: The textbook leaves off the intercept term. This is because the response and the regressors are both centered and scaled. Due to rounding, the output will give a small B_0 coefficient. We could also drop the vector of ones from X
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+Xty <- t(X) %*% tbl_9.3$`$y$`
+XtX <- t(X) %*% X
+k <- 0.032
+I <- diag(x = 1, nrow = length(XtX[, 1]))
+Beta_ridge <- ginv(XtX + k * I) %*% Xty
+Beta_ridge
 ```
 
 ## b) There is also a package to perform ridge regression automatically.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+linearRidge(tbl_9.3$`$y$` ~. ,subset(tbl_9.3, select = -`$y$`), lambda = 0.032)
 ```
 
 # 4. Example 9.3 (p.316-319)
@@ -114,47 +154,50 @@ Note: The textbook leaves off the intercept term. This is because the response a
 ## a) Perform Principal Component Regression using the pcr() function. Display $coefficients, $loadings, and $scores. Compare to Table 9.12 on p. 318 and Table 9.10 on p. 3.16.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+ex9.3pcr <- pcr( tbl_9.3$`$y$` ~. ,data =subset(tbl_9.3, select = -`$y$`) )
+summary(ex9.3pcr)
+kable(as.data.frame(ex9.3pcr$coefficients)) %>% 
+  kable_styling(latex_options = c("hold_position","scale_down"))
+kable(cbind(ex9.3pcr$loadings))
+kable(cbind(ex9.3pcr$scores))
 ```
 
 ## b) Perform Principal Component Regression (by hand) using the following steps:
-
-```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
-```
-
 ### 1) Define matrix of eigenvectors of xTx, where X is defined by standardized variables (Table 9.3).
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+kable(eigvecs)
 ```
 
 ### 2) Calculate Z; omit intercept row/column because variables are standardized. Compare to $scores output from pcr().
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+Z <- X[,-1] %*% eigvecs
+kable(Z)
 ```
 
 ### 3) Obtain least squares estimators for $\alpha$.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+alphas <- ginv(t(Z) %*% Z) %*% (t(Z) %*% tbl_9.3$`$y$`)
+kable(t(alphas))
 ```
 
 ### 4) Define vector of ones and zeros to determine cutoff of principal components to use.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+B <- c(1,1,1,1,1,0,0,0,0)
 ```
 
 ### 5) Define $\alpha_{pc}$ as per p.315 (equation not numbered). Note that this is term-by-term multiplication, not the dot product.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+alpha_pc <- alphas * B
 ```
 
 ### 6) Calculate $\beta_{pc}$ using Equation 9.10. Compare results to Table 9.12 on p. 318. Vary B vector to obtain standardized estimates in columns A, B, C, D, and E.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-
+beta_pc <- eigvecs %*% alpha_pc # Equation 9.10. Compare results to Table 9.12 on p. 318.
+kable(beta_pc)
 ```
