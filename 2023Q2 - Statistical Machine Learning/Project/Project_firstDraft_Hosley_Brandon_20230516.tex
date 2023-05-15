@@ -7,10 +7,14 @@
 \usepackage{url}
 
 % Title
-\title{Project Title}
+\title{A Comparative Study of Techniques for Addressing Class Imbalance in Machine Learning}
 
-\author{Author1, Author2, Author3% <-this % stops a space
-	\thanks{Manuscript received Month DD, YYYY; revised Month DD, YYYY.}}
+\author{Brandon Hosley, 1st Lt, \textit{AFIT}%
+	\thanks{Manuscript received May 16, 2023%
+%		; revised Month DD, YYYY.
+	}}
+
+%\keywords{class imbalance, data-level methods, algorithm-level methods, hybrid methods, machine learning, performance evaluation}
 
 % Document
 \begin{document}
@@ -20,13 +24,49 @@
 	
 	% Abstract
 	\begin{abstract}
-		This is the abstract of the project. It provides a brief overview of the project objectives, methodology, and key findings. It should be concise and informative, highlighting the significance of the project and its potential impact.
+		Class imbalance is a pervasive challenge in machine learning, occurring when the distribution of classes in a dataset is significantly skewed. Traditional learning algorithms often struggle to accurately classify minority classes due to the dominance of majority classes. To address this issue, various techniques have been proposed to mitigate the impact of class imbalance on model performance. This paper presents a comparative analysis of different methods for handling class imbalance, aiming to provide insights into their effectiveness and suitability across a range of domains and datasets.
 	\end{abstract}
 	
 	% Introduction
 	\section{Introduction}
 	\label{sec:introduction}
-	This section introduces the project by providing background information, explaining the motivation behind the project, and stating the project objectives. It may also include an overview of the methodology used and a summary of the project's contributions.
+	Class imbalance is a pervasive challenge in machine learning, where certain classes within a dataset are significantly underrepresented compared to others. This disparity often leads to biased models that are less accurate in predicting minority class instances, resulting in suboptimal overall performance. In various real-world applications, such as fraud detection, medical diagnosis, and rare event prediction, the minority class is often more significant than the majority class. In critical domains, such as medical diagnoses, where the cost of false negatives is extremely high, failing to correctly identify instances of the minority class can have severe implications. Consequently, it is crucial to develop effective strategies that mitigate the impact of class imbalance on model performance.
+
+
+
+
+
+
+
+Introduction:
+
+
+
+
+
+In recent years, researchers have proposed numerous techniques to address class imbalance and improve model performance. These methods can be broadly categorized into three main approaches: data-level methods, algorithm-level methods, and hybrid methods. Data-level methods focus on modifying the dataset itself by oversampling the minority class, undersampling the majority class, or generating synthetic samples. Algorithm-level methods aim to adapt existing machine learning algorithms or design new ones that are more robust to class imbalance. Hybrid methods combine data-level and algorithm-level techniques to leverage the advantages of both.
+
+Given the abundance of class imbalance handling methods, it becomes crucial to conduct a comparative analysis to understand their relative strengths and weaknesses. By empirically evaluating these techniques on diverse datasets and considering different evaluation metrics, we can gain insights into their effectiveness, applicability, and trade-offs. This paper aims to bridge this gap by providing a comprehensive evaluation of state-of-the-art class imbalance handling methods.
+
+The contributions of this study include:
+- An in-depth review of existing class imbalance handling techniques, categorizing them into data-level, algorithm-level, and hybrid methods.
+- A comparative analysis of these methods using benchmark datasets from various domains.
+- Evaluation of the methods based on performance metrics such as accuracy, precision, recall, F1-score, and area under the receiver operating characteristic curve (AUC-ROC).
+- Insights into the strengths, limitations, and applicability of different class imbalance handling techniques.
+- Recommendations for selecting the most suitable method(s) based on the characteristics of the dataset and the requirements of the application domain.
+
+The remainder of this paper is organized as follows. Section 2 provides an overview of related work on class imbalance handling methods. Section 3 describes the dataset used for experimentation and the evaluation metrics employed. Section 4 presents a detailed analysis of the different class imbalance handling methods. Section 5 discusses the experimental results, comparing the performance of the methods. Finally, Section 6 concludes the paper with a summary of the findings, limitations of the study, and potential directions for future research.
+
+
+
+
+
+
+
+
+
+
+
 	
 	% Literature Review
 	\section{Literature Review}
@@ -55,3 +95,9 @@
 	%\bibliography{references}
 	
 \end{document}
+
+
+
+
+
+
