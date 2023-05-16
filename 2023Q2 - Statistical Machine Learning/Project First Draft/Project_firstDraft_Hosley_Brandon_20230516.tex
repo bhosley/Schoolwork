@@ -67,12 +67,16 @@
 	
 	
 	
-	\subsection{Resampling Techniques}
+	\subsubsection{Undersampling}
 	
 	
 	
 	
-The earliest and most straightforward approaches to deal with class imbalance involve resampling the dataset. Undersampling techniques, such as random undersampling (RUS) and Tomek Links, reduce the instances of the majority class to balance the class distribution Liu et al. \cite{liu2009}. On the other hand, oversampling techniques such as random oversampling (ROS) and Synthetic Minority Over-sampling Technique (SMOTE) Chawla et al. \cite{chawla2002} increase the instances of the minority class. However, these methods can lead to overfitting (oversampling) or loss of potentially important data (undersampling).
+The earliest and most straightforward approaches to deal with class imbalance involve resampling the dataset. Undersampling techniques, such as random undersampling (RUS) and Tomek Links, reduce the instances of the majority class to balance the class distribution Liu et al. \cite{liu2009}. 
+
+\subsection{Oversampling}
+
+On the other hand, oversampling techniques such as random oversampling (ROS) and Synthetic Minority Over-sampling Technique (SMOTE) Chawla et al. \cite{chawla2002} increase the instances of the minority class. However, these methods can lead to overfitting (oversampling) or loss of potentially important data (undersampling).
 
 \subsection{Cost-Sensitive Learning}
 
@@ -170,10 +174,6 @@ Then used.
 	
 \end{tikzpicture}
 
-
-
-
-
 \begin{tikzpicture}
 \matrix (M) [matrix of nodes,
 nodes={minimum height = 7mm, minimum width = 2cm, outer sep=0, anchor=center, draw},
@@ -214,9 +214,3 @@ e/.style={fill=yellow!10}
 	%\bibliography{references}
 	
 \end{document}
-
-
-
-
-
-
