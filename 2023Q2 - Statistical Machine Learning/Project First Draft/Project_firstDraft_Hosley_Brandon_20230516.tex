@@ -64,35 +64,47 @@
 	% Literature Review
 	\section{Related Work}
 	\label{sec:related_work}
-	
-	
-	
-	\subsubsection{Undersampling}
-	
-	
-	
-	
-The earliest and most straightforward approaches to deal with class imbalance involve resampling the dataset. Undersampling techniques, such as random undersampling (RUS) and Tomek Links, reduce the instances of the majority class to balance the class distribution Liu et al. \cite{liu2009}. 
 
-\subsection{Oversampling}
-
-On the other hand, oversampling techniques such as random oversampling (ROS) and Synthetic Minority Over-sampling Technique (SMOTE) Chawla et al. \cite{chawla2002} increase the instances of the minority class. However, these methods can lead to overfitting (oversampling) or loss of potentially important data (undersampling).
-
-\subsection{Cost-Sensitive Learning}
-
-Cost-sensitive learning (CSL) is another strategy that assigns higher misclassification costs to the minority class Elkan et al. \cite{elkan2001}. This method avoids the overfitting problem of oversampling and the information loss of undersampling. However, the performance of CSL is dependent on the cost matrix, which is often hard to determine.
-
-\subsection{Ensemble Methods} 
-Ensemble methods, like Boosting and Bagging, have been extensively used to address class imbalance. AdaBoost Freund et al. \cite{freund1997} is a popular boosting algorithm, while Balanced Random Forests Chen et al. \cite{chen2004} is a well-known bagging technique. Both methods construct multiple classifiers and combine them to make the final decision. These techniques have been proven effective, but they can be computationally expensive.
-
-\subsection{Learning from Imbalanced Data Streams} 
-Imbalanced data streams are a more challenging scenario where the data distribution may change over time. Wang et al. \cite{wang2018} proposed a method that dynamically adjusts the class distribution by a resampling strategy. Gao et al. \cite{gao2015} presented a method that incrementally learns from the data stream by adjusting the decision boundaries.
-
-\subsection{Deep Learning Approaches}
-With the recent advancement in deep learning, several methods have been proposed to handle class imbalance. Cui et al. \cite{cui2019} introduced a loss function, called Class-Balanced Loss, based on effective number of samples. This technique achieves a balance between classes by adjusting the weights in the loss function. Similarly, Khan et al. \cite{khan2017} proposed Cost-Sensitive Deep Learning, which incorporates the cost matrix into the loss function of the deep learning model.
-
-These methods illustrate the wide range of techniques that have been proposed to tackle class imbalance. In this paper, we compare these methods on a suite of benchmarks to provide insights into their relative strengths and weaknesses.
+	Johnson et al. \cite{johnson2019} provides a comprehensive survey of the existing studies that focus on class imbalance and deep learning, detailing their implementation, outcomes, strengths, weaknesses, and applicability to various areas such as data complexity, performance interpretation, big data application, and more. Johnson et al. classify the techniques for addressing class imbalance into three categories; data-level, algorithm-level, and hybrid.
+	The paper concludes by highlighting the gaps in the existing research related to class imbalance in deep learning, with an aim to guide future investigations in this area. The research underscores the need for more studies, given the limited scope of current literature, especially in relation to big data applications.
 	
+	In this paper we will examine data level methods and will not examine neural network based classification methods. In the remainder of this section we will further contextualize the general strategies for addressing imbalance.
+	
+	\subsection{Undersampling}
+	
+	The earliest and most straightforward approaches to deal with class imbalance involve resampling the dataset. Undersampling techniques, such as random undersampling (RUS) and Tomek Links, reduce the instances of the majority class to balance the class distribution Liu et al. \cite{liu2009}. 
+
+	Tomek Links, as proposed by Tomek in 1976 \cite{tomek1976}, offer an enhancement over the preceding condensed nearest neighbor method. This improvement focuses on retaining only those majority class members that are proximate to the boundary with another class, rather than preserving redundant members within a cluster. The method strategically eliminates points distanced from the class boundaries, as these are less likely to be misclassified given that their nearest neighbors belong predominantly to the majority class
+
+	The one-sided sampling technique \cite{kubat1997} offers an innovative approach to reconstructing the majority class. Initially, it creates a subset that consists solely of data from the minority class. Subsequently, sets of majority class members are reintroduced. Specifically, for those majority members whose nearest neighbor would lead to their misclassification, proximate members from the original dataset are incorporated into the newly formed set. This strategy effectively lessens the density in areas distanced from the minority class, thereby enhancing class balance.
+
+	The general risk associated with undersampling techniques is the potential for important information to be lost.
+
+	\subsection{Oversampling}
+
+	Rather than reducing the size of a majority class, oversampling techniques such as random oversampling (ROS) and Synthetic Minority Over-sampling Technique (SMOTE) increase the instances of the minority class. 
+
+	SMOTE was developed by Chawla et al. \cite{chawla2002} and is a technique in which addition minority members are synthesized. The synthetic data is interpolated between two or more minority class points. This technique provides a way to avoid the creation of redundant data in a manner that is likely to be more meaningful than something like a simple jitter. 
+
+	Borderline SMOTE \cite{han2005} uses the principle method behind standard SMOTE, but with selection weighted toward the minority members closest to the boundary regions between classes. SVMSMOTE \cite{nguyen2011} accomplishes a very similar process, but uses an algorithm very similar to how a soft margin is calculated for a support vector machine.
+
+	The general risk associated with oversampling techniques is overfitting and that sampling variance may be exaggerated through over-representation of duplicated minority members.
+
+	\subsection{Cost-Sensitive Learning}
+	
+	Cost-sensitive learning (CSL) is an algorithm based strategy that assigns higher misclassification costs to the minority class Elkan et al. \cite{elkan2001}. This method avoids the overfitting problem of oversampling and the information loss of undersampling. However, the performance of CSL is dependent on the cost matrix, which is often hard to determine.
+	
+	\subsection{Ensemble Methods} 
+	
+	Ensemble methods, like Boosting and Bagging, have been extensively used to address class imbalance. While bagging techniques are generally data-level, boosting techniques are exclusively hybrid.
+	AdaBoost Freund et al. \cite{freund1997} is a popular boosting algorithm, while Balanced Random Forests Chen et al. \cite{chen2004} is a well-known bagging technique. Both methods construct multiple classifiers and combine them to make the final decision. These techniques have been proven effective, but they can be computationally expensive.
+	
+	\subsection{Learning from Imbalanced Data Streams} 
+	
+	Imbalanced data streams are a more challenging scenario where the data distribution may change over time. Wang et al. \cite{wang2018} proposed a method that dynamically adjusts the class distribution by a resampling strategy. Gao et al. \cite{gao2015} presented a method that incrementally learns from the data stream by adjusting the decision boundaries.
+	
+	\subsection{Deep Learning Approaches}
+	Within the area of deep learning, several methods have been proposed to handle class imbalance. Cui et al. \cite{cui2019} introduced a loss function, called Class-Balanced Loss, based on effective number of samples. This technique achieves a balance between classes by adjusting the weights in the loss function. Similarly, Khan et al. \cite{khan2017} proposed Cost-Sensitive Deep Learning, which incorporates the cost matrix into the loss function of the deep learning model.	
 	
 	% Dataset
 	\section{Dataset}
@@ -110,25 +122,28 @@ These methods illustrate the wide range of techniques that have been proposed to
 	% Methodology
 	\section{Methodology}
 	\label{sec:methodology}
+	
+	\subsection{Data Exploration}
+
+	In the final pre-processing phase of the diabetes dataset, we undertook further exploration of the remaining features to refine our selection.
+	
+	We initially eliminated features that exhibited extremely low variance. In this context, features related to heavy alcohol consumption and stroke were dropped due to their negligible number of positive cases, especially in scenarios with high $\rho$.
+	
+	Subsequently, we identified features such as 'Sex', 'Smoker', 'Fruits', and 'Veggies' that demonstrated a very low correlation with the response variable. After their removal, we were left with a reduced feature set comprising six elements.
+	
+	In the final step, we scaled these features. All were subjected to min-max normalization. Additionally, to mitigate the impact of skewness in each feature, 'BMI' and 'Physical Health' were further subjected to quantile normalization.
 
 
+\subsection{Experiments}
 
 
-In our final pre-processing for the diabetes dataset
+	To describe the relative imbalance within a dataset a common convention is to use $\rho$ which is calculated as
 
-dropped features with extremely low variance,
-in this case heavy alcohol consumption and stroke.
-the positive cases were extremely small
-
-'Sex','Smoker','Fruits','Veggies'
-low correlation with the response var
-
-Leaving 6 features
-which were scaled.
-
-Then used.
-
-
+	\begin{equation}
+		\rho = \frac{\max[n_c]}{\min[n_c]}, \qquad \forall\ c \in C,
+	\end{equation}
+	
+	where $n_c$ is the number of members in class $c$ and $C$ is the set of all classes in the dataset.
 
 \begin{figure}
 	\centering
@@ -137,13 +152,46 @@ Then used.
 		{\includegraphics[width=0.5\textwidth]{4Lrff}};
 		\node[red!50!black, font=\Huge\bfseries, rotate=45] at (image.center) {Temporary Example};
 	\end{tikzpicture}
-	\caption{TikZ diagram is under construction.}
+	\caption{TikZ diagram is under construction. 
+		This will be a visual aid of the down sample process.}
 	\label{fig:4lrff}
+\end{figure}
+
+	To assess the influence of varying techniques on distinct values of $\rho$, we artificially induced imbalance by randomly diminishing the count of the positive class in the dataset until achieving the desired ratio. This newly imbalanced dataset was then subjected to the several of the techniques under investigation. The efficacy of these techniques was gauged using a collection of classifiers limited to a concise set of hyperparameters.
+	
+	To minimize the potential impact of sample variance originating from the down-sampling process, we iterated this process multiple times and then averaged the results.
+
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[
+		roundnode/.style={rectangle,rounded corners=0.25cm, draw=black!60, fill=blue!5, very thick, minimum size=7mm},
+		squanode/.style={rectangle, draw=black!60, fill=red!5, very thick, minimum size=5mm},
+		]
+		%
+		%Nodes
+		\node[squanode] (Maintable)     {Original Dataset};
+		\node[squanode] (Subset1) [below=of Maintable] {Down-sampled Dataset};
+		\node[roundnode] (Subset2) [below=of Subset1] {Imbalance Technique};
+		\node[squanode] (Subset3) [below=of Subset2] {Augmented Dataset};
+	\end{tikzpicture}
+	\caption{TikZ diagram of the data trajectory/ experimental pipeline.}
+	\label{fig:4}
 \end{figure}
 
 
 
+\subsection{Conditions}
 
+
+
+
+
+
+
+
+
+\begin{comment}
 
 
 \begin{tikzpicture}[
@@ -191,12 +239,13 @@ e/.style={fill=yellow!10}
 \draw (M-1-2.north west) ++(0,2mm) coordinate (LT) edge[|<->|, >= latex] node[above]{Total number of datasets} (LT-|M-1-6.north east);
 \end{tikzpicture}
 
+\end{comment}
 
 
 	% Results and Discussion
 	\section{Results and Discussion}
 	\label{sec:results_discussion}
-	This section presents the results obtained from the project and discusses them in detail. It may include tables, figures, graphs, or charts to present the findings. The results are analyzed, interpreted, and compared with existing work or expected outcomes. The implications, limitations, and potential future directions are also discussed.
+	SVMSMOTE was not used on the basis of the size and shape of the dataset.
 	
 	% Conclusion
 	\section{Conclusion}
@@ -204,8 +253,11 @@ e/.style={fill=yellow!10}
 	This section summarizes the key findings, contributions, and implications of the project. It restates the project objectives, highlights the accomplishments, and discusses the significance of the work. It may also suggest areas for further research or improvements.
 	
 	\subsection{Future Work}
-	More than a binary classification
-	Additional techniques
+	\begin{itemize}
+		\item Additional Classes
+		\item Additional techniques
+	\end{itemize}
+	
 	
 	% References
 	\section*{References}
