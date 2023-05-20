@@ -21,6 +21,7 @@ from imblearn.over_sampling import RandomOverSampler, SMOTE, BorderlineSMOTE, AD
 
 def baseline(X,y):  return X,y
 
+
 ###   UNDERSAMPLING TECHNIQUES   ### 
 
 def Undersample(X,y):  return RandomUnderSampler().fit_resample(X,y)
@@ -55,6 +56,7 @@ def adasyn(X,y):  return ADASYN().fit_resample(X,y)
 def svmsmote(X,y):  return SVMSMOTE().fit_resample(X,y)
 # Resampling where the minority samples are synthesized 
 #   from and area determined using an SVM algorithm.
+
 
 ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
 ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
