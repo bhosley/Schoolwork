@@ -41,12 +41,15 @@ library(MuMIn)
 library(kableExtra)
 library(stringr)
 options(xtable.comment = FALSE, xtable.type="latex")
+options(rgl.useNULL=TRUE)
+#.rs.restartR()
+library(qpcR)
 ```
 
 ```{r, include=FALSE}
 kable <- function(data, ...) {
   knitr::kable(data, ..., 'latex', booktabs = TRUE, digits = 5, align = 'c') %>% 
-    kable_styling( latex_options =c("hold_position","scale_down"))
+    kable_styling( latex_options =c("hold_position"))
 }
 ```
 
@@ -54,32 +57,118 @@ kable <- function(data, ...) {
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
 df_B13 <- read.xlsx('./data-table-B13.xlsx', sheetIndex = 1)
+names(df_B13) = c("thrust", "primary", "secondary", "fuel", "press", "exhaust", "ambient")
 ```
 
 # 2. Jet Turbine Example
 ## a) Use dredge() function to automatically perform all regressors regression
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
-lmod <- lm(y~., data = df_B13, na.action = "na.fail")
-kable(summary(dredge(lmod)))
+lmod <- lm(thrust~., data = df_B13, na.action = "na.fail")
+kable(summary(dredge(lmod))) %>% kable_styling( latex_options =c("hold_position","scale_down") )
 ```
 
-Unfortunately I could not find an effective way to make this table look decent and readable at the same time.
+Unfortunately the output of Dredge is not very conducive to manipulation for table setting.
 
 ## b) Analyze Model A (p. 15 in Vining Lecture Video notes). Reproduce the results shown in pages 16-20.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+modelA <- lm(thrust ~ primary + fuel + exhaust + ambient, data=df_B13)
+print((summary(modelA)))
+kable(anova(modelA))
+print(vif(modelA))
 
+#residuals_A <- residuals(modelA)
+press_A <- PRESS(modelA)
+domain <- c(1:length(press_A$residuals))
+sprintf("PRESS = %f", press_A$stat)
+sprintf("R-Sq(pred) = %f", press_A$P.square)
+qqnorm(press_A$residuals, main = "Normal Probability Plot")
+
+plot(predict(modelA), press_A$residuals, ylab = "Deleted Residual",
+xlab = "Fitted Value", main = "Versus Fits")
+
+plot(domain, press_A$residuals, type = "b", pch = 19,
+col = "blue", xlab = "Observation Order", ylab = "Deleted Residual")
+
+plot(df_B13$primary, press_A$residuals, ylab = "Deleted Residual", xlab = "primary",
+main = "Residuals versus primary")
+
+plot(df_B13$fuel, press_A$residuals, ylab = "Deleted Residual", xlab = "fuel",
+main = "Residuals versus fuel")
+
+plot(df_B13$exhaust, press_A$residuals, ylab = "Deleted Residual", xlab = "exhaust",
+main = "Residuals versus exhaust")
+
+plot(df_B13$ambient, press_A$residuals, ylab = "Deleted Residual", xlab = "ambient",
+main = "Residuals versus ambient")
 ```
 
 ## c) Analyze Model B (p. 15 in Vining Lecture Video notes). Reproduce the results shown in pages 21-26.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+modelB <- lm(thrust ~ primary + fuel + exhaust + ambient + press, data=df_B13)
+print((summary(modelB)))
+kable(anova(modelB))
+print(vif(modelB))
 
+press_B <- PRESS(modelB)
+domain <- c(1:length(press_B$residuals))
+sprintf("PRESS = %f", press_B$stat)
+sprintf("R-Sq(pred) = %f", press_B$P.square)
+qqnorm(press_B$residuals, main = "Normal Probability Plot")
+
+plot(predict(modelB), press_B$residuals, ylab = "Deleted Residual",
+xlab = "Fitted Value", main = "Versus Fits")
+
+plot(domain, press_B$residuals, type = "b", pch = 19,
+col = "blue", xlab = "Observation Order", ylab = "Deleted Residual")
+
+plot(df_B13$primary, press_B$residuals, ylab = "Deleted Residual", xlab = "primary",
+main = "Residuals versus primary")
+
+plot(df_B13$fuel, press_B$residuals, ylab = "Deleted Residual", xlab = "fuel",
+main = "Residuals versus fuel")
+
+plot(df_B13$press, press_B$residuals, ylab = "Deleted Residual", xlab = "press",
+main = "Residuals versus press")
+
+plot(df_B13$exhaust, press_B$residuals, ylab = "Deleted Residual", xlab = "exhaust",
+main = "Residuals versus exhaust")
+
+plot(df_B13$ambient, press_B$residuals, ylab = "Deleted Residual", xlab = "ambient",
+main = "Residuals versus ambient")
 ```
 
 ## d) Analyze Model C (p. 15 in Vining Lecture Video notes). Reproduce the results shown in pages 27-32.
 
 ```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+modelC <- lm(thrust ~ primary + exhaust + ambient + press, data=df_B13)
+print((summary(modelC)))
+kable(anova(modelC))
+print(vif(modelC))
 
+press_C <- PRESS(modelC)
+domain <- c(1:length(press_C$residuals))
+sprintf("PRESS = %f", press_C$stat)
+sprintf("R-Sq(pred) = %f", press_C$P.square)
+qqnorm(press_C$residuals, main = "Normal Probability Plot")
+
+plot(predict(modelC), press_C$residuals, ylab = "Deleted Residual",
+xlab = "Fitted Value", main = "Versus Fits")
+
+plot(domain, press_C$residuals, type = "b", pch = 19,
+col = "blue", xlab = "Observation Order", ylab = "Deleted Residual")
+
+plot(df_B13$primary, press_C$residuals, ylab = "Deleted Residual", xlab = "primary",
+main = "Residuals versus primary")
+
+plot(df_B13$press, press_C$residuals, ylab = "Deleted Residual", xlab = "press",
+main = "Residuals versus press")
+
+plot(df_B13$exhaust, press_C$residuals, ylab = "Deleted Residual", xlab = "exhaust",
+main = "Residuals versus exhaust")
+
+plot(df_B13$ambient, press_C$residuals, ylab = "Deleted Residual", xlab = "ambient",
+main = "Residuals versus ambient")
 ```
