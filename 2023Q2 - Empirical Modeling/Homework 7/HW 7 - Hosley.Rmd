@@ -1,0 +1,166 @@
+---
+title: 'Homework 7'
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-05-18"
+author: 'Brandon Hosley'
+header-includes:
+  - \usepackage{multicol}
+---
+---
+title: "Homework 7"
+footer: 'HW 7'
+output:
+  pdf_document:
+    extra_dependencies: 'multicol'
+    df_print: kable
+  html_document:
+    df_print: paged
+    css: columns.css
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+```{r setup, include=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+library(MASS)
+library(readxl)
+options(xtable.comment = FALSE, xtable.type="latex")
+options(rgl.useNULL=TRUE)
+#.rs.restartR()
+library(qpcR)
+library(kableExtra)
+library(modelsummary)
+library(car)
+library(MuMIn)
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., booktabs = TRUE, digits = 4, align = 'c',escape = FALSE) %>% 
+    kable_styling(latex_options =c("striped", "hold_position"))
+}
+```
+
+*The purpose of this homework assignment is to assess your ability to perform and explain operations and concepts associated with lesson objectives for Lessons 4, 5, 14, and 15. The file 1989 NFL Season Data (Handout).xlsx contains team statistics from the 1989 National Football League (NFL) season.*
+
+```{r, include=FALSE}
+df1989 <- read_excel('../Homework 5/1989 NFL Season Data (HW5 Handout).xlsx', range = cell_rows(1:29))
+df1990 <- read_excel('./1990 NFL Season Data (HW7 Handout).xlsx', range = cell_rows(1:29))
+```
+
+## Problem 1.
+
+*Analyze the relationship between the nine numeric regressors $(x_1, x_2, \ldots, x_9)$ and total team wins. Perform model selection using two strategies: all possible regressions and forward stepwise regression. Use Adjusted $R^2$ as the metric of interest and select the best model produced by each approach. Comment on the results.*
+
+```{r, echo=TRUE}
+df_xy89 <- df1989[,-(13:15)][,-(0:2)]
+df_xy90 <- df1990[,-(13:15)][,-(0:2)]
+mod_full <- lm(y~., data = df_xy89, na.action=na.fail )
+
+adjR2 <- function(model)
+  {
+  summary(model)$adj.r.squared
+  } 
+
+mod_full_dd <- dredge(mod_full, rank = adjR2)
+mod_full_dd <- mod_full_dd[order(mod_full_dd$adjR2, decreasing = T), ]
+kable(t(head(mod_full_dd)))
+
+forward_regs <- stepAIC( lm(y~1,data=df_xy89), formula(mod_full), trace = FALSE)
+kable(forward_regs$anova)
+kable(t(forward_regs$coefficients))
+
+kable(xtable(summary(forward_regs)))
+```
+
+In both circumstances the same coefficients are selected as the optimal model. This is fortunate in this situation as forward selection is a greedy algorithm, and dredge (as I understand it) is an exhaustive algorithm. The data set we have is small enough that dredging is tenable, if the dataset had a significantly larger number of features or a significantly greater number of datapoints dredging becomes rapidly more resource intensive; this may be significant concern with some modern datasets with thousands of features. The exhaustive method is required to test $2^n$ combinations for first order functions. The heuristic method of stepwise feature selection may be the only choice that makes computational sense. But in those cases it is usually reasonably effective. For this problem it was completely successful. 
+
+The dredge returns don't provide an easy method to evaluate the significance, so we examined the output from the same model produced by step. This suggests that $x_2, x_8, x_9$ are not significant. However, there is probably marginal improvement on the training set, thus causing both methods to evaluate to the same conclusion.
+
+\clearpage
+## Problem 2.
+
+*Explore the implications of the best-fit model from Problem 1.*
+
+### (a)
+
+*Use the 1990 NFL season data as a prediction set. Calculate the predicted number of wins for each team in the 1990 season using the best-fit model trained on the 1989 season data. Display in a table.*
+
+```{r, echo=TRUE}
+
+preds90 = predict(forward_regs, newdata = df_xy90)
+
+kable(cbind(
+  '$\\hat{y}$' = preds90, 
+  '$y$' = df_xy90$y,
+  '$\\hat{y} - y$' = preds90 - df_xy90$y
+  ), caption = 'Prior Best Fit Model Results')
+
+``` 
+
+
+\clearpage
+
+### (b)
+
+*Use $R^2$ and $R_{prediction}^2$ to evaluate the validity of the model.*
+
+```{r, echo=T}
+trainR2 <- summary(forward_regs)$r.squared
+
+rss <- sum((df_xy90$y - preds90)^2)
+tss <- sum((df_xy90$y - mean(df_xy90$y))^2)
+testR2 <- 1 - (rss / tss)
+
+trainR2
+testR2
+```
+
+The model performs well on the training dataset, and in the case of the test set the model performs fairly well but not spectacularly. With this amount of variance explain the model likely produces good results but shouldn't be used to make financial decision about NFL seasons. 
+
+### (c)
+
+*Repeat Part (a) and Part (b) using only the significant regressors from the Problem 1 model $(x_2, x_5, x_7)$. Does this change our interpretation of the model’s validity? If so, how?*
+
+```{r, echo=T}
+mod2 <- lm( y ~ x2 + x5 + x7, data = df_xy89 )
+
+new_preds90 = predict(mod2, newdata = df_xy90)
+
+kable(cbind(
+  '$\\hat{y}$' = new_preds90, 
+  '$y$' = df_xy90$y,
+  '$\\hat{y} - y$' = new_preds90 - df_xy90$y
+), caption = 'Reduced Model') 
+```
+
+Results in table 2.
+
+```{r, echo=T}
+new_trainR2 <- summary(mod2)$r.squared
+
+new_rss <- sum((df_xy90$y - new_preds90)^2)
+new_tss <- sum((df_xy90$y - mean(df_xy90$y))^2)
+new_testR2 <- 1 - (new_rss / new_tss)
+
+new_trainR2
+new_testR2
+```
+
+While the performance on the training set is still very good it is lower than the previous model. However, interestingly, the different between the two remain almost the same between the scenarios.
+
+This result does cause reflection on the work in part 1 and casts doubt on the earlier conclusion about the other regressors being insignificant. This does, however offer an explanation to why the larger model was chosen when $R^2$ was used as the metric of evaluation.
+
+
