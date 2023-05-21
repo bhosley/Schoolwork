@@ -1,0 +1,92 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 17 Practical Exercise"
+footer: `r paste('Lesson 17 Practical Exercise')`
+date: "`r format(as.Date(c('2021/05/24')), '%d %B %Y')`"
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+library(kableExtra)
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(readxl)
+library(printr)
+library(xtable)
+library(formatR)
+library(boot)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., format = 'latex', booktabs = TRUE, digits = 5, align = 'c') %>% 
+    kable_styling( latex_options =c("hold_position") )
+}
+```
+
+# Perform data housekeeping - upload data for Resistivity Example, name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df <- read_excel('./Resistivity Example.xlsx')
+```
+
+# 2. Resistivity Example (p. 60-65 in Video lecture notes)
+## a) Add columns to the data frame for interactions (2-way, 3-way, 4-way) 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+attach(df)
+
+df$x12 <- x1 * x2
+df$x123 <- x1 * x2 * x3
+df$x124 <- x1 * x2 * x4
+df$x1234 <- x1 * x2 * x3 * x4
+
+df$x13 <- x1 * x3
+df$x134 <- x1 * x3 * x4
+
+df$x14 <- x1 * x4
+
+df$x23 <- x2 * x3
+df$x234 <- x2 * x3 * x4
+
+df$x24 <- x2 * x4
+df$x34 <- x3 * x4
+detach(df)
+```
+
+## b) Model using glm(), family = Gamma, link = log.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod <- glm(y~.,df, family = Gamma(link = 'log'))
+kable(xtable(mod))
+```
+
+## c) Model using main effects and two-way interactions
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod2 <- glm(y ~ x1 + x2 + x3 + x4 + x13 + x23 + x34, family = Gamma(link = "log"), data = df)
+kable(xtable(mod2))
+glm.diag.plots(mod2)
+```
+
