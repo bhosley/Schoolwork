@@ -1,0 +1,247 @@
+---
+title: 'Homework 8'
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-05-29"
+author: 'Brandon Hosley'
+---
+---
+title: "Homework 8"
+footer: 'HW 8'
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+```{r setup, include=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+library(MASS)
+library(readxl)
+options(xtable.comment = FALSE, xtable.type="latex")
+options(rgl.useNULL=TRUE)
+#.rs.restartR()
+library(qpcR)
+library(kableExtra)
+library(modelsummary)
+library(car)
+library(MuMIn)
+library(ResourceSelection)
+
+library(ggplot2)
+library(latex2exp)
+library(caret) 
+library(tidyverse)
+library(summarytools)
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., booktabs = TRUE, digits = 4, align = 'c',escape = FALSE) %>% 
+    kable_styling(latex_options =c("striped", "hold_position"))
+}
+```
+
+*The purpose of this homework assignment is to assess your ability to perform and explain operations and concepts associated with lesson objectives for Lessons 15, 16, and 17. The files 1989 NFL Season Data (Handout).xlsx, 1990 NFL Season Data (HW5 Handout).xlsx, and 1991 NFL Season Data (HW8 Handout).xlsx contain team statistics from the 1989, 1990, and 1991 National Football League (NFL) seasons.*
+
+```{r, include=FALSE}
+df1989 <- read_excel('../Homework 5/1989 NFL Season Data (HW5 Handout).xlsx', range = cell_rows(1:29))
+df1990 <- read_excel('../Homework 7/1990 NFL Season Data (HW7 Handout).xlsx', range = cell_rows(1:29))
+df1991 <- read_excel('./1991 NFL Season Data (HW8 Handout).xlsx', range = cell_rows(1:29))
+```
+
+
+## Problem 1.
+
+*Analyze the 1989 NFL season data with respect to its capability to predict whether a team makes the playoffs.*
+
+```{r, echo=TRUE}
+df_xy89 <- df1989[,-(13:14)][,-(2:3)]
+df_xy90 <- df1990[,-(13:14)][,-(2:3)]
+df_xy91 <- df1991[,-(13:14)][,-(2:3)]
+#df_xy89 <- df_xy89[order(df_xy89$Index),]
+#df_xy90 <- df_xy90[order(df_xy90$Index),]
+#df_xy91 <- df_xy91[order(df_xy91$Index),]
+df_xy89$Playoffs <- ifelse(df1989$Playoffs == 'Yes', 1,0)
+df_xy90$Playoffs <- ifelse(df1990$Playoffs == 'Yes', 1,0)
+df_xy91$Playoffs <- ifelse(df1991$Playoffs == 'Yes', 1,0)
+```
+
+## (a) 
+
+*Create a logistic regression model with a response variable equal to one if the team makes the playoffs and zero otherwise. Use turnover differential $(x_5)$ and percent rushing plays $(x_7)$ as the independent variables. Report the estimated regression equation and interpret the significance of the individual regressors in the context of the problem. Use a significance level of $0.10$.*
+
+```{r, echo=TRUE}
+mod <- glm(Playoffs ~ x5 + x7, data = df_xy89, family = binomial)
+# Print the summary of the model
+kable(xtable(summary(mod)))
+```
+
+Or in other letters,
+$$\text{logit}(\hat y_\text{playoffs}) = -13.4511 + 0.1990\, x_5 + 25.8395\, x_7\ .$$ 
+
+or
+
+$$ P(\hat y = 1) = \frac{1}{e^{-13.4511 + 0.1990\, x_5 + 25.8395\, x_7}} $$
+
+Within the threshold of 0.10 significance, all of the regressors provided are considered significant.
+
+## (b) 
+
+*Interpret the odds ratios for $x_5$ and $x_7$. Do they make sense? Explain why or why not.*
+
+```{r, echo=TRUE}
+exp(coef(mod)['x5'])
+exp(coef(mod)['x7'])
+```
+
+In the case of the turnover differential, I think this result seems very reasonable. I am surprised that an increase in 1 in the turnover differential could have such an effect.
+
+The percent rushing play makes sense in a certain way. Because it is a variable that exists between 0 and 1. There isn't really a way for any value to increase by one, except 0. It is difficult to imagine a team with 0% rushing plays winning any games, let alone making it into the playoffs. Because the reasonable range for changes in value are significantly smaller than 1, the values associated with the odds will thusly be significantly larger than what is reasonable.
+
+## (c) 
+
+*Assess goodness of fit using model deviance. Be sure to report the deviance, critical value, and associated $p$-value that inform the decision.*
+
+```{r, echo=TRUE}
+n <- nrow(df_xy89)
+p <- length(coef(mod))-1
+D <- mod$deviance
+
+sprintf('Deviance: %f\newline Critical Value: %f\newline p-value: %f', 
+        D, qchisq(p=0.1,df=n-p), pchisq(q=D,df=n-p) )
+```
+
+## (d) 
+
+*Create a table containing three columns, one for the team name, one for the model’s predicted probability of a playoff appearance using the 1989 data, and one for the model’s predicted probability of a playoff appearance using the 1990 NFL season data. What are the top five teams that the model predicts will make the playoffs in 1990?*
+
+```{r, echo=TRUE}
+
+tab <- data.frame('Team' = df1989$Team[order(df1989$Index)],
+  '1989 Playoff Prob.' = predict(mod,type = 'response')[order(df_xy89$Index)],
+  '1990 Playoff Prob.' = predict(mod, newdata = df_xy90, 
+                                 type = 'response')[order(df_xy90$Index)])
+
+kable(tab[order(-tab$X1990.Playoff.Prob.),][1:5,])
+```
+
+
+
+## Problem 2.
+
+*Continue to analyze the same model.*
+
+### (a)
+
+*Plot and interpret the plots of deviance residuals versus $x_5$, deviance residuals versus $x_7$, deviance residuals versus 1989 predicted probabilities, and deviance residuals versus index order. Does the plot of residuals versus 1989 probabilities concern you? Why or why not? (Do not make any transformations or adjust the model at all; simply interpret the plots.)*
+
+```{r, echo=TRUE}
+dev_res <- residuals(mod, type = "deviance")
+names(dev_res) <- 'Deviance Residuals'
+
+ggplot(df_xy89, aes(x=x5, y=dev_res, color=factor(Playoffs) )) + geom_point() + 
+  labs(title=TeX('Deviance vs $x_5$ (1989)'), y='Deviance Residuals', x=TeX('$x_5$'))
+
+ggplot(df_xy89, aes(x=x7, y=dev_res, color=factor(Playoffs) )) + geom_point() + 
+  labs(title=TeX('Deviance vs $x_7$ (1989)'), y='Deviance Residuals', x=TeX('$x_7$'))
+
+ggplot(df_xy89, aes(y=predict(mod, type = 'response'), x=dev_res, color=factor(Playoffs) )) + 
+  geom_point() + labs(title='Deviance vs Predicted (1989)', 
+                      x='Deviance Residuals', y='Predicted Probability')
+
+ggplot(df_xy89, aes(x=Index, y=dev_res, color=factor(Playoffs) )) + geom_point() + 
+  labs(title='Deviance vs Index (1989)', y='Deviance Residuals', x='Index')
+
+``` 
+
+The only thing that I changed in these plots was to flip the axes on the deviance and predicted plot. This was done as it was perceived to be a little easier to interpret. By adding the coloration that represents the team's playoff status provides significant clarity regarding the phenomena that would certainly be very odd looking without the distinction.
+
+In the cases of both $x_5$ and $x_7$ the two categories are split opposite of the residual line, which is to be expected base on the encoding. Additionally, both of these features have a wide dispersion for the teams that do not make the playoffs, whereas the teams that do occupy the upper half of the range. Additionally, due to the overlap of the two features, it suggests that the two features are independent enough that between them a fairly effective classifier can be constructed.
+
+In the final graph, the points appear to be generally well dispersed. Ideally, this is what we would see. It may be the case that this does not happen, simply by chance; but it is convenient when it does, as it is not likely that there would be a meaningful correlation between the index and the predictions/results.
+
+
+### (b)
+
+*The predicted probabilities are necessary but not sufficient to decide if a team is predicted to make the playoffs or not. Additionally, it is necessary to determine the cutoff probability for making that decision. Plot the predicted probabilities for the 1989 versus the index. Does the plot give any visual clues for what might be a logical probability threshold? Discuss the implications of setting a threshold of $0.9$ versus $0.3$.*
+
+```{r, echo=T}
+pred2b <- predict(mod, type = 'response')
+ggplot(df_xy89, aes(x=df1989$Index, y=pred2b, color=factor(Playoffs) )) + geom_point() + 
+  labs(title='Index vs Prediction (1989)', y='Prediction (Probability)', x='Index')
+```
+
+Setting the prediction threshold at 0.9 is likely too high. This will result in a high precision and low recall. In other words, the teams that are predicted to make the playoffs are very likely to make it, but the model will not predict very many of the teams that do make the playoffs. On the other hand, the 0.3 will perform much better based on the training data. The most notable error that we see that the number of predicted positives will be higher than the possible number of positives. In an ideal situation the probabilities would be provided, ranked and the top $n$ teams would be chosen, where $n$ is the number of slots available in the playoff roster. If that is not possible, which will often be the case, the threshold of 0.3 would be the better choice, and from visual inspection of the above, appears to be close to what will be optimal.
+
+### (c)
+
+*The probability threshold or cutoff value introduced in Part (b) is a hyperparameter, and this value can be adjusted in order to achieve the best result. The process of adjusting the hyperparameter is called tuning. Using the NFL data for the 1990 season, tune the probability cutoff hyperparameter. Give the best probability cutoff and show the associated confusion matrix.*
+
+```{r, echo=T}
+preds90 <- predict(mod, newdata = df_xy90, type='response')
+y_true <- as.factor(t(df_xy90['Playoffs']))
+
+points <- seq(from = 0.01, to = 0.99, by = 0.01)
+accuracies <- data.frame(Threshold=double(), Accuracy=double())
+
+for (p in points) {
+  y_pred <- as.factor(ifelse(preds90 > p, 1,0))
+  cm <- confusionMatrix( y_pred, y_true)
+  accuracies <- accuracies %>% add_row(Threshold=p, Accuracy=cm$overall['Accuracy'])
+}
+
+ggplot(accuracies, aes(x=Threshold, y=Accuracy) ) + geom_line()
+```
+
+
+```{r}
+accuracies[which.max(accuracies$Accuracy),]
+
+cm <- confusionMatrix( as.factor(ifelse(preds90 > 0.32, 1,0)), y_true)
+ctable <- as.table(matrix(c(cm$table), nrow = 2, byrow = TRUE))
+
+colnames(ctable) <- c('Actually not in Playoffs', 'Actually in Playoffs')
+row.names(ctable) <- c('Predicted not in Playoffs', 'Predicted in Playoffs')
+
+fourfoldplot(ctable, color = c("#CC6666", "#99CC99"),
+             conf.level = 0, margin = 1, main = "Confusion Matrix")
+```
+
+
+From the hyperparameter test we can confirm that the optimal threshold identified proposed during the training cycle was quite close to the calculated one, on this validation set. While the resulting confusion matrix does not show a resounding success, it is significantly better than random.
+
+
+### (d)
+
+*Using the best probability threshold that you identified in Part (b), apply the model from Problem 1 to the NFL data for the 1991 season. Display the confusion matrix. What does this tell you about the validity of your model?*
+
+```{r, echo=T}
+preds91 <- predict(mod, newdata = df_xy91, type='response')
+
+cm2 <- confusionMatrix( as.factor(ifelse(preds91 > 0.32, 1,0)), y_true)
+ctable2 <- as.table(matrix(c(cm2$table), nrow = 2, byrow = TRUE))
+
+colnames(ctable2) <- c('Actually not in Playoffs', 'Actually in Playoffs')
+row.names(ctable2) <- c('Predicted not in Playoffs', 'Predicted in Playoffs')
+
+fourfoldplot(ctable2, color = c("#CC6666", "#99CC99"),
+             conf.level = 0, margin = 1, main = "Confusion Matrix")
+```
+
+The model produced remains unimpressive, but still better than random guessing. It seems unlikely that someone with passing familiarity with the sport wouldn't have been able to outperform this model. One thing that it may also suggest is that the factors that contribute to a teams success will change over time. The factors that contribute positive to a team's performance should always correlate positively with positive outcomes, but the importance of each is likely to change based on the skills of all of the teams in the league. 
+
