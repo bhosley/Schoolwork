@@ -1,0 +1,184 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 18 Practical Exercise"
+footer: `r paste('Lesson 18 Practical Exercise')`
+date: "`r format(as.Date(c('2021/05/26')), '%d %B %Y')`"
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+library(kableExtra)
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(readxl)
+library(printr)
+library(xtable)
+library(formatR)
+library(lmtest)
+library(orcutt)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., format = 'latex', booktabs = TRUE, digits = 5, align = 'c') %>% 
+    kable_styling( latex_options =c("hold_position") )
+}
+```
+
+# Perform data housekeeping - upload data for Examples 14.1 and 14.3; name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df1 <- read_excel('./data-ex-14-1.xlsx')
+names(df1) <- c("Year", "T", "Sales", "Expenditures")
+
+df3 <- read_excel('./data-ex-14-3.xlsx')
+names(df3) <- c("Time", "MarketShare", "Price")
+```
+
+# 2. Example 14.1 
+## a) Initially assume straight-line relationship; create scatterplot and linear model; compare results to Figure 14.1 and Table 14.2 on p. 479.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(df1$Expenditures, df1$Sales, xlab = "Expenses",
+  ylab = "Sales", main = "Example 14.1 Scatterplot")
+mod <- lm(Sales ~ Expenditures, data = df1)
+kable(xtable(summary(mod)))
+kable(anova(mod))
+```
+
+## b) Plot R-Student residuals versus order of observations; compare to Figure 14.1 on p. 479.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+R_Student <- rstudent(mod)
+plot(df1$T, R_Student, xlab = "Time (Years)", ylab = "Residuals",
+     main = "Time Series Plot of Residuals")
+lines(df1$T, R_Student)
+```
+
+## c) Perform Durbin-Watson test automatically using dwtest().
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df1_dw <- dwtest(df1$Sales ~ df1$Expenditures, order.by = df1$Year)
+kable(xtable(summary(df1_dw)))
+df1_dw
+```
+
+## d) Calculate Durbin-Watson test statistic using Equation 14.5.The sum() and sapply() functions may be helpful. Compare to p. 480.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+dw_num <- sum(sapply(2:(length(df1$Year)), function(x) {
+  sum(mod$residuals[x] - mod$residuals[x - 1])^2 }))
+
+dw_den <- sum(mod$residuals^2)
+dw_statistic <- dw_num/dw_den
+dw_statistic
+```
+
+# 3. Example 14.2 (p. 480-481)
+
+## a) Update the dataset with additional information from Table 14.3 on p. 481.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df1$Population <- c(825000, 830445, 838750, 842940, 846315, 852240, 860760, 865925, 871640, 877745, 
+                    886520, 894500, 900400, 904005, 908525, 912160, 917630, 922220, 925910, 929610)
+```
+
+## b) Model with the additional regressor; compare to Table 14.4 on p. 481.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod2 <- lm(Sales ~ Expenditures + Population, data = df1)
+kable(xtable(summary(mod2) ))
+kable(anova(mod2))
+dwtest(Sales ~ Expenditures + Population, order.by = df1$Year, data = df1)
+```
+
+## c) Plot R-Studen residuals versus order of observations; compare to Figure 14.2 on p. 482.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+R_Student2 <- rstudent(mod2) # Use rstudent() versus calculating manually
+plot(df1$Year, R_Student2, xlab = "Time Order (Year)", ylab = "Externally Studentized Residuals",
+  main = "Time Series Plot of Residuals")
+lines(df1$Year, R_Student2)
+```
+
+# 4. Example 14.3 (p. 483-485)
+## a) Initially assume straight-line relationship; compare to Table 14.6 on p. 484.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+plot(df3$Price, df3$MarketShare, xlab = "Selling Price per Pound", ylab = "Market Share",
+  main = "Example 14.3 Scatterplot")
+
+mod3 <- lm(MarketShare ~ Price, data = df3)
+kable(xtable(summary(mod3)))
+```
+
+## b) Perform Durbin-Watson test automatically using dwtest(); compare to Table 14.6 on p. 484
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df3_dw <- dwtest(MarketShare ~ Price, data = df3)
+kable(xtable(summary(df3_dw)))
+df3_dw
+```
+
+## c) Estimate model parameters using Cochrane-Orcutt method. Note: the cochrane.orcutt() function in the orcutt package does not give the same results as the two-stage approach in the textbook.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+co_mod <- cochrane.orcutt(mod3)
+kable(print.orcutt(co_mod))
+```
+
+## d) Calculate psi_hat using sum() command.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+psi_hat <- sum(mod3$residuals[1:length(df3$Time) -
+  1] * mod3$residuals[2:length(df3$Time)])/sum(mod3$residuals^2)
+psi_hat
+```
+
+## e) Create transformations on the predictor and the response.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+y_new <- df3$MarketShare[2:length(df3$Time)] - psi_hat *
+  df3$MarketShare[1:length(df3$Time) - 1]
+x_new <- df3$Price[2:length(df3$Time)] - psi_hat * df3$Price[1:length(df3$Time) - 1]
+
+# Change to the incorrect value in textbook
+x_new[1] <- 0.533 
+kable(cbind(y_new,x_new))
+```
+
+## f) Run the new regression model and compare to Table 14.7 on p. 484. 
+Note: There is a mistake in the data table in the textbook. If manually building the transformation, the first x' data point will be approximately 0.5528463.
+The first value in Table 14.5 in the x' column is 0.533. Textbook models were run using the printed values and will be slightly off.
+Recommendation: run models both ways, one correctly and the other with the incorrect value in order to reproduce the results in the textbook.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_new <- lm(y_new ~ x_new)
+kable(xtable(summary(mod_new))) 
+dw_new <- dwtest(y_new ~ x_new)
+kable(xtable(summary(dw_new)))
+dw_new
+```
+
+
