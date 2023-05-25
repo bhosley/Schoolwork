@@ -1,0 +1,165 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 16 Practical Exercise"
+footer: `r paste('Lesson 16 Practical Exercise')`
+date: "`r format(as.Date(c('2021/05/19')), '%d %B %Y')`"
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+library(kableExtra)
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(printr)
+library(xtable)
+library(formatR)
+library(lmSubsets)
+library(leaps)
+library(gtools)
+library(car)
+library(dplyr)
+library(broom)
+library(MuMIn)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., format = 'latex', booktabs = TRUE, digits = 5, align = 'c') %>% 
+    kable_styling( latex_options =c("hold_position") )
+}
+```
+
+# 2. Example 13.1 (p. 426-427)
+## a) Create data frame with problem data.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+Years <- c(5.8, 15, 21.5, 27.5, 33.5, 39.5, 46, 51.5)
+Cases <- c(0, 1, 3, 8, 9, 8, 10, 5)
+Miners <- c(98, 54, 43, 48, 51, 38, 28, 11)
+Proportion <- Cases/Miners
+df_13 <- data_frame(Years,Cases,Miners,Proportion)
+kable(df_13)
+```
+
+## b) Perform logistic regression using glm(). Compare output to Table 13.2 on p. 427.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+outcomes <- cbind(df_13$Cases, df_13$Miners-df_13$Cases)
+mod_logreg <- glm(outcomes ~ Years, data = df_13, family = binomial)
+kable(xtable(summary(mod_logreg)))
+kable(confint(mod_logreg))
+```
+
+# 3. Example 13.2 (p. 428)
+## Calculate odds ratio for the regressor variable; compare to p. 428. 
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+kable(exp(coef(mod_logreg)))
+```
+
+# 4.Example 13.3 (p. 434-436)
+## Add a quadratic term to the model
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_logreg_quad <- glm(outcomes ~ Years + I(Years^2), data = df_13, family = binomial)
+```
+
+# 5. Example 13.4 (p. 437)
+## Test each regression coefficient for significance automatically using the summary() command.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+kable(xtable(summary(mod_logreg_quad)))
+```
+
+# 6. Example 13.5 (p. 438) ###
+## a) Calculate confidence intervals automatically using confint().
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+kable(confint(mod_logreg_quad))
+```
+
+## b) Calculate by hand using Equation (13.25).
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+Z <- qnorm(1 - 0.05/2)
+sprintf('Upper bounds: %f', coef(mod_logreg_quad) + Z * sqrt(diag(vcov(mod_logreg_quad))) )
+sprintf('Lower bounds: %f', coef(mod_logreg_quad) - Z * sqrt(diag(vcov(mod_logreg_quad))) )
+```
+
+# 7.Example 13.6 (p. 438)
+## On the original model, calculate a 95% confidence interval on the odds ratio using Equation (13.26).
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+sprintf('Upper bounds: %f',  exp(coef(mod_logreg) + Z * sqrt(diag(vcov(mod_logreg)))) )
+sprintf('Lower bounds: %f',  exp(coef(mod_logreg) - Z * sqrt(diag(vcov(mod_logreg)))) )
+```
+
+# 8.Example 13.7 (p. 439-440)
+## Create a 95% confidence interval on the predicted probability of Years = 40. First do automatically (Parts a-b), then do by hand (Parts c-f).
+
+## a) Calculate predicted probability using predict(); compare to p. 439.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+new_point <- data.frame(Years = 40)
+predict(mod_logreg, new_point, type = "response")
+```
+
+## b) Calculate the predicted linear predictor using predict(); compare to p. 439.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+linear_predictor <- predict(mod_logreg, new_point)
+linear_predictor
+```
+
+## c) Define vector for the new observation.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+x0 <- c(1, 40)
+```
+
+## d) Calculate the variance of the new observation. The function vcov() automatically calculates $(X^TVX)^{-1}$. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+Var_x0 <- t(x0) %*% vcov(mod_logreg) %*% x0
+Var_x0
+```
+
+## e) Calculate CI on linear predictor using Equation (13.27).
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+x0_Lower <- linear_predictor - Z * sqrt(Var_x0)
+x0_Lower
+
+x0_Upper <- linear_predictor + Z * sqrt(Var_x0)
+x0_Upper
+```
+
+## f) Convert to probabilities using Equation (13.28).
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+Lower_prob <- exp(x0_Lower)/(1 + exp(x0_Lower))
+Lower_prob
+
+Upper_prob <- exp(x0_Upper)/(1 + exp(x0_Upper))
+Upper_prob
+```
