@@ -1,0 +1,145 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+---
+title: "Lesson 15 Practical Exercise"
+footer: `r paste('Lesson 15 Practical Exercise')`
+date: "`r format(as.Date(c('2021/05/17')), '%d %B %Y')`"
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+# 1. Preliminaries
+
+```{r intro, echo=FALSE,message=FALSE, warning=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(printr)
+library(xtable)
+library(formatR)
+library(lmSubsets)
+library(leaps)
+library(gtools)
+library(car)
+library(dplyr)
+library(broom)
+library(MuMIn)
+library(kableExtra)
+options(xtable.comment = FALSE, xtable.type="latex")
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., format = 'latex', booktabs = TRUE, digits = 5, align = 'c') %>% 
+    kable_styling( latex_options =c("hold_position") )
+}
+```
+
+# Perform data housekeeping - upload data for the Examples 10.1, 11.2, and 11.3; name columns, display to make sure it reads properly, etc. 
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+df_1 <- read.xlsx('./data-ex-10-1.xlsx', sheetIndex = 1)
+df_2 <- read.xlsx('./data-ex-11-2.xlsx', sheetIndex = 1)
+df_3 <- read.xlsx('./data-ex-11-3.xlsx', sheetIndex = 1)
+```
+
+# 2. Example 11.1 (p. 374-375)
+## a) Reproduce Table 11.1 on p. 375
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60), results='asis'}
+model1 <- lm(y~ x1+x2, data = df_1)
+model2 <- lm(y~ x1+x2+x4, data = df_1)
+df_1$'Model 1' <- predict(model1)
+df_1$'Model 2' <- predict(model2)
+kable(df_1)
+```
+
+# 3. Example 11.2 (p. 375-377)
+## a) Distinguish between original data and new data.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60), results='asis'}
+names(df_2) <- c("Observation", "City", "Time", "Cases", "Distance")
+df_old <- df_2[!complete.cases(df_2), ]
+kable( df_old )
+df_new <- df_2[complete.cases(df_2), ]
+kable( df_new )
+```
+
+\newpage
+
+## b) Create model using original data.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_old <- lm(Time~Cases+Distance, data=df_old)
+kable(xtable(summary(mod_old)))
+```
+
+## c) Predict values in new dataset using original model.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+new_pred <- predict(mod_old, newdata = df_new)
+kable(new_pred)
+```
+
+\newpage
+
+## d) Reproduce Table 11.2 on p. 376.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+table <- data.frame(df_new$Observation,  df_new$City,  df_new$Cases, 
+                    df_new$Distance, df_new$Time, new_pred, df_new$Time-new_pred)
+names(table) <- c('Observation', 'City', 'Cases, $x_1$', 'Distances, $x_2$', 
+                  'Observed \nTime, $y$', '$\\hat y$', '$y-\\hat y$')
+
+kable(table, escape = FALSE, row.names = FALSE) %>% 
+  add_header_above(c(" " = 5, "Least-Squares Fit" = 2)) %>% 
+  add_header_above(c(" " = 1, '(1)'=1, '(2)'=1, '(3)'=1, '(4)'=1, '(5)'=1, '(6)'=1)) 
+```
+
+# 4. Example 11.3 (p. 380-385)
+## a) Split data into Estimation and Prediction sets.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+names(df_3) <- c("Observation", "City", "Time", "Cases", "Distance", "Set")
+df_3_split <- split(df_3, df_3$Set)
+Est_set <- df_3_split[1]$E
+Pred_set <- df_3_split[2]$P
+```
+
+## b) Create model using estimation set and compare to model using full set. Compare to Table 11.5 on p. 384.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+mod_est <- lm(Time ~ Cases + Distance, data = Est_set)
+kable(xtable(summary(mod_est))) 
+
+mod_full <- lm(Time ~ Cases + Distance, data = df_3)
+kable(xtable(summary(mod_full)))
+```
+
+## c) Reproduce Table 11.6 on p. 385.
+
+```{r, echo=T, tidy=TRUE, tidy.opts=list(width.cutoff=60)}
+preds <- predict(mod_est, newdata = Pred_set)
+
+table <- data.frame(Pred_set$Observation, Pred_set$Time, preds, Pred_set$Time-preds)
+names(table) <- c('Observation, $i$', 'Observed, $y_i$', 'Predicted, $\\hat y$', 'Prediction Error, $e_i= y_i-\\hat y_i$')
+
+kable(table, escape = FALSE, row.names = FALSE) %>% 
+  add_header_above(c(" " = 2, "Least-Squares Fit" = 2)) %>% 
+  add_header_above(c(" " = 1, '(1)'=1, '(2)'=1, '(3)'=1)) 
+```
