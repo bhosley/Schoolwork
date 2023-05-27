@@ -1,0 +1,142 @@
+---
+title: 'Homework 8'
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-05-29"
+author: 'Brandon Hosley'
+---
+---
+title: "Homework 8"
+footer: 'HW 8'
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+```{r setup, include=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+library(MASS)
+library(readxl)
+options(xtable.comment = FALSE, xtable.type="latex")
+options(rgl.useNULL=TRUE)
+#.rs.restartR()
+library(qpcR)
+library(kableExtra)
+library(modelsummary)
+library(car)
+library(MuMIn)
+library(ResourceSelection)
+
+library(ggplot2)
+library(latex2exp)
+library(caret) 
+library(tidyverse)
+library(summarytools)
+```
+
+```{r, include=FALSE}
+kable <- function(data, ...) {
+  knitr::kable(data, ..., booktabs = TRUE, digits = 4, align = 'c',escape = FALSE) %>% 
+    kable_styling(latex_options =c("striped", "hold_position"))
+}
+```
+
+# Outline of Empirical Modeling Project
+
+## Introduction Section
+
+The purpose of this report is to demonstrate proficiency in the course material by 
+modeling NFL player performance to achieve utilizing the first pick in the most optimal way (probabilistic)
+
+The league has ten fantasy teams, and I have the number one pick; and thus the 20 as well.
+As such predicting top 20 players ensures that we can select at least two of those players.
+
+Prioritizing consistency in performance. We will use average points per game as our metric.
+Regress data from the 2020 and 2021 (can use 2019 as well), target is to predict 2022 performance.
+
+```{r, include=FALSE}
+df19 <- read_excel('./ProjectData.xlsx', sheet = '2019 Regular Season')
+df20 <- read_excel('./ProjectData.xlsx', sheet = '2020 Regular Season')
+df21 <- read_excel('./ProjectData.xlsx', sheet = '2021 Regular Season')
+df22 <- read_excel('./ProjectData.xlsx', sheet = '2022 Regular Season')
+```
+
+# Support functions:
+#   Correlate Rosters
+
+
+
+>## Material to be assessed includes:
+>Data organization, aggregation, and cleaning
+
+```{r}
+df2019.gathered <- scale(subset(df19, select= c(-Name, -Team, -Position, -Total))) %>%
+  as_data_frame() %>%
+  mutate( Position = as.factor(df19$Position) ) %>%
+  gather(key = "variable", value = "value",
+         -PPG, -Position )
+
+#df2019.gathered['Position'] <- df19$Position
+head(df2019.gathered, 3)
+
+featurePlot <- ggplot(df2019.gathered, aes(x = value, y = PPG)) +
+  geom_point(aes(color = Position)) +
+  facet_wrap(~variable, ncol = 2) + theme(aspect.ratio = 1)
+
+ggsave(featurePlot, "./feature_comparison.png", dpi=300, width = 12)
+```
+
+One of the major difficulties will be making legitimate comparisons given the different positions that play are likely to earn points via different means.
+
+
+ 
+> Variable selection and model creation/comparison
+
+# Utilize Dredge and/or model subset selection
+
+
+> Adequacy checking, transformation (if necessary), and analysis of influential observations
+
+> Analysis and interpretation of results
+
+> Written communication in a technical report
+
+
+3. Methodology
+Step 1. Use 2021 fantasy points per game for each player as the dependent (response) variable.
+Step 2. Build a regression model using 2020 fantasy football data as the independent variable
+set to predict the 2020 fantasy points per game.
+• Students determine which variables are useful (which to include in model)
+• Students are free to obtain additional, open-source data to supplement the feature set if so desired
+• Torture the data until it confesses. . . but don’t torture it so much that it will confess to anything!
+Step 3. Once the final model is built, apply it to 2021 data to predict the average points per
+game for the 2022 season.
+• Rank the players by predicted fantasy points per game in descending order.
+• Make your prediction for which two players you would draft.
+Step 4. Present your results in writing.
+Following the AFIT Style Guide, write a double-spaced technical report not longer than eight (8) pages
+in length for the body of the report. The report should include a 2-5 sentence abstract and sections that
+respectively:
+(a) Introduce and motivate the project.
+(b) Discuss the methodology, to include variable selection, adequacy checking, model validation, and analysis of influential observations.
+(c) Present the model, results, and analysis.
+(d) Discuss the results, and provide insights and recommendations.
+Within your report, include at least one relevant table and at least one relevant figure. Recall that table
+titles go above the table and figure titles go below the figure.
+The cover page, table of contents, abstract, references, appendices, and other material do not count
+against the eight-page limit.
