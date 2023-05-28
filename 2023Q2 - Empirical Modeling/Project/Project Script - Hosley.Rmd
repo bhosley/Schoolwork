@@ -47,6 +47,9 @@ library(latex2exp)
 library(caret) 
 library(tidyverse)
 library(summarytools)
+library(corrplot)
+library(glue)
+library(plyr)
 ```
 
 ```{r, include=FALSE}
@@ -54,6 +57,10 @@ kable <- function(data, ...) {
   knitr::kable(data, ..., booktabs = TRUE, digits = 4, align = 'c',escape = FALSE) %>% 
     kable_styling(latex_options =c("striped", "hold_position"))
 }
+
+adjR2 <- function(model){
+  summary(model)$adj.r.squared
+} 
 ```
 
 # Outline of Empirical Modeling Project
@@ -73,38 +80,285 @@ Regress data from the 2020 and 2021 (can use 2019 as well), target is to predict
 df19 <- read_excel('./ProjectData.xlsx', sheet = '2019 Regular Season')
 df20 <- read_excel('./ProjectData.xlsx', sheet = '2020 Regular Season')
 df21 <- read_excel('./ProjectData.xlsx', sheet = '2021 Regular Season')
-df22 <- read_excel('./ProjectData.xlsx', sheet = '2022 Regular Season')
+#df22 <- read_excel('./ProjectData.xlsx', sheet = '2022 Regular Season')
+All.features <- c(colnames(df21))
 ```
 
-# Support functions:
-#   Correlate Rosters
+# Data Exploration
+
+## Exploration of Team Performance
+
+### Average PPG in teams
+
+```{r}
+teams.average.PPG.all <- Reduce(
+  function(x, y, ...) merge(x, y, by = 'Team', all = TRUE, ...), list(
+    aggregate(PPG ~ Team, df19, mean),
+    aggregate(PPG ~ Team, df20, mean), 
+    aggregate(PPG ~ Team, df21, mean)) ) %>% 
+  set_names(., c('Team','2019','2020','2021'))  %>% 
+  arrange(mean('2019','2020','2021')) %>%
+  gather(key = "Year", value = "Average.PPG", -Team)
+
+team.levels <- aggregate(Average.PPG ~ Team, teams.average.PPG.all, mean)
+team.levels <- t(team.levels[order(team.levels$Average.PPG),])
+```
+
+### All PPG
+
+```{r}
+teams.average.PPG.all$Team <- factor(teams.average.PPG.all$Team, levels = team.levels, ordered=TRUE)
+df19$Team <- factor(df19$Team, levels =team.levels, ordered=TRUE)
+df20$Team <- factor(df20$Team, levels =team.levels, ordered=TRUE)
+df21$Team <- factor(df21$Team, levels =team.levels, ordered=TRUE)
+
+violin_a = 0.3
+teamViolinPlot <- ggplot(df19, aes(Team, PPG)) + geom_violin(aes(colour = "2019"), alpha = violin_a) + 
+  geom_violin(df20, mapping = aes(Team, PPG, colour = "2020"), position = position_nudge(x = 0), alpha = violin_a) +
+  geom_violin(df21, mapping = aes(Team, PPG, colour = "2021"), position = position_nudge(x = 0), alpha = violin_a) +
+  geom_point(teams.average.PPG.all, mapping = aes(Team, Average.PPG, color = Year), alpha = violin_a+0.2)
+
+ggsave(teamViolinPlot, filename="Team_PPGs_YearOn.png", dpi=300, width = 12, height = 6)
+```
+
+It does not appear that there are any significant underlying 
+
+## Exploration of Player Performance
+
+One of the major difficulties will be making legitimate comparisons given the different positions that play are likely to earn points via different features.
+
+### Within Single Year
+
+```{r}
+df2019.gathered <- df19 %>% 
+  select(c(-Name,-Team)) %>%
+  mutate(PPG.2019 = PPG) %>%
+  as_data_frame() %>%
+  gather(key = "variable", value = "value", -PPG, -Position )
+
+featurePlot2019 <- ggplot(df2019.gathered, aes(x = value, y = PPG) ) +
+  geom_point(aes(color = Position)) +
+  facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
+  theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
+
+ggsave(featurePlot2019, filename="feature_comparison_2019.png", dpi=300, width = 8, height = 11)
+```
+
+### Players Across Seasons
+
+```{r}
+df19_pred20 <- inner_join(df19, df20[c('Name','PPG')], by='Name', suffix = c('.2019', '.2020') ) %>%
+  select(c(-Name,-Team)) %>%
+  as_data_frame() %>%
+  gather(key = "variable", value = "value", -PPG.2020, -Position )
+
+data2019pred2020 <- ggplot(df19_pred20, aes(x = value, y = PPG.2020)) +
+  geom_point(aes(color = Position)) +
+  facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
+  theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
+
+ggsave(data2019pred2020, filename="2019_predicting_2020.png", dpi=300, width = 8, height = 11)
+```
+
+```{r}
+df20_pred21 <- inner_join(df20, df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021') ) %>%
+  select(c(-Name,-Team,-Total)) %>%
+  as_data_frame() %>%
+  gather(key = "variable", value = "value", -PPG.2021, -Position )
+
+data2020pred2021 <- ggplot(df20_pred21, aes(x = value, y = PPG.2021)) +
+  geom_point(aes(color = Position)) +
+  facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
+  theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
+
+ggsave(data2020pred2021, filename="2020_predicting_2021.png", dpi=300, width = 8, height = 11)
+```
+
+The colors used are:
+```{r}
+FB.color <- "#F8766D" 
+QB.color <- "#A3A500" 
+RB.color <- "#00BF7D" 
+TE.color <- "#00B0F6" 
+WR.color <- "#E76BF3"
+```
+
+
+## Position Based Modeling
+
+Combine the seasons.
+
+```{r}
+names(df19_pred20) <- c('Position','PPG','variable','value')
+names(df20_pred21) <- c('Position','PPG','variable','value')
+combined.pseudopreds <- rbind(df19_pred20, df20_pred21) %>% 
+  mutate(variable = recode(variable, PPG.2019 = 'PPG.current', PPG.2020 = 'PPG.current' ))
+```
+
+### Quarterback
+
+#### Individual Features
+
+```{r}
+QB.featureSet <- All.features[!All.features %in% c('Receiving TD','Receiving Yards','Receptions','Rank')]
+QB.plot <- ggplot(subset(combined.pseudopreds, (Position == 'QB') & (variable %in% QB.featureSet) ),
+                  aes(x = value, y = PPG)) +
+  geom_point(color=QB.color) +
+  facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
+  theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
+
+ggsave(QB.plot, filename="QB_plot.png", dpi=300, width = 8, height = 11)
+```
+
+#### Correlation
+
+```{r}
+inner_join(df20[QB.featureSet], df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021')) %>%
+  filter(Position == 'QB') %>%
+  select(c(-Name,-Team,-Position)) %>%
+  as_data_frame() %>%
+  cor() %>% 
+  corrplot()
+```
+
+```{r}
+QB.featureSet <- c(All.features[!All.features %in% c('Receiving TD','Receiving Yards','Receptions','Fumbles Lost','PPG')], 'PPG.current', 'PPG.next')
+```
+
+
+### Running Back
+
+#### Individual Features
+
+```{r}
+RB.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','Passing Yards')]
+RB.plot <- ggplot(subset(combined.pseudopreds, (Position == 'RB') & (variable %in% RB.featureSet) ),
+                  aes(x = value, y = PPG)) +
+  geom_point(color=RB.color) +
+  facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
+  theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
+
+ggsave(RB.plot, filename="RB_plot.png", dpi=300, width = 8, height = 11)
+```
+
+#### Correlation
+
+```{r}
+inner_join(df20[RB.featureSet], df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021')) %>%
+  filter(Position == 'RB') %>%
+  select(c(-Name,-Team,-Position)) %>%
+  as_data_frame() %>%
+  cor() %>% 
+  corrplot()
+```
+
+```{r}
+RB.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','Passing Yards','Receiving TD')]
+```
+
+
+### Tight End
+
+#### Individual Features
+
+```{r}
+TE.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','Passing Yards')]
+TE.plot <- ggplot(subset(combined.pseudopreds, (Position == 'TE') & (variable %in% TE.featureSet) ),
+                  aes(x = value, y = PPG)) +
+  geom_point(color=TE.color) +
+  facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
+  theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
+
+ggsave(TE.plot, filename="TE_plot.png", dpi=300, width = 8, height = 11)
+```
+
+#### Correlation
+
+```{r}
+inner_join(df20[TE.featureSet], df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021')) %>%
+  filter(Position == 'TE') %>%
+  select(c(-Name,-Team,-Position)) %>%
+  as_data_frame() %>%
+  cor() %>% 
+  corrplot()
+```
+
+```{r}
+TE.featureSet <- All.features[!All.features %in% c('Receiving TD','Receiving Yards','Receptions','Fumbles Lost')]
+```
+
+
+### Wide Reveiver
+
+#### Individual Features
+
+```{r}
+WR.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','Passing Yards','Rushing TD')]
+WR.plot <- ggplot(subset(combined.pseudopreds, (Position == 'WR') & (variable %in% WR.featureSet) ),
+                  aes(x = value, y = PPG)) +
+  geom_point(color=WR.color) +
+  facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
+  theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
+
+ggsave(WR.plot, filename="WR_plot.png", dpi=300, width = 8, height = 11)
+```
+
+#### Correlation
+
+```{r}
+inner_join(df20[WR.featureSet], df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021')) %>%
+  filter(Position == 'WR') %>%
+  select(c(-Name,-Team,-Position)) %>%
+  as_data_frame() %>%
+  cor() %>% 
+  corrplot()
+```
+
+
+## Residuals
+
+```{r}
+All.19to20 <- inner_join(df19, df20[c('Name','PPG')], by='Name', suffix = c('.current', '.next')) 
+All.20to21 <- inner_join(df20, df21[c('Name','PPG')], by='Name', suffix = c('.current', '.next')) 
+All.19to21 <- rbind.fill(All.19to20,All.20to21) %>% replace(is.na(.), 0) %>% as_data_frame()
+```
+
+
+
+
+
+
+
+
+
+```{r}
+QB.train <- All.19to21 %>%
+  filter(Position == 'QB') %>%
+  select(c(-Name,-Team,-Position)) %>%
+  as_data_frame()
+
+QB.mod = lm(PPG.next ~. , data = QB.train, na.action=na.pass)
+summary(QB.mod)
+```
+
+```{r}
+QB.dredge <- dredge(QB.mod, rank = adjR2)
+kable(t(head(QB.dredge[order(QB.dredge$adjR2, decreasing = T), ] )))
+```
+
+
+```{r}
+library(leaps)
+model <- regsubsets(PPG.next ~ .^3, data = QB.train, nvmax = 10, really.big = TRUE)
+best_model <- which.min(model$bic)
+best_variables <- colnames(model$which)[best_model]
+final_model <- lm(as.formula(paste("y ~", paste(best_variables, collapse = "+"))), data = QB.train)
+```
 
 
 
 >## Material to be assessed includes:
->Data organization, aggregation, and cleaning
 
-```{r}
-df2019.gathered <- scale(subset(df19, select= c(-Name, -Team, -Position, -Total))) %>%
-  as_data_frame() %>%
-  mutate( Position = as.factor(df19$Position) ) %>%
-  gather(key = "variable", value = "value",
-         -PPG, -Position )
-
-#df2019.gathered['Position'] <- df19$Position
-head(df2019.gathered, 3)
-
-featurePlot <- ggplot(df2019.gathered, aes(x = value, y = PPG)) +
-  geom_point(aes(color = Position)) +
-  facet_wrap(~variable, ncol = 2) + theme(aspect.ratio = 1)
-
-ggsave(featurePlot, "./feature_comparison.png", dpi=300, width = 12)
-```
-
-One of the major difficulties will be making legitimate comparisons given the different positions that play are likely to earn points via different means.
-
-
- 
 > Variable selection and model creation/comparison
 
 # Utilize Dredge and/or model subset selection
