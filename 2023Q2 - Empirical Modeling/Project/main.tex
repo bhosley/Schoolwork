@@ -7,6 +7,15 @@
 \makenoidxglossaries
 \loadglsentries{myThesis/glossary}
 
+\usepackage{graphicx}
+%\graphicspath{./Figures/}
+\usepackage{pdflscape}
+\newcommand\measurepage{\dimexpr\pagegoal-\pagetotal-\baselineskip\relax}
+\usepackage[most]{tcolorbox}
+\newtcolorbox{flexfigure}[1][]{height fill, space to=\myspace,#1}
+\usepackage{import}
+\usepackage{booktabs}
+
 \begin{document}
 %\glossaryAcronyms
 {\frontmatter
