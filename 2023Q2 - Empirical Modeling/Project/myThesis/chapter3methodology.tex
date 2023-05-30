@@ -1,3 +1,92 @@
 \chapter{Methodology}
 \label{ch:methodology}
 \glsresetall
+
+\section{Data Sanitization}
+
+The datasets employed in this study encompass statistics from the 2019 and 2020 seasons, 
+juxtaposed with the points per game from the 2020 and 2021 seasons. 
+Initial data cleaning ensured the absence of missing values and consistent data types across all columns. 
+The dataframe summaries were scrutinized for anomalous instances. 
+The notable instance in the 2019 data revealed a player who participated in 17 games within the season. This player was identified as Emmanuel Sanders, who transitioned from the Denver Broncos to the San Francisco 49ers mid-season. While this anomaly was not replicated in 2020, the 2021 season saw the NFL shift to a 17-game standard season, leading to 82 players with similar statistics.
+
+\section{Variable Selection}
+
+In order to gain a deeper understanding of the data, we analyzed the relationship between each feature and the points per game. 
+The outcomes of this preliminary analysis are depicted in Figures \ref{app:featuresPPG}. 
+This exploration reveals a distinct correlation between specific features and points per game, 
+which is contingent on a player's role within the team. 
+This observation implies that segregating player positions could be advantageous, 
+enabling dimensionality reduction by eliminating unused features. 
+A case in point is the passing features; apart from quarterbacks, only one player has a non-zero value, 
+illustrating the specificity of certain features to particular positions.
+
+The relationship with the 'teams' feature is not depicted in the presented collection of charts, 
+as the initial plots did not exhibit any discernible pattern.
+To further investigate this, Figure \ref{fig:teamppgsyearon} provides a comparison of the 
+distribution of PPG across teams over the seasons under study.
+The teams are arranged in order of their average Per-Player PPG, to ensure a non-arbitrary sequence.
+This visualization underscores the lack of valuable insights based on team performance.
+
+Figure \ref{app:positionPlots} presents the plots for each position following the elimination of their constant variables. Further understanding was obtained by examining the correlation between features. Figures \ref{app:positionCorrPlots}, which display the correlation plots, are referenced when discussing correlation-related issues.
+
+Initially, a comprehensive model was constructed for the Quarterbacks to serve as a benchmark. The resulting coefficients are displayed in Table \ref{tab:full_lm_QB}. 
+The dredge tool was considered for identifying an optimal model. However, the constraints of the available computational environment rendered full enumeration impractical.
+Instead, we employed a step-wise variable selection function that operated bidirectionally and 
+utilized the Akaike Information Criterion (AIC) \cite{akaike1998} as the metric. 
+Concurrently, Elasticnet regularization was performed. 
+The former approach yielded a marginally superior model.
+Finally, a Bayesian linear model was implemented, which demonstrated comparable performance to the other two methods.
+This procedure was replicated for each player position.
+
+Finally, the partial
+
+
+
+
+
+
+
+
+
+%%%%%  Pre Edit  %%%%%%
+
+
+
+
+
+
+
+\section{Influential Variables}
+
+
+
+\section{Adequacy Checking}
+
+\section{Model Validation}
+
+
+
+
+
+
+
+
+
+3. Methodology
+
+Step 1. Use 2021 fantasy points per game for each player as the dependent (response) variable.
+
+Step 2. Build a regression model using 2020 fantasy football data as the independent variableset to predict the 2020 fantasy points per game.• Students determine which variables are useful (which to include in model)• Students are free to obtain additional, open-source data to supplement the feature set if so desired• Torture the data until it confesses. . . but don’t torture it so much that it will confess to anything!
+
+Step 3. Once the final model is built, apply it to 2021 data to predict the average points pergame for the 2022 season.• Rank the players by predicted fantasy points per game in descending order.• Make your prediction for which two players you would draft.
+
+Step 4. Present your results in writing.Following the AFIT Style Guide, write a double-spaced technical report not longer than eight (8) pagesin length for the body of the report. The report should include a 2-5 sentence abstract and sections thatrespectively:
+
+(a) Introduce and motivate the project.
+
+(b) Discuss the methodology, to include variable selection, adequacy checking, model validation, and analysis of influential observations.
+
+(c) Present the model, results, and analysis.
+
+(d) Discuss the results, and provide insights and recommendations.Within your report, include at least one relevant table and at least one relevant figure. Recall that tabletitles go above the table and figure titles go below the figure.The cover page, table of contents, abstract, references, appendices, and other material do not countagainst the eight-page limit.
