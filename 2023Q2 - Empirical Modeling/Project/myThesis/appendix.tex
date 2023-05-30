@@ -2,16 +2,123 @@
 %%%%%%%%%%
 % if Appendix is needed:
 %%%%%%%%%%
-\renewcommand{\theHchapter}{A\arabic{chapter}}
+\renewcommand{\theHchapter}{\Alph{chapter}}
+\renewcommand{\thesection}{\Alph{chapter}.\arabic{section}}
+\renewcommand{\thesubsection}{\Alph{chapter}.\arabic{section}.\arabic{subsection}}
 \appendix
 %	\begin{appendices}
-\phantomsection
+%\phantomsection
 
-\chapter{Additional Results}
-\label{app:addResults}
+\chapter{Supporting Figures}
+\label{app:supportingFigures}
 
-%More Results Figures here, if desired.
+\section{Examination of Features and Points Per Game}
+\label{app:featuresPPG}
+\subsection{2020 PPG v. 2019 Features}
+\begin{flexfigure}[blanker]
+	\centering
+	\includegraphics[height=\myspace,width=\linewidth,keepaspectratio]{Figures/2019_predicting_2020}
+	\label{fig:2019predicting2020}
+\end{flexfigure}
 
-\chapter{Second Appendix Title}
-%
-%e.g. include significant MATLAB Cod
+\subsection{2021 PPG v. 2020 Features}
+\begin{flexfigure}[blanker]
+	\centering
+	\includegraphics[height=\myspace,width=\linewidth,keepaspectratio]{Figures/2020_predicting_2021}
+	\label{fig:2020predicting2021}
+\end{flexfigure}
+
+\begin{landscape}
+\section{Team PPG Distribution Across Seasons}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=\linewidth]{Figures/Team_PPGs_YearOn}
+		\label{fig:teamppgsyearon}
+	\end{figure}
+\end{landscape}
+
+\section{Examination of Features by Player Position}
+\label{app:positionPlots}
+\subsection{Quarterback}
+\begin{flexfigure}[blanker]
+	\centering
+	\includegraphics[height=\myspace,width=\linewidth,keepaspectratio]{Figures/QB_plot}
+	\label{fig:qbplot}
+\end{flexfigure}
+
+\subsection{Running Back}
+\begin{flexfigure}[blanker]
+	\centering
+	\includegraphics[height=\myspace,width=\linewidth,keepaspectratio]{Figures/RB_plot}
+	\label{fig:rbplot}
+\end{flexfigure}
+
+
+\subsection{Tight End}
+\begin{flexfigure}[blanker]
+	\centering
+	\includegraphics[height=\myspace,width=\linewidth,keepaspectratio]{Figures/TE_plot}
+	\label{fig:teplot}
+\end{flexfigure}
+
+\subsection{Wide Receiver}
+\begin{flexfigure}[blanker]
+	\centering
+	\includegraphics[height=\myspace,width=\linewidth,keepaspectratio]{Figures/WR_plot}
+	\label{fig:wrplot}
+\end{flexfigure}
+
+
+\section{Feature Correlation by Position}
+\label{app:positionCorrPlots}
+
+\subsection{Quarterback}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth,keepaspectratio]{Figures/QB_plot_corr}
+	\label{fig:qbplotcorr}
+\end{figure}
+
+
+\subsection{Running Back}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth,keepaspectratio]{Figures/RB_plot_corr}
+	\label{fig:rbplotcorr}
+\end{figure}
+
+\clearpage
+\subsection{Tight End}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth,keepaspectratio]{Figures/TE_plot_corr}
+	\label{fig:teplotcorr}
+\end{figure}
+
+\subsection{Wide Receiver}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\linewidth,keepaspectratio]{Figures/WR_plot_corr}
+	\label{fig:wrplotcorr}
+\end{figure}
+
+
+\clearpage
+\begin{landscape}
+	\section{Mean-Squared Error Plot of ElasticNet Regularization (Quarterback)}
+	\begin{figure}[h]
+		\centering
+		\includegraphics[width=0.85\linewidth]{Figures/ElasticNet_Regularization}
+		\label{fig:elasticnetregularization}
+	\end{figure}
+\end{landscape}
+
+
+
+
+\chapter{Supporting Tables}
+\label{app:supportingTables}
+
+\section{Full Linear Model (for Quarterback) Summary}
+\label{tab:full_lm_QB}
+\import{./Tables/}{QB.mod.full.tex}
