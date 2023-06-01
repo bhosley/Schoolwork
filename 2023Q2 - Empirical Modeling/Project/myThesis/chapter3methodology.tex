@@ -39,7 +39,7 @@ The former approach yielded a marginally superior model.
 Finally, a Bayesian linear model was implemented, which demonstrated comparable performance to the other two methods.
 This procedure was replicated for each player position.
 
-Finally, the partial
+
 
 
 
@@ -51,17 +51,37 @@ Finally, the partial
 
 %%%%%  Pre Edit  %%%%%%
 
-
-
+Finally, the partial regressions are combined into a singular multiple regression with the position as an interaction term.
+The built-in library provided an effective method for practically joining these multiple regressions. 
+The resulting coefficients are largely similar, but reduced by the common regression terms.
 
 
 
 
 \section{Influential Variables}
 
+At each step we checked for outliers.
+In the first multiple regression there were 26 outliers within the data as measured by mahalanobis distance.
+Within the model there were two outliers based on cook's distance.
+The outliers reported from the model were recursively dropped until no outliers were identified.
+The data set outliers were dropped from a separate version of the model, 
+and the new model did not have any new outliers identified.
+
+Between all of these situations, the model developed from the dataset that had the outliers 
+based on mahalanobis distance had the best performance based on $R^2$ and Standard Error.
+
+\ref{tab:outliers}
+
+
 
 
 \section{Adequacy Checking}
+
+
+qqplot.png
+residual_plot.png
+results_plot.png
+results_trunc_plot.png
 
 \section{Model Validation}
 
@@ -73,20 +93,18 @@ Finally, the partial
 
 
 
-3. Methodology
 
-Step 1. Use 2021 fantasy points per game for each player as the dependent (response) variable.
+Residual standard error: 3.424 on 154 degrees of freedom 
+Multiple R-squared:  0.6613,	Adjusted R-squared:  0.5491 
+F-statistic: 5.896 on 51 and 154 DF,  p-value: < 2.2e-16
 
-Step 2. Build a regression model using 2020 fantasy football data as the independent variableset to predict the 2020 fantasy points per game.• Students determine which variables are useful (which to include in model)• Students are free to obtain additional, open-source data to supplement the feature set if so desired• Torture the data until it confesses. . . but don’t torture it so much that it will confess to anything!
 
-Step 3. Once the final model is built, apply it to 2021 data to predict the average points pergame for the 2022 season.• Rank the players by predicted fantasy points per game in descending order.• Make your prediction for which two players you would draft.
 
-Step 4. Present your results in writing.Following the AFIT Style Guide, write a double-spaced technical report not longer than eight (8) pagesin length for the body of the report. The report should include a 2-5 sentence abstract and sections thatrespectively:
 
-(a) Introduce and motivate the project.
+
+
 
 (b) Discuss the methodology, to include variable selection, adequacy checking, model validation, and analysis of influential observations.
 
-(c) Present the model, results, and analysis.
 
-(d) Discuss the results, and provide insights and recommendations.Within your report, include at least one relevant table and at least one relevant figure. Recall that tabletitles go above the table and figure titles go below the figure.The cover page, table of contents, abstract, references, appendices, and other material do not countagainst the eight-page limit.
+
