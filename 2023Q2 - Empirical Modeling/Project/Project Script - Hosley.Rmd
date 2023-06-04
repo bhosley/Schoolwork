@@ -41,7 +41,6 @@ library(modelsummary)
 library(car)
 library(MuMIn)
 library(ResourceSelection)
-
 library(ggplot2)
 library(latex2exp)
 library(caret) 
@@ -50,17 +49,24 @@ library(summarytools)
 library(corrplot)
 library(glue)
 library(plyr)
+library(performance)
+library(glmnet)
+library(BAS)
+library(grt)
 ```
 
 ```{r, include=FALSE}
 kable <- function(data, ...) {
   knitr::kable(data, ..., booktabs = TRUE, digits = 4, align = 'c',escape = FALSE) %>% 
-    kable_styling(latex_options =c("striped", "hold_position"))
+    kable_styling(latex_options =c("hold_position"))
 }
 
 adjR2 <- function(model){
   summary(model)$adj.r.squared
 } 
+
+  # Execution Variables
+ByPositions <- FALSE
 ```
 
 # Outline of Empirical Modeling Project
@@ -77,14 +83,38 @@ Prioritizing consistency in performance. We will use average points per game as 
 Regress data from the 2020 and 2021 (can use 2019 as well), target is to predict 2022 performance.
 
 ```{r, include=FALSE}
-df19 <- read_excel('./ProjectData.xlsx', sheet = '2019 Regular Season')
-df20 <- read_excel('./ProjectData.xlsx', sheet = '2020 Regular Season')
-df21 <- read_excel('./ProjectData.xlsx', sheet = '2021 Regular Season')
-#df22 <- read_excel('./ProjectData.xlsx', sheet = '2022 Regular Season')
+df19 <- read_excel('./ProjectData.xlsx', sheet = '2019 Regular Season',
+                   .name_repair = function(col){ gsub(" ", "_", col) })
+df19 <- df19 %>% rename_at('PPG', ~'PPG.current')
+
+df20 <- read_excel('./ProjectData.xlsx', sheet = '2020 Regular Season',
+                   .name_repair = function(col){ gsub(" ", "_", col) })
+df20 <- df20 %>% rename_at('PPG', ~'PPG.current')
+
+df21 <- read_excel('./ProjectData.xlsx', sheet = '2021 Regular Season',
+                   .name_repair = function(col){ gsub(" ", "_", col) })
+df21 <- df21 %>% rename_at('PPG', ~'PPG.current')
+
+df22 <- read_excel('./ProjectData.xlsx', sheet = '2022 Regular Season',
+                   .name_repair = function(col){ gsub(" ", "_", col) })
+df22 <- df22 %>% rename_at('PPG', ~'PPG.current')
+
 All.features <- c(colnames(df21))
 ```
 
 # Data Exploration
+
+## Data Quality
+
+```{r}
+paste('Stats for season 2019 :', sum(is.na(df19)))
+summary(df19)
+paste('Stats for season 2020:', sum(is.na(df20)))
+summary(df20)
+paste('Stats for season 2021:', sum(is.na(df21)))
+summary(df21)
+```
+
 
 ## Exploration of Team Performance
 
@@ -93,11 +123,11 @@ All.features <- c(colnames(df21))
 ```{r}
 teams.average.PPG.all <- Reduce(
   function(x, y, ...) merge(x, y, by = 'Team', all = TRUE, ...), list(
-    aggregate(PPG ~ Team, df19, mean),
-    aggregate(PPG ~ Team, df20, mean), 
-    aggregate(PPG ~ Team, df21, mean)) ) %>% 
+    aggregate(PPG.current ~ Team, df19, mean),
+    aggregate(PPG.current ~ Team, df20, mean), 
+    aggregate(PPG.current ~ Team, df21, mean)) ) %>% 
   set_names(., c('Team','2019','2020','2021'))  %>% 
-  arrange(mean('2019','2020','2021')) %>%
+  #arrange(mean('2019','2020','2021')) %>%
   gather(key = "Year", value = "Average.PPG", -Team)
 
 team.levels <- aggregate(Average.PPG ~ Team, teams.average.PPG.all, mean)
@@ -113,15 +143,15 @@ df20$Team <- factor(df20$Team, levels =team.levels, ordered=TRUE)
 df21$Team <- factor(df21$Team, levels =team.levels, ordered=TRUE)
 
 violin_a = 0.3
-teamViolinPlot <- ggplot(df19, aes(Team, PPG)) + geom_violin(aes(colour = "2019"), alpha = violin_a) + 
-  geom_violin(df20, mapping = aes(Team, PPG, colour = "2020"), position = position_nudge(x = 0), alpha = violin_a) +
-  geom_violin(df21, mapping = aes(Team, PPG, colour = "2021"), position = position_nudge(x = 0), alpha = violin_a) +
+teamViolinPlot <- ggplot(df19, aes(Team, PPG.current)) + geom_violin(aes(colour = "2019"), alpha = violin_a) + 
+  geom_violin(df20, mapping = aes(Team, PPG.current, colour = "2020"), position = position_nudge(x = 0), alpha = violin_a) +
+  geom_violin(df21, mapping = aes(Team, PPG.current, colour = "2021"), position = position_nudge(x = 0), alpha = violin_a) +
   geom_point(teams.average.PPG.all, mapping = aes(Team, Average.PPG, color = Year), alpha = violin_a+0.2)
 
-ggsave(teamViolinPlot, filename="Team_PPGs_YearOn.png", dpi=300, width = 12, height = 6)
+ggsave(teamViolinPlot, filename="Figures/Team_PPGs_YearOn.png", dpi=300, width = 12, height = 6)
 ```
 
-It does not appear that there are any significant underlying 
+It does not appear that there are any significant underlying relations with teams.
 
 ## Exploration of Player Performance
 
@@ -132,46 +162,50 @@ One of the major difficulties will be making legitimate comparisons given the di
 ```{r}
 df2019.gathered <- df19 %>% 
   select(c(-Name,-Team)) %>%
-  mutate(PPG.2019 = PPG) %>%
+  mutate(PPG.2019 = PPG.current) %>%
   as_data_frame() %>%
-  gather(key = "variable", value = "value", -PPG, -Position )
+  gather(key = "variable", value = "value", -PPG.current, -Position )
 
-featurePlot2019 <- ggplot(df2019.gathered, aes(x = value, y = PPG) ) +
+featurePlot2019 <- ggplot(df2019.gathered, aes(x = value, y = PPG.current) ) +
   geom_point(aes(color = Position)) +
   facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
   theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
 
-ggsave(featurePlot2019, filename="feature_comparison_2019.png", dpi=300, width = 8, height = 11)
+ggsave(featurePlot2019, filename="Figures/feature_comparison_2019.png", dpi=300, width = 8, height = 11)
 ```
 
 ### Players Across Seasons
 
 ```{r}
-df19_pred20 <- inner_join(df19, df20[c('Name','PPG')], by='Name', suffix = c('.2019', '.2020') ) %>%
+df19_pred20 <- inner_join(df19, df20[c('Name','PPG.current')], by='Name', suffix = c('.2019', '.2020') ) %>%
+  rename_at('PPG.current.2019', ~'PPG.current') %>%
+  rename_at('PPG.current.2020', ~'PPG.next') %>%
   select(c(-Name,-Team)) %>%
   as_data_frame() %>%
-  gather(key = "variable", value = "value", -PPG.2020, -Position )
+  gather(key = "variable", value = "value", -PPG.next, -Position )
 
-data2019pred2020 <- ggplot(df19_pred20, aes(x = value, y = PPG.2020)) +
+data2019pred2020 <- ggplot(df19_pred20, aes(x = value, y = PPG.next)) +
   geom_point(aes(color = Position)) +
   facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
   theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
 
-ggsave(data2019pred2020, filename="2019_predicting_2020.png", dpi=300, width = 8, height = 11)
+ggsave(data2019pred2020, filename="Figures/2019_predicting_2020.png", dpi=300, width = 8, height = 11)
 ```
 
 ```{r}
-df20_pred21 <- inner_join(df20, df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021') ) %>%
+df20_pred21 <- inner_join(df20, df21[c('Name','PPG.current')], by='Name', suffix = c('.2020', '.2021') ) %>%
+  rename_at('PPG.current.2020', ~'PPG.current') %>%
+  rename_at('PPG.current.2021', ~'PPG.next') %>%
   select(c(-Name,-Team,-Total)) %>%
   as_data_frame() %>%
-  gather(key = "variable", value = "value", -PPG.2021, -Position )
+  gather(key = "variable", value = "value", -PPG.next, -Position )
 
-data2020pred2021 <- ggplot(df20_pred21, aes(x = value, y = PPG.2021)) +
+data2020pred2021 <- ggplot(df20_pred21, aes(x = value, y = PPG.next)) +
   geom_point(aes(color = Position)) +
   facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
   theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
 
-ggsave(data2020pred2021, filename="2020_predicting_2021.png", dpi=300, width = 8, height = 11)
+ggsave(data2020pred2021, filename="Figures/2020_predicting_2021.png", dpi=300, width = 8, height = 11)
 ```
 
 The colors used are:
@@ -189,8 +223,8 @@ WR.color <- "#E76BF3"
 Combine the seasons.
 
 ```{r}
-names(df19_pred20) <- c('Position','PPG','variable','value')
-names(df20_pred21) <- c('Position','PPG','variable','value')
+names(df19_pred20) <- c('Position','PPG.next','variable','value')
+names(df20_pred21) <- c('Position','PPG.next','variable','value')
 combined.pseudopreds <- rbind(df19_pred20, df20_pred21) %>% 
   mutate(variable = recode(variable, PPG.2019 = 'PPG.current', PPG.2020 = 'PPG.current' ))
 ```
@@ -199,30 +233,31 @@ combined.pseudopreds <- rbind(df19_pred20, df20_pred21) %>%
 
 #### Individual Features
 
-```{r}
-QB.featureSet <- All.features[!All.features %in% c('Receiving TD','Receiving Yards','Receptions','Rank')]
+```{r, eval = ByPositions}
+QB.featureSet <- All.features[!All.features %in% c('Receiving_TD','Receiving_Yards','Receptions')]
 QB.plot <- ggplot(subset(combined.pseudopreds, (Position == 'QB') & (variable %in% QB.featureSet) ),
-                  aes(x = value, y = PPG)) +
+                  aes(x = value, y = PPG.next)) +
   geom_point(color=QB.color) +
   facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
   theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
 
-ggsave(QB.plot, filename="QB_plot.png", dpi=300, width = 8, height = 11)
+ggsave(QB.plot, filename="Figures/QB_plot.png", dpi=300, width = 8, height = 11)
 ```
 
 #### Correlation
 
-```{r}
-inner_join(df20[QB.featureSet], df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021')) %>%
+```{r, eval = ByPositions}
+png(filename = "Figures/QB_plot_corr.png", width = 1200, height = 800)
+inner_join(df20[QB.featureSet], df21[c('Name','PPG.current')], by='Name', suffix = c('.2020', '.2021')) %>%
+  rename_at('PPG.current.2020', ~'PPG.current') %>%
+  rename_at('PPG.current.2021', ~'PPG.next') %>%
   filter(Position == 'QB') %>%
   select(c(-Name,-Team,-Position)) %>%
   as_data_frame() %>%
   cor() %>% 
-  corrplot()
-```
+  corrplot();
 
-```{r}
-QB.featureSet <- c(All.features[!All.features %in% c('Receiving TD','Receiving Yards','Receptions','Fumbles Lost','PPG')], 'PPG.current', 'PPG.next')
+dev.off()
 ```
 
 
@@ -230,30 +265,31 @@ QB.featureSet <- c(All.features[!All.features %in% c('Receiving TD','Receiving Y
 
 #### Individual Features
 
-```{r}
-RB.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','Passing Yards')]
+```{r, eval = ByPositions}
+RB.featureSet <- All.features[!All.features %in% c('Passing_INT','Passing_TD','Passing_Yards')]
 RB.plot <- ggplot(subset(combined.pseudopreds, (Position == 'RB') & (variable %in% RB.featureSet) ),
-                  aes(x = value, y = PPG)) +
+                  aes(x = value, y = PPG.next)) +
   geom_point(color=RB.color) +
   facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
   theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
 
-ggsave(RB.plot, filename="RB_plot.png", dpi=300, width = 8, height = 11)
+ggsave(RB.plot, filename="Figures/RB_plot.png", dpi=300, width = 8, height = 11)
 ```
 
 #### Correlation
 
-```{r}
-inner_join(df20[RB.featureSet], df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021')) %>%
+```{r, eval = ByPositions}
+png(filename = "Figures/RB_plot_corr.png", width = 1200, height = 800)
+inner_join(df20[RB.featureSet], df21[c('Name','PPG.current')], by='Name', suffix = c('.2020', '.2021')) %>%
+  rename_at('PPG.current.2020', ~'PPG.current') %>%
+  rename_at('PPG.current.2021', ~'PPG.next') %>%
   filter(Position == 'RB') %>%
   select(c(-Name,-Team,-Position)) %>%
   as_data_frame() %>%
   cor() %>% 
-  corrplot()
-```
+  corrplot();
 
-```{r}
-RB.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','Passing Yards','Receiving TD')]
+dev.off()
 ```
 
 
@@ -261,136 +297,463 @@ RB.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','P
 
 #### Individual Features
 
-```{r}
-TE.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','Passing Yards')]
+```{r, eval = ByPositions}
+TE.featureSet <- All.features[!All.features %in% c('Passing_INT','Passing_TD','Passing_Yards')]
 TE.plot <- ggplot(subset(combined.pseudopreds, (Position == 'TE') & (variable %in% TE.featureSet) ),
-                  aes(x = value, y = PPG)) +
+                  aes(x = value, y = PPG.next)) +
   geom_point(color=TE.color) +
   facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
   theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
 
-ggsave(TE.plot, filename="TE_plot.png", dpi=300, width = 8, height = 11)
+ggsave(TE.plot, filename="Figures/TE_plot.png", dpi=300, width = 8, height = 11)
 ```
 
 #### Correlation
 
-```{r}
-inner_join(df20[TE.featureSet], df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021')) %>%
+```{r, eval = ByPositions}
+png(filename = "Figures/TE_plot_corr.png", width = 1200, height = 800)
+inner_join(df20[TE.featureSet], df21[c('Name','PPG.current')], by='Name', suffix = c('.2020', '.2021')) %>%
+  rename_at('PPG.current.2020', ~'PPG.current') %>%
+  rename_at('PPG.current.2021', ~'PPG.next') %>%
   filter(Position == 'TE') %>%
   select(c(-Name,-Team,-Position)) %>%
   as_data_frame() %>%
   cor() %>% 
-  corrplot()
+  corrplot();
+
+dev.off()
 ```
 
-```{r}
-TE.featureSet <- All.features[!All.features %in% c('Receiving TD','Receiving Yards','Receptions','Fumbles Lost')]
-```
 
-
-### Wide Reveiver
+### Wide Receiver
 
 #### Individual Features
 
-```{r}
-WR.featureSet <- All.features[!All.features %in% c('Passing INT','Passing TD','Passing Yards','Rushing TD')]
+```{r, eval = ByPositions}
+WR.featureSet <- All.features[!All.features %in% c('Passing_INT','Passing_TD','Passing_Yards','Rushing_TD')]
 WR.plot <- ggplot(subset(combined.pseudopreds, (Position == 'WR') & (variable %in% WR.featureSet) ),
-                  aes(x = value, y = PPG)) +
+                  aes(x = value, y = PPG.next)) +
   geom_point(color=WR.color) +
   facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
   theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
 
-ggsave(WR.plot, filename="WR_plot.png", dpi=300, width = 8, height = 11)
+ggsave(WR.plot, filename="Figures/WR_plot.png", dpi=300, width = 8, height = 11)
 ```
 
 #### Correlation
 
-```{r}
-inner_join(df20[WR.featureSet], df21[c('Name','PPG')], by='Name', suffix = c('.2020', '.2021')) %>%
+```{r, eval = ByPositions}
+png(filename = "Figures/WR_plot_corr.png", width = 1200, height = 800)
+inner_join(df20[WR.featureSet], df21[c('Name','PPG.current')], by='Name', suffix = c('.2020', '.2021')) %>%
+  rename_at('PPG.current.2020', ~'PPG.current') %>%
+  rename_at('PPG.current.2021', ~'PPG.next') %>%
   filter(Position == 'WR') %>%
   select(c(-Name,-Team,-Position)) %>%
   as_data_frame() %>%
   cor() %>% 
-  corrplot()
+  corrplot();
+
+dev.off()
 ```
 
 
-## Residuals
+# Variable Selection
 
 ```{r}
-All.19to20 <- inner_join(df19, df20[c('Name','PPG')], by='Name', suffix = c('.current', '.next')) 
-All.20to21 <- inner_join(df20, df21[c('Name','PPG')], by='Name', suffix = c('.current', '.next')) 
+All.19to20 <- inner_join(df19, df20[c('Name','PPG.current')], by='Name', suffix = c('.2019', '.2020')) %>%
+  rename_at('PPG.current.2019', ~'PPG.current') %>%
+  rename_at('PPG.current.2020', ~'PPG.next')
+
+All.20to21 <- inner_join(df20, df21[c('Name','PPG.current')], by='Name', suffix = c('.2020', '.2021')) %>%
+  rename_at('PPG.current.2020', ~'PPG.current') %>%
+  rename_at('PPG.current.2021', ~'PPG.next')
+  
 All.19to21 <- rbind.fill(All.19to20,All.20to21) %>% replace(is.na(.), 0) %>% as_data_frame()
 ```
 
+## Techniques Tried But Ultimately Unused
 
+1. Dredge took a really long time and did not provide any better of results.
 
+```{}
+library(leaps)
+# Set seed for reproducibility
+set.seed(123)
+# Set up repeated k-fold cross-validation
+train.control <- trainControl(method = "cv", number = 10)
+# Train the model
+step.model <- train(PPG.next ~., data = QB.train,
+                    method = "leapSeq", 
+                    tuneGrid = data.frame(nvmax = 1:length(QB.featureSet)),
+                    trControl = train.control
+                    )
+step.model$results
+summary(step.model$finalModel)
+```
 
+2. The leaps library for subsetting returned less effective models.
 
+3. GLM provided a reasonable LASSO Regression, so it was implemented below.
 
+## Create Functions
 
-
+These functions were originally built with the QB segment of the data, but generalized for broad implementation.
 
 ```{r}
-QB.train <- All.19to21 %>%
-  filter(Position == 'QB') %>%
+  # Generate a position-specific dataset.
+training.set <- function(position){
+  All.19to21 %>%
+  filter(Position == position) %>%
   select(c(-Name,-Team,-Position)) %>%
   as_data_frame()
+} 
+  # Save and export the model parameters
+save.summary <- function(mod){
+  filename <- glue('Tables/{deparse(substitute(mod))}.tex')
+  xtable(summary(mod)) %>%
+  knitr::kable(., format = 'latex') %>%
+  writeLines(., filename)
+}
+  # Technically actually, elasticnet
+lasso <- function(dataset, a = 1){
+  cv.model <- cv.glmnet(x = as.matrix(subset(dataset, select = -c(PPG.next))), 
+                        y = dataset$PPG.next, alpha = a)
+  best.lambda <- cv.model$lambda.min
+  best.model <- glmnet(x = as.matrix(subset(dataset, select = -c(PPG.next))), 
+                       y = dataset$PPG.next, alpha = a, lambda = best.lambda)
+  out <- list(cv=cv.model, mod=best.model)
+  return(out)
+}
+  # Feature selection in both directions from a full model
+stepwise <- function(full_model){
+  stepAIC(full_model, direction = "both", trace = FALSE)
+}
+  # Bayes linear model
+bayesglm <- function(dataset){
+  bas.lm(PPG.next ~ ., data = dataset, prior = "BIC", 
+                 modelprior = Bernoulli(1), 
+                 include.always = ~ ., n.models = 1)
+}
 
-QB.mod = lm(PPG.next ~. , data = QB.train, na.action=na.pass)
-summary(QB.mod)
+```
+
+## Quarterbacks
+
+```{r, eval = ByPositions}
+  # QB dataset
+QB.train <- training.set('QB')
+
+  # Check for Outliers
+check_outliers(QB.train)
+
+  # Train a full QB model
+QB.mod.full <- lm(PPG.next ~. , data = QB.train, na.action=na.pass)
+print('Full')
+summary(QB.mod.full)
+
+  # Train a Regularized Regression
+QB.lasso <- lasso(QB.train)
+plot(QB.lasso$cv)
+print('Regular')
+coef(QB.lasso$mod)
+print(QB.lasso$mod$dev.ratio)
+
+  # Train by Step
+QB.mod.step <- stepwise(QB.mod.full)
+print('Step')
+summary(QB.mod.step)
+
+  # Train a Bayesian Linear Model
+QB.mod.bayes <- bayesglm(QB.train)
+print('Bayes')
+summary(QB.mod.bayes)
+```
+
+The outliers found here are (both 2020 season)
+Taysom Hill O ~ 9.8 PPG.next
+Dak Prescot ~ 5 Games, 20.0 PPG.next
+
+
+## Running Backs
+
+```{r, eval = ByPositions}
+  # RB dataset
+RB.train <- training.set('RB')
+
+  # Check for Outliers
+try(check_outliers(RB.train))
+
+  # Train a full RB model
+RB.mod.full <- lm(PPG.next ~. , data = RB.train, na.action=na.pass)
+print('Full')
+summary(RB.mod.full)
+
+  # Train a Regularized Regression
+RB.lasso <- lasso(RB.train)
+plot(RB.lasso$cv)
+print('Regular')
+coef(RB.lasso$mod)
+print(RB.lasso$mod$dev.ratio)
+
+  # Train by Step
+RB.mod.step <- stepwise(RB.mod.full)
+print('Step')
+summary(RB.mod.step)
+
+  # Train a Bayesian Linear Model
+RB.mod.bayes <- bayesglm(RB.train)
+print('Bayes')
+summary(RB.mod.bayes)
+```
+
+
+## Tight End
+
+```{r, eval = ByPositions}
+  # TE dataset
+TE.train <- training.set('TE')
+
+  # Check for Outliers
+try(check_outliers(TE.train))
+
+  # Train a full TE model
+TE.mod.full <- lm(PPG.next ~. , data = TE.train, na.action=na.pass)
+print('Full')
+summary(TE.mod.full)
+
+  # Train a Regularized Regression
+TE.lasso <- lasso(TE.train)
+plot(TE.lasso$cv)
+print('Regular')
+coef(TE.lasso$mod)
+print(TE.lasso$mod$dev.ratio)
+
+  # Train by Step
+TE.mod.step <- stepwise(TE.mod.full)
+print('Step')
+summary(TE.mod.step)
+
+  # Train a Bayesian Linear Model
+TE.mod.bayes <- bayesglm(TE.train)
+print('Bayes')
+summary(TE.mod.bayes)
+```
+
+## Wide Receiver
+
+```{r, eval = ByPositions}
+  # WR dataset
+WR.train <- training.set('WR')
+
+  # Check for Outliers
+try(check_outliers(WR.train))
+
+  # Train a full WR model
+WR.mod.full <- lm(PPG.next ~. , data = WR.train, na.action=na.pass)
+print('Full')
+summary(WR.mod.full)
+
+  # Train a Regularized Regression
+WR.lasso <- lasso(WR.train)
+plot(WR.lasso$cv)
+print('Regular')
+coef(WR.lasso$mod)
+print(WR.lasso$mod$dev.ratio)
+
+  # Train by Step
+WR.mod.step <- stepwise(WR.mod.full)
+print('Step')
+summary(WR.mod.step)
+
+  # Train a Bayesian Linear Model
+WR.mod.bayes <- bayesglm(WR.train)
+print('Bayes')
+summary(WR.mod.bayes)
+```
+
+
+
+# Consolidating the Model Pieces
+
+
+```{r}
+Scaled.train.x <- scale(select(All.19to21,-c(Name,Position,Team,PPG.next)))
+Scaled.train.y <- scale(select(All.19to21, PPG.next))
+```
+
+
+```{r}
+All.train <- merge(All.19to21$Position, cbind(Scaled.train.x,Scaled.train.y), by = "row.names", all = TRUE) %>%
+  as_data_frame() %>% rename_at('x', ~'Position') %>% select(-Row.names)
+
+
+All.mod.full <- lm(PPG.next ~(.)*Position , data = All.train, na.action=na.pass)
+summary(All.mod.full)
 ```
 
 ```{r}
-QB.dredge <- dredge(QB.mod, rank = adjR2)
-kable(t(head(QB.dredge[order(QB.dredge$adjR2, decreasing = T), ] )))
+All.bayes <- bayesglm(All.train)
+summary(All.bayes)
+```
+
+## Checking for Outliers
+(analysis of influential observations)
+
+```{r}
+check_outliers(All.train)
+check_outliers(All.mod.full)
+```
+
+```{r}
+data_outliers <- c(1, 57, 112, 118, 119, 121, 122, 123, 125, 126, 
+                   127, 128, 129, 136, 142, 149, 157, 182, 235, 254, 
+                   297, 335, 353, 354, 370, 379, 396) 
+model_outliers <- c(229, 379)
+
+print('With Data Outliers Removed')
+All.mod.out <- lm(PPG.next ~(.)*Position , data = All.train[-data_outliers,], na.action=na.pass)
+summary(All.mod.out)
+check_outliers(All.mod.out)
+
+print('With Model Outliers Removed')
+All.mod.out <- lm(PPG.next ~(.)*Position , data = All.train[-model_outliers,], na.action=na.pass)
+summary(All.mod.out)
+check_outliers(All.mod.out)
+```
+
+```{r}
+library(gt)  
+library(gtsummary)
+All.mod.out %>%
+  gtsummary::tbl_regression() %>%
+  gtsummary::modify_caption('Summary of Multi-regression Model')%>%
+  knitr::kable(., format = 'latex') %>%
+  writeLines(., 'Tables/Multiple-Regression_coeffs.tex')
+
+```
+
+
+```{r} 
+All.train.adj <- All.train[-model_outliers,]
+
+All.19to21[model_outliers,] %>%
+  knitr::kable(., format = 'latex') %>%
+  writeLines(., 'Tables/Outliers.tex')
+```
+
+
+## Model Adequacy
+
+```{r}
+qqPlot(residuals(All.mod.out), main = 'QQ-plot of Multi-regression Model', ylab = 'Residuals', xlab = 'Normal Quantiles')
+
+#ggsave(plot, filename="Figures/results_plot.png", dpi=300, width = 9, height = 8)
 ```
 
 
 ```{r}
-library(leaps)
-model <- regsubsets(PPG.next ~ .^3, data = QB.train, nvmax = 10, really.big = TRUE)
-best_model <- which.min(model$bic)
-best_variables <- colnames(model$which)[best_model]
-final_model <- lm(as.formula(paste("y ~", paste(best_variables, collapse = "+"))), data = QB.train)
+gathered.residuals <- cbind(All.train.adj, Residuals = residuals(All.mod.out))  %>%
+  as_data_frame() %>%
+  gather(key = "variable", value = "value", -Position, -Residuals )
+
+all.residual.plot <- ggplot(gathered.residuals, aes(x = value, y = Residuals)) +
+  geom_point(aes(color = Position)) +
+  facet_wrap(~variable, ncol = 3, scales = 'free_x') + 
+  theme(aspect.ratio = 1, axis.ticks.x=element_blank() ) 
+
+all.residual.plot
+ggsave(all.residual.plot, filename="Figures/residual_plot.png", dpi=300, width = 8, height = 11)
+```
+
+
+```{r}
+df22.test <- cbind.data.frame(select(df21, c(Name,Team,Position)), scale(select(df21, colnames(Scaled.train.x)), 
+                     center = attr(Scaled.train.x, 'scaled:center'), 
+                     scale = attr(Scaled.train.x, 'scaled:scale') )  ) %>%
+  inner_join(., df22[c('Name','PPG.current')], by='Name', suffix = c('.2021', '.2022') ) %>%
+  rename_at('PPG.current.2021', ~'PPG.current') %>%
+  rename_at('PPG.current.2022', ~'PPG.actual') %>%
+  as_data_frame()
+
+df22.scaled.preds <- predict(All.mod.out, select(df22.test, -c(Name,Team,PPG.actual)))
+df22.test$PPG.preds <- df22.scaled.preds * attr(Scaled.train.y, 'scaled:scale') + attr(Scaled.train.y, 'scaled:center')
+
+results.plot <- ggplot(df22.test, aes(x=PPG.preds, y=PPG.actual)) + 
+  geom_point(aes(color=Position)) +
+  geom_abline(aes(slope = 1, intercept = 0), linetype = 2) + ggtitle('Model Predictions vs. Ground Truth') +
+  xlab('Predicted PPG') + ylab("Actual PPG")
+
+
+results.plot
+ggsave(results.plot, filename="Figures/results_plot.png", dpi=300, width = 9, height = 8)
+
+
+data <- data.frame(pred = df22.test$PPG.preds, actual = df22.test$PPG.actual)
+mean((data$actual - data$pred)^2)
+```
+
+```{r}
+select(df22.test[order(df22.test$PPG.actual, decreasing = TRUE),][1:21,], c(Name,Team,Position,PPG.actual,PPG.preds))
+select(df22.test[order(df22.test$PPG.preds, decreasing = TRUE),][1:21,], c(Name,Team,Position,PPG.actual,PPG.preds))
 ```
 
 
 
->## Material to be assessed includes:
 
-> Variable selection and model creation/comparison
+```{r}
+df22.trunc <- rbind.data.frame(
+  df22.test[order(df22.test$PPG.actual, decreasing = TRUE),][1:21,], 
+  df22.test[order(df22.test$PPG.preds, decreasing = TRUE),][1:21,]) %>%
+  unique
 
-# Utilize Dredge and/or model subset selection
+results.trunc.plot <- ggplot(df22.trunc, aes(x=PPG.preds, y=PPG.actual)) + 
+  geom_point(aes(color=Position)) +
+  geom_abline(aes(slope = 1, intercept = 0), linetype = 2) + ggtitle('Model Predictions vs. Ground Truth (Top 21 as inclusive or)') +
+  xlab('Predicted PPG') + ylab("Actual PPG")
+
+results.trunc.plot
+ggsave(results.trunc.plot, filename="Figures/results_trunc_plot.png", dpi=300, width = 9, height = 8)
+```
 
 
-> Adequacy checking, transformation (if necessary), and analysis of influential observations
+```{r}
+plotRanks <- function(a, b, labels.offset=0.1, arrow.len=0.2)
+  {
+  xadj.1 = 0.3
+  xadj.2 = xadj.1 + 0.3
+  
+  len.1 <- length(a)
+  len.2 <- length(b)
+  a.to.b <- match(a, b)
+  # Set up the eenvironment
+  p <- ggplot() + theme_void() + 
+    theme(plot.title = element_text(hjust = 0.5)  ) + 
+    xlim(0, xadj.2+0.3) + ylim(0, max(len.1, len.2)) +
+    # Labels
+    labs(title = 'Top PPG Rankings for 2023 NFL Season (by PPG)') +
+    annotate("text", x = 0.08, y = 12, label = 'Predicted', angle = 90, cex=5) +
+    annotate("text", x = 0.83, y = 12, label = 'Actual', angle = -90, cex=5) +
+    # Add the points
+    geom_point(aes(rep(xadj.1 , len.1),1:len.1)) +
+    geom_point(aes(rep(xadj.2 , len.2), 1:len.2)) + 
+    # Add the names of the players
+    geom_text(aes(rep(xadj.1 -labels.offset, len.1), 1:len.1, label=a), nudge_x = 0.1) +
+    geom_text(aes(rep(xadj.2 +labels.offset, len.2), 1:len.2, label=b), nudge_x = -0.1) +
+    # Draw arrows between the same players
+    geom_segment(aes(rep(xadj.1+0.02, len.1), 1:len.1, xend= rep(xadj.2-0.02, len.2), yend= a.to.b,),
+                 arrow = arrow(length=unit(arrow.len,'cm'), angle=20) )
+  return(p) 
+}
 
-> Analysis and interpretation of results
+ranks <- plotRanks(  rev(select(df22.test[order(df22.test$PPG.preds, decreasing = TRUE),],Name)$Name[1:21]) ,
+                     rev(select(df22.test[order(df22.test$PPG.actual, decreasing = TRUE),],Name)$Name[1:21]) , labels.offset = 0.2 )
+ranks
+ggsave(ranks, filename="Figures/ranks_plot.png", dpi=300, width = 9, height = 8)
+```
 
-> Written communication in a technical report
 
 
-3. Methodology
-Step 1. Use 2021 fantasy points per game for each player as the dependent (response) variable.
-Step 2. Build a regression model using 2020 fantasy football data as the independent variable
-set to predict the 2020 fantasy points per game.
-• Students determine which variables are useful (which to include in model)
-• Students are free to obtain additional, open-source data to supplement the feature set if so desired
-• Torture the data until it confesses. . . but don’t torture it so much that it will confess to anything!
-Step 3. Once the final model is built, apply it to 2021 data to predict the average points per
-game for the 2022 season.
-• Rank the players by predicted fantasy points per game in descending order.
-• Make your prediction for which two players you would draft.
-Step 4. Present your results in writing.
-Following the AFIT Style Guide, write a double-spaced technical report not longer than eight (8) pages
-in length for the body of the report. The report should include a 2-5 sentence abstract and sections that
-respectively:
-(a) Introduce and motivate the project.
-(b) Discuss the methodology, to include variable selection, adequacy checking, model validation, and analysis of influential observations.
-(c) Present the model, results, and analysis.
-(d) Discuss the results, and provide insights and recommendations.
-Within your report, include at least one relevant table and at least one relevant figure. Recall that table
-titles go above the table and figure titles go below the figure.
-The cover page, table of contents, abstract, references, appendices, and other material do not count
-against the eight-page limit.
+
+
+
+
