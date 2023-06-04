@@ -39,72 +39,52 @@ The former approach yielded a marginally superior model.
 Finally, a Bayesian linear model was implemented, which demonstrated comparable performance to the other two methods.
 This procedure was replicated for each player position.
 
-
-
-
-
-
-
-
-
-
-
-%%%%%  Pre Edit  %%%%%%
-
-Finally, the partial regressions are combined into a singular multiple regression with the position as an interaction term.
-The built-in library provided an effective method for practically joining these multiple regressions. 
-The resulting coefficients are largely similar, but reduced by the common regression terms.
-
-
-
+In the final stage, the partial regressions are combined into a single multiple regression, 
+with the player's position serving as an interaction term. 
+The built-in library offered a practical approach for this integration of multiple, separate regressions. 
+The coefficients derived from this unified model are very close to those from the individual regressions, 
+when adjusted for the new inclusion of the shared regression terms.
 
 \section{Influential Variables}
 
-At each step we checked for outliers.
-In the first multiple regression there were 26 outliers within the data as measured by mahalanobis distance.
-Within the model there were two outliers based on cook's distance.
-The outliers reported from the model were recursively dropped until no outliers were identified.
-The data set outliers were dropped from a separate version of the model, 
-and the new model did not have any new outliers identified.
+Throughout the analysis phase we screened for outliers. 
+In the initial multiple regression, 26 outliers were detected within the data, as determined by the Mahalanobis distance. 
+Within the model summary itself, two outliers were identified based on Cook's distance. 
+These model-reported outliers were iteratively removed until no further outliers were detected. 
+Concurrently, the outliers within the dataset were eliminated from a separate model variant. 
+The final revised models did not reveal any additional outliers.
 
-Between all of these situations, the model developed from the dataset that had the outliers 
-based on mahalanobis distance had the best performance based on $R^2$ and Standard Error.
-
-\ref{tab:outliers}
-
-
-
+Among all the scenarios considered, the model derived from eliminating the outliers, 
+as identified from the model summary, based on Cook's distance, 
+exhibited superior performance in terms of $R^2$ and Standard Error. 
+Consequently, this model was selected for further use in this project.
+The outliers that were removed are shown in Table \ref{tab:outliers}.
 
 \section{Adequacy Checking}
 
+The assumption of error independence is demonstrated in Table \ref{fig:residualplot}. This table also presents the plot of residuals against observed values for PPG.Next, which appears to exhibit homoscedasticity, indicating a constant variance of errors across all levels of the independent variables. The assumption of error normality is further supported by the Q-Q Plot depicted in Figure \ref{fig:qqplot}. These visualizations collectively affirm the adequacy of our multiple regression model.
 
-qqplot.png
-residual_plot.png
-results_plot.png
-results_trunc_plot.png
 
 \section{Model Validation}
 
+The validation of our regression model involved a comprehensive examination of various aspects. The Q-Q plot (Figure \ref{fig:qqplot}) confirmed the normality of the error terms, a critical assumption of regression analysis.
+
+We further refined our model using the Variance Inflation Factor (VIF). This iterative process led to the removal of several predictors from the model, namely 'Receiving Yards', 'Games', 'Passing Interceptions', and 'Fumbles Lost'.
+
+The impact of this refinement on the model's performance was assessed using the R-squared and adjusted R-squared statistics. The R-squared value decreased slightly from 0.66 to 0.64 following the VIF analysis. However, the adjusted R-squared increased from 0.54 to 0.61, indicating an improved fit of the model to the data.
+
+In conclusion, our rigorous process of validation and refinement has resulted in a robust and reliable regression model. The model's performance statistics are as follows: R-squared = 0.64, Adjusted R-squared = 0.61, F-statistic = 17.34 on 39, p-value = 2.2e-16. The coefficients of the final model are presented in Table \ref{tab:final_model}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\linewidth]{Figures/results_plot}
+	\caption{Predicted v. Observed}
+	\label{fig:resultsplot}
+\end{figure}
+
+%%%%%  Pre Edit  %%%%%%
 
 
-
-
-
-
-
-
-
-Residual standard error: 3.424 on 154 degrees of freedom 
-Multiple R-squared:  0.6613,	Adjusted R-squared:  0.5491 
-F-statistic: 5.896 on 51 and 154 DF,  p-value: < 2.2e-16
-
-
-
-
-
-
-
-(b) Discuss the methodology, to include variable selection, adequacy checking, model validation, and analysis of influential observations.
 
 
 
