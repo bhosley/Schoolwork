@@ -1,0 +1,109 @@
+---
+title: 'Homework 1'
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-04-05"
+author: 'Brandon Hosley'
+---
+---
+title: "Homework 1"
+footer: 'HW 1'
+output:
+  pdf_document:
+    df_print: kable
+  html_document:
+    df_print: paged
+  slidy_presentation:
+    code_folding: hide
+    fig_caption: yes
+    smart: no
+keep_tex: yes
+graphics: yes
+---
+
+```{r setup, include=FALSE}
+source('../R/scripts/R/setup.R')
+shiny::includeCSS('../R/scripts/css/flat-slidy.css')
+shiny::includeScript("../R/scripts/js/jquery.min.js")
+shiny::includeScript(system.file('../R/scripts','js','tpt-scroll.js'))
+shiny::includeScript(system.file('../R/scripts','js','hideout.js'))
+library(xlsx)
+library(xtable)
+options(xtable.comment = FALSE, xtable.type="latex")
+library(broom)
+```
+
+
+```{r, echo=TRUE}
+df <- read_excel('../Homework 1/1989 NFL Season Data (Handout).xlsx',range = cell_rows(1:28))
+
+```
+
+
+
+```{r}
+mod <- lm(y~x1+x2+x8+x9, data=df)
+summary(mod)
+```
+
+```{r}
+anova(mod)
+augment(mod)
+```
+
+```{r}
+df.washington <- read_excel('../Homework 1/1989 NFL Season Data (Handout).xlsx',range = cell_rows(1:29))[28,]
+```
+
+```{r}
+interval <- predict(mod, newdata = df.washington, interval = "prediction", level=0.90)
+print(interval)
+
+n <- 27
+y.bar <- 12.31538
+p.i <- interval[3]-interval[1]
+print(p.i)
+
+t.05 <- 1.717144
+MSE <- 3.717332 #Mean Square Error - Residual
+#S.xx <- 34.22125*(n)
+S.xx <- 34.22125
+x.bar <- 15.308
+
+print( t.05*sqrt((1+(1/n)+((y.bar-x.bar)^2)/S.xx)*MSE) )
+
+#print( (((p.i/t.05)^2)/MSE -1-(1/n))  )
+print( ((y.bar-x.bar)^2) / (((p.i/t.05)^2)/MSE -1-(1/n))  ) #S.xx
+```
+
+```{r}
+interval <- predict(mod, newdata = df.washington, interval = "confidence", level=0.95)
+print(interval)
+
+n <- 28
+y.bar <- 12.31538
+p.i <- interval[3]-interval[1]
+print(p.i)
+
+t.025 <- 2.073873
+MSE <- 3.717332 #Mean Square Error - Residual
+#S.xx <- 34.22125*(n)
+S.xx <- 34.22125
+x.bar <- 15.308
+
+print( t.025*sqrt(((1/n)+((y.bar-x.bar)^2)/S.xx)*MSE) )
+
+#print( (((p.i/t.05)^2)/MSE -1-(1/n))  )
+print( ((y.bar-x.bar)^2) / (((p.i/t.025)^2)/MSE -1-(1/n))  ) #S.xx
+```
+
+
+
+
+
+
+
+
+
+
