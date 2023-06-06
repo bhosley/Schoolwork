@@ -68,6 +68,21 @@
 	\label{fig:wrplot}
 \end{flexfigure}
 
+\subsection{Variable v. Residuals}
+\begin{flexfigure}[blanker]
+	\centering
+	\includegraphics[height=\myspace,width=0.85\linewidth,keepaspectratio]{Figures/residual_plot}
+	\label{fig:residualplot}
+\end{flexfigure}
+
+\subsection{Q-Q Plot}
+\begin{flexfigure}[blanker]
+	\centering
+	\includegraphics[height=\myspace,width=\linewidth,keepaspectratio]{Figures/qqplot}
+	\label{fig:qqplot}
+\end{flexfigure}
+
+
 
 \section{Feature Correlation by Position}
 \label{app:positionCorrPlots}
@@ -123,9 +138,71 @@
 \label{tab:full_lm_QB}
 \import{./Tables/}{QB.mod.full.tex}
 
-\section{Outliers}
-\label{tab:outliers}
-\import{./Tables/}{outliers.tex}
+\clearpage
+\begin{landscape}
+	\section{Outliers}
+	\label{tab:outliers}
+	\import{./Tables/}{outliers.tex}
+\end{landscape}
 
-
-
+\clearpage
+{\footnotesize \singlespacing
+\section{Coefficients of the Final Model}
+\label{tab:coeffs}
+\begin{tabular}{lc}
+	\toprule
+	Feature & Coefficient \\
+	\midrule
+(Intercept)              	& -2.906e+00 \\
+PositionQB               	& -1.836e+01 \\
+PositionRB               	&  7.395e+01 \\
+PositionTE               	&  6.214e+00 \\
+PositionWR               	& -4.609e-02 \\
+Passing\_Yards            	& -9.155e+00 \\
+Passing\_TD               	&  5.544e-01 \\
+Rushing\_Yards            	&  2.014e+00 \\
+Rushing\_TD               	& -5.218e-01 \\
+Receptions               	&  6.229e-02 \\
+Receiving\_TD             	& -3.365e-05 \\
+PPG.current              	&  6.433e-01 \\
+Total                    	& -5.168e-02 \\
+Rank                     	& -9.827e-02 \\
+PositionQB:Passing\_Yards 	&  7.471e+00 \\
+PositionRB:Passing\_Yards 	&  1.882e+02 \\
+PositionTE:Passing\_Yards 	&  1.524e+01 \\
+PositionWR:Passing\_Yards 	&         NA \\
+PositionQB:Passing\_TD    	& -2.063e+00 \\
+PositionRB:Passing\_TD    	&         NA \\
+PositionTE:Passing\_TD    	&         NA \\
+PositionWR:Passing\_TD    	&         NA \\
+PositionQB:Rushing\_Yards 	& -3.253e+00 \\
+PositionRB:Rushing\_Yards 	& -2.851e+00 \\
+PositionTE:Rushing\_Yards 	& -3.403e+00 \\
+PositionWR:Rushing\_Yards 	& -6.767e-01 \\
+PositionQB:Rushing\_TD    	& -2.252e-01 \\
+PositionRB:Rushing\_TD    	&  1.220e-01 \\
+PositionTE:Rushing\_TD    	& -4.549e-01 \\
+PositionWR:Rushing\_TD    	&         NA \\
+PositionQB:Receptions    	& -2.045e+01 \\
+PositionRB:Receptions    	& -1.130e+00 \\
+PositionTE:Receptions    	& -2.129e+00 \\
+PositionWR:Receptions    	&         NA \\
+PositionQB:Receiving\_TD 	&  1.418e+00 \\
+PositionRB:Receiving\_TD 	& -8.666e-01 \\
+PositionTE:Receiving\_TD 	& -1.003e+00 \\
+PositionWR:Receiving\_TD 	&         NA \\
+PositionQB:PPG.current  	& -5.383e-01 \\
+PositionRB:PPG.current  	& -1.847e-01 \\
+PositionTE:PPG.current  	& -5.735e-01 \\
+PositionWR:PPG.current  	&         NA \\
+ositionQB:Total         	& 3.783e+00  \\
+PositionRB:Total        	&  2.240e+00 \\
+PositionTE:Total        	&  3.729e+00 \\
+PositionWR:Total        	&         NA \\
+PositionQB:Rank         	&  2.519e-01 \\
+PositionRB:Rank         	&  1.581e-01 \\
+PositionTE:Rank         	&  1.273e-01 \\
+PositionWR:Rank         	&         NA \\
+	\bottomrule
+\end{tabular}
+}
