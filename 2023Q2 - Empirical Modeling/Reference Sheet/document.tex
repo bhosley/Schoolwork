@@ -1,0 +1,277 @@
+\documentclass[17pt]{extarticle}% This is a document class providing more font size options
+\usepackage[margin=0.25in]{geometry}
+
+\usepackage[svgnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{emerald}% font package
+\usepackage[doublespacing]{setspace}% line spacing
+\usepackage[T1]{fontenc}
+
+
+\begin{document}
+	\pagestyle{empty}
+	%\centering% that madman wouldn't justify his writings
+	\color{MidnightBlue}% my pick for "looks like ink"		
+	\ECFJD
+	\small
+	
+%%%%
+%\clearpage
+%{\Large CH1 Introduction} \\
+%
+
+%%%%
+%\clearpage
+%{\Large CH2 Simple Linear Regression} \\
+%
+
+%%%%
+\clearpage
+{\Large CH3 Interval Estimation} \\
+%
+Slope parameter \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 8.45.39 AM"} \\
+Prediction Interval: \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 7.44.26 AM"} \\
+Confidence Interval: \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 7.41.59 AM"} \\
+
+%%%%
+%\clearpage
+%{\Large CH4 Adequacy Checking} \\
+%
+
+%%%%
+\clearpage
+{\Large CH5 Transformations} \\
+%
+Logarithmic Transformation \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 7.55.05 AM"} \\
+Reciprocal Transformation \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 7.58.02 AM"} \\
+Box-Cox Transformation \\
+\begin{enumerate}
+\item Identify a window of interest for $\lambda$ \\
+- Typically 10-20 values are  \\
+- Values from -5 $\leq \lambda \leq$ 5 are good for most problems \\
+- Possible to do a first pass to narrow down the window and a then a second pass for a finer value 
+\item Run model for different $\lambda$; Calculate SSE 
+\item Select $\lambda$ with smallest SSE 
+- Simpler choices are easier to interpret ($\lambda$ = 0.5 vs. $\lambda$ = 0.596) 
+\item Model using
+\end{enumerate}
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 8.05.18 AM"} \\
+
+
+%%%%
+\clearpage
+{\Large CH6 Leverage and Influence} \\
+%
+\begin{enumerate}
+	\item “Pure” Outlier \\
+	- Unusual y-value but not an unusual x-value \\
+	- Typically does not affect slope
+	\item Leverage Point \\
+	- Unusual x-value \\
+	- Does not influence estimates of regression coefficients \\
+	- Does influence standard errors of the regression coefficients
+	\item Influence Points \\
+	- Can have an unusual y-value and an unusual x-value \\
+	- Does influence the regression coefficients
+\end{enumerate}
+Cook's D \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 8.29.42 AM"} \\
+Measures of Influence \\
+DFBETAS \\
+Deletion statistic that quantifies the change in Bj if the ith observation is deleted \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 8.37.12 AM"} \\ \\
+DFFITS \\
+Quantifies change in prediction after deletion of ith observation \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 8.42.10 AM"} \\
+Treatment of Influential Observational \\
+Can we discard an influential observation? \\
+1. Yes, if it is a “Bad” observation \\
+Where “bad” means: \\
+- Measurement error \\
+- Invalid point \\
+- Wrong sample population \\
+2. No, if it is valid but inconvenient \\
+- Rule of thumb: Trust your process, trust your data
+
+
+%%%%
+\clearpage
+{\Large CH7 Polynomial Regression} \\
+%
+Basic principles
+\begin{enumerate}
+\item Order of the model\\
+- Lower is better (generally speaking) \\
+- Transformation to keep at a first-order model is better than a second order model \\
+- Try to avoid higher order polynomials (k > 2) unless we have some theoretical or practical justification \\
+- Recall, a polynomial of order n - 1 can perfectly fit n observations, but such a model is rarely useful
+\item Model Building Strategy \\
+- Option 1 (Forward Selection): Successfully fit models of increasing order until we have a non-significant Bi \\
+- Iteration 1: Fit $y=\beta_0+\beta_1x$ \\
+- Iteration 2: Fit $y=\beta_0+\beta_1x+\beta_2x^2$ \\
+- Iteration k: Fit $y=\beta_0+\sum^k_{i=1}\beta_ix^i$ \\
+- Option 2 (Backward Elimination): Fit the highest order model we would consider, and then successively remove the highest order term \\
+- Note: These two approaches may not produce the same model \\
+- Keep in mind the order of the model (Principle 1 on previous slide)
+\item Extrapolation \\
+- Buyer beware! Potentially very hazardous and high risk for making a bad decision \hspace{6em} \\ \\ \\
+\item Ill-conditioning \\
+- As order increases, the $(\mathbf{X^\top X})^{-1}$ calculations become less accurate, which will introduce error into the parameter estimates \\
+- This is called an ill-conditioned $\mathbf{X^\top X}$ \\
+- If the range of $\mathbf X$ is small, then increasing the order can lead to multicollinearity. \\
+- If $0\leq x\leq 1 \rightarrow 0\leq x^2\leq1$\\
+$0\leq x\leq 2 \rightarrow 0\leq x^2\leq4$
+\item Hierarchy \\
+- If the n-order model contains terms for all i = 1, . . , n, then the model is said to be hierarchical \\
+- Some believe that the hierarchy principle should be maintained, but not everyone agrees
+\end{enumerate}
+
+
+	
+%%%%
+%\clearpage
+%{\Large CH8 Indicator Variables} \\
+%
+
+
+%%%%
+\clearpage
+{\Large CH9 Multicollinearity} \\
+%
+- Ideally, there will be no linear relationship between the regressors in our model - Orthogonal regressors \\
+- Unfortunately, this typically does not happen unless we explicitly design our experiment and data collection to ensure it \\
+- If the lack of orthogonality is to the extent that there are near-linear dependencies between the regressors, then the model exhibits multicollinearity \\
+Sources of:
+\begin{enumerate}
+\item Data Collection
+\item Model Constraints
+\item Model  (higher order with restricted domain)
+\item Overdefined Model (More regressors than variables)
+\end{enumerate}
+Effects:
+\begin{enumerate}
+\item Large variances and covariances
+\item Least Squares Estimates (Bj) will be too large in absolute value
+\end{enumerate}
+Diagnostics:
+\begin{enumerate}
+\item Correlation Matrix
+\item Variance inflation factor 1/(1-R$_j^2$)
+\item Eigensystem Analysis
+\item Determinant of X$^t$X is close to zero
+\item  Signs and magnitudes of Bj being unusual
+\end{enumerate} \hspace{2em} \\ \\
+Dealing with:
+\begin{enumerate}
+\item Collect additional data
+\item Change model
+\item Ridge Regression
+\item Principle Component Regression
+\end{enumerate}
+
+%%%%
+\clearpage
+{\Large CH10 Variable Selection} \\
+%
+What we already know how to:
+\begin{enumerate}
+\item Obtain regression parameter estimates 
+\item Perform appropriate hypothesis tests 
+\item Check for violations of assumptions or other model inadequacies \\
+- Assumptions: Normality, Constant Variance, Linearity \\
+- model inadequacies: Multicollinearity, Influential observations
+\item Apply a variety of approaches to mitigate the effects of what we find in Step 3 above. \\
+- Transformations \\
+- Model adjustments
+\end{enumerate}
+Adjusted Variable Selection Strategy:
+\begin{enumerate}
+\item Fit the largest possible model (Full feature set)
+\item Perform appropriate hypothesis tests
+\item Check assumptions/model inadequacies
+\item Mitigate the effects of issues discovered in Step 3
+\item Determine if all possible regressions is feasible or practical \\
+- Fit a separate regression model for all possible combinations of features, $2^k$ distinct models \\
+- This approach is impractical if the number of regressors exceeds “30-ish”
+\item If not feasible, perform stepwise regression : then obtain a reduced set of features and perform all possible regressions on that smaller feature set
+\item Analyze/Compare/Choose candidate model(s)
+\end{enumerate}
+Criteria to Evaluate Subset Models: \\
+\begin{enumerate}
+\item Coefficient of Multiple Determination
+\item R-squared Adjusted (Modify R to penalize extra regressors) \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 9.34.42 AM"}
+\item Residual Mean Square \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 9.52.22 AM"} 
+\item Mallow's C \\
+- Small C is desired
+\end{enumerate}
+Step-wise Regression
+\begin{enumerate}
+\item Forward Selection \\
+- Iterate through regressors, evaluate with partial F-tests \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 9.52.35 AM"} \\
+- Add best each time
+\item Backward Elimination \\
+- Similar to forward but starting with full model and deleting least useful items
+\item Stepwise \\
+- Like forward but tests each regressor at each step; added regressors may be dropped later
+\end{enumerate}
+
+
+
+%%%%
+\clearpage
+{\Large CH11 Validation of Regression Models} \\
+%
+Validation techniques:
+\begin{itemize}
+\item Analysis of Model Coefficients and Predicted Values
+\item Collect new data
+\item Data Splitting
+\begin{itemize}
+	\item Arbitrary/Random
+	\item Duplex Method \\
+	- Standardize the data \\
+	- Calculate Euclidean distances \\
+	- Furthest two points go into training, next two go into test, repeat
+\end{itemize}
+\item Cross Validation
+\item PRESS Statistic
+\end{itemize}
+
+%%%%
+%\clearpage
+%{\Large CH13 Generalized Linear Models} \\
+%
+
+	
+%%%%
+\clearpage
+{\Large CH14 Regression and Time Series} \\
+%
+Auto-correlation \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 8.46.20 AM"} \\
+1. OLS estimates will not have minimum variance \\
+2. With positive autocorrelation, MSE will seriously underestimate $\sigma^2$ \\
+→Confidence and prediction intervals will be too short \\
+→Standard errors of $\hat\beta_j$ will be too small \\
+3. Hypothesis tests based on t and F tests won’t be exact procedures \\
+
+Durbin-Watson \\
+Statistical test for the presence of positive autocorrelation \\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 10.28.46 AM"} \\
+To check for negative autocorrelation, calculate 4-d
+Cochrane-Orcutt \\
+Idea is to transform y so that y't \\
+Solution: estimate\\
+\includegraphics[width=0.7\linewidth]{"Images/Screenshot 2023-06-05 at 10.28.51 AM"}\\
+Future-step predictions
+
+	
+\end{document}
