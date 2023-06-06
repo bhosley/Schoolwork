@@ -2,31 +2,75 @@
 \label{ch:results}
 \glsresetall
 
-
+\vspace{-0.5em}
 \section{Final Model}
+\vspace{-1.5em}
+The model can be represented in compact form as 
+\vspace{-1.5em}
+\begin{align*}
+	\hat y &= \mathbf P\bm\beta\mathbf X
+\end{align*}
+\vspace{-3em}
+
+where $\hat y$ represents the players predicted score in the upcoming season, 
+the vector $\mathbf P$ is $1\times5$ with a 1 in the first position and 
+a 1 in the rank corresponding to the player's position. 
+For example, the $\mathbf P$ for a running back would be
+
+\vspace{-1.5em}
+{\singlespacing \setlength\arraycolsep{1ex}
+	\[ \mathbf P_{RB} = \begin{bmatrix} 1 & 0 & 1 & 0 & 0  \end{bmatrix}, \]}
+%
+the model's coefficients are represented as
+%
+\vspace{-1.5em}
+\[{\scriptsize \setcounter{MaxMatrixCols}{15} \setlength\arraycolsep{1ex}
+	\bm{\beta} = 
+	\begin{bmatrix}
+-2.906  &-9.155 & 0.5544 &  2.014 & -0.5218 & 0.06229&-3.365e-05 &  0.6433 & -0.05168 & -0.09827 \\[-2ex]
+-18.36  & 7.471 & -2.063 & -3.253 & -0.2252 & -20.45 &  1.418  &  -0.5383  &  3.783  & 0.2519 \\[-2ex]	
+ 73.95  & 188.2 &       0& -2.851 &  0.1220 & -1.130 & -0.0867 &  -0.1847  &  2.240  & 0.1581 \\[-2ex]	
+ 6.214  & 15.24 &       0& -3.403 & -0.4549 & -2.129 & -1.003  &  -0.5735  &  3.729  & 0.1273 \\[-2ex]	
+-0.04609&     0 &       0& -0.6767&       0 &      0 &       0 &        0  &       0 &      0 \\	
+	\end{bmatrix}
+}\]
+
+\vspace{-1em}
+which can be seen in long-form in Table \ref{tab:coeffs}. 
+And finally, $\mathbf X$ is the vector containing the measurements of the player's performance in the previous season.
+The breakout of what each part of $\mathbf{X}$ means can be seen in Table \ref{tab:coeff-key}.
+
+\begin{wraptable}{r}{4.5cm}
+	\vspace{-5.25em}
+	{\singlespacing
+	\caption{The corresponding vector values.}
+	\label{tab:coeff-key}
+	\begin{tabular}{cl}
+		\toprule
+		$\mathbf{X}$ & Feature \\
+		\midrule
+		$x_0=1$ & (Intercept)    \\
+		%$x_1$ & Games    \\
+		$x_1$ & Passing Yards   \\
+		$x_2$ & Passing TD    \\
+		%$x_4$ & Passing INT    \\
+		$x_3$ & Rushing Yards   \\
+		$x_4$ & Rushing TD   \\
+		$x_5$ & Receptions   \\
+		%$x_8$ & Receiving Yards    \\
+		$x_6$ & Receiving TD    \\
+		%$x_{10}$ & Fumbles Lost    \\
+		$x_{7}$ & PPG current    \\
+		$x_{8}$ & Total     \\
+		$x_{9}$ & Rank   \\
+		\bottomrule 
+	\end{tabular}}
+\end{wraptable}
+
+Among the features included in the model, most contribute significantly to its explanatory power. Interestingly, the points per game of the current season are not uniformly influential across different positions. Each position exhibits a distinct coefficient, indicating a unique relationship with the dependent variable. Conversely, the value of total points exhibits a high degree of consistency across positions, with the differences in coefficients not reaching statistical significance. This suggests that while the impact of current season performance varies by position, the total points achieved maintain a similar level of importance across all positions.
 
 
-\begin{equation}
-	content...
-\end{equation}
 
-Predictions:
+%%% Pre-edit
 
-
-ranks_plot.png
-
-\(Tables/Multiple-Regression_coeffs.tex\)
-
-
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%
-
-Step 3. Once the final model is built, apply it to 2021 data to predict the average points pergame for the 2022 season.• Rank the players by predicted fantasy points per game in descending order.• Make your prediction for which two players you would draft.
-
-(c) Present the model, results, and analysis.
 
