@@ -616,10 +616,19 @@ summary(All.mod.out)
 check_outliers(All.mod.out)
 
 print('With Model Outliers Removed')
-All.mod.out <- lm(PPG.next ~(.)*Position , data = All.train[-model_outliers,], na.action=na.pass)
+All.mod.out <- lm(PPG.next ~(.)*Position , data = All.train[-model_outliers,]%>%select(-c(Receiving_Yards,Games,Passing_INT,Fumbles_Lost)), na.action='na.omit')
 summary(All.mod.out)
 check_outliers(All.mod.out)
 ```
+
+
+
+```{r}
+vif(All.mod.out, type='predictor')
+#alias(All.mod.out)
+
+```
+
 
 ```{r}
 library(gt)  
@@ -664,6 +673,10 @@ all.residual.plot <- ggplot(gathered.residuals, aes(x = value, y = Residuals)) +
 all.residual.plot
 ggsave(all.residual.plot, filename="Figures/residual_plot.png", dpi=300, width = 8, height = 11)
 ```
+
+
+
+
 
 
 ```{r}
