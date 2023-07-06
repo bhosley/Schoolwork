@@ -5,9 +5,12 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
+\usepackage[table,xcdraw]{xcolor}
+
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \renewcommand\thesubsubsection{\quad(\alph{subsubsection})}
+
 
 \begin{document}
 \raggedbottom
@@ -26,6 +29,15 @@
 	identify the players, the nature of the interaction, the actions available to each player, and
 	each player’s preferences over the possible outcomes (i.e., the action tuples).}
 
+\begin{enumerate}
+	\item Choosing a store
+	\item 
+	\item 
+\end{enumerate}
+
+\phantom{} \\
+\hrule
+
 \subsection{}
 \emph{Construct a matrix representation for each of the following games:}
 
@@ -38,13 +50,46 @@
 	If both players pick the same strategy, then the sales figures are the same, and
 	therefore each player gets $1$ point. If one player makes an effort while the other player
 	does not, then the player who makes an effort has the higher sales figure, so that (s)he
-	gets $3$ points and the other gets 0 points.}
+	gets $3$ points and the other gets 0 points.}\\
+	
+
+	This game is represented by the matrix below. Because the results of their choices are 
+	symmetric the player assignment on axes are arbitrary. 
+	For both players, making an effort is the weakly dominant strategy. \\ 
+	
+	\begin{center}	
+		\begin{tabular}{|
+				>{\columncolor[HTML]{EFEFEF}}l |l|l|}
+			\hline
+			& \cellcolor[HTML]{EFEFEF}E & \cellcolor[HTML]{EFEFEF}N \\ \hline
+			E & (1,1)                     & (3,0)                     \\ \hline
+			N & (0,3)                     & (1,1)                     \\ \hline
+		\end{tabular}
+	\end{center}
+	\phantom{} \\ [1ex]
+	
 	
 \subsubsection{}
 \emph{Consider the same strategic situation, except for the payoff structure. If a player makes
 	an effort, (s)he incurs accost of $2.5$ points. The sales points are awarded in the same
-	way as in (a).}
+	way as in (a).} \\
+	
+	The updated matrix is below. Once again each player has a symmetric options. 
+	The addition of the penalty makes it such that  non-effort becomes the strictly dominant strategy for both.
 
+	\begin{center}
+		\begin{tabular}{|
+				>{\columncolor[HTML]{EFEFEF}}l |l|l|}
+			\hline
+			& \cellcolor[HTML]{EFEFEF}E & \cellcolor[HTML]{EFEFEF}N \\ \hline
+			E & (-1.5,-1.5)               & (0.5,0)                   \\ \hline
+			N & (0,0.5)                   & (1,1)                     \\ \hline
+		\end{tabular}
+	\end{center}
+	
+	\phantom{} \\
+	\hrule
+	
 \subsection{}
 \emph{Construct the matrix representation of the following game.
 There is a duopoly market in which firm $1$ and firm $2$ are the only producers. Each firm
@@ -59,6 +104,24 @@ D_i(p_i,p_j)= \begin{cases}
 	0 & \text{if }p_i>p_j
 \end{cases}\]
 
+Once again the results are symmetric and the axes arbitrary; matrix is presented below.
+
+\begin{center}
+	\begin{tabular}{|
+			>{\columncolor[HTML]{EFEFEF}}c |c|c|c|c|}
+		\hline
+		& \cellcolor[HTML]{EFEFEF}1 & \cellcolor[HTML]{EFEFEF}2 & \cellcolor[HTML]{EFEFEF}3 & \cellcolor[HTML]{EFEFEF}4 \\ \hline
+		1 & (1.8,1.8)  & (3.6,0)     & (3.6,0)     & (3.6,0)     \\ \hline
+		2 & (0,3.6)    & (2.6,2.6)   & (5.2,0)     & (5.2,0)     \\ \hline
+		3 & (0,3.6)    & (0,5.2)     & (2.4,2.4)   & (4.8,0)     \\ \hline
+		4 & (0,3.6)    & (0,5.2)     & (0,4.8)     & (1.2,1.2)   \\ \hline
+	\end{tabular}
+\end{center}
+
+
+\phantom{} \\
+\hrule
+
 \subsection{}
 \textit{\textbf{Dividing Money.} Two people have \$5 to divide between themselves. They use the
 following process to divide the money. Each person names a number of dollars (a positive
@@ -71,7 +134,32 @@ people name exceeds 5 and the amounts named are the same then each person receiv
 \$2.50. \\
 Model the situation as a strategic game, determine the best response of each player to each
 of the other player’s actions. Is there a combination of pure strategies that are best
-responses to each other?}
+responses to each other?} \\
+
+\begin{center}
+	\begin{tabular}{|
+			>{\columncolor[HTML]{DAE8FC}}c |c|c|c|c|c|}
+		\hline
+		\cellcolor[HTML]{EFEFEF} & \cellcolor[HTML]{FFCCC9}1     & \cellcolor[HTML]{FFCCC9}2     & \cellcolor[HTML]{FFCCC9}3         & \cellcolor[HTML]{FFCCC9}4     & \cellcolor[HTML]{FFCCC9}5     \\ \hline
+		1                        & (1,1)                         & (1,2)                         & (1,3)                             & (1,4)                         & (1,4)                         \\ \hline
+		2                        & (2,1)                         & (2,2)                         & (2,3)                             & (2,3)                         & (2,3)                         \\ \hline
+		3                        & (3,1)                         & \cellcolor[HTML]{ECF4FF}(3,2) & \cellcolor[HTML]{ECF4FF}(2.5,2.5) & \cellcolor[HTML]{ECF4FF}(3,2) & (3,2)                         \\ \hline
+		4                        & \cellcolor[HTML]{ECF4FF}(4,1) & \cellcolor[HTML]{ECF4FF}(3,2) & (2,3)                             & (2.5,2.5)                     & \cellcolor[HTML]{ECF4FF}(4,1) \\ \hline
+		5                        & \cellcolor[HTML]{ECF4FF}(4,1) & \cellcolor[HTML]{ECF4FF}(3,2) & (2,3)                             & (1,4)                         & (2.5,2.5)                     \\ \hline
+	\end{tabular} \\ \phantom{}
+\end{center}
+
+There is no dominant strategy. Evaluated from the perspective of row player (blue) 
+choosing 3 or 4 have the same number of outcomes in which blue maximizes their return.
+4 has a higher expected value overall.
+However, considering that 1 and 2 are strongly dominated it seems reasonable to expect player 2
+to never pick those numbers.
+Additionally, 5 is weakly dominated by 4.
+This being the case, since 3 is dominant in all cases except when the opponent chooses 1 or 5, 
+it is likely the best choice.
+
+\phantom{}
+\hrule
 
 \subsection{}
 \textit{\textbf{Swimming with sharks}. You and a friend are spending two days at an isolated beach and
