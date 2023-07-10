@@ -149,7 +149,8 @@ responses to each other?} \\
 	\end{tabular} \\ \phantom{}
 \end{center}
 
-There is no dominant strategy. Evaluated from the perspective of row player (blue) 
+The above matrix represents the game with the optimal response for blue given the column red's decision.
+There is no dominant pure strategy. Evaluated from the perspective of row player (blue) 
 choosing 3 or 4 have the same number of outcomes in which blue maximizes their return.
 4 has a higher expected value overall.
 However, considering that 1 and 2 are strongly dominated it seems reasonable to expect player 2
@@ -173,6 +174,18 @@ it is likely the best choice.
 	the second day. If no one goes swimming on the first day, you both retain the belief that
 	the probability of the water’s being infested is $\pi$. \\ \\
 	Model this situation as a strategic game in which you and your friend each decides whether
-	to go swimming on your first day at the beach.}
+	to go swimming on your first day at the beach.} \\
+	
+	The matrix representation of this game can be seen below. It is built under the assumption that if neither swim on the first day that both will swim on the second. \\
+	
+	\begin{center}
+		\begin{tabular}{|
+				>{\columncolor[HTML]{DAE8FC}}c |c|c|}
+			\hline
+			\cellcolor[HTML]{EFEFEF} & \cellcolor[HTML]{FFCCC9}0 & \cellcolor[HTML]{FFCCC9}1   \\ \hline
+			0                        & ($1-\pi,\ 1-\pi$)         & ($1-\pi,\ 2-\pi(c+1)$)      \\ \hline
+			1                        & ($2-\pi(c+1),\ 1-\pi$)    & ($2-\pi(c+1),\ 2-\pi(c+1)$) \\ \hline
+		\end{tabular}
+	\end{center}
 
 \end{document}
