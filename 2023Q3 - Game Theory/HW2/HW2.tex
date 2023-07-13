@@ -1,0 +1,207 @@
+\documentclass[12pt]{amsart}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{multirow}
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
+
+\begin{document}
+\raggedbottom
+
+\noindent{\large OPER 618 - Game Theory and Math Programming %
+	- Homework 2 }
+\hspace{\fill} {\large B. Hosley}
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{section}{}
+%\setcounter{subsection}{}
+\subsection{}
+\textit{\textbf{Selfish and altruistic social behavior}. Two people enter a bus. Two adjacent cramped seats
+	are free. Each person must decide whether to sit or stand. Sitting alone is more comfortable
+	than sitting next to the other person, which is more comfortable than standing.}
+	
+	\subsubsection{}
+	\textit{Suppose that each person cares only about her own comfort. Model the situation as a
+	strategic game. Is this game the Prisoner’s Dilemma? Find its Nash equilibrium
+	(equilibria?).}
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{cccc}
+			&                            & \multicolumn{2}{c}{Player 2}                           \\
+			& \multicolumn{1}{c|}{}      & \multicolumn{1}{c|}{Sit}  & \multicolumn{1}{c|}{Stand} \\ \cline{2-4} 
+			\multirow{2}{*}{Player 1} & \multicolumn{1}{c|}{Sit}   & \multicolumn{1}{c|}{1, 1} & \multicolumn{1}{c|}{2, 0}  \\ \cline{2-4} 
+			& \multicolumn{1}{c|}{Stand} & \multicolumn{1}{c|}{0, 2} & \multicolumn{1}{c|}{0, 0}  \\ \cline{2-4} 
+		\end{tabular}
+	\end{center}
+	
+	This is not a prisoner's dilemma type of game, it more similar to a coordination game.
+	The Nash equilibrium in this game is [sit, sit].
+	
+	\subsubsection{}
+	\textit{Suppose that each person is altruistic, ranking the outcomes according to the other
+	person’s comfort, and, out of politeness, prefers to stand than to sit if the other person
+	stands. Model the situation as a strategic game. Is this game the Prisoner’s Dilemma?
+	Find its Nash equilibrium (equilibria?).}
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{cccc}
+			&                            & \multicolumn{2}{c}{Player 2}                           \\
+			& \multicolumn{1}{c|}{}      & \multicolumn{1}{c|}{Sit}  & \multicolumn{1}{c|}{Stand} \\ \cline{2-4} 
+			\multirow{2}{*}{Player 1} & \multicolumn{1}{c|}{Sit}   & \multicolumn{1}{c|}{1, 1} & \multicolumn{1}{c|}{2, 0}  \\ \cline{2-4} 
+			& \multicolumn{1}{c|}{Stand} & \multicolumn{1}{c|}{0, 2} & \multicolumn{1}{c|}{3, 3}  \\ \cline{2-4} 
+		\end{tabular}
+	\end{center}
+	
+	This situation is a prisoner's dilemma, there are Nash equilibria at [sit, sit] and [stand, stand].
+	
+	\subsubsection{}
+	\textit{Compare the people’s comfort in the equilibria of the two games.} \\
+
+	Because the rewards in each situation are ordinal, they may not accurately represent the proportional
+	reward between each of the choices. Similarly the scale may be different between the two games.
+	The mutually selfish equilibria are relatively equivalent between the two games, 
+	and if the assumption that the [sit, sit] outcome is indeed identical between the two situations
+	then the ordinality of the situations should be transitively preserved.
+	If this is the case, then the highest utility is the mutually altruistic action(s), which ironically
+	represent the lowest comfort game state. \\
+
+\subsection{}
+\textit{\textbf{Finding Nash equilibria for normal form games with continuous action spaces}. 
+	Find the Nash equilibria of the two-player strategic game in which each player’s set of actions is the
+	set of nonnegative numbers and the players’ payoff functions are}
+	$u_1(a_1,a_2) =a_1(a_2-a_1)$ \textit{and} $u_2(a_1,a_2) = a_2(1-a_1-a_2)$.
+
+	For player 1 we have,
+	\begin{align*}
+		u_1(a_1,a_2) &= a_1(a_2-a_1) \\
+					 &= a_1a_2-a_1^2 \\
+		\frac{\partial\,u_1(a_1,a_2)}{\partial\,a_2} &= a_2-2a_1.
+	\end{align*}
+	
+	For player 2 we have,
+	\begin{align*}
+		u_2(a_1,a_2) &= a_2(1-a_1-a_2) \\
+					 &= a_2-a_1a_2-a_2^2 \\
+		\frac{\partial\,u_2(a_1,a_2)}{\partial\,a_2} &= 1-a_1-2a_2.
+	\end{align*}
+	
+	Solving the two partials,
+	\begin{align*}
+		2a_1 &= a_2 = \frac{1-a_1}{2} \\
+		4a_1 &= 1-a_1 \\
+		5a_1 &= 1.
+	\end{align*}
+
+	And finally, we find Nash equilibrium where the combined player actions are represented by the vector
+	\[\mathbf A = \begin{bmatrix} 0.2 \\0.4 \end{bmatrix}.\]
+
+\subsection{}
+\textit{\textbf{The Odd Couple}. Felix and Oscar share an apartment. They have decidedly different views
+	on cleanliness and, hence, on whether or not they would be willing to put in the hours of
+	work necessary to clean the apartment. Suppose that it takes at least twelve hours of work
+	(per week) to keep the apartment clean, nine hours to make it livable, and anything less
+	than nine hours leaves the apartment filthy. Suppose that each person can devote either
+	three, six, or nine hours to cleaning.}
+	
+\textit{Felix and Oscar agree that a livable apartment is worth 2 on the utility index. They
+	disagree on the value of clean apartment – Felix thinks it is worth 10 utils (i.e., utility units),
+	while Oscar thinks it is worth only 5. They also disagree on the unpleasantness of a filthy
+	apartment. Felix thinks it is worth -10 utils, while Oscar thinks it is worth -5. Each person’s
+	payoff is the utility from the apartment minus the number of hours worked.}
+
+\textit{Model this interaction as a normal form game and provide its matrix representation.
+	Identify what each of the following solution concepts can tell you about how Felix and Oscar
+	should play the game: (1) Nash equilibrium in pure strategies, (2) maxmin strategies, (3)
+	minmax strategies, (4) minimax regret, (5) iterated dominance. Discuss the relationship
+	between the various strategies.}
+	
+	Matrix representation: \\
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{ccccc}
+			&                        & \multicolumn{3}{c}{Oscar}                                                               \\
+			& \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{3}       & \multicolumn{1}{c|}{6}      & \multicolumn{1}{c|}{9}     \\ \cline{2-5} 
+			\multirow{3}{*}{Felix} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{-13, -8} & \multicolumn{1}{c|}{-1, -4} & \multicolumn{1}{c|}{7, -4} \\ \cline{2-5} 
+			& \multicolumn{1}{c|}{6} & \multicolumn{1}{c|}{-4, -1}  & \multicolumn{1}{c|}{4, -1}  & \multicolumn{1}{c|}{4, -4} \\ \cline{2-5} 
+			& \multicolumn{1}{c|}{9} & \multicolumn{1}{c|}{1, 2}    & \multicolumn{1}{c|}{1, -1}  & \multicolumn{1}{c|}{1, -4} \\ \cline{2-5} 
+		\end{tabular}
+	\end{center}
+	
+	\textbf{}
+
+
+\subsection{}
+\textit{\textbf{Dominance}. Consider the normal form game in the following matrix}
+
+\begin{center}
+	\def\arraystretch{1.25}%
+	\begin{tabular}{cccccc}
+		&                            &                            & \multicolumn{2}{c}{Player 2}                            &                            \\
+		& \multicolumn{1}{c|}{}      & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{$B_2$} & \multicolumn{1}{c|}{$C_2$} & \multicolumn{1}{c|}{$D_2$} \\ \cline{2-6} 
+		& \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{5, 0}  & \multicolumn{1}{c|}{1, 1}  & \multicolumn{1}{c|}{0, 2}  & \multicolumn{1}{c|}{0, 2}  \\ \cline{2-6} 
+		\multirow{2}{*}{Player 1} & \multicolumn{1}{c|}{$B_1$} & \multicolumn{1}{c|}{1, 6}  & \multicolumn{1}{c|}{1, 4}  & \multicolumn{1}{c|}{2, 5}  & \multicolumn{1}{c|}{1, 3}  \\ \cline{2-6} 
+		& \multicolumn{1}{c|}{$C_1$} & \multicolumn{1}{c|}{2, 0}  & \multicolumn{1}{c|}{4, 0}  & \multicolumn{1}{c|}{1, 0}  & \multicolumn{1}{c|}{0, 4}  \\ \cline{2-6} 
+		& \multicolumn{1}{c|}{$D_1$} & \multicolumn{1}{c|}{0, 1}  & \multicolumn{1}{c|}{1, 0}  & \multicolumn{1}{c|}{0, 1}  & \multicolumn{1}{c|}{4, 0}  \\ \cline{2-6} 
+	\end{tabular}
+\end{center}
+
+	\subsubsection{}
+	\textit{Find the mixed strategy for Player 2 that maximally dominates strategy $B_2$. \\3ex %
+%
+	\underline{Hint}: You can readily solve this problem via a linear program that maximizes the
+	minimum amount of domination over all possible Player 1 actions. As an example
+	calculation, if Player 2 plays $(p_{A_2},p_{C_2},p_{D_2}) = (0.5,0.5,0)$, 
+	the level of domination is $1 − 1 = 0$ for $A_1, 5.5 - 4 = 1.5$ for 
+	$B_1, 0 - 0 = 0$ for $C_1$, and $1 − 0 = 1$ for $D_1$, resulting in a
+	minimal level of domination of $0$ for this mixed strategy.}
+
+	\subsubsection{}
+	\textit{After eliminating $B_2$ from consideration, find the mixed strategy for Player 1 that
+	maximally dominates strategy $C_1$.}
+
+	\subsubsection{}
+	\textit{After eliminating $C_1$ from consideration, eliminate iteratively the other strictly and
+	weakly dominated strategies.}
+ 
+	\subsubsection{}
+	\textit{How many pure strategy Nash equilibria exist in the resulting, reduced game?}
+
+
+
+
+\subsection{}
+\textit{\textbf{Nash Equilibria}. Consider the normal form game in the following matrix}
+
+\begin{center}
+	\def\arraystretch{1.25}%
+	\begin{tabular}{ccccc}
+		&                            & \multicolumn{3}{c}{Player 2}                                                         \\
+		& \multicolumn{1}{c|}{}      & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{$B_2$} & \multicolumn{1}{c|}{$C_2$} \\ \cline{2-5} 
+		& \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{1, 4}  & \multicolumn{1}{c|}{2, 5}  & \multicolumn{1}{c|}{5, 3}  \\ \cline{2-5} 
+		Player 1 & \multicolumn{1}{c|}{$B_1$} & \multicolumn{1}{c|}{7, 2}  & \multicolumn{1}{c|}{1, 0}  & \multicolumn{1}{c|}{4, 0}  \\ \cline{2-5} 
+		& \multicolumn{1}{c|}{$C_1$} & \multicolumn{1}{c|}{5, 10} & \multicolumn{1}{c|}{0, 2}  & \multicolumn{1}{c|}{5, 3}  \\ \cline{2-5} 
+	\end{tabular}
+\end{center}
+
+\textit{Eliminate iteratively the strictly dominated strategies. Find all the Nash equilibria (in pure
+	and mixed strategies) from the reduced game and provide the mixed Nash equilibria
+	payoffs.}
+
+
+
+\subsection{}
+\textit{Correlated equilibrium. For the reduced game from the previous problem, identify a
+	correlated equilibrium that maximizes the minimum utility increase relative to the mixed strategy Nash equilibrium utility, over both players.}
+
+
+\end{document}
