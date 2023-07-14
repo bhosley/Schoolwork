@@ -122,7 +122,7 @@
 	Identify what each of the following solution concepts can tell you about how Felix and Oscar
 	should play the game: (1) Nash equilibrium in pure strategies, (2) maxmin strategies, (3)
 	minmax strategies, (4) minimax regret, (5) iterated dominance. Discuss the relationship
-	between the various strategies.}
+	between the various strategies.} \\
 	
 	Matrix representation: \\
 	
@@ -134,11 +134,66 @@
 			\multirow{3}{*}{Felix} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{-13, -8} & \multicolumn{1}{c|}{-1, -4} & \multicolumn{1}{c|}{7, -4} \\ \cline{2-5} 
 			& \multicolumn{1}{c|}{6} & \multicolumn{1}{c|}{-4, -1}  & \multicolumn{1}{c|}{4, -1}  & \multicolumn{1}{c|}{4, -4} \\ \cline{2-5} 
 			& \multicolumn{1}{c|}{9} & \multicolumn{1}{c|}{1, 2}    & \multicolumn{1}{c|}{1, -1}  & \multicolumn{1}{c|}{1, -4} \\ \cline{2-5} 
+		\end{tabular} \\[3ex]
+	\end{center}
+	
+	\textbf{NE with Pure-strategy} occurs at actions [3, 9], [6, 6], and [9, 3].
+	
+	\textbf{Maxmin}:
+	Felix will choose 9hrs;	
+	Oscar, 6 or 9hrs possibly breaking the tie in favor of 6 as it has a higher utility overall.
+	
+	\textbf{Minmax}:
+	Felix: 3 hrs; 
+	Oscar: 3 hrs.
+	
+	\textbf{Minimax Regret}:
+	Felix: 9 hrs;
+	Oscar: 9 hrs.
+	
+	\textbf{Iterated Dominance}:
+	
+	Oscar-9 is weakly dominated by 6,
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{cccc}
+			&                        & \multicolumn{2}{c}{Oscar}                                  \\
+			& \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{3}       & \multicolumn{1}{c|}{6}      \\ \cline{2-4} 
+			\multirow{3}{*}{Felix} & \multicolumn{1}{c|}{3} & \multicolumn{1}{c|}{-13, -8} & \multicolumn{1}{c|}{-1, -4} \\ \cline{2-4} 
+			& \multicolumn{1}{c|}{6} & \multicolumn{1}{c|}{-4, -1}  & \multicolumn{1}{c|}{4, -1}  \\ \cline{2-4} 
+			& \multicolumn{1}{c|}{9} & \multicolumn{1}{c|}{1, 2}    & \multicolumn{1}{c|}{1, -1}  \\ \cline{2-4} 
 		\end{tabular}
 	\end{center}
 	
-	\textbf{}
+	Felix-3 is strictly dominated by the other two actions
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{cccc}
+			&                        & \multicolumn{2}{c}{Oscar}                                \\
+			& \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{3}      & \multicolumn{1}{c|}{6}     \\ \cline{2-4} 
+			\multirow{2}{*}{Felix} & \multicolumn{1}{c|}{6} & \multicolumn{1}{c|}{-4, -1} & \multicolumn{1}{c|}{4, -1} \\ \cline{2-4} 
+			& \multicolumn{1}{c|}{9} & \multicolumn{1}{c|}{1, 2}   & \multicolumn{1}{c|}{1, -1} \\ \cline{2-4} 
+		\end{tabular}
+	\end{center}
+	
+	Oscar-6 is weakly dominated by 3
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{ccc}
+			&                        & Oscar                       \\
+			& \multicolumn{1}{c|}{}  & \multicolumn{1}{c|}{3}      \\ \cline{2-3} 
+			\multirow{2}{*}{Felix} & \multicolumn{1}{c|}{6} & \multicolumn{1}{c|}{-4, -1} \\ \cline{2-3} 
+			& \multicolumn{1}{c|}{9} & \multicolumn{1}{c|}{1, 2}   \\ \cline{2-3} 
+		\end{tabular} \\[2ex]
+	\end{center}
 
+	Felix-9 is strictly dominant here, leading to a final [9,3] cleaning regime. 
+	Consequently, this is the only set of actions that has a positive utility for both players. \\
+	
+	
 
 \subsection{}
 \textit{\textbf{Dominance}. Consider the normal form game in the following matrix}
