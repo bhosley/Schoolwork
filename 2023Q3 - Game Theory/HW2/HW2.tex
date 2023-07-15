@@ -42,7 +42,8 @@
 		\end{tabular}
 	\end{center}
 	
-	This is not a prisoner's dilemma type of game, it more similar to a coordination game.
+	This is not a prisoner's dilemma type of game, 
+	it is more similar to a coordination game.
 	The Nash equilibrium in this game is [sit, sit].
 	
 	\subsubsection{}
@@ -67,10 +68,10 @@
 	\textit{Compare the people’s comfort in the equilibria of the two games.} \\
 
 	Because the rewards in each situation are ordinal, they may not accurately represent the proportional
-	reward between each of the choices. Similarly the scale may be different between the two games.
-	The mutually selfish equilibria are relatively equivalent between the two games, 
+	reward between each of the choices. Similarly, the scale may be different between the two games being compared.
+	The mutually selfish equilibria seem that they should be equivalent in terms of utility between the two games, 
 	and if the assumption that the [sit, sit] outcome is indeed identical between the two situations
-	then the ordinality of the situations should be transitively preserved.
+	then the ordinality of the utilities should be transitively preserved.
 	If this is the case, then the highest utility is the mutually altruistic action(s), which ironically
 	represent the lowest comfort game state. \\
 
@@ -78,7 +79,7 @@
 \textit{\textbf{Finding Nash equilibria for normal form games with continuous action spaces}. 
 	Find the Nash equilibria of the two-player strategic game in which each player’s set of actions is the
 	set of nonnegative numbers and the players’ payoff functions are}
-	$u_1(a_1,a_2) =a_1(a_2-a_1)$ \textit{and} $u_2(a_1,a_2) = a_2(1-a_1-a_2)$.
+	$u_1(a_1,a_2) =a_1(a_2-a_1)$ \textit{and} $u_2(a_1,a_2) = a_2(1-a_1-a_2)$. \\
 
 	For player 1 we have,
 	\begin{align*}
@@ -101,8 +102,8 @@
 		5a_1 &= 1.
 	\end{align*}
 
-	And finally, we find Nash equilibrium where the combined player actions are represented by the vector
-	\[\mathbf A = \begin{bmatrix} 0.2 \\0.4 \end{bmatrix}.\]
+	And finally, we find a single Nash equilibrium where the combined player actions are represented by the vector
+	\[\mathbf A = \begin{bmatrix} 0.2 \\0.4 \end{bmatrix}.\]\\
 
 \subsection{}
 \textit{\textbf{The Odd Couple}. Felix and Oscar share an apartment. They have decidedly different views
@@ -141,7 +142,7 @@
 	
 	\textbf{Maxmin}:
 	Felix will choose 9hrs;	
-	Oscar, 6 or 9hrs possibly breaking the tie in favor of 6 as it has a higher utility overall.
+	Oscar, 6 or 9hrs possibly favoring 6 as it has a higher utility overall.
 	
 	\textbf{Minmax}:
 	Felix: 3 hrs; 
@@ -193,7 +194,10 @@
 	Felix-9 is strictly dominant here, leading to a final [9,3] cleaning regime. 
 	Consequently, this is the only set of actions that has a positive utility for both players. \\
 	
-	
+	It seems that while some of the strategies select the same actions as the EID selected strategy,
+	most of the competitive strategies appear to provide at least one of the players with a suboptimal 
+	choice regarding their own interest.
+	This is consistent with the intuition that this particular game has a significant cooperative aspect.
 
 \subsection{}
 \textit{\textbf{Dominance}. Consider the normal form game in the following matrix}
@@ -211,7 +215,7 @@
 \end{center}
 
 	\subsubsection{}
-	\textit{Find the mixed strategy for Player 2 that maximally dominates strategy $B_2$. \\3ex %
+	\textit{Find the mixed strategy for Player 2 that maximally dominates strategy $B_2$. \\[3ex] %
 %
 	\underline{Hint}: You can readily solve this problem via a linear program that maximizes the
 	minimum amount of domination over all possible Player 1 actions. As an example
@@ -219,14 +223,57 @@
 	the level of domination is $1 − 1 = 0$ for $A_1, 5.5 - 4 = 1.5$ for 
 	$B_1, 0 - 0 = 0$ for $C_1$, and $1 − 0 = 1$ for $D_1$, resulting in a
 	minimal level of domination of $0$ for this mixed strategy.}
+	
+	\begin{align*} 
+		\text{Maximize} &\left\{
+		\begin{bmatrix}
+			0 & 2 & 2 \\
+			6 & 5 & 3 \\
+			0 & 0 & 4 \\
+			1 & 1 & 0 
+		\end{bmatrix} 
+		\begin{bmatrix}
+			p_{A_2} \\ p_{C_2} \\ p_{D_2}
+		\end{bmatrix} -
+		\begin{bmatrix}
+			1 \\ 4 \\ 0 \\ 0
+		\end{bmatrix}
+		\right\} \\
+		\text{s.t. }\qquad 
+		&p_{A_2} + p_{C_2} + p_{D_2} = 1 \\
+		&p_{A_2},p_{C_2},p_{D_2} \geq 0 
+	\end{align*}
 
 	\subsubsection{}
 	\textit{After eliminating $B_2$ from consideration, find the mixed strategy for Player 1 that
 	maximally dominates strategy $C_1$.}
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{ccccc}
+			&                            & \multicolumn{3}{c}{Player 2}                                                         \\
+			& \multicolumn{1}{c|}{}      & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{$C_2$} & \multicolumn{1}{c|}{$D_2$} \\ \cline{2-5} 
+			\multirow{4}{*}{Player 1} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{5, 0}  & \multicolumn{1}{c|}{0, 2}  & \multicolumn{1}{c|}{0, 2}  \\ \cline{2-5} 
+			& \multicolumn{1}{c|}{$B_1$} & \multicolumn{1}{c|}{1, 6}  & \multicolumn{1}{c|}{2, 5}  & \multicolumn{1}{c|}{1, 3}  \\ \cline{2-5} 
+			& \multicolumn{1}{c|}{$C_1$} & \multicolumn{1}{c|}{2, 0}  & \multicolumn{1}{c|}{1, 0}  & \multicolumn{1}{c|}{0, 4}  \\ \cline{2-5} 
+			& \multicolumn{1}{c|}{$D_1$} & \multicolumn{1}{c|}{0, 1}  & \multicolumn{1}{c|}{0, 1}  & \multicolumn{1}{c|}{4, 0}  \\ \cline{2-5} 
+		\end{tabular}
+	\end{center}
 
 	\subsubsection{}
 	\textit{After eliminating $C_1$ from consideration, eliminate iteratively the other strictly and
 	weakly dominated strategies.}
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{ccccc}
+			&                            & \multicolumn{3}{c}{Player 2}                                                         \\
+			& \multicolumn{1}{c|}{}      & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{$C_2$} & \multicolumn{1}{c|}{$D_2$} \\ \cline{2-5} 
+			\multirow{3}{*}{Player 1} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{5, 0}  & \multicolumn{1}{c|}{0, 2}  & \multicolumn{1}{c|}{0, 2}  \\ \cline{2-5} 
+			& \multicolumn{1}{c|}{$B_1$} & \multicolumn{1}{c|}{1, 6}  & \multicolumn{1}{c|}{2, 5}  & \multicolumn{1}{c|}{1, 3}  \\ \cline{2-5} 
+			& \multicolumn{1}{c|}{$D_1$} & \multicolumn{1}{c|}{0, 1}  & \multicolumn{1}{c|}{0, 1}  & \multicolumn{1}{c|}{4, 0}  \\ \cline{2-5} 
+		\end{tabular}
+	\end{center}
  
 	\subsubsection{}
 	\textit{How many pure strategy Nash equilibria exist in the resulting, reduced game?}
@@ -245,17 +292,32 @@
 		& \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{1, 4}  & \multicolumn{1}{c|}{2, 5}  & \multicolumn{1}{c|}{5, 3}  \\ \cline{2-5} 
 		Player 1 & \multicolumn{1}{c|}{$B_1$} & \multicolumn{1}{c|}{7, 2}  & \multicolumn{1}{c|}{1, 0}  & \multicolumn{1}{c|}{4, 0}  \\ \cline{2-5} 
 		& \multicolumn{1}{c|}{$C_1$} & \multicolumn{1}{c|}{5, 10} & \multicolumn{1}{c|}{0, 2}  & \multicolumn{1}{c|}{5, 3}  \\ \cline{2-5} 
-	\end{tabular}
+	\end{tabular} \\[2ex]
 \end{center}
 
 \textit{Eliminate iteratively the strictly dominated strategies. Find all the Nash equilibria (in pure
 	and mixed strategies) from the reduced game and provide the mixed Nash equilibria
-	payoffs.}
+	payoffs.} \\
+	
+	First, $C_2$ is eliminated being strictly dominated by $A_2$,
+	which makes $C_1$ strictly dominated by $B_1$.
 
-
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{cccc}
+			&                            & \multicolumn{2}{c}{Player 2}                            \\
+			& \multicolumn{1}{c|}{}      & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{$B_2$} \\ \cline{2-4} 
+			\multirow{2}{*}{Player 1} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{1, 4}  & \multicolumn{1}{c|}{2, 5}  \\ \cline{2-4} 
+			& \multicolumn{1}{c|}{$B_1$} & \multicolumn{1}{c|}{7, 2}  & \multicolumn{1}{c|}{1, 0}  \\ \cline{2-4} 
+		\end{tabular} \\[1ex]
+	\end{center}
+	
+	$[A_1,B_2]$ and $[A_2,B_1]$ are both pure strategy Nash equilibria.
+	
+	
 
 \subsection{}
-\textit{Correlated equilibrium. For the reduced game from the previous problem, identify a
+\textit{\textbf{Correlated equilibrium}. For the reduced game from the previous problem, identify a
 	correlated equilibrium that maximizes the minimum utility increase relative to the mixed strategy Nash equilibrium utility, over both players.}
 
 
