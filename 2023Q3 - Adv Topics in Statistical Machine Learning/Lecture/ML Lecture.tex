@@ -6,6 +6,7 @@
 \usepackage{enumerate}
 \usepackage{graphicx}
 \usepackage{multirow}
+\usepackage{url}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
@@ -46,12 +47,12 @@ will similarly be an obstacle within the areas of interest.
 
 \subsubsection{Sources}
 \begin{enumerate}
-	\item Pre-reading will include\cite{brownlee2015} which is a quality blog post that has a very brief 
+	\item Pre-reading will include\cite{Brownlee_2015} which is a quality blog post that has a very brief 
 	description of the imbalance problem and provides 8 pointers to try to address the problem.
-	\item This \cite{zotero-1472} tensorflow article will be useful for building the learning
+	\item This \cite{tf-imbalanced} tensorflow article will be useful for building the learning
 	activity. It may also serve as a back up pre-reading article, though something a little 
 	more direct will be preferable.
-	\item The \cite{johnson2019} article is an academic survey of techniques. 
+	\item The \cite{Johnson_2019} article is an academic survey of techniques. 
 	This has been used as a guide for my own research into the topic and will be made available
 	as supplementary reading for those that have the interest.
 \end{enumerate}
@@ -82,11 +83,13 @@ As a result, adversarial interactions are a natural area of study.
 
 \subsubsection{Sources}
 \begin{enumerate}
-	\item A slideshow by Ian Goodfellow \cite{goodfellow2016} provides an overview of GANs and provides
+	\item A slideshow by Ian Goodfellow \cite{Goodfellow_2016} provides an overview of GANs and provides
 	additional context by comparing other generative algorithms. 
 	This may make good pre-reading material, or a helpful outline for the in class portion.
-	\item 
-	\item 
+	\item There is a tensorflow \cite{tf-GAN} tutorial that will be extremely helpful in producing the 
+	learning activity.
+	\item This \cite{Ghojogh_Ghodsi_Karray_Crowley_2021} paper is a survey and tutorial regarding GANs and adversarial autoencoders.
+	I would use this paper for background information, and due to a general interest in adversarial techniques.
 \end{enumerate}
 
 \subsubsection{Activities}
@@ -116,9 +119,11 @@ being able to isolate or examine certain model segments.
 
 \subsubsection{Sources}
 \begin{enumerate}
-	\item 
-	\item 
-	\item 
+	\item A tutorial \cite{shap_intro} of modeling different shapley values may provide a good start
+	for developing a learning activity.
+	\item This paper \cite{Gohel_Singh_Mohanty_2021} provides a decent overview of the state of explainability as of 2021.
+	\item A video lecture \cite{LRP_2021} might prove to be a useful
+	for pre-class work, as I think students are more likely to watch a video than read an article.	
 \end{enumerate}
 
 \subsubsection{Activities}
@@ -127,8 +132,14 @@ of the most referenced areas of an image that has been classified.
 
 
 \subsection{Model Compression}
+\subsubsection{}
+A subject of interest if it would be more valuable for the course.
 
+\vfill
 
+\nocite{*}
+\bibliographystyle{ieeetr}
+\bibliography{lecture.bib}
 
 
 \end{document}
