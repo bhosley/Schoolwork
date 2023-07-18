@@ -75,6 +75,10 @@
 	If this is the case, then the highest utility is the mutually altruistic action(s), which ironically
 	represent the lowest comfort game state. \\
 
+
+\clearpage
+
+
 \subsection{}
 \textit{\textbf{Finding Nash equilibria for normal form games with continuous action spaces}. 
 	Find the Nash equilibria of the two-player strategic game in which each player’s set of actions is the
@@ -243,8 +247,11 @@
 		&p_{A_2} + p_{C_2} + p_{D_2} = 1 \\
 		&p_{A_2},p_{C_2},p_{D_2} \geq 0 
 	\end{align*}
+	
+	\(\mathbf P_2 = \begin{bmatrix}0.1212225 & 0.6919 & 0.1868775\end{bmatrix}\) \\
 
-	\(\mathbf P_2 = \begin{bmatrix}0.1212225 & 0.6919 & 0.1868775\end{bmatrix}\)
+	\textbf{Note*} After several failures with pyomo I had to resort to an 
+	embarrassingly inelegant solution in Mac Numbers\textsuperscript{\texttrademark}.
 
 	\subsubsection{}
 	\textit{After eliminating $B_2$ from consideration, find the mixed strategy for Player 1 that
@@ -279,7 +286,19 @@
 		\end{tabular}\\[2ex]
 	\end{center}
 	
-	There are no weakly or strictly dominant pure strategies remaining in this game.
+	$D_2$ is weakly dominated by $C_2$, and after that elimination, 
+	$D_1$ is dominated by both of the other two strategies.
+	
+	\begin{center}
+		\def\arraystretch{1.25}%
+		\begin{tabular}{cccc}
+			&                            & \multicolumn{2}{c}{Player 2}                            \\
+			& \multicolumn{1}{c|}{}      & \multicolumn{1}{c|}{$A_2$} & \multicolumn{1}{c|}{$C_2$} \\ \cline{2-4} 
+			\multirow{2}{*}{Player 1} & \multicolumn{1}{c|}{$A_1$} & \multicolumn{1}{c|}{5, 0}  & \multicolumn{1}{c|}{0, 2}  \\ \cline{2-4} 
+			& \multicolumn{1}{c|}{$B_1$} & \multicolumn{1}{c|}{1, 6}  & \multicolumn{1}{c|}{2, 5} 
+		\end{tabular}
+	\end{center}
+	
  
 	\subsubsection{}
 	\textit{How many pure strategy Nash equilibria exist in the resulting, reduced game?} \\
@@ -318,7 +337,7 @@
 		\end{tabular} \\[1ex]
 	\end{center}
 	
-	$[A_1,B_2]$ and $[A_2,B_1]$ are both pure strategy Nash equilibria.
+	$[A_1,B_2]$ and $[B_1,A_2]$ are both pure strategy Nash equilibria; with expected payoffs of $[2,5]$ and $[7,2]$ respectively.
 	
 	Using $p_i$ as the probability that player $i$ chooses action $A_i$.
 	\begin{align*}
@@ -333,12 +352,24 @@
 	\end{align*}
 	
 	giving a third Nash equilibrium with the mixed strategy of 
-	$s_1=\begin{bmatrix} 2/5 \\ 3/5	\end{bmatrix}$ and
-	$s_2=\begin{bmatrix} 2/3 \\ 1/3	\end{bmatrix}$.
+	$s_1=\begin{bmatrix} 2/3 \\ 1/3	\end{bmatrix}$ and
+	$s_2=\begin{bmatrix} 2/5 \\ 3/5	\end{bmatrix}$ with an
+	expected payoff of $[2.2,10/3]$.
 
 \subsection{}
 \textit{\textbf{Correlated equilibrium}. For the reduced game from the previous problem, identify a
-	correlated equilibrium that maximizes the minimum utility increase relative to the mixed strategy Nash equilibrium utility, over both players.}
+	correlated equilibrium that maximizes the minimum utility increase relative to the mixed strategy Nash equilibrium utility, over both players.} \\
+	
+	Original solution was found via the awful Numbers\textsuperscript{\texttrademark} solution that I kludged together.
+	The result obtained was evaluated using a graphing method, seen below.
+	The updated strategies of 
+	$s_1=\begin{bmatrix} 0.765 \\ 0.235	\end{bmatrix}$ and
+	$s_2=\begin{bmatrix} 0.985 \\ 0.015	\end{bmatrix}$
+	which increases the utility of both players by 0.2.
+	
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{"Screenshot 2023-07-16 at 4.20.52 PM"}
+	\end{center}
 
 
 \end{document}
