@@ -1,0 +1,145 @@
+\documentclass[12pt]{amsart}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[]{forest}
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
+
+\begin{document}
+\raggedbottom
+
+\noindent{\large OPER 618 - Game Theory and Math Programming %
+	- Homework 4 }
+\hspace{\fill} {\large B. Hosley}
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{section}{}
+%\setcounter{subsection}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 1 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{}
+\textbf{Perfect-Information Extensive Form Games – Advanced Payment Game.}\textit{ Consider
+	internet shopping. There is one seller and one buyer of a good. The seller gets a payoff of
+	300 if she does not sell the good and consumes it herself. If the buyer obtains the good and
+	consumes it, he gets a payoff of 1000. Currently, the seller is posting the price of 500. Each
+	player’s total payoff is the sum of the consumption payoff and the monetary payoff.} \\
+
+\textit{First, the buyer chooses whether to send the payment of 500 or not. If he does not send
+	the money, the game ends. If he does, then the seller chooses whether to ship the good or
+	not and the game ends. If she ships the good, the buyer consumes the good; otherwise, the
+	seller consumes the good.}
+
+\subsubsection{}
+\textit{Draw the game tree of this game, specifying the payoff combinations at each terminal
+	node, and find the solution by backward induction.}
+
+\subsubsection{}
+\textit{Let’s consider a modification to the game structure. If the seller does not ship the good
+	after the buyer sent the money, the buyer informs the Consumer Authority and the
+	authority fines the seller. Half of the fine will be paid to the buyer, and the other half
+	will be taken by the authority as a fee. Let 𝑥𝑥 be the fine. Modify the payoff
+	combinations of the game tree you made in (a) and identify the minimum level of 𝑥𝑥 that
+	makes (send money, ship the good) the outcome of a solution via backward
+	induction.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 2 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{}
+\textbf{Perfect-Information Extensive Form Games – Marienbad.}\textit{ There are two piles of matches
+	and two players. The game starts with Player 1 and thereafter the players take turns.
+	When it is a player’s turn, he can remove any number of matches from either pile. Each
+	player is required to remove some number of matches if either pile has matches remaining,
+	and he can only remove matches from one pile at a time. In Marienbad, the player who
+	removes the last match loses the game.}
+
+\subsubsection{}
+\textit{If the game begins with one match in each pile – i.e., $(1,1)$ – who will win? Show it via
+	game tree mapping and backward induction.}
+
+\subsubsection{}
+\textit{If the game begins with an equal number of matches in each pile, and with at least two
+	matches in each pile, who will win? Show it via game tree mapping and backward
+	induction for the case of $(2,2)$ and argue the validity of the general result for $(x, x)$.}
+
+\subsubsection{}
+\textit{If the game begins with an unequal number of matches in each pile, and with at least
+	one match in the smaller pile, who will win? Show it via game tree mapping and
+	backward induction for the case of $(2,1)$ and argue the validity of the general result for
+	$(x, m)$. \underline{Hint}: the results for (a) and (b) might help with this argument.}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 3 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{}
+\textbf{Game Tree Search – Alpha Beta Pruning.} 
+\textit{Consider the game tree shown below for a two-player, two-stage, 
+	zero-sum extensive form game with perfect information, wherein Player
+	1 seeks to maximize the utility at a leaf node, and Player 2 seeks to minimize it.}
+	\begin{center}
+		%delay={font=\bfseries}
+	\forestset{default preamble={ for tree={l=20mm,font={\bfseries\large}} }} 
+	\begin{forest}
+		[\textcolor{white}{1}, circle, fill=ForestGreen, draw, delay={for children={fill=Maroon}}
+			[\textcolor{white}2, circle, draw
+				[15][33][12]]
+			[\textcolor{white}2, circle, draw
+				[15][10][18]]
+			[\textcolor{white}2, circle, draw
+				[16][14][21]]
+			[\textcolor{white}2, circle, draw
+				[9][18][24]]
+		]
+	\end{forest}
+	\end{center}
+	
+\subsubsection{}
+\textit{Apply the Alpha Beta Pruning algorithm, searching the tree \underline{from left-to-right}. Indicate
+	your values for $(\alpha,\beta)$ at each node upon the conclusion of the algorithm, and indicate
+	branches that can be fathomed (e.g., with an \textcolor{red}{X}). \underline{Hint}: remember to fathom whenever
+	$(\alpha\geq\beta)$.}
+	
+\subsubsection{}
+\textit{Apply the Alpha Beta Pruning algorithm, searching the tree from right-to-left. Indicate
+	your values for $(\alpha,\beta)$ at each node upon the conclusion of the algorithm, and indicate
+	branches that can be fathomed (e.g., with an \textcolor{red}{X}).	}
+	
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 4 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+\subsection{}
+\textbf{Imperfect Information Extensive Form Games.} 
+\textit{Describe a real-world example of such a game. It should have at least two players 
+	and a finite number of stages. Depict the game tree for your example.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%	\begin{ Question 5 }	  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{}
+\textbf{Imperfect Information Extensive Form Games with Perfect Recall.}
+
+\subsubsection{}
+\textit{What is an advantage of a sequence-form representation of an IIEF game in lieu of a
+	matrix form representation?}
+
+\subsubsection{}
+\textit{What is an advantage of representing a realization plan in $r_i$ (i.e., as per Definition 5.2.9)
+	instead of in $\beta_i$ (i.e., as per Definition 5.2.8).}
+
+
+\end{document}
