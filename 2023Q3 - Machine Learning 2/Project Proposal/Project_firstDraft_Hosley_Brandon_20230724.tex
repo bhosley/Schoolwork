@@ -1,0 +1,120 @@
+\documentclass[journal]{IEEEtran}
+
+% Packages
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{matrix,shapes.multipart, positioning}
+
+% Drafting Utility Package
+\usepackage{comment}
+
+% Title
+\title{CSCE 832 - Advanced Statistical Machine Learning Project Proposal}
+
+\author{Brandon Hosley, Capt, \textit{AFIT}%
+	\thanks{Manuscript received July 24, 2023%
+		%		; revised Month DD, YYYY.
+}}
+
+%\keywords{class imbalance, data-level methods, algorithm-level methods, hybrid methods, machine learning, performance evaluation}
+
+% Document
+\begin{document}
+	
+	\maketitle
+	
+	
+	% Abstract
+	\begin{abstract}
+		Class imbalance is a pervasive challenge in machine learning, occurring when the distribution of classes in a dataset is significantly skewed. Traditional learning algorithms often struggle to accurately classify minority classes due to the dominance of majority classes. To address this issue, various techniques have been proposed to mitigate the impact of class imbalance on model performance. This paper presents a survey and comparative analysis of different methods for handling class imbalance, aiming to provide insights into their effectiveness and suitability across a range of domains and datasets.
+	\end{abstract}
+	
+	
+	\section{Introduction}
+	\subsection{Overview}
+		The primary objective of this study is to conduct a meticulous comparative analysis of various class imbalance strategies. By employing a wide range of small machine learning models and diverse classic datasets, we aspire to generate a thorough comparison of these techniques' performance. The goal is to glean robust, generalizable insights into the most effective strategies under varying conditions, providing guidelines for optimal technique selection.
+		
+	
+	\subsection{Motivation}
+		Our primary goal is to critically assess a wide array of class imbalance techniques. Through training a large number of small machine learning models on classic datasets, we aim to establish a comprehensive comparison across these techniques. Our study will provide robust, generalizable insights, informing the selection of appropriate techniques for particular applications and model architectures.
+		These techniques can be broadly categorized into three main approaches: data-level methods, algorithm-level methods, and hybrid methods. \cite{johnson2019}
+		Data-level methods focus on modifying the dataset itself by oversampling the minority class, undersampling the majority class, or generating synthetic samples. Algorithm-level methods aim to adapt existing machine learning algorithms or design new ones that are more robust to class imbalance. Hybrid methods combine data-level and algorithm-level techniques to leverage the advantages of both.
+
+	
+	\section{Data}
+	
+		Given our study's condensed timeline, the need for numerous training replications, and the intent to evaluate class imbalance techniques across diverse data characteristics, we targeted several datasets specifically aligned with our requirements. We believe that utilizing well-known, well-maintained, and thoroughly documented datasets will best support our research goals. Furthermore, the larger the dataset's sample size, the more extensive the range of imbalance ratios we can test, enriching our study's comprehensiveness.
+		
+		Among our selected datasets, the Diabetes\cite{cdc2022} dataset encompasses over 70,000 patient entries, each marked with a positive or negative diabetes diagnosis, lending itself to binary classification tasks. The music genre-classification dataset \cite{zotero-1494}, designed for multiclass classification, houses approximately 25,000 samples across 12 classes, each with 15 associated features.
+		
+		For imagery data, the Dog vs Cat dataset \cite{zotero-1490} contains 25,000 images, evenly split between the two classes. The well-known Fashion MNIST dataset \cite{zotero-1492} adds to the diversity, featuring 60,000 images spread over 6 clothing classes.
+		
+		Lastly, the 'Toy Dataset'\cite{zotero-1488} - a synthetic dataset specifically designed for model development - will serve a distinct purpose in our research. With its large sample size of 150,000 and a variety of traits, it will facilitate the development of our pipelines. It will also enable us to examine scenarios with unrealistically tuned parameters, thereby assessing the effectiveness of class imbalance techniques in extreme cases.
+ 
+
+	\section{Machine Learning Task}
+		
+		To ensure a broad yet manageable scope for our study, we have deliberately chosen to focus on classification tasks. These tasks span across both binary and multiclass problems, using both imagery and non-imagery data. The first dataset in our selection, the diabetes dataset, involves a binary classification task utilizing non-imagery data. In contrast, the music genre dataset is designed for multiclass non-imagery classification. For image-based tasks, we have selected the Cats-vs-Dogs dataset for binary classification and the fashion MNIST for multiclass scenarios. We have also included a toy dataset in our analysis to evaluate the performance of the class imbalance techniques in mixed environments, featuring both binary and multiclass situations. This diverse dataset selection will ensure a comprehensive assessment of the class imbalance strategies across various types of data and classification tasks.
+
+		We will examine the follow techniques,
+		% Techniques
+		\subsection{Undersampling}
+		
+		The earliest and most straightforward approaches to deal with class imbalance involve resampling the dataset. Undersampling techniques, such as random undersampling (RUS) and Tomek Links, reduce the instances of the majority class to balance the class distribution Liu et al. \cite{liu2009}. 
+	
+		Tomek Links, as proposed by Tomek in 1976 \cite{tomek1976}, offer an enhancement over the preceding condensed nearest neighbor method. This improvement focuses on retaining only those majority class members that are proximate to the boundary with another class, rather than preserving redundant members within a cluster. The method strategically eliminates points distanced from the class boundaries, as these are less likely to be misclassified given that their nearest neighbors belong predominantly to the majority class
+	
+		The one-sided sampling technique \cite{kubat1997} offers an innovative approach to reconstructing the majority class. Initially, it creates a subset that consists solely of data from the minority class. Subsequently, sets of majority class members are reintroduced. Specifically, for those majority members whose nearest neighbor would lead to their misclassification, proximate members from the original dataset are incorporated into the newly formed set. This strategy effectively lessens the density in areas distanced from the minority class, thereby enhancing class balance.
+	
+		The general risk associated with undersampling techniques is the potential for important information to be lost.
+	
+		\subsection{Oversampling}
+	
+		Rather than reducing the size of a majority class, oversampling techniques such as random oversampling (ROS) and Synthetic Minority Over-sampling Technique (SMOTE) increase the instances of the minority class. 
+	
+		SMOTE was developed by Chawla et al. \cite{chawla2002} and is a technique in which addition minority members are synthesized. The synthetic data is interpolated between two or more minority class points. This technique provides a way to avoid the creation of redundant data in a manner that is likely to be more meaningful than something like a simple jitter. 
+	
+		Borderline SMOTE \cite{han2005} uses the principle method behind standard SMOTE, but with selection weighted toward the minority members closest to the boundary regions between classes. SVMSMOTE \cite{nguyen2011} accomplishes a very similar process, but uses an algorithm very similar to how a soft margin is calculated for a support vector machine.
+	
+		The general risk associated with oversampling techniques is overfitting and that sampling variance may be exaggerated through over-representation of duplicated minority members.
+	
+		\subsection{Cost-Sensitive Learning}
+		
+		Cost-sensitive learning (CSL) is an algorithm based strategy that assigns higher misclassification costs to the minority class Elkan et al. \cite{elkan2001}. This method avoids the overfitting problem of oversampling and the information loss of undersampling. However, the performance of CSL is dependent on the cost matrix, which is often hard to determine.
+		
+		\subsection{Ensemble Methods} 
+		
+		Ensemble methods, like Boosting and Bagging, have been extensively used to address class imbalance. While bagging techniques are generally data-level, boosting techniques are exclusively hybrid.
+		AdaBoost Freund et al. \cite{freund1997} is a popular boosting algorithm, while Balanced Random Forests Chen et al. \cite{chen2004} is a well-known bagging technique. Both methods construct multiple classifiers and combine them to make the final decision. These techniques have been proven effective, but they can be computationally expensive.
+		
+		\subsection{Learning from Imbalanced Data Streams} 
+		
+		Imbalanced data streams are a more challenging scenario where the data distribution may change over time. Wang et al. \cite{wang2018} proposed a method that dynamically adjusts the class distribution by a resampling strategy. Gao et al. \cite{gao2015} presented a method that incrementally learns from the data stream by adjusting the decision boundaries.
+		
+		\subsection{Deep Learning Approaches}
+		Within the area of deep learning, several methods have been proposed to handle class imbalance. Cui et al. \cite{cui2019} introduced a loss function, called Class-Balanced Loss, based on effective number of samples. This technique achieves a balance between classes by adjusting the weights in the loss function. Similarly, Khan et al. \cite{khan2017} proposed Cost-Sensitive Deep Learning, which incorporates the cost matrix into the loss function of the deep learning model.	
+		
+	
+	\section{Approach}
+
+		Our research strategy entails the development of an automated pipeline for model training. This pipeline will dynamically adjust not only the hyperparameters of the model but also the strategy applied to address class imbalance and the imbalance ratio itself. Given the need for multiple replications, an effortless and efficient training process is crucial.
+		
+		It's important to note that our objective is not to create exceptionally high-performing models. Instead, we aim to generate models that demonstrate stable performance under similar conditions. This approach allows us to assess the impact of each technique on performance under different scenarios, offering a robust comparison of their effectiveness.
+		
+		To evaluate the trained models, we will use several metrics that are suitable for imbalanced datasets, including the Area Under the Receiver Operating Characteristic (AUC-ROC), Precision, Recall, and F1 Score. Additionally, we will record training time as a measure of each technique's impact on efficiency. This combination of performance and efficiency metrics will provide a holistic assessment of the various class imbalance techniques across different scenarios.
+
+
+	\section{Expected Contribution}
+	
+		The results of our proposed experiment promise to deliver an intricate, comparative evaluation of multiple class imbalance techniques. By leveraging an extensive array of models and widely-recognized datasets, we anticipate generating insights that are not only detailed but also widely applicable. This comprehensive approach will augment our collective knowledge on the most effective strategies for managing class imbalance, catering to a variety of scenarios and model architectures. In essence, this study is set to offer crucial guidance for the machine learning community, elucidating optimal strategies for combating class imbalance across diverse conditions and model types.
+		
+		
+	% References
+	\label{sec:references}
+	\bibliographystyle{IEEEtran}
+	\bibliography{Project.bib}
+	
+\end{document}
