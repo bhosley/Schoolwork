@@ -5,8 +5,10 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
+
 \usepackage[dvipsnames]{xcolor}
 \usepackage[]{forest}
+\usepackage{caption}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
@@ -41,18 +43,54 @@
 
 \subsubsection{}
 \textit{Draw the game tree of this game, specifying the payoff combinations at each terminal
-	node, and find the solution by backward induction.}
+	node, and find the solution by backward induction.} \\
+	
+	\begin{center}
+		\forestset{default preamble={ for tree={l sep=7.5mm, s sep=7.5mm, edge=ultra thick} }} 
+		\begin{forest}
+			[\textcolor{white}{1}, circle, fill=ForestGreen, draw, font={\bfseries\large}
+				[{(500,300)}, edge label={node[midway,left,font=\scriptsize]{Do Not Send Money}} ]
+				[\textcolor{white}{2}, edge label={node[midway,right,font=\scriptsize]{Send Money}}, 
+				circle, draw, fill=Maroon, font={\bfseries\large} 
+					[{(0,800)}, edge label={node[midway,left,font=\scriptsize]{Do Not Ship Good}} ]
+					[{(1000,500)}, edge label={node[midway,right,font=\scriptsize]{Ship Good}} ]
+				]
+			]
+		\end{forest}
+	\end{center}
+	
+	Ignoring externalities and assuming self interest, 
+	it is assumed that player 2 (the seller) will keep both the money and the good. 
+	With this in mind player 1 will not send the money.\\
 
 \subsubsection{}
 \textit{Let’s consider a modification to the game structure. If the seller does not ship the good
 	after the buyer sent the money, the buyer informs the Consumer Authority and the
 	authority fines the seller. Half of the fine will be paid to the buyer, and the other half
 	will be taken by the authority as a fee. Let 𝑥𝑥 be the fine. Modify the payoff
-	combinations of the game tree you made in (a) and identify the minimum level of 𝑥𝑥 that
+	combinations of the game tree you made in (a) and identify the minimum level of $x$ that
 	makes (send money, ship the good) the outcome of a solution via backward
-	induction.}
+	induction.} \\
+	
+	\begin{center}
+		\forestset{default preamble={ for tree={l sep=7.5mm, s sep=7.5mm, edge=ultra thick} }} 
+		\begin{forest}
+			[\textcolor{white}{1}, circle, fill=ForestGreen, draw, font={\bfseries\large}
+				[{(500,300)}, edge label={node[midway,left,font=\scriptsize]{Do Not Send Money}} ]
+					[\textcolor{white}{2}, edge label={node[midway,right,font=\scriptsize]{Send Money}}, 
+				circle, draw, fill=Maroon, font={\bfseries\large} 
+					[{($x/2$,800-$x$)}, edge label={node[midway,left,font=\scriptsize]{Do Not Ship Good}} ]
+					[{(1000,500)}, edge label={node[midway,right,font=\scriptsize]{Ship Good}} ]
+				]
+			]
+		\end{forest}
+	\end{center}
+	
+	Using backwards induction we can see that the value of $x$ needs only to be strictly larger than the difference in 
+	utility between player 2's choices. In this case, any value $x>300$ fulfills the intent of the Consumer Authority.
 
 
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 2 }	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -67,11 +105,69 @@
 \subsubsection{}
 \textit{If the game begins with one match in each pile – i.e., $(1,1)$ – who will win? Show it via
 	game tree mapping and backward induction.}
+	
+	\begin{center}
+		\forestset{default preamble={ for tree={l sep=7.5mm, s sep=7.5mm, edge=ultra thick} }} 
+		\begin{forest}
+			[\textcolor{white}{(1,1)}, circle, fill=ForestGreen, draw, font={\bfseries\scriptsize}
+				[\textcolor{white}{(1,0)}, circle, fill=Maroon, draw, font={\bfseries\scriptsize}, 
+						edge label={node[midway,right]{-1}} 
+					[\textcolor{white}{(0,0)}, circle, fill=Gray, draw, font={\bfseries\scriptsize}, 
+						edge label={node[midway,right]{-1}}
+					]
+				]
+			]
+		\end{forest}
+	\end{center}
+	
+	For this, and the following trees we will treat the piles as distinct but unlabeled.
+	I.e. $(1,0)$ represents one toothpick in either pile.
+	
+	In this game the second player always loses.
 
 \subsubsection{}
 \textit{If the game begins with an equal number of matches in each pile, and with at least two
 	matches in each pile, who will win? Show it via game tree mapping and backward
 	induction for the case of $(2,2)$ and argue the validity of the general result for $(x, x)$.}
+	
+	\begin{center}
+		\forestset{default preamble={ for tree={l sep=7.5mm, s sep=7.5mm, edge=ultra thick} }} 
+		\begin{forest}
+			[\textcolor{white}{(2,2)}, circle, fill=ForestGreen, draw, font={\bfseries\scriptsize},
+					delay={for children={circle,fill=Maroon,font={\bfseries\scriptsize}}}
+				[\textcolor{white}{(2,0)}, draw, edge label={node[midway,right]{-2}},
+						delay={for children={circle,fill=ForestGreen,font={\bfseries\scriptsize}}}
+					[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{-1}}, name=A,
+							delay={for children={circle,fill=Gray,font={\bfseries\scriptsize}}}
+						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{-1}}]
+					]
+				]
+				[\textcolor{white}{(2,1)}, draw, edge label={node[midway,right]{-1}},
+						delay={for children={circle,fill=ForestGreen,font={\bfseries\scriptsize}}}
+					[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{-2}},
+							delay={for children={circle,fill=Gray,font={\bfseries\scriptsize}}}
+						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{-1}}]
+					]
+					[\textcolor{white}{(1,1)}, draw, edge label={node[midway,right]{-1}},
+							delay={for children={circle,fill=Maroon,font={\bfseries\scriptsize}}}
+						[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{-1}},
+								delay={for children={circle,fill=Gray,font={\bfseries\scriptsize}}}
+							[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{-1}}]
+						]
+					]
+					[\textcolor{white}{(2,0)}, draw, edge label={node[midway,right]{-1}},
+							delay={for children={circle,fill=Maroon,font={\bfseries\scriptsize}}}
+						[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{-1}},
+							delay={for children={circle,fill=Gray,font={\bfseries\scriptsize}}}
+						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{-1}}]]
+					]
+				]
+			]
+		\end{forest}
+	\end{center}
+	
+	
+
 
 \subsubsection{}
 \textit{If the game begins with an unequal number of matches in each pile, and with at least
@@ -89,10 +185,12 @@
 	zero-sum extensive form game with perfect information, wherein Player
 	1 seeks to maximize the utility at a leaf node, and Player 2 seeks to minimize it.}
 	\begin{center}
-		%delay={font=\bfseries}
-	\forestset{default preamble={ for tree={l=20mm,font={\bfseries\large}} }} 
+	\forestset{default preamble={ for tree={l sep=30mm, s sep=7.5mm, edge=ultra thick} }} 
 	\begin{forest}
-		[\textcolor{white}{1}, circle, fill=ForestGreen, draw, delay={for children={fill=Maroon}}
+		[\textcolor{white}{1}, circle, fill=ForestGreen, draw, font={\bfseries\large},
+			delay={for children={fill=Maroon,font={\bfseries\large},
+					label={[below right, xshift=2ex, align=left]$\alpha=$\rule{7.5mm}{0.15mm}\\ $\beta=$\rule{7.5mm}{0.15mm}}
+				}}
 			[\textcolor{white}2, circle, draw
 				[15][33][12]]
 			[\textcolor{white}2, circle, draw
