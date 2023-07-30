@@ -6,9 +6,17 @@
 \usepackage{enumerate}
 \usepackage{graphicx}
 
+\usepackage{comment}
 \usepackage[dvipsnames]{xcolor}
-\usepackage[]{forest}
+\usepackage[edges]{forest}
 \usepackage{caption}
+\usepackage{wrapfig}
+\newcommand\modulo[2]{\@tempcnta=#1
+	\divide\@tempcnta by #2
+	\multiply\@tempcnta by #2
+	\multiply\@tempcnta by -1
+	\advance\@tempcnta by #1\relax
+	\the\@tempcnta}
 
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
@@ -111,9 +119,9 @@
 		\begin{forest}
 			[\textcolor{white}{(1,1)}, circle, fill=ForestGreen, draw, font={\bfseries\scriptsize}
 				[\textcolor{white}{(1,0)}, circle, fill=Maroon, draw, font={\bfseries\scriptsize}, 
-						edge label={node[midway,right]{-1}} 
+						edge label={node[midway,right]{$p_1$(-1)}} 
 					[\textcolor{white}{(0,0)}, circle, fill=Gray, draw, font={\bfseries\scriptsize}, 
-						edge label={node[midway,right]{-1}}
+						edge label={node[midway,right]{$p_2$(-1)}}
 					]
 				]
 			]
@@ -130,52 +138,120 @@
 	matches in each pile, who will win? Show it via game tree mapping and backward
 	induction for the case of $(2,2)$ and argue the validity of the general result for $(x, x)$.}
 	
-	\begin{center}
-		\forestset{default preamble={ for tree={l sep=7.5mm, s sep=7.5mm, edge=ultra thick} }} 
+	\begin{wrapfigure}{l}{0.6\textwidth}
+		\centering
+		\forestset{default preamble={ for tree={l sep=7.5mm, s sep=17.5mm, edge=ultra thick} }} 
 		\begin{forest}
 			[\textcolor{white}{(2,2)}, circle, fill=ForestGreen, draw, font={\bfseries\scriptsize},
 					delay={for children={circle,fill=Maroon,font={\bfseries\scriptsize}}}
-				[\textcolor{white}{(2,0)}, draw, edge label={node[midway,right]{-2}},
+				[\textcolor{white}{(2,0)}, draw, edge label={node[midway,right]{$p_1$(-2)}},
 						delay={for children={circle,fill=ForestGreen,font={\bfseries\scriptsize}}}
-					[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{-1}}, name=A,
+					[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{$p_2$(-1)}}, name=A,
 							delay={for children={circle,fill=Gray,font={\bfseries\scriptsize}}}
-						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{-1}}]
+						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{$p_1$(-1)}}]
 					]
 				]
-				[\textcolor{white}{(2,1)}, draw, edge label={node[midway,right]{-1}},
+				[\textcolor{white}{(2,1)}, draw, edge label={node[midway,right]{$p_1$(-1)}},
 						delay={for children={circle,fill=ForestGreen,font={\bfseries\scriptsize}}}
-					[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{-2}},
+					[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{$p_2$(-2)}},
 							delay={for children={circle,fill=Gray,font={\bfseries\scriptsize}}}
-						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{-1}}]
+						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{$p_1$(-1)}}]
 					]
-					[\textcolor{white}{(1,1)}, draw, edge label={node[midway,right]{-1}},
+					[\textcolor{white}{(1,1)}, draw, edge label={node[midway,right]{$p_2$(-1)}},
 							delay={for children={circle,fill=Maroon,font={\bfseries\scriptsize}}}
-						[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{-1}},
+						[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{$p_1$(-1)}},
 								delay={for children={circle,fill=Gray,font={\bfseries\scriptsize}}}
-							[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{-1}}]
+							[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{$p_2$(-1)}}]
 						]
 					]
-					[\textcolor{white}{(2,0)}, draw, edge label={node[midway,right]{-1}},
+					[\textcolor{white}{(2,0)}, draw, edge label={node[midway,right]{$p_2$(-1)}},
 							delay={for children={circle,fill=Maroon,font={\bfseries\scriptsize}}}
-						[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{-1}},
+						[\textcolor{white}{(1,0)}, draw, edge label={node[midway,right]{$p_1$(-1)}},
 							delay={for children={circle,fill=Gray,font={\bfseries\scriptsize}}}
-						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{-1}}]]
+						[\textcolor{white}{(0,0)}, draw, edge label={node[midway,right]{$p_2$(-1)}}]]
 					]
 				]
 			]
 		\end{forest}
-	\end{center}
+		\caption{$(2,2)$ Marienbad full tree.}
+		\label{fig:2b.1}
+	\end{wrapfigure}
 	
+	\phantom{}\\
+	Figure \ref{fig:2b.1} shows the game with 2 in both piles. 
+	Regardless of player 1's move, player two can win.
+	From this we show that leaving the opponent with only 1 toothpick in 
+	either pile while the other is empty is equivalent to the win condition,
+	thus the final move will be omitted in future diagrams.
 	
+	For the next part, using the patterns observed in figure \ref{fig:2b.1}
+	to build another tree backward to generalize a strategy.
+	Figure \ref{fig:2b.2} represents a generalized version of the same tree.
+	In this tree let $2\leq\alpha,\beta<x$. 
+	In this tree we can see that player 2 can always prolong the game until an eventual victory.
+	
+	Note: that $(x,x)$ is somewhat inaccurate, it may be more accurate to say, $(x,x^\prime)$ 
+	wherein all of the $x$ that follow that root node may arbitrarily be either. \\
+
+\begin{figure}{}
+	\centering
+	\newcommand{\labPos}{above left}
+	\begin{forest}
+		forked edges,
+		for tree={%
+			%grow'=180,
+			grow'=0,
+			draw,
+			circle,
+			font={\bfseries\scriptsize\color{White}},
+			l sep=21mm,
+		},
+		where= {level()==0 || level()==2 || level()==4 || level()==6 }%
+		{fill=ForestGreen}%
+		{fill=Maroon},
+		[{(x,x)}, name=root
+			[{(x,0)}, edge label={node[\labPos]{$p_i$($x$)} },
+				[{(1,0)}, edge label={node[\labPos]{$p_j$($x-1$)} }, name=node10]
+			]
+			[{(x,1)}, edge label={node[\labPos]{$p_i$($x-1$)} },
+				[{(1,0)}, edge label={node[\labPos]{$p_j$($x$)} }, name=node01, [w]]
+			]
+			[{(x,$\boldsymbol{\alpha}$)}, edge label={node[\labPos]{$p_i$($x-\alpha$)} },
+				[{(x,0)}, edge label={node[\labPos]{$p_j$($\alpha$)} },
+					[{(1,0)}, edge label={node[\labPos]{$p_i$($x-1$)} }, name=node33]
+				]
+				[{($\boldsymbol{\alpha}$,0)}, edge label={node[\labPos]{$p_j$($x$)} },
+					[{(1,0)}, edge label={node[\labPos]{$p_i$($\alpha-1$)} },name=node30, [w]]
+				]
+				[{($\boldsymbol{\alpha}$,1)}, edge label={node[\labPos]{$p_j$($x-1$)} },
+					[{(1,0)}, edge label={node[\labPos]{$p_i$($\alpha$)} },name=node03]
+				]
+				[{($\boldsymbol{\alpha}$,$\boldsymbol\beta$)},edge label={node[\labPos]{$p_j$($x-\beta$)}},name=end
+				]
+			]
+		]
+		\draw[dashed,thick] (node01) -- node[] {} (node10);
+		\draw[dashed,thick] (node03) -- node[] {} (node30);
+		\draw[dashed,thick] (node33) -- node[] {} (node30);
+		\draw[->,dashed] (end) to[out=south west,in=south] (root);
+	\end{forest}
+	\caption{$(x,x)$ Marienbad abridged tree.}
+	\label{fig:2b.2}
+\end{figure} 
+
 
 
 \subsubsection{}
 \textit{If the game begins with an unequal number of matches in each pile, and with at least
 	one match in the smaller pile, who will win? Show it via game tree mapping and
 	backward induction for the case of $(2,1)$ and argue the validity of the general result for
-	$(x, m)$. \underline{Hint}: the results for (a) and (b) might help with this argument.}
+	$(x, m)$. \underline{Hint}: the results for (a) and (b) might help with this argument.} \\
+	
+	The case for $(2,1)$ can be seen directly in figure \ref{fig:2b.1}. 
+	For every other value where $m>2$ it may operate just like the $x^\prime$
+	in part b.
 
-
+\clearpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 3 }	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -184,24 +260,6 @@
 \textit{Consider the game tree shown below for a two-player, two-stage, 
 	zero-sum extensive form game with perfect information, wherein Player
 	1 seeks to maximize the utility at a leaf node, and Player 2 seeks to minimize it.}
-	\begin{center}
-	\forestset{default preamble={ for tree={l sep=30mm, s sep=7.5mm, edge=ultra thick} }} 
-	\begin{forest}
-		[\textcolor{white}{1}, circle, fill=ForestGreen, draw, font={\bfseries\large},
-			delay={for children={fill=Maroon,font={\bfseries\large},
-					label={[below right, xshift=2ex, align=left]$\alpha=$\rule{7.5mm}{0.15mm}\\ $\beta=$\rule{7.5mm}{0.15mm}}
-				}}
-			[\textcolor{white}2, circle, draw
-				[15][33][12]]
-			[\textcolor{white}2, circle, draw
-				[15][10][18]]
-			[\textcolor{white}2, circle, draw
-				[16][14][21]]
-			[\textcolor{white}2, circle, draw
-				[9][18][24]]
-		]
-	\end{forest}
-	\end{center}
 	
 \subsubsection{}
 \textit{Apply the Alpha Beta Pruning algorithm, searching the tree \underline{from left-to-right}. Indicate
@@ -209,12 +267,75 @@
 	branches that can be fathomed (e.g., with an \textcolor{red}{X}). \underline{Hint}: remember to fathom whenever
 	$(\alpha\geq\beta)$.}
 	
+	\begin{center}
+	\forestset{default preamble={ for tree={l sep=30mm, s sep=7.5mm, edge=ultra thick} }} 
+	\begin{forest}
+		[\textcolor{white}{1}, circle, fill=ForestGreen, draw, font={\bfseries\large},
+			label={[below right, xshift=3ex, align=left]$\alpha=14$\\
+				$\beta=-\infty$},
+			delay={for children={fill=Maroon,font={\bfseries\large} }}
+			[\textcolor{white}2, circle, draw,
+				label={[below right, xshift=3ex, align=left]$\alpha=\infty$ \\ $\beta=12$}
+				[15]
+				[33]
+				[12]]
+			[\textcolor{white}2, circle, draw,
+				label={[below right, xshift=3ex, align=left]$\alpha=12$ \\ $\beta=10$}
+				[15]
+				[10]
+				[18, edge label={node[midway]{\Huge\textcolor{red}{X}}} ]]
+			[\textcolor{white}2, circle, draw,
+				label={[below right, xshift=3ex, align=left]$\alpha=14$ \\ $\beta=12$}
+				[16]
+				[14]
+				[21]]
+			[\textcolor{white}2, circle, draw,
+				label={[below right, xshift=3ex, align=left]$\alpha=14$ \\ $\beta=9$}
+				[9]
+				[18, edge label={node[midway]{\Huge\textcolor{red}{X}}}]
+				[24, edge label={node[midway]{\Huge\textcolor{red}{X}}}]]
+		]
+	\end{forest}
+	\end{center}
+	
+	
 \subsubsection{}
-\textit{Apply the Alpha Beta Pruning algorithm, searching the tree from right-to-left. Indicate
+\textit{Apply the Alpha Beta Pruning algorithm, searching the tree from \underline{right-to-left}. Indicate
 	your values for $(\alpha,\beta)$ at each node upon the conclusion of the algorithm, and indicate
 	branches that can be fathomed (e.g., with an \textcolor{red}{X}).	}
 	
+	\begin{center}
+	\forestset{default preamble={ for tree={l sep=30mm, s sep=7.5mm, edge=ultra thick} }} 
+	\begin{forest}
+		[\textcolor{white}{1}, circle, fill=ForestGreen, draw, font={\bfseries\large},
+			label={[below right, xshift=3ex, align=left]$\alpha=14$\\
+				$\beta=-\infty$},
+			delay={for children={fill=Maroon,font={\bfseries\large} }}
+			[\textcolor{white}2, circle, draw,
+				label={[below right, xshift=3ex, align=left]$\alpha=$ \\ $\beta=12$}
+				[15, edge label={node[midway]{\Huge\textcolor{red}{X}}}]
+				[33, edge label={node[midway]{\Huge\textcolor{red}{X}}}]
+				[12]]
+			[\textcolor{white}2, circle, draw,
+				label={[below right, xshift=3ex, align=left]$\alpha=14$ \\ $\beta=10$}
+				[15, edge label={node[midway]{\Huge\textcolor{red}{X}}}]
+				[10]
+				[18]]
+			[\textcolor{white}2, circle, draw,
+				label={[below right, xshift=3ex, align=left]$\alpha=14$ \\ $\beta=9$}
+				[16]
+				[14]
+				[21]]
+			[\textcolor{white}2, circle, draw,
+				label={[below right, xshift=3ex, align=left]$\alpha=\infty$ \\ $\beta=9$}
+				[9]
+				[18]
+				[24]]
+		]
+	\end{forest}
+	\end{center}
 	
+\clearpage	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %	\begin{ Question 4 }	  %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
@@ -233,11 +354,21 @@
 
 \subsubsection{}
 \textit{What is an advantage of a sequence-form representation of an IIEF game in lieu of a
-	matrix form representation?}
+	matrix form representation?} \\
+	
+	The sequential form is generally more understandable for conveying information about games over a certain size.
+	A matrix representation requires that every distinct pathway to an outcome be enumerated. 
+	Additionally, in the sequential representation decisions that a player would never make can terminate, 
+	not needing any further enumeration along that pathway. 
+	Sequential representation is also more amenable to equivalent game states from different pathways.
 
 \subsubsection{}
 \textit{What is an advantage of representing a realization plan in $r_i$ (i.e., as per Definition 5.2.9)
-	instead of in $\beta_i$ (i.e., as per Definition 5.2.8).}
+	instead of in $\beta_i$ (i.e., as per Definition 5.2.8).} \\
 
+	One of the largest benefits of this style of representation is that it is algorithmically far more efficient.
+	A way of thinking about this is that it acts in a manner similar to Alpha-beta pruning, but preemptively.
+	Ignoring branches that are impossible to reach via the player's own decisions saves the time of pointless
+	guessing, which is especially valuable in an imperfect information environment.
 
 \end{document}
