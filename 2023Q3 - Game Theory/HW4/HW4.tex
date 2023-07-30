@@ -302,7 +302,7 @@
 \subsubsection{}
 \textit{Apply the Alpha Beta Pruning algorithm, searching the tree from \underline{right-to-left}. Indicate
 	your values for $(\alpha,\beta)$ at each node upon the conclusion of the algorithm, and indicate
-	branches that can be fathomed (e.g., with an \textcolor{red}{X}).	}
+	branches that can be fathomed (e.g., with an \textcolor{red}{X}).	} \\
 	
 	\begin{center}
 	\forestset{default preamble={ for tree={l sep=30mm, s sep=7.5mm, edge=ultra thick} }} 
@@ -342,7 +342,63 @@
 \subsection{}
 \textbf{Imperfect Information Extensive Form Games.} 
 \textit{Describe a real-world example of such a game. It should have at least two players 
-	and a finite number of stages. Depict the game tree for your example.}
+	and a finite number of stages. Depict the game tree for your example.} \\
+
+	Figure \ref{fig:4.1} shows a recursive extensive form game representing a two-player game of poker.
+	
+	In this game the move set is as follows:
+	\begin{description}
+		\item [${R_i(x)}$] \hspace{0.025ex} Player $i$ Raises. If the $pot=0$ it is instead called opening.
+		\item [${C_i}$] \hspace{3ex} Player $i$ calls. If the $pot=0$ it is instead called checking.
+		\item [${F_i}$] \hspace{3ex} Player $i$ folds; the other player wins the round.
+		\item [${Res}$] \hspace{1.2ex} Resolve the round. The player with the superior hand wins the round.
+	\end{description}
+	
+	At any time a player may fold and cede the round to the other player. 
+	When Both players call the round ends and a victor is determined.
+	Any time a player raises by x the other player is afforded an opportunity to respond,
+	if the other player calls, they must raise their bet to match the other and then the
+	player is afforded another opportunity to respond to that. \\
+
+\begin{figure}{}
+	\centering
+	\newcommand{\labPos}{above left}
+	\begin{forest}
+		forked edges,
+		for tree={%
+			%grow'=180,
+			grow'=0,
+			draw,
+			circle,
+			font={\bfseries\scriptsize\color{White}},
+			l sep=21mm,
+		},
+		where= {level()==0 || level()==2 || level()==4 || level()==6 }%
+		{fill=ForestGreen}%
+		{fill=Maroon},
+		[{$P_1$}, name=root
+			[{$P_2$}, edge label={node[\labPos]{$R_1(x)$} }
+				[{$P_1$}, edge label={node[\labPos]{$R_2(x)$} }, name=end1]
+				[{$P_1$}, edge label={node[\labPos]{$C_2$} }, name=end3]
+				[{$P_1$}, edge label={node[\labPos]{$F_2$} }]
+			]
+			[{$P_2$}, edge label={node[\labPos]{$C_1$} }
+				[{$P_1$}, edge label={node[\labPos]{$R_2(x)$} }, name=end2]
+				[{$Res$}, edge label={node[\labPos]{$C_2$} }, fill=Gray]
+				[{$P_1$}, edge label={node[\labPos]{$F_2$} }]
+			]
+			[{$P_2$}, edge label={node[\labPos]{$F_1$} }]
+		]
+		\draw[->,dashed] (end1) -- (6.8,3.45);
+		\draw[->,dashed] (end2) -- (7,0.1) -- (7,2.25);
+		\draw[->,dashed] (end3) -- (6.8,2.3);
+		\draw[->,dashed] (7,2.35) -- (7,3.4);
+		\draw[->,dashed] (7,3.57) -- (7,4.5) -- (0,4.5) -- (root);
+	\end{forest}
+	\caption{}
+	\label{fig:4.1}
+\end{figure} 
+
 
 
 
@@ -360,7 +416,8 @@
 	A matrix representation requires that every distinct pathway to an outcome be enumerated. 
 	Additionally, in the sequential representation decisions that a player would never make can terminate, 
 	not needing any further enumeration along that pathway. 
-	Sequential representation is also more amenable to equivalent game states from different pathways.
+	Sequential representation is also more amenable to equivalent game states from different pathways
+	as well as equivalence classes.
 
 \subsubsection{}
 \textit{What is an advantage of representing a realization plan in $r_i$ (i.e., as per Definition 5.2.9)
