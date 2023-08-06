@@ -31,8 +31,31 @@
 \subsubsection{}
 \textit{Adapt the network interdiction formulation(s) by Wood (1993) to model an attacker
 	maximizing the shortest path from node $s$ to node $t$ in a directed network $G(N, A)$
-	having arc lengths $c_i, ∀ (i, j) \in A$.}
+	having arc lengths $c_{ij}, ∀ (i, j) \in A$.} \\
 
+	Let,
+	\begin{description}
+		\item[$N$] Is the set of all nodes in the system
+		\item[$A$] The set of all $(i,j)$ where an arc exists between nodes $i$ and $j$
+		\item[$c_{ij}$] Arc length between nodes $i$ and $j$.
+		\item[$x_{ij}$] A binary value where $1$ indicates the use of path $i$ to $j$
+		\item[$\gamma_{ij}$] A binary value where $1$ indicates an elimination of path $i$ to $j$
+		\item[$s$]  A representation of the starting/source node
+		\item[$t$]  A representation of the ending/sink node
+	\end{description}
+
+	Then the shortest path maxmin problem can be represented as,
+	\begin{align*}
+		\max_\gamma\min_x \qquad \sum_{(i,j)\in A} c_{ij}x_{ij}& \\
+		\text{s.t.}\qquad\quad
+		\sum_{(i,j)\in A}x_{ij} &= 1, \qquad\qquad i=s \\
+		\sum_{(i,j)\in A}x_{ij} &= 1, \qquad\qquad j=t \\
+		\sum_{j:(i,j)\in A}x_{ij} - \sum_{j:(j,i)\in A}x_{ji} &= 0, \qquad\qquad i\in N\backslash \{s,t\} \\
+		x_{ij} &\in \{0,1\}, \qquad \forall(i,j) \in A  \\
+		%
+		\gamma_{ij} &\in \{0,1\}, \qquad \forall(i,j) \in A \\
+		x_{ij} + \gamma_{ij} &\in \{0,1\}\ \qquad \forall(i,j) \in A
+	\end{align*}
 
 \subsubsection{}
 \textit{Take the dual of the inner (i.e., lower level) problem to identify a mixed-integer
@@ -44,6 +67,23 @@
 \textbf{Applications of Network Interdiction for the Shortest Path Problem (SPP)}.
 \textit{Describe a practical application for this model.}
 
+	While this type of problem is usually intuited via transportation networks of some flavor, 
+	as they are tangible and easily grasped. There is a lot of fuzziness in the translation between
+	the mathematical model and the actual implementation. Leaving a (usually acceptable) amount of 
+	irreducible uncertainty.
+	
+	A similar application that typically feels more abstract is in digital communications networks.
+	The scales at which these networks operate lend a difficulty in conveying the effects to a network
+	communications lay-person. However, the situation is much more likely to adhere to the assertions made
+	in the mathematical model.
+	
+	Simply knowing the clock speed of the network devices that constitute the nodes can provide an extremely
+	accurate measurement of throughput via various routes in the network.
+	This measurement can be made even more accurate with knowledge of the connection medium.
+	
+	The objectives can be the same, such that degrading certain routes saturates nodes in a bottleneck fashion.
+	It is also possible that this type of analysis may be useful when attempting to divert more traffic to a particular
+	route that has a tap for intel collection.
 
 
 \section{}
