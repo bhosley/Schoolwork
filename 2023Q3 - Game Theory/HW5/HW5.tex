@@ -46,26 +46,38 @@
 
 	Then the shortest path maxmin problem can be represented as,
 	\begin{align*}
-		\max_\gamma\min_x \qquad \sum_{(i,j)\in A} c_{ij}x_{ij}& \\
-		\text{s.t.}\qquad\quad
-		\sum_{(i,j)\in A}x_{ij} &= 1, \qquad\qquad i=s \\
-		\sum_{(i,j)\in A}x_{ij} &= 1, \qquad\qquad j=t \\
-		\sum_{j:(i,j)\in A}x_{ij} - \sum_{j:(j,i)\in A}x_{ji} &= 0, \qquad\qquad i\in N\backslash \{s,t\} \\
-		x_{ij} &\in \{0,1\}, \qquad \forall(i,j) \in A  \\
+		\max_\gamma\min_x \hspace{8em} \sum_{(i,j)\in A} c_{ij}x_{ij}& \\
+		\text{s.t.}\quad
+		\sum_{j:(i,j)\in A}x_{ij} - \sum_{j:(j,i)\in A}x_{ji} -1 &= 0, \qquad\qquad i=s, \\
+		\sum_{j:(i,j)\in A}x_{ij} - \sum_{j:(j,i)\in A}x_{ji}\ \quad\ &= 0, \qquad\qquad i\in N\backslash \{s,t\}, \\
+		\sum_{j:(i,j)\in A}x_{ij} - \sum_{j:(j,i)\in A}x_{ji} +1 &= 0, \qquad\qquad i=t, \\
+		%\{s,t\}
+		x_{ij} &\leq (1- \gamma_{ij}), \quad \forall(i,j) \in A, \\
+		x_{ij} &\in \{0,1\}, \hspace{2.5em} \forall(i,j)\in A\cup \{s,t\}, \\
 		%
-		\gamma_{ij} &\in \{0,1\}, \qquad \forall(i,j) \in A \\
-		x_{ij} + \gamma_{ij} &\in \{0,1\}\ \qquad \forall(i,j) \in A
+		\sum_{(i,j)\in A} r_{ij}\gamma_{ij} &\leq R, \\
+		\gamma_{ij} &\in \{0,1\}\ \qquad\quad \forall(i,j) \in A,
 	\end{align*}
 
 \subsubsection{}
 \textit{Take the dual of the inner (i.e., lower level) problem to identify a mixed-integer
 	nonlinear single-level formulation.}
 
-
+	\begin{align*}
+		\max_\gamma\max_{\alpha,\theta} \qquad \sum_{(i,j)\in A} \theta_{ij}(1-\gamma_{ij})& \\
+		\text{s.t.}\qquad\quad
+		\alpha_i - \alpha_j + \theta_{ij} &\geq 0,\hspace{5em} \forall(i,j) \in A, \\
+		\alpha_t - \alpha_s &\geq \sum_{(i,j)\in A} c_{ij}, \\
+		\theta_{ij} &\geq 0, \hspace{5em} \forall(i,j) \in A,  \\
+		\alpha_i &\text{: unrestricted}, \quad i\in N, \\
+		%
+		\sum_{(i,j)\in A} r_{ij}\gamma_{ij} &\leq R, \\
+		\gamma_{ij} &\in \{0,1\}\hspace{3.5em} \forall(i,j) \in A
+	\end{align*}
 
 \subsection{}
 \textbf{Applications of Network Interdiction for the Shortest Path Problem (SPP)}.
-\textit{Describe a practical application for this model.}
+\textit{Describe a practical application for this model.} \\
 
 	While this type of problem is usually intuited via transportation networks of some flavor, 
 	as they are tangible and easily grasped. There is a lot of fuzziness in the translation between
