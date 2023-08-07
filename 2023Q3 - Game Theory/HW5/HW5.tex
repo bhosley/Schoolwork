@@ -158,7 +158,7 @@ location problem (MCLP).} \\
 		\sum_{j\in J} a_{ij}x_j \geq y_i,& \quad \forall i\in I, \\
 		\sum_{j\in J} x_j \leq p,& \\
 		x_j \in \{0,1\},& \quad \forall j\in J, \\
-		y_i \in \{0,1\},& \quad \forall i\in I.
+		y_i \in \{0,1\},& \quad \forall i\in I. \\
 	\end{align*}
 	
 \textit{To take the dual of the lower-level problem and attain a single-level reformulation (e.g.,
@@ -177,20 +177,20 @@ Solving the first, single-level formulation will provide an upper bound.
 Implicit in the single-level is that player one will make their best
 possible move without any interference, they cannot perform better.
 In other words, one can imagine the second player being present but is either unable to make a move, 
-or makes the worst possible move relative to their own interest (assuming zero-sum).
+or makes the worst possible move relative to their own interest (assuming zero-sum). \\
 
 
 \subsection{}
 \textit{Consider the following solution procedure. First, solve the reformulated, single-level
-	problem for the integer-relaxed lower-level problem. Take the binary-valued decisions $z_i$
-	for the upper-level player and affix them. Let’s call them $z_i$. Now, solve the following
+	problem for the integer-relaxed lower-level problem. Take the binary-valued decisions $z_j$
+	for the upper-level player and affix them. Let’s call them $\bar z_j$. Now, solve the following
 	problem to attain values $\bar x_j$ and $\bar y_i$ and a corresponding objective function 
 	value $\sum_{i\in I}v_i\bar y_i$.}
 
 	\begin{align*}
 		{\color{blue}\min_z}\max_{x,y} \qquad\qquad \sum_{i\in I} v_iy_i& \\
 		\text{s.t.}\quad
-		{\color{blue} x_j \leq 1-z_j,}& \quad {\color{blue}\forall j\in J,}\\
+		{\color{blue} x_j \leq 1-\bar z_j,}& \quad {\color{blue}\forall j\in J,}\\
 		\sum_{j\in J} a_{ij}x_j \geq y_i,& \quad \forall i\in I, \\
 		\sum_{j\in J} x_j \leq p,& \\
 		x_j \in \{0,1\},& \quad \forall j\in J, \\
@@ -199,12 +199,30 @@ or makes the worst possible move relative to their own interest (assuming zero-s
 
 \textit{Does the solution to this problem provide an upper bound or a lower bound on the optimal
 	solution to the zero-sum bilevel formulation? How does it relate to the objective function
-	value attained via the procedure described in Questions 2 and 3? Explain.}
+	value attained via the procedure described in Questions 2 and 3? Explain.} \\
 	
+	\begin{align*} 
+		\bar x_j &\leq 1 - \bar z_j \hspace{5.5em} \forall j\in J \\
+		\bar y_i &\leq \sum_{j\in J} a_{ij}(1-\bar z_{i}) \hspace{2em}  \forall i\in I \\
+		\max_{x,y}& \sum_{i\in I} \sum_{j\in J} v_i a_{ij}(1-\bar z_{i}) \\
+	\end{align*}
+
+
+	This formulation gives a lower bound. The relaxation removes the $q$ boundary limiting what $z_j$
+	can be. By eliminating this, the formulation demonstrates what the solution would be
+	given no limit on $z$. Thus we can identify what the minimum value for player 1 could be
+	given unlimited action by player 2, such that they cannot remove anything more from player 1. \\
 
 \subsection{}
 \textit{Would it be reasonable for the upper-level decision-maker to implement a “blocking
-	solution” attained by the solution procedure described by Question 4? Why or why not?}
+	solution” attained by the solution procedure described by Question 4? Why or why not?} \\
+
+	This is not likely a reasonable solution. As alluded to in the previous response,
+	the elimination of the $q$ constraint represents unlimited resources on the interdictor's part.
+	While this would be ideal from the perspective of player 2, it is seldom the case that this would be true.
+	Even if it were practically true, wherein player 2's resources so outmatch player 1's as to appear
+	unlimited, it would probably be seen as poor stewardship of resources to invest so far beyond a 
+	point of diminishing returns as to maximally dominate the zero sum game.
 
 
 \end{document}
