@@ -1,0 +1,228 @@
+\documentclass[12pt]{amsart}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+
+
+\usepackage{xcolor}
+\usepackage{xparse}
+
+\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
+
+\begin{document}
+\raggedbottom
+
+\noindent{\large OPER 618 - Game Theory and Math Programming %
+	- Homework 5 }
+\hspace{\fill} {\large B. Hosley}
+\bigskip
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{subsection}{0}
+\subsection{}
+\textbf{Network Interdiction for the Shortest Path Problem (SPP)}.
+
+\subsubsection{}
+\textit{Adapt the network interdiction formulation(s) by Wood (1993) to model an attacker
+	maximizing the shortest path from node $s$ to node $t$ in a directed network $G(N, A)$
+	having arc lengths $c_{ij}, ∀ (i, j) \in A$.} \\
+
+	Let,
+	\begin{description}
+		\item[$N$] Is the set of all nodes in the system
+		\item[$A$] The set of all $(i,j)$ where an arc exists between nodes $i$ and $j$
+		\item[$c_{ij}$] Arc length between nodes $i$ and $j$.
+		\item[$x_{ij}$] A binary value where $1$ indicates the use of path $i$ to $j$
+		\item[$\gamma_{ij}$] A binary value where $1$ indicates an elimination of path $i$ to $j$
+		\item[$s$]  A representation of the starting/source node
+		\item[$t$]  A representation of the ending/sink node
+	\end{description}
+
+	Then the shortest path maxmin problem can be represented as,
+	\begin{align*}
+		\max_\gamma\min_x \hspace{8em} \sum_{(i,j)\in A} c_{ij}x_{ij}& \\
+		\text{s.t.}\quad
+		\sum_{j:(i,j)\in A}x_{ij} - \sum_{j:(j,i)\in A}x_{ji} -1 &= 0, \qquad\qquad i=s, \\
+		\sum_{j:(i,j)\in A}x_{ij} - \sum_{j:(j,i)\in A}x_{ji}\ \quad\ &= 0, \qquad\qquad i\in N\backslash \{s,t\}, \\
+		\sum_{j:(i,j)\in A}x_{ij} - \sum_{j:(j,i)\in A}x_{ji} +1 &= 0, \qquad\qquad i=t, \\
+		%\{s,t\}
+		x_{ij} &\leq (1- \gamma_{ij}), \quad \forall(i,j) \in A, \\
+		x_{ij} &\in \{0,1\}, \hspace{2.5em} \forall(i,j)\in A\cup \{s,t\}, \\
+		%
+		\sum_{(i,j)\in A} r_{ij}\gamma_{ij} &\leq R, \\
+		\gamma_{ij} &\in \{0,1\}\ \qquad\quad \forall(i,j) \in A,
+	\end{align*}
+
+\subsubsection{}
+\textit{Take the dual of the inner (i.e., lower level) problem to identify a mixed-integer
+	nonlinear single-level formulation.}
+
+	\begin{align*}
+		\max_\gamma\max_{\alpha,\theta} \qquad \sum_{(i,j)\in A} \theta_{ij}(1-\gamma_{ij})& \\
+		\text{s.t.}\qquad\quad
+		\alpha_i - \alpha_j + \theta_{ij} &\geq 0,\hspace{5em} \forall(i,j) \in A, \\
+		\alpha_t - \alpha_s &\geq \sum_{(i,j)\in A} c_{ij}, \\
+		\theta_{ij} &\geq 0, \hspace{5em} \forall(i,j) \in A,  \\
+		\alpha_i &\text{: unrestricted}, \quad i\in N, \\
+		%
+		\sum_{(i,j)\in A} r_{ij}\gamma_{ij} &\leq R, \\
+		\gamma_{ij} &\in \{0,1\}\hspace{3.5em} \forall(i,j) \in A
+	\end{align*}
+
+\subsection{}
+\textbf{Applications of Network Interdiction for the Shortest Path Problem (SPP)}.
+\textit{Describe a practical application for this model.} \\
+
+	While this type of problem is usually intuited via transportation networks of some flavor, 
+	as they are tangible and easily grasped. There is a lot of fuzziness in the translation between
+	the mathematical model and the actual implementation. Leaving a (usually acceptable) amount of 
+	irreducible uncertainty.
+	
+	A similar application that typically feels more abstract is in digital communications networks.
+	The scales at which these networks operate lend a difficulty in conveying the effects to a network
+	communications lay-person. However, the situation is much more likely to adhere to the assertions made
+	in the mathematical model.
+	
+	Simply knowing the clock speed of the network devices that constitute the nodes can provide an extremely
+	accurate measurement of throughput via various routes in the network.
+	This measurement can be made even more accurate with knowledge of the connection medium.
+	
+	The objectives can be the same, such that degrading certain routes saturates nodes in a bottleneck fashion.
+	It is also possible that this type of analysis may be useful when attempting to divert more traffic to a particular
+	route that has a tap for intel collection.
+
+
+\section{}
+\setcounter{subsection}{2}
+
+\textbf{Zero-sum interdiction for the Lower-level Problem with (Binary) Integer Restrictions.} 
+\textit{For Questions 3, 4, \& 5, consider the following formulation of the maximal covering 
+location problem (MCLP).} \\
+
+\begin{center}
+\begin{minipage}{0.75\linewidth}
+	
+	\underline{Sets}
+		\begin{description}
+			\item[$I$] the set of demand node locations, indexed on $i$
+			\item[$J$] the set of possible facility sites, indexed on $j$
+		\end{description}
+		
+	\underline{Parameters}
+		\begin{description}
+			\item[$p$]  the number of facilities available for location
+			\item[$v_i$] the value attained by covering facility $i$
+			\item[$a_{ij}= 1$] if a facility emplaced at site $j$ can cover a demand at location $i$
+		\end{description}
+		
+	\underline{Decision Variables}
+		\begin{description}
+			\item[$x_j$] a binary decision variable equal to 1 if a facility is emplaced at location $i$, and 0 otherwise
+			\item[$y_i$] a binary decision variable equal to 1 if the demand at location $i$ is covered by an emplaced
+			facility within range, and 0 otherwise
+		\end{description}
+	
+	\underline{Formulation}
+		\begin{align*}
+			\max_{x,y} \qquad\qquad \sum_{i\in I} v_iy_i& \\
+			\text{s.t.}\quad \sum_{j\in J} a_{ij}x_j \geq y_i,& \quad \forall i\in I, \\
+			\sum_{j\in J} x_j \leq p,& \\
+			x_j \in \{0,1\},& \quad \forall j\in J, \\
+			y_i \in \{0,1\},& \quad \forall i\in I. \\
+		\end{align*}
+	
+\end{minipage}
+\end{center}
+
+\begin{center}
+\begin{minipage}{0.75\linewidth}
+		
+\textit{Now, consider a zero-sum bilevel formulation wherein an interdictor can block up to $q$ sites
+	in $J$ from being used, wherein a decision to “block” corresponds with the binary decision
+	variable $z_j = 1$. (For ease of discrimination, the upper-level player’s objective and
+	constraints are indicated in {\color{blue} blue-colored font}.)} \\
+	
+	\underline{Zero-sum Formulation}
+	\begin{align*}
+		{\color{blue}\min_z}\max_{x,y} \qquad\qquad \sum_{i\in I} v_iy_i& \\
+		\text{s.t.}\quad
+		{\color{blue} x_j+z_j \leq 1,}& \quad {\color{blue}\forall j\in J,}\\
+		{\color{blue} \sum_{j\in J}z_j\leq q,}&  \\
+		{\color{blue} z_j\in \{0,1\},}& {\color{blue}\quad\forall j\in J}.  \\
+		\sum_{j\in J} a_{ij}x_j \geq y_i,& \quad \forall i\in I, \\
+		\sum_{j\in J} x_j \leq p,& \\
+		x_j \in \{0,1\},& \quad \forall j\in J, \\
+		y_i \in \{0,1\},& \quad \forall i\in I. \\
+	\end{align*}
+	
+\textit{To take the dual of the lower-level problem and attain a single-level reformulation (e.g.,
+	Wood (1993), Lessin et al. (2018)), one would have to relax the binary integer restrictions
+	on $x_i$ and $y_i$ decision variables. The constraint matrix for a covering problem is not totally
+	unimodular, so this integer-relaxation may have consequences on the solution(s) attained.} \\
+
+\end{minipage}
+\end{center}		
+
+\subsection{}
+\textit{Would solving the resulting single-level formulation yield an upper bound or a lower bound
+on the optimal solution to the zero-sum bilevel formulation? Explain.} \\
+
+Solving the first, single-level formulation will provide an upper bound. 
+Implicit in the single-level is that player one will make their best
+possible move without any interference, they cannot perform better.
+In other words, one can imagine the second player being present but is either unable to make a move, 
+or makes the worst possible move relative to their own interest (assuming zero-sum). \\
+
+
+\subsection{}
+\textit{Consider the following solution procedure. First, solve the reformulated, single-level
+	problem for the integer-relaxed lower-level problem. Take the binary-valued decisions $z_j$
+	for the upper-level player and affix them. Let’s call them $\bar z_j$. Now, solve the following
+	problem to attain values $\bar x_j$ and $\bar y_i$ and a corresponding objective function 
+	value $\sum_{i\in I}v_i\bar y_i$.}
+
+	\begin{align*}
+		{\color{blue}\min_z}\max_{x,y} \qquad\qquad \sum_{i\in I} v_iy_i& \\
+		\text{s.t.}\quad
+		{\color{blue} x_j \leq 1-\bar z_j,}& \quad {\color{blue}\forall j\in J,}\\
+		\sum_{j\in J} a_{ij}x_j \geq y_i,& \quad \forall i\in I, \\
+		\sum_{j\in J} x_j \leq p,& \\
+		x_j \in \{0,1\},& \quad \forall j\in J, \\
+		y_i \in \{0,1\},& \quad \forall i\in I. \\
+	\end{align*}
+
+\textit{Does the solution to this problem provide an upper bound or a lower bound on the optimal
+	solution to the zero-sum bilevel formulation? How does it relate to the objective function
+	value attained via the procedure described in Questions 2 and 3? Explain.} \\
+	
+	\begin{align*} 
+		\bar x_j &\leq 1 - \bar z_j \hspace{5.5em} \forall j\in J \\
+		\bar y_i &\leq \sum_{j\in J} a_{ij}(1-\bar z_{i}) \hspace{2em}  \forall i\in I \\
+		\max_{x,y}& \sum_{i\in I} \sum_{j\in J} v_i a_{ij}(1-\bar z_{i}) \\
+	\end{align*}
+
+
+	This formulation gives a lower bound. The relaxation removes the $q$ boundary limiting what $z_j$
+	can be. By eliminating this, the formulation demonstrates what the solution would be
+	given no limit on $z$. Thus we can identify what the minimum value for player 1 could be
+	given unlimited action by player 2, such that they cannot remove anything more from player 1. \\
+
+\subsection{}
+\textit{Would it be reasonable for the upper-level decision-maker to implement a “blocking
+	solution” attained by the solution procedure described by Question 4? Why or why not?} \\
+
+	This is not likely a reasonable solution. As alluded to in the previous response,
+	the elimination of the $q$ constraint represents unlimited resources on the interdictor's part.
+	While this would be ideal from the perspective of player 2, it is seldom the case that this would be true.
+	Even if it were practically true, wherein player 2's resources so outmatch player 1's as to appear
+	unlimited, it would probably be seen as poor stewardship of resources to invest so far beyond a 
+	point of diminishing returns as to maximally dominate the zero sum game.
+
+
+\end{document}
