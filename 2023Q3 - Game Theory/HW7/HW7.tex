@@ -18,7 +18,7 @@
 \raggedbottom
 
 \noindent{\large OPER 618 - Game Theory and Math Programming %
-	- Homework 6 }
+	- Homework 7 }
 \hspace{\fill} {\large B. Hosley}
 \bigskip
 
@@ -26,96 +26,21 @@
 %%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{subsection}{0}
 \subsection{}
-\textbf{Bilevel Programming Problems.} 
-\textit{Consider the following linear BLPP.}
-\begin{align*}
-	\min_x		x+3y \\
-	\text{s.t.}	1 \leq x \leq 6 \\
-	y \in \arg\min \{ -y : x + y \leq 8, x + 4y \leq 8, x + 2y \leq 13 \}
-\end{align*}
 
-%
-% neg gradient is the direction of greatest improvement for the minimize problem
-%
+\textbf{BLPP Literature.} 
+\textit{Identify and read a paper published within the last two years that (i) formulates a bilevel program to solve a problem and (ii) solves instances of the BLPP. Do not select a paper previously discussed within the course, including any papers shared by other students on Lesson 14.}
+
 
 \subsubsection{}
-\textit{Draw the relaxed feasible region $\Omega$.}
+\textit{Write your own summary of the authors work and its contributions to the BLPP literature.}
+
 
 \subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla f(x,y)$, the negative of the gradient for the follower’s objective function.}
+\textit{Recommend an improvement to the authors’ model. Justify your recommendation in terms of its suitability for the application; its generalizability to other, related problems; its ability to be solved by selected methods; and/or its expected computational tractability by such methods.}
+
 
 \subsubsection{}
-\textit{Based on your answers to (a) and (b), draw the inducible region IR.}
-
-\subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.}
-
-\subsubsection{}
-\textit{Based on your answers on (c) and (d), what is the optimal decision for the leader?}
-
-
-
-
-\subsection{}
-\textbf{Bilevel Programming Problems.} 
-\textit{Discuss how the complexity of solving the BLPP in Problem 1 would change under the following conditions. A written description is necessary, and a manual sketch to illustrate any points might be helpful.}
-
-% 
-% opt/pessimistic occurs when follower has multiple optima
-% 
-
-\subsubsection{}
-\textit{The formulation included nonlinear constraints and/or nonlinear objective functions.}
-
-\subsubsection{}
-\textit{The formulation included integer restrictions on the leader and/or follower’s decision variables.}
-
-
-
-\subsection{}
-\textbf{BLPPs – Optimistic and Pessimistic Solutions.} 
-\textit{Consider the following BLPP, for which $y\in R(x)$ is not always a singleton.}
-
-\begin{align*}
-	\min_x	-x-y
-	\text{s.t.}	x \leq 5
-	\min_y	(-\|y\|)
-	\text{s.t.}	x^2 + y^2 \leq 16
-\end{align*}
-
-% 
-% draw inducible region/ and the follower's neg gradient
-% 
-
-\subsubsection{}
-\textit{Draw the relaxed feasible region $\Omega$.}
-
-\subsubsection{}
-\textit{Based on your answers to (a) and (b), draw the inducible region IR.}
-
-\subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.}
-
-\subsubsection{}
-\textit{Identify the optimal optimistic solution to the BLPP and depict it on the plot.}
-
-\subsubsection{}
-\textit{Identify the optimal pessimistic solution to the BLPP and depict it on the plot.}
-
-
-
-\subsection{}
-\textbf{Exact Solution Methods for BLPPs.} 
-\textit{The branch-and-bound procedure described by Gümüş and Floudas (2001) requires the identification of a global optimal solution to a mixedinteger nonlinear problem in Step 8. The authors use the(ir) \textbf{GMIN-}$\mathbf\alpha$\textbf{BB} algorithm. However, a suitable commercial solver could be used instead. Research and identify three commercial solvers that would be suitable for use in this step.} \\
-
-\textit{\underline{Note}: Answers identifying commercial solvers guaranteed to find a global optimum are guaranteed to receive full credit. Answers identifying commercial solvers reliant upon metaheurstics (e.g., particle swarm optimization, genetic algorithms) can be expected -- much like metaheurstics -- to receive a great deal of credit but with no guarantee of the
-maximum.}
-
-
-
-\subsection{}
-\textbf{Limitations on Exact Solution Methods for BLPPs.} 
-\textit{The branch-and-bound procedure described by Gümüş and Floudas (2001) requires the objective function and each constraint in the lower-level problem to be continuous and twice differentiable. Formulate a bilevel program motivated by a real-world application that does not meet these criteria.}
+\textit{For the existing model, identify an alternative solution methodology the authors could have (or perhaps should have) explored in comparison to their method(s). Justify your recommendation from the perspectives of optimization and implementation.}
 
 
 
