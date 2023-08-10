@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
+\usepackage[table,xcdraw]{xcolor}
 
 
 \usepackage{xcolor}
@@ -18,104 +19,51 @@
 \raggedbottom
 
 \noindent{\large OPER 618 - Game Theory and Math Programming %
-	- Homework 6 }
+	- Homework 8 }
 \hspace{\fill} {\large B. Hosley}
 \bigskip
 
 
 %%%%%%%%%%%%%%%%%%%%%%%
 \setcounter{subsection}{0}
-\subsection{}
-\textbf{Bilevel Programming Problems.} 
-\textit{Consider the following linear BLPP.}
-\begin{align*}
-	\min_x		x+3y \\
-	\text{s.t.}	1 \leq x \leq 6 \\
-	y \in \arg\min \{ -y : x + y \leq 8, x + 4y \leq 8, x + 2y \leq 13 \}
-\end{align*}
+For Questions 1-5, consider the following coalition game:
 
-%
-% neg gradient is the direction of greatest improvement for the minimize problem
-%
-
-\subsubsection{}
-\textit{Draw the relaxed feasible region $\Omega$.}
-
-\subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla f(x,y)$, the negative of the gradient for the follower’s objective function.}
-
-\subsubsection{}
-\textit{Based on your answers to (a) and (b), draw the inducible region IR.}
-
-\subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.}
-
-\subsubsection{}
-\textit{Based on your answers on (c) and (d), what is the optimal decision for the leader?}
-
-
-
+\begin{center}
+	{\renewcommand{\arraystretch}{1.2}
+	\begin{tabular}{|c|c|}
+		\hline
+		\rowcolor[HTML]{C0C0C0} 
+		\(S\) 		& \(v(S)\) 	\\ \hline
+		$\varnothing$ & $0$ 	\\ \hline
+		$\{1\}$ 	& $\alpha$ 	\\ \hline
+		$\{2\}$ 	& $0.2$ 	\\ \hline
+		$\{3\}$ 	& $0.3$ 	\\ \hline
+		$\{1,2\}$ 	& $0.4$ 	\\ \hline
+		$\{1,3\}$ 	& $\beta$ 	\\ \hline
+		$\{2,3\}$ 	& $0.5$ 	\\ \hline
+		$N=\{1,2,3\}$ & $1$ 	\\ \hline
+	\end{tabular}}
+\end{center}
 
 \subsection{}
-\textbf{Bilevel Programming Problems.} 
-\textit{Discuss how the complexity of solving the BLPP in Problem 1 would change under the following conditions. A written description is necessary, and a manual sketch to illustrate any points might be helpful.}
-
-% 
-% opt/pessimistic occurs when follower has multiple optima
-% 
-
-\subsubsection{}
-\textit{The formulation included nonlinear constraints and/or nonlinear objective functions.}
-
-\subsubsection{}
-\textit{The formulation included integer restrictions on the leader and/or follower’s decision variables.}
-
-
+\textbf{Game Classification.} 
+\textit{For what values of $\alpha$ and $\beta$ is the game superadditive? (Provide a plot of $(\alpha,\beta)$ with the relevant domain shaded.)}
 
 \subsection{}
-\textbf{BLPPs – Optimistic and Pessimistic Solutions.} 
-\textit{Consider the following BLPP, for which $y\in R(x)$ is not always a singleton.}
-
-\begin{align*}
-	\min_x	-x-y
-	\text{s.t.}	x \leq 5
-	\min_y	(-\|y\|)
-	\text{s.t.}	x^2 + y^2 \leq 16
-\end{align*}
-
-% 
-% draw inducible region/ and the follower's neg gradient
-% 
-
-\subsubsection{}
-\textit{Draw the relaxed feasible region $\Omega$.}
-
-\subsubsection{}
-\textit{Based on your answers to (a) and (b), draw the inducible region IR.}
-
-\subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.}
-
-\subsubsection{}
-\textit{Identify the optimal optimistic solution to the BLPP and depict it on the plot.}
-
-\subsubsection{}
-\textit{Identify the optimal pessimistic solution to the BLPP and depict it on the plot.}
-
-
+\textbf{Game Classification.} 
+\textit{What additional restrictions, if any, are required on $\alpha$ and/or $\beta$ to ensure the game is convex? (Provide a plot of $(\alpha,\beta)$ with the relevant domain shaded.)}
 
 \subsection{}
-\textbf{Exact Solution Methods for BLPPs.} 
-\textit{The branch-and-bound procedure described by Gümüş and Floudas (2001) requires the identification of a global optimal solution to a mixedinteger nonlinear problem in Step 8. The authors use the(ir) \textbf{GMIN-}$\mathbf\alpha$\textbf{BB} algorithm. However, a suitable commercial solver could be used instead. Research and identify three commercial solvers that would be suitable for use in this step.} \\
-
-\textit{\underline{Note}: Answers identifying commercial solvers guaranteed to find a global optimum are guaranteed to receive full credit. Answers identifying commercial solvers reliant upon metaheurstics (e.g., particle swarm optimization, genetic algorithms) can be expected -- much like metaheurstics -- to receive a great deal of credit but with no guarantee of the
-maximum.}
-
-
+\textbf{Shapley Value Allocations.} 
+\textit{Calculate each the player’s Shapley value allocations as a function of $\alpha$ and $\beta$. For a convex game (i.e., given your answer to Question 2 above), identify the respective values of $(\alpha,\beta)$ that would maximize each player’s allocation in a grand coalition.}
 
 \subsection{}
-\textbf{Limitations on Exact Solution Methods for BLPPs.} 
-\textit{The branch-and-bound procedure described by Gümüş and Floudas (2001) requires the objective function and each constraint in the lower-level problem to be continuous and twice differentiable. Formulate a bilevel program motivated by a real-world application that does not meet these criteria.}
+\textbf{The Core.} 
+Construct a two-player coalition game with payoffs $v(s),\ \in S \subseteq N$ with an empty core. Show the core is empty. For the sake of this exercise, ensure $v(\{1\}) \neq v(\{2\})$.
+
+\subsection{}
+\textbf{The $\boldsymbol\epsilon$-core.} 
+\textit{For the game you created for Question 4, identify the $\epsilon$-core payoff. Discuss the significance of your answer in the context of the game.}
 
 
 
