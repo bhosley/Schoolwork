@@ -38,44 +38,59 @@
 \end{align*}
 
 \subsubsection{}
-\textit{Draw the relaxed feasible region $\Omega$.}
+\textit{Draw the relaxed feasible region $\Omega$.} \\
+ 
+The gray shaded area represents the relaxed feasible area. 
 
 %
 % neg gradient is the direction of greatest improvement for the minimize problem
 %
 
-\begin{tikzpicture}
-	\begin{axis}[xmin=-1, xmax=8, ymin=-1, ymax=8, axis x line=middle, axis y line=middle]
-		\addplot[domain=1:6]{8-x}; 		% x + y <= 8
-		\addplot[domain=1:6]{2-x/4};	% x + 4y >= 8
-		\addplot[domain=1:6]{6.5-x/2};	% x + 2y <= 13
-		% Colored parts
-		\addplot[domain=1:3, color=blue]{8-x}; 		% x + y <= 8
-		\addplot[domain=3:6, color=blue]{6.5-x/2};	% x + 2y <= 13
-		% Relaxed Feasible
-		\addplot [name path=A, black!1] coordinates {(1,7) (6,3.5) };
-		\addplot [name path=B, black!1] coordinates {(1,1.8) (6,0.5) };
-		\addplot [gray!20] fill between[ of= A and B ];
-		\node at (axis cs:3,3) {$\Omega$};
-		\addplot[->, color=ForestGreen] coordinates {(0.5,1.5) (0.04,0.12)};
-		\node at (axis cs:1.5,0.75) {\scriptsize\textcolor{ForestGreen}{$-\nabla f(x,y)$}};
-	\end{axis}
-\end{tikzpicture}
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[xmin=-1, xmax=8, ymin=-1, ymax=8, axis x line=middle, axis y line=middle, ylabel=$y$, xlabel=$x$]
+			\addplot[domain=1:6]{8-x}; 		% x + y <= 8
+			\addplot[domain=1:6]{2-x/4};	% x + 4y >= 8
+			\addplot[domain=1:6]{6.5-x/2};	% x + 2y <= 13
+			% Colored parts
+			\addplot[domain=1:3, color=blue]{8-x}; 		% x + y <= 8
+			\addplot[domain=3:6, color=blue]{6.5-x/2};	% x + 2y <= 13
+			% Relaxed Feasible
+			\addplot [name path=A, black!1] coordinates {(1,7) (6,3.5) };
+			\addplot [name path=B, black!1] coordinates {(1,1.8) (6,0.52) };
+			\addplot [gray!20] fill between[ of= A and B ];
+			\node at (axis cs:3,3) {$\Omega$};
+			% Follower gradient
+			\addplot[->, color=Maroon] coordinates {(1,0) (1,1)};
+			\node at (axis cs:2.5,0.5) {\scriptsize\textcolor{Maroon}{$-\nabla f(x,y)$}};
+			% Leader gradient
+			\addplot[->, color=ForestGreen] coordinates { (3.7,7) (3.2,5.5) }; % 0.5, 1.5
+			\node at (axis cs:5,6.5) {\scriptsize\textcolor{ForestGreen}{$-\nabla F(x,y)$}};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
 
 \subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla f(x,y)$, the negative of the gradient for the follower’s objective function.}
+\textit{Somewhere on the plot, depict $-\nabla f(x,y)$, the negative of the gradient for the follower’s objective function.} \\
+
+	The $-\nabla f(x,y) = \begin{bmatrix} 0 & 1 \end{bmatrix}$. It can be seen in \textcolor{red}{red} in the graph.
 
 \subsubsection{}
-\textit{Based on your answers to (a) and (b), draw the inducible region IR.}
-
+\textit{Based on your answers to (a) and (b), draw the inducible region IR.} \\
+	
+	The inducible region is the \textcolor{blue}{blue} line(s) at the top of the feasible region.
+		
 \subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.}
-
+\textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.} \\
+	
+	The $-\nabla F(x,y) = \begin{bmatrix} -1 & -3 \end{bmatrix}$. It can be seen in \textcolor{green}{green} in the graph
+	
 \subsubsection{}
-\textit{Based on your answers on (c) and (d), what is the optimal decision for the leader?}
+\textit{Based on your answers on (c) and (d), what is the optimal decision for the leader?} \\
 
-
-
+	Player one should select $x=6$. Player 2's best move would be $y=3.5$ resulting in $F(x,y) = 16.5$ and $f(x,y) = 3.5$. 
+	
+\clearpage
 
 \subsection{}
 \textbf{Bilevel Programming Problems.} 
@@ -86,21 +101,28 @@
 % 
 
 \subsubsection{}
-\textit{The formulation included nonlinear constraints and/or nonlinear objective functions.}
+\textit{The formulation included nonlinear constraints and/or nonlinear objective functions.} \\
+
+Non-linear constraints will also require relaxation regardless of convexity of the move space.
+Such that the entirety of the nonlinear area would be entirely include. 
+A non-linear objective function presents a greater challenge. 
+The gradient can still be calculated
 
 \subsubsection{}
-\textit{The formulation included integer restrictions on the leader and/or follower’s decision variables.}
+\textit{The formulation included integer restrictions on the leader and/or follower’s decision variables.} \\
 
-
+Integers would similarly require relaxation, however, the domains previously applied will still work.
+The last step in solving this problem will be to round the optimal point to integer.
+Multiple integer pairs may need to be evaluated.
 
 \subsection{}
 \textbf{BLPPs – Optimistic and Pessimistic Solutions.} 
 \textit{Consider the following BLPP, for which $y\in R(x)$ is not always a singleton.}
 
 \begin{align*}
-	\min_x	-x-y
-	\text{s.t.}	x \leq 5
-	\min_y	(-\|y\|)
+	\min_x	-x-y \\
+	\text{s.t.}	x \leq 5 \\
+	\min_y	(-\|y\|) \\
 	\text{s.t.}	x^2 + y^2 \leq 16
 \end{align*}
 
