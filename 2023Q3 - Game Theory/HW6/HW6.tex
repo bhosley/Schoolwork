@@ -83,7 +83,7 @@ The gray shaded area represents the relaxed feasible area.
 \subsubsection{}
 \textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.} \\
 	
-	The $-\nabla F(x,y) = \begin{bmatrix} -1 & -3 \end{bmatrix}$. It can be seen in \textcolor{green}{green} in the graph
+	The $-\nabla F(x,y) = \begin{bmatrix} -1 & -3 \end{bmatrix}$. It can be seen in \textcolor{green}{green} in the graph.
 	
 \subsubsection{}
 \textit{Based on your answers on (c) and (d), what is the optimal decision for the leader?} \\
@@ -106,7 +106,7 @@ The gray shaded area represents the relaxed feasible area.
 Non-linear constraints will also require relaxation regardless of convexity of the move space.
 Such that the entirety of the nonlinear area would be entirely include. 
 A non-linear objective function presents a greater challenge. 
-The gradient can still be calculated
+The gradient can still be calculated by iteratively integrating until a vector is returned.
 
 \subsubsection{}
 \textit{The formulation included integer restrictions on the leader and/or follower’s decision variables.} \\
@@ -120,10 +120,10 @@ Multiple integer pairs may need to be evaluated.
 \textit{Consider the following BLPP, for which $y\in R(x)$ is not always a singleton.}
 
 \begin{align*}
-	\min_x	-x-y \\
-	\text{s.t.}	x \leq 5 \\
-	\min_y	(-\|y\|) \\
-	\text{s.t.}	x^2 + y^2 \leq 16
+	\min_x	-x-y & \\
+	\text{s.t.}\quad\	x \leq& 5 \\
+	\min_y (-&|y|) \\
+	\text{s.t.}\quad &	x^2 + y^2 \leq 16
 \end{align*}
 
 % 
@@ -133,19 +133,52 @@ Multiple integer pairs may need to be evaluated.
 \subsubsection{}
 \textit{Draw the relaxed feasible region $\Omega$.}
 
-\subsubsection{}
-\textit{Based on your answers to (a) and (b), draw the inducible region IR.}
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[xmin=-1, xmax=6, ymin=-6, ymax=6, axis x line=middle, axis y line=middle, ylabel=$y$, xlabel=$x$,axis on top]
+			% Relaxed Feasible
+			\addplot [domain=-2:8]{4}; 
+			\addplot [domain=-2:8]{-4}; 
+			\addplot [] coordinates {(4,8) (4,-6) };
+			\addplot [name path=A] coordinates {(4,4) (4,-4) };
+			\addplot [name path=B, black!1] coordinates {(-2,4) (-2,-4) };
+			\addplot [gray!10] fill between[ of= A and B ];
+			\node at (axis cs:2,2) {$\Omega$};
+			% Colored parts
+			\draw[thick] (axis cs:0,0) circle[radius=400];
+			\addplot[domain=0:4, color=blue]{sqrt(16-x^2)};
+			\addplot[domain=0:4, color=red]{-sqrt(16-x^2)};  	
+			% Leader gradient
+			\addplot[->, color=ForestGreen] coordinates { (4,4) (5,5) }; % 0.5, 1.5
+			\node at (axis cs:5,3) {\scriptsize\textcolor{ForestGreen}{$-\nabla F(x,y)$}};
+			% Solutions
+			\addplot[red,mark=o] coordinates {( 2.828427, -2.828427 )};
+			\addplot[blue,mark=o] coordinates {( 2.828427, 2.828427 )};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
 
 \subsubsection{}
-\textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.}
+\textit{Based on your answers to (a) and (b), draw the inducible region IR.} \\
+
+	Once again, the relaxed area is shown as a gray shaded area.
+	The optimistic inducible region is depicted in \textcolor{blue}{blue}, and the pessimistic region as \textcolor{red}{red}.
 
 \subsubsection{}
-\textit{Identify the optimal optimistic solution to the BLPP and depict it on the plot.}
+\textit{Somewhere on the plot, depict $-\nabla F(x,y)$, the negative of the gradient for the leader’s objective function.} \\
+
+	The $-\nabla F(x,y) = \begin{bmatrix} -1 & -3 \end{bmatrix}$. It can be seen in \textcolor{green}{green} in the graph.
 
 \subsubsection{}
-\textit{Identify the optimal pessimistic solution to the BLPP and depict it on the plot.}
+\textit{Identify the optimal optimistic solution to the BLPP and depict it on the plot.} \\
 
+	The optimal optimistic solution is shown by the small \textcolor{blue}{blue} circle, at $(2\sqrt{2},2\sqrt{2})$
 
+\subsubsection{}
+\textit{Identify the optimal pessimistic solution to the BLPP and depict it on the plot.} \\
+
+	The optimal optimistic solution is shown by the small \textcolor{red}{red} circle, at $(2\sqrt{2},-2\sqrt{2})$ \\
 
 \subsection{}
 \textbf{Exact Solution Methods for BLPPs.} 
