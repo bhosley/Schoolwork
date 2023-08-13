@@ -182,17 +182,42 @@ Multiple integer pairs may need to be evaluated.
 
 \subsection{}
 \textbf{Exact Solution Methods for BLPPs.} 
-\textit{The branch-and-bound procedure described by Gümüş and Floudas (2001) requires the identification of a global optimal solution to a mixedinteger nonlinear problem in Step 8. The authors use the(ir) \textbf{GMIN-}$\mathbf\alpha$\textbf{BB} algorithm. However, a suitable commercial solver could be used instead. Research and identify three commercial solvers that would be suitable for use in this step.} \\
+\textit{The branch-and-bound procedure described by Gümüş and Floudas (2001) requires the identification of a global optimal solution to a mixed integer nonlinear problem in Step 8. The authors use the(ir) \textbf{GMIN-}$\mathbf\alpha$\textbf{BB} algorithm. However, a suitable commercial solver could be used instead. Research and identify three commercial solvers that would be suitable for use in this step.} \\
 
 \textit{\underline{Note}: Answers identifying commercial solvers guaranteed to find a global optimum are guaranteed to receive full credit. Answers identifying commercial solvers reliant upon metaheurstics (e.g., particle swarm optimization, genetic algorithms) can be expected -- much like metaheurstics -- to receive a great deal of credit but with no guarantee of the
-maximum.}
+maximum.}\\
 
+\begin{description}
+	\item[ANTIGONE] Deterministic global solver, that also uses a branch and bound algorithm. \\
+	
+	\item[Octeract] Is also a deterministic global solver. It achieves high performance speed by leveraging 
+		parallel computing allowing multiple branches to be evaluated at the same time. \\
+	
+	\item[BARON] Is also global, and also uses parallelism to increase speed. 
+		Because it is is commercial not a lot of detail is provided, 
+		but they also credit significant domain reduction techniques for even more increases in performance. \\
+\end{description}
 
 
 \subsection{}
 \textbf{Limitations on Exact Solution Methods for BLPPs.} 
-\textit{The branch-and-bound procedure described by Gümüş and Floudas (2001) requires the objective function and each constraint in the lower-level problem to be continuous and twice differentiable. Formulate a bilevel program motivated by a real-world application that does not meet these criteria.}
+\textit{The branch-and-bound procedure described by Gümüş and Floudas (2001) requires the objective function and each constraint in the lower-level problem to be continuous and twice differentiable. Formulate a bilevel program motivated by a real-world application that does not meet these criteria.} \\
 
-
+	A real world example that is commonly referenced and fits the description above is the toll-setting problem.
+	In the case of formulating this as a math program, one would likely need to treat the follower as the amalgamation 
+	of the drivers that would use the tolled road.
+	However, even if taken as a group, the utility function would not only be nonlinear, but complex enough
+	so as to not be differentiable.
+	One immediate example would be that the utility loss between \$x.98 and \$x.98 is significantly lower than
+	the drop when \$x.99 becomes \$(x+1).00. 
+	
+	The constraints set on the follower will also be non-differentiable where time of day utilization has an effect,
+	and there is a relationship in which a lower toll increases utilization, but above a certain utilization utility
+	experiences diminishing returns or even a decrease as the road becomes subject to congestion.
+	
+	If the utility function and constraints grew in complexity and sophistication to perfectly model the
+	situation this problem could be solvable with an exact method, but not one with the limitations described
+	by G{\"u}m{\"u}s and Floudas. However, it isn't likely that an exact solution would produce enough
+	benefit as to be worth the effort when a heuristic will produce a good enough estimation.
 
 \end{document}
