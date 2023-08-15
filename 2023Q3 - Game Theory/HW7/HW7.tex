@@ -6,6 +6,7 @@
 \usepackage{enumerate}
 \usepackage{graphicx}
 
+\usepackage{amsrefs}
 
 \usepackage{xcolor}
 \usepackage{xparse}
@@ -13,6 +14,7 @@
 \renewcommand{\thesection}{}
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
+
 
 \begin{document}
 \raggedbottom
@@ -30,18 +32,115 @@
 \textbf{BLPP Literature.} 
 \textit{Identify and read a paper published within the last two years that (i) formulates a bilevel program to solve a problem and (ii) solves instances of the BLPP. Do not select a paper previously discussed within the course, including any papers shared by other students on Lesson 14.}
 
+\subsubsection{}
+\textit{Write your own summary of the authors work and its contributions to the BLPP literature.} \\
+
+For this assignment I have chosen to review an article titled 'Interaction-Aware Game-Theoretic Motion Planning for 
+Automated Vehicles using Bi-level Optimization' \cite{cite:art}. In this work, 
+the authors are interested in the interactions between an AVG (automated ground vehicle) and a vehicle operated by a human.
+They model these interactions as a Stackelberg game and solve the game as a bilevel programming problem.
+The model places the human as the follower agent.
+The objective functions are not provided beyond stating that each objective is a function of the position of the other agent, 
+their own position, and their own input sequences.
+The constraints are divided into two groups one of which is an equality, the other an inequality.
+
+
+In the process of working a solution to this problem they briefly mention the value of 
+convexity in relation to finding global optimal.
+Then they acknowledge that this is certainly not the case for their formulation.
+They linearize the formulation using second order Taylor expansion to estimate the objective function,
+allowing them to use the KKT conditions to reformulate the program as a single level.
+They resolve the dimensionality (Physics) problem by summarizing with a Lagrangian.
+
+The result is a mathematical program with complementarity constraints, 
+which presents its own challenges in solving which they summarize as 
+'At every feasible point, ordinary constraint qualifiers (CQ) such as LICQ or Mangasarian-Fromovitz CQ are violated'.
+The remainder of the solving process is contained in a mere two sentences in which they state that they 
+use relaxation to make it reasonably solvable. \\
+
+\textbf{Results} \\
+
+With a tractable model in hand the authors simulated several scenarios wherein drivers pass and merge.
+The results are incredibly intuitive.
+When the AGV operates at 100\% self interest, it may aggressively pass and brake-check the human driver,
+so as to return to appropriate cruising speed. 
+This would understandably be very unpopular behavior, so the researchers introduce a 'courtesy' constraint.
+The constraint acts by adding a proportion of the follower's utility to the leader's utility function
+and adjust behavior accordingly.
+
 
 \subsubsection{}
-\textit{Write your own summary of the authors work and its contributions to the BLPP literature.}
+\textit{Recommend an improvement to the authors’ model. Justify your recommendation in terms of its suitability for the application; its generalizability to other, related problems; its ability to be solved by selected methods; and/or its expected computational tractability by such methods.} \\
 
+There were two cases of influencing the human agent that were considered, slowing down the human driver, 
+or pushing the human to an adjacent lane.
+The slowing down the human behavior was alluded to in the previous section as the brake-check.
+This was certainly the case when courtesy constraint was absent, slower, less severe braking otherwise.
+
+As to the second behavior, perhaps there are places where pushing another driver into another lane is okay,
+in the United States this would likely be seen as criminal vehicular assault.
+With autonomous driving currently in its infancy, it may be ill-advised for researchers to work on methods of crime.
+With respect to the researcher's desire to avoid overly cautious planning, some evaluation of the optimal 
+$\alpha$ (courtesy constraint) would have been a very interesting, as that type of added constraint
+will be necessary if shared human and AGV roads are to ever exist. \\
+
+The methods that they use to make the program more tractable seem reasonable and effective.
+One place that I would recommend is in dimensionality reduction.
+Their state vector encodes more information than is necessary for the program,
+the speed and orientation make a velocity vector and should be kept.
+The absolute location of each agent is provided by coordinates. 
+But for the sake of the game, relative position is sufficient.
+The coordinates of both can be condensed into a single angle-magnitude vector resembling velocity
+and representing the distance between the agents.
+While this only drops two numbers, the time series-update is made faster as the new relative position vector is the 
+sum of the position and two velocity vectors.
+Additionally, this allows the collision avoidance constraint to be simplified 
+as a minimum value on the magnitude of the relative position vector.
+This eliminates the part where they construct a circle around each agent and check for overlap.
+Finally, they include important kinematic specifics for trajectory planning in their model, but for finding the 
+solution, changes to each agents velocity is all that matters for the model.
+There is no reason that considerations of wheel base and slip angle should be included in this part of the problem.
+These concerns should be condensed into a constraint on the update to velocity per time step.
+If measured in this manner, the Lagrangian is no longer necessary.
+
+These suggestions will simplify the program, the inverse kinematics of the agenta is abstracted out, 
+the specifics of the other follower's kinematics are not needed to be approximated.
 
 \subsubsection{}
-\textit{Recommend an improvement to the authors’ model. Justify your recommendation in terms of its suitability for the application; its generalizability to other, related problems; its ability to be solved by selected methods; and/or its expected computational tractability by such methods.}
+\textit{For the existing model, identify an alternative solution methodology the authors could have (or perhaps should have) explored in comparison to their method(s). Justify your recommendation from the perspectives of optimization and implementation.} \\
 
+It doesn't seem like this problem necessarily needs to be resolved in this manner.
+The experiment demonstrates an interesting method of simulating courtesy in an automated vehicle.
+In this way it may be useful to help generate styles of behavior that seem courteous to develop
+improvements to current collision avoidance methods.
+The weakness of this is that the human is the follower in the game. 
+This assumes that the human agent is both rational and self-interested but willing to cooperate.
+This assumption comes with liability that would not likely be accepted by any rational organization that 
+might wish to operate autonomous vehicles on shared space with human drivers.
 
-\subsubsection{}
-\textit{For the existing model, identify an alternative solution methodology the authors could have (or perhaps should have) explored in comparison to their method(s). Justify your recommendation from the perspectives of optimization and implementation.}
+During first read I thought that it would be better to swap the agents such that the autonomous vehicle
+was the follower, reacting to the actions of the less predictable human.
+This however, would defeat the whole point in utilizing a bilevel game.
+Additionally, that would change the problem to one in which the autonomous vehicles react in a 
+passive way to the actions of the human driver.
+In that regard I have come to agree with the choice of machine as the follower
+being the correct way to evaluate this behavior.
 
+In practice it might be better to treat human drivers as a moving obstacle without ascribing any motivation
+and seek to maintain an appropriate distance for the autonomous vehicle to safely react to the current
+trajectory of the human obstacle and update accordingly.
 
+\begin{bibdiv}
+	\begin{biblist}
+		\bib{cite:art}{inproceedings}{ 
+			title={Interaction-Aware Game-Theoretic Motion Planning for Automated Vehicles using Bi-level Optimization}, 
+			DOI={10.1109/ITSC55140.2022.9922600},  
+			booktitle={2022 IEEE 25th International Conference on Intelligent Transportation Systems (ITSC)}, 
+			author={Burger, Christoph and Fischer, Johannes and Bieder, Frank and Tas, Omer Sahin and Stiller, Christoph}, 
+			year={2022}, 
+			month={Oct}, 
+			pages={3978–3985} }
+	\end{biblist}
+\end{bibdiv}
 
 \end{document}
