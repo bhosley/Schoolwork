@@ -1,0 +1,214 @@
+\documentclass[12pt]{amsart}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumerate}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage{comment}
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
+
+\begin{document}
+\raggedbottom
+
+\noindent{\large CSCE 832 - Adv. Topics in Statistical ML %
+	- Student Lecture }
+\hspace{\fill} {\large B. Hosley}
+\bigskip
+
+\subsection{Topic Name}
+Handling Data Imbalance
+
+\subsection{Overview}
+Addressing data imbalance is crucial in machine learning because imbalanced datasets can lead to biased and ungeneralized models. When one class is overrepresented compared to others, the model tends to be heavily skewed towards predicting the majority class, often overlooking the minority class. This is problematic, especially in applications where the minority class is of significant importance, such as fraud detection, medical diagnosis, or rare event prediction. In such scenarios, failing to recognize the minority class can have severe consequences. Moreover, models trained on imbalanced data often exhibit inflated accuracy metrics, giving a false sense of their performance. By not addressing data imbalance, we risk building models that fail to capture the underlying patterns of all classes in the data, leading to poor generalization on real-world, unseen data. Hence, employing techniques to handle data imbalance is essential to ensure robust and fair machine learning models.
+
+\subsection{Learning Goals/Outcomes}
+\begin{itemize}
+	\item Students should build an intuition for the underlying statistical mechanisms that lead to problems when data is imbalanced.
+		It is intended that students will be able to approach this problem in a way that can address the underlying problems.
+	\item Students will develop an understanding of which machine learning techniques are more robust and which more susceptible to imbalance.
+	\item Students will develop an understanding of current and common techniques used to address imbalance, 
+		and which techniques may be more appropriate for the types of data that they may be working with for their thesis.
+\end{itemize}
+
+\subsection{Intended Format \& Flow}
+\begin{itemize}
+	\item The presentation will begin with a lecture and slide deck to expand upon the baseline established with the class pre-work.
+	\item A demo/activity will follow. Due to the possibility of time constraints this may offer time for discussion as well.
+		The demo/activity will have minimal student coding, rather, it will include functions that will allow students to
+		explore the effects of data-level imbalance addressing techniques.
+\end{itemize}
+
+\subsection{Pre-Class Activities Description}
+\begin{description}
+	\item[Read] \href{https://machinelearningmastery.com/imbalanced-classification-is-hard/}{Why Is Imbalanced Classification Difficult?} \\
+		Students should read this article to develop a familiarity with the underlying effects of data imbalance,
+		and how these effects actually work to make classification problems more difficult.
+	\item[Watch] \href{https://www.youtube.com/watch?v=vOBbKNwi6Go}{7 techniques to work with imbalanced data for machine learning in python.} \\
+		Students should watch this video. Feel free to skip from 7:08 to 16:45 unless you are interested in image segmentation and labeling.
+		This video gives a good overview of the most common methods of addressing data imbalance. [28 $\sim$ 37 min]
+	\item[Read] \href{https://imbalanced-learn.org/stable/introduction.html}{Section 1. of Introduction of the Imblearn API} \\
+		The imblearn package will be used for the class activity and includes data-level functions that may be useful to students in the future.
+\end{description}
+
+\subsection{In-Class Activities} \phantom{} \\
+
+\textbf{Lecture} \\
+The lecture will expand upon the pre-class work by elaborating upon the techniques that the students have already seen, 
+but with a greater emphasis on information preservation and how the algorithms function.
+Additionally, there will be a discussion of learning techniques that are particularly robust to imbalanced data.
+
+\textbf{Coding Activity/Demo}\\
+The coding activity will be a notebook that contains functions for visualizing a number of different distributions of imbalanced datasets
+and a function that will display the datapoints before and after data-level augmentation. 
+This will further reinforce how these techniques actually effect the data.
+
+
+\subsection{Student Learning Plan} \phantom{} \\
+
+\textbf{Read}
+\begin{itemize}
+	\item \href{https://machinelearningmastery.com/imbalanced-classification-is-hard/}{Why Is Imbalanced Classification Difficult?}
+\end{itemize}
+\textbf{Review}
+\begin{itemize}
+	\item \href{https://imbalanced-learn.org/stable/introduction.html}{Section 1. of Introduction of the Imblearn API}. 
+	This is the API for the package used in the class demo and has implementations of many of the techniques that will be discussed.
+\end{itemize}
+\textbf{Watch}
+\begin{itemize}
+	\item \href{https://www.youtube.com/watch?v=vOBbKNwi6Go}{7 techniques to work with imbalanced data for machine learning in python.}
+		Feel free to skip from 7:08 to 16:45 unless you are interested in image segmentation and labeling.
+\end{itemize}
+
+
+
+\clearpage
+\begin{center}
+	\large Appendix
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%\setcounter{section}{}
+\setcounter{subsection}{-1}
+\subsection{Scheduling}
+
+No preference. \\
+
+\subsection{Data Imbalance}
+
+\subsubsection{Overview}
+There are many potential issues associated with data that has significant imbalance between classes. 
+While the data-level techniques were addressed in the previous course, 
+this time we will examine algorithmic-level techniques.
+
+\subsubsection{Relevance}
+It is highly probable that students will encounter data imbalance of various sizes,
+a survey of different approaches will hopefully point other students in useful directions
+for their theses, or in future projects.
+
+\subsubsection{Rationale}
+This topic is a continuation of my previous and probably future class project.
+While I do not expect that my dissertation with be very focused on imbalance, 
+I do expect that the same statistical principles that make imbalance a problem
+will similarly be an obstacle within the areas of interest.
+
+\subsubsection{Sources}
+\begin{enumerate}
+	\item Pre-reading will include\cite{} which is a quality blog post that has a very brief 
+	description of the imbalance problem and provides 8 pointers to try to address the problem.
+	\item This \cite{} tensorflow article will be useful for building the learning
+	activity. It may also serve as a back up pre-reading article, though something a little 
+	more direct will be preferable.
+	\item The \cite{} article is an academic survey of techniques. 
+	This has been used as a guide for my own research into the topic and will be made available
+	as supplementary reading for those that have the interest.
+\end{enumerate}
+
+\subsubsection{Activities}
+The coding exercise will likely be comprised of a skeleton code in the style of what 
+is normally presented in this course.
+The student code may be a segment of implementing and adjusting the parameters 
+of threshold moving, cost-sensitive learning, and novel loss functions that address this problem.
+
+
+
+\subsection{GANs (or some related sub-topic)}
+\subsubsection{Overview}
+Training a pair of neural networks, one that generates a synthetic sample and another that classifies
+that synthetic example. The pair engage in an 'arms-race' until acceptable synthetic samples are
+produced by the generator network.
+
+\subsubsection{Relevance}
+GANs have become a fairly ubiquitous tool, even if students never use one in a meaningful capacity,
+it is important that a base level of understanding is achieved for today's practitioners;
+the increased popularity presents an increased risk of stakeholders requesting this tool to be
+implemented at inappropriate time.
+
+\subsubsection{Rationale}
+My research interests have taken me in the direction of game theory applications to machine learning.
+As a result, adversarial interactions are a natural area of study.
+
+\subsubsection{Sources}
+\begin{enumerate}
+	\item A slideshow by Ian Goodfellow \cite{} provides an overview of GANs and provides
+	additional context by comparing other generative algorithms. 
+	This may make good pre-reading material, or a helpful outline for the in class portion.
+	\item There is a tensorflow \cite{} tutorial that will be extremely helpful in producing the 
+	learning activity.
+	\item This \cite{} paper is a survey and tutorial regarding GANs and adversarial autoencoders.
+	I would use this paper for background information, and due to a general interest in adversarial techniques.
+\end{enumerate}
+
+\subsubsection{Activities}
+Student coding exercise will likely be something to the effect of taking a small plot of gaussian noise
+and generating artificial handwritten number(s) a la the MNIST dataset.
+
+
+
+\subsection{Model Explainability}
+% Explainability techniques (e.g. Layer-wise Relevance Propagation)
+\subsubsection{Overview}
+Explaining the inner workings of a model can increase the confidence not only of the stakeholder,
+but also the analyst producing the model. For example, decision trees might be considered the gold standard
+for explainability, neural networks are a long way off in this regard.
+
+\subsubsection{Relevance}
+Many models (especially those of the neural network variety) are frequently referred to as being a black box. 
+I believe this often gives the wrong idea of what is occurring in the hidden layers.
+Students in this course should recognize that this is an allusion to the currently very difficult 
+assignment of meaning to network weights.
+
+\subsubsection{Rationale}
+Improving the explainability of a model is likely to be useful in just about all areas of research.
+I suspect that the tools that are used by current researchers in the field may prove useful
+in the areas of interest that I am exploring. In most cases there will be significant benefits 
+being able to isolate or examine certain model segments.
+
+\subsubsection{Sources}
+\begin{enumerate}
+	\item A tutorial \cite{} of modeling different shapley values may provide a good start
+	for developing a learning activity.
+	\item This paper \cite{} provides a decent overview of the state of explainability as of 2021.
+	\item A video lecture \cite{} might prove to be a useful
+	for pre-class work, as I think students are more likely to watch a video than read an article.	
+\end{enumerate}
+
+\subsubsection{Activities}
+A viable student activity may be to complete a layer-wise relevance propagation script that returns a heatmap
+of the most referenced areas of an image that has been classified.
+
+
+\subsection{Model Compression}
+\subsubsection{}
+A subject of interest if it would be more valuable for the course.
+
+
+
+\end{document}
