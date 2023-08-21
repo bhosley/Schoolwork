@@ -5,11 +5,11 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{enumerate}
 \usepackage{graphicx}
-\usepackage[table,xcdraw]{xcolor}
 
-
-\usepackage{xcolor}
-\usepackage{xparse}
+\usepackage[table,xcdraw,dvipsnames]{xcolor}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepgfplotslibrary{fillbetween}
 
 \renewcommand{\thesection}{}
 \renewcommand{\thesubsection}{\arabic{subsection}}
@@ -49,13 +49,65 @@ For Questions 1-5, consider the following coalition game:
 \textbf{Game Classification.} 
 \textit{For what values of $\alpha$ and $\beta$ is the game superadditive? (Provide a plot of $(\alpha,\beta)$ with the relevant domain shaded.)}
 
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[xmin=0, xmax=1, ymin=0, ymax=1, axis x line=middle, axis y line=middle, ylabel=$\beta$, xlabel=$\alpha$]
+			\addplot[name path=a]{0.3+x};
+			\addplot[]{0.8};
+			\addplot[name path=b,domain=0:0.5]{0.8};
+			\addplot[gray!25] fill between[of=a and b];
+			\node[text width=2cm,align=center] at (axis cs:0.158,0.66) {Superadditive\newline $\beta\geq0.3+\alpha\newline  0.8\geq\beta$};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
+
+
 \subsection{}
 \textbf{Game Classification.} 
 \textit{What additional restrictions, if any, are required on $\alpha$ and/or $\beta$ to ensure the game is convex? (Provide a plot of $(\alpha,\beta)$ with the relevant domain shaded.)}
 
+The only non-redundant constraint is added from $\{1,2\}\cup\{1,3\} \rightarrow 0.6\geq\beta-\alpha$.
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[xmin=0, xmax=1, ymin=0, ymax=1, axis x line=middle, axis y line=middle, ylabel=$\beta$, xlabel=$\alpha$]
+			\addplot[name path=a]{0.3+x};
+			\addplot[]{0.8};
+			\addplot[]{0.6+x};
+			\addplot[name path=b,domain=0.2:0.5]{0.8};
+			\addplot[gray!25] fill between[of=a and b];
+			%\node[text width=2cm,align=center] at (axis cs:0.158,0.66) {Superadditive\newline $\beta\geq0.3+\alpha\newline  0.8\geq\beta$};			
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
+
 \subsection{}
 \textbf{Shapley Value Allocations.} 
 \textit{Calculate each the player’s Shapley value allocations as a function of $\alpha$ and $\beta$. For a convex game (i.e., given your answer to Question 2 above), identify the respective values of $(\alpha,\beta)$ that would maximize each player’s allocation in a grand coalition.}
+
+$\textcolor{blue}{\varphi_1} = \frac{1}{6}\left[ 2\alpha + 0.2 + \beta-0.3 + 2(0.5) \right] = \textcolor{blue}{ \frac{2\alpha+\beta+0.9}{6} \rightarrow (0.5,0.8) } $
+
+$\textcolor{red}{\varphi_2} = \frac{1}{6}\left[ 2(0.2) + 0.4-\alpha + 0.2 + 2(1-\beta) \right] = \textcolor{red}{ \frac{1-\alpha-\beta}{6} \rightarrow (0,0.3) } $
+
+$\textcolor{green}{\varphi_3} = \frac{1}{6}\left[ 2(0.3) + \beta-\alpha + 0.3 + 2(0.6) \right] = \textcolor{green}{ \frac{2.1+\beta-\alpha}{6} \rightarrow \beta-\alpha = 0.6 } $
+
+\begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[xmin=0, xmax=1, ymin=0, ymax=1, axis x line=middle, axis y line=middle, ylabel=$\beta$, xlabel=$\alpha$]
+			\addplot[name path=a]{0.3+x};
+			\addplot[]{0.8};
+			\addplot[]{0.6+x};
+			\addplot[name path=b,domain=0.2:0.5]{0.8};
+			\addplot[gray!25] fill between[of=a and b];
+			% Optimals
+			\draw[thick, blue] (axis cs:0.5,0.8) circle[radius=2];
+			\draw[thick, red] (axis cs:0,0.3) circle[radius=2];
+			\addplot[domain=0:0.2, color=green]{0.6+x};
+		\end{axis}
+	\end{tikzpicture}
+\end{center}
 
 \subsection{}
 \textbf{The Core.} 
