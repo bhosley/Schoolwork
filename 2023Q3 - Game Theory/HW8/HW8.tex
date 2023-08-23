@@ -10,6 +10,7 @@
 \usepackage{tikz}
 \usepackage{pgfplots}
 \usepgfplotslibrary{fillbetween}
+\usepackage{booktabs}
 
 \renewcommand{\thesection}{}
 \renewcommand{\thesubsection}{\arabic{subsection}}
@@ -111,12 +112,36 @@ $\textcolor{green}{\varphi_3} = \frac{1}{6}\left[ 2(0.3) + \beta-\alpha + 0.3 + 
 
 \subsection{}
 \textbf{The Core.} 
-Construct a two-player coalition game with payoffs $v(s),\ \in S \subseteq N$ with an empty core. Show the core is empty. For the sake of this exercise, ensure $v(\{1\}) \neq v(\{2\})$.
+\textit{Construct a two-player coalition game with payoffs $v(s),\ \in S \subseteq N$ with an empty core. 
+	Show the core is empty. For the sake of this exercise, ensure $v(\{1\}) \neq v(\{2\})$.}
+
+Players: $N={1,2}$
+
+Let's define the characteristic function 
+$v:2^{|\mathbb N|} \mapsto \mathbb R$ as \\
+
+\begin{tabular}{c|c}
+	$S$ & $v(S)$ \\
+	\midrule
+	$\varnothing$ & $0$ \\
+	$\{1\}$ & $1$ \\
+	$\{2\}$ & $2$ \\
+	$\{1,2\}$ & $2$ \\
+\end{tabular} \\
+
+The core is empty as player 2 has no reason to join the coalition as they gain nothing from doing so.
+Additionally, if the coalition was formed and player 2 was willing to join under the condition of receiving
+an equal payment, then the remaining payoff is 0 to be split among the other players, 
+which would be unreasonable for player 1.
 
 \subsection{}
 \textbf{The $\boldsymbol\epsilon$-core.} 
-\textit{For the game you created for Question 4, identify the $\epsilon$-core payoff. Discuss the significance of your answer in the context of the game.}
+\textit{For the game you created for Question 4, identify the $\epsilon$-core payoff. 
+	Discuss the significance of your answer in the context of the game.} \\
 
+From the previous problem we can reformulate the problem with an $\epsilon\geq1$. \\
 
+In the context of this problem that means that there must be a change of at least 1 to any of the values in order for the game to have a non-empty core.
+Specifically, the coalition payoff must increase by 1, or either of the individual payoffs must decrease by 1.
 
 \end{document}
