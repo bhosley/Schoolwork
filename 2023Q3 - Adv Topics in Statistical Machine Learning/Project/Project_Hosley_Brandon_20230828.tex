@@ -109,8 +109,24 @@
 	Imbalanced data streams are a more challenging scenario where the data distribution may change over time. Wang et al. \cite{wang2018} proposed a method that dynamically adjusts the class distribution by a resampling strategy. Gao et al. \cite{gao2015} presented a method that incrementally learns from the data stream by adjusting the decision boundaries.
 	
 	\subsection{Deep Learning Approaches}
+	
+	\subsubsection{Cost-Sensitive Learning}
 	Within the area of deep learning, several methods have been proposed to handle class imbalance. Cui et al. \cite{cui2019} introduced a loss function, called Class-Balanced Loss, based on effective number of samples. This technique achieves a balance between classes by adjusting the weights in the loss function. Similarly, Khan et al. \cite{khan2017} proposed Cost-Sensitive Deep Learning, which incorporates the cost matrix into the loss function of the deep learning model.	
 	
+	\subsubsection{Very-Deep CNN}
+	Ding et al. experimented with Deep CNNs (greater than or equal to 50 layers) to determine if this type of network performed better on imbalanced data. 
+	They claim improved performance is the result of larger networks having a greater number of local minima and an improved probability of finding a sufficient one.
+	
+	\subsubsection{Focal Loss}
+	Lin et al. proposed a model that uses a focal loss function to address imbalance which reshapes the cross-entropy loss function in proportion to the ratio of imbalance.
+	Essentially this is like a cost-sensitive method, but achieves the effect by scaling the weight updates during back propagation.
+	
+	\subsubsection{Extreme Learning Machines}
+	Extreme learning machines, which are extremely shallow and wide networks that leverage the universal approximation theorem.
+	Advocates of this method argue that a sufficiently wide network is generally attainable to approximate a function that operates 
+	in concert with the imbalanced information.
+	
+	\begin{comment}
 	\begin{table*}[h]
 		\centering		
 		\caption{Explanation of which features kept, which eliminated and why, and meaning of each feature.}
@@ -140,12 +156,13 @@
 			\bottomrule
 		\end{tabular}
 	\end{table*}
-	
+	\end{comment}
+
 	% Dataset
-	\section{Dataset}
+	\section{Datasets}
 	\label{sec:dataset}
 	
-	\subsection{CDC Diabetes Dataset}
+	\subsection{CDC Diabetes}
 	\cite{cdc2022}
 	Diabetes is a prevalent chronic disease in the U.S. that affects millions of individuals, resulting in a significant economic impact. Complications include heart disease, vision loss, limb amputation, and kidney disease. Despite the absence of a cure, weight loss, healthy eating, physical activity, and medical treatments can manage the disease. Early diagnosis and predictive models are crucial for effective treatment and lifestyle modifications.
 	
@@ -153,11 +170,40 @@
 
 	The derived dataset was cleaned and balanced leaving 70,692 samples with 17 features and one response variable. 
 	
+	\subsection{Music Genres}
+	The music genre-classification dataset \cite{Music_Genre_Classification}, designed for multiclass classification, 
+	houses approximately 25,000 samples across 12 classes, each with 15 associated features.
+	There are a number of concerns that were found with this dataset that decrease its value in our estimation.
+	The features are subjectively measured and the originator of the dataset does not provide a 
+	collection source or how these subjective measures were obtained.
+	It was used in a hackathon contest sponsored by an anonymous music streaming organization.
+	
+	\subsection{Cats-vs-Dogs}	
+	The Microsoft Cats vs. Dogs dataset \cite{Cats-vs-Dogs} is a widely recognized dataset in the computer vision community, 
+	primarily used for binary classification tasks. Originating from a Kaggle competition, 
+	this dataset comprises a diverse collection of 25,000 labeled images, evenly split between two classes: cats and dogs. 
+	Each image captures a variety of breeds, poses, and backgrounds, making the dataset both challenging and representative of real-world scenarios. 
+	The primary objective associated with this dataset is to train machine learning models to distinguish between images of cats and images of dogs with high accuracy. 
+	Due to its straightforward nature and moderate size, the Cats vs. Dogs dataset serves as an excellent benchmark for evaluating the 
+	performance of various image classification algorithms, from traditional methods to deep learning architectures.
+	
+	\subsection{MNIST Fashion}
+	The Fashion MNIST dataset \cite{Fashion_MNIST} is a modern alternative to the classic MNIST dataset, 
+	often used in the machine learning and computer vision communities as an introductory dataset for image classification tasks. 
+	Comprising 70,000 grayscale images, each of size 28x28 pixels, the dataset is divided into 60,000 training samples and 10,000 testing samples. 
+	Each image represents one of 10 fashion articles, including T-shirts, trousers, pullovers, dresses, coats, sandals, shirts, sneakers, bags, and ankle boots. 
+	The primary objective with this dataset is to classify these images into their respective fashion categories. 
+	Fashion MNIST was introduced to address the limitations of the traditional MNIST dataset, which was considered too easy for modern deep learning techniques. 
+	With more intricate patterns and a higher degree of class similarity, the Fashion MNIST dataset offers a more challenging benchmark 
+	for evaluating the performance of image classification algorithms.
+
 	
 	% Methodology
 	\section{Methodology}
 	\label{sec:methodology}
 	
+	\begin{comment}
+
 	\subsection{Data Exploration}
 	
 	In the final pre-processing phase of the diabetes dataset, we undertook further exploration of the remaining features to refine our selection.
@@ -177,7 +223,8 @@
 		\caption{Kernel Densities of Features.}
 		\label{fig:kdedistro}
 	\end{figure*}
-
+	\end{comment}
+	
 \subsection{Experiments}
 
 	To describe the relative imbalance within a dataset a common convention is to use $\rho$ which is calculated as
@@ -258,7 +305,7 @@
 	The Extra Trees test employed a parameter range identical to that utilized in the Random Forest experiments, with the addition of bootstrap sampling. Consistent with the methodology adopted for all preceding models, the corresponding parameters and F1 scores were comprehensively documented and returned for further analysis.
 
 
-\subsection{Techniques}
+\subsection{Data Level Techniques}
 
 	The methodologies adopted in this study are fundamentally data-driven, 
 	divided into two primary categories: undersampling and oversampling techniques. 
@@ -267,9 +314,16 @@
 	The intuition of these techniques can be found in Section \ref{sec:related_work} of this report, providing a foundational understanding of their theoretical underpinnings.
 		
 
+\subsection{Algorithm Level Techniques}
+
+	The algorithmic level techniques were trained on the synthetically imbalanced instances of the datasets.
+	The techniques that were tested in this experiment were the Focal Cross-entropy Loss,
+	Very Deep Convolutional Neural Network, and cost-sensitive loss.
+	For each technique and each round of testing the training history was collected
+	and the final performance on the test data was collected to be evaluated against the
+	corresponding $\rho$.
+
 \begin{comment}
-
-
 \begin{tikzpicture}[
 	roundnode/.style={circle, draw=black!60, fill=black!5, very thick, minimum size=7mm},
 	squanode/.style={rectangle, draw=black!60, fill=black!5, very thick, minimum size=5mm},
@@ -398,9 +452,65 @@ e/.style={fill=yellow!10}
 	\label{fig:undersampling-runtime}
 \end{figure}
 	
+	\subsection{Algorithmic Techniques}
+	
+	Figures \ref{fig:cv-train-loss} and \ref{fig:cv-train-acc} show the mean and standard deviation of the loss and accuracy history when training the different models.
+	
+	\begin{figure}
+		\centering
+		\includegraphics[width=0.9\linewidth]{"Images/CV Train Loss"}
+		\caption{}
+		\label{fig:cv-train-loss}
+	\end{figure}
+	
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{"Images/CV Train Acc"}
+	\caption{}
+	\label{fig:cv-train-acc}
+\end{figure}
+	
+	Figures \ref{fig:cv-val-loss} and \ref{fig:cv-val-acc} show the mean and standard deviation of the loss and accuracy history relating to the validation
+	set during the training of the different models.
+
+	
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{"Images/CV Val Loss"}
+	\caption{}
+	\label{fig:cv-val-loss}
+\end{figure}
+	
+	
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{"Images/CV Val Acc"}
+	\caption{}
+	\label{fig:cv-val-acc}
+\end{figure}
+	
+	Figures \ref{fig:cv-final-loss} and \ref{fig:cv-final-accuracy} the mean and standard deviation of the model's prediction loss and accuracy
+	as compared to the different values of $\rho$.
+		
+	
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{"Images/CV FInal Loss"}
+	\caption{}
+	\label{fig:cv-final-loss}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{"Images/CV Final Accuracy"}
+	\caption{}
+	\label{fig:cv-final-accuracy}
+\end{figure}
+	
 	Overall, our findings reinforce the notion that handling class imbalance is a complex task that requires careful selection and evaluation of techniques based on the specific characteristics of the dataset and the learning algorithm. There is no one-size-fits-all solution, and the choice of technique should be guided by a thorough understanding of the underlying methods and a careful validation of the model's performance.
 	
 	Our study also highlights the importance of a comprehensive validation strategy that includes an assessment of the model's performance on a separate test set, particularly when oversampling techniques are used. Further research is needed to explore more advanced techniques, including combination methods that leverage the strengths of both oversampling and undersampling, and algorithmic level methods that modify the learning process itself to handle class imbalance.
+	
 	
 	
 	% Conclusion
@@ -415,6 +525,8 @@ e/.style={fill=yellow!10}
 	
 	Under the umbrella of undersampling, both Tomek Links and One-Sided Undersampling demonstrated a performance during training and cross-validation that was more reflective of the results achieved during testing. In contrast, Random Undersampling and Near-Miss exhibited heteroscedastic behavior. While maintaining a consistent mean F1 score, we noted an increase in variance as $\rho$ escalated.
 	
+	In the realm of algorithmic techniques, those that implemented cost weights seemed to yield the best final accuracy. In most cases this was contrary to the results obtained In the context of algorithmic methodologies, techniques employing cost weights consistently demonstrated superior accuracy in the final evaluations. Interestingly, these outcomes often diverged from the trends observed during the training and validation phases.
+	
 	We believe the findings presented here will provide valuable groundwork for further investigation into this critical area of machine learning.
 	
 	
@@ -424,13 +536,7 @@ e/.style={fill=yellow!10}
 	
 	One crucial aspect of our future work involves incorporating non-random subsetting. The intent is to assess the performance of the various techniques in the context of samples that are less representative. This expansion is intended to provide a more nuanced understanding of the applicability and effectiveness of these methods across varying dataset conditions.
 	
-	Moreover, we are keen to extend these tests to different datasets, which will enable a more comprehensive analysis of how these techniques function in response to diverse dataset characteristics. It is our belief that such a venture will enhance the robustness and the generalizability of our findings.
-	
-	An important extension of our research will be the testing of datasets with more than two classes. The aim here is to appraise the behaviour of our chosen techniques in a multi-class scenario, thus augmenting the breadth of knowledge in class imbalance problem resolution.
-	
-	Furthermore, we anticipate broadening our examination to include algorithm-level techniques. This will supplement our existing focus on data-level techniques, contributing to a more holistic understanding of class imbalance remedies.
-	
-	Finally, our plan is to incorporate additional models to perform wider evaluations. We anticipate that this extension will reinforce the robustness of our findings and allow for a more comprehensive appraisal of techniques for handling class imbalance.
+	Additionally, our plan is to incorporate additional models to perform wider evaluations. We anticipate that this extension will reinforce the robustness of our findings and allow for a more comprehensive appraisal of techniques for handling class imbalance. There remain many more techniques that can be implemented and evaluated.
 	
 	Through the planned future works, we aim to continue refining and extending our understanding of class imbalance solutions in machine learning, and by doing so, contribute to the field's continued advancement.
 	
