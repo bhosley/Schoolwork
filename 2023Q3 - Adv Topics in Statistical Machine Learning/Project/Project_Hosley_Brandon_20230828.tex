@@ -79,9 +79,8 @@
 	
 	The earliest and most straightforward approaches to deal with class imbalance involve resampling the dataset. Undersampling techniques, such as random undersampling (RUS) and Tomek Links, reduce the instances of the majority class to balance the class distribution Liu et al. \cite{liu2009}. 
 
-	Tomek Links, as proposed by Tomek in 1976 \cite{tomek1976}, offer an enhancement over the preceding condensed nearest neighbor method. This improvement focuses on retaining only those majority class members that are proximate to the boundary with another class, rather than preserving redundant members within a cluster. The method strategically eliminates points distanced from the class boundaries, as these are less likely to be misclassified given that their nearest neighbors belong predominantly to the majority class
-
-	The one-sided sampling technique \cite{kubat1997} offers an innovative approach to reconstructing the majority class. Initially, it creates a subset that consists solely of data from the minority class. Subsequently, sets of majority class members are reintroduced. Specifically, for those majority members whose nearest neighbor would lead to their misclassification, proximate members from the original dataset are incorporated into the newly formed set. This strategy effectively lessens the density in areas distanced from the minority class, thereby enhancing class balance.
+	Tomek Links, as proposed by Tomek in 1976 \cite{tomek1976}, offer an enhancement by focusing on retaining only those majority class members that are proximate to the boundary with another class, rather than redundant members within a cluster.
+	The one-sided sampling technique \cite{kubat1997} offers creates a subset that consists solely of data from the minority class. Subsequently, sets of majority class members are reintroduced whose nearest neighbor would lead to their misclassification and are incorporated into the newly formed set. This strategy effectively reduces the density of the majority further from the minority class.
 
 	The general risk associated with undersampling techniques is the potential for important information to be lost.
 
@@ -101,17 +100,23 @@
 	
 	\subsection{Ensemble Methods} 
 	
-	Ensemble methods, like Boosting and Bagging, have been extensively used to address class imbalance. While bagging techniques are generally data-level, boosting techniques are exclusively hybrid.
-	AdaBoost Freund et al. \cite{freund1997} is a popular boosting algorithm, while Balanced Random Forests Chen et al. \cite{chen2004} is a well-known bagging technique. Both methods construct multiple classifiers and combine them to make the final decision. These techniques have been proven effective, but they can be computationally expensive.
+	Ensemble methods, like Boosting and Bagging, have been extensively used to address class imbalance. 
+	While bagging techniques are generally data-level, boosting techniques are exclusively hybrid.
+	AdaBoost \cite{freund1997} is a popular boosting algorithm, while Balanced Random Forests \cite{chen2004} is a well-known bagging technique. 
+	Both methods construct ensemble classifiers. 
+	These techniques have been proven effective, but relatively computationally expensive.
 	
 	\subsection{Learning from Imbalanced Data Streams} 
 	
-	Imbalanced data streams are a more challenging scenario where the data distribution may change over time. Wang et al. \cite{wang2018} proposed a method that dynamically adjusts the class distribution by a resampling strategy. Gao et al. \cite{gao2015} presented a method that incrementally learns from the data stream by adjusting the decision boundaries.
+	Imbalanced data streams are a more challenging scenario where the data distribution may change over time. 
+	Wang et al. \cite{wang2018} proposed a method that dynamically adjusts the class distribution by a resampling strategy. 
+	Gao et al. \cite{gao2015} presented a method that incrementally learns from the data stream by adjusting the decision boundaries.
 	
 	\subsection{Deep Learning Approaches}
 	
 	\subsubsection{Cost-Sensitive Learning}
-	Within the area of deep learning, several methods have been proposed to handle class imbalance. Cui et al. \cite{cui2019} introduced a loss function, called Class-Balanced Loss, based on effective number of samples. This technique achieves a balance between classes by adjusting the weights in the loss function. Similarly, Khan et al. \cite{khan2017} proposed Cost-Sensitive Deep Learning, which incorporates the cost matrix into the loss function of the deep learning model.	
+	Cui et al. \cite{cui2019} introduced Class-Balanced Loss, which achieves a balance between by adjusting the weights in the loss function by ratio of sample sizes. 
+	Similarly, Khan et al. \cite{khan2017} proposed Cost-Sensitive Deep Learning, which incorporates the cost matrix into the loss function which may not be specifically a ratio.	
 	
 	\subsubsection{Very-Deep CNN}
 	Ding et al. experimented with Deep CNNs (greater than or equal to 50 layers) to determine if this type of network performed better on imbalanced data. 
@@ -164,9 +169,12 @@
 	
 	\subsection{CDC Diabetes}
 	\cite{cdc2022}
-	Diabetes is a prevalent chronic disease in the U.S. that affects millions of individuals, resulting in a significant economic impact. Complications include heart disease, vision loss, limb amputation, and kidney disease. Despite the absence of a cure, weight loss, healthy eating, physical activity, and medical treatments can manage the disease. Early diagnosis and predictive models are crucial for effective treatment and lifestyle modifications.
-	
-	The CDC conducts an annual health-focused telephone survey known as the Behavioral Risk Factor Surveillance System (BRFSS). Initiated in 1984, the survey garners responses from over 400,000 Americans each year, gathering data on health-related risk behaviors, chronic health conditions, and utilization of preventive services. For the project at hand, we used a dataset derived from the 2015 version survey, available on Kaggle as a csv file. The raw dataset comprised responses from 441,455 individuals and included 21 features derived from 330 questions, which are a combination of direct questions posed to participants and variables calculated based on their responses.
+	Diabetes is a prevalent chronic disease in the U.S. that affects millions of individuals, 
+	the CDC conducts an annual health-focused telephone survey known as the Behavioral Risk Factor Surveillance System (BRFSS). 
+	Initiated in 1984, the survey garners responses from over 400,000 Americans each year, gathering data on health-related risk behaviors, 
+	chronic health conditions, and utilization of preventive services. For the project at hand, we used a dataset derived from the 2015 version survey, 
+	available on Kaggle as a csv file. The raw dataset comprised responses from 441,455 individuals and included 21 features derived from 330 questions, 
+	which are a combination of direct questions posed to participants and variables calculated based on their responses.
 
 	The derived dataset was cleaned and balanced leaving 70,692 samples with 17 features and one response variable. 
 	
@@ -179,21 +187,16 @@
 	It was used in a hackathon contest sponsored by an anonymous music streaming organization.
 	
 	\subsection{Cats-vs-Dogs}	
-	The Microsoft Cats vs. Dogs dataset \cite{Cats-vs-Dogs} is a widely recognized dataset in the computer vision community, 
-	primarily used for binary classification tasks. Originating from a Kaggle competition, 
-	this dataset comprises a diverse collection of 25,000 labeled images, evenly split between two classes: cats and dogs. 
-	Each image captures a variety of breeds, poses, and backgrounds, making the dataset both challenging and representative of real-world scenarios. 
-	The primary objective associated with this dataset is to train machine learning models to distinguish between images of cats and images of dogs with high accuracy. 
+	The Microsoft Cats vs. Dogs dataset \cite{Cats-vs-Dogs} will be used for binary classification tasks. 
+	Originating from a Kaggle competition, this dataset consists of 25,000 labeled images, evenly split between two classes: cats and dogs. 
 	Due to its straightforward nature and moderate size, the Cats vs. Dogs dataset serves as an excellent benchmark for evaluating the 
 	performance of various image classification algorithms, from traditional methods to deep learning architectures.
 	
 	\subsection{MNIST Fashion}
 	The Fashion MNIST dataset \cite{Fashion_MNIST} is a modern alternative to the classic MNIST dataset, 
 	often used in the machine learning and computer vision communities as an introductory dataset for image classification tasks. 
-	Comprising 70,000 grayscale images, each of size 28x28 pixels, the dataset is divided into 60,000 training samples and 10,000 testing samples. 
-	Each image represents one of 10 fashion articles, including T-shirts, trousers, pullovers, dresses, coats, sandals, shirts, sneakers, bags, and ankle boots. 
+	The dataset is divided into 60,000 training samples and 10,000 testing samples. 
 	The primary objective with this dataset is to classify these images into their respective fashion categories. 
-	Fashion MNIST was introduced to address the limitations of the traditional MNIST dataset, which was considered too easy for modern deep learning techniques. 
 	With more intricate patterns and a higher degree of class similarity, the Fashion MNIST dataset offers a more challenging benchmark 
 	for evaluating the performance of image classification algorithms.
 
@@ -281,16 +284,13 @@
 	\label{fig:trajectory}
 \end{figure}
 
-	To assess the influence of varying techniques on distinct values of $\rho$, we artificially induced imbalance by
-	first isolating a test set, then randomly diminishing the count of the positive class in the dataset 
-	until achieving the desired ratio, $\rho$. 
-	A new subset was imbalanced subset was created for each round of experimentation.
+	To assess the influence of varying techniques on distinct values of $\rho$, we artificially induce imbalance by
+	first isolating a test set, then randomly diminishing the count of the positive class in the dataset until achieving the desired ratio, $\rho$. 
+	A new imbalanced subset was created for each round of experimentation.
 	
-	This newly imbalanced subset was then subjected to one of the several techniques under investigation
-	decreasing the majority class for the undersampling techniques or increasing the minority for the oversampling techniques
-	until the $\rho$ value is close to $1$.
+	This newly imbalanced subset was then subjected to one of the several techniques under investigation.
 	The efficacy of these techniques was gauged using a collection of classifiers limited to a concise set of hyperparameters.
-	To minimize the potential impact of sample variance originating from the down-sampling process, we iterated this process multiple times and then averaged the results.
+	To reflect the impact of sample variance, we iterated this process multiple times.
 
 	\subsubsection{$k$-Nearest Neighbor}
 	Following an extensive preliminary assessment of $k$ values, we discerned that a range of 1 to 20 consistently yielded moderately satisfactory results. In each iteration of experimentation involving $k$NN, a grid search methodology was executed, focusing on the odd values within the 1 to 21 range. The best-performing model emerging from this process was then selected for evaluation on the test set. The associated $k$ and F1 values for this model were collated from both the training and testing sets.
