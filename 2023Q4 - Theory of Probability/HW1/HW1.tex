@@ -12,27 +12,157 @@
 \usepgfplotslibrary{fillbetween}
 \usepackage{booktabs}
 
-\renewcommand{\thesection}{}
-\renewcommand{\thesubsection}{\arabic{subsection}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
 \renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
 
 \begin{document}
 \raggedbottom
 
 \noindent{\large STAT 601 - Theory of Probability %
-	- Homework 8 }
+	- Homework 1 }
 \hspace{\fill} {\large B. Hosley}
 \bigskip
 
 
 %%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{subsection}{0}
+\setcounter{section}{1}
+\setcounter{subsection}{4}
+\subsection{} % 1.5
+\textit{Approximately one-third of all human twins are identical (one-egg) and two-thirds are fraternal (two-egg) twins. 
+	Identical twins are necessarily the same sex, with male and female being equally likely. 
+	Among fraternal twins, approximately one-fourth are both female, one-fourth are both male, andhalf are one male andone female. 
+	Finally, among all U.S. births, approximately 1 in 90 is a twin birth. Define the following events:}
+	\begin{align*}
+		A &= \{\text{a U.S. birth results in twin females}\} \\
+		B &= \{\text{a U.S. birth results in identical twins}\} \\
+		C &= \{\text{a U.S. birth results in twins}\}
+	\end{align*}
+	\subsubsection{} State, in words, the event \(A\cap B\cap C\).
+	\subsubsection{} Find \(P(A\cap B\cap C)\).
 
-\subsection{}
-\textit{Question Text}
 
-Answer text.
+\subsection{} % 1.6
+\textit{Two pennies, one with \(P\)(head)\( = u\) and one with \(P\)(head) \(= w\), are to be tossed together independently. Define}
+\begin{align*}
+	p_0 &= P(\text{0 heads occurs}), \\
+	p_1 &= P(\text{1 heads occurs}), \\
+	p_2 &= P(\text{2 heads occurs}). \\
+\end{align*}
+\textit{Can \(u\) and \(w\) be chosen such that \(p_0 = p_1 = p_2\)? Prove your answer.}
 
+\setcounter{subsection}{32}
+\subsection{} % 1.33
+\textit{Suppose that 5\% of men and .25\% of women are color-blind. A person is chosen at random and that person is color-blind. 
+	What is the probability that the person is male? (Assume males and females to be in equal numbers.)}
+
+\setcounter{subsection}{34}
+\subsection{} % 1.35
+\textit{Prove that if \(P(\cdot)\) is a legitimate probability function and \(B\) is a set with \(P (B) > 0\),
+	then \(P (\cdot|B)\) also satisfies Kolmogorov’s Axioms.}
+
+\setcounter{subsection}{36}
+\subsection{} % 1.37
+\textit{Here we look at some variations of Example 1.3.4}
+	\subsubsection{}
+	\textit{ In the warden’s calculation of Example 1.3.4 it was assumed that if \(A\) were to be
+		pardoned, then with equal probability the warden would tell A that either \(B\) or \(C\)
+		would die. However, this need not be the case. The warden can assign probabilities
+		\(\gamma\) and \(1 − \gamma\) to these events, as shown here:} \\
+	\begin{center}
+		\begin{tabular}{ccc}
+			\toprule
+			Prisoner pardoned & Warden tells A & \\
+			\midrule
+			A & B dies & with probability \(\gamma\) \\
+			A & C dies & with probability \(1-\gamma\) \\
+			B & C dies & \\
+			C & B dies & \\
+			\bottomrule
+		\end{tabular} \\[1.5em]
+	\end{center}
+	\textit{Calculate \(P(A|W)\) as a function of \(\gamma\). For what values of \(\gamma\) is \(P(A|W)\) less than,
+		equal to, or greater than \(\frac 1 3\)?}
+	\subsubsection{}
+	\textit{Suppose again that \(\gamma = \frac 1 2\), as in the example. After the warden tells \(A\) that \(B\)
+		will die, \(A\) thinks for a while and realizes that his original calculation was false.
+		However, \(A\) then gets a bright idea. \(A\) asks the warden if he can swap fates with \(C\).
+		The warden, thinking that no information has been passed, agrees to this. Prove
+		that \(A\)’s reasoning is now correct and that his probability of survival has jumped to \(\frac 2 3\)!} \\
+	
+\textit{A similar, but somewhat more complicated, problem, the “Monte Hall problem” is discussed by Selvin (1975). 
+	The problem in this guise gained a fair amount of notoriety when it appearedin a Sunday magazine (vos Savant 1990) along with a correct
+	answer but with questionable explanation. The ensuing debate was even reported on the front page of the Sunday New York Times (Tierney 1991). 
+	A complete andsomewhat amusing treatment is given by Morgan et al. (1991) [see also the response by vos Savant 1991]. 
+	Chun (1999) pretty much exhausts the problem with a very thorough analysis.}
+
+\subsection{} % 1.38
+\textit{Prove each of the following statements. (Assume that any conditioning event has positive probability.)}
+	\subsubsection{} \textit{If \(P(B) = 1\), then \(P(A|B) = P(A)\) for any \(A\).}
+	\subsubsection{} \textit{If \(A \subset B\), then \(P(B|A) = 1\) and \(P(A|B) = P(A)/P(B)\).}
+	\subsubsection{} \textit{If \(A\) and \(B\) are mutually exclusive, then}
+		\[ P(A|A\cup B) = \frac{P(A)}{P(A) + P(B)}. \]
+	\subsubsection{} \(P(A\cap B\cap C) = P(A|B\cap C) P(B|C) P(C)\).
+
+\subsection{} % 1.39
+\textit{A pair of events \(A\) and \(B\) cannot be simultaneously mutually exclusive and independent.
+	Prove that if \(P(A) > 0\) and \(P(B) > 0\), then:}
+	\subsubsection{} \textit{If \(A\) and \(B\) are mutually exclusive, they cannot be independent.}
+	\subsubsection{} \textit{If \(A\) and \(B\) are independent, they cannot be mutually exclusive.}
+
+\setcounter{subsection}{46}
+\subsection{} % 1.47
+\textit{Prove that the following functions are cdfs.}
+	\subsubsection{} \( \frac{1}{2}+\frac{1}{\pi} \tan^{-1}(x),\, x\in(-\infty,\infty) \)
+	\subsubsection{} \( (1+e^{-x})^{-1}\, x\in(-\infty,\infty) \)
+	\subsubsection{} \( e^{-e^{-x}}\, x\in(-\infty,\infty) \)
+	\subsubsection{} \( 1-e^{-x}\, x\in(-\infty,\infty) \)
+	\subsubsection{} \textit{the function defined in (1.5.6)}
+
+\setcounter{subsection}{50}
+\subsection{} % 1.51
+\textit{An appliance store receives a shipment of 30 microwave ovens, 5 of which are (unknown
+	to the manager) defective. The store manager selects 4 ovens at random, without
+	replacement, and tests to see if they are defective. Let \(X =\) number of defectives
+	found. Calculate the pmf and cdf of \(X\) and plot the cdf.}
+
+
+\subsection{} % 1.52
+\textit{Let \(X\) be a continuous random variable with pdf \(f(x)\) and cdf \(F(x)\). For a fixed number \(x_0\), define the function
+	\[g(x) = \begin{cases}
+		f(x)/[1 − F(x_0)] & x\geq x_0 \\
+		0 & x < x_0.
+	\end{cases} \]
+	Prove that \(g(x)\) is a pdf. (Assume that \(F(x0) < 1\).)}
+
+
+\subsection{} % 1.53
+\textit{A certain river floods every year. Suppose that the low-water mark is set at \(1\) and the
+	high-water mark \(Y\) has distribution function}
+	\[ F_Y = P(Y\leq y) = 1-\frac{1}{y^2}, \quad 1\leq y<\infty. \]
+	\subsubsection{} Verify \(F_Y(y)\) is a cdf.
+	
+	\subsubsection{} Find \(f_Y(y)\), the pdf of \(Y\).
+	
+	\subsubsection{} If the low-water mark is reset at \(0\) and we use a unit of measurement that is $\frac{1}{10}$ of
+		that given previously, the high-water mark becomes \(Z = 10(Y − 1)\). Find \(F_Z(z)\).
+		
+
+
+\subsection{} % 1.54
+\textit{For each of the following, determine the value of $c$ that makes $f(x)$ a pdf.}
+	\subsubsection{}
+	\( f(x) = c\sin x,\, 0<x<\pi/2 \)
+	
+	\subsubsection{}
+	\( f(x) = ce^{-x|x|},\, -\infty<x<\infty \)
+	
+
+
+\subsection{} % 1.55
+\textit{An electronic device has lifetime denoted by $T$. The device has value $V = 5$ if it fails
+	before time $t = 3$; otherwise, it has value $V = 2T$. Find the cdf of $V$, if $T$ has pdf}
+	\[ f_T(t) = \frac{1}{1.5}e^{-t/(1.5)},\quad t>0.\]
 
 
 \end{document}
