@@ -23,36 +23,36 @@ Another iteration of this problem occurs during movement cycles where vulnerable
 assigned to open billets. The movers have an opportunity to provide an ordered list of their preferences, and the hiring billet owner can likewise provide a ranked list of preferred candidates.
 Once again, it is preferable to maximize the utility of all involved parties.
 
+Generically, extensions of interest include cases where there are more open slots than candidates, some candidates occur as pairs (akin to the join spouse program), coalition forming (on either side of selection), and other strategies labelled 'Machiavellian'. 
+
 
 (b)
-This problem was shown to be NP-complete, not by extending a previously determined NP-complete problem,
-but through extensions of more basic versions of the problem. 
 Gale and Shapley proved that in the case of one-to-one matching a stable output alway exists and
-can be found algorithmically, an O(n^2) time. 
+can be found algorithmically, an O(n^2) time, thus is NP. 
 One weakness of this algorithm in application is that among all possible stable solutions the one 
 produced by the Shapley-Gale algorithm is the best for the candidate and worst for the program.
 
-Gusfield describes a number of extensions of this problem in which stable solutions (if they exist) 
-can be found and confirmed in polynomial time, and methods for doing so.
-
-Extensions of interest include cases where there are more open slots than candidates, some candidates occur as pairs (akin to the join spouse program), coalition forming (on either side of selection), and other strategies labelled 'Machiavellian'. 
-
-
-(c)
+Four variants of the problem; the marriage problem, the roommate problem, the intern assignment problem, and the intern assignment problem with couples; are shown to be NP complete by Ronn, et al. in their 1990 paper.
+In these proofs Ronn, et al. demonstrates that these four problems can be represented as
+instances of the 3SAT problem.
 
 In his 249 page book, Gusfield outlines a number of algorithms to solve this problem and its variations. 
 Additionally, he provides proofs in which certain aspects of different versions of the problem can or
-cannot be ignored.
-For example, Gusfield proves that in the case of a coalition, it is impossible for all members of the
-coalition to achieve a more preferred result than what they would have gotten otherwise.
+cannot be ignored. For example, Gusfield proves that in the case of a one-to-one problem, 
+it is impossible to form a coalition where all members of the
+coalition achieve a more preferred result than what they would have gotten otherwise.
 For this reason he argues that, assuming rational agents, the problem solver will not need to 
 worry about making their algorithm coalition-proof.
 
+This is expanded upon by Sotomayor (1998) where they consider a many-to-many situation.
+The objective in their paper was to examine subset stability.
+Subsets are defined as stable if none of its members can benefit from defection
+(or being transferred) to another subset, and thus represents a coalition proof result.
 
-
-
--Summary of 2 to 3 journal references (include links in blog) which pertain to the selected problem
-
+A result that I found particularly interesting in the Sotomayor paper is that 'setwise stability
+is strictly stronger than pairwise stability'. By that they mean that if a setwise stable 
+solution exists there will always exist a pairwise stable solution, 
+and even a many-to-one solution if the version of the problem allows for that.
 
 
 (e)
