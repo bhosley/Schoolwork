@@ -1,4 +1,9 @@
-(a)
+# Stable Matching Problem
+
+## Summary of Problem
+
+The most famous example of the stable matching problem is the hospital-resident matching problem,
+which was popularized by an organization founded to solve this problem in the USA.
 In the hospital-resident matching problem the goal is to match medical residents' choices 
 for training probgrams with the hospitals hat offer those programs. Simultaneously we seek to match
 the hospitals' preferences with their preferred applicants.
@@ -9,8 +14,8 @@ The resulting matches are considered to be stable if the following conditions ar
 3. Some program has an open slot *or*
 4. A program would prefer some other applicant over the ones assigned to it
 
+## Military Significance
 
-(d)
 The military application of this problem is that it is essentially a perfect similitude
 for several problems faced by AFPC.
 One may consider that during accessions each cadet/candidate will be assigned an AFSC;
@@ -25,8 +30,8 @@ Once again, it is preferable to maximize the utility of all involved parties.
 
 Generically, extensions of interest include cases where there are more open slots than candidates, some candidates occur as pairs (akin to the join spouse program), coalition forming (on either side of selection), and other strategies labelled 'Machiavellian'. 
 
+## Background
 
-(b)
 Gale and Shapley proved that in the case of one-to-one matching a stable output alway exists and
 can be found algorithmically, an O(n^2) time, thus is NP. 
 One weakness of this algorithm in application is that among all possible stable solutions the one 
@@ -54,14 +59,21 @@ is strictly stronger than pairwise stability'. By that they mean that if a setwi
 solution exists there will always exist a pairwise stable solution, 
 and even a many-to-one solution if the version of the problem allows for that.
 
+## Discussion
 
-(e)
 In practical terms it seems fairly likely that stability does not exist, 
-what alternatives might you recommend?
+what alternatives might we recommend?
 Often the answer to this is considered from a game theoretic perspective where
 we may wish to maximize overall happiness or minimize the maximum unhappiness. 
 
+As I understand it, this is an open problem for AFPC; there is a desire for 
+an algorithmic system as it would/could/should be unbiased in matching assignments.
 
 
+## References
 
-References:
+[1] D. Gusfield, The stable marriage problem : structure and algorithms. Cambridge, Mass. : MIT Press, 1989. Accessed: Oct. 09, 2023. [Online]. Available: http://archive.org/details/stablemarriagepr0000gusf
+
+[2] E. Ronn, “NP-complete stable matching problems,” Journal of Algorithms, vol. 11, no. 2, pp. 285–304, Jun. 1990, doi: [10.1016/0196-6774(90)90007-2](https://www.sciencedirect.com/science/article/pii/0196677490900072).
+
+[3] M. Sotomayor, “Three remarks on the many-to-many stable matching problem,” Mathematical Social Sciences, vol. 38, no. 1, pp. 55–70, Jul. 1999, doi: [10.1016/S0165-4896(98)00048-1](https://www.sciencedirect.com/science/article/pii/S0165489698000481).
