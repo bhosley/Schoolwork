@@ -31,19 +31,70 @@
 \subsection{} % 1.5
 \textit{Approximately one-third of all human twins are identical (one-egg) and two-thirds are fraternal (two-egg) twins. 
 	Identical twins are necessarily the same sex, with male and female being equally likely. 
-	Among fraternal twins, approximately one-fourth are both female, one-fourth are both male, andhalf are one male andone female. 
+	Among fraternal twins, approximately one-fourth are both female, one-fourth are both male, and half are one male and one female. 
 	Finally, among all U.S. births, approximately 1 in 90 is a twin birth. Define the following events:}
 	\begin{align*}
 		A &= \{\text{a U.S. birth results in twin females}\} \\
 		B &= \{\text{a U.S. birth results in identical twins}\} \\
 		C &= \{\text{a U.S. birth results in twins}\}
 	\end{align*}
-	\subsubsection{} State, in words, the event \(A\cap B\cap C\).
-	\subsubsection{} Find \(P(A\cap B\cap C)\).
+	\subsubsection{} State, in words, the event \(A\cap B\cap C\). \\
+	
+	
+	This event description corresponds to the situation in which a U.S. birth results in identical twin females.
+	
+	
+	\subsubsection{} Find \(P(A\cap B\cap C)\). \\
 
+	We may visualize the set interactions as follows (not to scale):
+
+	\begin{center}
+		\begin{tikzpicture}
+			\def\radius{1cm}
+			\def\mycolorbox#1{\textcolor{#1}{\rule{2ex}{2ex}}}
+			\colorlet{colorA}{red!50}
+			\colorlet{colorB}{blue!50}
+			\colorlet{colorC}{green!25}
+			
+			\coordinate (cenA);
+			\coordinate[xshift=\radius] (cenB);
+			\coordinate (cenC);
+			
+			\draw[fill=colorA,fill opacity=0.5] (cenA) circle (\radius);
+			\draw[fill=colorB,fill opacity=0.5] (cenB) circle (\radius);
+			\draw[fill=colorC,fill opacity=0.5] (cenC) circle (2*\radius);
+			
+			\draw  ([xshift=-20pt,yshift=20pt]current bounding box.north west) 
+			rectangle ([xshift=20pt,yshift=-20pt]current bounding box.south east);
+			
+			\node[yshift=10pt] at (current bounding box.north) {U.S. Births};
+			
+			\node at ([xshift=4.5*\radius]current bounding box.east) 
+			{
+				\begin{tabular}{@{}lr@{\,=\,}l@{}}
+					\mycolorbox{colorA!50} & $A$ & \{a U.S. birth results in twin females\} \\
+					\mycolorbox{colorB!50} & $B$ & \{a U.S. birth results in identical twins\} \\
+					\mycolorbox{colorC!50} & $C$ & \{a U.S. birth results in twins\}
+				\end{tabular}
+			};
+			
+			\node[xshift=-.4\radius] at (cenA) {$A$};
+			\node[xshift=.4\radius] at (cenB) {$B$};
+			\node[xshift=.5\radius,yshift=1.25*\radius] at (cenC) {$C$};
+			\node[xshift=35pt,yshift=10pt] at (current bounding box.south west) {Other Births};
+		\end{tikzpicture}
+	\end{center}
+	
+We can also translate the values given in the word problem to be
+
+$$P(C) = \frac{1}{90} ,\quad P(B|C) = \frac{1}{3} ,\quad P(A|B) = \frac{1}{2} ,\quad P(A|C\backslash B) = \frac{1}{4} ,\quad P(B^c|C) = \frac{2}{3}.$$
+
+Then, we can calculate the intersection as
+
+$$ P(A\cap B\cap C) \equiv P(A|B)P(B|C) P(C) = \frac{1}{540}. $$ \\[2em]
 
 \subsection{} % 1.6
-\textit{Two pennies, one with \(P\)(head)\( = u\) and one with \(P\)(head) \(= w\), are to be tossed together independently. Define}
+\textit{Two pennies, one with \(P\)(head) \(= u\) and one with \(P\)(head) \(= w\), are to be tossed together independently. Define}
 \begin{align*}
 	p_0 &= P(\text{0 heads occurs}), \\
 	p_1 &= P(\text{1 heads occurs}), \\
@@ -51,10 +102,50 @@
 \end{align*}
 \textit{Can \(u\) and \(w\) be chosen such that \(p_0 = p_1 = p_2\)? Prove your answer.}
 
+First, we will translate $p_n$ into the given variables,
+
+\begin{align*}
+	p_0 &= (1-u)(1-w) \\
+	p_2 &= w(1-u)+u(1-w) \\
+	p_3 &= uw.
+\end{align*}
+
+Then, if we assume for sake of contradiction that \(p_0 = p_1 = p_2\) we will see that
+
+\begin{align*}
+	p_0 &=  p_2\\
+	(1-u)(1-w) &= uw \\
+	1-u-w+uw &= uw \\
+	1 &= u+w, 
+\end{align*}
+
+and thus that $w=(1-u)$. Then, using this value to substitute we can see that
+
+\begin{align*}
+	p_1 &=  p_2\\
+	w(1-u)+u(1-w) &=uw \\
+	(1-u)^2+u(1-(1-u)) &=u(1-u) \\
+	2u(1-u) &= u(1-u) \\
+	2u &= u.
+\end{align*}
+
+Thus \(p_0 = p_1 = p_2\) cannot be entirely true. \\[2em]
+
+
 \setcounter{subsection}{32}
 \subsection{} % 1.33
 \textit{Suppose that 5\% of men and .25\% of women are color-blind. A person is chosen at random and that person is color-blind. 
-	What is the probability that the person is male? (Assume males and females to be in equal numbers.)}
+	What is the probability that the person is male? (Assume males and females to be in equal numbers.)} \\
+
+We will use Bayes' theorem where $B=$ colorblindness and $A=$ male, thus the answer to the question becomes $P(A|B)$.
+Solving becomes
+
+\begin{align*}
+	P(A|B) &= \frac{P(B|A)P(A)}{P(B)} \\
+	&= \frac{(0.05)(0.5)}{(0.05)(0.5)+(0.0025)(0.5)} \\
+	&= \frac{(0.025)}{(0.025)+(0.00125)} \\
+	&= 0.95238. \\
+\end{align*} \\
 
 \setcounter{subsection}{34}
 \subsection{} % 1.35
@@ -81,8 +172,26 @@
 			\bottomrule
 		\end{tabular} \\[1.5em]
 	\end{center}
-	\textit{Calculate \(P(A|W)\) as a function of \(\gamma\). For what values of \(\gamma\) is \(P(A|W)\) less than,
-		equal to, or greater than \(\frac 1 3\)?}
+	\textit{Calculate \(P(A|\mathcal W)\) as a function of \(\gamma\). For what values of \(\gamma\) is \(P(A|\mathcal W)\) less than,
+		equal to, or greater than \(\frac 1 3\)?} \\
+		
+	Maintaining the convention that \(\mathcal W\) describes the event of the warden telling $A$ that $B$ will be executed,
+	we can use Bayes' theorem to calculate \(P(A|\mathcal W)\). Given that we already have \(P(B)\) and \(P(\mathcal W|B)\) we only
+	need calculate \(P(A|\mathcal W)\);
+	
+	\begin{align*}
+		P(\mathcal W) = \frac{1}{3} \gamma + \frac{1}{3}
+		= \frac{\gamma+1}{3}. \\
+	\end{align*}
+	
+	With that in hand we may move to Bayes' theorem to show that
+	
+	\begin{align*}
+		P(A|\mathcal W) = \frac{P(\mathcal W|A)P(A)}{P(\mathcal W)}
+		= \frac{\gamma \left( \frac{1}{3} \right)}{\frac{\gamma+1}{3}}
+		= \frac{\gamma}{\gamma+1}. \\
+	\end{align*}
+	
 	\subsubsection{}
 	\textit{Suppose again that \(\gamma = \frac 1 2\), as in the example. After the warden tells \(A\) that \(B\)
 		will die, \(A\) thinks for a while and realizes that his original calculation was false.
@@ -91,9 +200,9 @@
 		that \(A\)’s reasoning is now correct and that his probability of survival has jumped to \(\frac 2 3\)!} \\
 	
 \textit{A similar, but somewhat more complicated, problem, the “Monte Hall problem” is discussed by Selvin (1975). 
-	The problem in this guise gained a fair amount of notoriety when it appearedin a Sunday magazine (vos Savant 1990) along with a correct
+	The problem in this guise gained a fair amount of notoriety when it appeared in a Sunday magazine (vos Savant 1990) along with a correct
 	answer but with questionable explanation. The ensuing debate was even reported on the front page of the Sunday New York Times (Tierney 1991). 
-	A complete andsomewhat amusing treatment is given by Morgan et al. (1991) [see also the response by vos Savant 1991]. 
+	A complete and some what amusing treatment is given by Morgan et al. (1991) [see also the response by vos Savant 1991]. 
 	Chun (1999) pretty much exhausts the problem with a very thorough analysis.}
 
 \subsection{} % 1.38
