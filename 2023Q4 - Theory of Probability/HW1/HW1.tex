@@ -234,23 +234,59 @@ Solving becomes
 		P(C|\mathcal W) = \frac{ P(\mathcal W|C) P(C)}{P(\mathcal W)}
 		= \frac{1\cdot\frac{1}{3}}{\frac{1}{2}}
 		= \frac{2}{3}.
-	\end{align*}
-	\\[2em]
-	
+	\end{align*} \\
 	
 \textit{A similar, but somewhat more complicated, problem, the “Monte Hall problem” is discussed by Selvin (1975). 
 	The problem in this guise gained a fair amount of notoriety when it appeared in a Sunday magazine (vos Savant 1990) along with a correct
 	answer but with questionable explanation. The ensuing debate was even reported on the front page of the Sunday New York Times (Tierney 1991). 
 	A complete and some what amusing treatment is given by Morgan et al. (1991) [see also the response by vos Savant 1991]. 
-	Chun (1999) pretty much exhausts the problem with a very thorough analysis.}
+	Chun (1999) pretty much exhausts the problem with a very thorough analysis.} \\[2em]
 
 \subsection{} % 1.38
 \textit{Prove each of the following statements. (Assume that any conditioning event has positive probability.)}
-	\subsubsection{} \textit{If \(P(B) = 1\), then \(P(A|B) = P(A)\) for any \(A\).}
-	\subsubsection{} \textit{If \(A \subset B\), then \(P(B|A) = 1\) and \(P(A|B) = P(A)/P(B)\).}
+	\subsubsection{} \textit{If \(P(B) = 1\), then \(P(A|B) = P(A)\) for any \(A\).} \\
+	
+		If \(P(B) = 1\) then it follows that \(P(B|A) = 1\). Knowing this we can prove the assertion via
+		Bayes' theorem;
+		
+		\begin{align*}
+			P(A|B) = \frac{P(B|A)P(A)}{P(B)} = \frac{1\cdot P(A)}{1} = P(A).
+		\end{align*} \\
+	
+	
+	\subsubsection{} \textit{If \(A \subset B\), then \(P(B|A) = 1\) and \(P(A|B) = P(A)/P(B)\).} \\
+	
+		Define \(A^\prime\) such that \(A\cup A^\prime = B\).
+		Then we can illustrate that \(P(B|A) = P(A\cup A^\prime|A) = 1\).
+	
+		We can use this result to get the second claim using Bayes' theorem
+		\begin{align*}
+			P(A|B) 
+			= \frac{P(B|A)P(A)}{P(B)}
+			= \frac{P(A)}{P(B)}.
+		\end{align*} \\
+	
 	\subsubsection{} \textit{If \(A\) and \(B\) are mutually exclusive, then}
-		\[ P(A|A\cup B) = \frac{P(A)}{P(A) + P(B)}. \]
-	\subsubsection{} \(P(A\cap B\cap C) = P(A|B\cap C) P(B|C) P(C)\).
+		\[ P(A|A\cup B) = \frac{P(A)}{P(A) + P(B)}. \] \\
+		
+		We will leverage the additive property: 
+		\[P(A\cup B) = P(A) + P(B) - P(A)\cap P(B)\]
+		where mutual exclusivity implies that \(P(A)\cap P(B) = 0\).
+		Next, we will observe that \(P(A\cup B|A)=1\) as \(A\subset A\cup B\). From this we can see that 
+		
+		\begin{align*}
+			P(A|A\cup B) = \frac{P(A\cup B|A)P(A)}{P(A\cup B)}
+			= \frac{1\cdot P(A)}{P(A) + P(B)}
+			= \frac{P(A)}{P(A) + P(B)}.
+		\end{align*} \\[1em]
+		 
+	\subsubsection{} \(P(A\cap B\cap C) = P(A|B\cap C) P(B|C) P(C)\). \\
+	
+	\begin{align*}
+		P(A\cap B\cap C) 
+		= P(A|B\cap C) P(B|C) P(C)
+		= P(A|B) P(A|C) P(B|C) P(C)
+	\end{align*}
 
 \subsection{} % 1.39
 \textit{A pair of events \(A\) and \(B\) cannot be simultaneously mutually exclusive and independent.
