@@ -240,7 +240,7 @@ Solving becomes
 	The problem in this guise gained a fair amount of notoriety when it appeared in a Sunday magazine (vos Savant 1990) along with a correct
 	answer but with questionable explanation. The ensuing debate was even reported on the front page of the Sunday New York Times (Tierney 1991). 
 	A complete and some what amusing treatment is given by Morgan et al. (1991) [see also the response by vos Savant 1991]. 
-	Chun (1999) pretty much exhausts the problem with a very thorough analysis.} \\[2em]
+	Chun (1999) pretty much exhausts the problem with a very thorough analysis.} \clearpage
 
 \subsection{} % 1.38
 \textit{Prove each of the following statements. (Assume that any conditioning event has positive probability.)}
@@ -271,7 +271,7 @@ Solving becomes
 		
 		We will leverage the additive property: 
 		\[P(A\cup B) = P(A) + P(B) - P(A)\cap P(B)\]
-		where mutual exclusivity implies that \(P(A)\cap P(B) = 0\).
+		and note that mutual exclusivity implies that \(P(A)\cap P(B) = 0\).
 		Next, we will observe that \(P(A\cup B|A)=1\) as \(A\subset A\cup B\). From this we can see that 
 		
 		\begin{align*}
@@ -280,27 +280,41 @@ Solving becomes
 			= \frac{P(A)}{P(A) + P(B)}.
 		\end{align*} \\[1em]
 		 
-	\subsubsection{} \(P(A\cap B\cap C) = P(A|B\cap C) P(B|C) P(C)\). \\
+	\subsubsection{} \(P(A\cap B\cap C) = P(A|B\cap C) P(B|C) P(C)\).
 	
 	\begin{align*}
 		P(A\cap B\cap C) 
-		= P(A|B\cap C) P(B|C) P(C)
-		= P(A|B) P(A|C) P(B|C) P(C)
+		= P(A\cap (B\cap C)) 
+		= P(A\cap | B\cap C) P(B\cap C) 
+		= P(A\cap | B\cap C) P(B| C) P(C) \\
 	\end{align*}
 
+\clearpage
 \subsection{} % 1.39
 \textit{A pair of events \(A\) and \(B\) cannot be simultaneously mutually exclusive and independent.
 	Prove that if \(P(A) > 0\) and \(P(B) > 0\), then:}
-	\subsubsection{} \textit{If \(A\) and \(B\) are mutually exclusive, they cannot be independent.}
-	\subsubsection{} \textit{If \(A\) and \(B\) are independent, they cannot be mutually exclusive.}
+	\subsubsection{} \textit{If \(A\) and \(B\) are mutually exclusive, they cannot be independent.} \\
+	
+	Assuming \(A\) and \(B\) are mutually exclusive, then \(A\cap B = \emptyset\) and \(P(A\cap B)=0\).
+	If \(A\) and \(B\) are independent then \(P(A\cap B) = P(A)P(B) = 0\),
+	but since \(P(A) > 0\) and \(P(B) > 0\) then we can conclude \(P(A)P(B) \neq 0\), thus a contradiction. \\
+	
+	\subsubsection{} \textit{If \(A\) and \(B\) are independent, they cannot be mutually exclusive.} \\
+	
+	Since \(P(A) > 0\) and \(P(B) > 0\) then \(P(A)P(B) > 0\) which implies that \(P(A\cap B)>0\)
+	and therefore \(P(A\cap B)\neq\emptyset\). \\
+	
 
 \setcounter{subsection}{46}
 \subsection{} % 1.47
 \textit{Prove that the following functions are cdfs.}
+	% lim(-infty) = 0 and lim(infty) = 1
+	% Strictly non-decreasing
+	% Right Continuous
 	\subsubsection{} \( \frac{1}{2}+\frac{1}{\pi} \tan^{-1}(x),\, x\in(-\infty,\infty) \)
-	\subsubsection{} \( (1+e^{-x})^{-1}\, x\in(-\infty,\infty) \)
-	\subsubsection{} \( e^{-e^{-x}}\, x\in(-\infty,\infty) \)
-	\subsubsection{} \( 1-e^{-x}\, x\in(-\infty,\infty) \)
+	\subsubsection{} \( (1+e^{-x})^{-1},\, x\in(-\infty,\infty) \)
+	\subsubsection{} \( e^{-e^{-x}},\, x\in(-\infty,\infty) \)
+	\subsubsection{} \( 1-e^{-x},\, x\in(-\infty,\infty) \)
 	\subsubsection{} \textit{the function defined in (1.5.6)}
 
 \setcounter{subsection}{50}
