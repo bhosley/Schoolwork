@@ -317,12 +317,49 @@ Solving becomes
 		
 		$\lim\limits_{x\rightarrow\infty} = \frac{1}{2}+\frac{1}{\pi}\frac{\pi}{2} = 1$
 		
-		$ \frac{d}{dx}\left(\frac{1}{2}+\frac{1}{\pi} \tan^{-1}(x)\right) = 0 + \frac{1}{x^2+1} $ which implies that the function is monotonically non-decreasing. \\
+		$ \frac{d}{dx}\left(\frac{1}{2}+\frac{1}{\pi} \tan^{-1}(x)\right) = 0 + \frac{1}{x^2+1} \quad\forall x $ which implies that the function is monotonically non-decreasing. \\
 	
 	\subsubsection{} \( (1+e^{-x})^{-1},\, x\in(-\infty,\infty) \) \\
+	
+	$\lim\limits_{x\rightarrow-\infty} (1+e^{-x})^{-1} \approx (1+\infty)^{-1} \equiv 0$
+	
+	$\lim\limits_{x\rightarrow\infty} (1+e^{-x})^{-1} \approx (1+0)^{-1} = 1$
+	
+	$ \frac{d}{dx}\left( (1+e^{-x})^{-1} \right) = \frac{1}{e^{x}(1+e^{-x})^{2}} >0\quad\forall x $ which implies that the function is monotonically non-decreasing. \\
+	
 	\subsubsection{} \( e^{-e^{-x}},\, x\in(-\infty,\infty) \) \\
+	
+	$\lim\limits_{x\rightarrow-\infty} e^{-e^{-x}} \approx e^{-\infty} \approx 0$
+	
+	$\lim\limits_{x\rightarrow\infty} e^{-e^{-x}} \approx e^{0} = 1$
+	
+	$ \frac{d}{dx}\left( e^{-e^{-x}} \right) = e^{-x}e^{-e^{-x}} = e^{-e^{-x}-x} >0\quad\forall x $ which implies that the function is monotonically non-decreasing. \\
+	
 	\subsubsection{} \( 1-e^{-x},\, x\in(-\infty,\infty) \) \\
-	\subsubsection{} \textit{the function defined in (1.5.6)} \\
+	
+	$\lim\limits_{x\rightarrow-\infty} 1-e^{-x} \equiv 1-1  = 0$
+	
+	$\lim\limits_{x\rightarrow\infty} 1-e^{-x} \equiv 1-e^\infty \equiv 1-0 = 1$
+	
+	$ \frac{d}{dx}\left( 1-e^{-x} \right) = e^x >0\quad\forall x$ which implies that the function is monotonically non-decreasing. \\
+	
+	\subsubsection{} \textit{the function defined in (1.5.6)} 
+	\[F_Y(y) = \begin{cases}
+		\frac{1-\epsilon}{1+e^{-y}} & \text{if } y<0 \\
+		\epsilon + \frac{1-\epsilon}{1+e^{-y}} & \text{if } y\geq0
+	\end{cases} \]
+	where $0<\epsilon<1$.\\
+	
+	$\lim\limits_{x\rightarrow-\infty} \frac{1-\epsilon}{1+e^{-y}} \approx \frac{1-\epsilon}{1+\infty} = 0\ \forall\epsilon$
+	
+	$\lim\limits_{x\rightarrow\infty} \epsilon + \frac{1-\epsilon}{1+e^{-y}} \approx \epsilon+ \frac{1-\epsilon}{1+0} = \epsilon + 1 -\epsilon = 1$
+	
+	$\frac{d}{dx}\epsilon = 0$ so,
+	$ \frac{d}{dx}\left( \epsilon + \frac{1-\epsilon}{1+e^{-y}} \right) = \frac{d}{dx}\left(\frac{1-\epsilon}{1+e^{-y}} \right) =
+	\frac{1}{e^y(1+e^{-y+1})} >0\quad\forall y$ \\
+	which implies that the function is monotonically non-decreasing on both pieces. 
+	Additionally, when $y=0$ the value is $\epsilon+\frac{1-\epsilon}{1+1} > 0\,\ \forall\epsilon$.\\
+	
 
 \setcounter{subsection}{50}
 \subsection{} % 1.51
@@ -331,6 +368,13 @@ Solving becomes
 	replacement, and tests to see if they are defective. Let \(X =\) number of defectives
 	found. Calculate the pmf and cdf of \(X\) and plot the cdf.}
 
+	\[ F_X(x) = \sum_{x=0}^{4} \frac{\binom{5}{x}\binom{25}{4-x}}{\binom{30}{4}} \]
+	\[ f_X(x) = \frac{\binom{5}{x}\binom{25}{4-x}}{\binom{30}{4}}, \quad x\in\{0,1,2,3,4\} \]
+
+	CDF in black, PDF in blue:\\
+	\includegraphics[width=0.7\linewidth]{"Screenshot 2023-10-13 at 6.12.07 PM"}
+
+
 
 \subsection{} % 1.52
 \textit{Let \(X\) be a continuous random variable with pdf \(f(x)\) and cdf \(F(x)\). For a fixed number \(x_0\), define the function
@@ -338,7 +382,7 @@ Solving becomes
 		f(x)/[1 − F(x_0)] & x\geq x_0 \\
 		0 & x < x_0.
 	\end{cases} \]
-	Prove that \(g(x)\) is a pdf. (Assume that \(F(x0) < 1\).)}
+	Prove that \(g(x)\) is a pdf. (Assume that \(F(x_0) < 1\).)}
 
 
 \subsection{} % 1.53
