@@ -382,8 +382,12 @@ Solving becomes
 		f(x)/[1 − F(x_0)] & x\geq x_0 \\
 		0 & x < x_0.
 	\end{cases} \]
-	Prove that \(g(x)\) is a pdf. (Assume that \(F(x_0) < 1\).)}
-
+	Prove that \(g(x)\) is a pdf. (Assume that \(F(x_0) < 1\).)} \\
+	
+	Because \(f(x)\) and \(F(x)\) are assumed to be valid, we can assume that \(x_0 \geq 0\). We conclude that \(g(x)\) is non-decreasing.
+	\[ \int_{x_0}^{\infty}g(x)dx = \int_{x_0}^{\infty}\frac{f(x)}{1-F(x_0)}dx = \frac{1-F(x_0)}{1-F(x_0)} = 1 \]
+	Thus \(g(x)\) is a valid pdf.
+	
 
 \subsection{} % 1.53
 \textit{A certain river floods every year. Suppose that the low-water mark is set at \(1\) and the
@@ -391,27 +395,68 @@ Solving becomes
 	\[ F_Y = P(Y\leq y) = 1-\frac{1}{y^2}, \quad 1\leq y<\infty. \]
 	\subsubsection{} Verify \(F_Y(y)\) is a cdf.
 	
+	On the lower bound we see that 
+	\[ \lim\limits_{y\rightarrow0} 1-\frac{1}{y^2} - 1-1 = 0\ \]
+	and
+	\[ \lim\limits_{y\rightarrow\infty} 1-\frac{1}{y^2} \approx 1 -0 = 1 \]
+	and
+	\[ \frac{d}{dy} \left( 1-\frac{1}{y^2} \right) = \frac{2}{y^3} >0 \quad \forall y>1 \]
+	which allows us to conclude that the function is non-decreasing; and by extension with the prior results that it is a valid CDF. \\
+	
 	\subsubsection{} Find \(f_Y(y)\), the pdf of \(Y\).
 	
+	From the previous problem we borrow the derivative, and translate the support to develop a complete pdf:
+	\[ f_Y(y) = \begin{cases}
+		\frac{2}{y^3} & \text{if } y \geq 1 \\
+		0 & \text{if } y < 1
+	\end{cases} \] \\
+	
 	\subsubsection{} If the low-water mark is reset at \(0\) and we use a unit of measurement that is $\frac{1}{10}$ of
-		that given previously, the high-water mark becomes \(Z = 10(Y − 1)\). Find \(F_Z(z)\).
+		that given previously, the high-water mark becomes \(Z = 10(Y − 1)\). Find \(F_Z(z)\). \\
 		
-
+		
+	First we translate the new unit of measure,
+	\[F_Z(z) = P(Z\leq z) = P(10(Y-1)\leq z) = P(Y\leq\frac{z}{10}+1) = F_Y(\frac{z}{10}+1) \]
+	then substitute into the previously found CDF,
+		
+	\[ F_Z(z) = \begin{cases}
+		0 & \text{if } z \leq 0 \\
+		1-\frac{1}{(\frac{z}{10}+1)^2} & \text{if } z > 0.
+	\end{cases} \] \\
 
 \subsection{} % 1.54
 \textit{For each of the following, determine the value of $c$ that makes $f(x)$ a pdf.}
 	\subsubsection{}
-	\( f(x) = c\sin x,\, 0<x<\pi/2 \)
+	\( f(x) = c\sin x,\, 0<x<\pi/2 \) \\
+	
+	We calculate the baseline pdf with \(c=1\),
+	\[ \int_{0}^{\pi/2}\sin x \,dx = 1. \]
+	Which allows us to conclude that \(c=1\).
 	
 	\subsubsection{}
-	\( f(x) = ce^{-x|x|},\, -\infty<x<\infty \)
+	\( f(x) = e^{-|x|},\, -\infty<x<\infty \) \\
 	
-
+	We calculate the baseline pdf with \(c=1\),
+	\[ \int_{-\infty}^{\infty} e^{-|x|} \,dx = \int_{-\infty}^{0} e^{x} \,dx + \int_{0}^{\infty} e^{-x} \,dx = 1 + 1 = 2. \]
+	Which allows us to conclude that \(c=\frac{1}{2}\).
 
 \subsection{} % 1.55
 \textit{An electronic device has lifetime denoted by $T$. The device has value $V = 5$ if it fails
 	before time $t = 3$; otherwise, it has value $V = 2T$. Find the cdf of $V$, if $T$ has pdf}
 	\[ f_T(t) = \frac{1}{1.5}e^{-t/(1.5)},\quad t>0.\]
 
+	First, we examine the case where \(t<3\),
+	\[ P(V\leq 5) = P(t\leq 3) = \int f_T(t) \,dt = \int_{0}^{3} \frac{1}{1.5}e^{-t/(1.5)} \,dt = \left. e^{-t/(1.5)} \right|_0^3 = 1-e^{-2} .\]
+	
+	Next, we examine the case where \(t\geq3\),
+	\[ P(V\leq v) = P(2T\leq v) = P(T\leq\frac{v}{2}) \int_{0}^{\frac{v}{2}} \frac{1}{1.5}e^{-t/(1.5)} \,dt = \left. e^{-t/(1.5)} \right|_0^{\frac{v}{2}} = 1-e^{-\frac{v}{3}} .\]
+	
+	We multiply the support by $2$ due to $V = 2T$, and combine the above parts, to get a piece-wise CDF;
+
+	\[ P(V\leq v) = \begin{cases}
+		0 & \text{if } v <0 \\
+		1-e^{-2} & \text{if } 0 \leq v < 6 \\
+		1-e^{-\frac{v}{3}}& \text{if } 6 \leq v
+	\end{cases} \]
 
 \end{document}
