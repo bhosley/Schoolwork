@@ -53,7 +53,7 @@
 
 \begin{questions}
 
-	\question In each of the following, find the bdf of $Y$. Show that the pdf integrates to 1.
+	\question In each of the following, find the pdf of $Y$. Show that the pdf integrates to 1.
 	\begin{parts}
 		\part $Y=X^3$ and $f_X(x) = 42 x^5 (1-x), \ 0 < x < 1$
 		\part $Y= 4X + 3$ and $f_X(x) = 7e^{-7x}, \ 0 < x <\infty$
@@ -63,8 +63,51 @@
 	
 	\begin{solution}\\
 		(a)
+		The PDF is
+		\begin{align*}
+			f_Y(y) &= f_X(g^{-1}(y)) \left|\frac{d}{dy}g^{-1}(y) \right| \\
+			&= f_X(y^{1/3}) \left|\frac{d}{dy}y^{1/3} \right| \\
+			&=  42y^{5/3} \left(1-y^{1/3}\right)  \left|\frac{1}{3}y^{-2/3} \right| \\
+			&=  14y\left(1-y^{1/3}\right). \\
+		\end{align*}
+		The range is the same, shown by $ 0^{1/3} < y < 1^{1/3} = 0 < y < 1$. \\
+		Integration is equal to 1:
+		\begin{align*}
+			\int_{0}^{1}f_Y(y) \,dy
+			&= \int_{0}^{1} 14y-14y^{4/3} \,dy \\
+			&= \left. 7y^2-6y^{7/3} \right|_0^1 \\
+			&= (7-6) - (0-0) = 1.
+		\end{align*}
+		 
+		
 		(b)
+		The PDF is
+		\begin{align*}
+			f_Y(y) &= f_X(g^{-1}(y)) \left|\frac{d}{dy}g^{-1}(y) \right| \\
+			&=
+		\end{align*}
+		The range is ... \\
+		Integration is equal to 1:
+		\begin{align*}
+			\int_{3}^{\infty}f_Y(y) \,dy
+			&=
+			&= \left.  \right|_3^\infty \\
+		\end{align*}
+		
 		(c)
+		The PDF is
+		\begin{align*}
+			f_Y(y) &= f_X(g^{-1}(y)) \left|\frac{d}{dy}g^{-1}(y) \right| \\
+			&=
+		\end{align*}
+		The range is ... \\
+		Integration is equal to 1:
+		\begin{align*}
+			\int_{0}^{1}f_Y(y) \,dy
+			&=
+			&= \left.  \right|_0^1 \\
+		\end{align*}
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
