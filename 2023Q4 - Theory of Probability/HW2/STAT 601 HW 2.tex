@@ -282,8 +282,25 @@
 		\part Find $E(X)$ and $Var(X)$
 	\end{parts}
 	
-	\begin{solution}
-		Here is the solution
+	\begin{solution} \\
+		(a)
+		\begin{align*}
+			\int_{0}^{\infty} f(x)\,dx
+			&= \int_{0}^{\infty} \frac{4}{\beta^3\sqrt{\pi}} x^2 e^{-x/\beta^2}\,dx \\
+			&= \frac{4}{\beta^3\sqrt{\pi}}  \int_{0}^{\infty} x^2 e^{-x/\beta^2}\,dx &\text{using a exponent integral identity} \\
+			&= \left. \frac{4}{\beta^3\sqrt{\pi}} e^{-x/\beta^2} \left( -\beta^2x^2- -\beta^4x- \beta^62 \right) \right|_0^\infty \\
+			&= 0 - \frac{4}{\beta^3\sqrt{\pi}} \cdot1\cdot(0-0-\beta^62) \\
+			&= \frac{6\beta^6}{\beta^3\sqrt{\pi}} \\
+			&= \frac{6\beta^3}{\sqrt{\pi}}
+		\end{align*}
+		Which demonstrates that the function is non-decreasing.
+		However it is only equal to $1$ when $\beta=\sqrt[3]{\frac{\sqrt{\pi}}{6}}$, and not for other values. 
+		For this reason I believe that there is likely a mistake in my process that I was unable to find.
+		
+		
+		(b)
+		
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -386,6 +403,11 @@
 	
 	\begin{solution}\\
 		(a)
+		Because we established that
+		\[f_X(x) = f_X(-x)\quad \forall x\]
+		then
+		\[ \int_{-\infty}^{\infty} f_X(x) \,dx = \int_{-\infty}^{\infty} f_X(-x) \,dx \]
+		which implies an identical distribution.
 		
 		(b)
 		
@@ -430,8 +452,11 @@
 		\part Use the results of part (a) to calculate the variances of the binomial and Poisson distributions. 
 	\end{parts}
 	
-	\begin{solution}
-		Here is the solution
+	\begin{solution} \\
+		(a)
+		
+		(b)
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
