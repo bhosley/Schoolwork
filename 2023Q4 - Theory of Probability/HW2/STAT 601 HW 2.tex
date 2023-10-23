@@ -438,20 +438,43 @@
 	\setcounter{question}{31}
 	\question  Let $M_X(t)$ be the moment generating function of $X$, and define $S(t) = \log{(M_X(t))}$. Show that
 	$$ \frac{d}{dt} \left. S(t) \right|_{t=0} = E(X) \text{ and }  \frac{d^2}{dt^2} \left. S(t) \right|_{t=0} = Var(X)$$
-	\begin{solution}
-		Here is the next solution
+	\begin{solution} \\
+		\(E[X]\):
+		\begin{align*}
+			\left. \frac{d}{dt}S(t) \right|_{t=0} &= \left. \frac{d}{dt}\log(M_\mathbf{X}(t)) \right|_{t=0} &\text{via substitution}\\
+			&= \left. \frac{\frac{d}{dt}M_\mathbf{X}(t)}{M_\mathbf{X}(t)} \right|_{t=0} &\text{via MGF identities} \\
+			&= \frac{E[X]}{1}
+		\end{align*}
+		\(\text{Var}[X]\):
+		\begin{align*}
+			\left. \frac{d^2}{dt^2}S(t) \right|_{t=0} &= \left. \frac{d^2}{dt^2}\log(M_\mathbf{X}(t)) \right|_{t=0} &\text{via substitution}\\
+			&= \left. \frac{d}{dt} \left( \frac{\frac{d}{dt}M_\mathbf{X}(t)}{M_\mathbf{X}(t)} \right) \right|_{t=0} &\text{via quotient rule} \\
+			&= \left. \frac{
+				M_\mathbf{X}(t)\frac{d^2}{dt^2} M_\mathbf{X}(t)-M_\mathbf{X}(t) \frac{d}{dt}M_\mathbf{X}(t) \frac{d}{dt} 
+				}{ 
+				\left[M_\mathbf{X}(t)\right] 
+				} \right|_{t=0} &\text{via MGF identities} \\
+			&= \frac{ E[X^2]\cdot1 - E[X]^2 }{ 1^2 } \\
+			&= E[X^2] - E[X]^2
+		\end{align*}
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
 	
 	\question  In each of the following cases verify the expression given for the moment generating function, and in each case use the mgf to calculate $E(X)$ and $Var(X)$.
 	\begin{parts}
-		\part $P(X=x)=\frac{e^{-\lambda} \lambda^x}{x}, \quad M_X(t)=e^{\lambda\left(e^t-1\right)}, \quad x=0,1, \ldots ; \quad \lambda>0$
+		\part $P(X=x)=\frac{e^{-\lambda} \lambda^x}{x!}, \quad M_X(t)=e^{\lambda\left(e^t-1\right)}, \quad x=0,1, \ldots ; \quad \lambda>0$
 		\part $P(X=x)=p(1-p)^x, \quad M_X(t)=\frac{p}{1-(1-p) e^t}, \quad x=0,1, \ldots ; \quad 0<p<1$
 		\part $f_X(x)=\frac{e^{-(x-\mu)^2 /\left(2 \sigma^2\right)}}{\sqrt{2 \pi} \sigma}, M_X(t)=e^{\mu t+\sigma^2 t^2 / 2},-\infty<x<\infty ;-\infty<\mu<\infty, \  \sigma>0$
 	\end{parts}
 	
-	\begin{solution}
+	\begin{solution}\\
 		(a)
+		
+		(b)
+		
+		(c)
+		
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
