@@ -1,51 +1,108 @@
-\documentclass[12pt]{amsart}
-\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
-\usepackage[english]{babel}
-\usepackage[utf8x]{inputenc}
-\usepackage{amsmath,amssymb,amsthm}
-\usepackage{enumerate}
-\usepackage{graphicx}
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
 
-\usepackage[table,xcdraw,dvipsnames]{xcolor}
-\usepackage{tikz}
-\usepackage{pgfplots}
-\usepgfplotslibrary{fillbetween}
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
 \usepackage{booktabs}
+\usepackage[table]{xcolor}
 
-\renewcommand{\thesection}{\arabic{section}}
-\renewcommand{\thesubsection}{\arabic{section}.\arabic{subsection}}
-\renewcommand{\thesubsubsection}{\quad(\alph{subsubsection})}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+\newcommand\chapter{ 3 }
+%\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+%\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{ OPER 623 - Heuristic Search Methods } % This is the name of the course 
+\newcommand{\assignmentname}{Homework \# \chapter} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 
 \begin{document}
-\raggedbottom
-
-\noindent{\large OPER 623 - Heuristic Search Methods %
-	- Homework 3 }
-\hspace{\fill} {\large B. Hosley}
-\bigskip
-
-
-%%%%%%%%%%%%%%%%%%%%%%%
-\setcounter{section}{1}
-
-\subsection{}
-\textit{Question Text}
-
-
-
-
-(6 pts) Given that Vertex Cover is an NP Complete problem, prove that Set Cover is an NP Complete problem.
-(1 pt) Explain the optimization versions of Set Cover and Vertex Cover.
-(1 pt) Explain the decision versions of both problems. 
-(3 pts) Create an appropriate transformation to show that Set Cover is at least as difficult as Vertex Cover (Warning: You should reduce the known NP-complete problem to the problem you are interested in) Steps you should follow:
-Generate an illustrative example to show your transformation from one instance to another.
-Generalize your example to cover any arbitrary instances.
-Prove your transformation meets all of Tovey’s 3 Criteria
-(1 pt) Prove Set Cover is in NP
-(4 pts) Propose1 a constructive heuristic to solve the 0-1 Multi-Constraint Knapsack Problem (MKP).  
-The MKP is a version of the Knapsack problem where instead of maximizing the utility of a knapsack subject to a single constraint (e.g., weight) you are maximizing the utility of the knapsack subject to multiple constraints (e.g., weight, volume, radioactivity, etc).  Thus, each item will have a utility score ui, and parameter values for each of these constraints (e.g., wi, vi, ri).    (Please note this is not the multiple constraint, multiple knapsack problem from a prior homework.  There is only a single knapsack.)
-The 0-1 MKP focuses on the specific situation where you can either bring an item or not (i.e no duplicates and no partial items.)     
-
-
-
-\end{document}
+	\pagestyle{plain}
+	\thispagestyle{empty}
+	\noindent
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\noindent
+	\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+		\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+		\textbf{\assignmentname } & \textbf{\workdate} & \\
+	\end{tabular*}\\ 
+	\rule{\textwidth}{2pt}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\begin{questions}
+		
+		\setcounter{question}{0}
+		\question 
+		(6 pts) Given that Vertex Cover is an NP Complete problem, prove that Set Cover is an NP Complete problem.
+		
+		\begin{parts}
+			\part
+			(1 pt) Explain the optimization versions of Set Cover and Vertex Cover.
+			\part
+			(1 pt) Explain the decision versions of both problems. 
+			\part
+			(3 pts) Create an appropriate transformation to show that Set Cover is at least as difficult as Vertex Cover 
+			(Warning: You should reduce the known NP-complete problem to the problem you are interested in) Steps you should follow:
+			
+			\begin{subparts}
+				\subpart
+				Generate an illustrative example to show your transformation from one instance to another.
+				\subpart
+				Generalize your example to cover any arbitrary instances.
+				\subpart
+				Prove your transformation meets all of Tovey’s 3 Criteria
+			\end{subparts}
+			
+			\part
+			(1 pt) Prove Set Cover is in NP
+		\end{parts}
+		
+		\begin{solution}
+			
+		\end{solution}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+		\question 
+		(4 pts) Propose a constructive heuristic to solve the 0-1 Multi-Constraint Knapsack Problem (MKP).  
+		
+		\begin{parts}
+			\part
+			The MKP is a version of the Knapsack problem where instead of maximizing the utility 
+			of a knapsack subject to a single constraint (e.g., weight) you are maximizing the utility of the knapsack subject to multiple constraints (e.g., weight, volume, radioactivity, etc).  Thus, each item will have a utility score ui, and parameter values for each of these constraints (e.g., \(w_i, v_i, r_i\)). 
+			
+			(Please note this is not the multiple constraint, multiple knapsack problem from a prior homework.  There is only a single knapsack.)
+			
+			\part
+			The 0-1 MKP focuses on the specific situation where you can either bring an item or not (i.e no duplicates and no partial items.)  
+		\end{parts}
+		
+		\begin{solution}
+			
+		\end{solution}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+	\end{questions}
+\end{document}  
