@@ -402,19 +402,29 @@
 	\end{parts}
 	
 	\begin{solution}\\
-		(a)
+		(a) \\
 		Because we established that
 		\[f_X(x) = f_X(-x)\quad \forall x\]
 		then
 		\[ \int_{-\infty}^{\infty} f_X(x) \,dx = \int_{-\infty}^{\infty} f_X(-x) \,dx \]
 		which implies an identical distribution.
 		
-		(b)
+		(b) \\
+		Borrowing the convention from 2.26 we will show symmetry about 0 by showing that \(M_\mathbf{X}(0+\epsilon)=M_\mathbf{X}(0-\epsilon)\).
+		To do so we only need to use the properties of integrals;
+		\begin{align*}
+			M_\mathbf{X}(0+\epsilon)
+			&= \int_{-\infty}^{\infty} e^{x\epsilon} f_\mathbf{X}(x) \,dx \\
+			&= \int_{-\infty}^{0} e^{x\epsilon} f_\mathbf{X}(x) \,dx + \int_{0}^{\infty} e^{x\epsilon} f_\mathbf{X}(x) \,dx \qquad\text{reverse limits of integration}\\
+			&= \int_{0}^{\infty} e^{-x\epsilon} f_\mathbf{X}(-x) \,dx + \int_{-\infty}^{0} e^{-x\epsilon} f_\mathbf{X}(-x) \,dx  \\
+			&= \int_{-\infty}^{\infty} e^{-x\epsilon} f_\mathbf{X}(-x) \,dx \\
+			&= M_\mathbf{X}(0-\epsilon).
+		\end{align*}
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
-	\question  Let $f(x)$ be a pdf and let $a$ be a number such that, for all $\epsilon > 0, \ f(x+\epsilon) = f(a-\epsilon)$. Such a pdf is said to be symmetric about the point $a$.
+	\question  Let $f(x)$ be a pdf and let $a$ be a number such that, for all $\epsilon > 0, \ f(a+\epsilon) = f(a-\epsilon)$. Such a pdf is said to be symmetric about the point $a$.
 	
 	\begin{parts}
 		\part Give three examples of symmetric pdfs.
@@ -432,14 +442,54 @@
 			is symmetric around $a=\mu$.
 		\end{enumerate}
 		
-		(b)
+		(b) 
+		\begin{align*}
+		\intertext{If $a$ is the median, then}
+			\int_{-\infty}^{a} f(x) \,dx &= \int_{a}^{\infty} f(x) \,dx
+		\intertext{which can be seen by substituting \(x=a+\epsilon \rightarrow \epsilon = x-a\)}
+			\int_{-\infty}^{0} (a+\epsilon) \,dx &= \int_{a}^{\infty} f(a+\epsilon) \,dx
+		\intertext{reversing the first integral bounds}
+			\int_{a}^{\infty} (a-\epsilon) \,dx &= \int_{a}^{\infty} f(a+\epsilon) \,dx
+		\intertext{and finally, using the symmetric property}
+			\int_{a}^{\infty} (a+\epsilon) \,dx &= \int_{a}^{\infty} f(a+\epsilon) \,dx.
+		\end{align*}
+		Which allows us to conclude that \(a\) is the median of this arbitrary symmetric function.
+		
+		(c) \\
+		To prove that $E[X] = a$ when an $f(x)$ is symmetric we will prove that $E[X] - a =0$.
+		\begin{align*}
+			E[X] - a
+			&= E[X-a] \\
+			&= \int_{-\infty}^{\infty} (x-a) f(x) \,dx  &\text{substitute }x = a + \epsilon\\
+			&= \int_{-\infty}^{\infty} (\epsilon) f(a + \epsilon) \,dx &\text{split the integral on }a\\
+			&= \int_{-\infty}^{a} (\epsilon) f(a - \epsilon) \,dx + \int_{a}^{\infty} (\epsilon) f(a - \epsilon) \,dx &\text{symmetry of }f(x)\\
+			&= \int_{-\infty}^{a} (\epsilon) f(a + \epsilon) \,dx + \int_{a}^{\infty} (\epsilon) f(a - \epsilon) \,dx &\text{reverse integral bounds}\\
+			&= \int_{a}^{\infty} -(\epsilon) f(a - \epsilon) \,dx + \int_{a}^{\infty} (\epsilon) f(a - \epsilon) \,dx \\
+			&= -\int_{a}^{\infty} (\epsilon) f(a - \epsilon) \,dx + \int_{a}^{\infty} (\epsilon) f(a - \epsilon) \,dx \\
+			&= 0
+		\end{align*}
 		
 		
-		(c)
+		(d)\\
+		First, we observe that
+		\begin{align*}
+			f(x) = e^{-x}, \\
+			f(a+\epsilon) = e^{-(a+\epsilon)}, \\
+			f(a-\epsilon) = e^{-(a-\epsilon)}.
+		\end{align*}
+		Which allows us to conclude that $f(a+\epsilon)$ and $f(a-\epsilon)$ are equal when $\epsilon=0$,
+		however, $\epsilon>0$, thus this function is not symmetric.
 		
-		(d)
 		
-		(e)
+		(e) \\
+		We can see that this $f(x)$ happens to be $\sim\exp(\lambda=1)$, which allows us to use the common
+		features of an exponential distribution,
+		
+		Mean: $\frac{1}{\lambda} = 1$
+		
+		Median: $\frac{\ln 2}{\lambda} = \ln 2 \approx 0.69$
+		
+		And thus we conclude that for this function median < mean.
 		
 		
 	\end{solution}
@@ -453,9 +503,25 @@
 	\end{parts}
 	
 	\begin{solution} \\
-		(a)
-		
-		(b)
+		(a) \\
+		Binomial:
+		\begin{align*}
+			E[X(X-1)] 
+			&= \sum_{x=2}^{n} x(x-1) \binom{n}{x} p^{x}q^{n-x}
+		\end{align*}
+		\textcolor{red}{Unfortunately, I got stuck on this one. I am sure there is some sort of 
+			binomial identity that will allow us to simplify, but I do not know what it is and 
+			was not able to find one in the time allotted.}\\
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -495,11 +561,88 @@
 	
 	\begin{solution}\\
 		(a)
-		
+		\begin{align*}
+		\intertext{\(E[X]\):}
+			M_X(t) 
+			&= \sum_{x=0}^{\infty} e^{tx} \frac{e^{-\lambda} \lambda^x}{x!}, \\
+			&= e^{-\lambda} \sum_{x=0}^{\infty}  \frac{ e^{tx}\lambda^x}{x!}, \\
+			&= e^{-\lambda} \sum_{x=0}^{\infty}  \frac{ e^{tx}\lambda^x}{x!},
+		\intertext{using an identity of infinite series with factorial denominator that I do not know the name of. Let $y=e^t\lambda$,}
+			&= e^{-\lambda} \sum_{x=0}^{\infty}  \frac{ y^x}{x!}, \\
+			&= e^{-\lambda} e^{y} \\
+			&= e^{-\lambda} e^{e^t\lambda} \\
+			&= e^{\lambda\left(e^t-1\right)}.
+		\intertext{Then,}
+			E[X]
+			&= \left. \frac{d}{dt} M_X(t) \right|_{t=0} \\
+			&= \left. \frac{d}{dt} e^{\lambda\left(e^t-1\right)} \right|_{t=0} \\
+			&= \left. \lambda e^t e^{\lambda\left(e^t-1\right)} \right|_{t=0} \\
+			&= \lambda.
+		\intertext{And,}
+			E[X^2]
+			&= \left. \frac{d^2}{d^2t} M_X(t) \right|_{t=0} \\
+			&= \left. \frac{d^2}{d^2t} e^{\lambda\left(e^t-1\right)} \right|_{t=0} \\
+			&= \left. \frac{d}{dt} \lambda e^t e^{\lambda\left(e^t-1\right)} \right|_{t=0} \\
+			&= \left. \lambda e^t( \lambda e^t e^{\lambda\left(e^t-1\right)} ) + (\lambda e^t e^{\lambda\left(e^t-1\right)}) \right|_{t=0} \\
+			&= \lambda^2 + \lambda.
+		\intertext{And,}
+			\text{Var}[X]
+			&= E[X^2] - E[X]^2 \\
+			&= (\lambda^2 + \lambda) - (\lambda)^2 \\
+			&= \lambda.
+		\end{align*}
+
 		(b)
+		\begin{align*}
+			M_X(t) 
+			&= \sum_{x=0}^{\infty} e^{tx} p(1-p)^x \\
+			&= \sum_{x=0}^{\infty} e^{tx} p(1-p)^x
+			&= \ldots
+		\intertext{\textcolor{red}{got stuck here, continued with provided information}}
+			E[X] 
+			&= \left. \frac{d}{dt} M_X(t) \right|_{t=0} \\
+			&= \left. \frac{d}{dt} \frac{p}{1-(1-p) e^t} \right|_{t=0} \\
+			&= \left. \frac{p(-(1-p) e^t)}{(1-(1-p) e^t)^2} \right|_{t=0} \\
+			&= \frac{p(-(1-p))}{(-p)^2}  \\
+			&= \frac{p}{1-p} 
+		\intertext{}
+			E[X^2] 
+			&= \left. \frac{d^2}{d^2t} M_X(t) \right|_{t=0} \\
+			&= \left. \frac{d^2}{d^2t} \frac{p}{1-(1-p) e^t} \right|_{t=0} \\
+			&= \left. \frac{d}{dt} \frac{p}{(1-(1-p) e^t)^2}(-(1-p) e^t) \right|_{t=0}			
+		\intertext{ouch,}
+			&= \left. \frac{%
+			\bigg(1-(1-p) e^t\bigg)^2  \bigg(1-(1-p) e^t\bigg) + 2p\bigg((1-p)e^t\bigg)^2 \bigg(1-(1-p) e^t\bigg)%
+			}{(1-(1-p) e^t)^4} \right|_{t=0} \\
+			&= \frac{d}{dt} \frac{%
+				\bigg(1-(1-p)\bigg)^2  \bigg(1-(1-p)\bigg) + 2p\bigg((1-p)\bigg)^2 \bigg(1-(1-p)\bigg)%
+			}{(1-(1-p))^4} \\
+			&= \frac{ %
+				\big(1-(1-p)\big)^2  + 2p^2\big((1-p)\big)^2%
+			}{(1-(1-p))^3}	\\	
+			&= \frac{  p^2(1-p)\big)^2  + 2p^2\big((1-p)\big)^2  }{(1-(1-p))^3}	\\
+			&= \frac{  p(1-p) + 2\big((1-p)\big)^2  }{(p)^2}
+		\intertext{}
+			\text{Var}[X]
+			&= E[X^2] - E[X]^2 \\
+			&= \frac{  p(1-p) + 2\big((1-p)\big)^2  }{(p)^2} - \frac{p}{1-p}  \\
+			&= \frac{1-p}{p^2}
+		\end{align*}
 		
 		(c)
-		
+%		\begin{align*}
+%		\intertext{}
+%			M_X(t) 
+%		\intertext{}
+%			E[X]
+%			&= \left. \frac{d}{dt} M_X(t) \right|_{t=0} \\
+%		\intertext{}
+%			E[X^2]
+%			&= \left. \frac{d^2}{d^2t} M_X(t) \right|_{t=0} \\
+%		\intertext{}
+%			\text{Var}[X]
+%			&= E[X^2] - E[X]^2 \\
+%		\end{align*}
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
@@ -513,7 +656,7 @@
 		\part Define a new random variable by $Y = 2pX$. Show that, as $p \downarrow 0$, the mgf of $Y$ converges to that of a chi squared random variable with $2r$ degrees of freedom by showing that $$\lim_{p \rightarrow 0} M_Y(t) = \left(\frac{1}{1-2t}\right)^r , \quad |t| < \frac{1}{2}.$$
 	\end{parts}
 	\begin{solution}
-		Here is the next solution
+		\textcolor{red}{Once again I had trouble with the binomial function and having insufficient time to find the information that I need.}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%			
 
