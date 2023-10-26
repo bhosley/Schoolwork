@@ -1,0 +1,272 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+\newcommand\chapter{3}
+\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{STAT 601} % This is the name of the course 
+\newcommand{\assignmentname}{Homework \# \chapter} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname } & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+
+	\setcounter{question}{3}
+	\question 
+	A man with \(n\) keys wants to open his door and tries the keys at random. Exactly one
+	key will open the door. Find the mean number of trials if
+	\begin{parts}
+		\part unsuccessful keys are not eliminated from further selections.
+		\part unsuccessful keys are eliminated.
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question 
+	A standard drug is known to be effective in 80\% of the cases in which it is used. A new
+	drug is tested on 100 patients and found to be effective in 85 cases. Is the new drug
+	superior? (\textit{Hint}: Evaluate the probability of observing 85 or more successes assuming
+	that the new and old drugs are equally effective.)
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\setcounter{question}{6}
+	\question 
+	Let the number of chocolate chips in a certain type of cookie have a Poisson distribution. We want the 
+	probability that a randomly chosen cookie has at least two chocolate chips to be greater than .99. 
+	Find the smallest value of the mean of the distribution that ensures this probability.
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\setcounter{question}{11}
+	\question 
+	Suppose \(X\) has a binomial\((n, p)\) distribution and let Y have a negative binomial\((r, p)\)
+	distribution. Show that \(F_X(r-1) = 1-F_Y(n-r)\).
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question 
+	A \textit{truncated} discrete distribution is one in which a particular class cannot be observed
+	and is eliminated from the sample space. In particular, if \(X\) has range \(1,2,34,\ldots\) and
+	the 0 class cannot be observed (as is usually the case), the 0-\textit{truncated} random variable
+	\(X_T\) has pmf
+	
+	\[P(X_T=x) = \frac{P(X=x)}{P(X>0)}, \quad x=1,2,\ldots.\]
+	
+	Find the pmf, mean, and variance of the 0-truncated random variable starting from
+	\begin{parts}
+		\part \(X\sim\) Poisson(\(\lambda\)).
+		\part \(X\sim\) negative binomial\((r, p)\), as in (3.2.10).
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question 
+	Starting from the 0-truncated negative binomial (refer to Exercise 3.13), if we let 
+	\(r \rightarrow 0\), we get an interesting distribution, the \textit{logarithmic series distribution}. 
+	A random variable \(X\) has a logarithmic series distribution with parameter \(p\) if
+	
+	\[P(X=x) = \frac{-(1-p)^x}{x\log p}, \quad x=1,2,\ldots \quad 0<p<1.\]
+	
+	\begin{parts}
+		\part Verify that this defines a legitimate probability function.
+		\part Find the mean and variance of \(X\). (The logarithmic series distribution has proved
+		useful in modeling species abundance. See Stuart and Ord 1987 for a more detailed
+		discussion of this distribution.)
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question 
+	In Section 3.2 it was claimed that the Poisson(\(\lambda\)) distribution is the limit of the negative
+	binomial\((r, p)\) distribution as \(r \rightarrow \infty,\ p \rightarrow 1\), and \(r(1-p) \rightarrow \lambda\).
+	Show that under these
+	conditions the mgf of the negative binomial converges to that of the Poisson.
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\setcounter{question}{16}
+	\question 
+	Establish a formula similar to (3.3.18) for the gamma distribution. 
+	If \(X \sim\) gamma\((\alpha,\beta)\),then for any positive constant \(\nu\),
+	
+	\[EX^\nu - \frac{\beta^\nu \Gamma (\nu+\alpha)}{\Gamma(\alpha)}.\]
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\setcounter{question}{18}
+	\question 
+	Show that
+	
+	\[
+		\int_{x}^{\infty} \frac{1}{\Gamma(\alpha)} z^{\alpha-1} \,dz = 
+		\sum_{y=0}^{\alpha-1} \frac{x^y e^{-x}}{y!}, \quad \alpha=1,2,3\ldots.
+	\]
+	
+	(\textit{Hint}: Use integration by parts.) Express this formula as a probabilistic relationship
+	between Poisson and gamma random variables/
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\setcounter{question}{22}
+	\question 
+	The \textit{Pareto distribution}, with parameters \(\alpha\) and \(\beta\), has pdf
+	
+	\[f(x) = \frac{\beta\alpha^\beta}{x^{\beta+1}}, \quad \alpha<x<\infty, \quad \alpha<0, \quad \beta>0.\]
+	
+	\begin{parts}
+		\part Verify that \(f(x)\) is a pdf.
+		\part Derive the mean and variance of this distribution.
+		\part Prove that the variance does not exist if\(\beta\leq2\)
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	3.26
+	
+	\setcounter{question}{25}
+	\question 
+	Verify that the following pdfs have the indicated hazard functions (see Exercise 3.25)
+	\begin{parts}
+		\part If \(T\sim\) exponential(\(\beta\)), then \(h_T(t) = 1/\beta\).
+		\part If \(T\sim\) Weibull(\(\gamma,\beta\)), then \(h_T(t) = (\gamma/\beta)t^{\gamma-1}1\).
+		\part If \(T\sim\) logistic(\(\mu,\beta\)), that is,
+		
+		\[F_T(t) = \frac{1}{1+e^{-(t-\mu)/\beta}},\]
+		
+		then \(h_T(t) = (1/\beta)F_T(t)\).
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\setcounter{question}{27}
+	\question 
+	Show that each of the following families is an exponential family
+	\begin{parts}
+		\setcounter{partno}{1}
+		\part gamma family with either parameter \(\alpha\) or \(\beta\) known or both unknown
+		\part beta family with either parameter \(\alpha\) or \(\beta\) known or both unknown
+		\part Poisson family
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\setcounter{question}{37}
+	\question 
+	Let \(Z\) be a random variable with pdf \(f(z)\). Define \(z_\alpha\) to be a number that satisfies this relationship:
+	
+	\[\alpha = P(Z>z_\alpha) = \int_{z_\alpha}^{\infty} f(z) \,dz.\]
+	
+	Show that if \(X\) is a random variable with pdf \((1/\sigma)f((x-\mu)/\sigma)\) and \(\sigma z_\alpha+\mu\),
+	then \(P(X>x_\alpha)\).	(Thus if a table of \(z_\alpha\) values were available, then values of \(x_\alpha\) 
+	could be easily computed for any member of the location–scale family.)
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
+	
+	\question 
+	Consider the Cauchy family defined in Section 3.3. This family can be extended to a
+	location–scale family yielding pdfs of the form
+	
+	\[f(x|\mu,\sigma) = \frac{1}{\sigma\pi \left(a + \left(\frac{x-\mu}{\sigma}\right)^2 \right)} ,\quad -\infty<x<\infty.\]
+	
+	The mean and variance do not exist for the Cauchy distribution. So the parameters
+	\(\mu\) and \(\sigma^2\) are not the mean and variance. But they do have important meaning. Show
+	that if \(X\) is a random variable with a Cauchy distribution with parameters \(\mu\) and \(\sigma\),
+	then:
+	
+	\begin{parts}
+		\part \(\mu\) is the median of the distribution of \(X\), that is, \(P(X\geq\mu) = P(X\leq\mu) = \frac{1}{2}\).
+		\part \(\mu+\sigma\) and \(\mu-\sigma\) are the quartiles of the distribution of \(X\), th at is, 
+		\(P(X\geq\mu-\sigma) = P(X\leq\mu-\sigma) = \frac{1}{4}\). 
+		(Hint: Prove this first for \(\mu=0\) and \(\sigma=1\) and then use Exercise 3.38.)
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{questions}
+\end{document}
