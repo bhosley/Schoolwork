@@ -14,6 +14,7 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{bbm}
+\usepackage{comment}
 
 \usepackage{hyperref}
 \usepackage{graphicx}
@@ -81,6 +82,55 @@
 		\end{parts}
 		
 		\begin{solution}
+			\begin{parts}
+				\part
+				
+				In set cover the optimization objective is to select the smallest number of subsets such that each element in the (Universe)
+				set is included in the union of the subsets.
+				
+				Similarly, the optimization object in the case of the vertex cover problem is to select the smallest number of nodes (vertices)
+				on an undirected graph such that ever edge is connected to at least one of the selected nodes.
+				
+				\part
+				
+				In the case of set coverage, the decision version of the problem asks if there is a \(k\) sized group of subsets \(s_i \in S \)
+				such that \(S \equiv \bigcup_{i=0}^k s_i \) .
+				
+				And for the vertex cover problem we may ask, is there a set of \(k\) nodes such that every edge in a graph 
+				is connected to at least one of the selected nodes.
+				
+				\part
+				
+				For any graph, let \(v\) be a vertex, \(e\) an edge, \(V\) be the set of all vertices, and \(E\) be the set of all edges in the graph.
+				A vertex \(v\) is meaningfully a set of the edges that join to create it.
+						
+				\begin{center}
+					\includegraphics[width=0.2\linewidth]{6n-graf.svg}
+				\end{center}
+				
+				Using this graph as an example we can illustrate 
+				\(v_1 = \{e_{12},e_{15}\}\) where the subscript represent the label for the node, and the nodes at either end for an edge.
+				
+				In this manner we transform the vertex covering problem into a set cover problem.
+				If it is true for a subset \(S\subset V\) that \(E\subset \bigcup_{i\in S} v_i \), in the vertex covering problem, 
+				it is true in the set covering problem.
+				
+				The first two of Tovey's criteria are confirmed by the fact that in this representation, 
+				all possible vertex covering problems are a specific type of set covering problem in which each element in the universe set
+				is a member of exactly two subsets, and each subset can have any number (\(>0\)) of elements as members.
+				
+				This transformation is likely linear as it requires only one pass when translating vertices to sets and when collecting the set of edges.
+				
+				\part
+				In the previous part we described the nature of a function that is injective, invertable, and could be executed in linear time
+				that maps every possible vertex covering problem into a type of set cover problem, 
+				and is thus set cover is at least as hard as vertex cover.
+				
+				Because we have been given that the vertex cover problem is NP complete, we can conclude that the set cover problem is also in NP.
+				
+				As a result  set covering problem 
+				
+			\end{parts}
 			
 		\end{solution}
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -91,7 +141,7 @@
 		\begin{parts}
 			\part
 			The MKP is a version of the Knapsack problem where instead of maximizing the utility 
-			of a knapsack subject to a single constraint (e.g., weight) you are maximizing the utility of the knapsack subject to multiple constraints (e.g., weight, volume, radioactivity, etc).  Thus, each item will have a utility score ui, and parameter values for each of these constraints (e.g., \(w_i, v_i, r_i\)). 
+			of a knapsack subject to a single constraint (e.g., weight) you are maximizing the utility of the knapsack subject to multiple constraints (e.g., weight, volume, radioactivity, etc).  Thus, each item will have a utility score \(u_i\), and parameter values for each of these constraints (e.g., \(w_i, v_i, r_i\)). 
 			
 			(Please note this is not the multiple constraint, multiple knapsack problem from a prior homework.  There is only a single knapsack.)
 			
@@ -100,9 +150,53 @@
 		\end{parts}
 		
 		\begin{solution}
+			A simple, linear time, option is to proceed through the items, adding them to the sack until one triggers one of the constraints.
+			Then for each subsequent item one will examine if adding this item represents an improvement over another,
+			this means that the \(u_{\text{new}}> u_{\text{old}}\) and \(\{w, v, r\}_{\text{new}} < \{w, v, r\}_{\text{old}} + \{w, v, r\}_{\text{slack}} \).
+			If both of these are true, replace the item and move on. 
+			
+			If one is willing to spend a little extra time on the problem they might consider every subset of items in the sack for replacement instead of
+			single items. \\
+			
+			\hrule
+			
+			To propose a destructive heuristic as an answer to a constructive heuristic question I would propose the following.
+			\begin{enumerate}
+				\item Add every item to the knapsack.
+				\item Replace each item's attributes by that attribute's value divided by the item's utility \(\frac{\{w_i, v_i, r_i\}}{u_i}\)
+				\item Identify which of the sack's constraints are most violated; if all are feasible, then we are done packed!
+				\item Remove the item with the highest adjusted value in the previously identified constraint.
+				\item Return to step 3.
+			\end{enumerate}		
 			
 		\end{solution}
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		
 	\end{questions}
 \end{document}  
+
+
+\begin{comment}
+			Assume 0-1 means item is or is not
+			
+			Let 
+			\(I\) = set of all items
+			\(A\) be a matrix (vector?) of all item's constraints \(\{w_i, v_i, r_i\}_{i\in I}\)
+			
+			
+			Assume all items are in the pack, then we will remove
+			
+			A = I x C matrix of \(\{w_i, v_i, r_i\}/ u_i\)
+			B = I x 1
+			
+			A @ B  = vector of con values C, 
+			C subtracted by bag capacity, select the highest value constraint c
+			c row of A @ B (t?) ... a 1xI or Ix1 result
+			Select the highest value
+			change the corresponding item's element in B from 1 to 0
+			
+			repeat until C subtract BagCap is <0 for each element
+			
+			Resulting B is the matrix of items not included, 
+			\(\not B\) is the affirmative version
+\end{comment}			
