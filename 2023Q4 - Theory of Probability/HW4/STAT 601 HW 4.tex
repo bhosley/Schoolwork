@@ -54,42 +54,225 @@
 
 \begin{questions}
 
-	\setcounter{question}{0}
+	%4.4
+	\setcounter{question}{3}
 	\question 
+	A pdf is defined by
+	
+	\[
+	f(x,y)=
+	\begin{cases}
+		C(x + 2y) & \text{if } 0 < y < 1 \text{ and } 0 < x < 2 \\
+		0 & \text{otherwise}.
+	\end{cases}
+	\]
+	
+	\begin{parts}
+		\part Find the value of \(C\).
+		\part Find the marginal distribution of \(X\).
+		\part Find the joint cdf of \(X\) and \(Y\).
+		\part Find the pdf of the random variable \(Z = 9/(X + 1)^2\).
+	\end{parts}
 	
 	\begin{solution}
-	
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+	%4.5
+	\question 
+	\begin{parts}
+		\part Find \(P(X>\sqrt{Y})\) if \(X\) and \(Y\) are jointly distributed with pdf
+			\[f(x,y) = x + y, \quad 0 \leq x \leq 1, \quad 0 \leq y \leq 1.\]
+		\part Find \(P(X^2 < Y < X)\) if \(X\) and \(Y\) are jointly distributed with pdf
+			\[f(x,y) = 2x, \quad 0 \leq x \leq 1, \quad 0 \leq y \leq 1.\]
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.4
+	%4.7
+	\setcounter{question}{6}
+	\question 
+	A woman leaves for work between 8 AM and 8:30 AM and takes between 40 and 50 
+	minutes to get there. Let the random variable \(X\) denote her time of departure, and
+	the random variable \(Y\) the travel time. Assuming that these variables are independent
+	and uniformly distributed, find the probability that the woman arrives at work before
+	9 AM.
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.5
+	%4.9
+	\setcounter{question}{8}
+	\question 
+	Prove that if the joint cdf of \(X\) and \(Y\) satisfies
+		\[F_{X,Y} (x,y) = F_X(x)F_Y(y),\]
+	then for any pair of intervals \((a, b)\), and \((c, d)\),
+		\[P(a \leq X \leq b, c \leq Y \leq d) = P(a \leq X \leq b)P(c \leq Y \leq d).\]
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.7
+	%4.10
+	\question 
+	The random pair \((X,Y)\) has the distribution
+	
+	\begin{center}
+		\def\arraystretch{1.25}
+		\begin{tabular}{cc|ccc}
+			& & & \(X\) & \\
+			& & 1 & 2 & 3 \\
+			\hline
+			& 2 & \(\frac{1}{12}\) & \(\frac{1}{6}\) & \(\frac{1}{12}\) \\
+			\(Y\) & 3 & \(\frac{1}{3}\)  & \(0\) & \(\frac{1}{6}\) \\
+			& 4 & \(0\) & \(\frac{1}{3}\) &  \(0\)
+		\end{tabular}
+	\end{center}
+	
+	
+	\begin{parts}
+		\part Show that \(X\) and \(Y\) are dependent.
+		\part Give a probability table for random variables \(U\) and \(V\) 
+			that have the same marginals as \(X\) and \(Y\) but are independent.
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.9
+	%4.12
+	\setcounter{question}{11}
+	\question 
+	If a stick is broken at random into three pieces, what is the probability that the pieces
+	can be put together in a triangle? (See Gardner 1961 for a complete discussion of this
+	problem.)
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.10
+	%4.19
+	\setcounter{question}{18}
+	\question 
+	
+	\begin{parts}
+		\part Let \(X_1\) and \(X_2\) be independent n\((0, 1)\) random variables. 
+			Find the pdf of \((X_1 - X_2)^2/2\).
+		\part If \(X_i, i = 1, 2,\) are independent gamma\((\alpha i, 1)\) random variables, 
+			find the marginal distributions of \(X_1/(X_1 + X_2)\) and \(X_2/(X_1 + X_2)\).
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.12
+	%4.23
+	\setcounter{question}{22}
+	\question 
+	For \(X\) and \(Y\) as in Example 4.3.3, find the distribution of \(XY\) by making the transformations given in (a) and (b) and integrating out \(V\).
+	
+	\begin{parts}
+		\part \(U = XY ,\ V = Y\)
+		\part \(U = XY ,\ V = X/Y\)
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.19
+	%4.24
+	\question
+	Let \(X\) and \(Y\) be independent random variables with 
+	\(X\sim\)gamma\((r,1)\) and \(Y\sim\)gamma\((s,1)\). 
+	Show that \(Z_1 = X + Y\) and \(Z_2 = X/(X + Y )\) are independent, 
+	and find the distribution of each. (\(Z_1\) is gamma and \(Z_2\) is beta.) 
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.23
+	%4.30
+	\setcounter{question}{30}
+	\question 
+	Suppose the distribution of \(Y\), conditional on \(X = x\), is n\((x, x^2)\) 
+	and that the marginal distribution of \(X\) is uniform\((0, 1)\).
+	
+	\begin{parts}
+		\part Find \(E\,Y\) , Var \(Y\) , and Cov\((X,Y)\).
+		\part Prove that \(Y/X\) and \(X\) are independent.
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.24
+	%4.31
+	\question 
+	Suppose that the random variable \(Y\) has a binomial distribution with \(n\) trials and success probability \(X\), where \(n\) is a given constant and \(X\) is a uniform\((0, 1)\) random variable.
+	
+	\begin{parts}
+		\part Find \(E\,Y\) and Var \(Y\).
+		\part Find the joint distribution of \(X\) and \(Y\).
+		\part Find the marginal distribution of \(Y\).
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.30
+	%4.41
+	\setcounter{question}{40}
+	\question 
+	Show that any random variable is uncorrelated with a constant.
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.31
+	%4.45
+	\setcounter{question}{44}
+	\question 
+	Show that if \((X,Y)\sim\) bivariate normal
+	\((\mu_X, \mu_Y , \sigma_X^2 , \sigma_Y^2 , \rho)\), then the following are true.
+	
+	\begin{parts}
+		\part The marginal distribution of \(X\) is n\((\mu_X, \sigma_X^2 )\) a
+		nd the marginal distribution of \(Y\) is n\((\mu_Y , \sigma_Y^2 )\).
+		\part The conditional distribution of Y given \(X = x\) is
+			\[n(\mu_Y + \rho(\sigma_Y /\sigma_X)(x-\mu_X), \sigma_Y^2 (1-\rho^2)).\]
+		\part For any constants \(a\) and \(b\), the distribution of \(aX + bY\) is
+			\[n(a\mu_X + b\mu_Y , a^2\sigma_X^2 + b^2\sigma_Y^2 + 2ab\rho\sigma_X\sigma_Y ).\]
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4.41
-
-4.45
-
-4.52		
+	%4.52	
+	\setcounter{question}{51}
+	\question 
+	Bullets are fired at the origin of an \((x, y)\) coordinate system, and the point hit, say \((X, Y )\), is a random variable. The variables \(X\) and \(Y\) are taken to be independent n\((0, 1)\) random variables. If two bullets are fired independently, what is the distribution of the distance between them?
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{questions}
 \end{document}
