@@ -53,33 +53,152 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{questions}
-
-	\setcounter{question}{0}
+	
+	%5.3
+	\setcounter{question}{2}
 	\question 
+	Let \(X_1,\ldots, X_n\) be iid random variables with continuous cdf \(F_X\), 
+	and suppose \(E\,X_i = \mu\).
+	Define the random variables \(Y_1,\ldots, Y_n\) by
+	
+	\[ 
+	Y_i = 
+	\begin{cases}
+		1 & \text{if } X_i > \mu \\
+		0 & \text{if } X_i \leq\mu.
+	\end{cases}
+	\]
+	
+	Find the distribution of \(\sum^{n}_{i=1}Y_i\).
 	
 	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
+	%5.6
+	\setcounter{question}{5}
+	\question 
+	If \(X\) has pdf \(f_X(x)\) and \(Y\), independent of \(X\), has pdf \(f_Y(y)\), 
+	establish formulas, similar to (5.2.3), for the random variable \(Z\) 
+	in each of the following situations.
+	\begin{parts}
+		\part \(Z = X - Y\)
+		\part \(Z = XY\)
+		\part \(Z = X/Y\)
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%5.11
+	\setcounter{question}{10}
+	\question 
+	Suppose \(\bar{X}\) and \(S^2\) are calculated from a random sample \(X_1,\ldots, X_n\) 
+	drawn from a population with finite variance \(\sigma^2\). We know that \(E\,S^2 = \sigma^2\). 
+	Prove that \(E\,S \leq \sigma\), and
+	if \(\sigma^2 > 0\), then \(E\,S < \sigma\).
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%5.15
+	\setcounter{question}{14}
+	\question 
+	Establish the following recursion relations for means and variances. 
+	Let \(\bar{X}_n\) and \(S_n^2\) be the mean and variance, respectively, of \(X_1,\ldots,X_n\). 
+	Then suppose another observation, \(X_{n+1}\), becomes available. Show that
+	
+	\begin{parts}
+		\part \(\bar{X}_{n+1} = \frac{X_{n+1}  + n\bar{X}_n}{n + 1} \).
+		\part \(nS_{n+1}^2 = (n-1)S_n^2 + \left( \frac{n}{n+1} \right) (X_{n+1}-\bar{X}_n)^2\).
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%5.16
+	\question 
+	Let \(X_i,i = 1, 2, 3\), be independent with n\((i,i^2)\) distributions. 
+	For each of the following situations, use the \(X_is\) to construct a statistic with the indicated distribution.
+	
+	\begin{parts}
+	\part chi squared with 3 degrees of freedom
+	\part \(t\) distribution with 2 degrees of freedom
+	\part \(F\) distribution with 1 and 2 degrees of freedom
+	\end{parts}
+	
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%5.17
+	\question 
+	Let \(X\) be a random variable with an \(F_{p,q}\) distribution.
+	
+	\begin{parts}
+		\part Derive the pdf of \(X\).
+		\part Derive the mean and variance of \(X\).
+		\part Show that \(1/X\) has an \(F_{q,p}\) distribution.
+		\part Show that \((p/q)X/[1 + (p/q)X]\) has a beta distribution with parameters \(p/2\) and \(q/2\).
+	\end{parts}
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	%5.22
+	\setcounter{question}{21}
+	\question 
+	Let \(X\) and \(Y\) be iid n\((0, 1)\) random variables, 
+	and define \(Z = \min(X,Y)\). Prove that \(Z^2 \sim \chi^2_1 \).
+	
+	\begin{solution}
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+	%5.24
+	\setcounter{question}{23}
+	\question 
+	Let \(X_1,\ldots, X_n\) be a random sample from a population with pdf
+	
+	\[
+	f_X(x)=
+	\begin{cases}
+		1/\theta & \text{if } 0 < x < \theta \\
+		0 	& \text{otherwise}.
+	\end{cases}
+	\]
+	
+	Let \(X_{(1)} < \ldots < X_{(n)}\) be the order statistics. 
+	Show that \(X_{(1)}/X_{(n)}\) and \(X_{(n)}\) are independent random variables.
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-5.3
-
-5.6
-
-5.11
-
-5.15
-
-5.16
-
-5.17
-
-5.22
-
-5.24
-
-5.31
+	%5.31
+	\setcounter{question}{30}
+	\question
+	Suppose \(\bar{X}\) is the mean of 100 observations from a population with mean \(\mu\) and variance \(\sigma^2 = 9\). 
+	Find limits between which \(\bar{X}-\mu\) will lie with probability at least \(.90\). 
+	Use both Chebychev’s Inequality and the Central Limit Theorem, and comment on each. 
+	
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		
 
 \end{questions}
