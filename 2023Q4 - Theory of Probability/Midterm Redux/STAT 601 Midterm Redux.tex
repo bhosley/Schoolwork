@@ -1,0 +1,96 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+%\newcommand\chapter{5}
+%\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+\renewcommand{\questionlabel}{\textbf{\thequestion}.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{STAT 601} % This is the name of the course 
+\newcommand{\assignmentname}{Midterm 1 Redux} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname } & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+
+	\setcounter{question}{0}
+	\question 
+	
+	\textbf{(40 points) Let Y be a random variable with pdf given by:}
+	
+	\[f_\mathbf{Y}(y) = e^ae^{-y} I_{[a,\infty)(y)}\]
+	
+	\begin{parts}
+		\part Find the Moment Generating Function of Y.
+		\part Find E[Y] and Var[Y].
+		\setcounter{partno}{3}
+		\part Find the pdf and CDF of X where \(X = e^{(Y-a)}\).
+	\end{parts}
+
+	\begin{solution}
+	
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\setcounter{question}{2}
+	\question 
+	
+	\textbf{(30 points) Let X be a random variable with pdf given by}
+	
+	\[
+	f_X(x) = \begin{cases}
+		\frac{x^2}{81} & \text{for } -6<x<3 \\
+		0 & \text{otherwise}
+	\end{cases}
+	\]
+	Find the pdf of \(Y=X^2\)
+	
+	\begin{solution}
+		
+	\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+
+\end{questions}
+\end{document}
