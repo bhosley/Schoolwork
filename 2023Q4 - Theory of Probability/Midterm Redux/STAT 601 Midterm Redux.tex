@@ -59,7 +59,7 @@
 	
 	\textbf{(40 points) Let Y be a random variable with pdf given by:}
 	
-	\[f_\mathbf{Y}(y) = e^ae^{-y} I_{[a,\infty)(y)}\]
+	\[f_\mathbf{Y}(y) = e^ae^{-y} I_{[a,\infty)}(y)\]
 	
 	\begin{parts}
 		\part Find the Moment Generating Function of Y.
@@ -69,10 +69,69 @@
 	\end{parts}
 
 	\begin{solution}
-	
+	\begin{parts}
+		\part 
+		\begin{align*}
+			M_Y(y)
+			&= \int_{-\infty}^{\infty} e^{ty}e^ae^{-y} \mathbb{I}_{[a,\infty)} \,dy \\
+			&= \mathbb{I}_{[a,\infty)}e^a \int_{-\infty}^{\infty} e^{y(t-1)} \,dy \\
+			&= e^a \int_{a}^{\infty} e^{y(t-1)} \,dy \\
+			&= e^a \left. \frac{1}{t-1}e^{y(t-1)} \right|_a^\infty \\
+			&= \left. \frac{1}{t-1}e^{y(t-1)+a} \right|_a^\infty \\
+			&= 0 - \frac{1}{t-1}e^{a(t-1)+a} \\
+			&= - \frac{e^{at}}{t-1} \\
+		\end{align*}
+		
+		\part 
+		\begin{align*}
+			E[Y] 
+			&= \frac{d}{dt} \frac{-e^{at}}{t-1} \\
+			&= \left. \frac{-ae^{at}(t-1) + e^{at} }{(t-1)^2} \right|_{t=0} \\
+			&=  \frac{a(1)(-1) + 0 }{(-1)^2}  \\ &= a
+		\end{align*}
+		
+		\begin{align*}
+			E[Y^2] 
+			&= \frac{d^2}{dt^2} \frac{-e^{at}}{t-1} \\
+			&= \frac{d}{dt} \frac{-ae^{at}(t-1) + e^{at} }{(t-1)^2} \\
+			&= \frac{d}{dt} \frac{-ae^{at}}{(t-1)} + \frac{d}{dt} \frac{e^{at} }{(t-1)^2} \\
+			&= \left. \frac{-a^2e^{at}(t-1) + ae^{at} }{(t-1)^2} + \frac{ae^{at}(t-1)^2 - e^{at}(2t-2) }{(t-1)^4} \right|_{t=0} \\
+			&= \frac{-a^2(1)(-1) + a(1) }{1} + \frac{a(1)(-1)^2 - (1)(-2) }{1} \\
+			&= a^2 + 2a + 2
+		\end{align*}
+		
+		\begin{align*}
+			\text{Var}[Y] 
+			&= E[Y^2] -E[Y]^2 \\
+			&= a^2 + 2a + 2 - a^2 \\
+			&= 2a - 2
+		\end{align*}
+		
+		\setcounter{partno}{3}
+		\part 
+		\begin{align*}
+			g_X(x)
+			&= P(X=x) \\
+			&= P(e^{Y-a}=x) \\
+			&= P(Y=\ln x +a) \\
+			&= e^ae^{-(\ln x +a)} \\
+			&= e^{-\ln x} \\
+			&= \frac{1}{x} \\
+		\end{align*}
+		Thus,
+		\[G_x(x) = \ln x.\]
+		And the support will be
+		\begin{align*}
+			a <\ &y < \infty \\
+			a < \ln x& +a < \infty \\
+			0 < \ln\,&x < \infty \\
+			1 <\ &x < \infty .
+		\end{align*}
+		
+	\end{parts}	
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+	\clearpage
 	\setcounter{question}{2}
 	\question 
 	
@@ -87,6 +146,21 @@
 	Find the pdf of \(Y=X^2\)
 	
 	\begin{solution}
+		\begin{align*}
+			g_Y(y)
+			&= P(Y=y) \\
+			&= P(X^2=y) \\
+			&= P(X=\sqrt x) \\
+			&= \frac{y}{81} \\
+		\end{align*}
+		On the support of
+		\begin{align*}
+			-6<\ &x<3 \\
+			-6<\ &\sqrt y<3 \\
+			(-6)^2<\ &y<(3)^2 \\
+		\intertext{However, this is an invalid operation on the lower bound, thus,}
+			0<\ &y<9 \\
+		\end{align*}
 		
 	\end{solution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
