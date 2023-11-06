@@ -64,7 +64,22 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			For this we can consult a geometric distribution with a population size \(n\) and a probability of success of \(\frac{1}{n}\).
+			The mean for this distribution is \(\frac{1}{p}\) and thus the expected/average number of trials for a single success is \(n\).
+			
+			\part
+			This situation matches a negative-hypergeometric distribution. 
+			The mean for this distribution is \(r\frac{K}{N-K+1}\)
+			where \(N\) is the population size,
+			\(K\) is the number of failure states in the population,
+			\(r\) is the number of successes.
+			
+			With substitution we see that the mean/expected number of trials until first success is
+			\(\frac{n-1}{n-(n-1)+1} = \frac{n-1}{2}\).
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -75,7 +90,11 @@
 	that the new and old drugs are equally effective.)
 	
 	\begin{solution}
-		
+		Using a binomial distribution, we can determine the probability of 85 or more successes, assuming the same effectiveness.
+		\[
+			P(x \geq 85) = \sum_{n=85}^{100} \binom{100}{n} 0.8^{n} 0.2^{100-n}.
+		\]
+		Courtesy of Wolfram Alpha, this value is approximately 0.128506.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -86,7 +105,14 @@
 	Find the smallest value of the mean of the distribution that ensures this probability.
 	
 	\begin{solution}
-		
+		\(P(x\geq2) = 0.99 = 1 - P(x<2)\)
+		\begin{align*}
+			\frac{\lambda^0e^{-\lambda}}{0!} + \frac{\lambda^1e^{-\lambda}}{1!} &= 0.01 \\
+			e^{-\lambda} + \lambda e^{-\lambda} &= 0.01 \\
+			\lambda e^{-\lambda} &= 0.01 - e^{-\lambda} \\
+			\lambda &= 0.01e^{\lambda} - 1
+		\end{align*}
+		Courtesy of Wolfram Alpha this calculation is \(\lambda \approx 6.63835\)
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -96,13 +122,27 @@
 	distribution. Show that \(F_X(r-1) = 1-F_Y(n-r)\).
 	
 	\begin{solution}
+		First we consider that,
+		\begin{align*}
+			F_X(r-1)& & 1- &F_Y(n-r) \\
+			=P(X \leq r-1)& \hspace{6em} \text{and}& =1- &P(Y \leq n-r) \\
+			=P(X < r)& & =&P(Y \geq n-r) \\
+		\end{align*}
+		Next we consider what each is measuring. For the binomial, \(X\) is measuring the number of successes in \(n\) trials.
+		In this example it is less than \(r\) successes, which implies \(n-r\) or more failures.
+		
+		Next, we note that any negative-binomial that results in \(n\) trials necessarily has \(n-r\) failures.		
+		Thus \(Y\) is measuring the number of failures until \(r\) successes.
+	
+		Because of the relationship between \(n\) and \(r\) shown above, the equality \(F_X(r-1) = 1-F_Y(n-r)\)
+		is essentially the same as \(p = 1 - (1-p)\).
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 	\question 
 	A \textit{truncated} discrete distribution is one in which a particular class cannot be observed
-	and is eliminated from the sample space. In particular, if \(X\) has range \(1,2,34,\ldots\) and
+	and is eliminated from the sample space. In particular, if \(X\) has range \(1,2,3,4,\ldots\) and
 	the 0 class cannot be observed (as is usually the case), the 0-\textit{truncated} random variable
 	\(X_T\) has pmf
 	
@@ -115,7 +155,51 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			\(P(X=x) = \frac{\lambda^xe^{-\lambda}}{x!}\ \)
+			and
+			\(\ P(X>0) = 1 - P(X=0) = 1 - \frac{\lambda^0e^{-\lambda}}{0!} = 1 - e^{-\lambda}\).
+			
+			Thus,
+			\(P(X_T=x) = \frac{\lambda^xe^{-\lambda}}{(1-e^{-\lambda})x!}\).
+			
+			Then,
+			\(E[X_T] = \frac{E[X]}{P(X>0)} = \frac{\lambda}{1-e^{-\lambda}}\).
+			And
+			\(E[X_T^2] = \frac{E[X^2]}{P(X>0)} = \frac{\lambda+\lambda^2}{1-e^{-\lambda}} \).
+			
+			Thus,
+			\(\text{Var}[X_T] = E[X_T^2] - E[X_T]^2 
+			= \frac{\lambda+\lambda^2}{1-e^{-\lambda}} - \left(\frac{\lambda}{1-e^{-\lambda}}\right)^2 
+			= \frac{\lambda-\lambda e^{-\lambda} -\lambda^2 e^{-\lambda}}{(1-e^{-\lambda})^2}
+			= \frac{\lambda(1-e^{-\lambda} -\lambda e^{-\lambda})}{(1-e^{-\lambda})^2} \).
+			
+			\part
+			First we calculate,
+			\(\ P(X>0) = 1 - P(X=0) = 1 - \binom{r-1}{0}(1-p)^0p^r = 1 - p^r\).
+			
+			Thus,
+			\(\ P(X_T=x) = \binom{r+x-1}{x}\frac{(1-p)^xp^r}{1 - p^r}\).
+			And
+			\(\ E[X_T] = \frac{E[X]}{P(X>0)} = \frac{r(1-p)}{p(1-p^r)}\).
+			
+			To find \(E[X^2]\) faster than using the MGF we will instead use the known Var\([X]+E[X]^2\)
+			\(\frac{r(1-p)}{p^2}+\left(\frac{r(1-p)}{p}\right)^2
+			= \frac{r(1-p) + \left(r(1-p)\right)^2}{p^2}
+			= \frac{r(1-p)\left(1 + r(1-p)\right)}{p^2}
+			\)
+			
+			Which gives,
+			\(\ E[X_T^2] = \frac{E[X^2]}{P(X>0)} = \frac{r(1-p)\left(1 + r(1-p)\right)}{p^2(1 - p^r)} \).
+			
+			
+			\(\ \text{Var}[X_T] 
+			= \frac{r(1-p)\left(1 + r(1-p)\right)}{p^2(1 - p^r)} - \left( \frac{r(1-p)}{p(1-p^r)} \right)^2
+			= \frac{r(1-p)\big(1 + r(1-p)(p^r)\big)}{p^2(1 - p^r)^2}
+			\).
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -134,7 +218,28 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			By rearranging a substituting a \(p = 1-q\) we see that,
+			\begin{align*}
+				P(X=x)
+				&= \frac{-(1-p)^x}{x\ln p} \\
+				&= \frac{-q^x}{x\ln (q-1)} \\
+				&= \frac{-1}{\ln (q-1)} \frac{q^x}{x}.
+			\end{align*}
+			Which is the pmf of the logarithmic distribution, a known legitimate distribution, with \(q\) replacing \(p\).
+			
+			\part
+			To find these expressions we will use the known expressions from the logarithmic distribution, 
+			but substitute the \(p\) in those distributions with a \(1-p\)
+			
+			Thus,			
+			\(E[X] = \frac{-1}{\ln\,p}\frac{1-p}{p}\).
+			
+			And,
+			\(-\frac{ (1-p)^2+(1-p)\ln(p) }{ (p)^2(\ln(p))^2 } \)
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -154,10 +259,19 @@
 	Establish a formula similar to (3.3.18) for the gamma distribution. 
 	If \(X \sim\) gamma\((\alpha,\beta)\),then for any positive constant \(\nu\),
 	
-	\[EX^\nu - \frac{\beta^\nu \Gamma (\nu+\alpha)}{\Gamma(\alpha)}.\]
+	\[EX^\nu = \frac{\beta^\nu \Gamma (\nu+\alpha)}{\Gamma(\alpha)}.\]
 	
 	\begin{solution}
-		
+		\begin{align*}
+			E[X^\nu]
+			&= \int_{0}^{\infty} x^\nu \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta} \,dx \\
+			&= \frac{1}{\Gamma(\alpha)\beta^\alpha} \int_{0}^{\infty} x^{\nu+\alpha-1} e^{-x/\beta} \,dx \\
+			&= \frac{\beta^{\nu+\alpha-1}}{\Gamma(\alpha)\beta^\alpha} \int_{0}^{\infty} \frac{x^{\nu+\alpha-1}}{\beta^{\nu+\alpha-1}} e^{-x/\beta} \frac{\beta}{\beta} \,dx \\
+			&= \frac{\beta^{\nu+\alpha}}{\Gamma(\alpha)\beta^\alpha} \int_{0}^{\infty} \left(\frac{x}{\beta}\right)^{\nu+\alpha-1} e^{-x/\beta} \,d\frac{x}{\beta}, \\
+			\intertext{which gives a \(\Gamma(\nu+\alpha)\) where the inner variable is \(\frac{x}{\beta}\),}
+			&= \frac{\beta^{\nu+\alpha}}{\Gamma(\alpha)\beta^\alpha} \Gamma(\nu+\alpha) \\
+			&= \frac{\beta^{\nu}\Gamma(\nu+\alpha)}{\Gamma(\alpha)}.  
+		\end{align*}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -171,9 +285,44 @@
 	\]
 	
 	(\textit{Hint}: Use integration by parts.) Express this formula as a probabilistic relationship
-	between Poisson and gamma random variables/
+	between Poisson and gamma random variables.
 	
 	\begin{solution}
+		Because this problem was covered in group work with the class, it felt a bit tedious to recreate, 
+		and it is probable that the white board answer has been seen many times I sought an alternative method.
+		
+		
+		First we recognize that the right hand side of the above equation is in the form a Poisson distribution's CDF.
+		\(F_K(k) = e^{-\lambda}\sum_{j=0}^{\lfloor k\rfloor} \frac{\lambda^j}{j!} \)
+		where
+		\(\lambda = x, k = (\alpha-1), j = y\)
+		
+		We can use another form of Poisson CDF
+		\(\frac{\Gamma(\lfloor k+1\rfloor,\lambda )}{\lfloor k\rfloor!}\)
+		
+		\begin{align*}
+			\frac{\Gamma((\alpha-1)+1,x )}{(\alpha-1)!}
+			&= \frac{1}{\Gamma(\alpha)} \Gamma((\alpha-1)+1,x ), \\
+			\intertext{expanding the upper partial gamma, and use \(z\) as the arbitrary inner variable we get,}
+			&= \frac{1}{\Gamma(\alpha)} \int_{x}^{\infty} z^{\alpha-1} e^{-z} \,dz \\
+			&=  \int_{x}^{\infty} \frac{1}{\Gamma(\alpha)} z^{\alpha-1} e^{-z} \,dz.
+		\end{align*}
+		
+		Because this alternate CDF is fairly uncommon, I wanted to find another way to leverage the properties of
+		the Poisson distribution to show this equality.
+		
+		For the next step we will use the Poisson's pdf 
+		\(f_K(k) = \frac{\lambda^k e^{-\lambda}}{k!} \) 
+		with the same substitution as above.				
+		\begin{align*}
+			\sum_{y=0}^{\alpha-1} \frac{x^y e^{-x}}{y!}
+			&= F(\alpha -1 ; x) \\
+			&= \int f(\alpha -1 ; x) \,dx \\
+			&= \int \frac{x^{\alpha-1} e^{-x}}{(\alpha-1)!} \,dx \\
+			&= \int \frac{x^{\alpha-1} e^{-x}}{\Gamma(\alpha)} \,dx \\
+			&= \int_{x}^{\infty} \frac{1}{\Gamma(\alpha)} z^{\alpha-1}e^{-z} \,dz.
+		\end{align*}
+		
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -182,16 +331,56 @@
 	\question 
 	The \textit{Pareto distribution}, with parameters \(\alpha\) and \(\beta\), has pdf
 	
-	\[f(x) = \frac{\beta\alpha^\beta}{x^{\beta+1}}, \quad \alpha<x<\infty, \quad \alpha<0, \quad \beta>0.\]
+	\[f(x) = \frac{\beta\alpha^\beta}{x^{\beta+1}}, \quad \alpha<x<\infty, \quad \alpha>0, \quad \beta>0.\]
 	
 	\begin{parts}
 		\part Verify that \(f(x)\) is a pdf.
 		\part Derive the mean and variance of this distribution.
-		\part Prove that the variance does not exist if\(\beta\leq2\)
+		\part Prove that the variance does not exist if \(\beta\leq2\)
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			Verify that the pdf integrates to 1;
+			
+			\[
+			\int_{\alpha}^{\infty} \frac{\beta\alpha^\beta}{x^{\beta+1}} \,dx =
+			\left. \frac{\beta\alpha^\beta}{-\beta x^\beta}\right|_\alpha^\infty =
+			\left[ 0 - \frac{\beta\alpha^\beta}{-\beta \alpha^\beta} \right] = 1.
+			\]
+			
+			Non-negativity, \(f(x) \geq 0\) can be seen by the fact that all variables and parameters are bound \(>0\),
+			and therefore there it is not possible for \(f(x) \leq 0\).
+			
+			\part
+			
+			\[
+			E[X^n] = \int_{\alpha}^{\infty} x^n \frac{\beta\alpha^\beta}{x^{\beta+1}} \,dx =
+			\beta\alpha^\beta  \int_{\alpha}^{\infty} x^{n-\beta-1} \,dx = 
+			\beta\alpha^\beta \left. \frac{x^{n-\beta}}{n-\beta} \right|_{\alpha}^{\infty} = 
+			\frac{\beta\alpha^{n}}{n-\beta}, \quad n\leq\beta 
+			\]
+			
+			Note that in the case that \(n>\beta\) the integral is undefined. Then,
+			
+			\[
+			E[X] = \frac{\alpha\beta}{1-\beta} \qquad \text{ and } \qquad
+			E[X^2] = \frac{\alpha^2\beta}{2-\beta}
+			\]
+			
+			and
+			
+			\[
+			\text{Var}[X] = E[X^2] - E[X]^2 = \frac{\alpha^2\beta}{2-\beta} - \frac{\alpha^2\beta^2}{(1-\beta)^2}.
+			\]
+						
+			\part
+			As noted in the beginning of part B these expressions only hold when \(n\leq\beta\),
+			the function is undefined otherwise, thus the variance would be an undefined expression minus \(E[X]^2\)
+			which would also be undefined.
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -200,7 +389,7 @@
 	Verify that the following pdfs have the indicated hazard functions (see Exercise 3.25)
 	\begin{parts}
 		\part If \(T\sim\) exponential(\(\beta\)), then \(h_T(t) = 1/\beta\).
-		\part If \(T\sim\) Weibull(\(\gamma,\beta\)), then \(h_T(t) = (\gamma/\beta)t^{\gamma-1}1\).
+		\part If \(T\sim\) Weibull(\(\gamma,\beta\)), then \(h_T(t) = (\gamma/\beta)t^{\gamma-1}\).
 		\part If \(T\sim\) logistic(\(\mu,\beta\)), that is,
 		
 		\[F_T(t) = \frac{1}{1+e^{-(t-\mu)/\beta}},\]
@@ -224,6 +413,70 @@
 	\end{parts}
 	
 	\begin{solution}
+		\begin{parts}
+			\setcounter{partno}{1}
+			\part
+			
+			\begin{align*}
+				f_X(x)
+				&= \frac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-\frac{1}{\beta}} \mathbbm{1}_{[0,\infty)} \\
+				&= \frac{1}{\Gamma(\alpha)\beta^\alpha} e^{\left[ -\frac{1}{\beta}+\ln(x^{\alpha-1}) \right]} \mathbbm{1}_{[0,\infty)} \\
+				&= \frac{1}{\Gamma(\alpha)\beta^\alpha} e^{\left[ -\frac{1}{\beta}+(\alpha-1)\ln(x) \right]} \mathbbm{1}_{[0,\infty)}
+			\end{align*}
+			From this we can see that in the case of both parameters being unknown the gamma function is in the exponential family where
+			\begin{align*}
+				c(\alpha,\beta) &= \frac{1}{\Gamma(\alpha)\beta^\alpha} & h(x) &= \mathbbm{1}_{[0,\infty)} \\
+				w_1(\alpha,\beta) &= \frac{1}{\beta} & t_1(x) &= -x \\
+				w_2(\alpha,\beta) &= \alpha-1  & t_2(x) &= \ln(x) .
+			\end{align*}
+			
+			Where \(\alpha\) is unknown
+			\begin{align*}
+				c(\alpha) &= \frac{1}{\Gamma(\alpha)\beta^\alpha} & h(x) &= e^{-\frac{x}{\beta}} \mathbbm{1}_{[0,\infty)} \\
+				w_1(\alpha) &= (\alpha-1) & t_1(x) &= \ln\,x.
+			\end{align*}
+			
+			Where \(\beta\) is unknown
+			\begin{align*}
+				c(\beta) &= \frac{1}{\beta^\alpha} & h(x) &= \frac{x^{\alpha-1}}{\Gamma(\alpha)} \mathbbm{1}_{[0,\infty)} \\
+				w_1(\beta) &= \frac{1}{\beta} & t_1(x) &= -x.
+			\end{align*}
+			
+			\part
+			The beta distribution 
+			\( \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} x^{\alpha-1} (1-x)^{\beta-1} \mathbbm{1}_{[0,1]} \)
+			can be converted as follows;
+			
+			\begin{align*}
+				c(\alpha,\beta) &= \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} & h(x) &= \mathbbm{1}_{[0,1]} \\
+				w_1(\alpha,\beta) &= \alpha - 1 & t_1(x) &= \ln\,x \\
+				w_2(\alpha,\beta) &= \beta - 1 & t_2(x) &= \ln(1-x).
+			\end{align*}
+			
+			\begin{align*}
+				c(\alpha) &= \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} & h(x) &= (1-x)^{\beta-1} \mathbbm{1}_{[0,1]} \\
+				w_1(\alpha) &= \alpha - 1 & t_1(x) &= \ln\,x .
+			\end{align*}
+			
+			\begin{align*}
+				c(\beta) &= \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)} & h(x) &= x^{\alpha-1} \mathbbm{1}_{[0,1]} \\
+				w_1(\beta) &= \beta - 1 & t_1(x) &= \ln(1-x) .
+			\end{align*}
+			
+			
+			\part 
+			For the Poisson distribution, we rearrange
+			\( \frac{\lambda^x e^{-\lambda}}{ x! } \mathbbm{1}_{x\in\mathbb{N}_0} \)
+			as
+			\( \frac{1}{x!} e^{-\lambda}  e^{x \ln\,\lambda} \mathbbm{1}_{x\in\mathbb{N}_0} \)
+			showing revealing an exponential family member as:
+			
+			\begin{align*}
+				c(\lambda) &= e^{-\lambda} & h(x) &= \frac{1}{x!} \mathbbm{1}_{x\in\mathbb{N}_0} \\
+				w_1(\lambda) &= \ln\,\lambda & t_1(x) &= x.
+			\end{align*}		
+			
+		\end{parts}
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -234,12 +487,19 @@
 	
 	\[\alpha = P(Z>z_\alpha) = \int_{z_\alpha}^{\infty} f(z) \,dz.\]
 	
-	Show that if \(X\) is a random variable with pdf \((1/\sigma)f((x-\mu)/\sigma)\) and \(\sigma z_\alpha+\mu\),
+	Show that if \(X\) is a random variable with pdf \((1/\sigma)f((x-\mu)/\sigma)\) and \(x_\alpha=\sigma z_\alpha+\mu\),
 	then \(P(X>x_\alpha)\).	(Thus if a table of \(z_\alpha\) values were available, then values of \(x_\alpha\) 
 	could be easily computed for any member of the location–scale family.)
 	
 	\begin{solution}
-		
+		Recognizing from the provided pdf that \(X\) is a member of a location-scale family,
+		thus we reference theorem 3.5.6.
+		\begin{align*}
+			P(X>x_\alpha)
+			&= P(X> \sigma z_\alpha+\mu ) \\
+			&= P(\sigma Z_\alpha+\mu> \sigma z_\alpha+\mu ) \\
+			&= P(Z> z_\alpha ) \\
+		\end{align*}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	
 	
@@ -247,7 +507,7 @@
 	Consider the Cauchy family defined in Section 3.3. This family can be extended to a
 	location–scale family yielding pdfs of the form
 	
-	\[f(x|\mu,\sigma) = \frac{1}{\sigma\pi \left(a + \left(\frac{x-\mu}{\sigma}\right)^2 \right)} ,\quad -\infty<x<\infty.\]
+	\[f(x|\mu,\sigma) = \frac{1}{\sigma\pi \left(1 + \left(\frac{x-\mu}{\sigma}\right)^2 \right)} ,\quad -\infty<x<\infty.\]
 	
 	The mean and variance do not exist for the Cauchy distribution. So the parameters
 	\(\mu\) and \(\sigma^2\) are not the mean and variance. But they do have important meaning. Show
@@ -262,7 +522,45 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			Utilizing substitution wherein
+			\(u = \frac{x-\mu}{\sigma}\) and
+			\(du = \frac{1}{\sigma}\,dx\)
+			\begin{align*}
+				P(X\geq\mu)
+				&= \int_{\mu}^{\infty} \frac{1}{\sigma\pi (1+ ( \frac{x-\mu}{\sigma} )^2)} \,dx \\
+				&= \frac{1}{\pi} \int_{\mu}^{\infty} \frac{1}{ 1+u^2 } \,du \\
+				&= \frac{1}{\pi} \left. \tan^{-1}(u) \right|_\mu^\infty \\
+				&= \frac{1}{\pi} \left. \tan^{-1}\left( \frac{x-\mu}{\sigma} \right) \right|_\mu^\infty \\
+				&= \frac{1}{\pi} \left[ \tan^{-1}(\infty) - \tan^{-1}(0/\pi) \right] \\
+				&= \frac{1}{\pi} \left[ \frac{\pi}{2} - 0 \right] \\
+				&= \frac{1}{2}.
+			\end{align*}
+			The symmetry can be verified through inverting the domain on the integral as follows,
+			\begin{align*}
+				P(X\leq\mu)
+				&= \frac{1}{\pi} \left. \tan^{-1}\left( \frac{x-\mu}{\sigma} \right) \right|^\mu_{-\infty} \\
+				&= \frac{1}{\pi} \left[ \tan^{-1}(0/\pi - \tan^{-1}(-\infty)) \right] \\
+				&= \frac{1}{\pi} \left[ 0 - \left( -\frac{\pi}{2} \right)  \right] \\
+				&= \frac{1}{2}.
+			\end{align*}
+			
+			\part
+			The quartiles can be verified by once again adjusting the domain of the result of the integral,
+			\begin{align*}
+				P(X\geq\mu)
+				&= \frac{1}{\pi} \left. \tan^{-1}\left( \frac{x-\mu}{\sigma} \right) \right|_{\mu-\sigma}^\infty \\
+				&= \frac{1}{\pi} \tan^{-1}(\infty) - \tan^{-1}\left( \frac{(\mu-\sigma)-\mu}{\sigma} \right)\\
+				&= \frac{1}{\pi} \left[ \frac{\pi}{2} - \tan^{-1}(-\frac{\sigma}{\sigma}) \right] \\
+				&= \frac{1}{\pi} \left[ \frac{\pi}{2} - \tan^{-1}(-1) \right] \\
+				&= \frac{1}{\pi} \left[ \frac{\pi}{2} - \frac{\pi}{4} \right] \\
+				&= \frac{1}{4}.
+			\end{align*}
+			
+			As above, this holds symmetrically for \(P(X\leq\mu)\).
+			
+		\end{parts}		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
