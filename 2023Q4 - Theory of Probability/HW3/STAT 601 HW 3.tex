@@ -237,7 +237,11 @@
 			\(E[X] = \frac{-1}{\ln\,p}\frac{1-p}{p}\).
 			
 			And,
-			\(-\frac{ (1-p)^2+(1-p)\ln(p) }{ (p)^2(\ln(p))^2 } \)
+			Var\([X] = -\frac{ (1-p)^2+(1-p)\ln(p) }{ (p)^2(\ln(p))^2 } \).
+			While the negative expression concerned me initially,
+			note that \(p<1\) and therefore \(\ln(p)<0\).
+			The negative hands the top \(\ln\), the bottom is handled
+			by the squaring.
 			
 		\end{parts}
 	\end{solution}
@@ -311,15 +315,15 @@
 		Because this alternate CDF is fairly uncommon, I wanted to find another way to leverage the properties of
 		the Poisson distribution to show this equality.
 		
-		For the next step we will use the Poisson's pdf 
+		For the next step we will use the Poisson's pmf 
 		\(f_K(k) = \frac{\lambda^k e^{-\lambda}}{k!} \) 
 		with the same substitution as above.				
 		\begin{align*}
 			\sum_{y=0}^{\alpha-1} \frac{x^y e^{-x}}{y!}
 			&= F(\alpha -1 ; x) \\
-			&= \int f(\alpha -1 ; x) \,dx \\
-			&= \int \frac{x^{\alpha-1} e^{-x}}{(\alpha-1)!} \,dx \\
-			&= \int \frac{x^{\alpha-1} e^{-x}}{\Gamma(\alpha)} \,dx \\
+			&= \int f(\alpha -1 ; z) \,dz \\
+			&= \int \frac{z^{\alpha-1} e^{-z}}{(\alpha-1)!} \,dz \\
+			&= \int \frac{z^{\alpha-1} e^{-z}}{\Gamma(\alpha)} \,dz \\
 			&= \int_{x}^{\infty} \frac{1}{\Gamma(\alpha)} z^{\alpha-1}e^{-z} \,dz.
 		\end{align*}
 		
@@ -398,7 +402,48 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			For simplicity sake we will use an exponential distribution with a \(\lambda\) 
+			parameter, but note that,
+			\begin{align*}
+				T \sim& \exp(\lambda) = \exp(\frac{1}{\beta}).
+			\intertext{Then the pdf and cdf of the exponential function is,}
+				f_T(t) &= \lambda e^{-\lambda t} \\
+				F_T(t) &= 1-e^{-\lambda t},
+			\intertext{which gives a hazard function of}
+				h_T(t) &= \frac{f_T(t)}{1- F_T(t)} \\
+				&= \frac{\lambda e^{-\lambda t}}{1-(1-e^{-\lambda t})} \\
+				&= \frac{\lambda e^{-\lambda t}}{e^{-\lambda t}} \\
+				&= \lambda \\
+				&= \frac{1}{\beta}.
+			\end{align*}
+						
+			\part
+			Using the pdf and cdf,
+			\begin{align*}
+				f_T(t) &= \frac{\gamma}{\beta}t^{\gamma-1} e^{-(x^\gamma/\beta)} \\
+				F_T(t) &= 1 - e^{-(x^\gamma/\beta)} ,
+			\intertext{we can calculate the hazard function,}
+				h_T(t) &= \frac{f_T(t)}{1- F_T(t)} \\
+				&= \frac{ \frac{\gamma}{\beta}t^{\gamma-1} e^{-(x^\gamma/\beta)} }{1-(1 - e^{-(x^\gamma/\beta)})} \\
+				&= \frac{\gamma}{\beta}t^{\gamma-1}.
+			\end{align*}
+						
+			\part
+			Using the pdf and cdf,
+			\begin{align*}
+				f_T(t) &= \frac{e^{-(t-\mu)/\beta}}{\beta (1+e^{-(t-\mu)/\beta})^2} \\
+				F_T(t) &= \frac{1}{1+e^{-(t-\mu)/\beta}},
+			\intertext{we can calculate the hazard function,}
+				h_T(t) &= \frac{f_T(t)}{1- F_T(t)} \\
+				&= \left(\frac{1}{\beta}\right) \left( \frac{e^{-(t-\mu)/\beta}}{(1+e^{-(t-\mu)/\beta})^2} \right) \left( 1- \frac{1}{1+e^{-(t-\mu)/\beta}} \right) \\
+				&= \left(\frac{1}{\beta}\right) \left( \frac{e^{-(t-\mu)/\beta}}{(1+e^{-(t-\mu)/\beta})^2} \right) \left(\frac{1+e^{-(t-\mu)/\beta}}{e^{-(t-\mu)/\beta}} \right) \\
+				&= \left(\frac{1}{\beta}\right) \left( \frac{1}{1+e^{-(t-\mu)/\beta}} \right) \\
+				&= \frac{1}{\beta} F_T(t).
+			\end{align*}
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
