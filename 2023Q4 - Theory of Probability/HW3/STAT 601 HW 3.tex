@@ -246,6 +246,7 @@
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	\question 
 	In Section 3.2 it was claimed that the Poisson(\(\lambda\)) distribution is the limit of the negative
@@ -255,8 +256,28 @@
 	
 	\begin{solution}
 		
+		\begin{align*}
+			M_X(t)_{\sim\text{NBIN(\(r,p\))}}
+			&= \left( \frac{p}{1-(1-p)e^t} \right)^r \\
+			&= \left( \frac{p}{1-(1-p)e^t} - \frac{1-p}{1-p} + 1 \right)^r \\
+			&= \left( \frac{p(1-p) - (1-p)(1-(1-p)e^t)}{(1-p)(1-(1-p)e^t)} + 1 \right)^r \\
+			&= \left( 1 + \frac{p(1-p) + (1-p)^2e^t - (1-p)}{(1-p)(1-(1-p)e^t)} \right)^r \\
+		\intertext{make use of \(p \rightarrow 1\),}
+			&= \left( 1 + \frac{0 + (1-p)((1-p)e^t - 1)}{(1-p)(1-(1-p)e^t)} \right)^r \\
+			&= \left( 1 + \frac{(1-p)e^t - 1}{(1-(1-p)e^t)} \right)^r \\
+		\intertext{make use of \(p \rightarrow 1\),}
+			&= \left( 1 + \frac{(1-p)e^t - 1}{(1-0)} \right)^r \\
+		\intertext{multiply by one,}
+			&= \left( 1 + \left(\frac{r}{r}\right) \frac{(1-p)e^t - 1}{1} \right)^r \\
+		\intertext{using \(r(1-p) \rightarrow \lambda\),}
+			&= \left( 1 +  \frac{\lambda e^t - 1}{r} \right)^r \\
+		\intertext{under the condition of \(r \rightarrow \infty\) this is the continuously compounding interest formula, which}
+			&= e^{\lambda e^t - 1} \\
+		\end{align*}
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	\setcounter{question}{16}
 	\question 
@@ -278,6 +299,7 @@
 		\end{align*}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	\setcounter{question}{18}
 	\question 
@@ -330,6 +352,7 @@
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	\setcounter{question}{22}
 	\question 
@@ -387,6 +410,7 @@
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	\setcounter{question}{25}
 	\question 
@@ -409,7 +433,7 @@
 			\begin{align*}
 				T \sim& \exp(\lambda) = \exp(\frac{1}{\beta}).
 			\intertext{Then the pdf and cdf of the exponential function is,}
-				f_T(t) &= \lambda e^{-\lambda t} \\
+				f_T(t) &= \lambda e^{-\lambda t}, \\
 				F_T(t) &= 1-e^{-\lambda t},
 			\intertext{which gives a hazard function of}
 				h_T(t) &= \frac{f_T(t)}{1- F_T(t)} \\
@@ -525,6 +549,7 @@
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	\setcounter{question}{37}
 	\question 
@@ -565,6 +590,7 @@
 		\(P(X\geq\mu-\sigma) = P(X\leq\mu-\sigma) = \frac{1}{4}\). 
 		(Hint: Prove this first for \(\mu=0\) and \(\sigma=1\) and then use Exercise 3.38.)
 	\end{parts}
+	\clearpage
 	
 	\begin{solution}
 		\begin{parts}
@@ -582,6 +608,7 @@
 				&= \frac{1}{\pi} \left[ \frac{\pi}{2} - 0 \right] \\
 				&= \frac{1}{2}.
 			\end{align*}
+			
 			The symmetry can be verified through inverting the domain on the integral as follows,
 			\begin{align*}
 				P(X\leq\mu)
