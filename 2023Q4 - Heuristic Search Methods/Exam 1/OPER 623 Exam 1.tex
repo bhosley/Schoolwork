@@ -430,7 +430,50 @@
 			\subpart How do you select a neighbor?
 		\end{subparts}
 		\begin{solution}
-			
+			\begin{subparts}
+				\subpart
+				
+				Instead of using the labeling system presented in part \textbf{3.2}, 
+				I have elected to use coordinates to identify cells \(C\) and tiles \(T\).
+				For an \(m\) by \(n\) board our objective function is				
+				
+				\[\min \sum_{i=0}^{mn} 2^{|T_{i,x} - C_{i,x}|} + 2^{|T_{i,y} - C_{i,y}|} \]
+				
+				
+				While it is assumed that global information 
+				
+				Tile's Face Values
+				Occupied Cell
+				Empty Cell
+				
+				Where tile \(T\), occupied cell \(O\), empty cell \(E\)
+				
+				\[ \tilde{x}_i, \tilde{y}_i, x_i,y_i \]
+				
+				
+				Using the labeling system presented in part \textbf{3.2}, the objective function can be seen
+				as attempting to minimize the difference between the times and the zone that they occupy.
+				This function can be deployed at both the local and global level. 
+				
+				\subpart
+				A move consists of taking any neighboring tile, moving it into the currently empty space,
+				and thus the tile's previously occupied space becomes the new empty space.
+				
+				
+				\subpart
+				Using the objective function one will select the tile closest to the current empty cell.
+				This simple selection method risks moving a single tile back and forth,
+				so the previously moved tile should be omitted from the current candidate's list if possible.
+				
+				As an example, if the empty space on a 5x5 is labeled 20, and the currently neighboring tiles are
+				10, 13, and 21, (above, left of, and below) the empty space and tile 21 would trade positions, 
+				tile 21 would now occupy cell 20, and the empty space would occupy cell 25.
+				
+				There is a possibility that two tiles have an equal absolute difference from the cell,
+				in this case we take the third (bad) option; if there is not a third option then
+				the move is selected randomly between the two. 
+				
+			\end{subparts}			
 		\end{solution}
 		
 		\part
@@ -438,6 +481,143 @@
 		Show all necessary iterations to achieve local optima. 
 		Note: Your 3 x 3 example can just use the numbers 1-8 for ease of reference.
 		\begin{solution}
+			
+			
+			\begin{minipage}{0.2\linewidth}	
+				\begin{tikzpicture}
+					% Define the grid
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2} \draw (\x,\y) rectangle ++(1,1);
+					% Add labels to the cells
+					\foreach \x in {1,2,3} \foreach \y in {1,2,3}{\node at (\x-0.5,\y-0.5) {\x,\y};} 				
+					% Create Tiles
+					\draw[fill=gray!20] (0,0) rectangle ++(1,1) node[midway] {7};
+					\draw[fill=gray!20] (1,0) rectangle ++(1,1) node[midway] {3};
+					%\draw[fill=gray!20] (2,0) rectangle ++(1,1) node[midway] {2};
+					\draw[fill=gray!20] (0,1) rectangle ++(1,1) node[midway] {2};
+					\draw[fill=gray!20] (1,1) rectangle ++(1,1) node[midway] {4};
+					\draw[fill=gray!20] (2,1) rectangle ++(1,1) node[midway] {8};
+					\draw[fill=gray!20] (0,2) rectangle ++(1,1) node[midway] {1};
+					\draw[fill=gray!20] (1,2) rectangle ++(1,1) node[midway] {6};
+					\draw[fill=gray!20] (2,2) rectangle ++(1,1) node[midway] {5};
+				\end{tikzpicture}
+			\end{minipage}
+			%
+			\begin{minipage}{0.2\linewidth}	
+				\begin{tikzpicture}
+					% Define the grid
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}
+					\draw (\x,\y) rectangle ++(1,1);
+					% Add labels to the cells
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}{
+						\node at (\x+0.5,\y+0.5) {\the\numexpr\x+3*\y\relax};} % Display the result				
+					% Create Tiles
+					\draw[fill=gray!20] (0,0) rectangle ++(1,1) node[midway] {7};
+					%\draw[fill=gray!20] (1,0) rectangle ++(1,1) node[midway] {3};
+					\draw[fill=gray!20] (2,0) rectangle ++(1,1) node[midway] {\textcolor{red}{3}};
+					\draw[fill=gray!20] (0,1) rectangle ++(1,1) node[midway] {2};
+					\draw[fill=gray!20] (1,1) rectangle ++(1,1) node[midway] {4};
+					\draw[fill=gray!20] (2,1) rectangle ++(1,1) node[midway] {8};
+					\draw[fill=gray!20] (0,2) rectangle ++(1,1) node[midway] {1};
+					\draw[fill=gray!20] (1,2) rectangle ++(1,1) node[midway] {6};
+					\draw[fill=gray!20] (2,2) rectangle ++(1,1) node[midway] {5};
+				\end{tikzpicture}
+			\end{minipage}
+			%
+			\begin{minipage}{0.2\linewidth}	
+				\begin{tikzpicture}
+					% Define the grid
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}
+					\draw (\x,\y) rectangle ++(1,1);
+					% Add labels to the cells
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}{
+						\node at (\x+0.5,\y+0.5) {\the\numexpr\x+3*\y\relax};} % Display the result				
+					% Create Tiles
+					\draw[fill=gray!20] (0,0) rectangle ++(1,1) node[midway] {7};
+					\draw[fill=gray!20] (1,0) rectangle ++(1,1) node[midway] {\textcolor{red}{4}};
+					\draw[fill=gray!20] (2,0) rectangle ++(1,1) node[midway] {3};
+					\draw[fill=gray!20] (0,1) rectangle ++(1,1) node[midway] {2};
+					%\draw[fill=gray!20] (1,1) rectangle ++(1,1) node[midway] {4};
+					\draw[fill=gray!20] (2,1) rectangle ++(1,1) node[midway] {8};
+					\draw[fill=gray!20] (0,2) rectangle ++(1,1) node[midway] {1};
+					\draw[fill=gray!20] (1,2) rectangle ++(1,1) node[midway] {6};
+					\draw[fill=gray!20] (2,2) rectangle ++(1,1) node[midway] {5};
+				\end{tikzpicture}
+			\end{minipage}
+			%
+			\begin{minipage}{0.2\linewidth}	
+				\begin{tikzpicture}
+					% Define the grid
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}
+					\draw (\x,\y) rectangle ++(1,1);
+					% Add labels to the cells
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}{
+						\node at (\x+0.5,\y+0.5) {\the\numexpr\x+3*\y\relax};} % Display the result				
+					% Create Tiles
+					\draw[fill=gray!20] (0,0) rectangle ++(1,1) node[midway] {7};
+					\draw[fill=gray!20] (1,0) rectangle ++(1,1) node[midway] {4};
+					\draw[fill=gray!20] (2,0) rectangle ++(1,1) node[midway] {3};
+					\draw[fill=gray!20] (0,1) rectangle ++(1,1) node[midway] {2};
+					\draw[fill=gray!20] (1,1) rectangle ++(1,1) node[midway] {\textcolor{red}{6}};
+					\draw[fill=gray!20] (2,1) rectangle ++(1,1) node[midway] {8};
+					\draw[fill=gray!20] (0,2) rectangle ++(1,1) node[midway] {1};
+					%\draw[fill=gray!20] (1,2) rectangle ++(1,1) node[midway] {6};
+					\draw[fill=gray!20] (2,2) rectangle ++(1,1) node[midway] {5};
+				\end{tikzpicture}
+			\end{minipage}
+			%
+			\begin{minipage}{0.2\linewidth}	
+				\begin{tikzpicture}
+					% Define the grid
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}
+					\draw (\x,\y) rectangle ++(1,1);
+					% Add labels to the cells
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}{
+						\node at (\x+0.5,\y+0.5) {\the\numexpr\x+3*\y\relax};} % Display the result				
+					% Create Tiles
+					\draw[fill=gray!20] (0,0) rectangle ++(1,1) node[midway] {7};
+					\draw[fill=gray!20] (1,0) rectangle ++(1,1) node[midway] {4};
+					\draw[fill=gray!20] (2,0) rectangle ++(1,1) node[midway] {3};
+					\draw[fill=gray!20] (0,1) rectangle ++(1,1) node[midway] {2};
+					\draw[fill=gray!20] (1,1) rectangle ++(1,1) node[midway] {6};
+					\draw[fill=gray!20] (2,1) rectangle ++(1,1) node[midway] {8};
+					\draw[fill=gray!20] (0,2) rectangle ++(1,1) node[midway] {1};
+					\draw[fill=gray!20] (1,2) rectangle ++(1,1) node[midway] {\textcolor{red}{5}};
+					%\draw[fill=gray!20] (2,2) rectangle ++(1,1) node[midway] {5};
+				\end{tikzpicture}
+			\end{minipage}
+			%
+			\begin{minipage}{0.2\linewidth}	
+				\begin{tikzpicture}
+					% Define the grid
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}
+					\draw (\x,\y) rectangle ++(1,1);
+					% Add labels to the cells
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}{
+						\node at (\x+0.5,\y+0.5) {\the\numexpr\x+3*\y\relax};} % Display the result				
+					% Create Tiles
+					\draw[fill=gray!20] (0,0) rectangle ++(1,1) node[midway] {7};
+					\draw[fill=gray!20] (1,0) rectangle ++(1,1) node[midway] {4};
+					\draw[fill=gray!20] (2,0) rectangle ++(1,1) node[midway] {3};
+					\draw[fill=gray!20] (0,1) rectangle ++(1,1) node[midway] {2};
+					\draw[fill=gray!20] (1,1) rectangle ++(1,1) node[midway] {6};
+					%\draw[fill=gray!20] (2,1) rectangle ++(1,1) node[midway] {8};
+					\draw[fill=gray!20] (0,2) rectangle ++(1,1) node[midway] {1};
+					\draw[fill=gray!20] (1,2) rectangle ++(1,1) node[midway] {5};
+					\draw[fill=gray!20] (2,2) rectangle ++(1,1) node[midway] {\textcolor{red}{8}};
+				\end{tikzpicture}
+			\end{minipage}
+			%
+			\begin{minipage}{0.2\linewidth}	
+				\begin{tikzpicture}
+					% Define the grid
+					\foreach \x in {0,1,2} \foreach \y in {0,1,2}
+					\draw (\x,\y) rectangle ++(1,1);
+					% Add labels to the cells
+					\foreach \x in {1,2,3} \foreach \y in {1,2,3}{
+						%\node at (\x+0.5,\y+0.5) {\the\numexpr\x+3*\y\relax};} % Display the result	
+						\node at (\x-0.5,\y-0.5) {\x,\y};} % Display the result			
+				\end{tikzpicture}
+			\end{minipage}
 			
 		\end{solution}
 		
@@ -449,7 +629,7 @@
 	\textbf{\large Coding (10 Pts)}
 	\begin{parts}
 		\part
-		Using the software of your choice1 write an implementation of the GRASP 
+		Using the software of your choice write an implementation of the GRASP 
 		Heuristic for the Traveling Salesman Problem (TSP).
 		\begin{subparts}
 			\subpart
