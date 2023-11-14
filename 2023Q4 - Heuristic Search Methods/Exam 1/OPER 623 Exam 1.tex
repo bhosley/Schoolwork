@@ -23,6 +23,7 @@
 \usepackage{subcaption}
 \usepackage[toc,page]{appendix}
 \usepackage{pdfpages}
+\usepackage{listings}
 %\usepackage{pgfplots}
 %\usetikzlibrary{shapes,arrows,positioning,patterns}
 %\usepackage{pythonhighlight}
@@ -341,7 +342,7 @@
 					
 					\item
 					Conversion from an HCP to a TSP requires completing the graph, 
-					which takes \(leq V^2\) operations;
+					which takes \(\leq V^2\) operations;
 					And assigning values to each edge, which takes \(E^*\) operations
 					where \(E^*\) represents the edges of the newly completed graph.
 					
@@ -386,11 +387,32 @@
 		graph \textbf{G =(V,E)} yields a Spanning Tree where all vertices in the 
 		spanning tree have degree 2 or less, is in NP-Complete.
 		\begin{solution}
-		
+			\begin{proof}
+				This particular problem is an example of one of Karp's 21 NP-complete problems, Steiner Trees.
+				An answer for the two degree spanning tree is identical to a Steiner tree with all Steiner nodes
+				equal to two.
+				
+				This relationship demonstrates two of the Tovey criteria, that every solution to the 2-degree
+				spanning tree is a Steiner Tree solution, and that every Steiner solution with no Steiner nodes 
+				or all Steiner nodes having a value of two is a 2-degree spanning tree solution.
+				
+				The third criteria is met by the conversion being trivial.
+				The Steiner problem assigns values to the "non-leaf" nodes which are typically not a concern
+				in a Spanning tree solution. In this particular case the values may be dropped, but feasibility
+				in the new problem can be determined by accounting for all of the values that are being discarded.
+				
+				Verification of feasibility of a potential 2-degree spanning tree solution is solvable in
+				linear time, as a combination of two linear functions.
+				
+				First, \(G(V) \notin S(V) = \emptyset\).
+				Then, given a function \(f(x)\) that counts the edges attached to a vertex \(V\)
+				then \(f(V) \leq 2\ \ \forall\ V\in S(V)\).
+			\end{proof}
 		\end{solution}
 	\end{parts}		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
+	\clearpage
 	
 	\question % 2
 	\textbf{\large Constructive Heuristics (30 Pts)}
@@ -410,10 +432,120 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part\phantom{text}
+			
+			The proposed heuristic operates in the following manner:
+			\begin{enumerate}
+				\item
+				Every grid position is assigned the value of 0.
+				
+				\item
+				Queens will be placed in columns from left to right.
+				A candidate list of positions is formed by collect the squares with the lowest value
+				within the current column.
+				
+				\item
+				From the candidates, the sum of values of their immediate neighbors is taken.
+				
+				\item
+				The queen is placed into the square with the highest neighbor from this set.
+				Ties are broken randomly.
+				
+				\item 
+				Once the Queen is placed the value of all squares within its attack range are incremented by 1.
+				
+				\item 
+				Repeat until all queens have been placed.
+			\end{enumerate}
+					
+			\part \phantom{text}
+			
+			\includegraphics[width=0.24\linewidth]{"Board 00001"} \hfill
+			\includegraphics[width=0.24\linewidth]{"Board 00002"} \hfill
+			\includegraphics[width=0.24\linewidth]{"Board 00003"} \hfill
+			\includegraphics[width=0.24\linewidth]{"Board 00004"} \hfill
+			\includegraphics[width=0.24\linewidth]{"Board 00005"} \hfill
+			\includegraphics[width=0.24\linewidth]{"Board 00006"} \hfill
+			\includegraphics[width=0.24\linewidth]{"Board 00007"} \hfill
+			\includegraphics[width=0.24\linewidth]{"Board 00008"} \hfill
+
+			\part \phantom{text}
+			
+			\textbf{Simplicity.}
+			
+			This heuristic is fairly simple. Probably the least intuitive part is the reasoning
+			behind summation of the neighbor values, which occurs to help condense changes toward infeasibility.
+			
+			
+			\textbf{Reasonable Storage.}
+			
+			The only storage required between iterations is the board state with values.
+			An \(n\times n\) array will be sufficient.
+			During placement an \(n\) array will be necessary to compare all of the column values
+			to create a candidate list.
+			
+			\textbf{Speed.} 
+			
+			The comparison between all values within a column for each column is relatively quick,
+			however, this heuristic is \(\mathbf{O}(n^2)\), not linear as would be ideal.
+			
+			\textbf{Accuracy of Solution.}
+			
+			The solution will significantly be better than random, but is unlikely to be optimal.
+			
+			\textbf{Low Variance.}
+			
+			Aside from ties, this heuristic is deterministic.			
+			
+			\textbf{Robustness.}
+			
+			This heuristic will work for an arbitrary sized version of this problem.
+			Large enough versions will provide problematic for computational resources of course.
+			
+			\part
+			
+			The board state may be stored as an \(n\times n\) array.
+			The board state array will be instantiated as filled with 0.
+			The queens' positions may be stored as a letter, or any number \(\geq n+1\).
+			
+			Given column \(i\) the collect all RCL \(= \min(\{x_{i,j},\ \forall j\in n\})\).
+			
+			For each entry \(x_{i,j}\) in the RCL we calculate \(\sum_{a = i-1}^{i+1} \sum_{b = j-1}^{j+1} x_{a,b}\)
+			and select the maximum.
+			The selected cell is labeled to contain a queen. Then the board state must be updated to reflect the
+			new attack paths.
+			
+			Given a new queen placed into space \(x_{i,j}\) then we increment values;			
+			
+			\begin{lstlisting}[language=Python]
+		for a in range(0,n):
+			X[a,j] += 1
+		for b in range(0,n):
+			X[i,b] += 1
+		for c in range(-n,n):
+			try:
+				X[i+c,j+c] += 1
+			try:
+				X[i-c,j+c] += 1
+			try:
+				X[i+c,j-c] += 1
+			try:
+				X[i-c,j-c] += 1
+			\end{lstlisting}
+			
+			Try prevents an index out of bounds error stopping the script. 
+			Additionally, the queen's new position will be incremented 6 times,
+			which may be convenient if using a \(>n\) representation for queen positions.
+			
+			Iterated through these steps \(n\) times and the resulting board state will be a minimally
+			infeasible solution.
+			
+		\end{parts}		
 	\end{solution}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
+	\clearpage
 	
 	\question % 3
 	\textbf{\large Local Search Heuristics (30 Pts)}
@@ -814,6 +946,7 @@
 	\end{parts}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
+	\clearpage
 	
 	\question % 5
 	\textbf{\large Extra Credit (5 Pts)}
@@ -824,6 +957,40 @@
 		instance of Graph Coloring (Aka Chromatic Number).
 	\end{subparts}
 	\begin{solution}
+		A regular sudoku puzzle is a grid composed of \(n^2\times n^2\) cells.
+		The grid is further divided into \(n\times n\) sub-squares.
+		Each row, column, and sub-square are filled with each of the numbers 
+		\(\{1,\ldots,n^2\}\) exactly once.
+		For convenience let \(\{1,\ldots,n^2\} = N_2\)
+		
+		To transform the sudoku problem into a graph coloring problem we first 
+		transform the sudoku grid into a graph.
+		Let each sudoku cell be represented as \(s_{x,y,z}\ \forall\, x,y,z\in N_2\).
+		The \(x,y\) values represent columns or rows arbitrarily.
+		The \(z\) values represent the sub-squares, also labeled arbitrarily.
+		
+		Each \(s_{x,y,z}\) will be transformed into graph vertices labeled \(v_{x,y,z}\).
+		Simple.
+		
+		Next, we must add the edges to the graph.
+		For convenience the set of edges can be divided into subsets
+		\(E_x,E_y,E_z \subset G(E)\).
+		
+		Each of these subsets contain sub-subsets of edges that connect vertices with other vertices
+		that have an equal coordinate value represented by that subset. Using \(x\) as an example,		
+		\[E_{x=i} = \{v_{i,y,z}|y,z\in N_2\}\ \forall\, i\in N_2.\]
+		
+		The same will be done for \(y\) and \(z\).
+		
+		Now the Graph coloring can occur. The edges represent connections between each member of
+		columns and rows \(x\) and \(y\) and sub-squares \(z\). 
+		This prevents colors (representing the numbers of sudoku) from being repeated within those divisions,
+		this equating the rules of each type of problem.
+		
+		As a result every feasible sudoku solution can be transformed into a feasible colored graph,
+		and every feasible colored graph\(^1\) can be transformed into a feasible sudoku solution.
+		
+		1. Provided that, with \(c\) colors in the graph it is true that \(\sqrt{c} \in \mathbb{N}_1\).
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
