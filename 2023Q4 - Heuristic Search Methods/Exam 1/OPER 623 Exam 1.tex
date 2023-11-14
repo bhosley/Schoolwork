@@ -21,6 +21,8 @@
 %\usepackage{capt-of}
 \usepackage{tikz}
 \usepackage{subcaption}
+\usepackage[toc,page]{appendix}
+\usepackage{pdfpages}
 %\usepackage{pgfplots}
 %\usetikzlibrary{shapes,arrows,positioning,patterns}
 %\usepackage{pythonhighlight}
@@ -804,7 +806,10 @@
 			You are free to recycle sections of the Nearest Neighbor and/or 2OPT code provided in labs as desired.
 		\end{subparts}
 		\begin{solution}
-			
+			Code is implemented in a python notebook.
+			A functional notebook will be included in submission,
+			a pdf version of the notebook is included in			
+			\hyperref[appendix:ipynb]{appendix A}.
 		\end{solution}
 	\end{parts}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -824,4 +829,16 @@
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 \end{questions}
+
+\clearpage
+\begin{appendices}
+	
+	\section{Python Notebook} \label{appendix:ipynb}
+	\begin{minipage}{\textwidth}
+	\includepdf[pages=1]{Exam 1.pdf}
+	\end{minipage}
+	\includepdf[pages=2-]{Exam 1.pdf}
+
+\end{appendices}
+
 \end{document}
