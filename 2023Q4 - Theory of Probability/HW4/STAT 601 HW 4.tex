@@ -19,7 +19,7 @@
 \usepackage{graphicx}
 %\usepackage{wrapfig}
 %\usepackage{capt-of}
-%\usepackage{tikz}
+\usepackage{tikz}
 %\usepackage{pgfplots}
 %\usetikzlibrary{shapes,arrows,positioning,patterns}
 %\usepackage{pythonhighlight}
@@ -75,7 +75,58 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			If \(f(x,y)\) is a valid pdf then,
+			\begin{align*}
+				\int f(x,y) = 1
+				&= \int_{0}^{2} \int_{0}^{1} C(x+2y) \,dy\,dx \\
+				&= \int_{0}^{2} \bigg[Cxy+Cy^2\bigg]_0^1 \,dx \\
+				&= \int_{0}^{2} Cx+C \,dx \\
+				&= \left. Cx+\frac{Cx^2}{2} \right|_{0}^{2} \\
+				&= 4C, \\
+			\end{align*}
+			thus we conclude that \(C = \frac{1}{4}\).
+			
+			\part
+			We obtain the marginal by integrating out all other variables,
+			\begin{align*}
+				f_X(x)
+				=\ \int_{0}^{1} \frac{1}{4} (x+2y) \,dy
+				=\ \left. \frac{1}{4}xy + \frac{1}{4}y^2 \right|_0^1
+				=\ \frac{1}{4}(x+1).
+			\end{align*}
+
+			\part
+			For \(0<x<2\) and \(0<y<1\),
+			\begin{align*}
+				F(x,y)
+				&= \int_{0}^{x} \int_{0}^{y} \frac{1}{4}x + \frac{1}{2}y \,dy \,dx \\
+				&= \int_{0}^{x} \frac{1}{4}xy + \frac{1}{4}y^2 \,dx \\
+				&= \frac{1}{8}x^2y + \frac{1}{4}xy^2 \\
+				&= \frac{1}{4}xy \left(\frac{1}{2}x + y \right). \\
+			\end{align*}
+			
+			The unintuitive extension of the distribution beyond joint feasibility,
+			
+			\(\frac{1}{8}x^2 + \frac{1}{4}x\ \) for \(1 \leq y\) and \(0<x<2\), and
+			
+			\(\frac{1}{4}y^2 + \frac{1}{8}y\ \) for \(2 \leq x\) and \(0<y<1\).
+			
+			\part
+			
+			\(g^{-1}(x) = \sqrt{\frac{9}{z}} - 1\)
+			
+			\begin{align*}
+				f_Z(z)
+				&= \frac{1}{4} \left( \sqrt{\frac{9}{z}} \right) \left| \frac{d}{dz} g^{-1}(x) \right| \\
+				&= \frac{1}{4} \left( \frac{3}{\sqrt{z}} \right) \left( \frac{3}{2} z^{-\frac{3}{2}} \right) \\
+				&= \frac{9}{8} z^{-2}
+			\end{align*}
+			
+			Using \(g^{-1}(x)\) we calculate the support to be over \(1<z<9\).
+			
+		\end{parts}		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -89,7 +140,33 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			
+			\begin{align*}
+				P(X > \sqrt{Y})
+				&= \int_{0}^{1} \int_{\sqrt{y}}^{1} x + y \,dx \,dy \\
+				&= \int_{0}^{1} \left[ \frac{1}{2}x^2 + xy \right]_{\sqrt{y}}^{1} \,dy \\
+				&= \int_{0}^{1} \left[ \left(\frac{1}{2} + y\right) - \left(\frac{1}{2}y + y^{3/2}\right) \right] \,dy \\
+				&= \int_{0}^{1} \frac{1}{2} + \frac{1}{2}y - y^{3/2} \,dy \\
+				&= \left. \frac{1}{2}y + \frac{1}{4}y^2 - \frac{2}{5}y^{5/2} \right|_{0}^{1} \\
+				&= \frac{1}{2} + \frac{1}{4} - \frac{2}{5} \\
+				&= \frac{7}{20} \\
+			\end{align*}
+			
+			\part
+			
+			\begin{align*}
+				P(X^2 < Y < X)
+				&= \int_{0}^{1} \int_{X^2}^{X} 2x \,dy \,dx \\
+				&= \int_{0}^{1} \left[2xy\right]_{X^2}^{X} \,dx \\
+				&= \int_{0}^{1} 2x^2 - 2x^3 \,dx \\
+				&= \left. \frac{2}{3}x^3 - \frac{1}{2}x^4 \right|_{0}^{1} \\
+				&= \frac{2}{3} - \frac{1}{2} \\
+				&= \frac{1}{6} \\
+			\end{align*}			
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -103,10 +180,26 @@
 	9 AM.
 	
 	\begin{solution}
+		Support is over \(0<x<30\), \(40<y<50\). The marginal probabilities for each part is		
+		\(f(x) = \frac{1}{30} \mathbbm{1}_{(0,30)}(x)\) 
+		and
+		\(f(y) = \frac{1}{10} \mathbbm{1}_{(40,50)}(y)\).
+		\begin{align*}
+			P(X+Y<60)
+			&= P(X<60-Y) \\
+			&= \int_{40}^{50} \int_{0}^{60-y} \frac{1}{30} \mathbbm{1}(x) \frac{1}{10} \mathbbm{1}(y) \,dx \,dy \\
+			&= \int_{40}^{50} \left. \frac{1}{30}x \right|_{0}^{60-y} \frac{1}{10} \mathbbm{1}(y) \,dy \\
+			&= \int_{40}^{50} \frac{1}{5} - \frac{y}{300} \,dy \\
+			&= \left. \frac{y}{5} - \frac{y^2}{300} \right|_{40}^{50} \\
+			&= \left(10 - \frac{25}{6}\right) - \left(8 - \frac{16}{6}\right) \\
+			&= 2 - \frac{9}{2} \\
+			&= \frac{1}{2} .
+		\end{align*}
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+	\clearpage
+	
 	%4.9
 	\setcounter{question}{8}
 	\question 
@@ -144,7 +237,27 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			If the variables are independent then \(P(Y|X) = P(Y)\).
+			
+			However, \(P(Y=4|X=1) = 0 \neq P(Y=4) = \frac{1}{4}\).
+			
+			\part \phantom{text}
+			
+			\begin{center}
+				\def\arraystretch{1.25}
+				\begin{tabular}{cc|ccc}
+					& & & \(U\) & \\
+					& & 1 & 2 & 3 \\
+					\hline
+					& 2 & \(\frac{1}{12}\) & \(\frac{1}{6}\) & \(\frac{1}{12}\) \\
+					\(V\) & 3 & \(\frac{1}{12}\)  & \(\frac{1}{6}\) & \(\frac{1}{12}\) \\
+					& 4 &\(\frac{1}{12}\) & \(\frac{1}{6}\) &  \(\frac{1}{12}\)
+				\end{tabular}
+			\end{center}
+						
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -167,11 +280,21 @@
 	\begin{parts}
 		\part Let \(X_1\) and \(X_2\) be independent n\((0, 1)\) random variables. 
 			Find the pdf of \((X_1 - X_2)^2/2\).
-		\part If \(X_i, i = 1, 2,\) are independent gamma\((\alpha i, 1)\) random variables, 
+		\part If \(X_i, i = 1, 2,\) are independent gamma\((\alpha_i, 1)\) random variables, 
 			find the marginal distributions of \(X_1/(X_1 + X_2)\) and \(X_2/(X_1 + X_2)\).
 	\end{parts}
 	
 	\begin{solution}
+		
+		\begin{tikzpicture}
+			
+			% Draw rectangle segments and label them
+			\draw[fill=red,  opacity=0.2] (0,0) rectangle (2,0.5) node[midway] {A};
+			\draw[fill=blue, opacity=0.2] (2,0) rectangle (4,0.5) node[midway] {B};
+			\draw[fill=green,  opacity=0.2] (4,0) rectangle (6,0.5) node[midway] {C};
+			\draw[fill=yellow,  opacity=0.2] (6,0) rectangle (8,0.5) node[midway] {D};
+			
+		\end{tikzpicture}
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
