@@ -269,7 +269,15 @@
 	problem.)
 	
 	\begin{solution}
-		
+				\begin{tikzpicture}
+			
+			% Draw rectangle segments and label them
+			\draw[fill=red,  opacity=0.2] (0,0) rectangle (2,0.5) node[midway] {A};
+			\draw[fill=blue, opacity=0.2] (2,0) rectangle (4,0.5) node[midway] {B};
+			\draw[fill=green,  opacity=0.2] (4,0) rectangle (6,0.5) node[midway] {C};
+			\draw[fill=yellow,  opacity=0.2] (6,0) rectangle (8,0.5) node[midway] {D};
+			
+		\end{tikzpicture}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -286,15 +294,7 @@
 	
 	\begin{solution}
 		
-		\begin{tikzpicture}
-			
-			% Draw rectangle segments and label them
-			\draw[fill=red,  opacity=0.2] (0,0) rectangle (2,0.5) node[midway] {A};
-			\draw[fill=blue, opacity=0.2] (2,0) rectangle (4,0.5) node[midway] {B};
-			\draw[fill=green,  opacity=0.2] (4,0) rectangle (6,0.5) node[midway] {C};
-			\draw[fill=yellow,  opacity=0.2] (6,0) rectangle (8,0.5) node[midway] {D};
-			
-		\end{tikzpicture}
+
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -327,7 +327,7 @@
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	%4.30
-	\setcounter{question}{30}
+	\setcounter{question}{29}
 	\question 
 	Suppose the distribution of \(Y\), conditional on \(X = x\), is n\((x, x^2)\) 
 	and that the marginal distribution of \(X\) is uniform\((0, 1)\).
@@ -378,8 +378,8 @@
 		nd the marginal distribution of \(Y\) is n\((\mu_Y , \sigma_Y^2 )\).
 		\part The conditional distribution of Y given \(X = x\) is
 			\[n(\mu_Y + \rho(\sigma_Y /\sigma_X)(x-\mu_X), \sigma_Y^2 (1-\rho^2)).\]
-		\part For any constants \(a\) and \(b\), the distribution of \(aX + bY\) is
-			\[n(a\mu_X + b\mu_Y , a^2\sigma_X^2 + b^2\sigma_Y^2 + 2ab\rho\sigma_X\sigma_Y ).\]
+		%\part For any constants \(a\) and \(b\), the distribution of \(aX + bY\) is
+		%	\[n(a\mu_X + b\mu_Y , a^2\sigma_X^2 + b^2\sigma_Y^2 + 2ab\rho\sigma_X\sigma_Y ).\]
 	\end{parts}
 	
 	\begin{solution}
