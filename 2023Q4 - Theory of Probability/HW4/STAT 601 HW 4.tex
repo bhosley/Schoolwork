@@ -209,7 +209,13 @@
 		\[P(a \leq X \leq b, c \leq Y \leq d) = P(a \leq X \leq b)P(c \leq Y \leq d).\]
 	
 	\begin{solution}
-		
+		\begin{align*}
+			P(a \leq X \leq b, c \leq Y \leq d) 
+			&=\int_{a}^{b} \int_{c}^{d} F_{X,Y} (x,y) \,dy \,dx \\
+			&=\int_{a}^{b} \int_{c}^{d} F_X(x)F_Y(y) \,dy \,dx \\
+			&=\int_{a}^{b} F_X(x) \,dx \int_{c}^{d} F_Y(y) \,dy \\
+			&= P(a \leq X \leq b)P(c \leq Y \leq d).
+		\end{align*}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -269,15 +275,35 @@
 	problem.)
 	
 	\begin{solution}
-				\begin{tikzpicture}
-			
-			% Draw rectangle segments and label them
-			\draw[fill=red,  opacity=0.2] (0,0) rectangle (2,0.5) node[midway] {A};
-			\draw[fill=blue, opacity=0.2] (2,0) rectangle (4,0.5) node[midway] {B};
-			\draw[fill=green,  opacity=0.2] (4,0) rectangle (6,0.5) node[midway] {C};
-			\draw[fill=yellow,  opacity=0.2] (6,0) rectangle (8,0.5) node[midway] {D};
-			
-		\end{tikzpicture}
+		With \(0\) being the left end and \(1\) being the right end of the stick,
+		let \(x_1,x_2\) be the relative positions of the left and right breaks on the stick respectively.
+		In order to form a triangle it is necessarily true that
+		\[x_1, x_2-x_1, 1-x_2 <0.5.\]
+		
+		From this we can extrapolate that the two breaks must be on opposite sides of the \(0.5\) (half-way) of the stick.
+		This ensures that neither resulting end piece is greater than \(0.5\).
+		Now for the middle we will see that in order to prevent this piece being too long we will have to further 
+		divide each side in half, where each break will have to be on the same half of their respective halves.
+ 		
+ 		\begin{center}
+			\begin{tikzpicture}
+				% Draw rectangle segments and label them
+				\draw[fill=red,  opacity=0.2] (0,0) rectangle (2,0.5) node[midway] {A};
+				\draw[fill=blue, opacity=0.2] (2,0) rectangle (4,0.5) node[midway] {B};
+				\draw[fill=green,  opacity=0.2] (4,0) rectangle (6,0.5) node[midway] {C};
+				\draw[fill=yellow,  opacity=0.2] (6,0) rectangle (8,0.5) node[midway] {D};
+			\end{tikzpicture}
+ 		\end{center}
+		
+		The necessary positioning can be shown in this diagram. 
+		If \(x_1\) is in quadrant A then it is necessary for \(x_2\) to be in quadrant C.
+		If \(x_1\) is in quadrant B then it is necessary for \(x_2\) to be in quadrant D.
+		Calculating the probability from this will require multiplying by 2
+		to account for all of the situations in which the first break is \(x_2\) rather than \(x_1\).
+		
+		Thus we can calculate the probability of being able to form a triangle as
+		\[ 2\left(\frac{1}{4} \cdot \frac{1}{4} + \frac{1}{4} \cdot \frac{1}{4}\right) = \frac{1}{4} \]
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -293,9 +319,14 @@
 	\end{parts}
 	
 	\begin{solution}
-		
-
-		
+		\begin{parts}
+			\part
+			\(X_1,X_2 \overset{iid}{\sim} N(0,1)\)
+			
+			\part
+			
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -322,7 +353,7 @@
 	and find the distribution of each. (\(Z_1\) is gamma and \(Z_2\) is beta.) 
 	
 	\begin{solution}
-		
+
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
