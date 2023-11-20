@@ -321,15 +321,59 @@
 	\begin{solution}
 		\begin{parts}
 			\part
-			\(X_1,X_2 \overset{iid}{\sim} N(0,1)\)
+			\begin{align*}
+			\intertext{We are given that}
+				X_1,X_2 &\overset{iid}{\sim} N(0,1).
+			\intertext{Which implies}
+				X_1 - X_2 &\sim N(\mu_1 + \mu_2, \sigma^2_1 + \sigma^2_2).		
+			\intertext{So via substitution, let}
+				Y &= X_1 - X_2 \sim N(0,2).
+			\intertext{Then with a further substitution, let}
+				Z &= \frac{Y}{\sqrt{2}} \sim N(0,1).
+			\intertext{Thus $Z$ can be shown as a Chi-squared distribution as,}
+				Z^2 \sim \chi^2_1& = \frac{1}{\Gamma(\frac{p}{2}) 2^{p/2}} x^{(p/2)-1} e^{-x/2} \\
+				&= \frac{1}{\Gamma(\frac{1}{2}) 2^{1/2}} z^{2(1/2-1)} e^{-z^2/2} \\
+				&= \frac{1}{z\sqrt{2}} e^{-z^2/2}.
+			\end{align*}
+			
+			There is support \(-\infty<z<\infty\) for a chi distribution. 
+			However, this distribution has the support \(0<z<\infty\) because 
+			\(z\) was calculated using a square-root/square during substitution.
+			
 			
 			\part
+			Let
+			\begin{align*}
+				U &= \frac{X_1}{X_1 + X_2} \qquad q^{-1}_1(u,v) = UV \qquad\ \ \ (=x_1) \\
+				V &= {X_1 + X_2} \qquad q^{-1}_2(u,v) = V-UV \quad (=x_2)
+			\end{align*}
 			
+			The Jacobian for the transformation will be,
+			\[|J| = \begin{vmatrix} v & u \\ -v & 1-u \end{vmatrix} = (1-u)v + uv = v.\]
 			
+			Then the transformed joint distribution is,
+			\begin{align*}
+				f_{UV}(u,v) &= f_{X_1}\left(g^{-1}_1(u,v) g^{-1}_2(u,v)\right) |v| \\
+				&= \frac{1}{\Gamma(\alpha_1)\Gamma(\alpha_2)} (uv)^{\alpha_1-1} (v-uv)^{\alpha_2-1} e^{-(uv+v-uv)} \\
+				&= \frac{1}{\Gamma(\alpha_1)\Gamma(\alpha_2)} u^{\alpha_1-1} v^{\alpha_1} v^{\alpha_2-1} (1-u)^{\alpha_2-1} e^{-v}.
+			\end{align*}
+			Which allows us to calculate the marginal distribution,			
+			\begin{align*}
+				f_U(u)
+				&= \int_{0}^{\infty}\frac{1}{\Gamma(\alpha_1)\Gamma(\alpha_2)} 
+					u^{\alpha_1-1} v^{\alpha_1} v^{\alpha_2-1} (1-u)^{\alpha_2-1} e^{-v} \,dv \\
+				&= \underset{\sim\beta(\alpha_1,\beta_2) \rightarrow 1}{
+					\underbrace{  \frac{1}{\Gamma(\alpha_1)\Gamma(\alpha_2)} u^{\alpha_1-1} (1-u)^{\alpha_2-1}  }}\ \
+					\underset{\sim Gam(\alpha_1+\alpha_2,1)}{
+						\underbrace{ \int_{0}^{\infty} v^{\alpha_1+\alpha_2-1}  e^{-v} \,dv }}.
+			\end{align*}
+			Thus we can see that for both  \(i\in\{1,2\}\) 
+			the marginal distributions are \(Gam(\alpha_1+\alpha_2,1)\).
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+	\clearpage
+	
 	%4.23
 	\setcounter{question}{22}
 	\question 
@@ -341,9 +385,42 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			Let \(Y = V\) and \(X = U/V\)
+			
+			The Jacobian
+			\[|J| = \begin{vmatrix} \frac{1}{v} & \frac{-u}{v^2} \\ 0 & 1 \end{vmatrix} = \frac{1}{v}\]
+			
+			\begin{align*}
+				f_{UV}(u,v) 
+				&= f_{XY}(g^{-1}_1(u,v)g^{-1}_2(u,v)) |J| \\
+				&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \left(\frac{u}{v}\right)^{\alpha-1} \left(1-\frac{u}{v}\right)^{\beta-1}
+				\frac{\Gamma(\alpha+\beta+\gamma)}{\Gamma(\alpha+\beta)\Gamma(\gamma)} \left(v\right)^{\alpha+\beta-1} \left(1-v\right)^{\gamma-1} \left(\frac{1}{v}\right) \\
+				&= \frac{\Gamma(\alpha+\beta+\gamma)}{\Gamma(\alpha)\Gamma(\beta)\Gamma(\gamma)}
+					u^{\alpha-1} v^{\beta-1} (1 - u/v)^{\beta-1} (1-v)^{\gamma-1} \\
+				&= \frac{\Gamma(\alpha+\beta+\gamma)}{\Gamma(\alpha)\Gamma(\beta)\Gamma(\gamma)}
+					u^{\alpha-1} v^{\beta-1} (v - u)^{\beta-1} (1-v)^{\gamma-1} \\
+				&= \frac{\Gamma(\alpha+\beta+\gamma)}{\Gamma(\alpha)\Gamma(\beta)\Gamma(\gamma)} u^{\alpha-1}
+					\int_{u}^{1}  v^{\beta-1} (v - u)^{\beta-1} (1-v)^{\gamma-1} \,dv \\
+				\intertext{substituting \(z = \frac{v-u}{1-u}\)}
+				&= \frac{\Gamma(\alpha+\beta+\gamma)}{\Gamma(\alpha)\Gamma(\beta)\Gamma(\gamma)} u^{\alpha-1}(1 - u)^{\beta+\gamma-1}
+					\int_{0}^{1}  z^{\beta-1} (1-z)^{\gamma-1} \,dv \\
+				\intertext{removing the Beta distribution by substituting in the reciprocal of the missing part,}
+				&= \frac{\Gamma(\alpha+\beta+\gamma)}{\Gamma(\alpha)\Gamma(\beta)\Gamma(\gamma)} u^{\alpha-1}(1 - u)^{\beta+\gamma-1}
+					\frac{\Gamma(\beta)\Gamma(\gamma)}{\Gamma(\beta+\gamma)} \\
+				&= \frac{\Gamma(\alpha+\beta+\gamma)}{\Gamma(\alpha)\Gamma(\beta+\gamma)} u^{\alpha-1}(1 - u)^{\beta+\gamma-1}
+			\end{align*}
+			Thus the distribution of \(U\) is a \(Gam(\alpha,\beta+\gamma)\)
+			
+			
+			\part
+			
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 
 	%4.24
 	\question
@@ -353,7 +430,18 @@
 	and find the distribution of each. (\(Z_1\) is gamma and \(Z_2\) is beta.) 
 	
 	\begin{solution}
-
+		Note that \(x = z_1z_2\) and \(y=z_1(1-z_2)\).
+		The Jacobian of the \(Z\)'s is
+		\[ |J| = \begin{vmatrix} z_2 & z_1 \\ 1 - z_2 & -z_1 \end{vmatrix} = z_1. \]
+		The the \(X\) and \(Y\) joint distribution can be refactored into the joint \(Z\) distribution
+		\begin{align*}
+			f_{Z_1Z_2}(z_1,z_2)
+			&= \frac{1}{\Gamma(r)} (z_1z_2)^{r-1} e^{-z_1z_2} \frac{1}{\Gamma(s)} z_1(1-z_2)^{s-1} e^{-z_1(1-z_2)} z_1\\
+			&= \frac{\Gamma(r+s)}{\Gamma(r+s)} \frac{1}{\Gamma(r)} z_1^{r-1} z_1^{s-1}
+			 \frac{1}{\Gamma(s)} z_2^{r} (1-z_2)^{s-1} e^{-z_1z_2}e^{-z_1+-z_1z_2} \\
+			&= \frac{1}{\Gamma(r+s)} z_1^{s+r-1} e^{-z_1} \frac{\Gamma(r+s)}{\Gamma(r)\Gamma(s)} z_2^{r-1} (1-z_2)^{s-1} \\
+		\end{align*}
+		The last line shows that the two \(Z\) distributions are independent.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -369,9 +457,22 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			\[E[Y] = E[E[Y|X]] = E[X] = \frac{1}{2}.\]
+			\[\text{Var}[Y] = \text{Var}[E[Y|X]] + E[\text{Var}[Y|X]] = \text{Var}[X] + E[X^2] 
+				= 2\text{Var}[X] + E[X]^2 = 2\left(\frac{1}{12}\right) + \frac{1}{4} = \frac{5}{12}\]
+			We will need \(E[XY]\) to calculate covariance
+			\[E[XY] = E[E[XY|X]] = E[X]E[Y|X] = E[X^2] = \frac{1}{12} + \frac{1}{4} = \frac{1}{3}\]
+			\[\text{Cov}(X,Y) = E[XY] - E[X]E[Y] = \frac{1}{3} - \frac{1}{4} = \frac{1}{12}\]
+			
+			\part
+			
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 
 	%4.31
 	\question 
@@ -380,11 +481,21 @@
 	\begin{parts}
 		\part Find \(E\,Y\) and Var \(Y\).
 		\part Find the joint distribution of \(X\) and \(Y\).
-		\part Find the marginal distribution of \(Y\).
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			Borrowing a lot of work from 4.30;
+			\[E[Y] = E[E[Y|X]] = E[nX] = \frac{n}{2}.\]
+			\[\text{Var}[Y] = \frac{n^2}{12} + \frac{n}{6}\]
+			
+			\part
+			\begin{align*}
+				P(Y=y,X=x) = \binom{n}{y} x^y (1-x)^{n-y}
+			\end{align*}
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -394,7 +505,12 @@
 	Show that any random variable is uncorrelated with a constant.
 	
 	\begin{solution}
+		Let \(Y\) be a random variable of arbitrary distribution,
+		and let \(k\) be an arbitrary constant.
 		
+		Then correlation is calculated by \[\rho_{Y,k} = \frac{\text{Cov}(Y,k)}{\sigma_Y\sigma_k}.\]
+		However, note that \(\sigma_k =0\).
+		Thus \(\rho_{Y,k}\) is undefined by virtue of division by 0.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -405,8 +521,8 @@
 	\((\mu_X, \mu_Y , \sigma_X^2 , \sigma_Y^2 , \rho)\), then the following are true.
 	
 	\begin{parts}
-		\part The marginal distribution of \(X\) is n\((\mu_X, \sigma_X^2 )\) a
-		nd the marginal distribution of \(Y\) is n\((\mu_Y , \sigma_Y^2 )\).
+		\part The marginal distribution of \(X\) is n\((\mu_X, \sigma_X^2 )\) 
+		and the marginal distribution of \(Y\) is n\((\mu_Y , \sigma_Y^2 )\).
 		\part The conditional distribution of Y given \(X = x\) is
 			\[n(\mu_Y + \rho(\sigma_Y /\sigma_X)(x-\mu_X), \sigma_Y^2 (1-\rho^2)).\]
 		%\part For any constants \(a\) and \(b\), the distribution of \(aX + bY\) is
@@ -414,7 +530,15 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{align}
+			f_{XY} 
+			&= \frac{1}{2\pi\sigma_x\sigma_y\sqrt{1-\rho^2}} \exp \left\{- \frac{1}{2(1-\rho^2)} \left[\frac{(x-\mu_x)^2}{\sigma_x} 
+				-2\rho\frac{(x-\mu_x)(y-\mu_y)}{\sigma_x\sigma_y} + \frac{(y-\mu_y)^2}{\sigma_y} \right]\right\} \\
+			&= \frac{1}{\sigma_x\sqrt{2\pi}} \frac{1}{\sigma_y\sqrt{2\pi}} \frac{1}{\sqrt{1-\rho^2}}
+			\exp \left\{- \frac{1}{2(1-\rho^2)} \left[\frac{(x-\mu_x)^2}{\sigma_x} - \rho \right] \left[
+			\frac{(y-\mu_y)^2}{\sigma_y} - \rho \right]\right\} \\
+		\end{align}
+		\textcolor{red}{incomplete}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -424,6 +548,48 @@
 	Bullets are fired at the origin of an \((x, y)\) coordinate system, and the point hit, say \((X, Y )\), is a random variable. The variables \(X\) and \(Y\) are taken to be independent n\((0, 1)\) random variables. If two bullets are fired independently, what is the distribution of the distance between them?
 	
 	\begin{solution}
+		\(X,Y \overset{iid}{\sim} N(0,1)\)
+		
+		Thus the distance between the two is
+		\(Z = \sqrt{(X^2_1+X^2_2)+(Y^2_1+Y^2_2)}.\)
+		
+		We know that 
+		\(X+Y \sim N(0+0,1^2+1^2)\)
+		and this can be re-normalized as
+		\(\frac{X+Y}{\sqrt{2}} \sim N(0,1)\).
+		
+		Jointly this is also a chi-squared distribution,
+		\[\left(\frac{X+Y}{\sqrt{2}}\right)^2 \sim \chi^2_1.\]
+		
+		Which can be further manipulated to be closer to the desired \(Z\) above, 
+		\(\frac{(X_1+Y_1)^2}{2} + \frac{(X_2+Y_2)^2}{2} \sim \chi^2_2\)
+		
+		Using that distribution and a substitution,
+		\begin{align*}
+			f_U(u) 
+			&= \frac{1}{2^{k/2}\gamma(k/2)} u^{k/2-1} e^{-u/2} \\
+			&= \frac{1}{2\Gamma(1)} u^0 e^{-u/2} \\
+			&= \frac{1}{2} e^{-u/2}.
+		\end{align*}
+		
+		This substitution relates to the desired distribution as, 
+		\(g(u) = z = \sqrt{2u} \Rightarrow g^{-1}(z) = \frac{z^2}{2}. \)
+		
+		Thus the distribution of the Euclidean distance between the two shots is,		
+		\begin{align*}
+			f_Z(z)
+			 &= f_u(g^{-1}(z) z) \\
+			 &= \frac{1}{2}ze^{-(z^2/2)/2} \\
+			 &= \frac{ze^{-z^2/4}}{2}.
+		\end{align*}
+		
+		The support can be calculated by
+		\begin{align*}
+			0 \leq&\ u < \infty \\
+			0 \leq&\ 2u < \infty \\
+			-\infty <&\ \sqrt{2u} < \infty \\
+			-\infty <&\ z < \infty.
+		\end{align*}
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
