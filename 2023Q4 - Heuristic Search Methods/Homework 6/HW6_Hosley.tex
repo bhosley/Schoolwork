@@ -1,0 +1,262 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+\usepackage{comment}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+\usepackage[toc,page]{appendix}
+\usepackage{listings}
+\usepackage{minted}
+
+\newcommand\chapter{ 6 }
+%\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+%\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{ OPER 623 - Heuristic Search Methods } % This is the name of the course 
+\newcommand{\assignmentname}{Homework \# \chapter} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+	\pagestyle{plain}
+	\thispagestyle{empty}
+	\noindent
+	
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\noindent
+	\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+		\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+		\textbf{\assignmentname } & \textbf{\workdate} & \\
+	\end{tabular*}\\ 
+	\rule{\textwidth}{2pt}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\begin{questions}
+		
+		\setcounter{question}{0}
+		\question 
+		(5 pts) Read “Genetic Algorithms for the Operations Researcher” (If you haven’t already, this was assigned reading).  Answer the following questions based on that reading and the class lectures.
+		
+		\begin{parts}
+			\part
+			What is a schema?  How are schema used in GA?  What is meant in your own words by intrinsic parallelism?
+			\part
+			Present a crossover method for creating offspring for the Traveling Salesman Problem that maintains feasibility.  Provide an example.  Defend how this method guarantees feasibility.  You can present and explain existing methods if cited for maximum 90\% credit. 
+		\end{parts}
+		
+		\begin{solution}
+			\begin{parts}
+				\part
+				\begin{subparts}
+					\subpart
+					Schema:
+					
+					Are analogous to biological phenomes.
+					It is probably a good choice to use the term schema instead to avoid accidental confusion with phenotype.
+					
+					There are finite regions dedicated on a biological chromosome eligible for crossover.
+					This occurs to avoid splitting a functional gene, and the size of the area provides more room for error.
+					Moreover, the size of these regions ensure that analogous pairs are adjacent during a crossover.
+					
+					\subpart
+					Schema in GA:
+					
+					The segments on either side of the crossover remain the same during this process; 
+					each of these segments may be labeled to belong to a schema with that segment in common.
+					During recombination the schema of each segment encompass the reachable region within the 
+					solution space in which the resulting chromosomes could occur.
+					
+					The mechanism of crossover controls what size and shape schema can occur as.
+					In a biological sense, there are sets of genes that do not have a crossover region between them,
+					therefor the \textit{solution space} in which these \textit{values} are independently changed is not reachable.
+					
+					If an implementation of a genetic algorithm shares a similar weakness these regions of the solution space
+					can only be reached through the mutation process.
+					
+					\subpart
+					Intrinsic Parallelism:
+					
+					The manner in which genetic algorithms work inherently lend themselves to parallelization without any modification.
+					Each chromosome can be evaluated independently of each other, and the reproduction mechanism can be performed independently.
+					Thus the generational pooling, ranking, culling etc. is the only aspect that must occur serially.
+					
+				\end{subparts}
+				
+				\part
+				
+				The method that I present is inspired by the two shortcomings mentioned in the reading, preserving edges and considering the path bidirectionally.
+				
+				The first step is to select a subset of elements from each parents, in the example it will be 6 elements starting from index 3.
+				Next, we take both ends of the string as starting points on the other parent. 
+				From that we construct a subset in both directions, continuing until they encounter a base that has already been used.
+				Treating the ends of the array as connected.
+				For both, we select the longest string as the new terminals of the child route.
+				This process is iterated back and forth until no additions can be made from either parent.
+				Any remaining elements will need to be added, there are many ways to accomplish this, but in this example we insert the leftover randomly to increase diversity.
+				
+				This method accounts for all elements, contiguous stretches, and is direction agnostic.
+				
+				\begin{center}
+					\begin{tabular}{cc}
+						\([2,6,3,\textcolor{cyan}{9,10,7,0,14,1,}13,11,4,8,12,5]\) & \\
+						\([14,13,6,9,8,2,3,0,12,10,7,4,5,11,1]\) & \\
+						
+						& \( [\ldots, 9,10,7,0,14,1, \ldots] \) \\
+						
+						\([2,6,3,\ldots,13,11,4,8,12,5]\) & \\
+						\([\ldots,\textcolor{red}{13,6,}\textcolor{cyan}{9,}\textcolor{red}{8,2,3,}\dots,12,\ldots,\textcolor{red}{4,5,11,}\textcolor{cyan}{1}]\) & \\
+						
+						& \( [\ldots, 3,2,8,9,10,7,0,14,1,11,5,4 \ldots] \) \\
+						
+						\([ \ldots,\textcolor{cyan}{6},\textcolor{red}{3},\ldots,13,\ldots,\textcolor{red}{4},\ldots,12,\ldots ]\) & \\
+						\([ \ldots,13,6,\dots,\textcolor{red}{3},\dots,12,\ldots,\textcolor{red}{4},\ldots ]\) & \\
+						
+						& \( [\ldots, 6,3,2,8,9,10,7,0,14,1,11,5,4 \ldots] \) \\
+						
+						\([ \ldots,\textcolor{cyan}{6},\ldots,13,\ldots,\textcolor{red}{4},\ldots,12,\ldots ]\) & \\
+						\([ \ldots,\textcolor{red}{13},\textcolor{cyan}{6},\dots,12,\ldots,\textcolor{cyan}{4},\ldots ]\) & \\
+						
+						& \( [\ldots, 13,6,3,2,8,9,10,7,0,14,1,11,5,4 \ldots] \) \\
+						
+						Random insertion of 12, & \\
+						& \( [ 13,6,3,2,8,9,10,7,0,14,1,11,12,5,4 ] \) \\
+					\end{tabular}
+				\end{center}
+				
+				Then, we can repeat starting with the other parent to generate a second child.
+				
+				\begin{center}
+					\begin{tabular}{cc}
+						\([2,6,3,9,10,7,0,14,1,13,11,4,8,12,5]\) & \\
+						\([14,13,6,\textcolor{red}{9,8,2,3,0,12},10,7,4,5,11,1]\) & \\
+						
+						& \( [\ldots, 9,8,2,3,0,12, \ldots] \) \\
+						
+						\([\ldots,6,\ldots,\textcolor{red}{9},\textcolor{cyan}{10,7},\ldots,14,1,13,11,4,\ldots,\textcolor{red}{12},\textcolor{cyan}{5}]\) & \\
+						\([14,13,6,\ldots,10,7,4,5,11,1]\) & \\
+						
+						& \( [\ldots, 7,10,9,8,2,3,0,12,5 \ldots] \) \\
+						\([\ldots,6,\ldots,\textcolor{cyan}{7},\ldots,14,1,13,11,4,\ldots,\textcolor{cyan}{5}]\) & \\
+						\([\textcolor{red}{14,13,6},\ldots,\textcolor{cyan}{7},\textcolor{red}{4},\textcolor{cyan}{5},\textcolor{red}{11,1}]\) & \\
+						
+						& \( [ 4,7,10,9,8,2,3,0,12,5,11,1,14,13,6 ] \) \\
+					\end{tabular}
+				\end{center}
+				
+			\end{parts}
+			
+		\end{solution}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+		\question 
+		(5 Pts )  Use the Genetic Algorithm code provided for the GA lab (for the MKP) and replace the offspring repair mechanism with a greedy repair mechanism.  Explain and defend your new offspring mechanism.
+		
+		\begin{solution}
+			Please see \hyperref[appendix:ipynb]{appendix A} for code or included iPython Notebook for functional example.
+			
+			This repair mechanism is the Scrooge McDuck of repair mechanisms.
+			
+			The first part of the repair is to return to feasibility. 
+			The logical, shortest path to feasibility is to drop the superlative item in the most violated constraint and repeat until feasibility is achieved.
+			However, this is only the greediest option along the axis of the corresponding constraint, we can be even greedier by adding in the value axis. 
+			Thus we drop the item with the highest constraint to value ratio, e.i. the item with the highest gram/€.
+			
+			The next step is to optimize this newly emptied space.
+			First we catalog all of the items that can possibly fit.
+			Then we determine which of the constraint has the least slack.
+			Then we add the eligible item with the greatest ratio of value to scarcest constraint.
+			We stuff the knapsack with items iteratively until none of the remaining items will fit.
+		\end{solution}
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+	\end{questions}
+	
+	\clearpage
+	\begin{appendices}
+	
+	\section{Python Code} \label{appendix:ipynb}
+	\begin{minted}[autogobble, numbersep=5pt, fontsize=\scriptsize,
+		frame=lines,
+		framesep=2mm,
+		breaklines, breakautoindent=false,
+		breaksymbolleft=\raisebox{0.8ex}{ \scriptsize\reflectbox{ {\rotatebox[origin=l]{-90}{$\curvearrowright$}} }},
+		breaksymbolindentleft=0pt, breaksymbolsepleft=0pt, breaksymbolright={\scriptsize {\rotatebox[origin=l]{270}{$\curvearrowright$}} }, breaksymbolindentright=0pt, breaksymbolsepright=0pt]{Python}
+def fixer(chromosome):
+	_, weight, volume = calculator(chromosome)
+	infeasible = True
+	
+	while infeasible:
+		# Drop items until feasibility is achieved
+		infeasible =  False
+		
+		slack_v = max_volume - volume
+		slack_w = max_weight - weight
+		
+		# Check constraints
+		if slack_w <= 0 or slack_v <= 0: 
+			infeasible = True
+		
+			# If weight is more violated than volume
+			if slack_w < slack_v:
+				# Drop with largest weight to value ratio
+				i = np.argmax(chromosome * mkp_array[:,1] / mkp_array[:,0])
+				chromosome[i]=0
+			else:
+				# Drop item with worst voluminous to value ratio
+				i = np.argmax(chromosome * mkp_array[:,2]/ mkp_array[:,0])
+				chromosome[i]=0
+		
+		_, weight, volume = calculator(chromosome)
+	
+	# End infeasibility loop
+	
+	# Check if any items can fit in the bag
+	slack_v = max_volume - volume
+	slack_w = max_weight - weight
+	eligible_items = [mkp_array[i,1] <= slack_w and mkp_array[i,2] <= slack_v and not chromosome[i] for i in range(len(mkp_data))]
+	
+	while np.sum(eligible_items) > 0:
+		# Find the most valuable of the items that can fit and add it
+		if slack_w < slack_v:
+			new_item = np.argmax(eligible_items * mkp_array[:,0] / mkp_array[:,1])
+			chromosome[new_item] = 1
+		else:
+			new_item = np.argmax(eligible_items * mkp_array[:,0] / mkp_array[:,2])
+			chromosome[new_item] = 1
+		
+		# Re-calculate until no items can fit
+		_, weight, volume = calculator(chromosome)
+		slack_v = max_volume - volume
+		slack_w = max_weight - weight
+		eligible_items = [mkp_array[i,1] <= slack_w and mkp_array[i,2] <= slack_v and not chromosome[i] for i in range(len(mkp_data))]
+	
+	return chromosome
+	\end{minted}
+	
+	\end{appendices}
+\end{document}  
