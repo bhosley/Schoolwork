@@ -62,12 +62,31 @@
 	\setcounter{partno}{3}
 		\part Given \(X\) is less than \(\frac{1}{2}\), what is the probability that \(Y\) is less than \(\frac{1}{4}\)?
 	\end{parts}
-	
-	
 
 	\begin{solution}
-	
-	\end{solution}
+		Using the property,
+		\[ f_{Y|X} = \frac{f_{YX}(y,x)}{f_X(x)} \Rightarrow f_{Y|X}\left(\left.y<\frac{1}{4}\right|x<\frac{1}{2}\right) = \frac{f_{YX}(y<\frac{1}{4},x<\frac{1}{2})}{f_X(x<\frac{1}{2})}. \]
+		First,
+		\[ P\left(x<\frac{1}{2}\right) = \int_{0}^{\frac{1}{2}} 5x^4 \,dx =  x^5 \Big|_{0}^\frac{1}{2} = \left(\frac{1}{2}\right)^5. \]
+		Next, \(f_{YX}\) noting that there will be two sets of bounds,
+		\begin{align*}
+			\int_{0}^{\frac{1}{4}} \int_{0}^{x} 10xy^2\,dy\,dx	&+ \int_{\frac{1}{4}}^{\frac{1}{2}} \int_{0}^{\frac{1}{4}} 10xy^2\,dy\,dx \\
+			\left(\frac{10}{3}\right)\quad  \int_{0}^{\frac{1}{4}} x \Big[y^2\Big]_0^x \,dx	&+ \int_{\frac{1}{4}}^{\frac{1}{2}} x \Big[y^2\Big]_0^\frac{1}{4} \,dx \\
+			\left(\frac{10}{3}\right)\qquad  \int_{0}^{\frac{1}{4}} x^4 \,dx	&+ \int_{\frac{1}{4}}^{\frac{1}{2}} x \left(\frac{1}{4}\right)^2 \,dx \\
+			\left(\frac{10}{3}\right)\qquad \left.\left(\frac{1}{5}\right) x^5\right|_{0}^{\frac{1}{4}} 	
+				&+	\left(\frac{1}{4}\right)^2 \left.\left(\frac{1}{2}\right)x^2\right|_{\frac{1}{4}}^{\frac{1}{2}}  \\
+			\left(\frac{10}{3}\right)\qquad \left(\frac{1}{5}\right) \left(\frac{1}{4}\right)^5
+			&+	\left(\frac{1}{4}\right)^2 \left(\frac{1}{2}\right) \left[ \left(\frac{1}{2}\right)^2 -\left(\frac{1}{4}\right)^2 \right]  \\
+			\left(\frac{10}{3}\right)\qquad\qquad \frac{1}{5(4)^5} &+ \frac{1}{2^5} \left( \frac{1}{4} - \frac{1}{16} \right) \\
+			\left( \frac{10}{3} \right) \left( \frac{1}{5(4)^5} \right. &+ \left. \frac{3}{16(2)^5} \right) \\
+			\left( \frac{10}{3} \right) \left( \frac{1}{5(2)^{10}} \right. &+ \left. \frac{3}{(2)^9} \right) \\
+			\frac{310}{15(2)^{10}} & \\
+		\intertext{we divide by the \(f_X(x)\) from above to help simplify,}
+			\frac{310}{15(2)^{5}} = \frac{62}{3(2)^{5}} =& \frac{31}{3(2)^{4}}  = \frac{31}{48}. \\
+		\end{align*}
+		Or approximately, \(\frac{31}{48}\). \\
+		
+	\end{solution} \clearpage
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 	\question 
@@ -78,6 +97,15 @@
 	\end{parts}
 	
 	\begin{solution}
+		Using the property that, when \(Y=X_1+X_2\)
+		\begin{align*}
+			\text{MGF}_Y(t) 
+			&= \text{MGF}_{X_1}(t) \text{MGF}_{X_2}(t) \\
+			&= e^{\lambda(e^t-1)} \, e^{\lambda(e^t-1)} \\
+			&= e^{2\lambda(e^t-1)} \\ 
+			\therefore&\sim\text{Poi}(2\lambda)
+		\end{align*}
+		and we also determine that \(f_Y(y) = \frac{2\lambda^ye^{-2\lambda}}{y!}\).
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -99,6 +127,12 @@
 	\end{parts}
 	
 	\begin{solution}
+		Solving by brute force,
+		\begin{align*}
+			\frac{1}{8} \sum_{x=1}^{8} \frac{\min(x,3)}{x}
+			= \frac{1+2+3(6)}{(8^2)/2}
+			= \frac{21}{36}.
+		\end{align*}
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
