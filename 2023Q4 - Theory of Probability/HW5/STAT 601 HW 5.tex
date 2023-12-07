@@ -72,7 +72,8 @@
 	Find the distribution of \(\sum^{n}_{i=1}Y_i\).
 	
 	\begin{solution}
-		
+		The distribution can be calculated if \(F_X\) is known, the relationship between the distributions is,
+		\[\sum^{n}_{i=1}Y_i \sim \text{binom}(n,p = P(X>\mu)).\]
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -119,7 +120,18 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			\[
+			\bar{X}_{n+1} = \frac{\sum_{i=1}^{n+1}X_i}{n+1} = \frac{X_{n+1} + \sum_{i=1}^{n}X_i}{n+1} = \frac{X_{n+1} + n\bar X_n}{n+1}
+			\]
+			
+			\part
+			\[
+			nS_{n+1}^2 = \sum_{i=1}^{n+1} \frac{\left(X_i - \bar{X}_{n+1} \right)^2}{(n+1)-1}
+			\]
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
