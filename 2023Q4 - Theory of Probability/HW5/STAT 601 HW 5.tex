@@ -90,7 +90,39 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			Let
+			\[ Z = X - Y \quad\text{ and }\quad W = X \]
+			then,
+			\[ \det J = \begin{vmatrix} 0&1 \\ -1&1 \end{vmatrix} = 1 \]
+			and,
+			\[ f_{W,Z}(w,z) = f_X(g^{-1}(y))f_Y(g^{-1}(y)) = f_X(w)f_Y(z-w). \]
+			We can then use this to find the marginal distribution of \(Z\),
+			\[\int_{-\infty}^{\infty} f_X(w)f_Y(z-w) \,dw \]
+			
+			\part
+			Let
+			\[ Z = XY \quad\text{ and }\quad W = X \]
+			then,
+			\[ \det J = \begin{vmatrix} 0&1 \\ \frac{1}{w}&-\frac{z}{w^2} \end{vmatrix} = -\frac{1}{w} \]
+			and,
+			\[ f_{W,Z}(w,z) = f_X(g^{-1}(y))f_Y(g^{-1}(y)) = f_X(w)f_Y(z/w)\left|-\frac{1}{w}\right|. \]
+			We can then use this to find the marginal distribution of \(Z\),
+			\[\int_{-\infty}^{\infty} f_X(w)f_Y(z/w)\frac{1}{w} \,dw \]
+			
+			\part
+			Let
+			\[ Z = X/Y \quad\text{ and }\quad W = X \]
+			then,
+			\[ \det J = \begin{vmatrix} 0&1 \\ -\frac{w}{z^2}&\frac{1}{z} \end{vmatrix} = \frac{w}{z^2}\]
+			and,
+			
+			\[ f_{W,Z}(w,z) = f_X(g^{-1}(y))f_Y(g^{-1}(y)) = f_X(w)f_Y(w/z)\left|\frac{w}{z^2}\right|. \]
+			We can then use this to find the marginal distribution of \(Z\),
+			\[\int_{-\infty}^{\infty} f_X(w)f_Y(w/z)\frac{1}{w} \frac{w}{z^2} \,dw \]
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -103,6 +135,14 @@
 	if \(\sigma^2 > 0\), then \(E\,S < \sigma\).
 	
 	\begin{solution}
+		We start with
+		\[E[S^2] = \sigma^2.\]
+		Jensen's inequality states that 
+		\[E[S^2] \geq E[S]^2\]
+		and transitively that
+		\[\sigma^2 \geq E[S]^2,\]
+		thus,
+		\[\sigma \geq E[S].\]
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -132,12 +172,25 @@
 				&= \sum_{i=1}^{n+1} \left(X_i - \bar{X}_{n+1} \right)^2 \\
 				&= \sum_{i=1}^{n+1} \left(X_i - \frac{X_{n+1}+n\bar{X}_{n}}{n+1} \right)^2 \\
 				&= \sum_{i=1}^{n+1} \left(X_i - \frac{X_{n+1}}{n+1} - \frac{n\bar{X}_{n}}{n+1} \right)^2 \\
-			\end{align*}
-			
-			
+				&= \sum_{i=1}^{n+1} \left(X_i - \frac{X_{n+1}}{n+1} - \frac{n\bar{X}_{n}+\bar{X}_{n}-\bar{X}_{n}}{n+1} \right)^2 \\
+				&= \sum_{i=1}^{n+1} \left(X_i - \frac{X_{n+1}}{n+1} - \frac{(n+1)\bar{X}_{n}}{n+1} - \frac{\bar{X}_{n}}{n+1} \right)^2 \\
+				&= \sum_{i=1}^{n+1} \left((X_i - \bar{X}_{n}) - \frac{ X_{n+1} - \bar{X}_{n} }{n+1} \right)^2 \\
+				&= \sum_{i=1}^{n+1} (X_i - \bar{X}_{n})^2 + \left(\frac{ X_{n+1}-\bar{X}_{n} }{n+1} \right)^2 -2(X_i - \bar{X}_{n})	\frac{ X_{n+1}+\bar{X}_{n} }{n+1} \\
+				&= \frac{\left( X_{n+1}-\bar{X}_{n}\right)^2 }{n+1}+ (X_{n+1}-\bar{X}_{n})^2  + \sum_{i=1}^{n} (X_i-\bar{X}_{n})^2 
+					- \sum_{i=1}^{n+1} 2(X_i - \bar{X}_{n})\frac{ X_{n+1}-\bar{X}_{n} }{n+1} \\
+				&= \frac{\left( X_{n+1}-\bar{X}_{n}\right)^2 }{n+1}+ (X_{n+1}-\bar{X}_{n})^2  + \sum_{i=1}^{n} (X_i-\bar{X}_{n})^2 
+				-2\frac{ X_{n+1}-\bar{X}_{n} }{n+1} \sum_{i=1}^{n+1} (X_i - \bar{X}_{n}) \\
+				&= \frac{\left(X_{n+1}-\bar{X}_{n}\right)^2 }{n+1}+ (X_{n+1}-\bar{X}_{n})^2 -2\frac{ (X_{n+1}-\bar{X}_{n})^2 }{n+1} +\sum_{i=1}^{n} (X_i-\bar{X}_{n})^2 \\
+				&= \frac{\left( X_{n+1}-\bar{X}_{n}\right)^2 }{n+1}+ (X_{n+1}-\bar{X}_{n})^2 -2\frac{ (X_{n+1}-\bar{X}_{n})^2 }{n+1}  +(n+1)\sum_{i=1}^{n} \frac{(X_i-\bar{X}_{n})^2}{(n+1)} \\
+				&= (n+1)S_n^2 + \frac{\left( X_{n+1}-\bar{X}_{n}\right)^2 -2(X_{n+1}-\bar{X}_{n})^2}{n+1}+ (X_{n-1}-\bar{X}_{n})^2 \\
+				&= (n+1)S_n^2 + \frac{\left( X_{n+1}-\bar{X}_{n}\right)^2 -2(X_{n+1}-\bar{X}_{n})^2 +  (n+1)(X_{n-1}-\bar{X}_{n})^2}{n+1} \\
+				&= (n+1)S_n^2 + \left( X_{n+1}-\bar{X}_{n}\right)^2 \frac{1 -2 + (n+1)}{n+1} \\
+				&= (n+1)S_n^2 + \frac{n}{n+1}\left( X_{n+1}-\bar{X}_{n}\right)^2  \\
+			\end{align*}			
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	%5.16
 	\question 
@@ -152,9 +205,30 @@
 	
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			Normalizing and using Lemma 5.3.2 parts 1 and 2;
+			\[\sum_{i=1}^{3} \left(\frac{X_i-i}{i}\right)^2 \sim \chi^2_{(3)}\]
+			
+			\part
+			Using theorem 3 in class notes 5.3; The distribution we seek to replicate is
+			\[ T = \frac{Z}{\sqrt{\frac{V}{r=2}}} \sim t(r=2). \]
+			First, finding a \(V\) equivalent,
+			\[ N(0,1) \sim Z \equiv \frac{X_j-j}{j} \quad j\in \{i\} \]
+			then finding a \(V\),
+			\[ \chi^2_{(2)} \sim V \equiv \sum_{\{i\}/j} \left(\frac{X_i-i}{i}\right)^2 .\]
+			
+			\part
+			The \(F\) distribution described in the class notes as,
+			\[ F(r_1=1,r_2=2) \sim \frac{\frac{Z^2}{r_1=1}}{\frac{V}{r=2}}\]
+			can use the same \(Z\) and \(V\) as described in part (b). Or collected as,
+			
+			\[ \frac{2\left(\frac{X_j-j}{j}\right)^2}{\sum_{\{i\}/j} \left(\frac{X_i-i}{i}\right)^2} \sim  F(1,2), \quad j\in\{i\}\]
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	%5.17
 	\question 
@@ -168,7 +242,26 @@
 	\end{parts}
 	
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			Let \(V_1\sim\chi^2_{(p)}\) and \(V_2\sim\chi^2_{(q)}\)
+			and let
+			\[Z = \frac{V_1/p}{V_2/q} \quad\text{ and }\quad Y = V_2.\]
+			Then,
+			\[ J = \begin{vmatrix}\frac{yp}{q}&\frac{zp}{q}\\0&1\end{vmatrix} y\frac{p}{q} \]
+			and
+			\[X = f_{Z,Y}(z,y)= f_{v_1}(zy\frac{p}{q}) f_{v_2}(y) y\frac{p}{q} \]
+			
+			\part
+			
+			
+			\part
+			
+			
+			\part
+			
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -179,7 +272,29 @@
 	and define \(Z = \min(X,Y)\). Prove that \(Z^2 \sim \chi^2_1 \).
 	
 	\begin{solution}
-		
+		\begin{align*}
+			F_{Z^2}(z) 
+			&= P(\min(x,y)^2\leq z) \\
+			&= P(\min(x,y)\leq \sqrt{z}) - P(\min(x,y)\leq -\sqrt{z}) \\
+			&= P(\min(x,y)\geq -\sqrt{z}) - P(\min(x,y)\geq \sqrt{z}) \\
+			&= P(x\geq -\sqrt{z})P(y\geq -\sqrt{z}) - P(x\geq \sqrt{z})P(y\geq \sqrt{z}) \\
+			\intertext{since \(X\) and \(Y\) are iid. let \(X,Y\in W\) where \(W\sim\) N\((0,1)\)}
+			&\equiv P(w\geq -\sqrt{z})^2 - P(w\geq \sqrt{z})^2 \\
+			&= P(w^2\geq -z) - P(w^2\geq z) \\
+			&= P(w^2\leq z) - P(w^2\leq -z) \\
+			\intertext{we know that a normal distribution squared is a chi-squared distribution with \(1\) degree of freedom,}
+			&=\frac{1}{2} \int_{0}^{z} \frac{1}{2^{1/2}\Gamma(1/2)}w^{(2)1/2-1}e^{-w^2/2} \,dw
+			- \frac{1}{2}\int_{0}^{-z} \frac{1}{2^{1/2}\Gamma(1/2)}w^{(2)1/2-1}e^{-w^2/2} \,dw \\
+			&= \frac{1}{\pi\sqrt{2}}\left( \frac{1}{2}\int_{0}^{z} w^{(2)1/2-1}e^{-w^2/2} \,dw
+			- \frac{1}{2}\int_{0}^{-z} w^{(2)1/2-1}e^{-w^2/2} \,dw \right) \\
+			&= \frac{1}{2}\frac{1}{\pi\sqrt{2}}\left( \int_{0}^{z} w^{-1}e^{-w^2/2} \,dw - \int_{0}^{-z} w^{-1}e^{-w^2/2} \,dw \right) \\
+			\intertext{graphing the function shows that it is odd, which allows,}
+			&= \frac{1}{2}\frac{1}{\pi\sqrt{2}}\left( \int_{0}^{z} w^{-1}e^{-w^2/2} \,dw + \int_{0}^{z} w^{-1}e^{-w^2/2} \,dw \right) \\
+			\intertext{thus,}
+			&= \frac{1}{2}\frac{1}{\pi\sqrt{2}}\left( 2\int_{0}^{z} w^{-1}e^{-w^2/2} \,dw  \right) \\
+			\intertext{which simplifies to a Chi-squared distribution,}
+			&= \int_{0}^{z} \frac{1}{\pi\sqrt{2}} w^{-1}e^{-w^2/2} \,dw.  \\
+		\end{align*}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -200,7 +315,24 @@
 	Show that \(X_{(1)}/X_{(n)}\) and \(X_{(n)}\) are independent random variables.
 	
 	\begin{solution}
+		Where \(f_X(x) = 1/\theta\), \(F_X(x) = x/\theta\).
+		The joint PDF
+		\[f(y_1,y_n) = \frac{n!}{(n-2)!}\left(\frac{1}{\theta}\right)^2 \left(\frac{y_1}{\theta}-\frac{y_{n}}{\theta}\right)^{n-2}
+		= n(n-1)\left(\frac{1}{\theta}\right)^n \left({y_1}-y_{n}\right)^{n-2} .\]
 		
+		Let
+		\(Z = X_{(1)}/X_{(n)}.\)
+		
+		The jacobian for a \(z, y_n\) is
+		\[\det J = \begin{vmatrix}1 &0 \\ y_1 &y_n \end{vmatrix} = y_n.\]
+		Thus,
+		\[
+		f(z,y_n) = n(n-1)\left(\frac{1}{\theta}\right)^n \left({zy_{n}}-y_{n}\right)^{n-2} \,y_n
+		= n(n-1)\left(\frac{1}{\theta}\right)^n \left(z-1\right)^{n-2} \left(y_{n}\right)^{n-1}.
+		\]
+		Independence can be seen in that the joint probability can be refactored into two independent functions of each variable.
+
+		The support is \(0<Y_n<\theta\) and \(0<z<(\frac{\theta}{\theta} =1)\).
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -212,7 +344,17 @@
 	Use both Chebychev’s Inequality and the Central Limit Theorem, and comment on each. 
 	
 	\begin{solution}
+		From \(\sigma^2=9\) we can determine that \(\sigma_{\bar X} = 3/10\). 
+		Using Chebyshev's inequality,
+		\[ P(|\bar{X}-\mu|\geq k\sigma_{\bar X}) \leq \frac{1}{k^2}\]
+		we can calculate,
+		\[ P(|\bar{X}-\mu|\leq 3/\sqrt{10}) \geq 0.9.\]
+		Thus, using Chebyshev's inequality we determine that with a probability of at least 90\%, \(\bar{X} \leq \mu\pm0.949\). \\
 		
+		Using a standard normal table we can look up that \(0.95\) (two-tailed .9) corresponds to \(Z=1.645\).	
+		\[ \left| \frac{ \bar{X}_n-\mu }{ \sigma_{\bar{X}} } \right| \leq 1.645\]
+		\[ \left| \bar{X}_n-\mu \right| \leq 0.4935\]
+		\[ P(\bar{X}_n \leq \mu \pm 0.4935) = 0.9.\]
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		
