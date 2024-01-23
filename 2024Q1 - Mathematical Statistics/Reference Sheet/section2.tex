@@ -1,0 +1,53 @@
+\section{Transformations and Expectations}
+\begin{equation*}
+	E_g(X) = 
+	\begin{cases}
+		\sum_{x\in\mathcal X} g(x)f_X(x) & \text{discrete} \\
+		\int_{-\infty}^{\infty} g(x)f_X(x) \,dx & \text{continuous}
+	\end{cases}
+\end{equation*}
+\subsection*{Properties}
+	\begin{enumerate}
+		\item \(E[ag_1(X) +bg_2(X) + c] \)\\ \(= aE_{g1}[X] + bE_{g2}[X] + c \)
+		\item If \(g_1(x)\geq0\) for all \(x\), \\ then \(E_{g1}[X]\geq0\)
+		\item If \(g_1(x) \geq g_2(x)\) for all \(x\), \\ then \(E_{g_1}[X] \geq E_{g_2}[X]\)
+		\item If \(a \leq g_1(X) \leq b\) for all \(x\), \\ then \(a \leq E_{g_1}[X] \leq b\)
+		\item (other properties) \(E[k] = k\)
+		\item \(E[(X-b)^2]\) is a min for \(b=E[X]\)
+	\end{enumerate}
+
+\subsection*{Iterated Expectations}
+	\begin{equation*}
+		\begin{split}
+			E[g(y)|x]  
+			&= \sum_{n} g(y)f_{Y|X}(x|y) \\
+			&= \int_{\mathbb{R}} g(y)f_{Y|X}(y|x) 
+		\end{split}
+	\end{equation*}
+	\[E[X] = E_Y[E_X[X|Y]]\]
+	\[\text{Var}[X] = E_Y[\text{Var}_X[X|Y]] + \text{Var}_Y[E_X[X|Y]]\]
+	
+\subsection*{Moments}
+	\subsubsection*{Moment Generating Function}
+		\begin{equation*}
+			\begin{split}
+				m_x(t) &= E[e^{tx}] \\
+				&= \sum_{x\in\mathcal X} e^{tx}\,f_X(x) \\
+				&= 1 + E[X] + \ldots + \frac{t^nE[X^n]}{n!} \\
+				&= \int_{-\infty}^{\infty} e^{tx} f_X(x) \,dx
+			\end{split}
+		\end{equation*}
+		Let \(Z=X+Y\)
+		\[M_Z(t) = M_X(t)M_Y(t)\]
+
+\subsection*{Leibnitz's Rule}
+	\begin{equation*}
+		\begin{split}
+			\frac{d}{d\theta} 
+			\int^{b(\theta)}_{a(\theta)} f(x, \theta) \,dx
+			&= f(b(\theta), \theta) \frac{d}{d\theta} b(\theta) \\
+			- f(a(\theta), \theta) \frac{d}{d\theta} a(\theta)
+			&+  \int^{b(\theta)}_{a(\theta)}\frac{\partial}{\partial\theta} f(x, \theta) \,dx
+		\end{split}
+	\end{equation*}
+
