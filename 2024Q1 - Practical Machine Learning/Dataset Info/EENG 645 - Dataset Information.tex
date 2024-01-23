@@ -1,0 +1,125 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+%\newcommand\chapter{}
+%\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+%\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{EENG 645} % This is the name of the course 
+\newcommand{\assignmentname}{Final Project Dataset} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname } & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+	\question 
+	What is your topic area?
+	\begin{solution}
+		I am studying reinforcement learning and utilizing the Starcraft2 Learning Environment.
+	\end{solution}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\question 
+	What are the inputs and outputs for your problem?
+	\begin{solution}
+		For initial training there are a series of playbacks of games including the outcome of the game. \\
+		For the training portion of the research the outputs will also include updates to the agents that have played
+		a round of the game.
+	\end{solution}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\question 
+	How will you get data for your project?
+	\begin{solution}
+		The playback data has been graciously provided by Blizzard and Deepmind.
+	\end{solution}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\question 
+	If collecting your own data, is it feasible you will actually get enough data in the next few weeks to complete the project? 
+	\begin{solution}
+		Initial training data is collected. I do not believe any of the self and league play data will be available in a reasonable time.
+	\end{solution}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\question 
+	If utilizing an existing dataset, are you sure the dataset contain everything you need (is it a labeled) dataset?
+	\begin{solution}
+		It is labeled for its purpose.
+	\end{solution}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\question 
+	If simulating, what are your methods to create synthetic data? 
+	It is high-enough fidelity to actually be worth pursuing? 
+	Do you have a path forward (someone else’s simulation code?) or do you need to write your own simulation software?
+	\begin{solution}
+		The available data is enough to provide initial training for others who have built networks using the same environment.
+	\end{solution}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\question 
+	What is the ANN architecture (Dense, CNN, RNN, 1D ConvNet, etc.)?
+	\begin{solution}
+		The architecture consists of more than one network, but all of them are Deep networks or RNNs.
+	\end{solution}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\question 
+	What will your baseline to compare against be (also include possible metrics)?
+	\begin{solution}
+		Effectiveness is typically based on the model's win-rate against some set of opponents.
+		I intend to base it on win rate against built in Computer Players, divided by their assigned difficulty; easy, medium, hard, etc.
+	\end{solution}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\question 
+	Are you all set to go from a hardware point of view?
+	\begin{solution}
+		I am currently working with my advisor to implement the simulations within the ANT Center
+	\end{solution}
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{questions}
+\end{document}
