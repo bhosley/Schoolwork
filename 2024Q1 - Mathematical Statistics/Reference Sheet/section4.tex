@@ -1,0 +1,44 @@
+\section{Joint and Marginal Distros}
+	\subsection{Joint Distributions}
+		\[ \footnotesize
+			E_{XY}[g(x,y)] =
+			\begin{cases}
+				\sum_{x}\sum_{y} g(x,y) f_{XY}(x,y) \\
+				\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} g(x,y) f_{XY}(x,y)\,dx\,dy
+			\end{cases}
+		\]
+		\subsubsection{Properties}
+			\[E(X) = E(E(X|Y)) = \sum_{i} E(X|A_i) P(A_i)\]
+			{\footnotesize\[ E[Y^2] = E[E[Y^2|X]] = E[\text{Var}[Y|X] + E[Y|X]^2]\]}
+			\[ \text{Var}[Y] = E[\text{Var}[Y|X]] + \text{Var}[E[Y|X]] \]
+			\[P(A) = \sum_{i} P(A|B_i)P(B_i)\]
+			\[\text{Var}[Y|X] = E[Y^2|X] - E[Y|X]^2\]
+	
+	\subsection{Marginal Distributions}
+		\[ f_X(x) = \sum_{y} f_{XY}(x,y) = \sum_{y} P(X=x,Y=y) \]
+		\[ f_X(x) = \int_{-\infty}^{\infty} f_{XY}(x,y)\,dy \]
+	
+	\subsection{Independence}
+		\[f_{XY}(x,y) = f_X(x)f_Y(y) \]
+		\begin{equation*}
+			\begin{split}
+				f_{X|Y}(x|y) &= \frac{f_{XY}(x,y)}{f_Y(y)} \\ &= \frac{f_X(x)f_Y(y)}{f_Y(y)} = f_X(x)
+			\end{split}
+		\end{equation*}
+		
+	\subsection{Conditional Distribution}
+		\begin{equation*}
+			\begin{split}
+				f_{X_1|X_2}(x_1|x_2) &= \frac{P(X_1=x_1, X_2=x_2)}{P(X_2=x_2)} \\ 
+				&= \frac{f_{X_1,X_2} (x_1x_2)}{f_{X_2}(x_2)}
+			\end{split}
+		\end{equation*}
+		\[ E[g(Y)|x] = \begin{cases}
+			\sum_{y} g(y) f_{Y|X}(y|x) \\
+			\int_{-\infty}^{\infty} g(y)f_{Y|X}(y|x)\,dy
+		\end{cases}\]
+
+
+	
+		
+	
