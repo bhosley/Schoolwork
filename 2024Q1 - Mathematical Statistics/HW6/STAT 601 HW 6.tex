@@ -64,7 +64,16 @@
 	Find a two-dimensional sufficient statistic for \((\mu, \sigma)\).
 	
 	\begin{solution}
+		First we take note that \(\mu\) is bounded by \(x_{(1)}\),
+		then with this in mind we can observe that this pdf is a member of the exponential family
+		in the form
+		\begin{align*}
+			\frac{1}{\sigma} \mathbbm{1}_{\mu,\infty} (x) \exp\left\{-\frac{1}{\sigma}(x-\mu)\right\}
+		\end{align*}
+		with \(t_1(x) = x-\mu\). This would imply that \(\sum_{i=1}^{n} x_i-\mu\) would be sufficient for \(\sigma\).
+		Because \(\mu\) is an unknown constant, this is equivalently \(\sum_{i=1}^{n} x_i\).
 		
+		Thus, \((x_{(1)}, \sum_{i=1}^{n} x_i)\) are sufficient for \((\mu, \sigma)\).
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -94,10 +103,60 @@
 	\begin{solution}
 		\begin{parts}
 			\part
+			\begin{align*}
+				\frac{f(x|\theta)}{f(y|\theta)}
+				&= \frac{ \prod_{i=1}^{n} \frac{1}{\sqrt{2\pi}} e^{-(x_i-\theta)^2/2} }{
+					\prod_{i=1}^{n} \frac{1}{\sqrt{2\pi}} e^{-(y_i-\theta)^2/2}}
+				= \frac{ e^{- \sum_{i=1}^{n} (x_i-\theta)^2/2} }{
+					e^{- \sum_{i=1}^{n} (y_i-\theta)^2/2}}
+				= \exp\left\{-\sum_{i=1}^{n} (x_i-\theta)^2/2 +\sum_{i=1}^{n} (y_i-\theta)^2/2 \right\} \\
+				&= \exp\frac{1}{2}\left\{\sum_{i=1}^{n} (y_i-\theta)^2 - 			
+					\sum_{i=1}^{n}(x_i-\theta)^2\right\}
+				= \exp\frac{1}{2}\left\{\sum_{i=1}^{n} (y_i^2-2y_i\theta+\theta^2) - \sum_{i=1}^{n} (x_i^2-2x_i\theta+\theta^2) \right\} \\
+				&= \exp\frac{1}{2}\left\{\sum_{i=1}^{n} (y_i^2-x_i^2) + 			
+				\sum_{i=1}^{n}(2x_i\theta-2y_i\theta)\right\}
+			\intertext{we drop the first sum as it is independent of \(\theta\)}
+				&= \exp\left\{ \theta \sum_{i=1}^{n}(x_i-y_i)\right\}
+				= \exp\left\{ n\theta (\bar x-\bar y)\right\}.
+			\end{align*}
+			Thus we see that \(\bar x\) is M.S.S. for \(\theta\).
+			\part \label{prob:9,sec:b}
+			\begin{align*}
+				\frac{f(x|\theta)}{f(y|\theta)}
+				&= \frac{ \prod_{i=1}^{n} e^{-(x_i-\theta)} \mathbbm{1}_{\theta,\infty}(x) }{ 
+					\prod_{i=1}^{n} e^{-(y_i-\theta)} \mathbbm{1}_{\theta,\infty}(y) }
+				= e^{\sum_{i=1}^n(y_i-\theta-x_i+\theta)} \frac{ \prod_{i=1}^{n} \mathbbm{1}_{\theta,\infty}(x) }{ \prod_{i=1}^{n} \mathbbm{1}_{\theta,\infty}(y) }
+			\intertext{the exponent can be discarded as the \(\theta\)s cancel out,}
+				&= \frac{ \prod_{i=1}^{n} \mathbbm{1}_{\theta,\infty}(x) }{ \prod_{i=1}^{n} \mathbbm{1}_{\theta,\infty}(y) }
+			\end{align*}
+			Each product is equal to \(1\) or \(0\) depending on if there is an \(x\) or \(y\) less than \(\theta\). Since the variable is bounded below by \(\theta\) or, more specifically,
+			\(\theta\) is bounded above by \(x\) only the first order statistic conveys information about \(\theta\). Thus, we define \(x_{(1)}\) as the M.S.S. for \(\theta\).
 			\part
+			\begin{align*}
+				\frac{f(x|\theta)}{f(y|\theta)}
+				&= \prod_{i=1}^{n} \frac{e^{-x_i-\theta}}{(1+e^{-(x_i-\theta)})^2} \frac{(1+e^{-(y_i-\theta)})^2}{e^{-y_i-\theta}}
+				= e^{\sum_{i=1}^n(y_i-\theta-x_i+\theta)}
+					\prod_{i=1}^{n}\frac{(1+e^{-(y_i-\theta)})^2}{(1+e^{-(x_i-\theta)})^2}
+			\intertext{above we saw the same first term cancel out,}
+				&= \prod_{i=1}^{n}\frac{(1+e^{-(y_i-\theta)})^2}{(1+e^{-(x_i-\theta)})^2}
+			\end{align*}
+			from here there does not appear to be a clear way to further separate \(x_i,y_i\) and \(\theta\). As a result we determine that the order statistics are M.S.S. for \(\theta\).
 			\part
+			\begin{align*}
+				\frac{f(x|\theta)}{f(y|\theta)}
+				&= \frac{\prod_{i=1}^{n} \pi[1+(y_i-\theta)^2] }{ \prod_{i=1}^{n} \pi[1+(x_i-\theta)^2] }
+				= \frac{\prod_{i=1}^{n} (1+y_i^2-2y_i\theta+\theta^2) }{ \prod_{i=1}^{n} (1+x_i^2-2x_i\theta+\theta^2) }
+			\end{align*}
+			Because these two products cannot be further factored, we find that the order statistics are M.S.S. for \(\theta\).
 			\part
-			\part
+			\begin{align*}
+				\frac{f(x|\theta)}{f(y|\theta)}
+				&= \frac{\prod_{i=1}^{n} \frac{1}{2}e^{-|x_i-\theta|} }{ \prod_{i=1}^{n} \frac{1}{2}e^{-|y_i-\theta|} }
+				= \exp\left\{\sum_{i=1}^{n} \Big(|y_i-\theta| - |x_i-\theta|\Big)\right\}
+			\end{align*}
+			The absolute value can be removed be conditioning on \(x,y\) being less than or greater than \(\theta\), which introduces \(\theta\)
+			to what will become four indicator functions. It does not appear that this would make the problem any more tractable, thus,
+			the order statistics are M.S.S. for \(\theta\).
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,7 +180,32 @@
 	\begin{solution}
 		\begin{parts}
 			\part
+			Using theorem 6.2.13
+			\begin{align*}
+				\frac{f(x|\theta,N=n_1)}{f(y|\theta,N=n_2)}
+				&= \frac{f(x|\theta)P_N(n_1)}{f(y|\theta)P_N(n_2)}
+				= \frac{ \binom{n_1}{x} \theta^x(1-\theta)^{n_1-x} P_N(n_1) \mathbbm{1}_{\mathbb N/0}(x) }{ \binom{n_2}{y} \theta^y(1-\theta)^{n_2-y} P_N(n_2) \mathbbm{1}_{\mathbb N/0}(y) } 
+			\intertext{dropping the non-\(\theta\) factors,}
+				&= \theta^{x-y}(1-\theta)^{n_1-n_2+y-x}.
+			\end{align*}
+			from this we see that not only must \(x=y\) but we require that \(n_1=n_2\).
+			\(N\) can be seen to be ancillary to \(\theta\) as \(P_N(n_i)\) is assumed to be already known.
 			\part
+			\begin{align*}
+				E\left[E\left[\frac{X}{N}|N\right]\right]
+				&= E\left[\frac{1}{N}E\left[X|N\right]\right]
+				= E\left[\frac{1}{N}\theta N\right]
+				= E\left[\theta\right]
+				= \theta
+			\end{align*}
+			and
+			\begin{align*}
+				\text{var}\left[\frac{X}{N}\right]
+				&= E\left[\text{var}\left[\frac{X}{N}|N\right]\right] + \text{var}\left[E\left[\frac{X}{N}|N\right]\right] \\
+				&= E\left[\frac{1}{N^2}\text{var}\left[X|N\right]\right] + \text{var}\left[\theta\right] \\
+				&= E\left[\frac{1}{N^2} N\theta(1-\theta)\right] + 0 \\
+				&= \theta(1-\theta)E\left[\frac{1}{N} \right]
+			\end{align*}
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,7 +221,12 @@
 	Is the family complete?
 	
 	\begin{solution}
-		
+		\begin{align*}
+			\theta(1-\theta)^{x-1}
+			=  \theta\frac{(1-\theta)^{x}}{(1-\theta)}
+			=  \frac{\theta}{(1-\theta)} \mathbbm{1}_\mathbb{N}(x) \ \exp\left\{\log(1-\theta)\ x\right\}
+		\end{align*}
+		Thus, as a member of the exponential family with \(t_1(x) = x\) we conclude that \(\sum_{i=1}^{n}x_i\) is sufficient for \(\theta\).
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -156,7 +245,6 @@
 		\part
 		\(f(x|\theta) = \frac{(\log\theta)\theta^x}{\theta-1}
 		,\quad 0<x<1 ,\quad \theta>1 \)
-		
 		\part
 		\(f(x|\theta) = e^{-(x-\theta)} \exp\left(-e^{-(x-\theta)}\right)
 		,\quad -\infty<x<\infty ,\quad -\infty<\theta<\infty \)
@@ -169,9 +257,24 @@
 		\begin{parts}
 			\part
 			\part
+			\begin{align*}
+				\frac{\theta}{(1+x)^{1+\theta}}
+				=\theta \exp\left\{ -\log(1+x)(1+\theta) \right\}
+			\end{align*}
+			This is an exponential with \(t_1(x) = \log(1+x)\) thus \(\sum\log(1+x)\) is complete and sufficient.
 			\part
+			This is an exponential family distribution,
+			\begin{align*}
+				\frac{(\log\theta)\theta^x}{\theta-1}
+				=\frac{(\log\theta)}{\theta-1} \,\exp\left\{\log(\theta)x\right\}
+			\end{align*}
+			with \(t_1(x) = x\) thus, \(\sum(x)\) is complete and sufficient.
 			\part
+			This distribution is a location family distribution with \(\theta\) as the location parameter. 
+			As a result a ratio of the order statistics will be ancillary and independent of \(\theta\) and cannot be complete.
 			\part
+			This can be refactored as an exponential family distribution with \(t_1(x) = x\) and \(t_2(x) =2- x\).
+			Both of which have a sufficient statistic equivalent to \(\sum x\), which is complete.
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -180,11 +283,23 @@
 	\setcounter{question}{22}
 	\question 
 	Let \(X_1, \ldots, X_n\) be a random sample from a uniform distribution on the interval 
-	\((\theta, 2\theta)\), \(\theta > \theta\). Find a minimal sufficient statistic for \(\theta\). 
+	\((\theta, 2\theta)\), \(\theta > 0\). Find a minimal sufficient statistic for \(\theta\). 
 	Is the statistic complete?
 	
 	\begin{solution}
+		\begin{align*}
+			\frac{f(x|\theta)}{f(y|\theta)}
+			&= \frac{\prod_{i=1}^{n} \frac{1}{\theta} \mathbbm{1}_{\theta,2\theta}(x_i) }{ \prod_{i=1}^{n} \frac{1}{\theta} \mathbbm{1}_{\theta,2\theta}(y_i)}
+			= \frac{\prod_{i=1}^{n} \mathbbm{1}_{\theta,2\theta}(x_i) }{ \prod_{i=1}^{n} \mathbbm{1}_{\theta,2\theta}(y_i)}
+		\end{align*}
+		This produces a situation much like that found in \hyperref[prob:9,sec:b]{problem 6.9 part b} where the indicator implies the bounds on 
+		\(\theta\) being defined by \(x,y\). In this case, \(\theta > x_{(1)}\) and \(\theta < \frac{x_{(n)}}{2}\). 
+		Thus, \(x_{(1)}, x_{(n)}\) are sufficient.
 		
+		Completeness of the statistic can be shown to be contradicted by Basu's theorem,
+		a complete statistic is independent of every ancillary statistic,
+		and the conclusion of example 6.2.19 where a ratio of any two order statistics is ancillary to a scale family distribution;
+		thus, the M.S.S. found in the first part of this problem is not complete.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
