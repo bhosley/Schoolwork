@@ -1,0 +1,64 @@
+\documentclass[10pt,landscape,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+%\usepackage[lf]{MyriadPro}
+%\usepackage[lf,minionint]{MinionPro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0mm,bottom=1mm,left=0mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+%\usepackage{microtype}
+\usepackage{graphicx}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{bbm}
+
+\definecolor{myblue}{cmyk}{1,.72,0,.38}
+
+\everymath\expandafter{\the\everymath \color{myblue}}
+\everydisplay\expandafter{\the\everydisplay \color{myblue}}
+\setlength{\abovedisplayskip}{0pt}
+\setlength{\belowdisplayskip}{0pt}
+
+\renewcommand{\baselinestretch}{.8}
+\pagestyle{empty}
+
+\usepackage{titlesec}
+\titleformat{\section}{\vspace{0.5ex}  \large\bfseries\filcenter}{\thesection.\ }{0em}{}
+\titleformat{\subsection}{\vspace{0.5ex}  \sffamily\bfseries}{}{0em}{}
+\titleformat{\subsubsection}{\vspace{0.5ex}  \footnotesize\bfseries\scshape\filcenter}{}{0em}{}
+%\renewcommand{\bottomtitlespace}{}
+\titlespacing{\section}{0em}{*0.5}{0em}
+\titlespacing{\subsection}{0em}{*0.5}{0em}
+\titlespacing{\subsubsection}{0em}{*0.5}{0em}
+
+
+\newcommand{\header}{\begin{center}
+		\textbf{Theory of Probability and Math Statistics Reference Sheet}
+	\end{center}}
+
+\setlength{\parindent}{0pt}
+
+\begin{document}
+	\let\displaystyle\textstyle
+	\small
+	\begin{multicols*}{5}
+		\header
+		\hrule
+		\input{section1}
+		\input{section2}
+		\input{section3}
+		\input{section4}
+		\input{section5}
+		\input{section6}
+		\input{section7}
+		\input{section8}
+		\includegraphics[width=\linewidth]{"../../../../../Desktop/Screenshot 2024-01-22 at 00.39.05"}
+		\includegraphics[width=1.5\linewidth]{"../../../../../Desktop/Screenshot 2024-01-22 at 00.39.59"}
+	\end{multicols*}
+	
+\end{document}
