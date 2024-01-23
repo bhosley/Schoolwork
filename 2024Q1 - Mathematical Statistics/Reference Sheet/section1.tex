@@ -1,0 +1,37 @@
+\section{Probability Theory}
+	\subsection*{Kolmogorov Axioms}
+		\begin{equation}
+			P(E) \in\mathbb{R},\ P(E)\geq 0\ \forall E\in F
+		\end{equation}
+		\begin{equation}
+			P(\Omega) = 1
+		\end{equation}
+		where \(\Omega\) is the set of all outcomes
+		\begin{equation}
+			P\left(\bigcup_{i=1}^\infty E_i \right) = \sum_{i=1}^\infty P(E_i)
+		\end{equation}
+		
+	\subsection*{Law of Total Probability}
+		\[P(A) = \sum_{n} P(A\cap B_n)  = \sum_{n} P(A|B_n) P(B_n)\]
+		
+	\subsection*{Cumulative Distribution Function}
+		\begin{enumerate}
+			\item {\footnotesize\(\lim\limits_{x\rightarrow-\infty}F_X(x)=0\) and \(\lim\limits_{x\rightarrow\infty}F_X(x)=1\)}
+			\item \(F_X(x)\) is strictly non-decreasing
+			\item \(F_X(x)\) must be right continuous
+		\end{enumerate}
+	
+	\subsection*{Probability Density Function}
+		\begin{enumerate}
+			\item \(f_X(x) \geq 0\ \forall x\)
+			\item \(\int_{-\infty}^{\infty} f_X(x)\,dx = 1 \)
+		\end{enumerate}
+
+	\subsection*{Probability Mass Function}
+		\begin{enumerate}
+			\item \(f_X(x) \geq 0\ \forall x\)
+			\item \(\sum_{-\infty}^{\infty} f_X(x) = 1 \)
+		\end{enumerate}
+
+
+
