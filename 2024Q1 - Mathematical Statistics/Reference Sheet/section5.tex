@@ -1,0 +1,42 @@
+\section{Properties of a Random Sample}
+\subsection{Basics}
+	\subsubsection{Sample Proportion}
+		\[\hat p = \sum_{i=1}^{n}\frac{Y_i}{n}\]
+		
+	\subsubsection{Sample MGF etc.}
+		\begin{equation*}
+			\begin{split}
+				M_{\hat X}(t) &= \left[M_x\left(\frac{t}{n}\right)\right]^n \\
+				\bar{X} &= \frac{1}{n} \sum_{i=1}^{n}X_i \\
+				S^2 &= \sum_{i=1}^{n} \frac{ \left(X_i-\bar{X}\right)^2 }{n-1} \\
+				(n-1)&\frac{S^2}{\sigma^2}\sim\chi_{n-1}^2
+			\end{split}
+		\end{equation*}
+		
+	\subsection{Convolution Theorem}
+		Let \(X\sim f_X(x)\) and \(Y\sim f_Y(y)\) be ind. \\
+		Define \(Z=X+Y\). Then,
+		\[F_Z(z) =\int_{-\infty}^{\infty} f_X(w)f_Y(z-w)\,dw \]
+
+	\subsection{Order Statistics}
+		The joint pdf of $Y_1,Y_2,\ldots,Y_n$ where ($Y_1 = X_{(1)},\ldots, Y_n= X_{(n)}$)
+		\[ \footnotesize 
+			g(y_1,y_2,\ldots,y_n) = n!f_X(y_1)f_X(y_2)\ldots f_X(y_n)
+		\]
+		
+		Marginal PDF of an order statistic
+		\begin{equation*}
+			\begin{split}
+				\frac{n!}{(k-1)!(n-k)!}f_X(y_n)[F_X(y_n)]^{k-1} \times\\ [1-F_X(y_1)]^{n-k}
+			\end{split}
+		\end{equation*}
+			
+		and the marginal between two
+		\begin{equation*}
+			\begin{split}
+				\frac{n!}{(i-1)!(j-i-1)!(n-j)!}f_X(y_i)[F_X(y_i)]^{i-1} \times\\
+				[F_X(y_j)-F_X(y_i)]^{j-i-1}
+				f_X(y_j)[1-F_X(y_j)]^{n-j}
+			\end{split}
+		\end{equation*}
+		
