@@ -1,0 +1,46 @@
+\section{Principles of Data Reduction}
+	\subsection{Statistically Sufficiency}
+		\subsubsection*{Theorem 6.2.1}
+			A statistic \(T(X)\) is sufficient for \(\theta\) if
+			\(T(X|\theta)\) is independent of \(\theta\)
+	
+		\subsubsection*{Factorization Theorem}
+			A statistic \(T(X)\) is sufficient if there exists
+			\[ f(x|\theta) = g(T(x)|\theta)h(x) \]
+			for all sample points \(x\)
+			and parameter points \(\theta\)
+		
+		\subsubsection*{Exponential Family}
+			For an exponential family member, then the following is a sufficient statistic for \(\theta\)
+			\[T(\mathbf{X})=\left( \sum_{i=1}^n t_1(X_i),\ldots, \sum_{i=1}^n t_k(X_i) \right)\]
+	
+	\subsection{Minimal Sufficient Statistic}
+		\subsubsection*{Lehmann-Scheffe Thm. 6.2.13}
+			The ratio \(\frac{f(x|\theta)}{f(y|\theta)}\) is constant as a function of \(\theta\) iff \(T(x) = T(y)\). 
+			Then \(T(X)\) is a minimal sufficient statistic for \(\theta\).
+			\[\frac{f(x|\theta)}{f(y|\theta)} = \frac{\prod_{i=1}^nf(x_i|\theta)\mathbbm{1}_{()}(x)}{\prod_{i=1}^nf(y_i|\theta)\mathbbm{1}_{()}(y)}\]
+	
+	\subsection{Ancillary Statistic}
+		A statistic \(T(X)\) is ancillary if
+		\(\partial T(X)\) is independent of \(\theta\)
+	
+	\subsection{Complete Statistic}
+		\subsubsection*{Definition 6.2.21}
+			\(T(X)\) is complete when 
+			\(E[g(T)]=0\) iff \(g(t) = 0\)
+			for all \(\theta\) 
+		
+		\subsubsection*{Basu's Theorem 6.2.24}
+			If \(T(X)\) is a complete and minimal sufficient statistic, 
+			then \(T(X)\) is independent of every ancillary statistic.
+		
+		\subsubsection*{Theorem 6.2.25 (in Exponential Family)}
+			When \(f(x|\theta)\) is a member of exponential, the following statistic is complete.
+			
+				
+		\subsubsection*{Theorem 6.2.28}
+			If a minimal sufficient statistic exists, then any complete statistic
+			is also a minimal sufficient statistic.
+	
+
+
