@@ -1,95 +1,84 @@
 \section{Distributions}
-\subsection*{Families of Common Distributions}
-	\subsubsection*{Uniform}
-		\[ \sum_{i=1}^{k} i = \frac{k(k+1)}{2} \]
-		\[ \sum_{i=1}^{k} i^2 = \frac{k(k+1)(2k+1)}{6} \]
-	
-	\subsubsection*{Binomial}
-		\(x\) successes in \(n\) trials
-		\[ P(X=x|n,p) = \binom{n}{x}p^x(1-p)^{n-x}\]
-	
-	\subsubsection*{Negative Binomial}
-		\[P(X=x|r,p) =  \] \[ \binom{x-1}{r-1}p^r(1-p)^{x-r} = \binom{x+r-1}{r}p^r(1-p)^{x} \]
-	
-	\subsubsection*{Geometric}
-		Probability of \(x\) trails until first success
-		\[P(X=x|p) = p(1-p)^{x-1}\]
+	\subsection*{Families of Common Distributions}
+		\subsubsection*{Uniform}
+			\[ \sum_{i=1}^{k} i = \frac{k(k+1)}{2} \]
+			\[ \sum_{i=1}^{k} i^2 = \frac{k(k+1)(2k+1)}{6} \]
 		
-	\subsubsection*{HyperGeometric}
-		\(k\) observations of success states \(K\)
-		in \(n\) trials in a population of \(N\)
-		\[P(k=x|N,K,n) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}\]
-	
-	\subsubsection*{Poisson}
-		\(x\) observations of an event that occurs at a rate of \(\lambda\) events per time interval
-		\[P(X=x) = \frac{\lambda^xe^{-\lambda}}{x!}\]
+		\subsubsection*{Binomial}
+			\(x\) successes in \(n\) trials
+			\[ P(X=x|n,p) = \binom{n}{x}p^x(1-p)^{n-x}\]
 		
-	\subsubsection*{Exponential}
-		\(x\) intervals between POI events
-		\[f(x|\lambda) = \lambda e^{-x\lambda}\]
-	
-	\subsubsection*{Gamma}
-		\[f(x|\alpha,\beta) = \frac{1}{\Gamma(\alpha)\beta^\alpha}x^{\alpha-1}e^{-x/\beta}\]
-		\[\Gamma(n) = (n-1)! = \int_{0}^{\infty}t^{n-1}e^{-t}\,dt\]
-	
-\subsection*{Derived Distributions}
-	\subsubsection*{Chi Distribution}
-		\[ \chi^2_k \sim \sum_{i=1}^{k} \left[N_i(0,1)\right]^2	\]
+		\subsubsection*{Negative Binomial}
+			\[P(X=x|r,p) =  \] \[ \binom{x-1}{r-1}p^r(1-p)^{x-r} = \binom{x+r-1}{r}p^r(1-p)^{x} \]
+		
+		\subsubsection*{Geometric}
+			Probability of \(x\) trails until first success
+			\[P(X=x|p) = p(1-p)^{x-1}\]
 			
-	\subsubsection*{Cauchy Distribution}
-		\begin{itemize}
-			\item \(X,Y \overset{i.i.d.}{\sim} N(0,\sigma^2) \Rightarrow \frac{X}{Y}\sim Cauchy\)
-			\item \(X \sim Cauchy \Rightarrow \frac{1}{X}\sim Cauchy\)
-			\item \(X_i \overset{i.i.d.}{\sim} Cauchy \Rightarrow \bar X \sim Cauchy\)
-		\end{itemize}
+		\subsubsection*{HyperGeometric}
+			\(k\) observations of success states \(K\)
+			in \(n\) trials in a population of \(N\)
+			\[P(k=x|N,K,n) = \frac{\binom{K}{k}\binom{N-K}{n-k}}{\binom{N}{n}}\]
+		
+		\subsubsection*{Poisson}
+			\(x\) observations of an event that occurs at a rate of \(\lambda\) events per time interval
+			\[P(X=x) = \frac{\lambda^xe^{-\lambda}}{x!}\]
+			
+		\subsubsection*{Exponential}
+			\(x\) intervals between POI events
+			\[f(x|\lambda) = \lambda e^{-x\lambda}\]
+		
+		\subsubsection*{Gamma}
+			\[f(x|\alpha,\beta) = \frac{1}{\Gamma(\alpha)\beta^\alpha}x^{\alpha-1}e^{-x/\beta}\]
+			\[\Gamma(n) = (n-1)! = \int_{0}^{\infty}t^{n-1}e^{-t}\,dt\]
+		
+	\subsection*{Derived Distributions}
+		\subsubsection*{Chi Distribution}
+			\[ \chi^2_k \sim \sum_{i=1}^{k} \left[N_i(0,1)\right]^2	\]
+				
+		\subsubsection*{Cauchy Distribution}
+			\begin{itemize}
+				\item \(X,Y \overset{i.i.d.}{\sim} N(0,\sigma^2) \Rightarrow \frac{X}{Y}\sim Cauchy\)
+				\item \(X \sim Cauchy \Rightarrow \frac{1}{X}\sim Cauchy\)
+				\item \(X_i \overset{i.i.d.}{\sim} Cauchy \Rightarrow \bar X \sim Cauchy\)
+			\end{itemize}
+		
+		\subsubsection*{T Distribution}
+			Let \(Z\sim N(0,1)\) independent \(V\sim\chi_{(r)}^2\) then \(T=\frac{Z}{\sqrt{V/r}}\sim t(r)\).
+			\textbf{Properties:}
+			\begin{itemize}
+				\item The \(t\)-distribution is completely determined by \(r\).
+				\item \(f_T(t)=f_T(-t)\) symmetry about \(0\)
+				\item As \(r \rightarrow\infty\), the \(t\)-distribution \(\rightarrow N(0,1)\)
+				\item No closed form \(\int\), thus reqs table
+				\item \(r=1 \Rightarrow T = Cauchy\) 
+			\end{itemize}
+		
+		\subsubsection*{F Distribution}
+			Let \(i\in\{1,2\}\)
+			\[ V_i\sim \chi^2_{(r_i)} \Rightarrow F(r_1,r_2)\sim\frac{V_1/r_1}{V_2/r_2}\]
+			\[ T\sim t_{v_1},t_{v_2} \Rightarrow T^2\sim F_{v_1,v_2} \]
+			
+		
+	\subsection*{Exponential Family Distributions}
+	\[ f_\mathbf{x}(x|\theta) = h(x)c(\theta) \exp \left\{ \sum_{i=1}^k w_i(\theta)t_i(x) \right\} \]
 	
-	\subsubsection*{T Distribution}
-		Let \(Z\sim N(0,1)\) independent \(V\sim\chi_{(r)}^2\) then \(T=\frac{Z}{\sqrt{V/r}}\sim t(r)\).
-		\textbf{Properties:}
-		\begin{itemize}
-			\item The \(t\)-distribution is completely determined by \(r\).
-			\item \(f_T(t)=f_T(-t)\) symmetry about \(0\)
-			\item As \(r \rightarrow\infty\), the \(t\)-distribution \(\rightarrow N(0,1)\)
-			\item No closed form \(\int\), thus reqs table
-			\item \(r=1 \Rightarrow T = Cauchy\) 
-		\end{itemize}
+	\subsection*{Location-Scale Families}
+		\subsubsection*{Location}
+			Any PDFs \(f_X(x-\mu)\) where \(\mu\) is the 
+			location parameter bound by \((-\infty<\mu<\infty)\)
+			
+		\subsubsection*{Scale}
+			Any PDFs \(\frac{1}{\sigma}f_X(\frac{x}{\sigma})\) where \(\sigma\) is the 
+			location parameter bound by \((-\infty<\sigma<\infty)\)
+			
 	
-	\subsubsection*{F Distribution}
-		Let \(i\in\{1,2\}\)
-		\[ V_i\sim \chi^2_{(r_i)} \Rightarrow F(r_1,r_2)\sim\frac{V_1/r_1}{V_2/r_2}\]
-		\[ T\sim t_{v_1},t_{v_2} \Rightarrow T^2\sim F_{v_1,v_2} \]
-		
+	\subsection*{Interrelation}
+	\includegraphics[width=\linewidth]{DistributionRelationships.jpg}
 	
-\subsection*{Exponential Family Distributions}
-\[ f_\mathbf{x}(x|\theta) = h(x)c(\theta) \exp \left\{ \sum_{i=1}^k w_i(\theta)t_i(x) \right\} \]
 
-\subsection*{Location-Scale Families}
-	\subsubsection*{Location}
-		Any PDFs \(f_X(x-\mu)\) where \(\mu\) is the 
-		location parameter bound by \((-\infty<\mu<\infty)\)
-		
-	\subsubsection*{Scale}
-		Any PDFs \(\frac{1}{\sigma}f_X(\frac{x}{\sigma})\) where \(\sigma\) is the 
-		location parameter bound by \((-\infty<\sigma<\infty)\)
-		
-
-\subsection*{Interrelation}
-\includegraphics[width=\linewidth]{DistributionRelationships.jpg}
-
-
-\subsection*{Inequalities and Identities}
-	\subsubsection*{Chebyshev's Inequality}
-		\[P(|X-E[X]|\geq k\sigma) \leq \frac{1}{k^2}\]
-	\subsubsection*{Markov's Inequality}
-		\[P(|X|\geq c)\leq \frac{E[|X|]}{c}\]
-	\subsubsection*{Holder's Inequality}
-		If \(1/p+1/q=1\) then,
-		\[ |E[XY]| \leq E[|XY|]\leq (E[|X|^p])^{1/p}(E[|Y|^q])^{1/q} \]
-	\subsubsection*{Stein's Lemma}
-		For \(X\sim N(\theta,\sigma^2)\)
-		\[ E[g(X)(X-\theta)] = \sigma^2 E[g^\prime(X)] \]
-		
-
-
-
-
+			
+	
+	
+	
+	
