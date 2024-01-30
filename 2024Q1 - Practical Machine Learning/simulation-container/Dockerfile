@@ -15,8 +15,9 @@ RUN apt update -yq \
         vim \
         cmake \
         sudo \
+    #
     && useradd -m docker && echo "docker:docker" | chpasswd \
-    # Adding a user, not sure that this is necessary
+    # Adding a user, not sure that this is necessary on ACE
     && adduser docker sudo \
     # as above..
     && pip3 install pysc2
@@ -33,9 +34,13 @@ RUN wget https://blzdistsc2-a.akamaihd.net/Linux/SC2.4.10.zip && \
     wget http://blzdistsc2-a.akamaihd.net/MapPacks/Ladder2017Season1.zip && \
     unzip -P ${PASSWORD} Ladder2017Season1.zip -d ~/StarCraftII/Maps && \
     # delete compressed files
-    rm *.zip && \
+    rm *.zip 
+    #\
     # use the API's script for pulling replay packs
-    echo "wget http://blzdistsc2-a.akamaihd.net/ReplayPacks/3.16.1-Pack_1-fix.zip && unzip -P iagreetotheeula 3.16.1-Pack_1-fix.zip -d ~/StarCraftII/Replays" > download_replays.sh
+    #&& echo "wget http://blzdistsc2-a.akamaihd.net/ReplayPacks/3.16.1-Pack_1-fix.zip && unzip -P iagreetotheeula 3.16.1-Pack_1-fix.zip -d ~/StarCraftII/Replays" > download_replays.sh
+    # This was in the original; it errors on first run. 
+    #wget http://blzdistsc2-a.akamaihd.net/ReplayPacks/3.16.1-Pack_1-fix.zip && \
+    #unzip -P iagreetotheeula 3.16.1-Pack_1-fix.zip -d ~/StarCraftII/Replays
 
 
 # Entry point into the container
