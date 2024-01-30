@@ -13,6 +13,9 @@
 			\[ \text{Var}[Y] = E[\text{Var}[Y|X]] + \text{Var}[E[Y|X]] \]
 			\[P(A) = \sum_{i} P(A|B_i)P(B_i)\]
 			\[\text{Var}[Y|X] = E[Y^2|X] - E[Y|X]^2\]
+			
+	\subsection{Joint MGF}
+		\[M_{X,Y}(t_1,t_2) = E[\exp\{t_1X+t_2Y\}]\]
 	
 	\subsection{Marginal Distributions}
 		\[ f_X(x) = \sum_{y} f_{XY}(x,y) = \sum_{y} P(X=x,Y=y) \]
@@ -38,7 +41,74 @@
 			\int_{-\infty}^{\infty} g(y)f_{Y|X}(y|x)\,dy
 		\end{cases}\]
 
-
+	\subsection{Covariance}
+		\[\scalebox{0.85}{ \(\text{Cov}(X,Y) = E[(X-\mu_x)(Y-\mu_y)] = E[XY] - \mu_x\mu_y\) }\]
+		\[\text{Var}(aX+bY) = a^2\text{Var}(Y) + 2ab\,\text{Cov}(X,Y)\]
 	
+	\subsection{Correlation}
+		\[\rho_{XY} = \frac{Cov(X,Y)}{\sigma_x\sigma_y}\]
+		
+	\subsection{Multivariate Normal}
+		\[f_X(\underset{\sim}{x})= \frac{1}{\sqrt{2\pi|\sigma|}} \exp\left\{-\frac{(X-\mu)^\prime}{2} \frac{X-\mu}{\sigma} \right\}\]
+	
+	\subsection{Bivariate Transform}
+		Let,
+		\begin{equation*}
+			\begin{split}
+				Y_1 = g_1(x_1,x_2) \quad g_1^{-1}(y_1,y_2) \quad ( = x_1) \\
+				Y_2 = g_2(x_1,x_2) \quad g_2^{-1}(y_1,y_2) \quad ( = x_2)
+			\end{split}
+		\end{equation*}
+		If discrete:
+		\begin{equation*}
+			\begin{split}
+				f_{Y_1,Y_2}(y_1,y_2) &= P(Y_1=y_1, Y_2=y_2) \\
+				&= P(g_1^{-1}(y_1,y_2), g_2^{-1}(y_1,y_2)) \\
+				= f_{X_1,X_2} &(g_1^{-1}(y_1,y_2), g_2^{-1}(y_1,y_2))
+			\end{split}
+		\end{equation*}
+		If continuous:
+		\begin{equation*}
+			J = \det\begin{vmatrix}
+				\frac{\partial g_1^{-1}(y_1,y_2)}{\partial y_1} & \frac{\partial g_1^{-1}(y_1,y_2)}{\partial y_2} \\
+				\frac{\partial g_2^{-1}(y_1,y_2)}{\partial y_1} & \frac{\partial g_2^{-1}(y_1,y_2)}{\partial y_2}
+			\end{vmatrix}
+		\end{equation*}
+		\begin{equation*}
+			\begin{split}
+				f_{Y_1,Y_2}&(y_1,y_2) \\&= f_{X_1,X_2}( g_1^{-1}(y_1,y_2),g_2^{-1}(y_1,y_2))|J|
+			\end{split}
+		\end{equation*}
+	
+	\subsection{Multinomial Distribution}
+		\begin{itemize}
+			\item \(K\) Mutually exclusive/exhaustive
+			\item \(P_i\) probability of being \(i\in K\) class
+			\item \(X_i\) \# of \(i\) class after \(n\) draws
+		\end{itemize}
+		\[ f_X(\underset{\sim}{x}) = P(X_1=x_1,\ldots) = \frac{n!}{\prod_{i=1}^{k}x_i!} \prod_{i=1}^{k}P^{x_i}_i \]
+		\begin{enumerate}
+			\item \(\sum_{i=1}^{k}p_i=1 \quad x_k=n-\sum_{i=1}^{k-1}x_i \)
+			\item \(X_i\sim \text{Bin}(n,P_i)\)
+			\item \(\text{Cov}(X_i,X_j) = \frac{-P_iP_j}{n} \quad \forall i\neq j\)
+		\end{enumerate}
+	
+	
+	\subsection*{Inequalities and Identities}
+		\subsubsection*{Chebyshev's Inequality}
+			\[P(|X-E[X]|\geq k\sigma) \leq \frac{1}{k^2}\]
+		\subsubsection*{Markov's Inequality}
+			\[P(|X|\geq c)\leq \frac{E[|X|]}{c}\]
+		\subsubsection*{Holder's Inequality}
+			If \(1/p+1/q=1\) then,
+			\[ |E[XY]| \leq E[|XY|]\leq (E[|X|^p])^{1/p}(E[|Y|^q])^{1/q} \]
+		\subsubsection*{Stein's Lemma}
+			For \(X\sim N(\theta,\sigma^2)\)
+			\[ E[g(X)(X-\theta)] = \sigma^2 E[g^\prime(X)] \]
+		
+		
+		
+		
+
 		
 	
