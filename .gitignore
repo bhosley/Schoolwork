@@ -71,7 +71,6 @@
 
 # JS
 *eslintrc
-*.js*
 
 # Other - Named
 *.csv
