@@ -293,11 +293,16 @@ $$P_\theta (X = x) = \theta^x (1-\theta)^{1-x}, \quad x = 0 \text{ or } 1, \quad
 				= \frac{\theta(1-\theta)}{n}
 			\end{align*}
 			\\\textbf{MLE MSE:}\\
-			In this context we leverage that the sum of independent Bernoulli trials is a binomial distribution,
+			In this context we have a two part function, when \(\bar{x}<1/2\) 
+			the MSE is equal to that found in the M.o.M. calculation.
 			\begin{align*}
 				\text{Var}_\theta W + (E_\theta W-\theta)^2
-				= n\theta(1-\theta)+(n\theta-\theta)^2
-				= n\theta(1-\theta)+\theta^2(n-1)^2
+				= 0 + (E[1/2]-\theta)^2
+				=(1/2-\theta)^2
+			\intertext{therefore,}
+				\text{MLEMSE}
+				= \frac{\theta(1-\theta)}{n} \mathbbm{1}_{(0,\frac{1}{2})}(\bar{x})
+				+ (1/2-\theta)^2 \mathbbm{1}_{(\frac{1}{2},1)}(\bar{x})
 			\end{align*}
 			
 			\part
@@ -325,8 +330,10 @@ $$P_\theta (X = x) = \theta^x (1-\theta)^{1-x}, \quad x = 0 \text{ or } 1, \quad
 				= \frac{n}{\theta} + \sum_{i=1}^n\ln x_i
 				=  - \sum_{i=1}^n\ln x_i - \frac{n}{\theta}
 			\end{align*}
-			Thus \(-\sum_{i=1}^n\ln x_i\) is an unbiased estimator of \(\tau(\theta) = \frac{n}{\theta}\) 
+			Thus \(-\sum_{i=1}^n\ln x_i\) is an estimator of \(\tau(\theta) = \frac{n}{\theta}\) 
 			that attains the Cramer-Rao lower bound.
+			
+			To show that this estimator is unbiased:
 			
 			\part
 			\begin{align*}
@@ -338,9 +345,11 @@ $$P_\theta (X = x) = \theta^x (1-\theta)^{1-x}, \quad x = 0 \text{ or } 1, \quad
 				&= \frac{n\bar{x}}{\theta} + \frac{n}{\ln\theta} + \frac{n}{\theta-1}
 				= \frac{n}{\theta}\left[\bar{x} + \frac{\theta}{\ln\theta} + \frac{\theta}{\theta-1}\right]
 			\end{align*}
-			Thus, \(\bar{x}\) is an unbiased estimator that attains the CRLB for 
+			Thus, \(\bar{x}\) is an estimator that attains the CRLB for 
 			\(\tau(\theta) = \frac{\theta}{\ln\theta} + \frac{\theta}{\theta-1}\)
 			where \(a(\theta) = \frac{n}{\theta}\).
+			
+			To show that this estimator is unbiased:
 			
 		\end{parts}
 	\end{solution}
@@ -390,7 +399,54 @@ $$P_\theta (X = x) = \theta^x (1-\theta)^{1-x}, \quad x = 0 \text{ or } 1, \quad
 \part Find the method of moments estimate and the MLE of $\theta$ based on the data $$1.29, 0.86, 1.33,$$ three observations of average berry sizes (in centimeters) of wine grapes.
 \end{parts}
 	\begin{solution}
-		Here is the next solution
+		\begin{parts}
+			\part The method of moments estimator for \(\theta\):
+			\begin{align*}
+				E[\bar{X}] &= \frac{\theta+2\theta}{2} = \frac{3}{2}\theta \\
+				\tilde{\theta} &= \frac{2}{3}\bar{x}
+			\end{align*}
+			
+			\part The MLE for \(\theta\)
+			\begin{align*}
+				\mathcal{L}(\theta|x) 
+				= \prod_{i=1}^3 \frac{1}{\theta} \mathbbm{1}_{(\theta,2\theta)}(x)
+				= \frac{1}{\theta^3} \mathbbm{1}_{(\frac{x_{(3)}}{2},x_{(1)})}(x)
+			\end{align*}
+			\(\theta\) is monotonically decreasing, and thus the maximum likelihood is where \(\theta\) is minimal,
+			which will be at the lower bound \(\frac{x_{(3)}}{2}\). 
+			It will either equal this value or approach this value based on whether or not 
+			\(\theta\) is included within the distribution.
+			
+			\begin{align*}
+				\theta
+				&= E_\theta\left[ k\frac{x_{(3)}}{2} \right]
+			\end{align*}
+			
+			First, we find the pdf of the order statistic,
+			\[\frac{(x-\theta)^2}{\theta^3}\]
+			then, the expected value from that,
+			\begin{align*}
+				\int_{\theta}^{\theta} x \frac{(x-\theta)^2}{\theta^3} \,dx
+				&= \int_{\theta}^{\theta} \frac{x^3}{\theta^3} -\frac{2x^2\theta}{\theta^3} +\frac{x\theta^2}{\theta^3} \,dx
+				= \left. \frac{x^4}{4\theta^3} -\frac{2x^3\theta}{3\theta^3} +\frac{x^2\theta^2}{2\theta^3} \right|\int_{\theta}^{\theta} \\
+				&= \frac{15\theta^4}{4\theta^3} -\frac{18\theta^4}{3\theta^3} +\frac{3\theta^4}{2\theta^3}
+				= \theta\left(1+\frac{1}{3}-\frac{1}{4}-\frac{1}{2}\right)
+				= \theta\frac{7}{8}
+			\end{align*}
+			which allows us to determine that \(k=\frac{8}{7}\).
+			
+			\part
+			The \(k\) in the previous problem suggests a bias, however, the method of moments statistic is not sufficient for
+			a uniform distribution, and thus would be the one that might be improved.
+			
+			\part
+			\begin{align*}
+				\tilde{\theta} &= 2/9(1.29 + 0.86 + 1.33) = 0.7733\bar{3} \\
+				\hat{\theta} &= \frac{1.33}{2} = 0.665
+			\end{align*}
+			
+			
+		\end{parts}
 	\end{solution}
 
 \setcounter{question}{49-1}
@@ -403,7 +459,41 @@ $$ 50.1, 70.1, 137.0, 166.9, 170.5, 152.8, 80.5, 123.5, 112.6, 148.5, 160.0, 125
 Failure tiems are often modeled with the exponential distribution. Estimate the mean failure time using the estimators from parts (a) and (b).
 \end{parts}
 	\begin{solution}
-		Here is the next solution
+		\begin{parts}
+			\part
+			First we find the pdf of \(Y\)
+			\begin{align*}
+				\frac{n}{\lambda}e^{-y/\lambda}\left(1-(1-e^-y/\lambda)\right)^{n-1}
+				= \frac{n}{\lambda}e^{-ny/\lambda}
+			\end{align*}
+			Thus, \(Y\sim Exp(\lambda/n)\) which allows us to determine, that an unbiased estimate is
+			\begin{align*}
+				E[Y] = \lambda/n \\
+				E[nY] = \hat\lambda
+			\end{align*}
+						
+			\part
+			Using the exponential family statistical sufficiency we can find that \(\sum_{i=1}^{n}x_i\) is sufficient for \(\lambda\).
+			Additionally, the \(\theta\) part of the exponential is \(-n/\lambda\), which is an open set in \(\mathbb{R}\); 
+			thus the statistic is also complete.
+		
+			Then, because this is an exponential distribution we know that,
+			\begin{align*}
+				E[\bar x] &= \lambda
+				\intertext{and equivalently,}
+				E\left[\sum_{i=1}^{n}x_i\right] &= n\lambda.
+			\end{align*}
+			We can leverage theorem 7.3.23, where \(T\) is our sum, a complete sufficient statistic for \(\lambda\)
+			then define \(\phi(T)\) as \(\frac{1}{n}T\), 
+			and find that \(E[\bar x]\) is a best unbiased estimator for \(\lambda\).
+			
+			\part
+			\begin{align*}
+				\text{Part A }\hat{\lambda} &= 601.2 \\
+				\text{Part B }\hat{\lambda} &= 124.817
+			\end{align*}
+			
+		\end{parts}
 	\end{solution}
 
 \end{questions}
