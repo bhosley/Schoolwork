@@ -1,0 +1,77 @@
+\section{Point Estimation}
+	\subsection{Finding Point Estimators}
+		\subsubsection{Method of Moments}
+			\begin{itemize}
+				\item Requires a known underlying distribution
+				\item where \(m_k = \frac{1}{n}\sum_{i=1}^{n}X_i^k = E[X^k]\)
+			\end{itemize}
+	
+		\subsubsection{Maximum Likelihood Estimator}
+		\[\mathcal{L}(\theta|x) = \prod_{i=1}^n f(x_i|\theta,\ldots,\theta_k)\]
+		\(\hat{\theta}\) is the \(\arg_\theta\max(\mathcal{L})\) Likelihood  function
+		If it is differentiable, candidate MLEs can be found by solving;
+		\[\frac{\partial}{\partial\theta_i}\mathcal{L}(\theta|x)=0\]
+		It is global max if there is only one solution and 
+		\[\frac{\partial^2}{\partial\theta_i^2}\mathcal{L}(\theta|x)\bigg|_{\theta=\bar x}<0\]
+		\textit{\textbf{Invariance Property of MLE}}
+		If \(\hat{\theta}\) is the MLE of \(\theta\)
+		then \(\tau(\hat\theta)\) is the MLE of \(\tau(\theta)\)
+		
+	\subsection{Evaluating Estimators}
+		\subsubsection{Mean Squared Error}
+			\begin{equation*}
+				\begin{split}
+					E_\theta[(W-\theta)^2] 
+					&= \text{Var}_\theta[W] + (E_\theta[W]-\theta)^2 \\
+					&= \text{Var}_\theta[W] + (\text{Bias}_\theta W)^2
+				\end{split}
+			\end{equation*}
+		
+		\subsubsection{Best Unbiased Estimators}
+			If \(E_\theta[W^*] = \tau(\theta) \forall\theta\) 
+			and for every other \(W\) we have \(\text{Var}_\theta[W^*]\leq\text{Var}_\theta[W]\)
+		
+		\subsubsection{Cram\'er-Rao Theorem}
+			If 
+			\(\frac{d}{d\theta}E_\theta[E(W)] = \int_{\mathcal{X}}\frac{\partial}{\partial\theta}\left[W(x)f(x|\theta)\right]\,dx\)
+			and
+			\(\text{Var}_\theta[W(X)]<\infty\)
+			then:
+		
+		\subsubsection{Cram\'er-Rao Lower-Bound}
+			\[\text{Var}_\theta(W(\mathbf{X}))\geq \frac{\left(\frac{d}{d\theta}E_\theta[W(\mathbf{X})]\right)^2}{
+				nE_\theta\left[ \left(\frac{\partial}{\partial\theta}\ln f(\mathbf{X}|\theta)\right)^2 \right]}\]
+			If pdf \(f(x|\theta)\) is \textbf{not iid} drop the \(n\) term;
+			if exponential family the denominator becomes
+			\(-nE\left[\frac{\partial^2}{\partial\theta^2} \ell(\theta|x) \right]\)
+			
+		\subsubsection{Attainment Theorem}
+			\begin{itemize}
+				\item Let \(f(x\theta)\) be iid. and satisfy the conditions of CR theorem
+				\item Likelihood: \(\mathcal{L}(\theta|x) = \prod_{i=1}^nf(x_i|\theta)\)
+				\item If \(W(X)\) is an unbiased estimator of \(\tau(\theta)\) it attains CRLB iff.
+			\end{itemize}
+			\[a(\theta)\left[W(x)-\tau(\theta)\right] = \frac{\partial}{\partial\theta}\ln\mathcal{L}(\theta|x)\]
+			
+	\subsection{Sufficiency and Unbiasedness}
+		\subsubsection{Rao-Blackwell}
+			\begin{itemize}
+				\item \(W:=\) unbiased estimator of \(\tau(\theta)\)
+				\item \(T:=\) a sufficient stat for \(\theta\)
+				\item \(\phi(T):=E(W|T)\)
+			\end{itemize}
+			Then \(E_\theta[\phi(T)] = \tau(\theta)\) \\
+			and \(\text{Var}_\theta[\phi(T)] \leq \text{Var}_\theta[W] \forall \theta\)
+			
+			\(\phi(T)\) is a uniformly better unbiased estimator of \(\tau(\theta)\)
+			
+		\subsubsection{Theorem 7.3.23}
+			Let \(T\) be a complete and sufficient stat for \(\theta\)
+			and let \(\phi(T)\) be any estimator only in \(T\).
+			Then \(\phi(T)\) is the unique best unbiased estimator of its expected value
+			
+			
+			
+			
+			
+		
