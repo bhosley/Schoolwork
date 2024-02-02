@@ -1,0 +1,92 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+\newcommand\chapter{ 1 }
+%\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+%\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{  } % This is the name of the course 
+\newcommand{\assignmentname}{Quiz \# \chapter Redux} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname } & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+	\question[20] 
+	Let \(X_1,X_2,\ldots,X_n\) be a random sample form a population with a pdf
+	\[f_X(x|\theta) - \theta x^{\theta+1}, \quad 0<x<1, \theta>0.\]
+	\begin{parts}
+		\part
+			Is \(\sum_{i=1}^{n}X_i\) sufficient for \(\theta\)?
+		\part
+			Find a minimal sufficient statistic for \(\theta\). Is \(\sum_{i=1}^{n}\ln(X_i)\) minimal sufficient for \(\theta\)?
+			Explain why/why not.
+	\end{parts}
+	\begin{solution}
+		\begin{parts}
+			\part
+			\part
+		\end{parts}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question[20] 
+	Let \(X_1,X_2,\ldots,X_n\sim \text{ iid } Weibull(2,\beta),\ \beta>0\).
+	\begin{parts}
+		\part
+			Find a complete statistic for \(\beta\).
+		\part
+			Prove that the statistic in part a is independent of \(\frac{X_{(1)}}{\sum_{i=1}^{n}X_i}\). \\
+			Recall the Weibull\((\gamma,\beta)\) pdf is given by 
+			\(f_X(x|\gamma,\beta) = \frac{\gamma}{\beta}x^{\gamma-1}e^{-x\frac{\gamma}{\beta}},\ 
+				0\leq x\leq\infty,\ \gamma>0,\ \beta>0\).
+	\end{parts}
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+
+\end{questions}
+\end{document}
