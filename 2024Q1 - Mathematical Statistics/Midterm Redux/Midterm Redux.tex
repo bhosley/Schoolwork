@@ -1,0 +1,96 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+\newcommand\chapter{ 2 }
+%\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+%\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{  } % This is the name of the course 
+\newcommand{\assignmentname}{Midterm (Quiz \# \chapter) Redux} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname } & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+	\question[20] 
+	Let \(X_1,X_2,\ldots,X_n\) be a random sample from a \(GAM(\alpha,\beta)\) with \(\alpha\) known.
+	Show \(\hat{\beta}=\frac{\bar{x}}{\alpha}\) is UMVUE for \(\beta\).
+	\begin{solution}
+		
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
+	
+	\question[20] 
+	Let \(X_1,X_2,\ldots,X_n\) be a random sample from the continuous distribution with pdf 
+	\( f(x|\theta) = \frac{2\theta^2}{x^3} \mathbbm{1}_{(\theta,\infty)}(x) \) where 
+	\( 0 < \theta < \infty \).
+	\begin{parts}
+		\part
+		Show that \(X_{(1)}\) is sufficient for \(\theta\).
+		\part
+		When \(0<\theta<\infty\), the probability distribution of \(X_{(1)}\) is complete.
+		In this case, find the best unbiased estimator of \(\theta\).
+	\end{parts}
+	\begin{solution}
+		\begin{parts}
+			\part
+			First we reorganize the pdf,
+			\begin{align*}
+				f(x|\theta)
+				= \frac{2\theta^2}{x^3} \mathbbm{1}_{(\theta,\infty)}(x) 
+				= \frac{2\theta^2}{x^3} \mathbbm{1}_{(\theta,\infty)}(x_{(1)}) 
+				= \frac{2\theta^2}{x^3} \mathbbm{1}_{(0,x_{(1)})}(\theta) 
+				= \underbrace{2\theta^2\mathbbm{1}_{(0,x_{(1)})}(\theta)}_{g(T(x)|\theta)}  \underbrace{\frac{1}{x^3}}_{h(x)}
+			\end{align*}
+			Using the factorization theorem we can identify a \(g(T(x)|\theta)\) only requiring \(T(X) = X_{(1)}\)
+			and conclude that \(X_{(1)}\) is a sufficient statistic.
+			\part	
+		\end{parts}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		
+
+\end{questions}
+\end{document}
