@@ -55,7 +55,7 @@
 \begin{questions}
 	\question[20] 
 	Let \(X_1,X_2,\ldots,X_n\) be a random sample form a population with a pdf
-	\[f_X(x|\theta) - \theta x^{\theta+1}, \quad 0<x<1, \theta>0.\]
+	\[f_X(x|\theta) = \theta x^{\theta+1}, \quad 0<x<1, \theta>0.\]
 	\begin{parts}
 		\part
 			Is \(\sum_{i=1}^{n}X_i\) sufficient for \(\theta\)?
@@ -66,10 +66,41 @@
 	\begin{solution}
 		\begin{parts}
 			\part
+			This pdf can be shown to be a member of the exponential family,
+			\begin{align*}
+				f_X(x|\theta)
+				&= \theta x^{\theta+1} \mathbbm{1}_{(0,1)}(x) \mathbbm{1}_{(0,\infty)}(\theta) \\
+				&= \underbrace{\mathbbm{1}_{(0,1)}(x)}_{h(x)} \underbrace{\theta\mathbbm{1}_{(0,\infty)}(\theta)}_{c(\theta)}
+					\exp \Big\{ \underbrace{\ln x}_{t(x)} \underbrace{(\theta+1)}_{w(\theta)} \Big\} .
+			\end{align*}
+			Yielding \(\sum_{i=1}^{n}\ln(X_i)\) as a sufficient statistic. 
+			This particular statistic is also minimal sufficient (shown in part b), 
+			and thus is a function in any sufficient statistic.
+			Because there does not exist an \(f(T(x)))\) such that
+			\[f\left( \sum_{i=1}^{n}\ln(X_i) \right) = \sum_{i=1}^{n} (X_i)\]
+			then we conclude that \(\sum_{i=1}^{n} (X_i)\) is not a sufficient statistic.
+			
 			\part
+			To demonstrate that \(\sum_{i=1}^{n}\ln(X_i)\) is also minimally sufficient we can look to the Lehmann-Scheffe thereom;
+			\begin{align*}
+				\frac{f(x|\theta)}{f(y|\theta)}
+				&= \frac{\prod_{i=1}^{n}\theta x_i^{(\theta+1)} \mathbbm{1}_{(0,1)}(x_i)}{\prod_{i=1}^{n}\theta y_i^{(\theta+1)} \mathbbm{1}_{(0,1)}(y_i)} \\
+				&= \prod_{i=1}^{n} \exp\left\{ (\theta+1)\ln(x_i) - (\theta+1)\ln(y_i) \mathbbm{1}_{(0,1)}(x_i) \mathbbm{1}_{(0,1)}(y_i) \right\} \\
+				&= \exp\left\{n(\theta+1)\right\} \exp\left\{\sum_{i=1}^{n}\ln(x_i) - \ln(y_i)\right\}
+			\end{align*}
+			then, setting this equal to some constant we can get,
+			\begin{align*}
+				\exp\left\{\sum_{i=1}^{n} \ln(x_i) \right\}
+				&= \exp\left\{\sum_{i=1}^{n} \ln(y_i) \right\} \\
+				\sum_{i=1}^{n} \ln(x_i)
+				&= \sum_{i=1}^{n} \ln(y_i).
+			\end{align*}
+			From this we can determine that for for the statistic \(T(X) = \sum_{i=1}^{n}\ln(X_i)\)
+			then for every sample point, \(T(x)=T(y),\ \forall\,x=y\); satisfying minimum sufficiency by the Lehmann-Scheffe Theorem.
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\clearpage
 	
 	\question[20] 
 	Let \(X_1,X_2,\ldots,X_n\sim \text{ iid } Weibull(2,\beta),\ \beta>0\).
@@ -83,7 +114,43 @@
 				0\leq x\leq\infty,\ \gamma>0,\ \beta>0\).
 	\end{parts}
 	\begin{solution}
-		
+		\begin{parts}
+			\part
+			The provided Weibull distribution is
+			\[ \frac{\gamma}{\beta}x^{\gamma-1}e^{-x^{\gamma}/\beta} \]
+			which (as \(Weibull(2,\beta)\)) can be refactored as
+			\[ \frac{2}{\beta}x^1 \exp\left\{-\frac{1}{\beta}x^2\right\} \]
+			to make its status as a member of the exponential family more clear.
+			Using this we can get that \(\sum_{i=1}^{n}x_{i}^{2}\) is a sufficient statistic.
+			The support on \(X\), \([0,\infty)\) is the case for both the sample distribution and the statistic,
+			which is a domain open in \(\mathbb R\) we know that this statistic is also complete.
+			\part
+			To show independence we will leverage Basu's Theorem by showing that 
+			\(\frac{X_{(1)}}{\sum_{i=1}^{n}X_i}\) is an ancillary statistic and thus independent of part a's complete statistic.
+			
+			This statistic can be shown to be ancillary if the distribution is of the scale family and that 
+			this statistic is scalar invariant.
+			This doesn't appear to always be the case, but a Weibull with a fixed \(\gamma\) is.
+			This is easier to see when using the Weibull as defined outside of Berger and Casella (citations available upon request)
+			that refactors (as above) with a fixed \(\gamma=2\) to
+			\[ \frac{2}{\beta}x \exp\left\{-\left(\frac{x}{\beta}\right)^2\right\}. \]
+			This equation makes it more clear that where \(Y= cX\) and \(X\sim Weibull(2,\beta)\) 
+			then \(Y\sim Weibull(2,\frac{\beta}{c})\), and is thus a scale family member.
+			
+			Next, scale invariance of the statistic
+			\(T(x) = \frac{X_{(1)}}{\sum_{i=1}^{n}X_i}\)
+			can be shown by \(T(X) = T(cX)\) for arbitrary \(c\);
+			\begin{align*}
+				T(cX)
+				= \frac{cX_{(1)}}{\sum_{i=1}^{n}cX_i}
+				= \frac{cX_{(1)}}{c\sum_{i=1}^{n}X_i}
+				= \frac{X_{(1)}}{\sum_{i=1}^{n}X_i}
+				= T(X)
+			\end{align*}
+			Thus, statistic \(T(X)\) is ancillary to the given distribution and is independent of the complete
+			statistic found in part A.
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		
