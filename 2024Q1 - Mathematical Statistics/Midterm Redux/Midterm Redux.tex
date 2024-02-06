@@ -57,6 +57,15 @@
 	Let \(X_1,X_2,\ldots,X_n\) be a random sample from a \(GAM(\alpha,\beta)\) with \(\alpha\) known.
 	Show \(\hat{\beta}=\frac{\bar{x}}{\alpha}\) is UMVUE for \(\beta\).
 	\begin{solution}
+		For \(GAM(\alpha,\beta)\) we know that \(E[X] = \alpha\beta\), and thus,
+		\begin{align*}
+			\hat{\beta} 
+			= \frac{E[X]}{\alpha}
+			= \frac{1}{n\alpha} \sum_{i=1}^{n} x_i
+			= \frac{\bar{x}}{\alpha}
+		\end{align*}
+		This shows that \(\frac{\bar{x}}{\alpha}\) is unbiased as an estimator for \(\hat{\beta}\).
+		
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,7 +95,8 @@
 			\end{align*}
 			Using the factorization theorem we can identify a \(g(T(x)|\theta)\) only requiring \(T(X) = X_{(1)}\)
 			and conclude that \(X_{(1)}\) is a sufficient statistic.
-			\part	
+			\part
+			
 		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
