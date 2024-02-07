@@ -65,7 +65,32 @@
 			= \frac{\bar{x}}{\alpha}
 		\end{align*}
 		This shows that \(\frac{\bar{x}}{\alpha}\) is unbiased as an estimator for \(\hat{\beta}\).
+		% Does this answer the assumptions of the Cramer Rao Theorem?
+		Next, we can verify that this is UMVUE if it meets the Cram\'{e}r-Rao lower bound.
+		As it happens, it is easier to use the attainment theorem. First calculate the likelihood function,
+		\begin{align*}
+			\mathcal{L}(\theta=\beta|x)
+			= \prod_{i=1}^{n} \frac{1}{\Gamma(\alpha)\beta^\alpha}x_i^{\alpha-1}e^{-x_i/\beta}
+			=  \frac{1}{\Gamma(\alpha)^n\beta^{n\alpha}}  \prod_{i=1}^{n}  x_i^{\alpha-1}e^{-x_i/\beta}.
+		\end{align*}
+		Then the log-likelihood function,
+		\begin{align*}
+			\ell(\beta|x) = \ln \mathcal{L}(\beta|x)
+			&= - n\ln\Gamma(\alpha) - n\alpha\ln(\beta) + \sum_{i=1}^{n} (\alpha-1)\ln x_i -\frac{x_i}{\beta}   \\
+			&= - n\ln\Gamma(\alpha) - n\alpha\ln(\beta) - \frac{n\bar{x}}{\beta} + (\alpha-1)\sum_{i=1}^{n} \ln x_i  \\
+			&= - n\ln\Gamma(\alpha) - n\alpha\ln(\beta) - \frac{n\bar{x}}{\beta} + (\alpha-1)\ln n\bar{x}.
+		\end{align*}
+		Then take the derivative, and rearrange,
+		\begin{align*}
+			\frac{\partial}{\partial\beta} \ell(\beta|x)
+			= \frac{n\alpha}{\beta} - \frac{n\bar{x}}{\beta^2}
+			= \frac{n}{\beta^2}\left[-\bar{x} + \alpha\beta\right]
+			= \frac{n\alpha}{\beta^2}\left[-\frac{\bar{x}}{\alpha} + \beta\right].
+		\end{align*}
+		Finally, from this we get that \(-\frac{\bar{x}}{\alpha}\) is the UMVUE for \(-\beta\), 
+		equivalently the result to the result above.
 		
+		Thus we conclude that \(\frac{\bar{x}}{\alpha}\) is UMVUE for \(\hat{\beta}\).
 		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
