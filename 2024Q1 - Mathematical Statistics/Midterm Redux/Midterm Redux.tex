@@ -120,7 +120,22 @@
 			\end{align*}
 			Using the factorization theorem we can identify a \(g(T(x)|\theta)\) only requiring \(T(X) = X_{(1)}\)
 			and conclude that \(X_{(1)}\) is a sufficient statistic.
+			
 			\part
+			The problem provides that this statistic is also complete.
+			Thus we can use Theorem 7.3.23 as labeled by Berger and Casella.
+			First, we solve the following,
+			\begin{align*}
+				E[x_{(1)}]
+				&= \int_{\theta}^{\infty}x\,n \frac{2\theta^2}{x^3}\left[1+\frac{\theta^2}{x^2}\right]^{n-1}\,dx
+			\intertext{using substitution where \(du = -f_{X_{(1)}}(x)\,dx\) and \(u=1+F_{X_{(1)}}(x)\)}
+				&= \int_{2}^{1} -\sqrt{\frac{\theta^2}{u-1}} nu^{n-1}\,du
+			\intertext{then, with liberal use of further substitution and Wolfram Alpha's equation solver we arrive at,}
+				&= \theta \frac{2n}{2n-1}.
+			\end{align*}
+			From this we can determine the necessary \(\phi\).
+			\(E[\phi(X_{(1)})] = \tau(\theta)\) where \(\tau(\theta)\) and \(\phi = \frac{2n-1}{2n} \).
+			Thus we find that \(\frac{2n-1}{2n}x_{(1)}\) is the best unbiased estimator of \(\theta\).
 			
 		\end{parts}
 	\end{solution}
