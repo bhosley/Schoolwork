@@ -25,7 +25,7 @@
 %\usetikzlibrary{shapes,arrows,positioning,patterns}
 %\usepackage{pythonhighlight}
 
-\newcommand\chapter{7}
+\newcommand\chapter{8}
 \renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
 \renewcommand{\questionlabel}{\thequestion}
 
@@ -58,7 +58,27 @@
 	Is it reasonable to assume that the coin is fair? Justify your answer.
 	
 	\begin{solution}
-		Here is the solution
+		If the coin is 'fair' we typically assume that the \(p=1-p\) and therefore \(p=0.5\).
+		Further, we expect \(X\sim \text{bin}(1000,0.5)\), and
+		
+		\( E[X] = np = 500 \),
+		
+		\( Var[X] = np(1-p) = 250\).
+		
+		Then, noting that as \(n\rightarrow\infty\) the binomial approaches normal distribution.
+		We can utilize the normal distribution to approximate the probability of this coin's result.
+		\begin{align*}
+			z &= \frac{x-\mu}{\sigma} \\
+			&= \frac{60}{\sqrt{250}} \\
+			&= 3.7947,
+		\intertext{thus,}
+			P(Z\geq z)  &= P(Z\geq 3.7947) .\\
+		\end{align*}
+		With this value we can calculate an approximate probability;
+		of the first 4 tables that I consulted, the highest \(Z\) score was \(3.69\)
+		which returns a value of \(0.0001\).
+		Thus, even without an exact answer we can determine that it is highly unlikely that this
+		particular coin is fair (\(p=0.5\)).
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -70,7 +90,7 @@
 	Show that the LRT of \(H_0: \theta \leq \theta_0\) versus \(H_1:\theta > \theta_0\) will reject \(H_0\) if \(\sum_{i=1}^{m} Y_i > b\).
 	
 	\begin{solution}
-		Here is the next solution
+		H
 	\end{solution}
 	
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,7 +106,12 @@
 	\end{parts}
 	
 	\begin{solution}
-		Here is the next solution
+		Borrowing the normal power function from Casella and Berger example 8.3.3
+		\begin{align*}
+			\beta(\theta)
+			&= P\left(Z>c+\frac{\theta_0-\theta}{\sigma/\sqrt{n}}\right) \\
+			&= P\left(\frac{\bar{X}-\theta}{\sigma/\sqrt{n}}>1.645+\frac{\theta_0-\theta}{\sigma}\sqrt{n}\right)
+		\end{align*}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -101,7 +126,7 @@
 	\setcounter{question}{15-1}
 	
 	\question 
-	Show that for a random sample $X_1, ..., X_n$ from a n(0,$\sigma^2$) population, 
+	Show that for a random sample $X_1, ..., X_n$ from a $N(0,\sigma^2)$ population, 
 	the most powerful test of $H_0: \sigma = \sigma_0$ versus $H_1: \sigma = \sigma_1$, 
 	where $\sigma_0 < \sigma_1$, is given by
 	\begin{align*}
