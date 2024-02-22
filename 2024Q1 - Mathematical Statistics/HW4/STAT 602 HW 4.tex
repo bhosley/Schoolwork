@@ -86,13 +86,57 @@
 	
 	\question 
 	Here, the LRT alluded to in Example 8.2.9 will be derived. 
-	Suppose that we observe \(m\) iid Bernoulli(\(\theta\)) random variables, denoted \(Y_1,...,Y_m\). 
+	Suppose that we observe \(m\) iid Bernoulli(\(\theta\)) random variables, denoted \(Y_1,\ldots,Y_m\). 
 	Show that the LRT of \(H_0: \theta \leq \theta_0\) versus \(H_1:\theta > \theta_0\) will reject \(H_0\) if \(\sum_{i=1}^{m} Y_i > b\).
 	
 	\begin{solution}
-		H
+		Equivalently
+		\(\lambda(y)<c\)
+		\[\lambda(y) = \frac{\sup_{\theta<\theta_0}L(\theta|y)}{\sup_\Theta L(\theta|y)}\]
+		
+		Let \(y = \sum_{i=1}^{m} Y_i\). Then, we know that \(y\sim\text{Binom}(\theta,m)\)
+		which can help us shortcut to \(\hat{p} = \frac{y}{m}\).
+		
+		We can find this the long way by
+		\begin{align*}
+			L(p|y) &= \prod_{i=1}^{m} p^{y_i} (1-p)^{1-y_i} \\
+			&= p^{m\bar{y}} (1-p)^{m(1-\bar{y})}
+		\intertext{take log likelihood to ease the solving process,}
+			\ell(p|y) &= m\bar{y} \ln(p) + m(1-\bar{y})\ln(1-p) 
+		\intertext{then we set the derivative of this equal to 0,}
+			0 &=: \frac{m\bar{y}}{p} - \frac{m(1-\bar{y})}{1-p}
+		\intertext{equivalently,}
+			pm(1-\bar{y}) &= (1-p)m\bar{y} \\
+			p-\bar{y}p &= \bar{y}-\bar{y}p \\
+			p &= \bar{y} \\
+			p &= \frac{\sum_{i=1}^my_i}{m} = \frac{y}{m} .
+		\end{align*}
+		This is the \(\sup_\Theta L(\theta|y)\). The \(\sup_{\theta<\theta_0}L(\theta|y)\) is \(\min(\theta_0,\frac{y}{m})\).
+		
+		With this we can revisit \(\lambda\)
+		\begin{align*}
+			\lambda(y) 
+			&= \frac{\sup_{\theta<\theta_0}L(\theta|y)}{\sup_\Theta L(\theta|y)} \\
+			&= \begin{cases}
+				\frac{\theta_0^y(1-\theta_0)^{m-y}}{(y/m)^y(1-y/m)^{m-y}} & \frac{y}{m} > \theta_0 \\
+				1 & \frac{y}{m} \leq \theta_0
+			\end{cases}
+		\end{align*}
+		Next, we would like to determine what the behavior of this function is, which will be easier (as above) in log,
+		\begin{align*}
+			\frac{d}{dy}\ln\lambda(y)
+			&= \frac{d}{dy} y\ln\theta_0 + (m-y)\ln(1-\theta_0) - y\ln\frac{y}{m} - (m-y)\ln(1-\frac{y}{m}) \\
+			&= \ln\theta_0 - \ln(1-\theta_0) - \frac{1}{y} \,y + \ln(1-y/m) + (m-y)\frac{1}{m-y} \\
+			&= \ln\left( \frac{\theta_0}{1-\theta_0}(1-y/m) \right)
+		\end{align*}
+		by inspection of the final expression we can see that \(\lambda\) is a decreasing function in \(y\)
+		and thus \(\lambda(y)<c \). 
+		
+		For greater context, one may need to review example 8.2.9; but this implies that for \(\lambda(y)<c \)
+		there exists a \(b\) for which \(\sum_{i=1}^{m} Y_i > b\), and is therefor an equivalent rejection region.
+		
 	\end{solution}
-	
+	\clearpage
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 	\setcounter{question}{12-1}
@@ -106,12 +150,30 @@
 	\end{parts}
 	
 	\begin{solution}
-		Borrowing the normal power function from Casella and Berger example 8.3.3
-		\begin{align*}
-			\beta(\theta)
-			&= P\left(Z>c+\frac{\theta_0-\theta}{\sigma/\sqrt{n}}\right) \\
-			&= P\left(\frac{\bar{X}-\theta}{\sigma/\sqrt{n}}>1.645+\frac{\theta_0-\theta}{\sigma}\sqrt{n}\right)
-		\end{align*}
+		\begin{parts}
+			\part
+			Borrowing the normal power function from Casella and Berger example 8.3.3
+			\begin{align*}
+				\beta(\theta)
+				&= P\left(Z>c-\frac{\theta_0-\theta}{\sigma/\sqrt{n}}\right) \\
+				&= P\left(\frac{\bar{X}-\theta}{\sigma/\sqrt{n}}>1.645-\frac{\theta_0-\theta}{\sigma}\sqrt{n}\right)
+			\end{align*}
+				I have approximated the power functions in Desmos, requiring some liberties on the axes, 
+				but hopefully showing the appropriate changes as \(n\) increases.
+			\begin{center}
+				\includegraphics[width=0.7\linewidth]{"Screenshot 2024-02-21 at 18.50.40"}
+			\end{center}
+			
+			\part
+			Borrowing the normal power function from Casella and Berger example 8.3.3
+			\begin{align*}
+				\beta(\theta)
+				&= P\left(Z<\left| c+\frac{\theta_0-\theta}{\sigma/\sqrt{n}} \right|\right) \\
+				&= P\left(Z<\left| 1.96+\frac{\theta_0-\theta}{\sigma/\sqrt{n}} \right|\right)
+			\end{align*}
+			
+		\end{parts}
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -122,7 +184,7 @@
 	%	Here is the next solution
 	%\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
+	\clearpage
 	\setcounter{question}{15-1}
 	
 	\question 
@@ -137,12 +199,35 @@
 		\end{cases}
 	\end{align*}
 	For a given value of $\alpha$, the size of the Type I Error, show how the value of $c$ is explicitly determined.
-	
+
 	\begin{solution}
-		Here is the next solution
+		First, using Neyman-Pearson;
+		\begin{align*}
+			\lambda(x)
+			&= \frac{\mathcal{L}(\sigma_1|x)}{\mathcal{L}(\sigma_1|x)}
+			= \frac{(2\pi\sigma_1^2)^{-n/2}e^{\sum_{i=1}^{n}x_i^2/(2\sigma_1^2)}}
+				{(2\pi\sigma_0^2)^{-n/2}e^{\sum_{i=1}^{n}x_i^2/(2\sigma_0^2)}}
+			= \frac{\sigma_0^n}{\sigma_1^n} \exp\left\{\frac{1}{2}\left(\frac{1}{\sigma_0^2}-\frac{1}{\sigma_1^2}\right) \sum_{i=1}^nx_i^2 \right\}.
+		\end{align*}
+		Then for some \(k\),
+		\begin{align*}
+			k &< \frac{\sigma_0^n}{\sigma_1^n} \exp\left\{\frac{1}{2}\left(\frac{1}{\sigma_0^2}-\frac{1}{\sigma_1^2}\right) \sum_{i=1}^nx_i^2 \right\} \\
+			k\frac{\sigma_1^n}{\sigma_0^n} &< \exp\left\{\frac{1}{2}\left(\frac{1}{\sigma_0^2}-\frac{1}{\sigma_1^2}\right) \sum_{i=1}^nx_i^2 \right\} \\
+			\ln(k\sigma_1^n/\sigma_0^n) &< \frac{1}{2}\left(\frac{1}{\sigma_0^2}-\frac{1}{\sigma_1^2}\right)\sum_{i=1}^nx_i^2 \\
+			2\ln(k\sigma_1^n/\sigma_0^n) &< \left(\frac{1}{\sigma_0^2}-\frac{1}{\sigma_1^2}\right)\sum_{i=1}^nx_i^2 \\
+			\frac{2\ln(k\sigma_1^n/\sigma_0^n)}{\left(\frac{1}{\sigma_0^2}-\frac{1}{\sigma_1^2}\right)} &< \sum_{i=1}^nx_i^2. \\
+		\end{align*}
+		Thus,
+		\begin{align*}
+			\alpha = P\left(\sum_{i=1}^nx_i^2 > c\right)
+		\intertext{then, if we standard normal the normal distribution we can leverage a \(\chi^2\) distribution,}
+			\alpha &= P\left(\sum_{i=1}^n\frac{x_i}{\sigma_0^2} > \frac{c}{\sigma_0^2}\right) \\
+			&= P\left(\chi_n^2 > \frac{c}{\sigma_0^2}\right).
+		\end{align*}
+		Thus the \(c\) corresponds to the value of \(\sigma_0^2\chi_n^2\).
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
+	\clearpage
 	\setcounter{question}{19-1}
 	
 	\question 
@@ -152,10 +237,57 @@
 	Find the UMP level $\alpha = .10$ test and compute the Type II Error probability.
 
 	\begin{solution}
-		Here is the next solution
+		First, we perform a transform of variable
+		\begin{align*}
+			f(y) 
+			= f(g^{-1}(x)) 
+			= e^{-y^{-1/\theta}}\,\frac{d}{dy} e^{-y^{-1/\theta}}
+			= -\frac{1}{\theta}y^{1/\theta-1} e^{-y^{-1/\theta}}
+		\end{align*}
+		
+		Second, we determine the direction of MLR
+		\begin{align*}
+			\frac{f(y|H_1)}{f(y|H_0)}
+			= \frac{-\frac{1}{2}y^{-1/2}e^{y^{1/2}}}{-1(1)e^{-y}} 
+			= \frac{1}{2}y^{-1/2}e^{y-y^{1/2}}.
+		\end{align*}
+		Graphing the function shows us that the function is decreasing on \(y<1\) and increasing on \(y>1\).
+		\begin{center}
+			\includegraphics[width=0.5\linewidth]{"Screenshot 2024-02-21 at 13.06.55"}
+		\end{center}
+		This implies two rejection regions.
+
+		
+		Third, we set the two rejection regions equal to each other and to sum to \(\alpha\).
+		\(y\leq c_0\) and \(y\geq c_1\)
+		\begin{align*}
+			\beta(\theta)
+			&= P(y\leq c_0) + P(y\geq c_1)
+			= \alpha
+			= 0.10
+		\intertext{or equivalently,}
+			\frac{\alpha}{2}
+			= 0.05
+			&= P(y\leq c_0)
+			= P(y\geq c_1) \\
+			&= \int_{0}^{c_0} e^{-y} \,dy
+			= 1 - \int_{0}^{c_1} e^{-y} \,dy.
+		\end{align*}
+		Given to Wolfram's solver we get,
+		\(c_0 \approx 0.512933\) and 
+		\(c_1 \approx 2.99573\).
+		
+		Finally, we can calculate the Type II error by integrating over the acceptance region.
+		\begin{align*}
+			\int_{c_0}^{c_1} f(y|H_1)
+			&= \int_{c_0}^{c_1} \frac{1}{2}y^{-1/2}e^{-y^{1/2}} \,dy
+		\intertext{once again leveraging a solver,}
+			&\approx 0.620196.
+		\end{align*}
+		
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	
+	\clearpage
 	\setcounter{question}{20-1}
 	
 	\question 
@@ -171,7 +303,26 @@
 	Compute the probability of Type II Error for this test.
 
 	\begin{solution}
-		Here is the next solution
+		First we calculate the likelihood ratios between the two hypotheses,
+		\begin{align*}
+			\begin{array}{cccccccc}
+				x & 1 & 2 & 3 & 4 & 5 & 6 & 7 \\ \hline 
+				\frac{f(x|H_1)}{f(x|H_0)} & 6 & 5 & 4 & 3 & 2 & 1 & .84 \\
+			\end{array}
+		\end{align*}
+		From this we can observe that \(f(x)\) is decreasing on \(x\), 
+		and thus we are looking for a \(c\) such that
+		\begin{align*}
+			P(X\leq c|H_0) &= \alpha \\
+			\sum_{i=1}^{c} f(x|H_0) &= \alpha \\
+		\end{align*}
+		which can be brute-forced to determine that \(c=4\).
+		
+		Then the probability of a Type II error is
+		\begin{align*}
+			\sum_{i=c+1}^{n} f(x|H_1) = 0.82 \,.
+		\end{align*}
+	
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
