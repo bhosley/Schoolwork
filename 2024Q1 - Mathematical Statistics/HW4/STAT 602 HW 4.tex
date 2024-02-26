@@ -333,12 +333,58 @@
 	\begin{parts}
 		\part For testing $H_0: \theta \le 1$ versus $H_1: \theta > 1$, 
 			find the size and sketch the power function of the test that rejects $H_0$ if $X > \frac{1}{2}$.
-		\part Find the most powerful level $\alpha$ test fo $H_0: \theta =1$ versus $H_1: \theta = 2$.
+		\part Find the most powerful level $\alpha$ test for $H_0: \theta =1$ versus $H_1: \theta = 2$.
 		\part Is there a UMP test of $H_0: \theta \le 1$ versus $H_1: \theta > 1$? If so, find it. If not, prove so.
 	\end{parts}
 	
 	\begin{solution}
-		Here is the next solution
+		\begin{parts}
+			\part \phantom{} \vspace{-3em}
+			\begin{align*}
+				\beta(\theta)
+				= P_\theta(X>\frac{1}{2})
+				= \int_{1/2}^{1} \frac{\Gamma(\theta+1)}{\Gamma(\theta)\Gamma(1)} x^{\theta-1} (1-x)^{1-1} \,dx
+				= \int_{1/2}^{1} \theta x^{\theta-1} \,dx
+				= \left. x^\theta \right|_{1/2}^{1} 
+				= 1 - \frac{1}{2^\theta}
+			\end{align*}
+			\begin{center}
+				\includegraphics[width=0.4\linewidth]{"Screenshot 2024-02-21 at 23.23.38"}
+			\end{center}
+			As can be seen here this function is increasing, on \(\theta\) 
+			as a result, the \(\sup_{\theta<1}\beta(\theta) = 0.5\).
+			
+			\part
+			Utilizing the simplified pdf for beta\((\theta,1)\) from above;
+			\begin{align*}
+				\lambda(x)
+				= \frac{f(x|x=2)}{f(x|\theta=1)}
+				= \frac{2x^{2-1}}{1x^{1-1}}
+				= 2x
+				\Rightarrow x>\frac{k}{2}
+			\end{align*}
+			Then we can evaluate the \(\alpha\),
+			\begin{align*}
+				\alpha 
+				= P(X>\frac{k}{2})
+				= 1-\left(\frac{k}{2}\right)^{\theta_0}
+				= 1-\frac{k}{2}.
+			\end{align*}
+			
+			\part
+			For the UMP we can first note that beta\((\theta,1)\)
+			is a member of the exponential family with and exponentiation component of
+			\(ln(x)(\theta-1)\).
+			The \(\theta\) component is non decreasing, 
+			thus we have a monotone, non-decreasing function and by extension, an MLR.
+			
+			Using the Karlin-Rubin theorem this allows us to conclude that the UMP
+			can be calculated using \(X > \frac{k}{2}\)
+			where \(\alpha = 1-\frac{k}{2}\)
+			and \(\frac{k}{2} = 1-\alpha\);
+			thus the UMP for a size \(\alpha\) test is \(X>1-\alpha\).
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -358,7 +404,39 @@
 	\end{parts}
 	
 	\begin{solution}
-		Here is the next solution
+		\begin{parts}
+			\part
+			
+			\begin{align*}
+				\frac{f(x|\theta_2)}{f(x|\theta_1)}
+				= \frac{ \frac{e^{(x-\theta_2)}}{(1+e^{(x-\theta_2)})^2} }{ \frac{e^{(x-\theta_1)}}{(1+e^{(x-\theta_1)})^2} }
+				= e^{\theta_1-\theta_2}  \frac{(1+e^{x-\theta_1})^2}{(1+e^{x-\theta_2})^2} 
+			\end{align*}
+			Then, to evaluate the behavior of the function in relation to \(x\)
+			we can examine,
+			\begin{align*}
+				\frac{d}{dx}\frac{1+e^{x-\theta_1}}{1+e^{x-\theta_1}}
+				= \frac{e^{x-\theta_1}-e^{x-\theta_2}}{(e^{x-\theta_2})^2}
+			\end{align*}
+			assuming fixed \(\theta\) such that \(\theta_2>\theta_1\)
+			we can see that the function is increasing on \(x\)
+			and conclude that the family has MLR.
+			
+			\part
+			Using the CDF in lieu of the integral (as that would be significantly more difficult),
+			\begin{align*}
+				\alpha &=  1- \frac{1}{1+e^c} \\
+				0.2 &=  1- \frac{1}{1+e^c} \\
+				c &\approx 1.386 
+			\end{align*}
+			Then evaluating the CDF over \(H_1\) using this \(c\) we get
+			\[\frac{e^{0.386}}{1+e^{0.386}} \approx 0.59532\]
+			
+			\part
+			The above satisfies the assumptions of the Karlin-Rubin Theorem
+			and thus the test is UMP for the corresponding size.
+			
+		\end{parts}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -373,11 +451,110 @@
 		is a test of size $\alpha$. Show that the test can be derived as an LRT.
 		\part Show that the test in part (a) is a UMP test
 		\part If $\sigma^2$ is unknown, show that the test that rejects $H_0$ when
-		$$\bar{X} > \theta_0 + z_{n-1,\alpha} \sqrt{S^2/n}$$ is a test of size $\alpha$. Show that the test can be derived as an LRT.
+		$$\bar{X} > \theta_0 + t_{n-1,\alpha} \sqrt{S^2/n}$$ is a test of size $\alpha$. Show that the test can be derived as an LRT.
 	\end{parts}
 	
 	\begin{solution}
-		Here is the next solution
+		\begin{parts}
+			\part
+			First, we construct an LRT,
+			\begin{align*}
+				\lambda(x)
+				&= \frac{
+					(2\pi\sigma^2)^{-n/2} e^{\sum_{i=1}^n (x_i-\theta_0)^2/2\sigma^2}
+					}{
+					(2\pi\sigma^2)^{-n/2} e^{\sum_{i=1}^n (x_i-\bar{x})^2/2\sigma^2}
+					} \\
+				&= \exp\left\{ \sum_{i=1}^n (x_i-\theta_0)^2/2\sigma^2 - \sum_{i=1}^n (x_i-\bar{x})^2/2\sigma^2 \right\} \\
+				&= \exp\left\{ \frac{1}{2\sigma^2} \sum_{i=1}^n (x_i-\theta_0)^2 - (x_i-\bar{x})^2 \right\} \\
+				&= \exp\left\{ \frac{1}{2\sigma^2} \sum_{i=1}^n x_i^2-2\theta_0x_i+\theta_0^2 -x_i^2 + 2\bar{x}x_i -\bar{x}^2 \right\} \\
+				&= \exp\left\{ \frac{n}{2\sigma^2} \left( \theta_0^2 - 2\theta_0\bar{x} + 2\bar{x}^2 - \bar{x}^2 \right) \right\} \\
+				&= \exp\left\{ \frac{n}{2\sigma^2} \left( \theta_0^2 - 2\theta_0\bar{x} + \bar{x}^2 \right) \right\} \\
+				&= \exp\left\{ \frac{n}{2\sigma^2} \left( \theta_0 - \bar{x} \right)^2 \right\}
+				:< c
+			\end{align*}
+			for some \(c\).
+			Solving for \(\bar{x}\),
+			\begin{align*}
+				\exp\left\{ \frac{n}{2\sigma^2} \left( \theta_0 - \bar{x} \right)^2 \right\} &< c \\
+				\frac{n}{2\sigma^2} \left( \theta_0 - \bar{x} \right)^2 &< \ln(c) \\
+				\left( \theta_0 - \bar{x} \right)^2 &< \frac{2\sigma^2\ln(c)}{n} \\
+				\theta_0 - \bar{x} &< \sqrt{\frac{2\sigma^2\ln(c)}{n}} \\
+				 \bar{x} &> \theta_0 - \sqrt{\frac{2\sigma^2\ln(c)}{n}} .
+			\end{align*}
+			Then,
+			\begin{align*}
+				\alpha
+				&= P\left( \bar{X}> \theta_0 - \sqrt{\frac{2\sigma^2\ln(c)}{n}} \right) \\
+				&= P\left( \bar{X} - \theta_0 >  - \sqrt{\frac{2\sigma^2\ln(c)}{n}} \right) \\
+				&= P\left( (\bar{X} - \theta_0)\sqrt{n} >  - \sqrt{2\sigma^2\ln(c)} \right) \\
+				&= P\left( \frac{(\bar{X} - \theta_0)\sqrt{n}}{\sqrt{\sigma^2}} >  - \sqrt{2\ln(c)} \right) \\
+				&= P\left( \frac{(\bar{X} - \theta_0)}{\sigma/\sqrt{n}} >  c^\prime \right)
+			\end{align*}
+			The left hand side of this inequality is equivalent to the \(z\) value of a standard normal distribution,
+			by setting this \(c^\prime\) as such we can achieve the rejection region stated in the problem,
+			\begin{align*}
+				P\left( \frac{(\bar{X} - \theta_0)}{\sigma/\sqrt{n}} > z_\alpha \right)
+				= P\left( {(\bar{X} - \theta_0)} > z_\alpha\sigma/\sqrt{n} \right)
+				= P\left( {\bar{X} } > \theta_0+ z_\alpha\sqrt{\sigma^2/n} \right)
+			\end{align*}
+						
+			\part
+			First we check for an MLR,
+			\begin{align*}
+				\frac{f(x|\theta_2)}{f(x|\theta_1)}
+				&= \frac{
+					(2\pi\sigma^2)^{-n/2} e^{(x-\theta_2)^2/2\sigma^2}
+				}{
+					(2\pi\sigma^2)^{-n/2} e^{(x-\theta_1)^2/2\sigma^2}
+				} \\
+				&= \exp\left\{ \frac{1}{2\sigma^2} \left((x-\theta_1)^2 - (x-\theta_2)^2 \right)\right\} \\
+				&= \exp\left\{ \frac{1}{2\sigma^2} \left(\theta_1^2 - 2x\theta_1 - \theta_2^2 + 2x\theta_2 \right)\right\} \\
+				&= \exp\left\{ \frac{1}{2\sigma^2} \left(\theta_1^2 - \theta_2^2 + 2x(\theta_2 - \theta_1) \right)\right\}
+			\end{align*}
+			on inspection we can see that when \(\theta_2>\theta_1\)
+			the \(2x(\theta_2 - \theta_1)\) is increasing in \(x\)
+			and by extension, this entire function is increasing in \(x\),
+			and we conclude that the function has an MLR.
+			
+			This meets the requirement for the Karlin-Rubin Theorem,
+			thus we further conclude that the test in part a
+			is a UMP level \(\alpha\) test for the provided hypotheses.
+			
+			\part
+			It is intuitive that when the \(\sigma^2\) is unknown that the test would look very similar to the previous
+			test with a \(z\) distribution, but in this case replaced with a \(t\).
+			
+			Like in part (a) we wish to use MLE's established for normal distributions shown in other parts of the class.
+			{\footnotesize\begin{align*} 
+				\lambda(x)
+				= \frac{
+					(2\pi\sigma^2)^{-n/2} e^{\sum_{i=1}^n (x_i-\theta_0)^2/2\sigma^2}
+				}{
+					(2\pi S^2)^{-n/2} e^{\sum_{i=1}^n (x_i-\bar{x})^2/2S^2}
+				} 
+				= \frac{
+					(\sigma^2)^{-n/2} e^{\sum_{i=1}^n (x_i-\theta_0)^2/2\sigma^2}
+				}{
+					(S^2)^{-n/2} e^{\sum_{i=1}^n (x_i-\bar{x})^2/2S^2}
+				} 
+				= \left( \frac{S^2}{\sigma^2} \right)^{n/2} :< c
+			\end{align*}}
+			for some \(c\).
+			
+			\begin{align*}
+				\lambda(x) = \left( \frac{S^2}{\sigma^2} \right)^{n/2} &< c \\
+				\frac{S^2}{\sigma^2} &< c^{n/2} \\
+				\sigma^2 &> \frac{S^2}{c^{n/2}} \\
+				\sigma &> \sqrt{\frac{S^2}{c^{n/2}} } \\
+				\frac{1}{n}\sum_{i=1}^n (x_i - \sigma_0) &> \sqrt{\frac{S^2}{c^{n/2}} } \\
+				\frac{1}{n}\sum_{i=1}^n (x_i) &> \sigma_0 + \sqrt{\frac{S^2}{c^{n/2}} } \\
+				\bar{x} &> \sigma_0 + \sqrt{\frac{S^2}{c^{n/2}} } \\
+			\end{align*}
+			
+			
+			\textcolor{red}{.. Ran out of steam at this point and was already behind on turning it in...}
+		\end{parts}
 	\end{solution}
 
 \end{questions}
