@@ -1,1 +1,65 @@
-%\section{Hypothesis Testing}
+\section{Hypothesis Testing}
+	\begin{tabular}{ccc}
+		\((H_0)\) is... &  True & is False \\
+		Accept \((H_0)\) & TN \((1-\alpha)\) & Type II \((\beta)\) \\
+		Reject \((H_0)\) & Type I \((\alpha)\) & TP \((1-\beta)\)
+	\end{tabular}
+
+	\subsection{Finding Tests}
+		\subsubsection{Likelihood Ratio Test}
+			\[ \lambda(\underset{\sim}{x}) = \frac{\sup_{\Theta_0}L(\theta|\underset{\sim}{x})}{\sup_{\Theta}L(\theta|\underset{\sim}{x})}\]
+			Given some constant \(c\) we reject \(H_0\) if \(\lambda<c\) and accept if \(\lambda\geq c\).
+			
+		\subsubsection{Union-Intersection Test}
+			Wherein 
+			\[H_0:\theta\in\bigcap_{\gamma\in\Gamma}\Theta_\gamma\]
+			the rejection region is
+			\[\bigcup_{\gamma\in\Gamma} \left\{T_\gamma(\mathbf{x})\in R_\gamma\right\}
+			= \bigcup_{\gamma\in\Gamma} \left\{T_\gamma(\mathbf{x}) > c\right\} \]
+			\[= \left\{\mathbf{x}:\underset{\gamma\in\Gamma}{\sup}T_\gamma(\mathbf{x})>c\right\} \]
+		
+		%\subsubsection{Intersection-Union Test}
+		
+		
+	\subsection{Evaluating Tests}
+		\subsubsection{Power Function}
+			\[\beta(\theta) = P_\theta(\mathbf{X}\in R)\]
+		\textbf{Size} \(\alpha\) test \(\sum_{\theta\in\Theta_0} \beta(\theta) = \alpha\)
+		
+		\textbf{Level} \(\alpha\) test \(\sum_{\theta\in\Theta_0} \beta(\theta) \leq \alpha\)
+			
+		\subsubsection{Neyman-Pearson Lemma}
+			(1) \(\mathbf{x}\in R\) if \(f(x|\theta_1) > k\, f(x|\theta_0) \),	\\
+			(1) \(\mathbf{x}\in R^c\) if \(f(x|\theta_1) > k\, f(x|\theta_0) \)	\\
+			(2) for some \(k\geq0\) and \(\alpha=P_{\theta_0}(X\in R)\). Then;
+			\begin{enumerate}
+				\item Any test satisfying 1 and 2, is a UMP level \(\alpha\) test
+				\item If a test exists satisfying 1 and 2 with \(k>0\),
+					then every UMP level \(\alpha\) test is a size \(\alpha\) test
+					and every UMP level \(\alpha\) test satisfies 1.
+			\end{enumerate}
+			
+			Given a \(T\) sufficient statistic for \(\theta\)
+			then, \(t\in S\) if \(g(t|\theta_1) > k\, g(t|\theta_0)\)
+			and \(S^c\) if \(<\).
+		
+		\subsubsection{Monotone Likelihood Ratio}
+		A real value parameter \(\theta\) has an MLR if 
+		for every \(\theta_2>\theta_1\),
+		\(g(t|\theta_2)/g(t|\theta_1)\)
+		is a monotone function over \(t\).
+		
+		\textit{Note:}
+		A function also has an MLR if it belongs to an exponential family and the 
+		\(w(\theta)\) is a non-decreasing function.
+		
+		\subsubsection{Karlin-Rubin Theorem}
+		Given a \(H_0:\theta\leq\theta_0\) v. \(H_1:\theta>\theta_0\);
+		
+		and a \(T\) sufficient statistic for \(\theta\) has an MLR;
+		
+		then for any \(t_0\) the test that rejects \(H_0\)
+		iff \(T>t_0\) is a UMP level \(\alpha\) test, 
+		where \(\alpha = P_{\theta_0}(T>t_0)\)
+		
+		
