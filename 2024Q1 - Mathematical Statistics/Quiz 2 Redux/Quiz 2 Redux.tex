@@ -1,0 +1,103 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+\newcommand\chapter{ 2 }
+%\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+%\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{  } % This is the name of the course 
+\newcommand{\assignmentname}{Quiz \chapter Redux} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname } & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+	\question[40] 
+	Let \(X_1,X_2,\ldots,X_5\) be a random sample from a \(Ber(p)\) distribution.
+	Let \(H_0:p = \frac{1}{2}\) and \(H_1:p = \frac{1}{4}\).
+	\begin{parts}
+		\part[15]
+		Show that the test \(Y=\sum_{i=1}^{5}X_i\leq1\) is UMP of size \(\alpha=\frac{3}{16}\).
+			
+		\part[15]
+		Give the expression for the \textit{power function} of the test in part a.
+		What is the \textit{power} of this test?
+		
+		\part[10]
+		Is the test in part a) UMP level \(\alpha\) for the hypotheses \(H_0p\geq\frac{1}{2}\)
+		versus \(H_1:p<\frac{1}{2}\)? Justify your answer.
+		
+	\end{parts}
+	\begin{solution}
+		\begin{parts}
+			\part
+			First, we note that the sum of Bernoulli trials is a binomial distribution. Then,
+			
+			\begin{align*}
+				\beta(\theta)
+				= P_\theta(Y\leq1)
+				&= \binom{5}{0} (1-p)^5 + \binom{5}{1} p(1-p)^4 \\
+				&= (1-p)^5 + 5 p(1-p)^4 \\
+				&= (1-p)^4 (1+4p),
+			\end{align*}
+			in general. And in this case,
+			\begin{align*}
+				\beta(\theta=p_0)
+				= \left(\frac{1}{4}\right)^4(3)
+				= \frac{3}{16}
+			\end{align*}
+			and thus we conclude that \(Y\) is a test of size \(\alpha=\frac{3}{16}\)
+			
+			\part
+			
+			
+			\part
+			
+			
+		\end{parts}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\end{questions}
+\end{document}
