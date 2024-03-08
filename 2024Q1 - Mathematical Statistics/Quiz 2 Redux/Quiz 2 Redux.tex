@@ -65,7 +65,7 @@
 		What is the \textit{power} of this test?
 		
 		\part[10]
-		Is the test in part a) UMP level \(\alpha\) for the hypotheses \(H_0p\geq\frac{1}{2}\)
+		Is the test in part a) UMP level \(\alpha\) for the hypotheses \(H_0:p\geq\frac{1}{2}\)
 		versus \(H_1:p<\frac{1}{2}\)? Justify your answer.
 		
 	\end{parts}
@@ -73,41 +73,87 @@
 		\begin{parts}
 			\part
 			First, we note that the sum of Bernoulli trials is a binomial distribution. Then,
-			
+			%		
 			\begin{align*}
-				\beta(\theta)
-				= P_\theta(Y\leq1)
+				\alpha
+				= P_{\theta_0}(Y\leq1)
 				&= \binom{5}{0} (1-p)^5 + \binom{5}{1} p(1-p)^4 \\
 				&= (1-p)^5 + 5 p(1-p)^4 \\
 				&= (1-p)^4 (1+4p),
 			\end{align*}
+			%
 			in general. And in this case,
+			%
 			\begin{align*}
-				\beta(\theta=p_0)
-				= \left(\frac{1}{4}\right)^4(3)
+				P_{}\left(Y\leq1\left|p=\frac{1}{2}\right.\right)
+				= \left(\frac{1}{2}\right)^4(3)
 				= \frac{3}{16}
 			\end{align*}
+			%
 			and thus we conclude that \(Y\) is a test of size \(\alpha=\frac{3}{16}\)
-			
-			Next, we need to prove that it is also UMP.
-			
-			
+			Next, we look at the likelihood ratio;
+			%
+			\begin{align*}
+				\prod_{i=1}^{5}\frac{\left(\frac{1}{4}\right)^{x_i} \left(\frac{3}{4}\right)^{1-x_i}}{\left(\frac{1}{2}\right)^{x_i} \left(\frac{1}{2}\right)^{1-x_i}} &\leq k  \\
+				%
+				\prod_{i=1}^{5}\frac{\left(\frac{1}{4}\right)^{x_i} \left(\frac{3}{4}\right)^{-x_i} \left(\frac{3}{4}\right)^{}}{ \left(\frac{1}{2}\right)^{}} &\leq k  \\
+				%
+				\prod_{i=1}^{5} \left(\frac{1}{3}\right)^{x_i} \left(\frac{3}{2}\right)^{} &\leq k  \\
+				%
+				\prod_{i=1}^{5} \left(\frac{1}{3}\right)^{x_i} &< k \left(\frac{2}{3}\right)^{5} \\
+				%
+				\ln\left(\frac{1}{3}\right)\sum_{i=1}^{5}x_i &< \ln k + 5\ln\left(\frac{2}{3}\right)^{} \\
+				%
+				\sum_{i=1}^{5}x_i &\geq k^*
+			\end{align*}
+			%
+			We showed in the first part that this \(k^*=1\) for a level \(\alpha\) test.
+			And by the Neyman-Pearson Lemma we conclude that \(Y=\sum_{i=1}^{5}X_i\leq1\) is UMP for this level.
 			
 			\part
 			The power function is,
 			\begin{align*}
 				\beta(\theta)
-				= 1 - P_\theta(Y\leq k)
-				= \sum_{}^{} \binom{5}{y} \theta^{y} (1-\theta)^{5-y}
+				= P_{\theta_1}(Y> k)
+				= 1 - P_{\theta_1}(Y\leq k)
+				= 1 - \left(\frac{3}{4}\right)^4 (2)
+				= 1 - \left(\frac{3}{4}\right)^4 (2)
 			\end{align*}
-			
-			Need to specify the values of y
-			
-			need to compute the value of the power
+			%
+			In this case we can leverage the general expression in part a to help calculate,
+			the power of this test is;
+			%
+			\begin{align*}
+				1 - \sum_{y=0}^{1} \binom{5}{y} (1/4)^{y} (3/4)^{5-y}
+				%
+				&= 1 - (3/4)^{4} (2) \\
+				%
+				&= 1 - \frac{3^4}{2^7} \\
+				&= 1 - \frac{81}{128} \\
+				&= \frac{47}{128}
+			\end{align*}
 			
 			\part
 			
-			Can use Karlin-Ruben; but will need to demonstrate the MLR property.
+			Using the Karlin-Rubin theorem, given that \(Y\) is sufficient for \(p\) then if it has an MLR
+			we can conclude that this test is UMP for the new set of hypotheses as well.
+			\begin{align*}
+				\frac{\mathcal{L}(\theta_2|x)}{\mathcal{L}(\theta_1|x)}
+				%
+				&= \prod_{i=1}^{5}\frac{\left(\theta_2\right)^{x_i} \left(1-\theta_2\right)^{1-x_i}}{\left(\theta_1\right)^{x_i} \left(1-\theta_1\right)^{1-x_i}} \\
+				%
+				&= \frac{\left(\theta_2\right)^{\sum_{i=1}^{5} x_i} \left(1-\theta_2\right)^{\sum_{i=1}^{5}(1-x_i)}} {\left(\theta_1\right)^{\sum_{i=1}^{5}x_i} \left(1-\theta_1\right)^{\sum_{i=1}^{5}(1-x_i)}} \\
+				%
+				&= \ln(\theta_2){\sum_{i=1}^{5} x_i} + \ln\left(1-\theta_2\right){\sum_{i=1}^{5}(1-x_i)} \\
+				&\quad- \ln\left(\theta_1\right){\sum_{i=1}^{5}x_i} - \ln\left(1-\theta_1\right){\sum_{i=1}^{5}(1-x_i)} \\
+				%
+				&= \ln\left(\frac{\theta_2}{\theta_1}\right){\sum_{i=1}^{5} x_i} + \ln\left(\frac{1-\theta_2}{1-\theta_1}\right){\sum_{i=1}^{5}(1-x_i)} \\
+				%
+				&= {\sum_{i=1}^{5}x_i} \left(\ln\frac{\theta_2}{\theta_1} - \ln\left(\frac{1-\theta_2}{1-\theta_1}\right)\right) + 5\ln\left(\frac{1-\theta_2}{1-\theta_1}\right) \\
+			\end{align*}
+			When \(\theta_2>\theta_1\) then \(\ln(\theta_2/\theta_1) > 0\) and \(\ln(1-\theta_2\ /\ 1-\theta_1) < 0\)
+			thus this function has an MLR. And further we conclude that this test is also UMP level \(\alpha\) 
+			for the hypotheses \(H_0:p\geq\frac{1}{2}\)	versus \(H_1:p<\frac{1}{2}\).
 			
 		\end{parts}
 	\end{solution}
