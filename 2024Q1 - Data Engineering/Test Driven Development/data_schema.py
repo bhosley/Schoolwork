@@ -2,10 +2,6 @@ import dataclasses
 from dataclasses import field 
 import datetime
 
-def positive_int_validator(value):
-    if value <= 0:
-        raise ValueError("Value must be a positive integer")
-
 @dataclasses.dataclass
 class Agent:
     agentType: str
