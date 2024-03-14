@@ -1,0 +1,135 @@
+\documentclass[journal]{IEEEtran}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{./Images/}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{tikz}
+\usetikzlibrary{matrix,shapes,positioning,arrows,backgrounds}
+
+% Drafting Utility Package
+\usepackage{comment}
+\usepackage{blindtext}
+
+% Title
+\title{Working Title for HMARL League Play}
+
+\author{Brandon Hosley, Capt, \textit{AFIT}%
+	\thanks{Manuscript received \today%
+		%		; revised Month DD, YYYY.
+}}
+
+%\keywords{class imbalance, data-level methods, algorithm-level methods, hybrid methods, machine learning, performance evaluation}
+
+% Document
+\begin{document}
+	
+	\maketitle
+	
+	
+	% Abstract
+	\begin{abstract}
+		
+		In the realm of artificial intelligence, the domain of board games, particularly chess, 
+		has long served as a benchmark for evaluating the capabilities of computational models. 
+		Recent advancements in reinforcement learning (RL) have enabled the development of 
+		agents capable of achieving superhuman performance. 
+		However, the majority of these models rely on a self-play mechanism 
+		that may limit their strategic diversity and adaptability. 
+		This study introduces a novel approach by training multiple agents with distinct 
+		play styles to compete in a league format, akin to diverse ecosystems in natural competition. 
+		Through the implementation of reinforcement learning algorithms, 
+		we aim to investigate whether a heterogeneous pool of agents can enhance strategic depth 
+		and performance compared to traditional self-play paradigms and if it simulates the benefits of 
+		training against specifically tailored adversarial agents. 
+		\begin{comment}
+		We developed several agents, each with a unique play style—aggressive, defensive, positional, and tactical—trained within a multi-agent reinforcement learning framework. 
+		The performance of these agents was evaluated based on their win rates, Elo ratings, Glicko ratings, and their ability to adapt and counter a variety of opponent strategies. 
+		Our results indicate that the inclusion of diverse play styles not only elevates the overall performance of individual agents in league play but also encourages the emergence of innovative strategies and adaptability.
+		\end{comment}
+		This approach mirrors the complexity of human competition more closely than the conventional self-play model and suggests that diversity in training partners within reinforcement learning environments can significantly impact the development of artificial intelligence in competitive domains.
+		
+	\end{abstract}
+	
+	% Introduction
+	\section{Introduction}
+	\label{sec:introduction}
+	
+	\Blindtext
+	\begin{comment}
+		content...
+	\end{comment}
+
+	
+	% Literature Review
+	\section{Related Work}
+	\label{sec:related_work}
+	
+	\Blindtext
+	\begin{comment}
+		content...
+	\end{comment}
+	
+
+	% Dataset
+	\section{Datasets}
+	\label{sec:dataset}
+	
+	\Blindtext
+	\begin{comment}
+		content...
+	\end{comment}
+
+	
+	% Methodology
+	\section{Methodology}
+	\label{sec:methodology}
+	
+	\Blindtext
+	\begin{comment}
+		content...
+	\end{comment}
+	
+	\subsection{Experiments}
+	\Blindtext
+
+	
+	% Results and Discussion
+	\section{Results and Discussion}
+	\label{sec:results_discussion}
+	
+	\Blindtext
+	\begin{comment}
+		content...
+	\end{comment}
+	
+	
+	% Conclusion
+	\section{Conclusion}
+	\label{sec:conclusion}
+	
+	\Blindtext
+	\begin{comment}
+		content...
+	\end{comment}
+	
+	
+	\subsection{Future Work}
+	
+	\begin{comment}
+		content...
+	\end{comment}
+	
+		
+	% References
+	\label{sec:references}
+	\bibliographystyle{IEEEtran}
+	\bibliography{Project.bib}
+	
+\end{document}
