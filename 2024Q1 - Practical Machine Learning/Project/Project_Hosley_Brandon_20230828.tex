@@ -60,10 +60,29 @@
 	% Introduction
 	\section{Introduction}
 	\label{sec:introduction}
+	Chess has long served as a bench-mark challenge for artificial intelligence (AI),
+	with its non-trivial strategy and vast number of state spaces providing a rich domain for exploring 
+	computational intelligence, decision-making, and learning algorithms. 
+	The success of AI in chess, culminating in programs capable of defeating human world champions, 
+	is largely attributed to advances in machine learning, particularly reinforcement learning (RL), 
+	where agents learn optimal behaviors through interactions with their environment. 
+	Traditionally, the pinnacle of AI chess performance has been achieved through the self-play methodology, 
+	where a single agent improves by playing against versions of itself, gradually refining its strategy based on the outcomes of these games.
 	
-	\Blindtext
 	\begin{comment}
-		content...
+		
+		While self-play has led to significant advancements, it inherently limits an agent's exposure to the diverse range of strategies 
+		encountered in real-world play, potentially stunting the agent's ability to adapt to and counter novel strategies. 
+		Recent research in reinforcement learning has begun exploring multi-agent systems and the benefits of diversity in training environments, 
+		suggesting that exposure to a variety of opponents can lead to more robust and adaptable agents. 
+		However, the potential of applying these insights to the domain of chess, 
+		with deliberately diversified play styles during the training phase, remains underexplored.
+		
+		This study seeks to fill this gap by investigating the effects of training multiple chess agents, each with a distinct play style, through reinforcement learning, and evaluating their performance in a league-based self-play architecture. We hypothesize that a diversified training environment will foster the development of agents that are not only proficient in their unique styles but are also more adaptable and capable of handling a wider array of opponent strategies. Such diversity, we posit, may offer a training advantage analogous to or greater than that provided by training against specifically designed adversarial agents.
+		
+		To explore this hypothesis, we employ a range of reinforcement learning algorithms to train a cohort of chess agents, each encouraged to specialize in different strategic approaches to the game. Our methodology involves designing tailored reward functions and training regimes to promote the development of unique play styles, from aggressive to defensive and positional to tactical. We assess the effectiveness of this approach through various metrics, including win rates, ELO ratings, and a novel measure of strategic diversity.
+		
+		The contributions of this research are twofold. Firstly, it advances our understanding of how diversity in training environments affects the development and performance of AI agents in strategic games. Secondly, it offers practical insights into the design of reinforcement learning systems for chess, providing a blueprint for creating more adaptable and strategically diverse AI players. By exploring the intersection of reinforcement learning, multi-agent systems, and game theory, this study paves the way for new avenues in AI research, with implications extending beyond the realm of chess.
 	\end{comment}
 
 	
@@ -129,7 +148,7 @@
 		
 	% References
 	\label{sec:references}
-	\bibliographystyle{IEEEtran}
-	\bibliography{Project.bib}
+	%\bibliographystyle{IEEEtran}
+	%\bibliography{Project.bib}
 	
 \end{document}
