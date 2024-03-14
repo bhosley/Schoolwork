@@ -1,1 +1,88 @@
-%\section{Interval Estimation}
+\section{Interval Estimation}
+
+		\subsubsection{Confidence Coefficient}
+			For an Interval Estimator \([L(x),U(x)]\) of a parameter \(\theta\), 
+			the confidence coefficient is the infimum of the coverage probabilities:
+			$$\inf_\theta P_\theta(\theta\in[L(x),U(x)])$$
+			or \(1-\alpha\)
+
+	\subsection{Finding Interval Estimators}
+		\subsubsection{Theorem 9.2.2}
+			For each $\theta_0 \in\Theta$, let $A(\theta_0)$ be the acceptance region of a level $\alpha$ test of $H_0 : \theta = \theta_0$. For each $\mathbf x\in\mathcal X$, define a set $C(x)$ in the parameter space by
+			$$C(x) = \{\theta_0 : x \in A(\theta_0)\}.$$
+			Then the random set $C(\mathbf X)$ is a $1-\alpha$ confidence set. Conversely, let $C(\mathbf X)$ be a $1-\alpha$ confidence set. For any $\theta_0\in\Theta$, define
+			$$A(\theta_0) = \{\mathbf x: \theta_0\in C(\mathbf x)\}.$$
+			Then $A(\theta_0)$ is an acceptance region of a level $\alpha$ test of $H_0:\theta = \theta_0$.
+			
+		\subsubsection{Pivots}
+			Random variable whose distribution does not depend on the parameter $\theta$ 
+			and for which the coverage probability can be expressed in terms of.
+		
+			$Q(\underset{\sim}{X},\theta) = Q(\{x_1,\ldots,x_n\},\theta)$
+			is a pivotal quantity (or pivot) if $\underset{\sim}{X} \sim F(\underset{\sim}{x}|\theta)$, 
+			then $Q(\underset{\sim}{X},\theta)$ has the same distribution $\forall\,\theta$.
+		
+			\begin{tabular}{ccc}
+				Form of pdf & Type of pdf & Pivotal \\
+				\hline
+				\(f(x-\mu)\) & Location & \(\bar X-\mu\) \\
+				\(\frac{1}{\sigma}f(\frac{x}{\sigma})\) & Scale & \(\frac{\bar X}{\sigma}\) \\
+				\(\frac{1}{\sigma}f(\frac{x-\mu}{\sigma})\) & Loc–scale & \(\frac{\bar{X}-\mu}{S}\)
+			\end{tabular}
+			
+		\subsubsection{Theorem 9.2.12: Pivoting a Continuous CDF}
+			Let $T$ be a statistic with continuous cdf $F_T(t|\theta)$. Let $\alpha_1 + \alpha_2 = \alpha$ with $0 < \alpha < 1$ be fixed values. Suppose that for each $t\in T$ , the functions $\theta_L(t)$ and $\theta_U(t)$ can be defined as follows.
+			\begin{enumerate}
+				\item If $F_T(t|\theta)$ is a decreasing function of $\theta$ for each $t$, define $\theta_L(t)$ and $\theta_U(t)$ by $$F_T(t|\theta_U(t)) = \alpha_1,$$ $$F_T(t|\theta_L(t)) =1-\alpha_2.$$
+				\item If $F_T(t|\theta)$ is an increasing function of $\theta$ for each $t$, define $\theta_L(t)$ and $\theta_U(t)$ by
+			$$F_T(t|\theta_U(t)) =1 -\alpha_2,$$ $$F_T(t|\theta_L(t)) = \alpha_1.$$
+			\end{enumerate}
+			Then the random interval $[\theta_L(T), \theta_U(T)]$ is a $1 -\alpha$ confidence interval for $\theta$.
+			
+		\subsubsection{Theorem 9.2.14: Pivoting a Discrete CDF}
+			Let $T$ be a statistic with discrete cdf $F_T(t|\theta)=P(T\leq t|\theta)$. Let $\alpha_1 + \alpha_2 = \alpha$ with $0 < \alpha < 1$ be fixed values. Suppose that for each $t\in T$, $\theta_L(t)$ and $\theta_U(t)$ can be defined as follows.
+			\begin{enumerate}
+				\item If $F_T(t|\theta)$ is a decreasing function of $\theta$ for each $t$, define $\theta_L(t)$ and $\theta_U(t)$ by $$P(T\leq t|\theta_U(t)) = \alpha_1,$$ $$P(T\geq t|\theta_L(t)) =\alpha_2.$$
+				\item If $F_T(t|\theta)$ is an increasing function of $\theta$ for each $t$, define $\theta_L(t)$ and $\theta_U(t)$ by
+				$$P(T\geq t|\theta_U(t))=\alpha_1,$$ $$P(T\leq t|\theta_L(t))=\alpha_2.$$				
+			\end{enumerate}
+			Then the random interval $[\theta_L(T), \theta_U(T)]$ is a $1-\alpha$ confidence interval for $\theta$.
+			
+			
+	\subsection{Evaluating Interval Estimators}
+		\subsubsection{Theorem 9.3.2}
+			Let $f(x)$ be a Unimodal pdf. If the interval $[a,b]$ satisfies:
+			\begin{enumerate}
+				\item $\int_{a}^{b}f(x)\,d(x) = 1-\alpha$
+				\item $f(a) = f(b) >0$
+				\item $a\leq x^*\leq b$ where $x^*$ is a mode of $f(x)$
+			\end{enumerate}
+			Then $[a,b]$ is the shortest among all intervals satisfying (1).
+			
+			*For symmetric distributions \(\alpha/2\) is always the optimal split.
+			
+		\subsubsection{False Coverage}
+			The probability of false coverage is the function of $\theta$ and $\theta^\prime$ defined by
+			\[P\theta (\theta^\prime\in C(X)),\ \theta\ne \theta^\prime,\text{ if }C(X) = [L(X),U(X)],\]
+			\[P\theta (\theta^\prime\in C(X)),\ \theta^\prime < \theta,\text{ if }C(X) = [L(X), \infty), \]
+			\[P\theta (\theta^\prime\in C(X)),\ \theta^\prime > \theta,\text{ if }C(X) = (-\infty, U(X)],\]
+
+		\subsubsection{Theorem 9.3.5}
+			Let $x\sim f(x|\theta)$, where $\theta$ is a real-valued parameter. For each $\theta_0\in\Theta$, let $A^*(\theta_0)$ be the [[Uniformly Most Powerful Test|UMP]] level $\alpha$  acceptance region of a test of  $H_0 : \theta = \theta_0$ versus $H_1: \theta > \theta_0$. Let $C^*(x)$ be the $1-\alpha$ confidence set formed by inverting the UMP
+			acceptance regions. Then for any other $1 - \alpha$ confidence set $C$,
+			$$P_\theta(\theta^\prime\in C^*(X)) \leq P_\theta(\theta^\prime\in C(X)) \text{ for all }\theta^\prime < \theta.$$
+			
+		\subsubsection{Def 9.3.7}
+			A $1-\alpha$ confidence set $C(\underset{\sim}{x})$ is unbiased if 
+			$P_\theta(\theta^\prime\in C(\underset{\sim}{x}))\leq1-\alpha\ \forall\ \theta\neq\theta^\prime$.
+			(probably of false coverage is no more than min prob of true coverage)
+			
+			\textbf{Expected Length:}
+			Sum/integral of the probability of false coverage over all false values of the parameter
+			$E_{\theta^*}(\text{length }C(\underset{\sim}{x})) = \int_{\theta\neq\theta^\prime}P_{\theta^*}(\theta\in C(\underset{\sim}{x}))\, d\theta$
+			
+			
+
+			
+			
+			
