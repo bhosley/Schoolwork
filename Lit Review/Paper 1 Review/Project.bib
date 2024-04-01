@@ -1,0 +1,241 @@
+@online{balduzzi2019,
+  title = {Open-Ended {{Learning}} in {{Symmetric Zero-sum Games}}},
+  author = {Balduzzi, David and Garnelo, Marta and Bachrach, Yoram and Czarnecki, Wojciech M. and Perolat, Julien and Jaderberg, Max and Graepel, Thore},
+  date = {2019-05-13},
+  eprint = {1901.08106},
+  eprinttype = {arxiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1901.08106},
+  url = {http://arxiv.org/abs/1901.08106},
+  urldate = {2024-03-15},
+  abstract = {Zero-sum games such as chess and poker are, abstractly, functions that evaluate pairs of agents, for example labeling them `winner' and `loser'. If the game is approximately transitive, then self-play generates sequences of agents of increasing strength. However, nontransitive games, such as rock-paper-scissors, can exhibit strategic cycles, and there is no longer a clear objective -- we want agents to increase in strength, but against whom is unclear. In this paper, we introduce a geometric framework for formulating agent objectives in zero-sum games, in order to construct adaptive sequences of objectives that yield open-ended learning. The framework allows us to reason about population performance in nontransitive games, and enables the development of a new algorithm (rectified Nash response, PSRO\_rN) that uses game-theoretic niching to construct diverse populations of effective agents, producing a stronger set of agents than existing algorithms. We apply PSRO\_rN to two highly nontransitive resource allocation games and find that PSRO\_rN consistently outperforms the existing alternatives.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Computer Science and Game Theory,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/JIHZMJL2/Balduzzi et al. - 2019 - Open-ended Learning in Symmetric Zero-sum Games.pdf;/Users/brandonhosley/Zotero/storage/NWLIW2GL/1901.html}
+}
+
+@article{fawzi2022,
+  title = {Discovering Faster Matrix Multiplication Algorithms with Reinforcement Learning},
+  author = {Fawzi, Alhussein and Balog, Matej and Huang, Aja and Hubert, Thomas and Romera-Paredes, Bernardino and Barekatain, Mohammadamin and Novikov, Alexander and R. Ruiz, Francisco J. and Schrittwieser, Julian and Swirszcz, Grzegorz and Silver, David and Hassabis, Demis and Kohli, Pushmeet},
+  date = {2022-10},
+  journaltitle = {Nature},
+  volume = {610},
+  number = {7930},
+  pages = {47--53},
+  publisher = {Nature Publishing Group},
+  issn = {1476-4687},
+  doi = {10.1038/s41586-022-05172-4},
+  url = {https://www.nature.com/articles/s41586-022-05172-4},
+  urldate = {2024-03-15},
+  abstract = {Improving the efficiency of algorithms for fundamental computations can have a widespread impact, as it can affect the overall speed of a large amount of computations. Matrix multiplication is one such primitive task, occurring in many systems—from neural networks to scientific computing routines. The automatic discovery of algorithms using machine learning offers the prospect of reaching beyond human intuition and outperforming the current best human-designed algorithms. However, automating the algorithm discovery procedure is intricate, as the space of possible algorithms is enormous. Here we report a deep reinforcement learning approach based on AlphaZero1 for discovering efficient and provably correct algorithms for the multiplication of arbitrary matrices. Our agent, AlphaTensor, is trained to play a single-player game where the objective is finding tensor decompositions within a finite factor space. AlphaTensor discovered algorithms that outperform the state-of-the-art complexity for many matrix sizes. Particularly relevant is the case of 4\,×\,4 matrices in a finite field, where AlphaTensor’s algorithm improves on Strassen’s two-level algorithm for the first time, to our knowledge, since its discovery 50 years ago2. We further showcase the flexibility of AlphaTensor through different use-cases: algorithms with state-of-the-art complexity for structured matrix multiplication and improved practical efficiency by optimizing matrix multiplication for runtime on specific hardware. Our results highlight AlphaTensor’s ability to accelerate the process of algorithmic discovery on a range of problems, and to optimize for different criteria.},
+  langid = {english},
+  keywords = {Applied mathematics,Computer science},
+  file = {/Users/brandonhosley/Zotero/storage/3E6LV4SX/Fawzi et al. - 2022 - Discovering faster matrix multiplication algorithm.pdf}
+}
+
+@online{mathieu2023,
+  title = {{{AlphaStar Unplugged}}: {{Large-Scale Offline Reinforcement Learning}}},
+  shorttitle = {{{AlphaStar Unplugged}}},
+  author = {Mathieu, Michaël and Ozair, Sherjil and Srinivasan, Srivatsan and Gulcehre, Caglar and Zhang, Shangtong and Jiang, Ray and Paine, Tom Le and Powell, Richard and Żołna, Konrad and Schrittwieser, Julian and Choi, David and Georgiev, Petko and Toyama, Daniel and Huang, Aja and Ring, Roman and Babuschkin, Igor and Ewalds, Timo and Bordbar, Mahyar and Henderson, Sarah and Colmenarejo, Sergio Gómez and family=Oord, given=Aäron, prefix=van den, useprefix=false and Czarnecki, Wojciech Marian and family=Freitas, given=Nando, prefix=de, useprefix=true and Vinyals, Oriol},
+  date = {2023-08-07},
+  eprint = {2308.03526},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  url = {http://arxiv.org/abs/2308.03526},
+  urldate = {2024-01-22},
+  abstract = {StarCraft II is one of the most challenging simulated reinforcement learning environments; it is partially observable, stochastic, multi-agent, and mastering StarCraft II requires strategic planning over long time horizons with real-time low-level execution. It also has an active professional competitive scene. StarCraft II is uniquely suited for advancing offline RL algorithms, both because of its challenging nature and because Blizzard has released a massive dataset of millions of StarCraft II games played by human players. This paper leverages that and establishes a benchmark, called AlphaStar Unplugged, introducing unprecedented challenges for offline reinforcement learning. We define a dataset (a subset of Blizzard's release), tools standardizing an API for machine learning methods, and an evaluation protocol. We also present baseline agents, including behavior cloning, offline variants of actor-critic and MuZero. We improve the state of the art of agents using only offline data, and we achieve 90\% win rate against previously published AlphaStar behavior cloning agent.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/8YZYHT7G/Mathieu et al_2023_AlphaStar Unplugged.pdf;/Users/brandonhosley/Zotero/storage/YT9XV348/2308.html}
+}
+
+@online{mohan2023,
+  title = {Structure in {{Reinforcement Learning}}: {{A Survey}} and {{Open Problems}}},
+  shorttitle = {Structure in {{Reinforcement Learning}}},
+  author = {Mohan, Aditya and Zhang, Amy and Lindauer, Marius},
+  date = {2023-08-09},
+  eprint = {2306.16021},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2306.16021},
+  url = {http://arxiv.org/abs/2306.16021},
+  urldate = {2024-01-26},
+  abstract = {Reinforcement Learning (RL), bolstered by the expressive capabilities of Deep Neural Networks (DNNs) for function approximation, has demonstrated considerable success in numerous applications. However, its practicality in addressing various real-world scenarios, characterized by diverse and unpredictable dynamics, noisy signals, and large state and action spaces, remains limited. This limitation stems from issues such as poor data efficiency, limited generalization capabilities, a lack of safety guarantees, and the absence of interpretability, among other factors. To overcome these challenges and improve performance across these crucial metrics, one promising avenue is to incorporate additional structural information about the problem into the RL learning process. Various sub-fields of RL have proposed methods for incorporating such inductive biases. We amalgamate these diverse methodologies under a unified framework, shedding light on the role of structure in the learning problem, and classify these methods into distinct patterns of incorporating structure. By leveraging this comprehensive framework, we provide valuable insights into the challenges of structured RL and lay the groundwork for a design pattern perspective on RL research. This novel perspective paves the way for future advancements and aids in developing more effective and efficient RL algorithms that can potentially handle real-world scenarios better.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/58RITZNG/Mohan et al_2023_Structure in Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/NEWISZEB/2306.html}
+}
+
+@online{openai2019,
+  title = {Dota 2 with {{Large Scale Deep Reinforcement Learning}}},
+  author = {OpenAI and Berner, Christopher and Brockman, Greg and Chan, Brooke and Cheung, Vicki and Debiak, Przemys\l{l}aw and Dennison, Christy and Farhi, David and Fischer, Quirin and Hashme, Shariq and Hesse, Chris and J\'{o}zefowicz, Rafal and Gray, Scott and Olsson, Catherine and Pachocki, Jakub and Petrov, Michael and Pinto, Henrique P. d O. and Raiman, Jonathan and Salimans, Tim and Schlatter, Jeremy and Schneider, Jonas and Sidor, Szymon and Sutskever, Ilya and Tang, Jie and Wolski, Filip and Zhang, Susan},
+  date = {2019-12-13},
+  eprint = {1912.06680},
+  eprinttype = {arxiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1912.06680},
+  url = {http://arxiv.org/abs/1912.06680},
+  urldate = {2024-03-15},
+  abstract = {On April 13th, 2019, OpenAI Five became the first AI system to defeat the world champions at an esports game. The game of Dota 2 presents novel challenges for AI systems such as long time horizons, imperfect information, and complex, continuous state-action spaces, all challenges which will become increasingly central to more capable AI systems. OpenAI Five leveraged existing reinforcement learning techniques, scaled to learn from batches of approximately 2 million frames every 2 seconds. We developed a distributed training system and tools for continual training which allowed us to train OpenAI Five for 10 months. By defeating the Dota 2 world champion (Team OG), OpenAI Five demonstrates that self-play reinforcement learning can achieve superhuman performance on a difficult task.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/GIAX6G7H/OpenAI et al. - 2019 - Dota 2 with Large Scale Deep Reinforcement Learnin.pdf;/Users/brandonhosley/Zotero/storage/HM7FXNK8/1912.html}
+}
+
+@article{perolat2022,
+  title = {Mastering the {{Game}} of {{Stratego}} with {{Model-Free Multiagent Reinforcement Learning}}},
+  author = {Perolat, Julien and family=Vylder, given=Bart, prefix=de, useprefix=true and Hennes, Daniel and Tarassov, Eugene and Strub, Florian and family=Boer, given=Vincent, prefix=de, useprefix=true and Muller, Paul and Connor, Jerome T. and Burch, Neil and Anthony, Thomas and McAleer, Stephen and Elie, Romuald and Cen, Sarah H. and Wang, Zhe and Gruslys, Audrunas and Malysheva, Aleksandra and Khan, Mina and Ozair, Sherjil and Timbers, Finbarr and Pohlen, Toby and Eccles, Tom and Rowland, Mark and Lanctot, Marc and Lespiau, Jean-Baptiste and Piot, Bilal and Omidshafiei, Shayegan and Lockhart, Edward and Sifre, Laurent and Beauguerlange, Nathalie and Munos, Remi and Silver, David and Singh, Satinder and Hassabis, Demis and Tuyls, Karl},
+  date = {2022-12-02},
+  journaltitle = {Science},
+  shortjournal = {Science},
+  volume = {378},
+  number = {6623},
+  eprint = {2206.15378},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  pages = {990--996},
+  issn = {0036-8075, 1095-9203},
+  doi = {10.1126/science.add4679},
+  url = {http://arxiv.org/abs/2206.15378},
+  urldate = {2024-03-15},
+  abstract = {We introduce DeepNash, an autonomous agent capable of learning to play the imperfect information game Stratego from scratch, up to a human expert level. Stratego is one of the few iconic board games that Artificial Intelligence (AI) has not yet mastered. This popular game has an enormous game tree on the order of \$10\^{}\{535\}\$ nodes, i.e., \$10\^{}\{175\}\$ times larger than that of Go. It has the additional complexity of requiring decision-making under imperfect information, similar to Texas hold'em poker, which has a significantly smaller game tree (on the order of \$10\^{}\{164\}\$ nodes). Decisions in Stratego are made over a large number of discrete actions with no obvious link between action and outcome. Episodes are long, with often hundreds of moves before a player wins, and situations in Stratego can not easily be broken down into manageably-sized sub-problems as in poker. For these reasons, Stratego has been a grand challenge for the field of AI for decades, and existing AI methods barely reach an amateur level of play. DeepNash uses a game-theoretic, model-free deep reinforcement learning method, without search, that learns to master Stratego via self-play. The Regularised Nash Dynamics (R-NaD) algorithm, a key component of DeepNash, converges to an approximate Nash equilibrium, instead of 'cycling' around it, by directly modifying the underlying multi-agent learning dynamics. DeepNash beats existing state-of-the-art AI methods in Stratego and achieved a yearly (2022) and all-time top-3 rank on the Gravon games platform, competing with human expert players.},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Computer Science and Game Theory,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/FFI4KSNZ/Perolat et al. - 2022 - Mastering the Game of Stratego with Model-Free Mul.pdf;/Users/brandonhosley/Zotero/storage/7P9M6VCA/2206.html}
+}
+
+@other{romstad,
+  title = {Stockfish},
+  author = {Romstad, Tord and Castalba, Marco and Kiiski, Joona and Linscott, Gary},
+  url = {https://stockfishchess.org/},
+  abstract = {Please cite this software using the metadata from this file.}
+}
+
+@article{schrittwieser2020,
+  title = {Mastering {{Atari}}, {{Go}}, {{Chess}} and {{Shogi}} by {{Planning}} with a {{Learned Model}}},
+  author = {Schrittwieser, Julian and Antonoglou, Ioannis and Hubert, Thomas and Simonyan, Karen and Sifre, Laurent and Schmitt, Simon and Guez, Arthur and Lockhart, Edward and Hassabis, Demis and Graepel, Thore and Lillicrap, Timothy and Silver, David},
+  date = {2020-12-24},
+  journaltitle = {Nature},
+  shortjournal = {Nature},
+  volume = {588},
+  number = {7839},
+  eprint = {1911.08265},
+  eprinttype = {arxiv},
+  eprintclass = {cs, stat},
+  pages = {604--609},
+  issn = {0028-0836, 1476-4687},
+  doi = {10.1038/s41586-020-03051-4},
+  url = {http://arxiv.org/abs/1911.08265},
+  urldate = {2024-03-15},
+  abstract = {Constructing agents with planning capabilities has long been one of the main challenges in the pursuit of artificial intelligence. Tree-based planning methods have enjoyed huge success in challenging domains, such as chess and Go, where a perfect simulator is available. However, in real-world problems the dynamics governing the environment are often complex and unknown. In this work we present the MuZero algorithm which, by combining a tree-based search with a learned model, achieves superhuman performance in a range of challenging and visually complex domains, without any knowledge of their underlying dynamics. MuZero learns a model that, when applied iteratively, predicts the quantities most directly relevant to planning: the reward, the action-selection policy, and the value function. When evaluated on 57 different Atari games - the canonical video game environment for testing AI techniques, in which model-based planning approaches have historically struggled - our new algorithm achieved a new state of the art. When evaluated on Go, chess and shogi, without any knowledge of the game rules, MuZero matched the superhuman performance of the AlphaZero algorithm that was supplied with the game rules.},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/J44JGPSW/Schrittwieser et al. - 2020 - Mastering Atari, Go, Chess and Shogi by Planning w.pdf;/Users/brandonhosley/Zotero/storage/AT34P7RI/1911.html}
+}
+
+@article{silver2016,
+  title = {Mastering the Game of {{Go}} with Deep Neural Networks and Tree Search},
+  author = {Silver, David and Huang, Aja and Maddison, Chris J. and Guez, Arthur and Sifre, Laurent and family=Driessche, given=George, prefix=van den, useprefix=true and Schrittwieser, Julian and Antonoglou, Ioannis and Panneershelvam, Veda and Lanctot, Marc and Dieleman, Sander and Grewe, Dominik and Nham, John and Kalchbrenner, Nal and Sutskever, Ilya and Lillicrap, Timothy and Leach, Madeleine and Kavukcuoglu, Koray and Graepel, Thore and Hassabis, Demis},
+  date = {2016-01},
+  journaltitle = {Nature},
+  volume = {529},
+  number = {7587},
+  pages = {484--489},
+  publisher = {Nature Publishing Group},
+  issn = {1476-4687},
+  doi = {10.1038/nature16961},
+  url = {https://www.nature.com/articles/nature16961},
+  urldate = {2024-03-15},
+  abstract = {The game of Go has long been viewed as the most challenging of classic games for artificial intelligence owing to its enormous search space and the difficulty of evaluating board positions and moves. Here we introduce a new approach to computer Go that uses ‘value networks’ to evaluate board positions and ‘policy networks’ to select moves. These deep neural networks are trained by a novel combination of supervised learning from human expert games, and reinforcement learning from games of self-play. Without any lookahead search, the neural networks play Go at the level of state-of-the-art Monte Carlo tree search programs that simulate thousands of random games of self-play. We also introduce a new search algorithm that combines Monte Carlo simulation with value and policy networks. Using this search algorithm, our program AlphaGo achieved a 99.8\% winning rate against other Go programs, and defeated the human European Go champion by 5 games to 0. This is the first time that a computer program has defeated a human professional player in the full-sized game of Go, a feat previously thought to be at least a decade away.},
+  langid = {english},
+  keywords = {Computational science,Computer science,Reward},
+  file = {/Users/brandonhosley/Zotero/storage/F29T7VGP/Silver et al. - 2016 - Mastering the game of Go with deep neural networks.pdf}
+}
+
+@article{silver2017,
+  title = {Mastering the Game of {{Go}} without Human Knowledge},
+  author = {Silver, David and Schrittwieser, Julian and Simonyan, Karen and Antonoglou, Ioannis and Huang, Aja and Guez, Arthur and Hubert, Thomas and Baker, Lucas and Lai, Matthew and Bolton, Adrian and Chen, Yutian and Lillicrap, Timothy and Hui, Fan and Sifre, Laurent and family=Driessche, given=George, prefix=van den, useprefix=true and Graepel, Thore and Hassabis, Demis},
+  date = {2017-10},
+  journaltitle = {Nature},
+  volume = {550},
+  number = {7676},
+  pages = {354--359},
+  publisher = {Nature Publishing Group},
+  issn = {1476-4687},
+  doi = {10.1038/nature24270},
+  url = {https://www.nature.com/articles/nature24270},
+  urldate = {2024-03-15},
+  abstract = {A long-standing goal of artificial intelligence is an algorithm that learns, tabula rasa, superhuman proficiency in challenging domains. Recently, AlphaGo became the first program to defeat a world champion in the game of Go. The tree search in AlphaGo evaluated positions and selected moves using deep neural networks. These neural networks were trained by supervised learning from human expert moves, and by reinforcement learning from self-play. Here we introduce an algorithm based solely on reinforcement learning, without human data, guidance or domain knowledge beyond game rules. AlphaGo becomes its own teacher: a neural network is trained to predict AlphaGo’s own move selections and also the winner of AlphaGo’s games. This neural network improves the strength of the tree search, resulting in higher quality move selection and stronger self-play in the next iteration. Starting tabula rasa, our new program AlphaGo Zero achieved superhuman performance, winning 100–0 against the previously published, champion-defeating AlphaGo. Starting from zero knowledge and without human data, AlphaGo Zero was able to teach itself to play Go and to develop novel strategies that provide new insights into the oldest of games. To beat world champions at the game of Go, the computer program AlphaGo has relied largely on supervised learning from millions of human expert moves. David Silver and colleagues have now produced a system called AlphaGo Zero, which is based purely on reinforcement learning and learns solely from self-play. Starting from random moves, it can reach superhuman level in just a couple of days of training and five million games of self-play, and can now beat all previous versions of AlphaGo. Because the machine independently discovers the same fundamental principles of the game that took humans millennia to conceptualize, the work suggests that such principles have some universal character, beyond human bias.},
+  langid = {english},
+  keywords = {Computational science,Computer science,Reward},
+  file = {/Users/brandonhosley/Zotero/storage/RCPCCGV2/Silver et al. - 2017 - Mastering the game of Go without human knowledge.pdf}
+}
+
+@online{silver2017a,
+  title = {Mastering {{Chess}} and {{Shogi}} by {{Self-Play}} with a {{General Reinforcement Learning Algorithm}}},
+  author = {Silver, David and Hubert, Thomas and Schrittwieser, Julian and Antonoglou, Ioannis and Lai, Matthew and Guez, Arthur and Lanctot, Marc and Sifre, Laurent and Kumaran, Dharshan and Graepel, Thore and Lillicrap, Timothy and Simonyan, Karen and Hassabis, Demis},
+  date = {2017-12-05},
+  eprint = {1712.01815},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1712.01815},
+  url = {http://arxiv.org/abs/1712.01815},
+  urldate = {2024-03-15},
+  abstract = {The game of chess is the most widely-studied domain in the history of artificial intelligence. The strongest programs are based on a combination of sophisticated search techniques, domain-specific adaptations, and handcrafted evaluation functions that have been refined by human experts over several decades. In contrast, the AlphaGo Zero program recently achieved superhuman performance in the game of Go, by tabula rasa reinforcement learning from games of self-play. In this paper, we generalise this approach into a single AlphaZero algorithm that can achieve, tabula rasa, superhuman performance in many challenging domains. Starting from random play, and given no domain knowledge except the game rules, AlphaZero achieved within 24 hours a superhuman level of play in the games of chess and shogi (Japanese chess) as well as Go, and convincingly defeated a world-champion program in each case.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/PFGFAPGW/Silver et al. - 2017 - Mastering Chess and Shogi by Self-Play with a Gene.pdf;/Users/brandonhosley/Zotero/storage/SR3IRUXR/1712.html}
+}
+
+@article{vinyals2019,
+  title = {Grandmaster Level in {{StarCraft II}} Using Multi-Agent Reinforcement Learning},
+  author = {Vinyals, Oriol and Babuschkin, Igor and Czarnecki, Wojciech M. and Mathieu, Michaël and Dudzik, Andrew and Chung, Junyoung and Choi, David H. and Powell, Richard and Ewalds, Timo and Georgiev, Petko and Oh, Junhyuk and Horgan, Dan and Kroiss, Manuel and Danihelka, Ivo and Huang, Aja and Sifre, Laurent and Cai, Trevor and Agapiou, John P. and Jaderberg, Max and Vezhnevets, Alexander S. and Leblond, Rémi and Pohlen, Tobias and Dalibard, Valentin and Budden, David and Sulsky, Yury and Molloy, James and Paine, Tom L. and Gulcehre, Caglar and Wang, Ziyu and Pfaff, Tobias and Wu, Yuhuai and Ring, Roman and Yogatama, Dani and Wünsch, Dario and McKinney, Katrina and Smith, Oliver and Schaul, Tom and Lillicrap, Timothy and Kavukcuoglu, Koray and Hassabis, Demis and Apps, Chris and Silver, David},
+  date = {2019-11-14},
+  journaltitle = {Nature},
+  shortjournal = {Nature},
+  volume = {575},
+  number = {7782},
+  pages = {350--354},
+  issn = {0028-0836, 1476-4687},
+  doi = {10.1038/s41586-019-1724-z},
+  url = {https://www.nature.com/articles/s41586-019-1724-z},
+  urldate = {2023-12-24},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/97RK6RVS/Vinyals et al. - 2019 - Grandmaster level in StarCraft II using multi-agen.pdf}
+}
+
+@inproceedings{wang2021,
+  title = {{{SCC}}: An Efficient Deep Reinforcement Learning Agent Mastering the Game of {{StarCraft II}}},
+  shorttitle = {{{SCC}}},
+  booktitle = {Proceedings of the 38th {{International Conference}} on {{Machine Learning}}},
+  author = {Wang, Xiangjun and Song, Junxiao and Qi, Penghui and Peng, Peng and Tang, Zhenkun and Zhang, Wei and Li, Weimin and Pi, Xiongjun and He, Jujie and Gao, Chao and Long, Haitao and Yuan, Quan},
+  date = {2021-07-01},
+  pages = {10905--10915},
+  publisher = {PMLR},
+  issn = {2640-3498},
+  url = {https://proceedings.mlr.press/v139/wang21v.html},
+  urldate = {2023-12-20},
+  abstract = {AlphaStar, the AI that reaches GrandMaster level in StarCraft II, is a remarkable milestone demonstrating what deep reinforcement learning can achieve in complex Real-Time Strategy (RTS) games. However, the complexities of the game, algorithms and systems, and especially the tremendous amount of computation needed are big obstacles for the community to conduct further research in this direction. We propose a deep reinforcement learning agent, StarCraft Commander (SCC). With order of magnitude less computation, it demonstrates top human performance defeating GrandMaster players in test matches and top professional players in a live event. Moreover, it shows strong robustness to various human strategies and discovers novel strategies unseen from human plays. In this paper, we’ll share the key insights and optimizations on efficient imitation learning and reinforcement learning for StarCraft II full game.},
+  eventtitle = {International {{Conference}} on {{Machine Learning}}},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/KFLKSCJ6/Wang et al. - 2021 - SCC an efficient deep reinforcement learning agen.pdf}
+}
+
+@online{zotero-2222,
+  title = {Deciphering {{AlphaStar}} on {{StarCraft II}} | {{Yekun}}'s {{Note}}},
+  url = {https://ychai.uk/notes/2019/07/21/RL/DRL/Decipher-AlphaStar-on-StarCraft-II/},
+  urldate = {2024-01-24},
+  file = {/Users/brandonhosley/Zotero/storage/2GL72AQU/Decipher-AlphaStar-on-StarCraft-II.html}
+}
+
+@online{zotero-2247,
+  title = {Lichess.Org Open Database},
+  url = {https://database.lichess.org/},
+  urldate = {2024-03-15},
+  file = {/Users/brandonhosley/Zotero/storage/J2U69X67/database.lichess.org.html}
+}
+
+@online{zotero-2272,
+  title = {{{FICS Games Database}} - {{Download}}},
+  url = {https://www.ficsgames.org/download.html},
+  urldate = {2024-03-15},
+  file = {/Users/brandonhosley/Zotero/storage/R8BPMP88/download.html}
+}
