@@ -83,8 +83,9 @@
 	While self-play has led to significant advancements, it inherently limits an agent's exposure to the diverse range of strategies 
 	encountered in real-world play, potentially stunting the agent's ability to adapt to and counter novel strategies. 
 	Recent research in reinforcement learning has begun exploring multi-agent systems and the benefits of diversity in training environments, 
-	suggesting that exposure to a variety of opponents can lead to more robust and adaptable agents
-	\cite{}. 
+	suggesting that exposure to a variety of opponents can lead to more robust and adaptable agents.
+	In particular, Vinyals et. al.  had notable success in \cite{vinyals2019} (discussed further in section \ref{sec:related_work})
+	utilizing a league-play approach that employed exploiters, specialists to assist primary agent training. 
 	However, the potential of applying these insights to the domain of chess, 
 	with deliberately diversified play styles during the training phase, remains underexplored.
 	\begin{comment}
@@ -92,7 +93,7 @@
 	\end{comment}
 	
 	%
-	% Problem Statement is here
+	%	Problem Statement is here
 	%
 	This study seeks to fill this gap by investigating the effects of training multiple chess agents, each with a distinct play style, 
 	through reinforcement learning, and evaluating their performance in a league-based self-play architecture. 
@@ -103,6 +104,7 @@
 	in our diverse agent pool to precisely match those achieved through training against dedicated adversarial agents, 
 	which are specifically designed to challenge and refine the primary agent's strategies. 
 	%
+	%	May be good to mention the state of league-play
 	%
 	Dedicated adversarial agents, by their very nature, are tailored to exploit weaknesses and force rapid adaptation, 
 	potentially leading to steeper learning curves. However, our research aims to demonstrate that by incorporating a variety 
