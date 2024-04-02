@@ -1,4 +1,6 @@
 \documentclass[journal]{IEEEtran}
+%\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 
 % Packages
 \usepackage{amsmath}
@@ -39,7 +41,7 @@
 	\begin{abstract}
 		
 		In the realm of artificial intelligence, the domain of board games, particularly chess, 
-		has long served as a benchmark for evaluating the capabilities of computational models. 
+		has long served as a benchmark for evaluating the capabilities of computational models.
 		Recent advancements in reinforcement learning (RL) have enabled the development of 
 		agents capable of achieving superhuman performance. 
 		However, the majority of these models rely on a self-play mechanism 
@@ -64,28 +66,44 @@
 	\label{sec:introduction}
 	Chess is a well established bench-marking challenge for artificial intelligence (AI),
 	with its non-trivial strategy and vast number of state spaces providing a rich domain for exploring 
-	computational intelligence, decision-making, and learning algorithms. 
-	The success of AI in chess, culminating in programs capable of defeating human world champions, 
+	computational intelligence, decision-making, and learning algorithms 
+	\cite{silver2017, silver2017a, schrittwieser2020, 
+	% Uncited elsewhere
+	campbell2002, lai2015, hammersborg2023,bertram2022}.
+	% Bertram and Hammersbourg is recon blind chess
+	% Want to add more chess based agents,
+	The success of AI in chess, culminating in programs capable of defeating human world champions
+	\cite{campbell2002}, 
 	is largely attributed to advances in machine learning, particularly reinforcement learning (RL), 
 	where agents learn optimal behaviors through interactions with their environment. 
-	Traditionally, the pinnacle of AI chess performance has been achieved through the self-play methodology, 
+	Traditionally, the pinnacle of AI chess performance has been achieved through the self-play methodology
+	\cite{silver2017, silver2017a}, 
 	where a single agent improves by playing against versions of itself, gradually refining its strategy based on the outcomes of these games.
 	
 	While self-play has led to significant advancements, it inherently limits an agent's exposure to the diverse range of strategies 
 	encountered in real-world play, potentially stunting the agent's ability to adapt to and counter novel strategies. 
 	Recent research in reinforcement learning has begun exploring multi-agent systems and the benefits of diversity in training environments, 
-	suggesting that exposure to a variety of opponents can lead to more robust and adaptable agents. 
+	suggesting that exposure to a variety of opponents can lead to more robust and adaptable agents
+	\cite{}. 
 	However, the potential of applying these insights to the domain of chess, 
 	with deliberately diversified play styles during the training phase, remains underexplored.
-		
+	\begin{comment}
+		I don't love this sentence, I think it implies too much that this is about chess in particular
+	\end{comment}
+	
+	%
+	% Problem Statement is here
+	%
 	This study seeks to fill this gap by investigating the effects of training multiple chess agents, each with a distinct play style, 
 	through reinforcement learning, and evaluating their performance in a league-based self-play architecture. 
 	We hypothesize that a diversified training environment will foster the development of agents that are not only 
 	proficient in their unique styles but are also more adaptable and capable of handling a wider array of opponent strategies. 
-		
+	
 	It is important to acknowledge that we do not anticipate the rate or level of improvement 
 	in our diverse agent pool to precisely match those achieved through training against dedicated adversarial agents, 
 	which are specifically designed to challenge and refine the primary agent's strategies. 
+	%
+	%
 	Dedicated adversarial agents, by their very nature, are tailored to exploit weaknesses and force rapid adaptation, 
 	potentially leading to steeper learning curves. However, our research aims to demonstrate that by incorporating a variety 
 	of play styles within the same league, we can achieve a more nuanced and comprehensive training environment. 
@@ -170,7 +188,6 @@
 
 	% Dataset
 	\begin{comment}
-	\end{comment}
 	\section{Datasets}
 	\label{sec:dataset}
 	In the initial phase of our study, the agents underwent supervised learning pre-training to establish a foundational understanding of strategic play in chess. 
@@ -212,6 +229,7 @@
 	environment of shared learning and development, encouraging innovation in AI research and the broader field of game theory. 
 	The use of Stockfish in training and evaluating chess agents underlines the importance of leveraging 
 	established knowledge bases and computational tools to advance the state of AI in strategic game playing.
+	\end{comment}
 	
 	
 	% Methodology
