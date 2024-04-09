@@ -1,0 +1,202 @@
+\documentclass[12pt,letterpaper]{exam}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+\newcommand\chapter{1}
+\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{ DSOR 646 $-$ Reinforcement Learning } % This is the name of the course 
+\newcommand{\assignmentname}{Homework \# \chapter} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers% this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname} & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+
+	\setcounter{question}{1-1}
+	\question%
+	Self-play (p.12)
+
+	\emph{Suppose, instead of playing against a random opponent, the reinforcement learning algorithm described above played against itself, 
+	with both sides learning. What do you think would happen in this case? Would it learn a different policy for selecting moves?}
+	
+	\begin{solution}
+		If we may assume that the agent making the first move is not fixed,
+		then the two agents will probably develop distinct polices during the early episodes of training.
+		Provided that exploration occurs sufficiently, the two agents policies will likely converge to the same policy.
+		This is only the case as the result of the relative simplicity of tic-tac-toe.
+
+		If exploration is insufficient, or loss is treated as a lower value than a tie,
+		then the two agent's policies will converge on a pair of strategies that are optimized to force the opponent
+		into a tied game. The pair of strategiesmay not necessarily by the same.
+
+		If the agent making the first move is fixed, then the two agents would necessarily develop different
+		policies despite using the same algorithm.
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question%
+	Symmetries (p.12)
+	
+	\emph{Many tic-tac-toe positions appear different but are really the same because of symmetries. 
+	How might we amend the learning process described above to take advantage of this? 
+	In what ways would this change improve the learning process? Now think again. 
+	Suppose the opponent did not take advantage of symmetries. In that case, should we? 
+	Is it true, then, that symmetrically equivalent positions should necessarily have the same value?}
+
+	\begin{solution}
+		Any function on the state space that returns a rotation and reflection invariant result
+		can be used to address the equivalence of symmetric states.
+		This effectively reduces the functional state-space, which in turn allows training to occur at a faster rate.
+
+		If the opponent does not recongize this state symmetry, then the probability of selection between
+		symmetric responses may not necessarily be the same values. Thus it would be beneficial for our own policy
+		to discard the symmetry as it attempts to optimize its own response to the opponent.
+
+		As a result, the value gained (especially in the long term) depends on mutual recognition of symmetry.
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\question%
+	Greedy play (p.12)
+	
+	\emph{Suppose the reinforcement learning player was greedy, that is, 
+	it always played the move that brought it to the position that it rated the best. 
+	Might it learn to play better, or worse, than a nongreedy player? What problems might occur?}
+
+	\begin{solution}
+		
+		In the case of 
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question%
+	Learning from exploration (p.13)
+	
+	\emph{Suppose learning updates occurred after all moves, including exploratory moves. 
+	If the step-size parameter is appropriately reduced over time (but not the tendency to explore), 
+	then the state values would converge to a different set of probabilities. 
+	What (conceptually) are the two sets of probabilities computed when we do, and when we do not, learn from exploratory moves? 
+	Assuming that we do continue to make exploratory moves, which set of probabilities might be better to learn? Which would result in more wins?}
+
+	\begin{solution}
+	
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+
+	\renewcommand\chapter{2}
+
+
+	\question%
+	$\epsilon$-greedy action selection (p.28)
+	
+	\emph{In $\epsilon$-greedy action selection, for the case of two actions and $\epsilon$=0.5, 
+	what is the probability that the greedy action is selected?}
+
+	\begin{solution}
+	
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question%
+	Bandit example (p.30)
+	
+	\emph{Consider a $k$-armed bandit problem with $k = 4$ actions, denoted 1, 2, 3, and 4. 
+	Consider applying to this problem a bandit algorithm using $\epsilon$-greedy action selection, 
+	sample-average action-value estimates, and initial estimates of $Q_1(a) = 0$, for all $a$. 
+	Suppose the initial sequence of actions and rewards is 
+	A1 = 1, R1 = 1, A2 = 2, R2 = 1, A3 = 2, R3 = 2, A4 = 2, R4 = 2, A5 = 3, R5 = 0. 
+	On some of these time steps the $\epsilon$ case may have occurred, causing an action to be selected at random. 
+	On which time steps did this definitely occur? On which time steps could this possibly have occurred?}
+
+	\begin{solution}
+	
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	\question%
+	Method comparison (p.30)
+	
+	\emph{In the comparison shown in Figure 2.2, which method will perform best in the long run in terms of 
+	cumulative reward and probability of selecting the best action? How much better will it be? 
+	Express your answer quantitatively.}
+
+	\begin{solution}
+	
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\renewcommand\chapter{ }
+
+
+	\question%
+	Encode a Python implementation of the simple bandit algorithm defined in the pseudocode block on page 32. 
+	Use your implementation to recreate Figure 2.2 (p.29) by performing tests on the 10-armed testbed, 
+	described in the first paragraph of Section 2.3. Include your code with your homework submission.
+	
+	\begin{solution}
+	
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\question%
+	Encode a Python implementation of one of the following algorithms, and test it on the 10-armed testbed you created for the previous problem. 
+	Test different parameter values and comment on your results. 
+	Use tables and figures as appropriate. Include your code with your homework submission.
+	\begin{itemize}
+		\item Optimistic greedy
+		\item Upper confidence bound 
+		\item Gradient bandit
+	\end{itemize}
+	
+	\begin{solution}
+	
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{questions}
+\end{document}
+
