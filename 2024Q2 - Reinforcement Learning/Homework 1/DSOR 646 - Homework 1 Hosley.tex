@@ -106,8 +106,17 @@
 	Might it learn to play better, or worse, than a nongreedy player? What problems might occur?}
 
 	\begin{solution}
+		While the initial performance of the greedy player iwll likely be higher than that of 
+		the less greedy player, the tendency for the less greedy player to be able to explore
+		will allow them to learn over a larger ranger of possibilities.
+		It follows that this will increase the probability that the less greedy player is able to 
+		find a less obvious but more optimal policy.
 		
-		In the case of 
+		As for the results; the greedy player will likely have higher returns in the short term,
+		but the player more willing to explore may have an opportunity to catch up.
+		How fast this occurs is dependent on how sub-optimal the greedy player is behaving,
+		how much better the actions that the less greedy player finds are,
+		and how frequently these actions are chosen in leui of exploration.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -121,7 +130,12 @@
 	Assuming that we do continue to make exploratory moves, which set of probabilities might be better to learn? Which would result in more wins?}
 
 	\begin{solution}
-	
+		Updates performed after every move will operate akin to a reward signal as described
+		by Sutton and Barto; that is, resulting probabilities will be conceptually related to 
+		a state reward function.
+
+		If instead we delay the updates and perform updates for multiple states and/or 
+		multiple time steps at once, we develop probabilities conceptually similar to value functions.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -130,13 +144,22 @@
 
 
 	\question%
-	$\epsilon$-greedy action selection (p.28)
+	$\varepsilon$-greedy action selection (p.28)
 	
-	\emph{In $\epsilon$-greedy action selection, for the case of two actions and $\epsilon$=0.5, 
+	\emph{In $\varepsilon$-greedy action selection, for the case of two actions and $\varepsilon$=0.5, 
 	what is the probability that the greedy action is selected?}
 
 	\begin{solution}
-	
+		Under the chapter 2 paradigm the probability of selecting the current greedy 
+		action for an arbitrary action space is
+		\[
+			P\left(A_t= \arg\max_a Q_t(a) \right) = 
+			1 - \varepsilon\left(\frac{n-1}{n}\right)
+		\]
+		where \(n=\) the number of actions available to the agent at the time \(t\).
+		
+		In the case of \(\varepsilon=0.5\) and \(n=2\)
+		the probabilityof selecting the greedy option is \(0.75\).
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -144,15 +167,27 @@
 	Bandit example (p.30)
 	
 	\emph{Consider a $k$-armed bandit problem with $k = 4$ actions, denoted 1, 2, 3, and 4. 
-	Consider applying to this problem a bandit algorithm using $\epsilon$-greedy action selection, 
+	Consider applying to this problem a bandit algorithm using $\varepsilon$-greedy action selection, 
 	sample-average action-value estimates, and initial estimates of $Q_1(a) = 0$, for all $a$. 
 	Suppose the initial sequence of actions and rewards is 
-	A1 = 1, R1 = 1, A2 = 2, R2 = 1, A3 = 2, R3 = 2, A4 = 2, R4 = 2, A5 = 3, R5 = 0. 
-	On some of these time steps the $\epsilon$ case may have occurred, causing an action to be selected at random. 
+	\(A_1 = 1, R_1 = 1, 
+	A_2 = 2, R_2 = 1, 
+	A_3 = 2, R_3 = 2, 
+	A_4 = 2, R_4 = 2, 
+	A_5 = 3, R_5 = 0\). 
+	On some of these time steps the $\varepsilon$ case may have occurred, causing an action to be selected at random. 
 	On which time steps did this definitely occur? On which time steps could this possibly have occurred?}
 
 	\begin{solution}
-	
+		Assuming that this implementation does not utilize a \"warm-start\" early exploration
+		schema then we know that \(A_2\) is an \(\varepsilon\) case.
+		Additionally, we know that \(A_5\) is also an \(\varepsilon\) case.
+
+		Without insight into the RNG of the actor it is not possible to know if \(A_3,A_4\)
+		are also \(\varepsilon\) cases with certainty, just that they may not have been.
+
+		If this scenario is an episodic task, then \(A_1\) may also have been an \(\varepsilon\) case,
+		otherwise, it may be unusual to consider it in terms of \(\varepsilon\).
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
@@ -164,7 +199,24 @@
 	Express your answer quantitatively.}
 
 	\begin{solution}
-	
+		The \(\varepsilon=0.1\) outperform the other two in the the examined term.
+		It is probable that \(\varepsilon=0.01\) will converge to a similar action profile
+		as \(\varepsilon=0.1\) if training were allowed to continue.
+
+		There are a number of ways that one might compare the effectiveness of each method quantitatively.
+		In terms of closeness to optimality, the difference of the optimality of each method's choices
+		at the end of the evaluation period may provide valuable comparisons.
+		Utilizing the average of the optimality would provide a more stable comparison;
+		but using a moving average would provide that same stability but over time reduce the effect 
+		of the initial behavior.
+		%
+		We would want this comparison if we desire the action-value calculations after the episode.
+
+		If, rather than final behavior, we are concerned with the performance of each methods as they
+		accumulate rewards over the episode we would instead want to integrate or sum the rewards across each time step. 
+		The difference between these sums would inform us of the performance of each method during the episode.
+		%
+		We want this comparison if we wish to emphasize episodic performance.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -200,3 +252,9 @@
 \end{questions}
 \end{document}
 
+\begin{comment}
+	
+	Do I need to implement my own bandit test bed or is there one available?
+	Once I have that I should be able to finish the other parts fairly easily.
+
+\end{comment}
