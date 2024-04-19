@@ -1,0 +1,117 @@
+\chapter{Introduction}
+\label{ch:introduction}
+\glsresetall
+{
+Overview the chapter here}
+
+\section{First Section Title Here}
+\label{sec:sectionRefNameHere}
+
+%\begin{figure}[tb!] % "tb!" puts it at top, if possible, then at bottom. the "!" tries harder to put it where you place it. Make every effort to have Figures at/after the first reference and within 1 page distance of the first reference, if possible.
+
+Modern navigation solutions used in practical applications substantially rely on the use of the \gls{GPS}, as when fully operational, no other technology can currently achieve a similar performance. Blah...
+\subsection{Classical Cameras and Feature Detection}
+
+
+
+\section{Research Objectives}
+
+The primary goal of this research is to ...
+
+\section{Document Overview}
+
+This document is organized as follows. \Cref{ch:background} provides an overview of relevant background information. \Cref{ch:methodology} details the process of training a \gls{CNN} that produces feature points and descriptors, and the method of evaluating this network. \Cref{ch:results} presents the results of evaluating variations of the feature detector/descriptor network, as well as the results of the \gls{EVIO} pipeline. Finally, \Cref{ch:conclusion} discusses the conclusions drawn from the results.
+
+
+\section{First Section Title Here}
+\label{sec:sectionRefNameHere}
+
+%\begin{figure}[tb!] % "tb!" puts it at top, if possible, then at bottom. the "!" tries harder to put it where you place it. Make every effort to have Figures at/after the first reference and within 1 page distance of the first reference, if possible.
+%	\centering
+%	\includegraphics[width = 0.75\columnwidth]{Figures/InsertPictureHere.png}
+%	\caption[TOC Figure Name]{Title shown in text here: short paragraph description of picture here}
+%	\label{fig:examplePicture}
+%\end{figure}
+
+Text description here, can reference other Chapters or Sections, like \Cref{ch:introduction} or \Cref{fig:examplePicture}.
+
+\subsection[Optional TOC Subsection Title Here]{Subsection Title Here}
+\label{sec:subsectionRefNameHere}
+\phantomsection
+
+Take about an equation with text without space, like
+\begin{equation}
+\label{eq:eqRefNameHere}
+%\lambda 
+\frac{1}{z}
+\begin{bmatrix}
+u \\
+v \\
+1 \\
+\end{bmatrix}=
+K \begin{bmatrix}
+x \\
+y \\
+z \\
+\end{bmatrix}=
+\begin{bmatrix}
+f_x & 0 & c_x \\
+0 & f_y & c_y \\
+0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix}
+x \\
+y \\
+z \\
+\end{bmatrix}
+\end{equation}
+where $\lambda$ can be referenced. Don't put lines before or after equations, unless the equation is the end of a paragraph's discussion. 
+
+You can also include an algorithm, like \Cref{alg:algorithmRefName}. 
+
+\begin{algorithm}[tb!]
+	\caption{Algorithm Title Here}
+	\label{alg:algorithmRefName}
+	\begin{algorithmic}[1] % The number tells where the line numbering should start
+		\Function{foo}{$a,b,c$}
+		\State $\mathbf{R}^{C_0}_W,\mathbf{p}^W_{C_0} \gets \textsc{getPose}(e_0.t)$	\Comment{Target pose}	
+		\For{$k\gets 1,N$} \Comment{Loop over events}
+		\State $\begin{bmatrix}x_H \\ y_H \end{bmatrix}  \gets \textsc{undistPos}(e_x,e_y)$ \Comment Pixel location to position
+		\label{alg:line:lineRefName} % to use to reference specific lines in Algorithm
+		\EndFor
+		\State \textbf{return} $image$\Comment{Output}
+		\EndFunction
+	\end{algorithmic}
+\end{algorithm}
+
+
+Reference equations a little differently like \labelcref{eq:eqRefNameHere}. Or reference a table like \Cref{tab:tabRefNameHere}.
+
+\begin{table}[tb!]
+	\begin{center}
+		\caption[TOC Table Title Here]{Table Title Here}
+		\label{tab:tabRefNameHere}
+		\begin{tabular}{l|S|r} % <-- Changed to S here.
+			\textbf{Description} & \textbf{Variable} & \textbf{Value} \\
+			\hline
+			Focal lengths & $f_x$ & \num{198.44397844114553} \\
+			%			Focal length, y   
+			& $f_y$ & \num{198.82574577980597} \\
+			\hline
+			Image Center & $c_x$ & \num{104.82882039668912} \\
+			%			Image Center, y  
+			& $c_y$ & \num{92.83779928839462} \\
+			\hline
+			Radial Distortion& {$k_1$} & \num{-0.39351276662408013} \\
+			%			Radial Distortion 
+			& {$k_2$} &  \num{0.1559033641626471} \\ 
+			%			Radial Distortion 3
+			& {$k_3$} & 0  \\
+			\hline	
+			Tangential Distortion & {$p_1$} & \num{-0.12466011637578988e-3} 
+			\\
+			%			Tangential Distortion 2
+			& {$p_2$} &  \num{-1.6292737247630268e-3} \\ 
+		\end{tabular}
+	\end{center}
+\end{table}

@@ -1,0 +1,26 @@
+\chapter{Methodology}
+\label{ch:methodology}
+\glsresetall %forces acronyms to be spelled out again, I think
+\section*{Preamble}
+The methodology described in this chapter is inspired by a combination of research to build an \gls{EVIO} pipeline....
+
+\section{Programming Platform}
+\label{sec:ProgramPlatform}
+
+The Python programming language \cite{Python} was used with multiple specialized libraries throughout this work mainly for its compatibility with the TensorFlow ...
+
+
+\subsection{Some Cool Equations}
+First, prior to propagating the covariance as described in \Cref{sec:Propagation}, $\mathbf{\Phi}_{k}$ is modified according to \Cref{eq:Phi11} - \Cref{eq:Phi51}, where $\mathbf{\Phi}_{11}$, $\mathbf{\Phi}_{31}$ and $\mathbf{\Phi}_{51}$ correspond to the first, third and fifth $3\times3$ blocks in the first three columns of $\mathbf{\Phi}_{k}$.
+\begin{equation}
+\label{eq:Phi11}
+\mathbf{\Phi}_{11} = \mathbf{R}_{I,k|k-1}^{I,k+1|k} = \mathbf{R}_{G}^{I,k+1|k}\mathbf{R}_{I,k|k-1}^{G}
+\end{equation}
+\begin{equation}
+\label{eq:Phi31}
+\mathbf{\Phi}_{31}\mathbf{R}_{G,k|k-1}^{I}\mathbf{g}^{G} = ([\hat{\mathbf{v}}_{I,k|k-1}^{G} \times] - [\hat{\mathbf{v}}_{I,k+1|k}^{G} \times])\mathbf{g}^{G}
+\end{equation}
+\begin{equation}
+\label{eq:Phi51}
+\mathbf{\Phi}_{51}\mathbf{R}_{G,k|k-1}^{I}\mathbf{g}^{G} = (\delta t[\hat{\mathbf{v}}_{I,k|k-1}^{G} \times] - [\hat{\mathbf{p}}_{I,k+1|k}^{G} \times])\mathbf{g}^{G}
+\end{equation}

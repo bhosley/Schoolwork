@@ -1,0 +1,56 @@
+\documentclass[12pt,letterpaper,oneside]{book}
+
+\input{myThesis/header.tex}
+
+\graphicspath{{Figures/}}
+\input{myThesis/titlePage}	
+\makenoidxglossaries
+\loadglsentries{myThesis/glossary}
+
+\begin{document}
+%\glossaryAcronyms
+{\frontmatter
+\flyleaf                        
+\disclaimerpage                 
+\titlepageAFIT                      
+\committeepage  }
+\phantomsection
+\input{myThesis/abstract.tex}
+
+\phantomsection %not sure exactly what this does, but it helps with Table of Contents and References
+{
+\tableofcontents
+\glsunsetall % resets all acronyms, so all will be spelled out again
+\listoffigures
+\listoftables
+% UNUSED
+%\listofabbreviations
+%\listofsymbols
+	
+\mainmatter }
+\phantomsection
+\input{myThesis/chapter1introduction.tex}
+\phantomsection
+\input{myThesis/chapter2background.tex}
+\phantomsection
+\input{myThesis/chapter3methodology.tex}
+\phantomsection
+\input{myThesis/chapter4results.tex}
+\phantomsection
+\input{myThesis/chapter5conclusion.tex}
+\phantomsection
+\input{myThesis/appendix.tex}
+
+\phantomsection
+\bibliographystyle{unsrt}
+%\bibliography{myThesis/myBibliography}
+\bibliography{myThesis/library} % POINT TO .bib FILE (e.g. the one updated by Mendeley)
+% only references used will be printed in bibliography
+\phantomsection
+\printnoidxglossary[sort=word,type=acronym]
+%\printglossary[type=abbrev]
+
+\backmatter
+\input{myThesis/SF298}
+
+\end{document}
