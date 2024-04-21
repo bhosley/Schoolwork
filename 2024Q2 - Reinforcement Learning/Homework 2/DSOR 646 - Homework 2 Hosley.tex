@@ -1,0 +1,207 @@
+\documentclass[12pt,letterpaper]{exam}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+\newcommand\chapter{2}
+\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{ DSOR 646 $-$ Reinforcement Learning } % This is the name of the course 
+\newcommand{\assignmentname}{Homework \# \chapter} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers% this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname} & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+
+	\renewcommand\chapter{3}
+	\question%
+	Exercise 3.1: MDP examples (p.51)
+	\emph{Question text.}
+
+	\begin{solution}
+		Solution.
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+2. Exercise 3.3: Scoping (p.51)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+3. Exercise 3.7: Selecting rewards (p.56)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+4. Exercise 3.8: Returns, episodic (p.56)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+5. Exercise 3.9: Returns, continuing (p.56)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+6. Exercise 3.18: Value of a state (p.62)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+7. Exercise 3.19: Value of a state-action (p.62)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+8. Exercise 3.25: Optimal state-value function (p.67)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+9. Exercise 3.26: Optimal action-value function (p.67)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+10. Exercise 3.27: Optimal policy (p.67)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\renewcommand\chapter{4}
+11. Exercise 4.1: Policy evaluation (p.76)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+12. Exercise 4.5: Policy iteration using action-values (p.82)
+
+\question%
+\emph{}
+\begin{solution}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\setcounter{question}{6}
+\question%
+Jack's Car Rental Problem, Extended (p.82)
+\begin{enumerate}[label= (\alph*)]
+	\item 
+	MDP model formulation. 
+	Use the following \textbf{mathematical notation} to fully define the MDP model components.
+	\begin{itemize}
+		\item set of decision epochs: \(\mathcal{T}\)
+		\item set of states (i.e., state space): \(\mathcal{S}\), 
+		requiring definition of \emph{state variable} \(s \in \mathcal{S}\)
+		\item set of actions (i.e., state-dependent action space): \(\mathcal{A}_s\), 
+		requiring definition of \emph{decision variable} \(a\in\mathcal{A}_s\) for all \(s\in\mathcal{S}\)
+		\item transition probability function: \(p(s^\prime|s, a)\), 
+		for all \(s, s^\prime \in \mathcal{S}, a \in \mathcal{A}_s\). 
+		\textbf{It is acceptable to express the state transition function} \(S^M(S_t, A_t)\), 
+		which returns the next state \(S_{t+1}\), in terms of the four primary random variables driving the stochastic process forward, 
+		rather than the transition probability function. Other problem parameters \- e.g., capacity of each car lot
+		and maximum number of cars that may be transferred \- should be incorporated as well.
+		\item reward function: \(r(s, a, s^\prime)\), for all \(s, s^\prime \in S, a \in A_s\)
+	\end{itemize}
+	\item 
+	Dynamic programming. Solve the extended problem using \emph{Policy Iteration}. 
+	\textbf{You must encode your own implementation of the algorithm on page 80 in Python.} 
+	Upload your Python file when you submit your assignment. 
+	Report results by creating a policy chart and a final value function graph, 
+	similar to those seen in the bottom right panels of Figure 4.2 on page 81.
+	\item 
+	Policy insights. How did the changes impact Jack's Rental Car business? That is, compare
+	your policy and value results with those of the original problem. Your answer should reference
+	the optimal policy and optimal value function graphs you created for part (b). Describe any
+	differences in structure observed between the policies.
+	\item 
+	Dynamic programming. Solve the extended problem using \emph{Value Iteration}. 
+	\textbf{You must encode your own implementation of the algorithm on page 83 in Python.} 
+	Upload your Python file when you submit your assignment. 
+	Report results by creating a policy chart for the optimal policy and a final value function graph, 
+	similar to the last two figures in Figure 4.2 on page 81.
+	\item 
+	Algorithm comparison. Compare your algorithm results with respect to \(\pi_*,\upsilon_*\),
+	and computational time.
+\end{enumerate}
+\begin{solution}
+	\begin{enumerate}
+		\item 
+	\end{enumerate}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{questions}
+\end{document}

@@ -1,0 +1,95 @@
+\documentclass[12pt,letterpaper,oneside]{book}
+\usepackage{afitStyleFiles/afitThesis}
+%\usepackage{afitStyleFiles/sf298}
+\usepackage[acronym, toc, shortcuts]{glossaries}
+%\usepackage[acronym]{glossaries-extra}
+\usepackage{cleveref} % for \Cref, etc.
+
+
+\makeatletter
+\def\input@path{{Chapters/}{other/}}
+\makeatother
+
+\makenoidxglossaries%
+\loadglsentries{other/glossary.tex}
+
+\usepackage{blindtext}
+\usepackage{comment}
+\begin{comment}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{bm}%boldmath
+\usepackage[table,xcdraw]{xcolor}
+\usepackage{listings}
+\usepackage{silence} \WarningFilter{fixltx2e}{}
+\usepackage{stringstrings}
+\usepackage{titlecaps}
+\usepackage{textcomp}
+\usepackage{siunitx} % for using scientific notation for numbers, can include units easily and "x10^6" etc.
+\usepackage[section]{placeins}
+\usepackage{multirow}
+\lstset{basicstyle=\ttfamily,breaklines=true}
+\sisetup{
+	round-mode          = places, % Rounds numbers
+	round-precision     = 3, % to 2 places
+	per-mode=symbol,
+	% fraction-function=\sfrac % for different style of fractions
+}
+%\graphicspath{{Figures/}}
+%\input{myThesis/titlePage}	
+\end{comment}
+
+\begin{document}
+	\tableofcontents
+	%
+	\printnoidxglossary[type=acronym]
+	\glsresetall% reset the glossary acronyms
+	%
+    \input{introduction.tex}
+    \input{literature_review.tex}
+	\input{contributions.tex}
+	\input{design_and_methodology.tex}
+	\input{results.tex}
+	\input{conclusion.tex}
+	%
+	%Research schedule
+	%	Research phase
+	%	Objectives
+	%	Deadline
+	%
+	%references
+\begin{comment}
+{\frontmatter
+\flyleaf                        
+\disclaimerpage                 
+\titlepageAFIT                      
+\committeepage  }
+\phantomsection
+\input{myThesis/abstract.tex}
+
+\phantomsection %not sure exactly what this does, but it helps with Table of Contents and References
+{
+\tableofcontents
+\glsunsetall % resets all acronyms, so all will be spelled out again
+\listoffigures 
+\listoftables
+% UNUSED
+%\listofabbreviations
+%\listofsymbols
+	
+\mainmatter }
+
+\phantomsection
+\bibliographystyle{unsrt}
+%\bibliography{myThesis/myBibliography}
+\bibliography{myThesis/library} % POINT TO .bib FILE (e.g. the one updated by Mendeley)
+% only references used will be printed in bibliography
+\phantomsection
+\printnoidxglossary[sort=word,type=acronym]
+%\printglossary[type=abbrev]
+
+\backmatter
+\input{myThesis/SF298}
+\end{comment}
+
+\end{document}
