@@ -1,95 +1,175 @@
-\documentclass[12pt,letterpaper,oneside]{book}
-\usepackage{afitStyleFiles/afitThesis}
-%\usepackage{afitStyleFiles/sf298}
-\usepackage[acronym, toc, shortcuts]{glossaries}
-%\usepackage[acronym]{glossaries-extra}
-\usepackage{cleveref} % for \Cref, etc.
+\documentclass{afitthesis}
 
+% --------------------------------- preamble -----------------------------------
+
+% NOTE: The following macros are the meta data of your document, like the title,
+% author, and department. Some of these apply to the whole document. Some, like
+% in the section after this, apply to the SF 298 form only. Several are
+% commented out because they are probably not needed for your situation.
+
+% Main document information
+\title{ Working Title}
+\author{Brandon Hosley}
+% \authorsecond{}
+% \authorthird{}
+% \authorfourth{}
+\rank{Captain, USAF}
+% \ranksecond{}
+% \rankthird{}
+% \rankfourth{}
+\previousdegrees{B.SC., B.Sc., M.Sc. M.Sc.}
+\newdegree{Doctor of Philosophy in Data Science}
+\graduationdate{September 2024}
+\department{\ENS} % \ENY, \ENG, \ENP, \ENC, \ENS, or \ENV
+\doctype{prospectus}
+\docdesignator{AFIT-ENS-P-XX-X-XXX}
+% \address{}
+% \disclaimer{}
+% \copyrightstatement{}
+\committee{ % rank name, Ph.D. \\ role
+    {Bruce Cox, Ph.D.\\Chair},
+    {Matthew Robbins, Ph.D.\\Member},
+    {Maj Nicholas Yielding, Ph.D.\\Member}}
+%\abstract{Write your abstract here. This text should probably stay under 100
+%    words or so. Make sure to not put any personally-identifiable information
+%    about others in this text.}
+%\keywords{earth; water; air; fire}
+%\dedication{To the one who loves me most.}
+%\acknowledgments{I would like to thank the entire committee for your great
+%    support.}
+
+% Distribution and Control
+% \cui{
+%     Controlled By: AETC \\
+%     Controlled By: AFIT/ENG \\
+%     CUI Category(ies): PRVCY \\
+%     Distribution: \DistB{CATEGORY}{DATE}{OFFICE} \\
+%     POC: John Smith, 555-123-4567}
+% \classified{
+%     Classified By: \\
+%     Derived From: \\
+%     Declassify On: }
+% \banner{cui}
+
+% SF 298 (Report Documentation Page) information
+%\sfStartDate{Sep 2023}
+%\sfEndDate{Mar 2024}
+%\sfContractNumber{XXXXXX-XX-X-XXXX}
+%\sfGrantNumber{}
+%\sfProgramElementNumber{}
+%\sfProjectNumber{XXXXXXXX}
+%\sfTaskNumber{}
+%\sfWorkUnitNumber{}
+%\sfSponsorAgency{AFXX/XXXX\\
+%    Building XXX, WPAFB OH 45433-7765\\
+%    DSN XXX-XXXX, COMM 937-XXX-XXXX, Email: first.last@us.af.mil }
+%\sfSponsorAcronyms{}
+%\sfSponsorReportNumber{}
+%\sfDistribution{\DistA}
+%\sfSupplementaryNotes{}
+%\sfReportClassification{}
+%\sfAbstractClassification{}
+%\sfPageClassification{}
+%\sfAbstractLimitation{UU}
+%\sfResponsiblePerson{Dr. Your Advisor, AFIT/ENG}
+%\sfPhoneNumber{(937) XXX-XXXX}
+
+    % SF 298 Override default variables
+    % \sfReportDate{}
+    % \sfReportType{}
+    % \sfTitle{}
+    % \sfAuthors{}
+    % \sfDepartment{}
+    % \sfAddress{}
+    % \sfDocDesignator{}
+    % \sfAbstract{}
+    % \sfSubjectTerms{}
+    % \sfPageCount{}
+    % \sfClassification{}
 
 \makeatletter
 \def\input@path{{Chapters/}{other/}}
 \makeatother
+\usepackage{cleveref}
 
-\makenoidxglossaries%
-\loadglsentries{other/glossary.tex}
+% NOTE: Google "Overleaf Getting started with BibLaTeX" for guidance.
+\usepackage[style=apa]{biblatex} % bibliographies
+\addbibresource{other/refs.bib} % name of the bibliography file
 
-\usepackage{blindtext}
-\usepackage{comment}
-\begin{comment}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-\usepackage{bm}%boldmath
-\usepackage[table,xcdraw]{xcolor}
-\usepackage{listings}
-\usepackage{silence} \WarningFilter{fixltx2e}{}
-\usepackage{stringstrings}
-\usepackage{titlecaps}
-\usepackage{textcomp}
-\usepackage{siunitx} % for using scientific notation for numbers, can include units easily and "x10^6" etc.
-\usepackage[section]{placeins}
-\usepackage{multirow}
-\lstset{basicstyle=\ttfamily,breaklines=true}
-\sisetup{
-	round-mode          = places, % Rounds numbers
-	round-precision     = 3, % to 2 places
-	per-mode=symbol,
-	% fraction-function=\sfrac % for different style of fractions
-}
-%\graphicspath{{Figures/}}
-%\input{myThesis/titlePage}	
-\end{comment}
+% Define the default location to look for figures.
+% \graphicspath{{fig}} % Uncomment to use
+
+\usepackage[nomain,abbreviations,section]{glossaries-extra}
+%\usepackage{glossaries-extra}
+%\loadglsentries{glossary.tex}
+%\loadglsentries{abbreviations}
+%\makenoidxglossaries%
+\makeglossaries%
+\input{abbreviations}
+%\input{glossary.tex}
+
+% ------------------------------ body of paper ---------------------------------
 
 \begin{document}
-	\tableofcontents
-	%
-	\printnoidxglossary[type=acronym]
-	\glsresetall% reset the glossary acronyms
-	%
-    \input{introduction.tex}
-    \input{literature_review.tex}
-	\input{contributions.tex}
-	\input{design_and_methodology.tex}
-	\input{results.tex}
-	\input{conclusion.tex}
-	%
-	%Research schedule
-	%	Research phase
-	%	Objectives
-	%	Deadline
-	%
-	%references
-\begin{comment}
-{\frontmatter
-\flyleaf                        
-\disclaimerpage                 
-\titlepageAFIT                      
-\committeepage  }
-\phantomsection
-\input{myThesis/abstract.tex}
+\maketitle % This command will create all the prefatory pages.
 
-\phantomsection %not sure exactly what this does, but it helps with Table of Contents and References
-{
-\tableofcontents
-\glsunsetall % resets all acronyms, so all will be spelled out again
-\listoffigures 
-\listoftables
-% UNUSED
-%\listofabbreviations
-%\listofsymbols
-	
-\mainmatter }
+% --------------------
+\chapter{Introduction}
+\input{introduction.tex}
+\gls{afit}
 
-\phantomsection
-\bibliographystyle{unsrt}
-%\bibliography{myThesis/myBibliography}
-\bibliography{myThesis/library} % POINT TO .bib FILE (e.g. the one updated by Mendeley)
-% only references used will be printed in bibliography
-\phantomsection
-\printnoidxglossary[sort=word,type=acronym]
-%\printglossary[type=abbrev]
+% -------------------------
+\chapter{Literature Review}
+\input{literature_review.tex}
 
-\backmatter
-\input{myThesis/SF298}
-\end{comment}
+% -------------------
+\chapter{Methodology}%
+\label{ch:methodology}
+\input{contributions.tex}
+\input{design_and_methodology.tex}
 
+% ----------------------------
+%\chapter{Results and Analysis}%
+\label{ch:results}% chktex 24
+\input{results.tex}
+
+% ------------------
+%\chapter{Conclusion}%
+\label{ch:conclusion}% chktex 24
+\input{conclusion.tex}
+
+%
+%Research schedule
+%	Research phase
+%	Objectives
+%	Deadline
+%
+%references
+
+
+% --------------------------------- optional -----------------------------------
+\appendix % This command is necessary before any appendix chapters.
+
+\chapter{Glossary}
+%\printabbreviations[title=]
+\printglossaries%
+
+
+
+% ------------------------------- bibliography ---------------------------------
+\nocite{*} % Uncomment to print all .bib entries, regardless of citation.
+\clearpage\phantomsection% Creates new page and section for bibliography.
+\addcontentsline{toc}{appendix}{\bibname} % Adds bib to table of contents.
+%\printbibliography% Prints the bibliography.
+
+% --------------------------------- optional -----------------------------------
+%\begin{vita} % Add name within brackets for multiple vitas.
+%    If you are adding a description about yourself. Use the \verb|vita|
+%    environment. Keep the contents to one page. If for some reason there is
+%    more than one author contributing to this paper, each author should have a
+%    separate page.
+%\end{vita}
+
+% ---------------------------- Standard Form 298 -------------------------------
+%\sfTwoNineEight
 \end{document}

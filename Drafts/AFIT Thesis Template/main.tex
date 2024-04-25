@@ -1,0 +1,163 @@
+\documentclass{afitthesis}
+
+% --------------------------------- preamble -----------------------------------
+
+% NOTE: The following macros are the meta data of your document, like the title,
+% author, and department. Some of these apply to the whole document. Some, like
+% in the section after this, apply to the SF 298 form only. Several are
+% commented out because they are probably not needed for your situation.
+
+% Main document information
+\title{Great Contribution to the Field of Things}
+\author{John Smith}
+% \authorsecond{}
+% \authorthird{}
+% \authorfourth{}
+\rank{First Lieutenant, USAF}
+% \ranksecond{}
+% \rankthird{}
+% \rankfourth{}
+\previousdegrees{B.S.E.E.}
+\newdegree{Master of Science in Electrical Engineering}
+\graduationdate{September 2024}
+\department{\ENG} % \ENY, \ENG, \ENP, \ENC, \ENS, or \ENV
+% \doctype{dissertation}
+\docdesignator{AFIT-ENG-MS-XX-X-XXX}
+% \address{}
+% \disclaimer{}
+% \copyrightstatement{}
+\committee{ % rank name, Ph.D. \\ role
+    {Albert Einstein, Ph.D.\\Chair},
+    {Lt Col Michael Faraday, Ph.D.\\Member},
+    {Maj Carl F. Gauss, M.S.\\Member}}
+\abstract{Write your abstract here. This text should probably stay under 100
+    words or so. Make sure to not put any personally-identifiable information
+    about others in this text.}
+\keywords{earth; water; air; fire}
+\dedication{To the one who loves me most.}
+\acknowledgments{I would like to thank the entire committee for your great
+    support.}
+
+% Distribution and Control
+% \cui{
+%     Controlled By: AETC \\
+%     Controlled By: AFIT/ENG \\
+%     CUI Category(ies): PRVCY \\
+%     Distribution: \DistB{CATEGORY}{DATE}{OFFICE} \\
+%     POC: John Smith, 555-123-4567}
+% \classified{
+%     Classified By: \\
+%     Derived From: \\
+%     Declassify On: }
+% \banner{cui}
+
+% SF 298 (Report Documentation Page) information
+\sfStartDate{Sep 2023}
+\sfEndDate{Mar 2024}
+\sfContractNumber{XXXXXX-XX-X-XXXX}
+\sfGrantNumber{}
+\sfProgramElementNumber{}
+\sfProjectNumber{XXXXXXXX}
+\sfTaskNumber{}
+\sfWorkUnitNumber{}
+\sfSponsorAgency{AFXX/XXXX\\
+    Building XXX, WPAFB OH 45433-7765\\
+    DSN XXX-XXXX, COMM 937-XXX-XXXX, Email: first.last@us.af.mil }
+\sfSponsorAcronyms{}
+\sfSponsorReportNumber{}
+\sfDistribution{\DistA}
+\sfSupplementaryNotes{}
+\sfReportClassification{}
+\sfAbstractClassification{}
+\sfPageClassification{}
+\sfAbstractLimitation{UU}
+\sfResponsiblePerson{Dr. Your Advisor, AFIT/ENG}
+\sfPhoneNumber{(937) XXX-XXXX}
+
+% SF 298 Override default variables
+% \sfReportDate{}
+% \sfReportType{}
+% \sfTitle{}
+% \sfAuthors{}
+% \sfDepartment{}
+% \sfAddress{}
+% \sfDocDesignator{}
+% \sfAbstract{}
+% \sfSubjectTerms{}
+% \sfPageCount{}
+% \sfClassification{}
+
+% NOTE: Google "Overleaf Getting started with BibLaTeX" for guidance.
+\usepackage[style=apa]{biblatex} % bibliographies
+\addbibresource{refs.bib} % name of the bibliography file
+
+% Define the default location to look for figures.
+% \graphicspath{{fig}} % Uncomment to use
+
+% ------------------------------ body of paper ---------------------------------
+
+\begin{document}
+\maketitle % This command will create all the prefatory pages.
+
+% --------------------
+\chapter{Introduction}
+
+\emph{Contents of Chapter I, typically the introduction}
+
+% -------------------------
+\chapter{Literature Review}
+
+\emph{Contents of Chapter II, typically includes background and literature
+review}
+
+% -------------------
+\chapter{Methodology}
+
+\emph{Contents of Chapter III, typically the methodology}
+
+% ----------------------------
+\chapter{Results and Analysis}
+
+\emph{Contents of Chapter IV, typically the analysis}
+
+% ------------------
+\chapter{Conclusion}
+
+\emph{Contents of Chapter V, typically the conclusion and future work}
+
+% --------------------------------- optional -----------------------------------
+\appendix % This command is necessary before any appendix chapters.
+
+\chapter{List of Acronyms}
+
+\def\afit{Air Force Institute of Technology}
+
+The \afit{} Style Guide permits putting your lists of acronyms, symbols, and
+such into the appendices section of your paper.
+\begin{description}
+    \item[AFIT] \afit
+    \item[ENC] \ENC
+    \item[ENG] \ENG
+    \item[ENP] \ENP
+    \item[ENS] \ENS
+    \item[ENV] \ENV
+    \item[ENY] \ENY
+\end{description}
+
+% ------------------------------- bibliography ---------------------------------
+\nocite{*} % Uncomment to print all .bib entries, regardless of citation.
+\clearpage\phantomsection % Creates new page and section for bibliography.
+\addcontentsline{toc}{appendix}{\bibname} % Adds bib to table of contents.
+\printbibliography % Prints the bibliography.
+
+% --------------------------------- optional -----------------------------------
+\begin{vita} % Add name within brackets for multiple vitas.
+    If you are adding a description about yourself. Use the \verb|vita|
+    environment. Keep the contents to one page. If for some reason there is
+    more than one author contributing to this paper, each author should have a
+    separate page.
+\end{vita}
+
+% ---------------------------- Standard Form 298 -------------------------------
+\sfTwoNineEight
+\end{document}

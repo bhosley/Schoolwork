@@ -4,37 +4,33 @@
 \usepackage[T1]{fontenc}
 \usepackage[left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
 
-\usepackage{libertine}
-\usepackage{multicol}
-\usepackage[shortlabels]{enumitem}
-
 \usepackage{booktabs}
+\usepackage[shortlabels]{enumitem}
 \usepackage[table]{xcolor}
 
-\usepackage{amssymb}
-\usepackage{amsthm}
-\usepackage{mathtools}
-\usepackage{bbm}
-
-\usepackage{hyperref}
+\usepackage{amssymb, amsthm, mathtools, bbm}
+%\usepackage{hyperref}
 \usepackage{graphicx}
-%\usepackage{wrapfig}
-%\usepackage{capt-of}
-%\usepackage{tikz}
-%\usepackage{pgfplots}
-%\usetikzlibrary{shapes,arrows,positioning,patterns}
-%\usepackage{pythonhighlight}
 
-\newcommand\chapter{2}
+\newcommand{\chapter}{2}
 \renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
 \renewcommand{\questionlabel}{\thequestion}
+
+\usepackage{xpatch}
+\makeatletter
+\xpatchcmd{\questions}
+  {question@\arabic{question}}
+  {question@\arabic{section}@\arabic{question}}
+  {}{}
+\makeatother
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\class}{ DSOR 646 $-$ Reinforcement Learning } % This is the name of the course 
 \newcommand{\assignmentname}{Homework \# \chapter} % 
 \newcommand{\authorname}{Hosley, Brandon} % 
 \newcommand{\workdate}{\today} % 
-\printanswers% this includes the solutions sections
+\printanswers% This includes the solutions sections
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -56,152 +52,237 @@
 
 	\renewcommand\chapter{3}
 	\question%
-	Exercise 3.1: MDP examples (p.51)
-	\emph{Question text.}
+	MDP examples (p.51)
+
+	\emph{Devise three example tasks of your own that fit into the MDP framework, 
+	identifying for each its states, actions, and rewards. 
+	Make the three examples as different from each other as possible. 
+	The framework is abstract and flexible and can be applied in many different ways. 
+	Stretch its limits in some way in at least one of your examples.}
 
 	\begin{solution}
-		Solution.
+		\begin{parts}
+			\item Autonomous Vehicle Navigation is a modern classic and widely understood example of this problem.
+			MIn modelling 
+
+			\item 2
+			
+			\item 3
+			
+		\end{parts}
+	\end{solution}
+
+
+	Example 1: 
+States: The states in this task could include various sensor readings about the vehicle's environment, such as the distance to other vehicles, road conditions, current speed, GPS location, and traffic signals.
+
+Actions: Actions available to the autonomous vehicle could involve accelerating, braking, steering left, steering right, changing lanes, maintaining current speed, and activating turn signals.
+
+Rewards: The reward function might include positive rewards for maintaining safe distances from other vehicles, staying within speed limits, and following traffic rules. Negative rewards could be assigned for traffic rule violations, collisions, or unnecessary braking and acceleration that could lead to inefficiencies.
+
+Example 2: Personalized Learning System
+States: States in a personalized learning system could include the current topic, the difficulty level of the material, the learner’s engagement level, previous performance metrics, time spent on current material, and learner's feedback.
+
+Actions: Actions might be presenting a new topic, repeating the current topic, adjusting the difficulty level, incorporating interactive elements like quizzes or videos, or scheduling a review of previously learned topics.
+
+Rewards: The reward function could provide positive rewards for improvements in the learner's performance on assessments, increased engagement, and positive feedback. Negative rewards could be given for declining performance, disengagement, or negative feedback indicating that the material is either too challenging or too easy.
+
+Example 3: Investment Strategy Optimization
+States: States in this domain could be defined by various financial indicators such as stock prices, market trends, volatility indexes, economic news updates, portfolio performance, and historical data of investments.
+
+Actions: Possible actions could include buying or selling different types of assets, adjusting the portfolio allocation, holding onto current assets, or reallocating resources among various investment options.
+
+Rewards: The reward function might give positive rewards for achieving a higher return on investment, exceeding benchmark performance, and maintaining liquidity above a certain threshold. Negative rewards could occur for substantial losses, high volatility in the portfolio beyond a risk threshold, or failing to meet specified investment goals.
+
+In each of these examples, the MDP framework provides a structured way to model decision-making environments where outcomes are partly random and partly under the control of a decision maker, making it suitable for optimizing actions based on predicted rewards.
+
+
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\setcounter{question}{3-1}% chktex 8
+	\question%
+	Scoping (p.51)
+
+	\emph{Consider the problem of driving. You could define the actions in terms of the accelerator, 
+	steering wheel, and brake, that is, where your body meets the machine. 
+	Or you could define them farther out—say, where the rubber meets the road, considering your actions to be tire torques. 
+	Or you could define them farther in—say, where your brain meets your body, the actions being muscle twitches to control your limbs. 
+	Or you could go to a really high level and say that your actions are your choices of where to drive. 
+	What is the right level, the right place to draw the line between agent and environment? 
+	On what basis is one location of the line to be preferred over another? 
+	Is there any fundamental reason for preferring one location over another, or is it a free choice?}
+	\begin{solution}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-2. Exercise 3.3: Scoping (p.51)
+	\setcounter{question}{7-1}% chktex 8
+	\question%
+	Selecting rewards (p.56)
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{Imagine that you are designing a robot to run a maze. 
+	You decide to give it a reward of \(+1\) for escaping from the maze and a reward of zero at all other times.
+	The task seems to break down naturally into episodes—the successive runs through the maze—so you decide to 
+	treat it as an episodic task, where the goal is to maximize expected total reward (3.7).
+	After running the learning agent for a while, you find that it is showing no improvement in escaping from the maze.
+	What is going wrong? Have you effectively communicated to the agent what you want it to achieve?}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-3. Exercise 3.7: Selecting rewards (p.56)
+	%\setcounter{question}{8-1}% chktex 8
+	\question%
+	Returns, episodic (p.56)
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{Suppose \(\gamma=0.5\) and the following sequence of rewards is received 
+	\(R_1 = 1, R_2 = 2, R_3 = 6, R_4 = 3\), and \(R_5 = 2\), with \(T = 5\). What are \(G_0, G_1, \ldots, G_5\)? 
+	Hint: Work backwards.}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-4. Exercise 3.8: Returns, episodic (p.56)
+	\setcounter{question}{9-1}% chktex 8
+	\question%
+	Returns, continuing (p.56)
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{Suppose \(\gamma=0.9\) and the reward sequence is \(R_1 = 2\) followed by an infinite sequence of \(7\)s. 
+	What are \(G_1\) and \(G_0\)?}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-5. Exercise 3.9: Returns, continuing (p.56)
+	\setcounter{question}{18-1}% chktex 8
+	\question%
+	Value of a state (p.62)
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{The value of a state depends on the values of the actions possible in that 
+	state and on how likely each action is to be taken under the current policy. 
+	We can think of this in terms of a small backup diagram rooted at the state and considering each possible action:}
 
-6. Exercise 3.18: Value of a state (p.62)
+	\includegraphics*[width=\linewidth]{Screenshot 2024-04-22 at 22.25.31.png}% chktex 8
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{Give the equation corresponding to this intuition and diagram for the value at the root node, \(v_\pi(s)\), 
+	in terms of the value at the expected leaf node, \(q_\pi(s, a)\), given \(S_t = s\).
+	This equation should include an expectation conditioned on following the policy, \(\pi\). 
+	Then give a second equation in which the expected value is written out explicitly in terms of \(\pi(a|s)\) 
+	such that no expected value notation appears in the equation.}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-7. Exercise 3.19: Value of a state-action (p.62)
+	\question%
+	Value of a state-action (p.62)
+	\emph{The value of an action, \(q_\pi(s, a)\), depends on the expected next reward and the expected sum of the remaining rewards. 
+	Again we can think of this in terms of a small backup diagram, this one rooted at an action (state\-action pair) 
+	and branching to the possible next states:}
+	
+	\includegraphics*[width=\linewidth]{Screenshot 2024-04-22 at 23.22.31.png}% chktex 8
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{Give the equation corresponding to this intuition and diagram for the action value, \(q_\pi(s, a)\), 
+	in terms of the expected next reward, \(R_t+1\), and the expected next state value, \(v_\pi(S_t+1)\), 
+	given that \(S_t = s\) and \(A_t = a\). This equation should include an expectation but not one conditioned on following the policy. 
+	Then give a second equation, writing out the expected value explicitly in terms of \(p(s_0,r|s, a)\) defined by (3.2), 
+	such that no expected value notation appears in the equation.}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-8. Exercise 3.25: Optimal state-value function (p.67)
+	\setcounter{question}{25-1}% chktex 8
+	\question%
+	Optimal state-value function (p.67)
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{Give an equation for \(v_*\) in terms of \(q_*\).}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-9. Exercise 3.26: Optimal action-value function (p.67)
+	\question%
+	Optimal action-value function (p.67)
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{Give an equation for \(q_*\) in terms of \(\upsilon_*\) and the four-arguement \(p\).}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-10. Exercise 3.27: Optimal policy (p.67)
+	\question%
+	Optimal policy (p.67)
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\emph{Give an equation for \(\pi_*\) in terms of \(q_*\).}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+	\setcounter{section}{4}
+	\renewcommand\chapter{4}
+	\setcounter{question}{1-1}% chktex 8
+	\question%
+	Policy evaluation (p.76)
 
-\renewcommand\chapter{4}
-11. Exercise 4.1: Policy evaluation (p.76)
+	\emph{In Example 4.1, if \(\pi\) is the equiprobable random policy, what is \(q_\pi(11, \texttt{down})\)? 
+	What is \(q_\pi(7, \texttt{down})\)?}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\setcounter{question}{5-1}% chktex 8
+	\question%
+	Policy iteration using action-values (p.82)
+	
+	\emph{How would policy iteration be defined for action values? Give a complete algorithm for computing 
+	\(q_*\), analogous to that on page \(80\) for computing \(v_*\). 
+	Please pay special attention to this exercise, because the ideas involved will be used throughout the rest of the book.}
+	\begin{solution}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-12. Exercise 4.5: Policy iteration using action-values (p.82)
-
-\question%
-\emph{}
-\begin{solution}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\setcounter{question}{6}
-\question%
-Jack's Car Rental Problem, Extended (p.82)
-\begin{enumerate}[label= (\alph*)]
-	\item 
-	MDP model formulation. 
-	Use the following \textbf{mathematical notation} to fully define the MDP model components.
-	\begin{itemize}
-		\item set of decision epochs: \(\mathcal{T}\)
-		\item set of states (i.e., state space): \(\mathcal{S}\), 
-		requiring definition of \emph{state variable} \(s \in \mathcal{S}\)
-		\item set of actions (i.e., state-dependent action space): \(\mathcal{A}_s\), 
-		requiring definition of \emph{decision variable} \(a\in\mathcal{A}_s\) for all \(s\in\mathcal{S}\)
-		\item transition probability function: \(p(s^\prime|s, a)\), 
-		for all \(s, s^\prime \in \mathcal{S}, a \in \mathcal{A}_s\). 
-		\textbf{It is acceptable to express the state transition function} \(S^M(S_t, A_t)\), 
-		which returns the next state \(S_{t+1}\), in terms of the four primary random variables driving the stochastic process forward, 
-		rather than the transition probability function. Other problem parameters \- e.g., capacity of each car lot
-		and maximum number of cars that may be transferred \- should be incorporated as well.
-		\item reward function: \(r(s, a, s^\prime)\), for all \(s, s^\prime \in S, a \in A_s\)
-	\end{itemize}
-	\item 
-	Dynamic programming. Solve the extended problem using \emph{Policy Iteration}. 
-	\textbf{You must encode your own implementation of the algorithm on page 80 in Python.} 
-	Upload your Python file when you submit your assignment. 
-	Report results by creating a policy chart and a final value function graph, 
-	similar to those seen in the bottom right panels of Figure 4.2 on page 81.
-	\item 
-	Policy insights. How did the changes impact Jack's Rental Car business? That is, compare
-	your policy and value results with those of the original problem. Your answer should reference
-	the optimal policy and optimal value function graphs you created for part (b). Describe any
-	differences in structure observed between the policies.
-	\item 
-	Dynamic programming. Solve the extended problem using \emph{Value Iteration}. 
-	\textbf{You must encode your own implementation of the algorithm on page 83 in Python.} 
-	Upload your Python file when you submit your assignment. 
-	Report results by creating a policy chart for the optimal policy and a final value function graph, 
-	similar to the last two figures in Figure 4.2 on page 81.
-	\item 
-	Algorithm comparison. Compare your algorithm results with respect to \(\pi_*,\upsilon_*\),
-	and computational time.
-\end{enumerate}
-\begin{solution}
-	\begin{enumerate}
+	\setcounter{question}{6}
+	\question%
+	Jack's Car Rental Problem, Extended (p.82)
+	\begin{enumerate}[label= (\alph*)]
 		\item 
+		MDP model formulation. 
+		Use the following \textbf{mathematical notation} to fully define the MDP model components.
+		\begin{itemize}
+			\item set of decision epochs: \(\mathcal{T}\)
+			\item set of states (i.e., state space): \(\mathcal{S}\), 
+			requiring definition of \emph{state variable} \(s \in \mathcal{S}\)
+			\item set of actions (i.e., state-dependent action space): \(\mathcal{A}_s\), 
+			requiring definition of \emph{decision variable} \(a\in\mathcal{A}_s\) for all \(s\in\mathcal{S}\)
+			\item transition probability function: \(p(s^\prime|s, a)\), 
+			for all \(s, s^\prime \in \mathcal{S}, a \in \mathcal{A}_s\). 
+			\textbf{It is acceptable to express the state transition function} \(S^M(S_t, A_t)\), 
+			which returns the next state \(S_{t+1}\), in terms of the four primary random variables driving the stochastic process forward, 
+			rather than the transition probability function. Other problem parameters \- e.g., capacity of each car lot
+			and maximum number of cars that may be transferred \- should be incorporated as well.
+			\item reward function: \(r(s, a, s^\prime)\), for all \(s, s^\prime \in S, a \in A_s\)
+		\end{itemize}
+		\item 
+		Dynamic programming. Solve the extended problem using \emph{Policy Iteration}. 
+		\textbf{You must encode your own implementation of the algorithm on page 80 in Python.} 
+		Upload your Python file when you submit your assignment. 
+		Report results by creating a policy chart and a final value function graph, 
+		similar to those seen in the bottom right panels of Figure 4.2 on page 81.
+		\item 
+		Policy insights. How did the changes impact Jack's Rental Car business? That is, compare
+		your policy and value results with those of the original problem. Your answer should reference
+		the optimal policy and optimal value function graphs you created for part (b). Describe any
+		differences in structure observed between the policies.
+		\item 
+		Dynamic programming. Solve the extended problem using \emph{Value Iteration}. 
+		\textbf{You must encode your own implementation of the algorithm on page 83 in Python.} 
+		Upload your Python file when you submit your assignment. 
+		Report results by creating a policy chart for the optimal policy and a final value function graph, 
+		similar to the last two figures in Figure 4.2 on page 81.
+		\item 
+		Algorithm comparison. Compare your algorithm results with respect to \(\pi_*,\upsilon_*\),
+		and computational time.
 	\end{enumerate}
-\end{solution}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	\begin{solution}
+		\begin{enumerate}
+			\item 
+		\end{enumerate}
+	\end{solution}
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{questions}
 \end{document}
