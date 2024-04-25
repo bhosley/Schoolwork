@@ -24,13 +24,15 @@
   {}{}
 \makeatother
 
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{refs.bib}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\class}{ DSOR 646 $-$ Reinforcement Learning } % This is the name of the course 
 \newcommand{\assignmentname}{Homework \# \chapter} % 
 \newcommand{\authorname}{Hosley, Brandon} % 
 \newcommand{\workdate}{\today} % 
-\printanswers% This includes the solutions sections
+\printanswers% This includes the solutions section
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -62,41 +64,50 @@
 
 	\begin{solution}
 		\begin{parts}
-			\item Autonomous Vehicle Navigation is a modern classic and widely understood example of this problem.
-			MIn modelling 
-
-			\item 2
+			\item Autonomous Vehicle Navigation is a modern classic example.
 			
-			\item 3
+			States are typically comprised of the information provided by the sensors on the vehicle.
+			Various implementations have provided different readings. 
+			Common sensors include visual light cameras, LiDAR, speedometers, GPS receivers, thermometers, etc.
+			
+			Actions available to the autonomous vehicle could involve primitive actions such as 
+			accelerating, braking, steering left, steering right; composite actions such as
+			changing lanes, maintaining current speed; and communicative actions such as activating turn signals or honking.
+
+			The reward function might include positive rewards for maintaining safe distances from other vehicles, 
+			staying within speed limits, and following traffic rules. 
+			Negative rewards could be assigned for traffic rule violations, collisions, or 
+			unnecessary braking and acceleration that could lead to inefficiencies.
+
+			\item Investment Strategies can be modeled as MDPs as well.
+			
+			The state space for this problem has an extreme range of possibilities.
+			In this particular case, there is not a narrowly defined environment one would expect to measure to approximate a state.
+			Instead, a lot of the input information may appear ancillary as stock prices, market trends, or historical data are not likely
+			to provide the necessary insight for an MDP to outperform a basic algorithmic investment strategy. 
+			
+			The actions available are to buy, sell, or do nothing. 
+			These actions are available for each asset and the first two can (and should) include a magnitude component.
+			
+			The reward function for this model can be conveniently matched to the total value of the investment portfolio.
+			It is also possible to perform reward shaping if more specific behaviors are desired; 
+			for example, a negative reward for loss may scale non-linearly if the user wishes to avoid risk.
+
+			\item A management component of a personalized learning system.
+			
+			States in a personalized learning system could include the current topic, the difficulty level of the material, 
+			the learner's engagement level, previous performance metrics, time spent on current material, and learner's feedback.
+
+			Actions might be presenting a new topic, repeating the current topic, adjusting the difficulty level, 
+			incorporating interactive elements like quizzes or videos, or scheduling a review of previously learned topics.
+
+			The reward function could provide positive rewards for improvements in the learner's performance on assessments, 
+			increased engagement, and positive feedback. 
+			Negative rewards could be given for declining performance, disengagement, 
+			or negative feedback indicating that the material is either too challenging or too easy.
 			
 		\end{parts}
 	\end{solution}
-
-
-	Example 1: 
-States: The states in this task could include various sensor readings about the vehicle's environment, such as the distance to other vehicles, road conditions, current speed, GPS location, and traffic signals.
-
-Actions: Actions available to the autonomous vehicle could involve accelerating, braking, steering left, steering right, changing lanes, maintaining current speed, and activating turn signals.
-
-Rewards: The reward function might include positive rewards for maintaining safe distances from other vehicles, staying within speed limits, and following traffic rules. Negative rewards could be assigned for traffic rule violations, collisions, or unnecessary braking and acceleration that could lead to inefficiencies.
-
-Example 2: Personalized Learning System
-States: States in a personalized learning system could include the current topic, the difficulty level of the material, the learner’s engagement level, previous performance metrics, time spent on current material, and learner's feedback.
-
-Actions: Actions might be presenting a new topic, repeating the current topic, adjusting the difficulty level, incorporating interactive elements like quizzes or videos, or scheduling a review of previously learned topics.
-
-Rewards: The reward function could provide positive rewards for improvements in the learner's performance on assessments, increased engagement, and positive feedback. Negative rewards could be given for declining performance, disengagement, or negative feedback indicating that the material is either too challenging or too easy.
-
-Example 3: Investment Strategy Optimization
-States: States in this domain could be defined by various financial indicators such as stock prices, market trends, volatility indexes, economic news updates, portfolio performance, and historical data of investments.
-
-Actions: Possible actions could include buying or selling different types of assets, adjusting the portfolio allocation, holding onto current assets, or reallocating resources among various investment options.
-
-Rewards: The reward function might give positive rewards for achieving a higher return on investment, exceeding benchmark performance, and maintaining liquidity above a certain threshold. Negative rewards could occur for substantial losses, high volatility in the portfolio beyond a risk threshold, or failing to meet specified investment goals.
-
-In each of these examples, the MDP framework provides a structured way to model decision-making environments where outcomes are partly random and partly under the control of a decision maker, making it suitable for optimizing actions based on predicted rewards.
-
-
 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -113,6 +124,18 @@ In each of these examples, the MDP framework provides a structured way to model 
 	On what basis is one location of the line to be preferred over another? 
 	Is there any fundamental reason for preferring one location over another, or is it a free choice?}
 	\begin{solution}
+		I assert that the best location to define the action space is at the point where that action is initiated.
+		While we may define the action space in terms of tire torques, it is probable that the agent's interaction with this
+		measurement is via depression of an accelerator in a COTS vehicle, voltage or pulse-width in the case of controlling
+		an electric motor.
+		Defining actions at a lower level will, in many cases, be less efficient than implementing that part of the action 
+		algorithmically or mechanically.
+		Defining actions higher may require us to implement algorithmic or mechanical controls that are rather more complicated
+		and dismiss the value of using RL in solving the problem. 
+
+		Still, there is significant value in defining action spaces at multiple levels as is done in 
+		hierarchical reinforcement learning. Examples of such can be found in 
+		{\cite{li2023}} and {\cite{shu2017}}.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -136,7 +159,7 @@ In each of these examples, the MDP framework provides a structured way to model 
 
 	\emph{Suppose \(\gamma=0.5\) and the following sequence of rewards is received 
 	\(R_1 = 1, R_2 = 2, R_3 = 6, R_4 = 3\), and \(R_5 = 2\), with \(T = 5\). What are \(G_0, G_1, \ldots, G_5\)? 
-	Hint: Work backwards.}
+	Hint: Work backward.}
 	\begin{solution}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -199,7 +222,7 @@ In each of these examples, the MDP framework provides a structured way to model 
 	\question%
 	Optimal action-value function (p.67)
 
-	\emph{Give an equation for \(q_*\) in terms of \(\upsilon_*\) and the four-arguement \(p\).}
+	\emph{Give an equation for \(q_*\) in terms of \(\upsilon_*\) and the four-argument \(p\).}
 	\begin{solution}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -253,7 +276,7 @@ In each of these examples, the MDP framework provides a structured way to model 
 			\textbf{It is acceptable to express the state transition function} \(S^M(S_t, A_t)\), 
 			which returns the next state \(S_{t+1}\), in terms of the four primary random variables driving the stochastic process forward, 
 			rather than the transition probability function. Other problem parameters \- e.g., capacity of each car lot
-			and maximum number of cars that may be transferred \- should be incorporated as well.
+			and a maximum number of cars that may be transferred \- should be incorporated as well.
 			\item reward function: \(r(s, a, s^\prime)\), for all \(s, s^\prime \in S, a \in A_s\)
 		\end{itemize}
 		\item 
@@ -285,4 +308,5 @@ In each of these examples, the MDP framework provides a structured way to model 
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{questions}
+\printbibliography%
 \end{document}
