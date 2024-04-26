@@ -61,7 +61,6 @@
 	Make the three examples as different from each other as possible. 
 	The framework is abstract and flexible and can be applied in many different ways. 
 	Stretch its limits in some way in at least one of your examples.}
-
 	\begin{solution}
 		\begin{parts}
 			\item Autonomous Vehicle Navigation is a modern classic example.
@@ -150,8 +149,18 @@
 	After running the learning agent for a while, you find that it is showing no improvement in escaping from the maze.
 	What is going wrong? Have you effectively communicated to the agent what you want it to achieve?}
 	\begin{solution}
+		This is a great example of the problem of sparse rewards.
+		As described, the reward is irrelevant as it coincides with the end of the episode,
+		the final step of the episode is always worth +1 regardless of when that final step occurs.
+		Because there is no benefit realized during the episode, there is no time for the agent to learn anything beneficial.
+
+		One way that this implementation could work is if it were parallelized and updates allowed to be made after the completion of episodes.
+		However, it would probably be more accurate to consider this an evolutionary algorithm with a temporal fitness component 
+		rather than a reinforcement learning algorithm.
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\clearpage
 
 	%\setcounter{question}{8-1}% chktex 8
 	\question%
@@ -161,6 +170,21 @@
 	\(R_1 = 1, R_2 = 2, R_3 = 6, R_4 = 3\), and \(R_5 = 2\), with \(T = 5\). What are \(G_0, G_1, \ldots, G_5\)? 
 	Hint: Work backward.}
 	\begin{solution}
+		Working backward we can calculate,
+		\begin{center}
+			\begin{tabular}{ccc}
+				\toprule
+				$T$ & $R_T$ & $G_T$ \\
+				\midrule
+				5  & 2 & 0 \\
+				4  & 3 & 2 \\
+				3  & 6 & 4 \\
+				2  & 2 & 5 \\
+				1  & 1 & 4.5 \\
+				0  & 0 & 3.25 \\
+				\bottomrule
+			\end{tabular}
+		\end{center}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -171,6 +195,21 @@
 	\emph{Suppose \(\gamma=0.9\) and the reward sequence is \(R_1 = 2\) followed by an infinite sequence of \(7\)s. 
 	What are \(G_1\) and \(G_0\)?}
 	\begin{solution}
+		We can approach this problem in a manner similar to Sutton and Barto equation 3.10,
+		except that the geometric series will start one step later and feature a scalar multiple.
+		\begin{align*}
+			G_1 = \sum_{k=1}^{\infty} \gamma^k (7)
+			= 7\frac{\gamma^1-\gamma^\infty}{1-\gamma}
+			= 7\frac{\gamma^1}{1-\gamma}
+			= 7\frac{0.9}{0.1}
+			= 63
+		\end{align*}
+		and
+		\begin{align*}
+			G_0 = R_1 + \gamma G_1
+			= 2 + (0.9)63
+			= 58.7 .
+		\end{align*}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -190,6 +229,7 @@
 	Then give a second equation in which the expected value is written out explicitly in terms of \(\pi(a|s)\) 
 	such that no expected value notation appears in the equation.}
 	\begin{solution}
+
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -207,6 +247,7 @@
 	Then give a second equation, writing out the expected value explicitly in terms of \(p(s_0,r|s, a)\) defined by (3.2), 
 	such that no expected value notation appears in the equation.}
 	\begin{solution}
+
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -216,6 +257,7 @@
 
 	\emph{Give an equation for \(v_*\) in terms of \(q_*\).}
 	\begin{solution}
+
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -224,6 +266,7 @@
 
 	\emph{Give an equation for \(q_*\) in terms of \(\upsilon_*\) and the four-argument \(p\).}
 	\begin{solution}
+
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -232,6 +275,7 @@
 
 	\emph{Give an equation for \(\pi_*\) in terms of \(q_*\).}
 	\begin{solution}
+
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -244,6 +288,7 @@
 	\emph{In Example 4.1, if \(\pi\) is the equiprobable random policy, what is \(q_\pi(11, \texttt{down})\)? 
 	What is \(q_\pi(7, \texttt{down})\)?}
 	\begin{solution}
+
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -255,6 +300,7 @@
 	\(q_*\), analogous to that on page \(80\) for computing \(v_*\). 
 	Please pay special attention to this exercise, because the ideas involved will be used throughout the rest of the book.}
 	\begin{solution}
+
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
