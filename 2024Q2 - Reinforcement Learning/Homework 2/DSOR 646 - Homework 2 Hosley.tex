@@ -11,6 +11,7 @@
 \usepackage{amssymb, amsthm, mathtools, bbm}
 %\usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{pdfpages}
 
 \newcommand{\chapter}{2}
 \renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
@@ -26,6 +27,8 @@
 
 \usepackage[backend=biber, style=ieee]{biblatex}
 \addbibresource{refs.bib}
+
+\usepackage{algorithm2e}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\class}{ DSOR 646 $-$ Reinforcement Learning } % This is the name of the course 
@@ -229,7 +232,17 @@
 	Then give a second equation in which the expected value is written out explicitly in terms of \(\pi(a|s)\) 
 	such that no expected value notation appears in the equation.}
 	\begin{solution}
-
+		This diagram provides intuition related to Sutton and Barto's eq. 3.12
+		\begin{align*}
+			v_\pi(s)\doteq \mathbb E_\pi\left[ G_t|S_t=s \right] 
+			= \mathbb E_\pi\left[\left. \sum_{k=0}^\infty\gamma^k R_{t+k+1}\right|S_t=s\right], \quad\text{for all }s\in S
+		\end{align*}
+		and their later derivation of the Bellman equation wherein \(\mathbb E_\pi\left[ G_t|S_t=s \right]\)
+		represents the value derived from the `leaf nodes'.
+		This can be seen more directly in the above diagram as
+		\begin{align*}
+			v_\pi(s) = \sum_{a\in A}\pi(a|s)q_\pi(s,a).
+		\end{align*}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -247,6 +260,32 @@
 	Then give a second equation, writing out the expected value explicitly in terms of \(p(s_0,r|s, a)\) defined by (3.2), 
 	such that no expected value notation appears in the equation.}
 	\begin{solution}
+		The probability of any progression from the root node is defined as
+		\[ 
+			p(s^\prime, r|s,a)
+		\]
+		each reward is \(r_i\) and the value of the corresponding state \(s_i^\prime\)
+		is \(v_\pi(s_i^\prime)\), thus the value along each path \(i\) is
+		\[ 
+			G_i = r_i+\gamma v_\pi(s_i^\prime)
+		\]
+		given a discount factor \(\gamma\). Thus we can gather these reward and state values as
+		\[ 
+			q(s_0,a) =
+			\sum_{i\in I} p(s_i^\prime, r_i|s_0,a) \left[r_i+\gamma v_\pi(s_i^\prime)\right] 
+		\]
+		where \(I\) is the set of indices given to the leaf nodes. 
+		This is an expression of the value of action \(a\) taken from state \(s_0\)
+		without regard to a policy \(\pi\).
+		The sum of values across the potential outcomes scaled by the probability of those outcomes 
+		is the expected value. 
+		Rewriting the above expression to reflect that expectation will give us
+		\[
+			q(s_0,a) = \mathbb{E}\left[G|S=s_0,A=a\right]
+		\]
+		which is nearly identical to Sutton and Barto's eq. 3.13 except defined at a root node
+		\(s_0\) and without reference to a policy and its effect on the probability of the succeeding
+		state \(s^\prime\).
 
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -257,7 +296,7 @@
 
 	\emph{Give an equation for \(v_*\) in terms of \(q_*\).}
 	\begin{solution}
-
+		\[ v_*(s) = \max_{a\in\mathcal{A}(s)} q_*(s,a) \]
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -266,7 +305,7 @@
 
 	\emph{Give an equation for \(q_*\) in terms of \(\upsilon_*\) and the four-argument \(p\).}
 	\begin{solution}
-
+		\[ q_*(s,a) = \sum_{s^\prime,r} p(s^\prime,r|s, a)\left[ r + \gamma v_*(s^\prime) \right] \]
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -275,7 +314,7 @@
 
 	\emph{Give an equation for \(\pi_*\) in terms of \(q_*\).}
 	\begin{solution}
-
+		\[\pi_*(s) = \underset{a\in\mathcal{A}(s)}{\arg\max} \ q_*(s,a)\]
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -288,9 +327,21 @@
 	\emph{In Example 4.1, if \(\pi\) is the equiprobable random policy, what is \(q_\pi(11, \texttt{down})\)? 
 	What is \(q_\pi(7, \texttt{down})\)?}
 	\begin{solution}
-
+		In the case of \(q_\pi(11, \texttt{down})\), the result is a determinist transition into a terminal
+		state with a single transition reward \(r = -1\); thus \(q_\pi(11, \texttt{down}) = -1\).
+		
+		In the case of \(q_\pi(7, \texttt{down})\) we can use
+		\begin{align*}
+			q_\pi(s,a) &= \sum_{s^\prime,r} p(s^\prime,r|s, a)\left[r+\gamma q_\pi(s^\prime,a^\prime) \right] \\
+		\intertext{to see that}
+			q_\pi(7, \texttt{down}) &= (1) \left[ -1 + v_\pi(11) \right].
+		\end{align*}
+		Figure 4.1 provides a \(v_\pi(11)\) as \(-14\).
+		Thus, \(q_\pi(7, \texttt{down}) = -15\).
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	\clearpage
 
 	\setcounter{question}{5-1}% chktex 8
 	\question%
@@ -300,7 +351,21 @@
 	\(q_*\), analogous to that on page \(80\) for computing \(v_*\). 
 	Please pay special attention to this exercise, because the ideas involved will be used throughout the rest of the book.}
 	\begin{solution}
-
+		We can create an analogous algorithm by simply substituting the \(v\) related values with the \(q\) corresponding values
+		as described in problem 25 and 26. Leaving part 1 and 3 the same;\\
+		\begin{algorithm}[H]
+			2. Policy Evaluation \\
+			\While{\(\Delta<\theta\)}{
+				\(\Delta\leftarrow0\) \\
+				\ForAll{\(s\in\mathcal{S}\)}{
+					\(q(s,a) \leftarrow Q(s,a)\) \\
+					\(Q(s,a) \leftarrow \sum_{s^\prime,r} p(s^\prime,r|s, a)\left[ r + 
+						\gamma \sum_{a^\prime} \pi(a^\prime|s^\prime)Q(s^\prime,a^\prime) \right] \) \\
+					\(\Delta \leftarrow \max(\Delta,|q(s,a)-Q(s,a)|)\)
+				}
+			}
+			%\caption{Policy Iteration (Partial)}
+		\end{algorithm}
 	\end{solution}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -347,10 +412,9 @@
 		and computational time.
 	\end{enumerate}
 	\begin{solution}
-		\begin{enumerate}
-			\item 
-		\end{enumerate}
+		Please see accompanying \colorbox{lightgray}{Homework 2.ipynb} file.
 	\end{solution}
+	%\includepdf[pages=-]{homework 2.pdf}
 	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \end{questions}
