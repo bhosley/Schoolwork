@@ -118,87 +118,6 @@ class MCC():
         mean, hw = self.confinterval(test_data)
         return mean, hw
 
-    def train_on_policy(self, num_episodes, replications):
-        time_start = time.perf_counter()
-        # loop through each algorithm replication for current design run
-        for z in range(replications):
-            # initialize Q-table
-            Q = self.qinit*np.ones(self.SAsize)*(self.qrange[1]-self.qrange[0]) +self.qrange[0]
-            # initialize state-action counter
-            C = np.zeros(self.SAsize)
-
-            print(f"\nMCC (on-policy)(eps_a={self.eps_a:<3.2f},eps_b={self.eps_b:<3.2f},q0={self.qinit}) rep {z}...")
-
-            # loop through each episode
-            for m in range(num_episodes):
-                # initialize episode complete flag (when system enters terminal state)
-                terminated, truncated = False, False
-                # initialize state, action, and reward queues
-                state_queue, action_queue, reward_queue = collections.deque([]),collections.deque([]),collections.deque([])
-                # reset environment and set seeds
-                state = self.env.reset(seed=int(z*1e6+m+self.offset))[0]
-                np.random.seed(int(z*1e6+m+self.offset))    # set numpy random number generator seed
-
-                # implement epsilon-greedy exploration mechanism
-                if np.random.rand() > self.epsilon(m):                   # With epsilon probability:
-                    action = np.argmax(Q[tuple(self.phi(state))])   # act greedy by taking best action at current state using Q bar
-                else:
-                    action = self.env.action_space.sample()              # act randomly with probability epsilon to explore
-
-                # MCC episode generation, forward loop
-                while not (terminated or truncated):
-                    state_queue.append(state)# record state
-                    action_queue.append(action)# record action
-                    # apply action and observe system information
-                    state, reward, terminated, truncated, _ = self.env.step(action)
-                    reward_queue.append(reward)# record reward
-                    # select action with epsilon-greedy exploration mechanism
-                    if np.random.rand() > self.epsilon(m):                   # With epsilon probability:
-                        action = np.argmax(Q[tuple(self.phi(state))])   # act greedy by taking best action at current state using Q bar
-                    else:
-                        action = self.env.action_space.sample()              # act randomly with probability epsilon to explore
-
-                Gm = 0 # initialize episode total discounted reward
-
-                #print(len(state_queue))
-                #exit()
-
-                # MCC update l-table, backward loop
-                while len(state_queue) > 0:
-                    # define state, action, reward from ends of queues
-                    s = state_queue.pop()       # pop() method removes last value
-                    s = self.phi(s)             # discretize state
-                    a = action_queue.pop()      
-                    r = reward_queue.pop()
-                    Gm = self.gamma*Gm + r      # update total discounted reward
-                    sa = tuple(np.append(s,a))  # specify state-action variable
-                    C[sa] += 1                  # update state-action counter
-                    Q[sa] += (Gm-Q[sa])/C[sa]   # update Q-table via incremental update mechanism
-
-                self.Gzm.append((z,Gm))  # record performance
-
-                # test current policy (as represented by current w and iht) every test_freq episodes
-                if m % self.test_freq == 0:
-                    mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
-                    self.GzmTest.append((z, m, mean, hw))
-
-                    # update best scores if necessary
-                    self.update_and_print(m,mean,hw,Q)
-
-            # last test of current algorithm replication
-            mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
-            self.GzmTest.append((z,num_episodes,mean,hw))
-
-            # update best scores if necessary
-            self.update_and_print(m,mean,hw,Q)
-
-        self.total_episodes += num_episodes
-        # Update execution time record
-        execution_time = time.perf_counter()-time_start
-        total_time = (self.total_training_reps * self.avg_execution_time) + execution_time
-        self.total_training_reps += replications
-        self.avg_execution_time = total_time/self.total_training_reps
-
     def show_results(self):
         Z = self.total_training_reps
         M = self.total_episodes
@@ -306,16 +225,172 @@ class MCC():
 
         return maxETDR, maxETDRhw, meanMaxTestEETDR, maxTestHW, meanAULC, hwAULC, self.avg_execution_time
 
+    def train_on_policy(self, num_episodes, replications):
+        time_start = time.perf_counter()
+        # loop through each algorithm replication for current design run
+        for z in range(replications):
+            # initialize Q-table
+            Q = self.qinit*np.ones(self.SAsize)*(self.qrange[1]-self.qrange[0]) +self.qrange[0]
+            # initialize state-action counter
+            C = np.zeros(self.SAsize)
+
+            print(f"\nMCC (on-policy)(eps_a={self.eps_a:<3.2f},eps_b={self.eps_b:<3.2f},q0={self.qinit}) rep {z}...")
+
+            # loop through each episode
+            for m in range(num_episodes):
+                # initialize episode complete flag (when system enters terminal state)
+                terminated, truncated = False, False
+                # initialize state, action, and reward queues
+                state_queue, action_queue, reward_queue = collections.deque([]),collections.deque([]),collections.deque([])
+                # reset environment and set seeds
+                state = self.env.reset(seed=int(z*1e6+m+self.offset))[0]
+                np.random.seed(int(z*1e6+m+self.offset))    # set numpy random number generator seed
+
+                # implement epsilon-greedy exploration mechanism
+                if np.random.rand() > self.epsilon(m):                   # With epsilon probability:
+                    action = np.argmax(Q[tuple(self.phi(state))])   # act greedy by taking best action at current state using Q bar
+                else:
+                    action = self.env.action_space.sample()              # act randomly with probability epsilon to explore
+
+                # MCC episode generation, forward loop
+                while not (terminated or truncated):
+                    state_queue.append(state)# record state
+                    action_queue.append(action)# record action
+                    # apply action and observe system information
+                    state, reward, terminated, truncated, _ = self.env.step(action)
+                    reward_queue.append(reward)# record reward
+                    # select action with epsilon-greedy exploration mechanism
+                    if np.random.rand() > self.epsilon(m):                   # With epsilon probability:
+                        action = np.argmax(Q[tuple(self.phi(state))])   # act greedy by taking best action at current state using Q bar
+                    else:
+                        action = self.env.action_space.sample()              # act randomly with probability epsilon to explore
+
+                Gm = 0 # initialize episode total discounted reward
+
+                # MCC update l-table, backward loop
+                while len(state_queue) > 0:
+                    # define state, action, reward from ends of queues
+                    s = state_queue.pop()       # pop() method removes last value
+                    s = self.phi(s)             # discretize state
+                    a = action_queue.pop()      
+                    r = reward_queue.pop()
+                    Gm = self.gamma*Gm + r      # update total discounted reward
+                    sa = tuple(np.append(s,a))  # specify state-action variable
+                    C[sa] += 1                  # update state-action counter
+                    Q[sa] += (Gm-Q[sa])/C[sa]   # update Q-table via incremental update mechanism
+
+                self.Gzm.append((z,Gm))  # record performance
+
+                # test current policy (as represented by current w and iht) every test_freq episodes
+                if m % self.test_freq == 0:
+                    mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
+                    self.GzmTest.append((z, m, mean, hw))
+
+                    # update best scores if necessary
+                    self.update_and_print(m,mean,hw,Q)
+
+            # last test of current algorithm replication
+            mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
+            self.GzmTest.append((z,num_episodes,mean,hw))
+
+            # update best scores if necessary
+            self.update_and_print(m,mean,hw,Q)
+
+        self.total_episodes += num_episodes
+        # Update execution time record
+        execution_time = time.perf_counter()-time_start
+        total_time = (self.total_training_reps * self.avg_execution_time) + execution_time
+        self.total_training_reps += replications
+        self.avg_execution_time = total_time/self.total_training_reps
+
+    def train_off_policy(self, num_episodes, replications):
+        time_start = time.perf_counter()
+        # loop through each algorithm replication for current design run
+        for z in range(replications):
+            # initialize Q-table
+            Q = self.qinit * np.ones(self.SAsize) * (self.qrange[1] - self.qrange[0]) + self.qrange[0]
+            # initialize state-action counter
+            C = np.zeros(self.SAsize)
+            # initialize policy
+            pi = np.argmax(Q,axis=-1)
+
+            print(f"\nMCC (off-policy)(eps_a={self.eps_a:<3.2f},eps_b={self.eps_b:<3.2f},q0={self.qinit}) rep {z}...")
+
+            # loop through each episode
+            for m in range(num_episodes):
+                # initialize episode complete flag (when system enters terminal state)
+                terminated, truncated = False, False
+                # initialize state, action, and reward queues
+                state_queue, action_queue, reward_queue = collections.deque([]), collections.deque([]), collections.deque([])
+                # reset environment and set seeds
+                state = self.env.reset(seed=int(z*1e6 + m + self.offset))[0]
+                np.random.seed(int(z*1e6 + m + self.offset))    # set numpy random number generator seed
+
+                # Produce a random soft policy
+                b = np.random.rand(*Q.shape) * Q.max()
+                # MCC episode generation, forward loop, using b
+                while not (terminated or truncated):
+                    if np.random.rand() > self.epsilon(m):              # With epsilon probability:
+                        action = np.argmax(b[tuple(self.phi(state))])   # act greedy by taking best action at current state using Q bar
+                    else:
+                        action = self.env.action_space.sample()         # act randomly with probability epsilon to explore
+                    state_queue.append(state)  # record state
+                    action_queue.append(action)  # record action
+                    # apply action and observe system information
+                    state, reward, terminated, truncated, _ = self.env.step(action)
+                    reward_queue.append(reward)  # record reward
+
+                Gm = 0  # initialize episode total discounted reward
+                W = 1.0 # Initial weighted importance
+
+                # MCC update Q-table, backward loop with weighted importance sampling
+                while len(state_queue) > 0:
+                    s = state_queue.pop()   # pop() method removes last value
+                    s = self.phi(s)         # discretize state
+                    a = action_queue.pop()
+                    r = reward_queue.pop()
+                    sa = tuple(np.append(s, a))         # specify state-action variable
+
+                    Gm = self.gamma * Gm + r            # update total discounted reward
+                    C[sa] += W                          # update state-action counter with weight
+                    Q[sa] += (W / C[sa]) * (Gm - Q[sa]) # update Q-table via weighted incremental update mechanism
+                    pi[s] = np.argmax(Q[tuple(s)])
+                    if a != pi[*s]: continue            # exit inner loop (proceed to next episode)
+                    W *= 1 / b[sa]
+
+                self.Gzm.append((z, Gm))  # record performance
+
+                # test current policy (as represented by current Q) every test_freq episodes
+                if m % self.test_freq == 0:
+                    mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
+                    self.GzmTest.append((z, m, mean, hw))
+
+                    # update best scores if necessary
+                    self.update_and_print(m, mean, hw, Q)
+
+            # last test of current algorithm replication
+            mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
+            self.GzmTest.append((z, num_episodes, mean, hw))
+
+            # update best scores if necessary
+            self.update_and_print(m, mean, hw, Q)
+
+        self.total_episodes += num_episodes
+        # Update execution time record
+        execution_time = time.perf_counter() - time_start
+        total_time = (self.total_training_reps * self.avg_execution_time) + execution_time
+        self.total_training_reps += replications
+        self.avg_execution_time = total_time / self.total_training_reps
+
 
 
 """
 Test
 
-
 num_episodes=int(0.5e3)
-replications=10
+replications=5
 
 pol = MCC()
-pol.train_on_policy(num_episodes, replications)
-pol.show_results(num_episodes, replications)
+pol.train_off_policy(num_episodes, replications)
+pol.show_results()
 """
