@@ -3,7 +3,7 @@ from joblib import Parallel, delayed
 from datetime import datetime
 import time
 
-import matplotlib. pyplot as plt
+import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import statsmodels.api as sm
@@ -13,7 +13,7 @@ from statsmodels.formula.api import ols
 NUM_CPU_CORE_PROCS = 6
 column_names = ["Run Index", "eps_a", "eps_b", "Init Qbar", "Sup EETDR", "Sup EETDR hw", "Mean Max EETDR", "Mean Max EETDR hw", "Time-Avg EETDR", "Time-Avg EETDR hw", "Secs per run", "Score"]
 
-def parallel_lhs(experiment, num_runs=10, num_alg_feats=3, rng_seed=0):
+def parallel_lhs(experiment, num_runs=10, num_alg_feats=3, rng_seed=0, on_or_off='on'):
     """ Execute LHS Experiment in Parallel """
      # Needs 40
 
@@ -43,20 +43,36 @@ def parallel_lhs(experiment, num_runs=10, num_alg_feats=3, rng_seed=0):
     results_table = np.column_stack((results_table[:,0], factor_table, results_table[:,1:], score))
     # grab data for performance scatter plot
     results_table = np.row_stack((column_names, results_table))
-    filename_DOE = "MCC_onpolicy_results_DOE_" + datetime.now().strftime('%Y%m%d_%H%M%S') + ".csv"
+    filename_DOE = f"MCC_{on_or_off}policy_results_DOE_" + datetime.now().strftime('%Y%m%d_%H%M%S') + ".csv"
     np.savetxt(filename_DOE, results_table, delimiter = ",", fmt = "%s")
 
     return factor_table, results_table
 
-def plot_results(results_table):
+def plot_results(results_table, on_or_off='on'):
     x = np.array(results_table[1:,6],float) # 0-index appears to be title
     y = np.array(results_table[1:,8],float) # 0-index appears to be title
     # create scatter plot
-    plt. scatter(x, y, label="MCC (on-policy) -- 40 reps per run, 10k episodes per rep")
+    plt. scatter(x, y, label=f"MCC ({on_or_off}-policy) -- 40 reps per run, 10k episodes per rep")
     # setting title and labels
-    plt.title("MCC (on-policy) LHS DOE Performance Results")
+    plt.title(f"MCC ({on_or_off}-policy) LHS DOE Performance Results")
     plt.xlabel("Mean Maximum EETDR")
     plt.ylabel("Mean Time-Average EETDR")
+    # grid on
+    plt.grid()
+    # legend on
+    plt.legend(loc='upper left', fontsize=7)
+    # display the plot
+    plt.show()
+
+def plot_param_comparison(results_table, on_or_off='on'):
+    y = np.array(results_table[1:,-1],float) # 0-index appears to be title
+    # create scatter plot
+    plt.scatter(np.array(results_table[1:,1],float), y, label="eps_a")
+    plt.scatter(np.array(results_table[1:,2],float), y, label="eps_b")
+    plt.scatter(np.array(results_table[1:,3],float), y, label="Q-init")
+    # setting title and labels
+    plt.title(f"MCC ({on_or_off}-policy) LHS DOE Performance Results -- 40 reps per run, 10k episodes per rep")
+    plt.ylabel("Score")
     # grid on
     plt.grid()
     # legend on

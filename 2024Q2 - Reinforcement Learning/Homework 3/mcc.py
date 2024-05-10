@@ -1,5 +1,5 @@
 """
-Large amount of code borrowed from Dr. Robbins
+Large amount of code 'borrowed' from Dr. Robbins
 """
 import gymnasium as gym
 import numpy as np
@@ -10,30 +10,21 @@ from sklearn import metrics
 import time
 
 class MCC():
-    def __init__(self,
-                 eps_a = 0.5,
-                 eps_b = 0.5,
-                 qinit = 1.0,
-                 ) -> None:
+    def __init__(self, eps_a = 0.5, eps_b = 0.5, qinit = 1.0, ) -> None:
         self.env = gym.make('CartPole-v1')
         """ Algorithm Parameters for Hyperparameter Tuning """
         # eps-greedy stepsize rule
         self.eps_a = eps_a
         self.eps_b = eps_b
         self.qinit = qinit
-        # number of Intervals per dimension
-        # e.g., using 11 intervals indicates 12 discrete states per dim
-        self.Sintervals = 11 
-
         """ """
+        # number of Intervals per dimension
+        self.Sintervals = 11    # e.g., using 11 intervals indicates 12 discrete states per dim
         self.qrange = (0,500)    # range of q-values for environment (for setting qinit)
         self.gamma = 0.999       # discount rate
-        #Z = 10 # number of algorithm replications
-        #M = int(0.5e3) # number of episodes
         self.test_freq = 25 # policy evaluation test frequency (1/test_freq)
         self.num_test_reps = 30 # number of replications per test 
         self.offset = 0 # random number generator seed manual offset 
-
         """Discretizing the Space"""
         self.Slow = np .array([-2.5,-4.0,-0.3,-1.9])
         self.Shigh = np.array([2.5, 3.3, 0.3, 3.9])
@@ -41,24 +32,18 @@ class MCC():
         self.Sunit = Srange/self.Sintervals
         Ssize = (self.Sintervals+1) * np.ones(len(self.env.observation_space.low)).astype(int) # intervals * number of dimensions
         self.SAsize = np.append(Ssize,self.env.action_space.n) # size of state-action space
-
-
         self.Gzm = [] # record each episode's cumulative reward to measure online performance
         self.GzmTest = []
-
         # Initialize the data structure to hold the Top 2 scores and VEA parameters 
         self.num_best_scores = 10
         self.best_scores = [{'ETDR': -np.inf, 'ETDR_hw': np.inf, 'Q': None} for _ in range(self.num_best_scores)]
-
         self.total_training_reps = 0
         self.avg_execution_time = 0.0
         self.total_episodes = 0
 
-
     def ordinal(self,n):   # create string for ordinal number
         suffix = ['th', 'st', 'nd', 'rd', 'th'][min(n%10, 4)]
-        if 11 <= (n % 100) <= 13:
-            suffix = 'th'
+        if 11 <= (n % 100) <= 13:suffix = 'th'
         return str(n) + suffix
 
     def epsilon(self,n) :
@@ -66,7 +51,8 @@ class MCC():
 
     def phi(self, Scont) : 
         """convert continuous state to discrete 2D state var representation"""
-        return np.round((Scont-self.Slow)/self.Sunit).astype(int)
+        a = np.round((Scont-self.Slow)/self.Sunit).astype(int)
+        return np.clip(a,0,self.Sintervals)
 
     def confinterval(self, data, alpha=0.05):
         n = np.size(data)               # number of data points
@@ -101,8 +87,7 @@ class MCC():
         # run num_test_reps replications per test
         for rep in range(num_reps):
             # initialize episode complete flag (i.e., when system enters terminal state)
-            terminated = False
-            truncated = False
+            terminated, truncated = False, False
             # initialize episode reward
             Gtest = 0
             # initialize the system by resetting the environment, obtain state var
@@ -112,13 +97,12 @@ class MCC():
                 action = np.argmax(Q[tuple(self.phi(state))])
                 # apply action and observe system information
                 state, reward, terminated, truncated, _ = self.env.step(action)
-                # update episode cumulative reward
-                Gtest += reward
+                Gtest += reward    # update episode cumulative reward
             test_data[rep] = Gtest
         mean, hw = self.confinterval(test_data)
         return mean, hw
 
-    def show_results(self):
+    def show_results(self, on_or_off='on'):
         Z = self.total_training_reps
         M = self.total_episodes
 
@@ -148,7 +132,7 @@ class MCC():
         plt.plot(np.arange(0,M+1,self.test_freq),avgTestEETDR-avgTestHW, color='blue', linestyle = '--', linewidth = 0.5)
         plt.xlabel('Episode')
         plt.ylabel('Mean Estimated Expected\nTotal Discounted Reward (EETDR)')
-        plt.title(f'MCC (on-policy) Algorithm Performance, {Z} reps, {np.round(self.avg_execution_time,1)} min/rep\
+        plt.title(f'MCC ({on_or_off}-policy) Algorithm Performance, {Z} reps, {np.round(self.avg_execution_time,1)} sec/rep\
                   \ngamma={self.gamma}, eps_a={self.eps_a}, eps_b={self.eps_b}, g0={self.qinit}, |S|/d={self.Sintervals+1} \nMean Max EETDR: {meanMaxTestEETDR:>6.2f} +/- {maxTestHW:4.2f}, Mean Time-Avg EETDR = {meanAULC:>6.2f} +/- {hwAULC:4.2f}) \nSuperlative Policy EETDR: {maxETDR:>6.2f} +/- {maxETDRhw:4.2f}', fontsize =9)
         plt.legend(loc="lower right",fontsize=7)
         plt.xlim([-0.05*M, 1.05*M])
@@ -168,10 +152,7 @@ class MCC():
         test_data = np.zeros((num_reps_show)) # original test_data = np.zeros((num_runs_show))
         # perform test replications
         for rep in range(num_reps_show):
-            # initialize episode complete flag (i.e., when system enters terminal state)
-            # done = False
-            terminated = False
-            truncated =False
+            terminated, truncated = False, False
             # initialize episode reward
             Gtest = 0
             # initialize the system by resetting the environment, obtain state var
@@ -185,7 +166,6 @@ class MCC():
                 Gtest += reward
             test_data[rep] = Gtest
             print(f"Episode {rep} ETDR: {np.round(Gtest,4)}")
-            #time.sleep(1)
         env.close()
         mean, hw = self.confinterval(test_data)
         print (f"\n Rendered episodes... ETDR CI: {np.round(mean,1)} +/- {np.round(hw,1)}")
@@ -193,8 +173,7 @@ class MCC():
 
     def find_superlative(self, num_test_reps=30):
         # initialize list of means and half-widths for testing top policies
-        mean_values = []
-        hw_values = []
+        mean_values, hw_values = [], []
         # loop through top policies stored in best_scores to find superlative policy
         for i, score in enumerate(self.best_scores):
             mean, hw = self.evaluate_policy_test(score['Q'], 2*num_test_reps,2)
@@ -238,32 +217,26 @@ class MCC():
 
             # loop through each episode
             for m in range(num_episodes):
+                np.random.seed(int(z*1e6+m+self.offset))    # set numpy random number generator seed
                 # initialize episode complete flag (when system enters terminal state)
                 terminated, truncated = False, False
                 # initialize state, action, and reward queues
                 state_queue, action_queue, reward_queue = collections.deque([]),collections.deque([]),collections.deque([])
                 # reset environment and set seeds
                 state = self.env.reset(seed=int(z*1e6+m+self.offset))[0]
-                np.random.seed(int(z*1e6+m+self.offset))    # set numpy random number generator seed
-
-                # implement epsilon-greedy exploration mechanism
-                if np.random.rand() > self.epsilon(m):                   # With epsilon probability:
-                    action = np.argmax(Q[tuple(self.phi(state))])   # act greedy by taking best action at current state using Q bar
-                else:
-                    action = self.env.action_space.sample()              # act randomly with probability epsilon to explore
 
                 # MCC episode generation, forward loop
                 while not (terminated or truncated):
-                    state_queue.append(state)# record state
-                    action_queue.append(action)# record action
+                    # select action with epsilon-greedy exploration mechanism
+                    if np.random.rand() > self.epsilon(m):                  # With epsilon probability:
+                        action = np.argmax(Q[tuple(self.phi(state))])       # act greedy by taking best action at current state using Q bar
+                    else:
+                        action = self.env.action_space.sample()             # act randomly with probability epsilon to explore
+                    state_queue.append(state)       # record state
+                    action_queue.append(action)     # record action
                     # apply action and observe system information
                     state, reward, terminated, truncated, _ = self.env.step(action)
-                    reward_queue.append(reward)# record reward
-                    # select action with epsilon-greedy exploration mechanism
-                    if np.random.rand() > self.epsilon(m):                   # With epsilon probability:
-                        action = np.argmax(Q[tuple(self.phi(state))])   # act greedy by taking best action at current state using Q bar
-                    else:
-                        action = self.env.action_space.sample()              # act randomly with probability epsilon to explore
+                    reward_queue.append(reward)     # record reward
 
                 Gm = 0 # initialize episode total discounted reward
 
@@ -285,14 +258,12 @@ class MCC():
                 if m % self.test_freq == 0:
                     mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
                     self.GzmTest.append((z, m, mean, hw))
-
                     # update best scores if necessary
                     self.update_and_print(m,mean,hw,Q)
 
             # last test of current algorithm replication
             mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
             self.GzmTest.append((z,num_episodes,mean,hw))
-
             # update best scores if necessary
             self.update_and_print(m,mean,hw,Q)
 
@@ -364,14 +335,12 @@ class MCC():
                 if m % self.test_freq == 0:
                     mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
                     self.GzmTest.append((z, m, mean, hw))
-
                     # update best scores if necessary
                     self.update_and_print(m, mean, hw, Q)
 
             # last test of current algorithm replication
             mean, hw = self.evaluate_policy_test(Q, self.num_test_reps)
             self.GzmTest.append((z, num_episodes, mean, hw))
-
             # update best scores if necessary
             self.update_and_print(m, mean, hw, Q)
 
@@ -381,16 +350,3 @@ class MCC():
         total_time = (self.total_training_reps * self.avg_execution_time) + execution_time
         self.total_training_reps += replications
         self.avg_execution_time = total_time / self.total_training_reps
-
-
-
-"""
-Test
-
-num_episodes=int(0.5e3)
-replications=5
-
-pol = MCC()
-pol.train_off_policy(num_episodes, replications)
-pol.show_results()
-"""
