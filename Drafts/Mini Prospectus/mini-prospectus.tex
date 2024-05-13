@@ -8,7 +8,9 @@
 % commented out because they are probably not needed for your situation.
 
 % Main document information
-\title{ Working Title}
+\title{ WORKING TITLE:\\
+    Efficiency, Efficacy, and Explainability in\\
+    Heterogeneous Agent Reinforcement Learning }
 \author{Brandon Hosley}
 % \authorsecond{}
 % \authorthird{}
@@ -17,9 +19,9 @@
 % \ranksecond{}
 % \rankthird{}
 % \rankfourth{}
-\previousdegrees{B.Sc., B.Sc., M.Sc. M.Sc.}
+\previousdegrees{B.Sc., M.Sc.}
 \newdegree{Doctor of Philosophy in Data Science}
-\graduationdate{September 2024}
+\graduationdate{May 2026}
 \department{\ENS} % \ENY, \ENG, \ENP, \ENC, \ENS, or \ENV
 \doctype{prospectus}
 \docdesignator{AFIT-ENS-P-XX-X-XXX}
@@ -93,33 +95,36 @@
 \usepackage{cleveref}
 
 % NOTE: Google "Overleaf Getting started with BibLaTeX" for guidance.
-\usepackage[style=apa]{biblatex} % bibliographies
-\addbibresource{other/refs.bib} % name of the bibliography file
+\usepackage[style=ieee]{biblatex} % bibliographies
+\addbibresource{other/Prospectus.bib} % name of the bibliography file
 
 % Define the default location to look for figures.
 % \graphicspath{{fig}} % Uncomment to use
 
-\usepackage[nomain,abbreviations,section]{glossaries-extra}
-%\usepackage{glossaries-extra}
-%\loadglsentries{glossary.tex}
-%\loadglsentries{abbreviations}
-%\makenoidxglossaries%
+% Define types and file locations of glossaries
+\usepackage[nomain,abbreviations,symbols,section]{glossaries-extra}
 \makeglossaries%
 \input{abbreviations}
-%\input{glossary.tex}
+\input{symbols}
+
+% Formatting tools
+\usepackage{tcolorbox}  % For call out boxes
+
 
 % ------------------------------ body of paper ---------------------------------
 
 \begin{document}
 \maketitle % This command will create all the prefatory pages.
+%\printunsrtglossary[type=symbols,style=long]
+\printunsrtglossary[type=symbols,title=Summary of Notation]
 
 % --------------------
 \chapter{Introduction}
 \input{introduction.tex}
-\gls{afit}
 
 % -------------------------
-\chapter{Literature Review}
+\chapter{Literature Review}%
+\label{ch:literature_review}
 \input{literature_review.tex}
 
 % -------------------
@@ -160,7 +165,7 @@
 \nocite{*} % Uncomment to print all .bib entries, regardless of citation.
 \clearpage\phantomsection% Creates new page and section for bibliography.
 \addcontentsline{toc}{appendix}{\bibname} % Adds bib to table of contents.
-%\printbibliography% Prints the bibliography.
+\printbibliography% Prints the bibliography.
 
 % --------------------------------- optional -----------------------------------
 %\begin{vita} % Add name within brackets for multiple vitas.

@@ -1,12 +1,138 @@
-% Introduction
+% Introduction %%%%%####################%%%%%%%%%%%%%%%%%%%%####################%%%%%%%%%%%%%%%%%%%%
+\section{Motivation}%
+\label{sec:motivation}
 
-In this section lets talk about the dissertation motivation.
-Example:
-Exploration of Pareto Frontiers in curriculum design for multi-agent reinforcement learning. (Quality v expense)
+In the rapidly evolving field of artificial intelligence, reinforcement learning has become a 
+cornerstone for developing autonomous decision-making systems~\cite{sutton2018}.
+However, the complexity of real-world challenges often surpasses the capabilities of solitary agents,
+necessitating a shift towards more collaborative solutions~\cite{cao2012}.
+This dissertation is driven by the potential of \gls{harl}, an extension of \gls{marl}
+wherein multiple agents with varied capabilities work together to accomplish common objectives. 
+Such systems are anticipated to significantly improve problem-solving efficiency and adaptability, 
+surpassing the performance of homogeneous agent groups~\cite{calvo2018}.
+%calvo - traffic management
 
+The concept of heterogeneity among agents—featuring diverse skills, perspectives, 
+and problem-solving strategies—reflects the complexity of collaborative human endeavors, 
+providing a robust framework for navigating complex, dynamic environments. 
+The practical applications of this approach are vast, 
+particularly in scenarios where coordination and cooperation are crucial. 
+For example, drone swarms in search and rescue missions can leverage diverse capabilities, 
+such as various sensory equipment or distinct maneuverability traits, 
+enabling more thorough area coverage and expedited victim detection~\cite{hoang2023,kouzeghar2023}.
+Similarly, agricultural robots outfitted with different sensors and tools can concurrently 
+execute multiple tasks—ranging from harvesting to soil analysis and pest control—
+thereby substantially enhancing efficiency and increasing crop yields~%
+\cite{carbone2018,amarasinghe2019}.
 
-\section{Background and context}%
+This dissertation seeks to advance the growing body of research in this field by developing 
+methodologies and frameworks that enable effective collaboration among heterogeneous agents. 
+By exploring the synergy between diverse agents, this work aims to harness their collective 
+potential to address challenges currently unmanageable by homogeneous systems. 
+Specifically, it will explore novel strategies for coordination and decision-making 
+that enhance adaptability and efficiency in complex scenarios.
+
+\section{Background}%
 \label{sec:background}
+
+
+
+\begin{comment}
+
+\subsection*{Markov Decision Processes}
+
+%Markov Decision Processes (MDPs)
+\glspl*{mdp} are foundational to the field of reinforcement learning. 
+An examination of the literature cited in this dissertation reveals that the terminology and 
+descriptions of MDPs in early papers have significantly influenced the language still used in 
+the field today.
+
+
+\end{comment}
+
+\subsection*{Reinforcement Learning: From Deep Blue to AlphaStar}
+
+\gls{rl} has marked a number of significant milestones in outperforming humans in competitive domains.
+One of the most pivotal events occurred in 1997 when IBM's Deep Blue defeated world chess champion
+Garry Kasparov. Though powered mainly by brute force computation and hand-tuned algorithms rather
+than learning-based approaches~\cite{campbell2002},
+Deep Blue's victory set the stage for the broader application of \gls{ai} in complex strategic games.
+
+The field progressed significantly with DeepMind's introduction of AlphaGo in 2015.
+AlphaGo employed a combination of deep neural networks and Monte Carlo tree search~\cite{silver2016},
+initially trained on human expert games and further improved through self-play.
+This method enabled AlphaGo to defeat one of the world's top Go players, illustrating \gls{rl}'s
+potential to tackle challenges in games with vast state spaces and decisions typically driven by
+human intuition.
+
+This breakthrough was quickly followed by the development of AlphaZero~\cite{silver2017},
+which revolutionized the field by mastering chess, Go, and Shogi through self-play alone,
+without any human-derived data~\cite{silver2017a}.
+The method of self-play demonstrated not only versatility across different games but also the
+capacity of RL systems to develop domain-independent strategies.
+
+A subsequent major advancement was achieved with DeepMind's AlphaStar~\cite{vinyals2019},
+which demonstrated that advanced RL models could handle complex strategies,
+real-time decision-making, and intricate player interactions. AlphaStar's success in 
+defeating professional StarCraft II players was particularly notable due to the game's demand 
+for long-term strategic planning and quick tactical responses in an open-ended scenario.
+
+To achieve the level of proficiency demonstrated in AlphaStar, Vinyals et al.~employed a 
+multifaceted approach that integrated deep learning, imitation learning, reinforcement learning, 
+and multi-agent learning. The specifics of these contributions will be explored in 
+detail in Chapter~\Cref{ch:literature_review}.
+
+
+
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+\subsection*{Multi-agent Reinforcement Learning}
+
+As early as 1951, Brown proposed a method for calculating \gls{nash} in two-player games 
+through a process he termed fictitious play, which involves iteratively updating strategies. 
+Unlike simultaneous strategy updates, Brown's method applies updates sequentially—a condition 
+that Berger later proved to be sufficient for guaranteed convergence to \gls{nash} in 
+nondegenerate ordinal games~\cite{brown1951iterative, berger2005, berger2007}. 
+This foundational concept paved the way for later developments in game-theoretical 
+approaches to multi-agent systems.
+
+The development in this area remained comparatively stunted until significant 
+strides were made in single-agent methods. Traditional Bellman-Equation-style solutions, 
+while effective in single-agent settings and certain types of multi-agent games like zero-sum and 
+common-payoff games, faced greater difficulty in stochastic or degenerate games~\cite{shoham2007a}.
+These challenges highlighted the limitations of extending single-agent frameworks directly to 
+multi-agent environments without modifications.
+
+The introduction of multiple independent agents in an environment introduces additional complexity;
+the game becomes non-stationary from the perspective of any single agent~\cite{busoniu2008}. 
+This non-stationarity poses unique challenges as each agent must adapt to the actions of others 
+whose strategies are also evolving, significantly complicating the learning process.
+
+In this realm, the extension into \gls{marl} allows for the consideration of a wide spectrum of 
+interactions as described in game theory, ranging from purely competitive to purely cooperative. 
+\gls{marl} addresses the multitude of challenges associated with these diverse styles of interaction,
+offering frameworks and strategies that are adaptable to varying degrees of cooperation and 
+competition among agents~\cite{lowe2020}.
+
+In some cases, the interactions of interest in \gls{marl} are asymmetrical, 
+adding another layer of complexity to strategy formulation and execution~\cite*{sun2023}.
+Among the most notable successes in handling mixed modes of cooperation and competition is 
+OpenAI's achievement with OpenAI Five. In this project, a team of agents reached superhuman 
+performance in the multiplayer game Dota 2, utilizing a blend of techniques including a unique 
+method of skill transfer known as ``surgery'' and extensive use of self-play~\cite{berner2019}.
+This milestone not only demonstrated the capability of MARL systems to manage and excel in intricate, 
+dynamically shifting competitive environments but also showcased the potential for these systems to 
+develop and refine collaborative strategies among heterogeneous agents.
+
+
+
+
 
 \section{Problem statement}%
 \label{sec:problem_statement}
@@ -17,15 +143,11 @@ Exploration of Pareto Frontiers in curriculum design for multi-agent reinforceme
 \section{Relevance and importance of the research}%
 \label{sec:relevance_and_importance}
 
-We will want at least 1 paragraph per contribution.
 
-Declarative on the structure of the remainder of the document:
 
-This document is organized as follows. 
-\Cref{ch:methodology} details the process of training a \gls{CNN} that produces feature points and descriptors, and the method of evaluating this network. 
-\Cref{ch:results} presents the results of evaluating variations of the feature detector/descriptor network, as well as the results of the \gls{EVIO} pipeline. 
-Finally, \Cref{ch:conclusion} discusses the conclusions drawn from the results.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{tcolorbox}[colback=blue!5,colframe=blue!30!black,title=Note to Editor]
+    We will want at least 1 paragraph per contribution.
 
+    Declarative on the structure of the remainder of the document:
+\end{tcolorbox}
 
