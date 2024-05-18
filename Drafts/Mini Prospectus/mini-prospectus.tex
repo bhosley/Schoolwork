@@ -115,8 +115,7 @@
 
 \begin{document}
 \maketitle % This command will create all the prefatory pages.
-%\printunsrtglossary[type=symbols,style=long]
-\printunsrtglossary[type=symbols,title=Summary of Notation]
+
 
 % --------------------
 \chapter{Introduction}
@@ -138,6 +137,8 @@
 \label{ch:results}% chktex 24
 \input{results.tex}
 
+~\label{ch:discussion}
+
 % ------------------
 %\chapter{Conclusion}%
 \label{ch:conclusion}% chktex 24
@@ -156,9 +157,10 @@
 \appendix % This command is necessary before any appendix chapters.
 
 \chapter{Glossary}
-%\printabbreviations[title=]
+\printunsrtglossary[type=symbols,title=Summary of Notation]
 \printglossaries%
-
+%\printabbreviations[title=]
+%\printunsrtglossary[type=symbols,style=long]
 
 
 % ------------------------------- bibliography ---------------------------------

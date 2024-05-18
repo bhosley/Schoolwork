@@ -186,6 +186,21 @@
   file = {/Users/brandonhosley/Zotero/storage/EWGATS8U/Hoang et al. - 2023 - Drone Swarms to Support Search and Rescue Operatio.pdf}
 }
 
+@inproceedings{kapetanakis2005,
+  title = {Reinforcement {{Learning}} of {{Coordination}} in {{Heterogeneous Cooperative Multi-agent Systems}}},
+  booktitle = {Adaptive {{Agents}} and {{Multi-Agent Systems II}}},
+  author = {Kapetanakis, Spiros and Kudenko, Daniel},
+  editor = {Kudenko, Daniel and Kazakov, Dimitar and Alonso, Eduardo},
+  date = {2005},
+  pages = {119--131},
+  publisher = {Springer},
+  location = {Berlin, Heidelberg},
+  doi = {10.1007/978-3-540-32274-0_8},
+  abstract = {Most approaches to the learning of coordination in multi-agent systems (MAS) to date require all agents to use the same learning algorithm with similar (or even the same) parameter settings. In today’s open networks and high inter-connectivity such an assumption becomes increasingly unrealistic. Developers are starting to have less control over the agents that join the system and the learning algorithms they employ. This makes effective coordination and good learning performance extremely difficult to achieve, especially in the absence of learning agent standards. In this paper we investigate the problem of learning to coordinate with heterogeneous agents. We show that an agent employing the FMQ algorithm, a recently developed multi-agent learning method, has the ability to converge towards the optimal joint action when teamed-up with one or more simple Q-learners. Specifically, we show such convergence in scenarios where simple Q-learners alone are unable to converge towards an optimum. Our results show that system designers may improve learning and coordination performance by adding a “smart” agent to the MAS.},
+  isbn = {978-3-540-32274-0},
+  langid = {english}
+}
+
 @online{kouzeghar2023,
   title = {Multi-{{Target Pursuit}} by a {{Decentralized Heterogeneous UAV Swarm}} Using {{Deep Multi-Agent Reinforcement Learning}}},
   author = {Kouzeghar, Maryam and Song, Youngbin and Meghjani, Malika and Bouffanais, Roland},
@@ -292,6 +307,25 @@
   file = {/Users/brandonhosley/Zotero/storage/PFGFAPGW/Silver et al. - 2017 - Mastering Chess and Shogi by Self-Play with a Gene.pdf;/Users/brandonhosley/Zotero/storage/SR3IRUXR/1712.html}
 }
 
+@article{smit2023,
+  title = {Scaling Multi-Agent Reinforcement Learning to Full 11 versus 11 Simulated Robotic Football},
+  author = {Smit, Andries and Engelbrecht, Herman A. and Brink, Willie and Pretorius, Arnu},
+  date = {2023-03-24},
+  journaltitle = {Autonomous Agents and Multi-Agent Systems},
+  shortjournal = {Auton Agent Multi-Agent Syst},
+  volume = {37},
+  number = {1},
+  pages = {20},
+  issn = {1573-7454},
+  doi = {10.1007/s10458-023-09603-y},
+  url = {https://doi.org/10.1007/s10458-023-09603-y},
+  urldate = {2024-03-16},
+  abstract = {Robotic football has long been seen as a grand challenge in artificial intelligence. Despite recent success of learned policies over heuristics and handcrafted rules in general, current teams in the simulated RoboCup football leagues, where autonomous agents compete against each other, still rely on handcrafted strategies with only a few using reinforcement learning directly. This limits a learning agent’s ability to find stronger high-level strategies for the full game. In this paper, we show that it is possible for agents to learn competent football strategies on a full 22 player setting using limited computation resources (one GPU and one CPU), from tabula rasa through self-play. To do this, we build a 2D football simulator with faster simulation times than the RoboCup simulator. We propose various improvements to the standard single-agent PPO training algorithm which help it scale to our multi-agent setting. These improvements include (1) using a policy and critic network with an attention mechanism that scales linearly in the number of agents, (2) sharing networks between agents which allow for faster throughput using batching, and (3) using Polyak averaged opponents, league opponents and freezing the opponent team when necessary. We show through experimental results that stable training in the full 22 player setting is possible. Agents trained in the 22 player setting learn to defeat a variety of handcrafted strategies, and also achieve a higher win rate compared to agents trained in the 4 player setting and evaluated in the full game.},
+  langid = {english},
+  keywords = {11 versus 11 football,Multi-agent reinforcement learning,RoboCup,RoboCup 2D,Simulated robotic football,Soccer},
+  file = {/Users/brandonhosley/Zotero/storage/5UPXMZ63/Smit et al. - 2023 - Scaling multi-agent reinforcement learning to full.pdf}
+}
+
 @online{sun2023,
   title = {Mastering {{Asymmetrical Multiplayer Game}} with {{Multi-Agent Asymmetric-Evolution Reinforcement Learning}}},
   author = {Sun, Chenglu and Zhang, Yichi and Zhang, Yu and Lu, Ziling and Liu, Jingbin and Xu, Sijia and Zhang, Weidong},
@@ -340,6 +374,36 @@
   urldate = {2023-12-24},
   langid = {english},
   file = {/Users/brandonhosley/Zotero/storage/97RK6RVS/Vinyals et al. - 2019 - Grandmaster level in StarCraft II using multi-agen.pdf}
+}
+
+@online{wakilpoor2020,
+  title = {Heterogeneous {{Multi-Agent Reinforcement Learning}} for {{Unknown Environment Mapping}}},
+  author = {Wakilpoor, Ceyer and Martin, Patrick J. and Rebhuhn, Carrie and Vu, Amanda},
+  date = {2020-10-06},
+  eprint = {2010.02663},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2010.02663},
+  url = {http://arxiv.org/abs/2010.02663},
+  urldate = {2024-05-14},
+  abstract = {Reinforcement learning in heterogeneous multi-agent scenarios is important for real-world applications but presents challenges beyond those seen in homogeneous settings and simple benchmarks. In this work, we present an actor-critic algorithm that allows a team of heterogeneous agents to learn decentralized control policies for covering an unknown environment. This task is of interest to national security and emergency response organizations that would like to enhance situational awareness in hazardous areas by deploying teams of unmanned aerial vehicles. To solve this multi-agent coverage path planning problem in unknown environments, we augment a multi-agent actor-critic architecture with a new state encoding structure and triplet learning loss to support heterogeneous agent learning. We developed a simulation environment that includes real-world environmental factors such as turbulence, delayed communication, and agent loss, to train teams of agents as well as probe their robustness and flexibility to such disturbances.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/JRDBJMX5/Wakilpoor et al_2020_Heterogeneous Multi-Agent Reinforcement Learning for Unknown Environment Mapping.pdf;/Users/brandonhosley/Zotero/storage/G975SLIL/2010.html}
+}
+
+@inproceedings{zheng2020,
+  title = {Cooperative {{Heterogeneous Deep Reinforcement Learning}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Zheng, Han and Wei, Pengfei and Jiang, Jing and Long, Guodong and Lu, Qinghua and Zhang, Chengqi},
+  date = {2020},
+  volume = {33},
+  pages = {17455--17465},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper/2020/hash/ca3a9be77f7e88708afb20c8cdf44b60-Abstract.html},
+  urldate = {2024-05-14},
+  abstract = {Numerous deep reinforcement learning agents have been proposed, and each of them has its strengths and flaws. In this work, we present a Cooperative Heterogeneous Deep Reinforcement Learning (CHDRL) framework that can learn a policy by integrating the advantages of heterogeneous agents. Specifically, we propose a cooperative learning framework that classifies heterogeneous agents into two classes: global agents and local agents. Global agents are off-policy agents that can utilize experiences from the other agents. Local agents are either on-policy agents or population-based evolutionary algorithms (EAs) agents that can explore the local area effectively. We employ global agents, which are sample-efficient, to guide the learning of local agents so that local agents can benefit from the sample-efficient agents and simultaneously maintain their advantages, e.g., stability. Global agents also benefit from effective local searches. Experimental studies on a range of continuous control tasks from the Mujoco benchmark show that CHDRL achieves better performance compared with state-of-the-art baselines.},
+  file = {/Users/brandonhosley/Zotero/storage/4XRVMVDD/Zheng et al_2020_Cooperative Heterogeneous Deep Reinforcement Learning.pdf}
 }
 
 @article{zhong2024,
