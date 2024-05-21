@@ -1,0 +1,153 @@
+\documentclass{beamer}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{survey.bib}
+
+
+\usepackage{comment}
+
+
+\title{DSOR 646~-~Reinforcement Learning Survey}
+\author{Capt. Brandon Hosley\inst{1}}
+\institute[ENS]{
+    \inst{1}
+    Department of Operational Sciences\\
+    Air Force Institute of Technology}
+\date{\today}
+
+\AtBeginSection[]{
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\mode<presentation>
+
+\begin{document}
+    \frame{\titlepage}
+    \begin{frame}
+        \tableofcontents
+    \end{frame}
+
+\section{Methodological Paper: A3C}
+
+    \begin{frame}
+        \frametitle{A3C~-~Overview}
+        \begin{description}
+            \item[Title:] Asynchronous Methods for Deep Reinforcement Learning
+            \item[Authors:]
+            Volodymyr Mnih,
+            Adrià Puigdomènech Badia,
+            Mehdi Mirza,
+            Alex Graves,
+            Tim Harley,
+            Timothy P. Lillicrap,
+            David Silver,
+            Koray Kavukcuoglu
+            \item[Source:] arXiv:1602.01783~\footfullcite{mnih2016}
+        \end{description}
+        
+        \vspace*{1em}
+        
+        \begin{block}{Objective}
+            Introduce a lightweight framework for deep reinforcement learning (DRL).
+            Use asynchronous gradient descent for optimizing deep neural network controllers.
+        \end{block}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{A3C~-~Key Contributions}
+        \begin{description}
+            \item[Asynchronous Variants:] \phantom{}\\
+                \begin{itemize}
+                    \item Developed asynchronous versions of four standard RL algorithms.
+                    \item Demonstrated stabilizing effect of parallel actor-learners on training.
+                \end{itemize}
+            \item[State-of-the-Art Performance:] \phantom{}\\
+                \begin{itemize}
+                    \item Asynchronous actor-critic method surpassed current 
+                    state-of-the-art on Atari domain.
+                    \item Achieved this while training on a single multi-core CPU 
+                    instead of a GPU.%
+                \end{itemize}
+            \item[Wide Applicability:] \phantom{}\\
+                \begin{itemize}
+                    \item Success on continuous motor control problems.
+                    \item Navigation in random 3D mazes using visual input.
+                \end{itemize}
+        \end{description}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Asynchronous Variants}
+        \begin{itemize}
+            \item Algorithms Implemented,
+            Asynchronous variants of:
+            \begin{itemize}
+                \item One-step Q-learning
+                \item N-step Q-learning
+                \item SARSA
+                \item \textbf{Actor-Critic}
+            \end{itemize} 
+            \item Change to utilizes asynchronous gradient descent.
+            \item Multiple actor-learners run in parallel.
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Asynchronous Gradient Descent}
+        \includegraphics[width=0.5\linewidth]{images/batchGD.png}
+    \end{frame}
+
+\begin{comment}
+                
+
+
+                
+                Slide 5: Results
+                
+                Training Efficiency:
+                Reduced training time by half compared to traditional methods using GPUs.
+    Performance:
+    Outperformed state-of-the-art benchmarks in Atari game simulations.
+    Demonstrated robustness across various tasks and environments.
+    
+    Slide 6: Implications
+    
+    Scalability:
+    Demonstrates potential for scalable RL applications using CPU-based training.
+    Future Work:
+    Further exploration of asynchronous methods in different RL domains.
+    Application to more complex and diverse tasks.
+    
+    Slide 7: Conclusion
+    
+    Summary:
+    Asynchronous methods provide a robust and efficient approach to deep reinforcement learning.
+    Parallel actor-learners contribute significantly to training stability and performance.
+    Significance:
+    Paves the way for broader and more accessible applications of deep reinforcement learning.
+    
+\end{comment}
+    
+    \section{Survey}
+    \begin{frame}
+        \frametitle{Paper Title}
+        % MDP Model Components (SAPR) 
+        % Application Characteristics, solution procedures, and results
+        % Strengths and Weaknesses of their approach
+    \end{frame}
+    
+    \section{References}
+    \frame{\printbibliography}
+    
+    \begin{frame}
+        Questions?
+    \end{frame}
+    
+\end{document}
