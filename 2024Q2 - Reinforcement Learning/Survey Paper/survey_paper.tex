@@ -1,0 +1,144 @@
+\documentclass[journal]{IEEEtran}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{./images/}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{url}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{survey.bib}
+
+% Drafting Utility Package
+\usepackage{comment}
+\usepackage{blindtext}
+\usepackage{hyperref}
+%\usepackage[toc,page]{appendix}
+
+% Title
+\title{DSOR 646 Survey of Applications of Reinforcement Learning}
+
+\author{Brandon Hosley, Capt, \textit{AFIT}%
+    \thanks{Manuscript received \today%
+    %; revised Month DD, YYYY.
+}}
+%\keywords{reinforcement learning}
+
+
+% Document
+\begin{document}
+\maketitle
+% Abstract
+\begin{abstract}
+\end{abstract}
+% Introduction
+\section{Introduction}
+\label{sec:introduction}
+
+Reinforcement Learning (RL) is a rapidly evolving field within artificial intelligence, 
+characterized by its unique approach to solving decision-making problems where an agent 
+learns to make sequences of decisions by interacting with an environment. 
+Over the past decade, RL has seen significant advancements, 
+both in terms of theoretical developments and practical applications. 
+This survey will explore the application of RL in various domains by examining 10 
+selected papers published in the last 10 years in high-ranking journals. 
+The primary objective is to assess the modeling components, solution procedures, and results 
+of these applications, providing insights into the strengths and weaknesses of each study.
+
+This survey is structured to provide an overview of RL applications, focusing on how 
+different problems are formulated using Markov Decision Processes (MDPs), 
+the solution approaches employed, and the outcomes achieved. Each paper is analyzed to 
+highlight key contributions and to evaluate applications over a diverse range of areas; 
+demonstrating the versatility and impact of RL in solving complex problems across various fields.
+
+\section{Overview}
+\label{sec:overview}
+
+For each of the analyzed papers we will examine core MDP components
+
+
+
+
+\begin{itemize}
+    \item \textbf{Agents:} Entities that make decisions.
+    \item \textbf{Environments:} The external system with which agents interact.
+    \item \textbf{States:} Representations of the environment at a given time.
+    \item \textbf{Actions:} Possible decisions or moves the agent can make.
+    \item \textbf{Rewards:} Feedback from the environment based on the actions taken.
+\end{itemize}
+
+
+
+(b) Summarize results, creating a table summarizing key information with one row for each paper 
+i. Authors, topic or application area
+iii. Solution approaches, algorithmic features, novel extensions
+iv. tuning and/or testing adequate?
+
+
+
+% Analysis of Selected Papers
+\section{Analysis of Selected Papers}
+\label{sec:selected_papers}
+
+\begin{table*}
+    \begin{tabularx}{\textwidth}{cX X ccc}
+        Citation & Short-Title & MDP Characteristics & Solution Approaches & Algorithm &
+        Novel Extensions\\
+        \midrule
+        \cite{giang2020} & Hybrid NOMA/OMA Power Allocation Using Deep RL in 5G Network & 
+        $S$: \# Users and transmission requests \newline
+        $A$: Channel and Power Allocation \newline
+        $R$: Data Throughput &
+        & A3C\cite{mnih2016} & Application
+    \end{tabularx}
+\end{table*}
+
+
+\subsection{Hybrid NOMA/OMA-Based Dynamic Power Allocation Scheme 
+Using Deep Reinforcement Learning in 5G Networks}
+
+In their paper\cite{giang2020}, Giang et al discuss the evolution of wireless communication systems
+from 4G to 5G, emphasizing the need for efficient spectrum utilization due to the explosive growth 
+in devices and data volumes. Non-orthogonal multiple access (NOMA) is identified as a promising 
+candidate for 5G due to its ability to allow multiple users to share time and spectrum resources.
+NOMA uses power-domain multiplexing, allowing multiple users to share the same spatial layer, 
+contrasting with traditional orthogonal multiple access (OMA) techniques like FDMA and TDMA. 
+This results in higher spectral efficiency (SE).
+
+The paper addresses the lack of research on resource allocation using deep reinforcement learning 
+(DRL) under non-RF energy-harvesting scenarios in uplink cognitive radio networks (CRNs).
+They use a deep actor-critic reinforcement learning (DACRL) framework for efficient joint power and
+bandwidth allocation in hybrid NOMA/OMA CRNs, where solar-powered users are assigned optimal 
+transmission power and bandwidth to maximize long-term data transmission rates.
+
+
+
+
+
+
+
+% Conclusion
+\section{Conclusion}
+\label{sec:conclusion}
+
+\subsection{Summary of Key Insights}
+Recap of the major contributions from the reviewed papers
+
+\subsection{Overall Impact on the Field}
+How the reviewed literature has shaped the current state of RL
+
+
+% References
+\label{sec:references}
+\printbibliography
+
+%\clearpage
+%\begin{appendices}
+%\end{appendices}
+
+\end{document}

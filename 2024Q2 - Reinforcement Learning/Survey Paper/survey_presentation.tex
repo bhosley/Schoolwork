@@ -1,7 +1,10 @@
 \documentclass{beamer}
 \usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{libertinus}
 \usepackage{csquotes}
 \usepackage{graphicx}
+\usepackage{multicol}
 \usepackage[backend=biber,style=ieee]{biblatex}
 \addbibresource{survey.bib}
 
@@ -29,125 +32,306 @@
 \mode<presentation>
 
 \begin{document}
-    \frame{\titlepage}
-    \begin{frame}
-        \tableofcontents
-    \end{frame}
+\frame{\titlepage}
+\begin{frame}
+    \tableofcontents
+\end{frame}
 
 \section{Methodological Paper: A3C}
 
-    \begin{frame}
-        \frametitle{A3C~-~Overview}
-        \begin{description}
-            \item[Title:] Asynchronous Methods for Deep Reinforcement Learning
-            \item[Authors:]
-            Volodymyr Mnih,
-            Adrià Puigdomènech Badia,
-            Mehdi Mirza,
-            Alex Graves,
-            Tim Harley,
-            Timothy P. Lillicrap,
-            David Silver,
-            Koray Kavukcuoglu
-            \item[Source:] arXiv:1602.01783~\footfullcite{mnih2016}
-        \end{description}
-        
-        \vspace*{1em}
-        
-        \begin{block}{Objective}
-            Introduce a lightweight framework for deep reinforcement learning (DRL).
-            Use asynchronous gradient descent for optimizing deep neural network controllers.
-        \end{block}
-    \end{frame}
+\begin{frame}
+    \frametitle{A3C~-~Overview}
+    \begin{description}
+        \item[Title:] Asynchronous Methods for Deep Reinforcement Learning
+        \item[Authors:]
+        Volodymyr Mnih,
+        Adrià Puigdomènech Badia,
+        Mehdi Mirza,
+        Alex Graves,
+        Tim Harley,
+        Timothy P. Lillicrap,
+        David Silver,
+        Koray Kavukcuoglu
+        \item[Source:] arXiv:1602.01783~\footfullcite{mnih2016}
+    \end{description}
     
-    \begin{frame}
-        \frametitle{A3C~-~Key Contributions}
-        \begin{description}
-            \item[Asynchronous Variants:] \phantom{}\\
-                \begin{itemize}
-                    \item Developed asynchronous versions of four standard RL algorithms.
-                    \item Demonstrated stabilizing effect of parallel actor-learners on training.
-                \end{itemize}
-            \item[State-of-the-Art Performance:] \phantom{}\\
-                \begin{itemize}
-                    \item Asynchronous actor-critic method surpassed current 
-                    state-of-the-art on Atari domain.
-                    \item Achieved this while training on a single multi-core CPU 
-                    instead of a GPU.%
-                \end{itemize}
-            \item[Wide Applicability:] \phantom{}\\
-                \begin{itemize}
-                    \item Success on continuous motor control problems.
-                    \item Navigation in random 3D mazes using visual input.
-                \end{itemize}
-        \end{description}
-    \end{frame}
+    \vspace*{1em}
+    
+    \begin{block}{Objective}
+        Introduce a lightweight framework for deep reinforcement learning (DRL).
+        Use asynchronous gradient descent for optimizing deep neural network controllers.
+    \end{block}
+\end{frame}
 
-    \begin{frame}
-        \frametitle{Asynchronous Variants}
-        \begin{itemize}
-            \item Algorithms Implemented,
-            Asynchronous variants of:
+\begin{frame}
+    \frametitle{A3C~-~Key Contributions}
+    \begin{description}
+        \item[Asynchronous Variants:] \phantom{}\\
             \begin{itemize}
-                \item One-step Q-learning
-                \item N-step Q-learning
-                \item SARSA
-                \item \textbf{Actor-Critic}
-            \end{itemize} 
-            \item Change to utilizes asynchronous gradient descent.
-            \item Multiple actor-learners run in parallel.
+                \item Developed asynchronous versions of four standard RL algorithms.
+                \item Demonstrated stabilizing effect of parallel actor-learners on training.
+            \end{itemize}
+        \item[State-of-the-Art Performance:] \phantom{}\\
+            \begin{itemize}
+                \item Asynchronous actor-critic method surpassed current 
+                state-of-the-art on Atari domain.
+                \item Achieved this while training on a single multi-core CPU 
+                instead of a GPU.%
+            \end{itemize}
+        \item[Wide Applicability:] \phantom{}\\
+            \begin{itemize}
+                \item Success on continuous motor control problems.
+                \item Navigation in random 3D mazes using visual input.
+            \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Asynchronous Variants}
+    \begin{itemize}
+        \item Algorithms Implemented,
+        Asynchronous variants of:
+        \begin{itemize}
+            \item One-step Q-learning
+            \item N-step Q-learning
+            \item SARSA
+            \item \textbf{Actor-Critic}
+        \end{itemize} 
+        \item Change to utilizes asynchronous gradient descent.
+        \item Multiple actor-learners run in parallel.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Actor Critic}
+    \begin{multicols}{2}
+        \begin{description}
+            \item[Actor] Updates the policy distribution $\pi(s)$
+            \item[Critic] Estimates the value function; 
+            action-value $Q(s,a)$ or state-value $V(s)$
+        \end{description}
+        \begin{figure}
+            \includegraphics[width=\linewidth]{images/Actor-Critic_Structure.png}
+            \caption{AC Structure\footfullcite{giang2020}}
+        \end{figure}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Advantage Actor Critic}
+    Advantage Value:
+    \begin{align*}
+        A(s,a) &= Q(s,a) - V(s)
+        \intertext{Substituting for $Q$,}
+        Q(s_t,a_t) &= \mathbb{E}\left[r_{t+1}+\gamma V(s_{t+1})\right] \\
+        A(s_t,a_t) &=\quad r_{t+1}+\gamma V(s_{t+1}) - V(s_t) \\
+    \end{align*}
+    Why? \\
+    Advantage supplies context to $Q$ values relative to the state value from which they originate.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Asynchronous Gradient Descent}
+    \begin{figure}
+        \includegraphics[width=0.75\linewidth]{images/batchGD.png}
+        \caption{Batch Gradient Descent\footfullcite{dabbura2022}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Asynchronous Gradient Descent}
+    \begin{figure}
+        \includegraphics[width=0.5\linewidth]{images/a3c.jpg}
+        \caption{Asynchronous Batching\footfullcite{sarkar2018}}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{A3C - Results}
+    \begin{figure}
+        \includegraphics[width=0.9\linewidth]{images/a3c results.png}
+        \caption{Results in Atari 2600 environments\footcite{mnih2016}}
+    \end{figure}
+    \begin{itemize}
+        \item Blue: single threaded DQN
+        \item Yellow: A3C
+        \item AC takes the advantages of $Q$ but reduces bias
+    \end{itemize}
+\end{frame}
+
+\section{Survey}
+
+\begin{frame}
+    \frametitle{Paper 1 - Deep Reinforcement Learning in 5G}
+    \begin{description}
+        \item[Title:] Hybrid NOMA/OMA-Based Dynamic Power Allocation Scheme Using 
+        Deep Reinforcement Learning in 5G Networks\footfullcite{giang2020}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: Transmission Tower
+            \item $S$: Users
+            \item $A$: Channel and Power Allocation
+            \item $P$: Deterministic
+            \item $R$: Data Throughput
         \end{itemize}
-    \end{frame}
+        \item[Weakness:] POMDP v. Deep RL 
+        % Authors mention that the latter might not be appropriate.
+        % They fail to state why they chose it vs. some other implementation
+        % they argue as a matter of state space size, but never address SS 
+        % reduction techniques.
+    \end{description}
+\end{frame}
 
-    \begin{frame}
-        \frametitle{Asynchronous Gradient Descent}
-        \includegraphics[width=0.5\linewidth]{images/batchGD.png}
-    \end{frame}
+\begin{frame}
+    \frametitle{Paper 2 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
 
-\begin{comment}
-                
+\begin{frame}
+    \frametitle{Paper 3 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Paper 4 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Paper 5 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Paper 6 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Paper 7 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
 
 
-                
-                Slide 5: Results
-                
-                Training Efficiency:
-                Reduced training time by half compared to traditional methods using GPUs.
-    Performance:
-    Outperformed state-of-the-art benchmarks in Atari game simulations.
-    Demonstrated robustness across various tasks and environments.
-    
-    Slide 6: Implications
-    
-    Scalability:
-    Demonstrates potential for scalable RL applications using CPU-based training.
-    Future Work:
-    Further exploration of asynchronous methods in different RL domains.
-    Application to more complex and diverse tasks.
-    
-    Slide 7: Conclusion
-    
-    Summary:
-    Asynchronous methods provide a robust and efficient approach to deep reinforcement learning.
-    Parallel actor-learners contribute significantly to training stability and performance.
-    Significance:
-    Paves the way for broader and more accessible applications of deep reinforcement learning.
-    
-\end{comment}
-    
-    \section{Survey}
-    \begin{frame}
-        \frametitle{Paper Title}
-        % MDP Model Components (SAPR) 
-        % Application Characteristics, solution procedures, and results
-        % Strengths and Weaknesses of their approach
-    \end{frame}
-    
-    \section{References}
-    \frame{\printbibliography}
-    
-    \begin{frame}
-        Questions?
-    \end{frame}
-    
+\begin{frame}
+    \frametitle{Paper 8 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Paper 9 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Paper 10 - }
+    \begin{description}
+        \item[Title:] \footfullcite{}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: 
+            \item $S$: 
+            \item $A$: 
+            \item $P$: 
+            \item $R$: 
+        \end{itemize}
+        \item[] 
+    \end{description}
+\end{frame}
+
+\section{References}
+\frame{\printbibliography}
+
+\begin{frame}
+    Questions?
+\end{frame}
+
 \end{document}
