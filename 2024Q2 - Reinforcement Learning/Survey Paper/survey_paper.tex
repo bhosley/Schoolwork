@@ -120,6 +120,42 @@ transmission power and bandwidth to maximize long-term data transmission rates.
 
 
 
+\subsection{Trust Region Policy Optimization}
+This paper presents Trust Region Policy Optimization (TRPO), an iterative method for optimizing policies with guaranteed monotonic improvement. TRPO combines theoretical rigor with practical approximations to develop a robust algorithm suitable for large nonlinear policies, such as neural networks. The algorithm is evaluated on various tasks, including robotic control (swimming, hopping, walking) and Atari games using raw pixel inputs. TRPO consistently shows monotonic improvement and robust performance with minimal hyperparameter tuning, making it a reliable choice for policy optimization in diverse environments.
+\cite{schulman2017}
+
+\subsection{Proximal Policy Optimization Algorithms}
+This paper proposes Proximal Policy Optimization (PPO), a new family of policy gradient methods for reinforcement learning. PPO alternates between sampling data from the environment and optimizing a surrogate objective function using stochastic gradient ascent. Unlike standard policy gradient methods, PPO's objective function allows multiple epochs of minibatch updates, improving sample efficiency. The algorithm retains the benefits of Trust Region Policy Optimization (TRPO) but is simpler to implement and more general. Empirical results show that PPO outperforms other online policy gradient methods on benchmark tasks, including simulated robotic locomotion and Atari games, striking a favorable balance between sample complexity, simplicity, and performance.
+\cite{schulman2017a}
+
+\subsection{QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning}
+This paper introduces QMIX, a value-based multi-agent reinforcement learning (MARL) method that facilitates centralized training and decentralized execution. QMIX estimates joint action-values as a non-linear combination of per-agent values conditioned on local observations, with a structural monotonicity constraint ensuring consistency between centralized and decentralized policies. The method is evaluated on StarCraft II micromanagement tasks, showing significant performance improvements over existing value-based MARL methods. QMIX effectively leverages centralized training to derive robust decentralized policies, making it a strong approach for complex coordination tasks in multi-agent settings.
+\cite{rashid2018}
+
+\subsection{Continuous Control with Deep Reinforcement Learning}
+This paper presents an adaptation of Deep Q-Learning (DQN) for continuous action domains through an actor-critic, model-free algorithm based on deterministic policy gradients (DPG). The proposed algorithm effectively solves over 20 simulated physics tasks, such as cartpole swing-up, dexterous manipulation, legged locomotion, and car driving, using the same learning algorithm, network architecture, and hyperparameters. It achieves performance competitive with planning algorithms that have full access to the domain dynamics and derivatives. Additionally, the algorithm can learn policies directly from raw pixel inputs, demonstrating robustness and flexibility across various tasks.
+\cite{lillicrap2019}
+
+\subsection{Addressing Function Approximation Error in Actor-Critic Methods}
+This paper tackles the issue of function approximation errors in actor-critic methods, which can lead to overestimated value estimates and suboptimal policies. The authors propose mechanisms to minimize these errors on both the actor and the critic. The algorithm builds on Double Q-learning by taking the minimum value between a pair of critics to limit overestimation. Additionally, delaying policy updates is suggested to reduce per-update error. Evaluations on the OpenAI gym tasks show that the proposed method outperforms state-of-the-art approaches in every tested environment, demonstrating its robustness and effectiveness in addressing approximation errors.
+\cite{fujimoto2018}
+
+\subsection{Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments}
+This paper explores deep reinforcement learning methods for multi-agent domains, specifically focusing on mixed cooperative-competitive environments. Traditional algorithms like Q-learning and policy gradient face challenges in multi-agent settings due to non-stationarity and high variance. The authors propose an adaptation of actor-critic methods that takes into account the action policies of other agents, enabling the learning of complex coordination strategies. Additionally, an ensemble of policies for each agent is introduced, resulting in more robust multi-agent policies. The approach is validated in various cooperative and competitive scenarios, demonstrating superior performance and robustness compared to existing methods.
+\cite{lowe2020}
+
+\subsection{Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized Critics}
+This paper addresses the issue of value function overestimation bias in multi-agent reinforcement learning (MARL). The authors propose using double centralized critics to mitigate this bias, drawing inspiration from Double Q-Learning in single-agent RL. The proposed method is evaluated on six mixed cooperative-competitive tasks, showing significant improvements over current methods. Additionally, the approach is tested on high-dimensional robotic tasks, demonstrating its capability to learn decentralized policies in complex environments. The results highlight the effectiveness of reducing overestimation bias and the potential for broader applications in MARL.
+\cite{ackermann2019}
+
+\subsection{The Surprising Effectiveness of PPO in Cooperative, Multi-Agent Games}
+This paper investigates the performance of Proximal Policy Optimization (PPO) in cooperative multi-agent reinforcement learning (MARL) settings. Despite being less utilized than off-policy algorithms due to perceived sample inefficiency, PPO demonstrates strong performance in four multi-agent testbeds: particle-world environments, StarCraft multi-agent challenge, Google Research Football, and the Hanabi challenge. With minimal hyperparameter tuning and without domain-specific modifications, PPO often achieves competitive or superior results compared to off-policy methods. The study includes ablation analyses to identify key implementation factors, providing practical suggestions for optimizing PPO's performance. These findings suggest that PPO can serve as a strong baseline in cooperative MARL.
+\cite{yu2022}
+
+\subsection{Heterogeneous-Agent Reinforcement Learning}
+This paper addresses the challenges in cooperative multi-agent reinforcement learning (MARL) with heterogeneous agents. Traditional approaches often rely on parameter sharing among agents, limiting their applicability to homogeneous-agent settings and resulting in training instability and lack of convergence guarantees. The authors propose Heterogeneous-Agent Reinforcement Learning (HARL) algorithms to overcome these issues. Key contributions include the multi-agent advantage decomposition lemma and the sequential update scheme. The paper introduces Heterogeneous-Agent Trust Region Learning (HATRL) and its approximations, HATRPO and HAPPO, which provide stability and convergence guarantees. Additionally, the Heterogeneous-Agent Mirror Learning (HAML) framework strengthens theoretical guarantees and facilitates the design of new cooperative MARL algorithms. The proposed algorithms are comprehensively tested on six challenging benchmarks, demonstrating superior effectiveness and stability compared to existing methods like MAPPO and QMIX.
+\cite{zhong2024}
+
 
 
 % Conclusion

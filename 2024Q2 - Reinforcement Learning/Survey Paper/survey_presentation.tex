@@ -160,12 +160,13 @@
 \end{frame}
 
 \section{Survey}
+\newcounter{papercounter}
 
 \begin{frame}
-    \frametitle{Paper 1 - Deep Reinforcement Learning in 5G}
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Hybrid NOMA/OMA-Based Dynamic Power Allocation Scheme Using 
+        Deep Reinforcement Learning in 5G Networks\footfullcite{giang2020}}
     \begin{description}
-        \item[Title:] Hybrid NOMA/OMA-Based Dynamic Power Allocation Scheme Using 
-        Deep Reinforcement Learning in 5G Networks\footfullcite{giang2020}
         \item[Model:]
         \begin{itemize}
             \item Agent: Transmission Tower
@@ -174,7 +175,12 @@
             \item $P$: Deterministic
             \item $R$: Data Throughput
         \end{itemize}
+        \item[Contribution:] Applications of RL
         \item[Weakness:] POMDP v. Deep RL 
+        \begin{itemize}
+            \item Compared to random, uniform, myopic-OMA
+            \item Probably should have compared to the MDP they mention
+        \end{itemize}
         % Authors mention that the latter might not be appropriate.
         % They fail to state why they chose it vs. some other implementation
         % they argue as a matter of state space size, but never address SS 
@@ -182,153 +188,250 @@
     \end{description}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Paper 2 - }
+\begin{frame} %% TRPO(schulman2017)
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Trust Region Policy Optimization (TRPO)%
+    \footfullcite{schulman2017}}
     \begin{description}
-        \item[Title:] \footfullcite{}
+        \item[Environments:] MuJoCo and Atari
         \item[Model:]
         \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
+            \item Agent: Simulated robot / Atari player
+            \item $S$: continuous, positioning / screen input
+            \item $A$: continuous, generally torque on joints / discrete, controller input
+            \item $P$: deterministic / game dependent
+            \item $R$: +Time alive +for moving -control costs / game dependent
         \end{itemize}
-        \item[] 
+        \item[Algorithm:]
+        \begin{itemize}
+            \item Iterative
+            \item Approximate: Trajectory sampling
+            \item Monotonic: Constrained policy gradient
+        \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame} %PPO(schulman2017a)
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Proximal Policy Optimization Algorithms (PPO)%
+    \footfullcite{schulman2017a}}
+    \begin{description}
+        \item[Environment:] MuJoCo 
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: Simulated robot
+            \item $S$: continuous, positioning and angles of joints
+            \item $A$: continuous, generally torque on joints
+            \item $P$: deterministic
+            \item $R$: +Time alive +for moving -control costs
+        \end{itemize}
+        \item[Algorithm:] 
+        \begin{itemize}
+            \item Fixed-length trajectory sampling
+            \item Advantage values
+            \item Batch updates
+        \end{itemize}
+        \item[Weakness:] Same group as TRPO but did not test on the same environments.
+    \end{description}
+\end{frame}
+
+\begin{frame}% QMIX(Rashid2018)
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - QMIX: Monotonic Value Function Factorisation for Deep 
+    Multi-Agent Reinforcement Learning\footfullcite{rashid2018}}
+    \begin{description}
+        \item[Environment:] StarCraft II Learning Environment\cite{vinyals2019}
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: Individual units
+            \item $S$: Local observations and global observations
+            \item $A$: Local actions, joint action-values
+            \item $P$: Non-deterministic
+            \item $R$: Reward shaping, sparse rewards
+        \end{itemize}
+        \item[Algorithm:] QMIX is a mixture of centralized and individual Q-learning
+        \begin{itemize}
+            \item Centralized training
+            \item Decentralized policy
+            \item Off-policy
+        \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame}% QMIX(Rashid2018)
+    \frametitle{Paper \thepapercounter - QMIX: Monotonic Value Function Factorisation for Deep 
+    Multi-Agent Reinforcement Learning\cite{rashid2018}}
+    \begin{description}
+        \item[Algorithm:] QMIX is a mixture of centralized and individual Q-learning
+    \end{description}
+    \begin{figure}\small
+        \includegraphics[width=0.9\linewidth]{images/qmix.png}
+        \caption{Mixing network structure\cite{rashid2018}}
+    \end{figure}
+\end{frame}
+
+\begin{frame} % DDPG(lillicrap2019) 
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Continuous Control with Deep Reinforcement Learning%
+    \footfullcite{lillicrap2019}}
+    \begin{description}
+        \item[Environment:] MuJuCo
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: Simulated robot
+            \item $S$: Continuous, positioning
+            \item $A$: Continuous, generally torque on joints
+            \item $P$: Deterministic
+            \item $R$: +Time alive +for moving(sometimes) -control costs
+        \end{itemize}
+        \item[Algorithm:] DPG\cite{silver2014} $\rightarrow$ DDPG 
+            (Deep Deterministic Policy Gradient)
+        \begin{itemize}
+            \item Utilizes actor-critic framework
+            \item \textbf{Extends DQN to be continuous}
+        \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame} % TD3(Fujimoto2018)
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Addressing Function Approximation Error in Actor-Critic 
+    Methods\footfullcite{fujimoto2018}}
+    \begin{description}
+        \item[Environment:] MuJuCo
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: Simulated robot
+            \item $S$: Continuous, positioning
+            \item $A$: Continuous, generally torque on joints
+            \item $P$: Deterministic
+            \item $R$: +Time alive +for moving(sometimes) -control costs
+        \end{itemize}
+        \item[Algorithm:] DDPG $\rightarrow$ TD3 
+        (Twin Delayed Deep Deterministic policy gradient algorithm)
+        \begin{itemize}
+            \item Adds secondary critic, and takes min value
+            \item Correct overestimation attributed to DDPG % also mentioned in MATD3
+        \end{itemize}
     \end{description}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Paper 3 - }
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Multi-Agent Actor-Critic for Mixed 
+    Cooperative-Competitive Environments\footfullcite{lowe2020}}
     \begin{description}
-        \item[Title:] \footfullcite{}
+        \item[Environment:] MPE
         \item[Model:]
-        \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
+        \begin{itemize} \small
+            \item Agent: Particles
+            \item $S$: Position of self, others, obstacles
+            \item $A$: Move, speak, listen
+            \item $P$: Deterministic
+            \item $R$: Dependent on game-mode. 
         \end{itemize}
-        \item[] 
+        \item[Algorithm:] DDPG $\rightarrow$ MADDPG
     \end{description}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Paper 4 - }
+    \frametitle{Paper \thepapercounter - Multi-Agent Actor-Critic for Mixed 
+    Cooperative-Competitive Environments\cite{lowe2020}}
+    \begin{figure}\small
+        \includegraphics[width=0.4\linewidth]{images/maddpg.png}
+        \caption{Multi-agent Actor Critic\cite{lowe2020}}
+    \end{figure}
+\end{frame}
+
+\begin{frame} %MATD3(Ackerman2019)
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Reducing Overestimation Bias in Multi-Agent Domains 
+    Using Double Centralized Critics\footfullcite{ackermann2019}}
     \begin{description}
-        \item[Title:] \footfullcite{}
+        \item[Environments:] MPE and MuJoCo 
         \item[Model:]
         \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
+            \item Agent:  Particles / Ant legs
+            \item $S$: Position of self, others, obstacles / position and angle of limbs and body
+            \item $A$: Move, speak, listen / torque on joints
+            \item $P$: Deterministic
+            \item $R$: Game mode dependent / +Time alive +forward movement -control costs
         \end{itemize}
-        \item[] 
+        \item[Algorithm:] TD3 $\rightarrow$ MATD3
+        \begin{itemize}
+            \item Takes twin critic and extends it to be centralized critic
+        \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame} 
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - The Surprising Effectiveness of PPO in Cooperative, 
+    Multi-Agent Games\footfullcite{yu2022}}
+    \begin{description}\small
+        \item[Environments:] 
+    \end{description}
+    \begin{figure}\small\vspace*{-1em}
+        \includegraphics[width=0.75\linewidth]{images/yu2020_envs.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame} 
+    \frametitle{Paper \thepapercounter - The Surprising Effectiveness of PPO in Cooperative, 
+    Multi-Agent Games\footfullcite{yu2022}}
+    \begin{description}\small
+        \item[Model:] 
+        \begin{itemize} 
+            \item Agent: SMAC, GRF, MPE and Hanabi players
+            \item $S,A$: According to game, disc. for Hanabi, cont. for others
+            \item $P$: Deterministic for Hanabi and MPE, stochastic for SMAC and GRF
+            \item $R$: Reward sharing, end of game rewards
+        \end{itemize}
+        \item[Algorithm:] PPO\cite{schulman2017a} $\rightarrow$ MAPPO
+        \begin{itemize}
+            \item Kept fixed-length trajectory sampling and advantage values
+            \item Allowed multiple agents to contribute to batch updates for central policy
+        \end{itemize}
+        \item[Strengths:]
+        \begin{itemize}
+            \item Ablative study of their changes
+            \item Added to and tested previously used environments
+        \end{itemize}
     \end{description}
 \end{frame}
 
 \begin{frame}
-    \frametitle{Paper 5 - }
-    \begin{description}
-        \item[Title:] \footfullcite{}
-        \item[Model:]
-        \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
-        \end{itemize}
-        \item[] 
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Heterogeneous-Agent Reinforcement Learning%
+    \footfullcite{zhong2024}}
+    \begin{description} \small
+        \item[Environments:]
     \end{description}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Paper 6 - }
-    \begin{description}
-        \item[Title:] \footfullcite{}
+        \includegraphics[width=\linewidth]{images/MARL_envs.png}
+    \begin{description}\small
         \item[Model:]
-        \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
+        \begin{itemize} \small
+            \item Agent: Multiple agents with distinct capabilities and roles.
+            \item $S_m$, $A_m$, $R_m$: Dependent on the testing environment.
+            Potentially distinct sets between each Agent $m\in M$.
         \end{itemize}
-        \item[] 
-    \end{description}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Paper 7 - }
-    \begin{description}
-        \item[Title:] \footfullcite{}
-        \item[Model:]
-        \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
-        \end{itemize}
-        \item[] 
-    \end{description}
-\end{frame}
-
-
-\begin{frame}
-    \frametitle{Paper 8 - }
-    \begin{description}
-        \item[Title:] \footfullcite{}
-        \item[Model:]
-        \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
-        \end{itemize}
-        \item[] 
-    \end{description}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Paper 9 - }
-    \begin{description}
-        \item[Title:] \footfullcite{}
-        \item[Model:]
-        \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
-        \end{itemize}
-        \item[] 
-    \end{description}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Paper 10 - }
-    \begin{description}
-        \item[Title:] \footfullcite{}
-        \item[Model:]
-        \begin{itemize}
-            \item Agent: 
-            \item $S$: 
-            \item $A$: 
-            \item $P$: 
-            \item $R$: 
-        \end{itemize}
-        \item[] 
+        \item[Algorithms:] Introduced updates to previous MARL Algorithms, \vspace*{-1em}
+        \begin{multicols*}{2}
+            \begin{itemize} \small
+                \item TRPO\cite{schulman2017} $\rightarrow$ HATRPO
+                \item MAPPO\cite{yu2022} $\rightarrow$ HAPPO
+                \item A3C\cite{mnih2016} $\rightarrow$ HAA2C
+                \item MADDPG\cite{lowe2020} $\rightarrow$ HADDPG
+                \item MATD3\cite{ackermann2019} $\rightarrow$ HATD3
+            \end{itemize}
+        \end{multicols*}
     \end{description}
 \end{frame}
 
 \section{References}
-\frame{\printbibliography}
+
+\renewcommand*{\bibfont}{\tiny}
+\frame[allowframebreaks]{\printbibliography}
 
 \begin{frame}
     Questions?

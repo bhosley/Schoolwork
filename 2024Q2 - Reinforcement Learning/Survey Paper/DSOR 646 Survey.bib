@@ -1,3 +1,15 @@
+@online{ackermann2019,
+  title = {Reducing {{Overestimation Bias}} in {{Multi-Agent Domains Using Double Centralized Critics}}},
+  author = {Ackermann, Johannes and Gabler, Volker and Osa, Takayuki and Sugiyama, Masashi},
+  date = {2019-10-03},
+  url = {https://arxiv.org/abs/1910.01465v2},
+  urldate = {2024-05-26},
+  abstract = {Many real world tasks require multiple agents to work together. Multi-agent reinforcement learning (RL) methods have been proposed in recent years to solve these tasks, but current methods often fail to efficiently learn policies. We thus investigate the presence of a common weakness in single-agent RL, namely value function overestimation bias, in the multi-agent setting. Based on our findings, we propose an approach that reduces this bias by using double centralized critics. We evaluate it on six mixed cooperative-competitive tasks, showing a significant advantage over current methods. Finally, we investigate the application of multi-agent methods to high-dimensional robotic tasks and show that our approach can be used to learn decentralized policies in this domain.},
+  langid = {english},
+  organization = {arXiv.org},
+  file = {/Users/brandonhosley/Zotero/storage/3DUYWQRZ/Ackermann et al_2019_Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized.pdf}
+}
+
 @online{dabbura2022,
   title = {Gradient {{Descent Algorithm}} and {{Its Variants}}},
   author = {Dabbura, Imad},
@@ -8,6 +20,23 @@
   langid = {english},
   organization = {Medium},
   file = {/Users/brandonhosley/Zotero/storage/4WHREMZZ/gradient-descent-algorithm-and-its-variants-10f652806a3.html}
+}
+
+@online{fujimoto2018,
+  title = {Addressing {{Function Approximation Error}} in {{Actor-Critic Methods}}},
+  author = {Fujimoto, Scott and van Hoof, Herke and Meger, David},
+  options = {useprefix=true},
+  date = {2018-10-22},
+  eprint = {1802.09477},
+  eprinttype = {arxiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1802.09477},
+  url = {http://arxiv.org/abs/1802.09477},
+  urldate = {2024-05-25},
+  abstract = {In value-based reinforcement learning methods such as deep Q-learning, function approximation errors are known to lead to overestimated value estimates and suboptimal policies. We show that this problem persists in an actor-critic setting and propose novel mechanisms to minimize its effects on both the actor and the critic. Our algorithm builds on Double Q-learning, by taking the minimum value between a pair of critics to limit overestimation. We draw the connection between target networks and overestimation bias, and suggest delaying policy updates to reduce per-update error and further improve performance. We evaluate our method on the suite of OpenAI gym tasks, outperforming the state of the art in every environment tested.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/53LNWQEE/Fujimoto et al_2018_Addressing Function Approximation Error in Actor-Critic Methods.pdf;/Users/brandonhosley/Zotero/storage/HKDN2XRX/1802.html}
 }
 
 @article{giang2020,
@@ -21,6 +50,38 @@
   doi = {10.3390/app10124236},
   abstract = {Non-orthogonal multiple access (NOMA) is considered a potential technique in fifth-generation (5G). Nevertheless, it is relatively complex when applying NOMA to a massive access scenario. Thus, in this paper, a hybrid NOMA/OMA scheme is considered for uplink wireless transmission systems where multiple cognitive users (CUs) can simultaneously transmit their data to a cognitive base station (CBS). We adopt a user-pairing algorithm in which the CUs are grouped into multiple pairs, and each group is assigned to an orthogonal sub-channel such that each user in a pair applies NOMA to transmit data to the CBS without causing interference with other groups. Subsequently, the signal transmitted by the CUs of each NOMA group can be independently retrieved by using successive interference cancellation (SIC). The CUs are assumed to harvest solar energy to maintain operations. Moreover, joint power and bandwidth allocation is taken into account at the CBS to optimize energy and spectrum efficiency in order to obtain the maximum long-term data rate for the system. To this end, we propose a deep actor-critic reinforcement learning (DACRL) algorithm to respectively model the policy function and value function for the actor and critic of the agent (i.e., the CBS), in which the actor can learn about system dynamics by interacting with the environment. Meanwhile, the critic can evaluate the action taken such that the CBS can optimally assign power and bandwidth to the CUs when the training phase finishes. Numerical results validate the superior performance of the proposed scheme, compared with other conventional schemes.},
   file = {/Users/brandonhosley/Zotero/storage/2UHZBJ64/Giang et al_2020_Hybrid NOMA-OMA-Based Dynamic Power Allocation Scheme Using Deep Reinforcement.pdf}
+}
+
+@online{lillicrap2019,
+  title = {Continuous Control with Deep Reinforcement Learning},
+  author = {Lillicrap, Timothy P. and Hunt, Jonathan J. and Pritzel, Alexander and Heess, Nicolas and Erez, Tom and Tassa, Yuval and Silver, David and Wierstra, Daan},
+  date = {2019-07-05},
+  eprint = {1509.02971},
+  eprinttype = {arxiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1509.02971},
+  url = {http://arxiv.org/abs/1509.02971},
+  urldate = {2024-05-25},
+  abstract = {We adapt the ideas underlying the success of Deep Q-Learning to the continuous action domain. We present an actor-critic, model-free algorithm based on the deterministic policy gradient that can operate over continuous action spaces. Using the same learning algorithm, network architecture and hyper-parameters, our algorithm robustly solves more than 20 simulated physics tasks, including classic problems such as cartpole swing-up, dexterous manipulation, legged locomotion and car driving. Our algorithm is able to find policies whose performance is competitive with those found by a planning algorithm with full access to the dynamics of the domain and its derivatives. We further demonstrate that for many of the tasks the algorithm can learn policies end-to-end: directly from raw pixel inputs.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/4SDUFMAZ/Lillicrap et al_2019_Continuous control with deep reinforcement learning.pdf;/Users/brandonhosley/Zotero/storage/YUCJ4FU9/1509.html}
+}
+
+@online{lowe2020,
+  title = {Multi-{{Agent Actor-Critic}} for {{Mixed Cooperative-Competitive Environments}}},
+  author = {Lowe, Ryan and Wu, Yi and Tamar, Aviv and Harb, Jean and Abbeel, Pieter and Mordatch, Igor},
+  date = {2020-03-14},
+  eprint = {1706.02275},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1706.02275},
+  url = {http://arxiv.org/abs/1706.02275},
+  urldate = {2023-02-12},
+  abstract = {We explore deep reinforcement learning methods for multi-agent domains. We begin by analyzing the difficulty of traditional algorithms in the multi-agent case: Q-learning is challenged by an inherent non-stationarity of the environment, while policy gradient suffers from a variance that increases as the number of agents grows. We then present an adaptation of actor-critic methods that considers action policies of other agents and is able to successfully learn policies that require complex multi-agent coordination. Additionally, we introduce a training regimen utilizing an ensemble of policies for each agent that leads to more robust multi-agent policies. We show the strength of our approach compared to existing methods in cooperative as well as competitive scenarios, where agent populations are able to discover various physical and informational coordination strategies.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing},
+  file = {/Users/brandonhosley/Zotero/storage/Q54TTJQQ/Lowe et al. - 2020 - Multi-Agent Actor-Critic for Mixed Cooperative-Com.pdf;/Users/brandonhosley/Zotero/storage/F3DU3EG3/1706.html}
 }
 
 @online{mnih2016,
@@ -39,6 +100,24 @@
   file = {/Users/brandonhosley/Zotero/storage/ZNCS528Y/Mnih et al. - 2016 - Asynchronous Methods for Deep Reinforcement Learni.pdf;/Users/brandonhosley/Zotero/storage/MJV4AMZK/1602.html}
 }
 
+@online{rashid2018,
+  title = {{{QMIX}}: {{Monotonic Value Function Factorisation}} for {{Deep Multi-Agent Reinforcement Learning}}},
+  shorttitle = {{{QMIX}}},
+  author = {Rashid, Tabish and Samvelyan, Mikayel and de Witt, Christian Schroeder and Farquhar, Gregory and Foerster, Jakob and Whiteson, Shimon},
+  options = {useprefix=true},
+  date = {2018-06-06},
+  eprint = {1803.11485},
+  eprinttype = {arxiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1803.11485},
+  url = {http://arxiv.org/abs/1803.11485},
+  urldate = {2024-04-04},
+  abstract = {In many real-world settings, a team of agents must coordinate their behaviour while acting in a decentralised way. At the same time, it is often possible to train the agents in a centralised fashion in a simulated or laboratory setting, where global state information is available and communication constraints are lifted. Learning joint action-values conditioned on extra state information is an attractive way to exploit centralised learning, but the best strategy for then extracting decentralised policies is unclear. Our solution is QMIX, a novel value-based method that can train decentralised policies in a centralised end-to-end fashion. QMIX employs a network that estimates joint action-values as a complex non-linear combination of per-agent values that condition only on local observations. We structurally enforce that the joint-action value is monotonic in the per-agent values, which allows tractable maximisation of the joint action-value in off-policy learning, and guarantees consistency between the centralised and decentralised policies. We evaluate QMIX on a challenging set of StarCraft II micromanagement tasks, and show that QMIX significantly outperforms existing value-based multi-agent reinforcement learning methods.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/9U68HQRD/Rashid et al_2018_QMIX.pdf;/Users/brandonhosley/Zotero/storage/4FPV8YXI/1803.html}
+}
+
 @online{sarkar2018,
   title = {A {{Brandom-ian}} View of {{Reinforcement Learning}} towards Strong-{{AI}}},
   author = {Sarkar, Atrisha},
@@ -53,4 +132,99 @@
   pubstate = {preprint},
   keywords = {Computer Science - Artificial Intelligence},
   file = {/Users/brandonhosley/Zotero/storage/24L6V564/Sarkar - 2018 - A Brandom-ian view of Reinforcement Learning towar.pdf}
+}
+
+@online{schulman2017,
+  title = {Trust {{Region Policy Optimization}}},
+  author = {Schulman, John and Levine, Sergey and Moritz, Philipp and Jordan, Michael I. and Abbeel, Pieter},
+  date = {2017-04-20},
+  eprint = {1502.05477},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1502.05477},
+  url = {http://arxiv.org/abs/1502.05477},
+  urldate = {2024-05-25},
+  abstract = {We describe an iterative procedure for optimizing policies, with guaranteed monotonic improvement. By making several approximations to the theoretically-justified procedure, we develop a practical algorithm, called Trust Region Policy Optimization (TRPO). This algorithm is similar to natural policy gradient methods and is effective for optimizing large nonlinear policies such as neural networks. Our experiments demonstrate its robust performance on a wide variety of tasks: learning simulated robotic swimming, hopping, and walking gaits; and playing Atari games using images of the screen as input. Despite its approximations that deviate from the theory, TRPO tends to give monotonic improvement, with little tuning of hyperparameters.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/WB9X428C/Schulman et al_2017_Trust Region Policy Optimization.pdf;/Users/brandonhosley/Zotero/storage/N4BJ2EUW/1502.html}
+}
+
+@online{schulman2017a,
+  title = {Proximal {{Policy Optimization Algorithms}}},
+  author = {Schulman, John and Wolski, Filip and Dhariwal, Prafulla and Radford, Alec and Klimov, Oleg},
+  date = {2017-08-28},
+  eprint = {1707.06347},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1707.06347},
+  url = {http://arxiv.org/abs/1707.06347},
+  urldate = {2024-05-25},
+  abstract = {We propose a new family of policy gradient methods for reinforcement learning, which alternate between sampling data through interaction with the environment, and optimizing a "surrogate" objective function using stochastic gradient ascent. Whereas standard policy gradient methods perform one gradient update per data sample, we propose a novel objective function that enables multiple epochs of minibatch updates. The new methods, which we call proximal policy optimization (PPO), have some of the benefits of trust region policy optimization (TRPO), but they are much simpler to implement, more general, and have better sample complexity (empirically). Our experiments test PPO on a collection of benchmark tasks, including simulated robotic locomotion and Atari game playing, and we show that PPO outperforms other online policy gradient methods, and overall strikes a favorable balance between sample complexity, simplicity, and wall-time.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/XDWVYD3Y/Schulman et al_2017_Proximal Policy Optimization Algorithms.pdf;/Users/brandonhosley/Zotero/storage/5UT3G33Z/1707.html}
+}
+
+@inproceedings{silver2014,
+  title = {Deterministic {{Policy Gradient Algorithms}}},
+  booktitle = {Proceedings of the 31st {{International Conference}} on {{Machine Learning}}},
+  author = {Silver, David and Lever, Guy and Heess, Nicolas and Degris, Thomas and Wierstra, Daan and Riedmiller, Martin},
+  date = {2014-01-27},
+  pages = {387--395},
+  publisher = {PMLR},
+  issn = {1938-7228},
+  url = {https://proceedings.mlr.press/v32/silver14.html},
+  urldate = {2024-05-26},
+  abstract = {In this paper we consider deterministic policy gradient algorithms for reinforcement learning with continuous actions. The deterministic policy gradient has a particularly appealing form: it is the expected gradient of the action-value function. This simple form means that the deterministic policy gradient can be estimated much more efficiently than the usual stochastic policy gradient. To ensure adequate exploration, we introduce an off-policy actor-critic algorithm that learns a deterministic target policy from an exploratory behaviour policy. Deterministic policy gradient algorithms outperformed their stochastic counterparts in several benchmark problems, particularly in high-dimensional action spaces.},
+  eventtitle = {International {{Conference}} on {{Machine Learning}}},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/2SAJTD6Q/Silver et al_2014_Deterministic Policy Gradient Algorithms.pdf}
+}
+
+@article{vinyals2019,
+  title = {Grandmaster Level in {{StarCraft II}} Using Multi-Agent Reinforcement Learning},
+  author = {Vinyals, Oriol and Babuschkin, Igor and Czarnecki, Wojciech M. and Mathieu, Michaël and Dudzik, Andrew and Chung, Junyoung and Choi, David H. and Powell, Richard and Ewalds, Timo and Georgiev, Petko and Oh, Junhyuk and Horgan, Dan and Kroiss, Manuel and Danihelka, Ivo and Huang, Aja and Sifre, Laurent and Cai, Trevor and Agapiou, John P. and Jaderberg, Max and Vezhnevets, Alexander S. and Leblond, Rémi and Pohlen, Tobias and Dalibard, Valentin and Budden, David and Sulsky, Yury and Molloy, James and Paine, Tom L. and Gulcehre, Caglar and Wang, Ziyu and Pfaff, Tobias and Wu, Yuhuai and Ring, Roman and Yogatama, Dani and Wünsch, Dario and McKinney, Katrina and Smith, Oliver and Schaul, Tom and Lillicrap, Timothy and Kavukcuoglu, Koray and Hassabis, Demis and Apps, Chris and Silver, David},
+  date = {2019-11-14},
+  journaltitle = {Nature},
+  shortjournal = {Nature},
+  volume = {575},
+  number = {7782},
+  pages = {350--354},
+  issn = {0028-0836, 1476-4687},
+  doi = {10.1038/s41586-019-1724-z},
+  url = {https://www.nature.com/articles/s41586-019-1724-z},
+  urldate = {2023-12-24},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/97RK6RVS/Vinyals et al. - 2019 - Grandmaster level in StarCraft II using multi-agen.pdf}
+}
+
+@online{yu2022,
+  title = {The {{Surprising Effectiveness}} of {{PPO}} in {{Cooperative}}, {{Multi-Agent Games}}},
+  author = {Yu, Chao and Velu, Akash and Vinitsky, Eugene and Gao, Jiaxuan and Wang, Yu and Bayen, Alexandre and Wu, Yi},
+  date = {2022-11-04},
+  eprint = {2103.01955},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2103.01955},
+  url = {http://arxiv.org/abs/2103.01955},
+  urldate = {2024-05-25},
+  abstract = {Proximal Policy Optimization (PPO) is a ubiquitous on-policy reinforcement learning algorithm but is significantly less utilized than off-policy learning algorithms in multi-agent settings. This is often due to the belief that PPO is significantly less sample efficient than off-policy methods in multi-agent systems. In this work, we carefully study the performance of PPO in cooperative multi-agent settings. We show that PPO-based multi-agent algorithms achieve surprisingly strong performance in four popular multi-agent testbeds: the particle-world environments, the StarCraft multi-agent challenge, Google Research Football, and the Hanabi challenge, with minimal hyperparameter tuning and without any domain-specific algorithmic modifications or architectures. Importantly, compared to competitive off-policy methods, PPO often achieves competitive or superior results in both final returns and sample efficiency. Finally, through ablation studies, we analyze implementation and hyperparameter factors that are critical to PPO's empirical performance, and give concrete practical suggestions regarding these factors. Our results show that when using these practices, simple PPO-based methods can be a strong baseline in cooperative multi-agent reinforcement learning. Source code is released at \textbackslash url\{https://github.com/marlbenchmark/on-policy\}.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/SDH5KMVS/Yu et al_2022_The Surprising Effectiveness of PPO in Cooperative, Multi-Agent Games.pdf;/Users/brandonhosley/Zotero/storage/3KM2DXK5/2103.html}
+}
+
+@article{zhong2024,
+  title = {Heterogeneous-{{Agent Reinforcement Learning}}},
+  author = {Zhong, Yifan and Kuba, Jakub Grudzien and Feng, Xidong and Hu, Siyi and Ji, Jiaming and Yang, Yaodong},
+  date = {2024},
+  journaltitle = {Journal of Machine Learning Research},
+  shortjournal = {JMLR},
+  volume = {25},
+  number = {32},
+  pages = {1--67},
+  url = {http://jmlr.org/papers/v25/23-0488.html},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/RP4HSFZU/Zhong et al. - Heterogeneous-Agent Reinforcement Learning.pdf}
 }
