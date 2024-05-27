@@ -1,0 +1,304 @@
+\documentclass[12pt,letterpaper]{exam}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+%\usepackage{libertine}
+\usepackage[left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage[table]{xcolor}
+\usepackage{minted}
+\setminted[python3]{
+    fontsize=\footnotesize,
+    %bgcolor=lightgray!10,
+    linenos}
+\usepackage{graphicx}
+\graphicspath{{./images/}}
+\usepackage{fancyvrb}
+
+\usepackage{booktabs}
+%\usepackage{multicol}
+%\usepackage[shortlabels]{enumitem}
+%\usepackage{wrapfig}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+
+\usepackage{tcolorbox}
+\newtcbox{\inlinecode}{on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt,
+    colback=gray!15, colframe=white, fontupper={\ttfamily \footnotesize}}
+
+\newcommand\chapter{4}
+\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{ DSOR 646 $-$ Reinforcement Learning } % This is the name of the course 
+\newcommand{\assignmentname}{Homework \# \chapter} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers% this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname} & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{questions}
+\question%
+\textbf{SARSA Temporal Difference Control:} \\
+\emph{
+Consider the Farama OpenAI \inlinecode{Gymnasium MountainCar-v0 environment}.
+See the following link for a description of the environment: 
+\url{https://gymnasium.farama.org/environments/classic_control/mountain_car/}.
+Solve the agent's sequential decision problem using an implementation of the SARSA algorithm. 
+You must encode your own implementation of the algorithm in Python. See page 130 of the course 
+textbook for pseudocode and Lesson 10 Handout for an example implementation of SARSA using Python.
+\\[0.25em]
+Tune your algorithm via experimentation to attain best results. 
+Utilize a parallelized Latin Hyper-cube Sampling (LHS) design. 
+See Lesson 9 for an example implementation. 
+What algorithm design run parameter values attain the best performance? 
+Which parameters appear to most impact performance? Utilize estimated expected total discounted 
+reward (EETDR) of generated target policies at milestone episodes to evaluate results.
+\\[0.25em]
+Test and report the best performing algorithm parameter values for your algorithm. 
+Use tables and figures to convey your results. Execute at least 50 design runs. 
+Execute at least 10 replications for each run. Use 1000 episodes per replication. 
+Report Mean Time-Avg EETDR and Mean Max EETDR to convey algorithm performance in terms quality of 
+solution and reliability. Report the best performing, superlative policy found by your SARSA 
+implementation across all parameter tuning design runs performed. 
+Record and report the average times required to execute a single design run replication. When 
+milestone testing a policy, use at least 30 episodes. Report 95\% confidence interval of EETDR. 
+Use the lower bound of the confidence interval, i.e., 95CILB, to identify a superlative policy. 
+The 95CILB seeks to measure reliable performance. Show a scatter plot of the observed 95CILB 
+values for average and maximum performance for each design run.
+\\[0.25em]
+Use the following stepsize TD learning rate. The learning rate at episode n is defined as
+\[ \alpha_n = \alpha_a \left(\frac{1}{(n+1)^{\alpha_b}}\right). \]
+Use state-action visit counts instead of the episode number to improve performance.
+Use the following exploration-exploitation \(\epsilon\)-greedy rule. 
+The probability of selecting a random action at episode \(n\) is
+\[ \epsilon_n = \epsilon_a \left(\frac{1}{(n+1)^{\epsilon_b}}\right). \]
+Use state visit counts instead of the episode number to improve performance.
+Test the following algorithm parameters
+\vspace*{-0.75em}
+\begin{itemize}
+    \setlength\itemsep{-0.25em}
+    \item \(\alpha_a\): initial learning rate
+    \item \(\alpha_b\): learning rate decay (higher indicates faster decay)
+    \item \(\epsilon_a\): initial exploration probability
+    \item \(\epsilon_b\): exploration probability decay (higher indicates faster decay)
+    \item \(Q^{init}\): initial Q-values across all state-action pairs
+\end{itemize}
+}
+\inputminted{python3}{scripts/SARSA.py}
+\begin{figure}[H]
+    \includegraphics*[height=0.33\linewidth]{one_step_sarsa_doe_performance.png}
+    \includegraphics*[height=0.33\linewidth]{one_step_sarsa_doe_params.png}
+\end{figure}
+{\footnotesize\VerbatimInput{anova_tables/one_step_sarsa.txt}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%    PROBLEM 2    %%
+%%%%%%%%%%%%%%%%%%%%%
+
+\question%
+\textbf{Q-learning Temporal Difference Control:} \\
+\emph{ 
+Consider the Farama OpenAI \inlinecode{Gymnasium MountainCar-v0 environment}.
+Solve the agent’s sequential decision problem using the Q-learning algorithm, 
+an off-policy temporal difference (TD) control solution procedure. 
+You must encode your own implementation of the algorithm in Python. 
+See page 131 of the course textbook for pseudocode. 
+Perform the same analysis as described for SARSA above.
+}
+\inputminted{python3}{scripts/QLearning.py}
+\begin{figure}[H]
+    \includegraphics*[height=0.33\linewidth]{q_learning_doe_performance.png}
+    \includegraphics*[height=0.33\linewidth]{q_learning_doe_params.png}
+\end{figure}
+{\footnotesize\VerbatimInput{anova_tables/q_learning.txt}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%    PROBLEM 3    %%
+%%%%%%%%%%%%%%%%%%%%%
+
+\question%
+\textbf{Expected SARSA:} \\
+\emph{ 
+Consider the Farama OpenAI \inlinecode{Gymnasium MountainCar-v0 environment}.
+Solve the agent's sequential decision problem using either the 
+Expected SARSA Algorithm (discussed in Section 6.6) or 
+the Double Q-learning Algorithm (discussed in Section 6.7 with pseudocode on p.136). 
+You must encode your own implementation of the algorithm in Python. 
+Perform the same analysis as described for SARSA above.
+}
+\inputminted{python3}{scripts/ExpectedSARSA.py}
+\begin{figure}[H]
+    \includegraphics*[height=0.33\linewidth]{expected_sarsa_doe_performance.png}
+    \includegraphics*[height=0.33\linewidth]{expected_sarsa_doe_params.png}
+\end{figure}
+{\footnotesize\VerbatimInput{anova_tables/expected_sarsa.txt}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%    PROBLEM 4    %%
+%%%%%%%%%%%%%%%%%%%%%
+
+\question%
+\textbf{\(n\)-step SARSA:} \\
+\emph{ 
+Consider the Farama OpenAI \inlinecode{Gymnasium MountainCar-v0 environment}.
+Solve the agent's sequential decision problem using the n-step SARSA algorithm. 
+You must encode your own implementation of the algorithm in Python. 
+See page 147 of the course textbook for pseudocode. See Lesson 12 Handout for an example 
+implementation of n-step SARSA using Python. 
+Perform the same analysis as described for SARSA above. 
+You must test different values of step parameter n.
+}
+
+\begin{solution}
+    Because the default Scipy Latin Hypercube Samples on a range \([0,1)\) without
+    an immediately obvious method for sampling from a set of integers, we write
+    the \(steps\) variable to accept a float value.
+    Given a float \(f\) then \(n=2^{\lfloor cf \rfloor}\).
+    The constant \(c\) determines the range of values,
+    in this implementation \(c=6\) means that \(n\) is selected from \(\{1,2,4,8,16,32\}\)
+    with equal probability.
+\end{solution}
+
+\begin{minted}[gobble=4]{python3}
+    env = gym.make('MountainCar-v0')
+    features = ["alpha_a", "alpha_b", "eps_a", "eps_b", "steps"]
+    sarsa_experiment = LHS_Experiment(SARSA,env,features)
+    sarsa_experiment.parallel_lhs()
+    sarsa_experiment.export_results()
+    sarsa_experiment.plot_results()
+    sarsa_experiment.plot_param_comparison()
+    sarsa_experiment.anova()
+\end{minted}
+
+\begin{figure}[H]
+    \includegraphics*[height=0.33\linewidth]{n_step_sarsa_doe_performance.png}
+    \includegraphics*[height=0.33\linewidth]{n_step_sarsa_doe_params.png}
+\end{figure}
+{\footnotesize\VerbatimInput{anova_tables/n_step_sarsa.txt}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%    PROBLEM 5    %%
+%%%%%%%%%%%%%%%%%%%%%
+
+\question%
+\textbf{Evaluate the Benchmark Momentum Policy:} \\
+\emph{ 
+In this fixed benchmark policy, the agent accelerates in the direction it is currently moving. 
+This policy is expressed as follows.
+\[\pi(s) = 
+\begin{cases}
+    0 & \text{if } s^{velocity} < 0 \\
+    2 & \text{otherwise}
+\end{cases}\]
+Evaluate the policy by simulating its execution for 100 trials then taking the average. 
+This is one replication. Perform 30 replications, reporting the average and 95\% 
+confidence interval half-width from the 30 test replication averages.
+}
+\inputminted{python3}{scripts/benchmark_momentum.py}
+\begin{figure}[H]
+    \includegraphics*[height=0.45\linewidth]{momentum_performance.png}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%    PROBLEM 6    %%
+%%%%%%%%%%%%%%%%%%%%%
+
+\question%
+\textbf{Compare the performance of the four algorithms with respect to quality of solution, 
+reliability, and computational expense:} \\
+\emph{ 
+Which algorithm is best for this problem? Justify your claim. 
+Create a single color-coded and/or icon-differentiated scatter plot that depicts the algorithms' 
+results with respect to mean and max 95CILB measures of reliable average and maximum performance. 
+Also create a single learning curve figure showing the best learning curve 
+(associated with the best parameter design run) for each algorithm. 
+Create a summary statistics table to compactly represent your results. 
+Provide an accompanying narrative to support your claims. 
+Make sure you explain your key observations. Can the algorithms determine superlative policies 
+that outperform the benchmark Momentum Policy? (I hope so.)
+\\[0.25em]
+What was the most challenging aspect of solving the MountainCar-v0 environment using these RL
+approaches? What novel algorithm design mechanisms would you suggest to improve performance?
+}
+
+\begin{solution}
+    As with all questions regarding the best algorithm, the answer depends on multiple factors
+    or the allowance of certain assumptions.
+    In the case of this problem, being trained in simulation, there is no exceptional cost 
+    associated with failure, riskier algorithms that explore more are not a problem.
+
+    The parameters of the superlative policies trained during this experiment were
+    \begin{center}
+        \begin{tabular}{c cccc c}
+            Algorithm & \(\alpha_a\) & \(\alpha_b\) & \(\epsilon_a\) & \(\epsilon_b\) & n \\
+            \midrule
+            One-step SARSA & 0.71 & 0.39 & 0.33 & 0.13 &  \\
+            n-step SARSA   & 0.71 & 0.39 & 0.33 & 0.13 & 2 \\
+            Expected SARSA & 0.99 & 0.31 & 0.07 & 0.73 &  \\
+            Q-learning     & 0.87 & 0.21 & 0.40 & 0.54 &  \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    Given that the performance results of my implementations are all very similar,
+    the primary factor that would influence which algorithm should be considered the best
+    is probably the resource expense required to train the policy.
+    In this experiment that would indicate Q-learning as a clear winner, given that its training
+    time is approximately 16\% shorter than the next algorithm on average.
+
+    Below is a table of summary statistics.
+    \begin{center}
+        \begin{tabular}{ccccc}
+            Algorithm & Avg Execution Time & Avg Score & Avg Sup EETDR & Max Score \\
+            \midrule
+            One-step SARSA & 17.500773 & -180.382835 & -151.354667 & -155.071442 \\
+            n-step SARSA   & 17.830613 & -182.281669 & -154.208000 & -154.190447 \\
+            Expected SARSA & 17.881559 & -182.136424 & -152.470000 & -155.199330 \\
+            Q-learning     & 15.102565 & -181.978577 & -154.812667 & -153.492831 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+
+    One interesting note is that while all of these implementations failed to achieve the 
+    desired performance (I believe due to ineffective exploration) when left to run for 
+    significantly longer Expected SARSA and Q-learning do continue to improve at a faster
+    rate than 1-step and 2-step SARSA. This can be seen in the comparison of the figures below.
+
+    \begin{figure}[H]
+        \includegraphics*[height=0.36\linewidth]{comparison.png}
+        \includegraphics*[height=0.36\linewidth]{long comparison.png}
+    \end{figure}
+
+    Unfortunately, it seems the expert system (momentum baseline) may technically be the best 
+    option of the given options. However, it seems that Q-learning has the greatest promise.
+\end{solution}
+\end{questions}
+
+\clearpage
+\textbf{Support Functions} 
+\inlinecode{HW4\_functions.py}
+\inputminted{python3}{../HW4_functions.py}
+
+\end{document}

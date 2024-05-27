@@ -269,7 +269,7 @@ class LHS_Experiment():
         self.column_names = ["Run Index"] + features + ["Sup EETDR", "Sup EETDR hw", 
                              "Mean Max EETDR", "Mean Max EETDR hw", "Time-Avg EETDR", 
                              "Time-Avg EETDR hw", "Secs per run", "Score"]
-        self.NUM_CPU_PROCS  = kwargs.get('num_cpu_procs',6)     # Number of CPU threads to use
+        self.NUM_CPU_PROCS  = kwargs.get('num_cpu_procs',16)     # Number of CPU threads to use
         self.num_episodes   = kwargs.get('episodes',int(1e3))
         self.replications   = kwargs.get('replications',10)
         self.runs           = kwargs.get('runs',50)
@@ -386,7 +386,7 @@ class LHS_Experiment():
         y = np.array(self.results_table[1:,-1],float) # 0-index appears to be title
         # create scatter plot
         for i,param in enumerate(self.features):
-            plt.scatter(np.array(self.results_table[1:,i],float), y , label=param)
+            plt.scatter(np.array(self.results_table[1:,i+1],float), y , label=param)
         #plt.scatter(np.array(self.results_table[1:,1],float), y, label="eps_a")
         #plt.scatter(np.array(self.results_table[1:,2],float), y, label="eps_b")
         #plt.scatter(np.array(self.results_table[1:,3],float), y, label="Q-init")
