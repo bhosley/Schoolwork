@@ -5,9 +5,12 @@
 \usepackage{graphicx}
 \graphicspath{./images/}
 \usepackage[table,dvipsnames]{xcolor}
+
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{multirow}
+\usepackage{pgfplotstable}
+
 \usepackage{wrapfig}
 \usepackage{float}
 \usepackage{url}
@@ -59,19 +62,15 @@ demonstrating the versatility and impact of RL in solving complex problems acros
 \section{Overview}
 \label{sec:overview}
 
-For each of the analyzed papers we will examine core MDP components
-
-
-
+For each of the analyzed papers we will examine core MDP components;
 
 \begin{itemize}
-    \item \textbf{Agents:} Entities that make decisions.
     \item \textbf{Environments:} The external system with which agents interact.
+    \item \textbf{Agents:} Entities that make decisions.
     \item \textbf{States:} Representations of the environment at a given time.
     \item \textbf{Actions:} Possible decisions or moves the agent can make.
     \item \textbf{Rewards:} Feedback from the environment based on the actions taken.
 \end{itemize}
-
 
 
 (b) Summarize results, creating a table summarizing key information with one row for each paper 
@@ -98,6 +97,20 @@ iv. tuning and/or testing adequate?
     \end{tabularx}
 \end{table*}
 
+\newcolumntype{C}{>{\centering\arraybackslash}p{60mm}}%
+\newcolumntype{L}{>{\raggedright\arraybackslash}p{60mm}}%
+\begin{table*}
+    \pgfplotstabletypeset[
+    %columns={citekey,Short-Title,MDP Characteristics,Extended Algorithm,Novel Extensions},
+    col sep=comma,
+    string type,
+    every head row/.style={after row=\midrule},
+    every last row/.style={after row=\bottomrule},
+    columns/citekey/.style={column name=Citation, column type=c},
+    columns/Short-Title/.style={column name=Short-Title, column type=L},
+    ]{lit_review_table.csv}
+\end{table*}
+
 
 \subsection{Hybrid NOMA/OMA-Based Dynamic Power Allocation Scheme 
 Using Deep Reinforcement Learning in 5G Networks}
@@ -116,19 +129,26 @@ They use a deep actor-critic reinforcement learning (DACRL) framework for effici
 bandwidth allocation in hybrid NOMA/OMA CRNs, where solar-powered users are assigned optimal 
 transmission power and bandwidth to maximize long-term data transmission rates.
 
-
-
-
-
 \subsection{Trust Region Policy Optimization}
-This paper presents Trust Region Policy Optimization (TRPO), an iterative method for optimizing policies with guaranteed monotonic improvement. TRPO combines theoretical rigor with practical approximations to develop a robust algorithm suitable for large nonlinear policies, such as neural networks. The algorithm is evaluated on various tasks, including robotic control (swimming, hopping, walking) and Atari games using raw pixel inputs. TRPO consistently shows monotonic improvement and robust performance with minimal hyperparameter tuning, making it a reliable choice for policy optimization in diverse environments.
-\cite{schulman2017}
+In \cite{schulman2017} Schulman et. al. introduce Trust Region Policy Optimization (TRPO), 
+an iterative method for optimizing policies with guaranteed monotonic improvement. 
+TRPO combines theoretical rigor with practical approximations to develop a robust algorithm 
+suitable for large nonlinear policies, such as neural networks. 
+The algorithm is evaluated on various tasks, including simulated robotic control in MuJoCo
+(swimming, hopping, walking) and Atari games using raw pixel inputs. 
+TRPO consistently shows monotonic improvement and robust performance with minimal hyperparameter 
+tuning, making it a reliable choice for policy optimization in diverse environments.
+
+
+
+
+
 
 \subsection{Proximal Policy Optimization Algorithms}
 This paper proposes Proximal Policy Optimization (PPO), a new family of policy gradient methods for reinforcement learning. PPO alternates between sampling data from the environment and optimizing a surrogate objective function using stochastic gradient ascent. Unlike standard policy gradient methods, PPO's objective function allows multiple epochs of minibatch updates, improving sample efficiency. The algorithm retains the benefits of Trust Region Policy Optimization (TRPO) but is simpler to implement and more general. Empirical results show that PPO outperforms other online policy gradient methods on benchmark tasks, including simulated robotic locomotion and Atari games, striking a favorable balance between sample complexity, simplicity, and performance.
 \cite{schulman2017a}
 
-\subsection{QMIX: Monotonic Value Function Factorisation for Deep Multi-Agent Reinforcement Learning}
+\subsection{QMIX: Monotonic Value Function Factorization for Deep Multi-Agent Reinforcement Learning}
 This paper introduces QMIX, a value-based multi-agent reinforcement learning (MARL) method that facilitates centralized training and decentralized execution. QMIX estimates joint action-values as a non-linear combination of per-agent values conditioned on local observations, with a structural monotonicity constraint ensuring consistency between centralized and decentralized policies. The method is evaluated on StarCraft II micromanagement tasks, showing significant performance improvements over existing value-based MARL methods. QMIX effectively leverages centralized training to derive robust decentralized policies, making it a strong approach for complex coordination tasks in multi-agent settings.
 \cite{rashid2018}
 
@@ -140,7 +160,8 @@ This paper presents an adaptation of Deep Q-Learning (DQN) for continuous action
 This paper tackles the issue of function approximation errors in actor-critic methods, which can lead to overestimated value estimates and suboptimal policies. The authors propose mechanisms to minimize these errors on both the actor and the critic. The algorithm builds on Double Q-learning by taking the minimum value between a pair of critics to limit overestimation. Additionally, delaying policy updates is suggested to reduce per-update error. Evaluations on the OpenAI gym tasks show that the proposed method outperforms state-of-the-art approaches in every tested environment, demonstrating its robustness and effectiveness in addressing approximation errors.
 \cite{fujimoto2018}
 
-\subsection{Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments}
+\subsection{MA2C for Mixed Environments}
+%\subsection{Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments}
 This paper explores deep reinforcement learning methods for multi-agent domains, specifically focusing on mixed cooperative-competitive environments. Traditional algorithms like Q-learning and policy gradient face challenges in multi-agent settings due to non-stationarity and high variance. The authors propose an adaptation of actor-critic methods that takes into account the action policies of other agents, enabling the learning of complex coordination strategies. Additionally, an ensemble of policies for each agent is introduced, resulting in more robust multi-agent policies. The approach is validated in various cooperative and competitive scenarios, demonstrating superior performance and robustness compared to existing methods.
 \cite{lowe2020}
 
@@ -163,7 +184,7 @@ This paper addresses the challenges in cooperative multi-agent reinforcement lea
 \label{sec:conclusion}
 
 \subsection{Summary of Key Insights}
-Recap of the major contributions from the reviewed papers
+
 
 \subsection{Overall Impact on the Field}
 How the reviewed literature has shaped the current state of RL
