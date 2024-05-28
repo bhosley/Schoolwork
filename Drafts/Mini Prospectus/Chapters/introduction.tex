@@ -130,7 +130,7 @@ previous milestone agents for ongoing comparison and refinement.
 \section{Problem statement}%
 \label{sec:problem_statement}
 
-The field of \gls*{rl} in heterogeneous agents, while growing, remains narrowly focused. 
+The field of \gls{rl} in heterogeneous agents, while growing, remains narrowly focused. 
 Current research predominantly addresses the cooperative dynamics of agents working together to 
 achieve objectives within a given environment, as evidenced by studies such as those by 
 ~\cite*{zhong2024, zheng2020, wakilpoor2020, kapetanakis2005}. 
@@ -141,11 +141,11 @@ these projects have relied on extensive resources, which may not be accessible t
 researchers or practitioners.
 
 This dissertation seeks to conduct a deeper examination of the conditions that lead to strategic
-collapse in \gls*{harl} and to identify effective and efficient methods to address these issues. 
+collapse in \gls{harl} and to identify effective and efficient methods to address these issues. 
 There is a critical need to understand how competitive strategies can fail or succeed in diverse 
-settings, which will be crucial for enabling broader applications of \gls*{harl} technologies.
+settings, which will be crucial for enabling broader applications of \gls{harl} technologies.
 
-Additionally, the identification and understanding of pitfall strategies in \gls*{harl} 
+Additionally, the identification and understanding of pitfall strategies in \gls{harl} 
 could be immensely beneficial. Being able to recognize and enumerate strategies that are prone 
 to risks during training and before deployment could greatly enhance the trust and 
 reliability of these systems for future users. This study aims to fill these gaps, 
@@ -158,19 +158,19 @@ contributing to a more robust understanding of competitive heterogeneous-agent e
 
 \begin{description}
     \item[Question 1:] 
-    What are the key factors contributing to strategic collapse in \gls*{harl} environments?
+    What are the key factors contributing to strategic collapse in \gls{harl} environments?
     % This question aims to identify and analyze the conditions under which strategies fail, 
     % particularly in \emph{competitive} \gls*{harl} settings. 
     % Understanding these factors is crucial for developing robust and resilient AI systems.
     \item[Question 1.1:] 
-    What methods can prevent or mitigate strategic collapse in \gls*{harl} without compromising the 
+    What methods can prevent or mitigate strategic collapse in \gls{harl} without compromising the 
     learning efficiency and effectiveness of the agents?
     % Focusing on solutions, this question investigates the techniques and approaches that can be 
     % employed to address the issues of strategic collapse, 
     % ensuring that agents remain effective in their tasks while avoiding over-specialization 
     % and other pitfalls.
     \item[Question 2:] 
-    How can competitive \gls*{harl} be effectively managed with limited resources compared to the 
+    How can competitive \gls{harl} be effectively managed with limited resources compared to the 
     extensive resources used in projects like AlphaStar and OpenAI Five?
     % This question seeks to explore methods and strategies that can optimize resource use in \gls*{harl}, 
     % making competitive applications more accessible and feasible for a wider range of researchers and 
@@ -182,7 +182,7 @@ contributing to a more robust understanding of competitive heterogeneous-agent e
     %%  % this question aims to understand how these dynamics influence overall system 
     %%  % performance and strategy development in heterogeneous-agent settings.
     \item[Question 3:] 
-    Can pitfall strategies in \gls*{harl} be identified and enumerated during the training phase to 
+    Can pitfall strategies in \gls{harl} be identified and enumerated during the training phase to 
     prevent potential failures post-deployment?
     % This question addresses the predictive aspects of HARL, exploring whether it is possible 
     % to foresee and correct risky strategies during the development phase of AI systems,
@@ -196,7 +196,7 @@ contributing to a more robust understanding of competitive heterogeneous-agent e
 \begin{tcolorbox}[colback=blue!5,colframe=blue!50!black,title=Note to Editor]
     Among the current questions I don't believe that I have effectively enumerated the
     objective where it comes to examining training that is robust to various team sizes/
-    compositions. For example,~\cite*{smit2023} was unable to train agents in 4v4 that generalized
+    compositions. For example,~\cite{smit2023} was unable to train agents in 4v4 that generalized
     well to 11v11 (for Football/American Soccer).
 
     I think that a rewrite on Q2 is the appropriate place. 
@@ -207,17 +207,17 @@ contributing to a more robust understanding of competitive heterogeneous-agent e
 
 The remainder of this document is designed to systematically explore the complex field of 
 multi-agent reinforcement learning, particularly focusing on heterogeneous-agent systems.
-Following this introductory chapter,~\ref*{ch:literature_review}: Literature Review provides a 
+Following this introductory chapter,~\ref{ch:literature_review}: Literature Review provides a 
 comprehensive analysis of the seminal and recent literature pertinent to our research focus.%
 %\ref*{ch:methodology} outlines the essential theories that underpin our methodologies.
-\ref*{ch:methodology} details the experimental and analytical techniques employed.
-~\ref*{ch:results} presents the data and findings from our research, followed by 
-~\ref*{ch:discussion}, where these results are interpreted in the context of existing 
+\ref{ch:methodology} details the experimental and analytical techniques employed.
+~\ref{ch:results} presents the data and findings from our research, followed by 
+~\ref{ch:discussion}, where these results are interpreted in the context of existing 
 knowledge and their implications for future research are explored.
-The \emph{dissertation} will conclude with~\ref*{ch:conclusion}, 
+The \emph{dissertation} will conclude with~\ref{ch:conclusion}, 
 which summarizes the research and suggests avenues for further investigation. 
 Each chapter builds upon the previous to provide a comprehensive understanding of the topic, 
-aiming to contribute valuable insights to the field of \gls*{harl}.
+aiming to contribute valuable insights to the field of \gls{harl}.
 
 \begin{comment}
     The structure of this dissertation is designed to systematically explore the complex field of 

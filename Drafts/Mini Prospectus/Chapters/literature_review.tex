@@ -1,63 +1,206 @@
 % Literature Review
-\begin{comment}
-We intend to use this section for accomplish three things;
-\begin{enumerate}
-    \item Convince the committee that this is important
-    \item Convince the committee that this is an open question
-    \item Convince the committee that we understand the current state of the literature and the scope of the intended research. (Implicitly indicating the feasibility of the research)
-\end{enumerate}
 
-\section{Key concepts, theories and studies}%
-\label{sec:concepts_theories_studies}
-
-\section{Key debates and controversies}%
-\label{sec:debates_and_controversies}
-
-\section{Gaps in existing knowledge}%
-\label{sec:knowledge_gaps}
-
-Include a lit review table.
-
-\begin{tabular}{ccc}
-    Paper & contributions & ref 
-\end{tabular}
-
-\end{comment}
-
-% Literature Review ####################%%%%%%%%%%%%%%%%%%%%####################%%%%%%%%%%%%%%%%%%%%
-\section{Markov Decision Processes}
-
-\begin{comment}
-
-    \subsection*{Markov Decision Processes}
-    
-    %Markov Decision Processes (MDPs)
-    \glspl*{mdp} are foundational to the field of reinforcement learning. 
-    An examination of the literature cited in this dissertation reveals that the terminology and 
-    descriptions of MDPs in early papers have significantly influenced the language still used in 
-    the field today.
-    
-\end{comment}
-
+This chapter delves deeper into the current \gls{sota} and the foundational work that has 
+contributed to its development. It is divided into sections covering the foundational elements 
+of reinforcement learning, the evolution to multi-agent systems, and the progression to 
+heterogeneous-agent systems. The chapter will conclude by examining some of the open questions, 
+unaddressed challenges, and potential future directions in the field.
 
 \section{Reinforcement Learning}
 
 
+\section*{Markov Decision Processes}
+
+\glsplural{mdp} form the foundation of reinforcement learning by providing a formal framework for 
+modeling decision-making in environments with stochastic dynamics~\cite{puterman2005}.
+An MDP is defined by a tuple \((S, A, P, R, \gamma)\), where:
+\begin{itemize}
+    \item \gls{S} is a finite set of states.
+    \item \gls{A} is a finite set of actions.
+    \item \(\gls{P}: S\times A\times S\rightarrow [0,1]\) is the state transition probability function.
+    \item \(\gls{R}: S \times A \rightarrow \gls{reals}\) is the reward function.
+    \item \(\gls{discount} \in [0, 1]\) is the discount factor.
+\end{itemize}
+
+\subsection*{State Transition Probability Function}
+The state transition probability function \(P(s^\prime|s, a)\) represents the probability of 
+transitioning to state \(s^\prime\) given the current state \(s\) and action \(a\). 
+This captures the stochastic nature of the environment.
+
+\subsection*{Reward Function}
+The reward function \(R(s, a)\) defines the immediate reward received after taking 
+action \(a\) in state \(s\). This reward guides the agent's learning process.
+
+\subsection*{Discount Factor}
+The discount factor \(\gamma\) determines the importance of future rewards. 
+A discount factor close to \(1\) values future rewards similarly to immediate rewards, 
+while a factor close to \(0\) prioritizes immediate rewards.
+
+\subsection*{Objective in MDPs}
+The objective in an \gls{mdp} is to find a policy \(\pi: S \rightarrow A\) 
+that maximizes the expected cumulative reward, often referred to as the return. 
+The return \(G_t\) at time \(t\) is defined as the sum of discounted rewards:
+\[
+    G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
+\]
+where \(R_{t+k+1}\) is the reward received \(k+1\) time steps after time \(t\).
+
+\subsection*{Value Functions}
+The value function \(V^\pi(s)\) represents the expected return starting from state \(s\) and 
+following policy \(\pi\). It is defined as:
+\[
+    v_\pi(s) = \mathbb{E}\pi [G_t | S_t = s] = \mathbb{E}\pi 
+    \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \middle| S_t = s \right]
+\]
+The action-value function \(Q^\pi(s, a)\) represents the expected return starting from state \(s\),
+taking action \(a\), and thereafter following policy \(\pi\):
+\[ 
+    q_\pi(s, a) = \mathbb{E}\pi [G_t | S_t = s, A_t = a] 
+    = \mathbb{E}\pi \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \middle| S_t =s, A_t =a \right]
+\]
+
+\subsection*{Bellman Equations}
+The Bellman equations provide recursive definitions for the value functions. 
+For the state-value function, the Bellman equation is:
+\[
+    v_\pi(s) = \sum_{a \in A} \pi(a|s) \sum_{s^\prime \in S} P(s^\prime|s, a) 
+    \left[R(s, a) + \gamma V^\pi(s^\prime)\right]
+\]
+For the action-value function, the Bellman equation is:
+\[
+    q_\pi(s, a) = \sum_{s^\prime \in S} P(s^\prime|s, a)\left[R(s, a) 
+    + \gamma \sum_{a^\prime \in A} \pi(a^\prime|s^\prime) Q^\pi(s^\prime, a^\prime)\right]
+\]
+
+\subsection*{Optimal Policy}
+The goal is to find the optimal policy \(\pi\) that maximizes the value function for all states. 
+The optimal value function \(V_*(s)\) satisfies the Bellman optimality equation:
+\[
+    v_*(s) = \max_a \sum_{s^\prime \in S} P(s^\prime|s, a) [R(s, a) + \gamma V^(s^\prime)] 
+\]
+Similarly, the optimal action-value function \(Q^*(s, a)\) satisfies:
+\[
+    q_*(s, a) = \sum_{s^\prime \in S} P(s^\prime|s, a) 
+    [R(s, a) + \gamma \max_{a^\prime} Q^(s^\prime, a^\prime)] 
+\]
+
+\subsection*{Solution Methods}
+There are numerous methods for solving \glspl{mdp}, including exact methods like 
+value iteration and policy iteration, as well as approximate methods such as \gls{rl} techniques. 
+Exact methods iteratively compute the value functions and improve 
+the policy until convergence to the optimal solution. 
+However, for large state and action spaces, these methods become computationally infeasible.
+
+In contrast, \gls{rl} methods, which learn optimal policies through interaction with the 
+environment, offer a scalable approach for solving \glspl{mdp}. 
+\gls{rl} methods do not require a model of the environment's dynamics and can handle large, 
+complex problems where exact methods fall short.
+
+Given the focus of this literature review, on the development towards \gls{harl}, 
+we will proceed by delving deeper into \gls{rl} methods. 
+This will provide a comprehensive understanding of how MDPs evolve into more complex frameworks
+suitable for real-world applications involving multiple, diverse agents.
+
+
+\section*{Single-Agent Reinforcement Learning}
+
+Single-agent \glsentrylong{rl} extends the foundational principles of \glspl{mdp} by enabling 
+an agent to learn optimal policies through direct interaction with the environment. 
+In single-agent \gls{rl}, the agent learns by trial and error, using feedback in the form of 
+rewards to adjust its actions and maximize cumulative rewards over time.
+
+\subsection*{Learning Algorithms}
+Single-agent \gls{rl} employs various algorithms to learn the optimal policy by approximating 
+the value functions. These algorithms can be broadly categorized into dynamic programming, 
+Monte Carlo methods, and \gls{td} learning.
+
+
+
+
+
+
+\clearpage
+\begin{comment}
+
+
+
+2.2 Single-Agent Reinforcement Learning --
+
+3. Evolution to Multi-Agent Systems
+
+3.1 Cooperative and Competitive Multi-Agent Systems
+
+Multi-agent reinforcement learning (MARL) introduces scenarios where multiple agents interact, either cooperatively or competitively. These interactions add layers of complexity, as agents must consider not only their actions but also the actions of other agents.
+
+	•	Key Paper: Littman, M.L. (1994). Markov games as a framework for multi-agent reinforcement learning.
+
+3.2 Advances in MARL
+
+The advancement of MARL includes the development of algorithms that allow agents to learn in environments with other learning agents, leading to applications in fields such as robotics, game theory, and economics.
+
+	•	Key Paper: Busoniu, L., Babuska, R., & De Schutter, B. (2008). A comprehensive survey of multi-agent reinforcement learning.
+	•	Key Paper: Mnih, V. et al. (2015). Human-level control through deep reinforcement learning.
+	•	Key Paper: Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
+
+4. Introduction to Heterogeneous-Agent Reinforcement Learning (HARL)
+
+4.1 Definition and Significance
+
+HARL extends MARL by allowing agents with different capabilities and knowledge to interact. This heterogeneity mirrors real-world scenarios more closely, where agents (e.g., robots, drones) often have diverse functionalities.
+
+	•	Key Paper: Lowe, R. et al. (2017). Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments.
+
+4.2 Applications of HARL
+
+HARL has been applied in various domains such as autonomous driving, smart grids, and collaborative robotics, demonstrating its potential to solve complex, real-world problems.
+
+	•	Key Paper: Kraemer, L., & Banerjee, B. (2020). Multi-agent reinforcement learning as a rehearsal for decentralized planning.
+
+5. Current State of the Art in HARL
+
+5.1 Recent Advances
+
+Recent research has focused on enhancing the efficiency, scalability, and robustness of HARL algorithms. Significant contributions include the development of new learning paradigms and the application of HARL in increasingly complex environments.
+
+	•	Key Paper: Zhou, Y. et al. (2023). The role of hierarchy in multi-agent learning.
+	•	Key Paper: Yang, Y. et al. (2023). Efficient policy learning in large-scale heterogeneous-agent environments.
+
+5.2 Addressing Strategic Collapse
+
+One critical challenge in HARL is the risk of strategic collapse, where agents’ strategies become suboptimal when scaling up the number of agents or increasing environmental complexity. Addressing this issue is crucial for the practical deployment of HARL systems.
+
+	•	Key Paper: Papoudakis, G. et al. (2021). Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms.
+	•	Key Paper: Foerster, J. et al. (2018). Learning with Opponent-Learning Awareness.
+
+6. Open Challenges and Future Directions
+
+6.1 Scalability and Efficiency
+
+Improving the scalability and computational efficiency of HARL algorithms remains a significant challenge. Research in this area focuses on optimizing algorithms to handle large-scale agent populations without sacrificing performance.
+
+	•	Key Paper: Baker, B. et al. (2020). Emergent Tool Use from Multi-Agent Autocurricula.
+
+6.2 Policy Generalization
+
+Ensuring that HARL policies generalize well across different environments and agent configurations is essential for real-world applications. This involves developing robust learning strategies that can adapt to varying conditions.
+
+	•	Key Paper: Shao, K. et al. (2020). Is Multi-Agent Deep Reinforcement Learning the Answer or the Question? A Brief Survey.
+
+7. Conclusion
+
+The field of HARL holds great promise for advancing multi-agent systems, offering solutions to complex problems through the interaction of diverse agents. However, significant challenges remain, particularly in addressing strategic collapse and ensuring scalability and policy generalization. Future research must continue to push the boundaries of HARL, focusing on these critical issues to unlock its full potential.
+
+
+
+
+\subsection*{Single-Agent Reinforcement Learning}
 \section{Multi-Agent Reinforcement Learning}
 \subsection*{Multi-Agent Advantage Decomposition}
 \subsection*{Simultaneous Update}
 \subsection*{Sequential Update}
-
-
 \section{Heterogeneous-Agent Reinforcement Learning}
-
-
 \section{Self-play}
-
-
 \section{Strategic Collapse}
-
-
 \section{Key Algorithms}
 \subsection*{Multi-Agent DQNs}
 \subsection*{Actor-Critic methods} % (lowe2020)
@@ -65,11 +208,9 @@ Include a lit review table.
 \subsection*{Joint Action Learners}
 \subsection*{MAPPO}
 \subsection*{HAPPO}
-\subsection*{}
-\subsection*{}
 
 
-\begin{comment}
+
 %Additionally, mediated reinforcement learning introduces the concept of mediators to ensure 
 %cooperation among self-interested agents, promoting socially beneficial behaviors 
 %(Ivanov \& Zisman, 2023).
@@ -79,7 +220,20 @@ Include a lit review table.
 %capability to handle complex interactions and achieve high performance without human data 
 %(Sun et al., 2023).
 
-
 \cite*{zhong2024} for HARL
 
+\end{comment}
+\begin{comment}
+We intend to use this section for accomplish three things;
+\begin{enumerate}
+    \item Convince the committee that this is important
+    \item Convince the committee that this is an open question
+    \item Convince the committee that we understand the current state of the literature and the 
+    scope of the intended research. (Implicitly indicating the feasibility of the research)
+\end{enumerate}
+
+Include a lit review table.
+\begin{tabular}{ccc}
+    Paper & contributions & ref 
+\end{tabular}
 \end{comment}
