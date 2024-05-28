@@ -1,4 +1,5 @@
 % Literature Review
+\glsresetall
 
 This chapter delves deeper into the current \gls{sota} and the foundational work that has 
 contributed to its development. It is divided into sections covering the foundational elements 
@@ -6,83 +7,83 @@ of reinforcement learning, the evolution to multi-agent systems, and the progres
 heterogeneous-agent systems. The chapter will conclude by examining some of the open questions, 
 unaddressed challenges, and potential future directions in the field.
 
-\section{Reinforcement Learning}
+\section{Reinforcement Learning Foundations}
 
+\subsection*{Markov Decision Processes}
 
-\section*{Markov Decision Processes}
-
-\glsplural{mdp} form the foundation of reinforcement learning by providing a formal framework for 
+\Glsplural{mdp} form the foundation of reinforcement learning by providing a formal framework for 
 modeling decision-making in environments with stochastic dynamics~\cite{puterman2005}.
 An MDP is defined by a tuple \((S, A, P, R, \gamma)\), where:
 \begin{itemize}
     \item \gls{S} is a finite set of states.
     \item \gls{A} is a finite set of actions.
-    \item \(\gls{P}: S\times A\times S\rightarrow [0,1]\) is the state transition probability function.
+    \item \(\gls{P}: S\times A\times S\rightarrow [0,1]\) is the state transition 
+    probability function.
     \item \(\gls{R}: S \times A \rightarrow \gls{reals}\) is the reward function.
     \item \(\gls{discount} \in [0, 1]\) is the discount factor.
 \end{itemize}
 
-\subsection*{State Transition Probability Function}
+\subsubsection*{State Transition Probability Function}
 The state transition probability function \(P(s^\prime|s, a)\) represents the probability of 
 transitioning to state \(s^\prime\) given the current state \(s\) and action \(a\). 
 This captures the stochastic nature of the environment.
 
-\subsection*{Reward Function}
+\subsubsection*{Reward Function}
 The reward function \(R(s, a)\) defines the immediate reward received after taking 
 action \(a\) in state \(s\). This reward guides the agent's learning process.
 
-\subsection*{Discount Factor}
+\subsubsection*{Discount Factor}
 The discount factor \(\gamma\) determines the importance of future rewards. 
 A discount factor close to \(1\) values future rewards similarly to immediate rewards, 
 while a factor close to \(0\) prioritizes immediate rewards.
 
-\subsection*{Objective in MDPs}
+\subsubsection*{Objective in MDPs}
 The objective in an \gls{mdp} is to find a policy \(\pi: S \rightarrow A\) 
 that maximizes the expected cumulative reward, often referred to as the return. 
 The return \(G_t\) at time \(t\) is defined as the sum of discounted rewards:
-\[
+\begin{equation}
     G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
-\]
+\end{equation}
 where \(R_{t+k+1}\) is the reward received \(k+1\) time steps after time \(t\).
 
-\subsection*{Value Functions}
+\subsubsection*{Value Functions}
 The value function \(V^\pi(s)\) represents the expected return starting from state \(s\) and 
 following policy \(\pi\). It is defined as:
-\[
+\begin{equation}
     v_\pi(s) = \mathbb{E}\pi [G_t | S_t = s] = \mathbb{E}\pi 
     \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \middle| S_t = s \right]
-\]
+\end{equation}
 The action-value function \(Q^\pi(s, a)\) represents the expected return starting from state \(s\),
 taking action \(a\), and thereafter following policy \(\pi\):
-\[ 
+\begin{equation}
     q_\pi(s, a) = \mathbb{E}\pi [G_t | S_t = s, A_t = a] 
     = \mathbb{E}\pi \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \middle| S_t =s, A_t =a \right]
-\]
+\end{equation}
 
 \subsection*{Bellman Equations}
 The Bellman equations provide recursive definitions for the value functions. 
 For the state-value function, the Bellman equation is:
-\[
+\begin{equation}
     v_\pi(s) = \sum_{a \in A} \pi(a|s) \sum_{s^\prime \in S} P(s^\prime|s, a) 
     \left[R(s, a) + \gamma V^\pi(s^\prime)\right]
-\]
+\end{equation}
 For the action-value function, the Bellman equation is:
-\[
+\begin{equation}
     q_\pi(s, a) = \sum_{s^\prime \in S} P(s^\prime|s, a)\left[R(s, a) 
     + \gamma \sum_{a^\prime \in A} \pi(a^\prime|s^\prime) Q^\pi(s^\prime, a^\prime)\right]
-\]
+\end{equation}
 
 \subsection*{Optimal Policy}
 The goal is to find the optimal policy \(\pi\) that maximizes the value function for all states. 
 The optimal value function \(V_*(s)\) satisfies the Bellman optimality equation:
-\[
+\begin{equation}
     v_*(s) = \max_a \sum_{s^\prime \in S} P(s^\prime|s, a) [R(s, a) + \gamma V^(s^\prime)] 
-\]
+\end{equation}
 Similarly, the optimal action-value function \(Q^*(s, a)\) satisfies:
-\[
+\begin{equation}
     q_*(s, a) = \sum_{s^\prime \in S} P(s^\prime|s, a) 
     [R(s, a) + \gamma \max_{a^\prime} Q^(s^\prime, a^\prime)] 
-\]
+\end{equation}
 
 \subsection*{Solution Methods}
 There are numerous methods for solving \glspl{mdp}, including exact methods like 
@@ -93,7 +94,7 @@ However, for large state and action spaces, these methods become computationally
 
 In contrast, \gls{rl} methods, which learn optimal policies through interaction with the 
 environment, offer a scalable approach for solving \glspl{mdp}. 
-\gls{rl} methods do not require a model of the environment's dynamics and can handle large, 
+\Gls{rl} methods do not require a model of the environment's dynamics and can handle large, 
 complex problems where exact methods fall short.
 
 Given the focus of this literature review, on the development towards \gls{harl}, 
@@ -102,10 +103,10 @@ This will provide a comprehensive understanding of how MDPs evolve into more com
 suitable for real-world applications involving multiple, diverse agents.
 
 
-\section*{Single-Agent Reinforcement Learning}
+\section{Single-Agent Reinforcement Learning}
 
-Single-agent \glsentrylong{rl} extends the foundational principles of \glspl{mdp} by enabling 
-an agent to learn optimal policies through direct interaction with the environment. 
+Single-agent \glsentrylong{rl} extends the foundational principles of \glspl{mdp} by enabling an 
+agent to learn optimal policies through direct interaction with the environment~\cite{sutton2018}.
 In single-agent \gls{rl}, the agent learns by trial and error, using feedback in the form of 
 rewards to adjust its actions and maximize cumulative rewards over time.
 
@@ -114,86 +115,167 @@ Single-agent \gls{rl} employs various algorithms to learn the optimal policy by 
 the value functions. These algorithms can be broadly categorized into dynamic programming, 
 Monte Carlo methods, and \gls{td} learning.
 
+\subsection*{Dynamic Programming}
+Dynamic programming methods, such as value iteration and policy iteration, 
+require a complete model of the environment's dynamics. 
+They iteratively update value functions and policies until convergence.
+\begin{description}
+    \item[Value Iteration:] Updates the value function based on the Bellman optimality equation 
+        until it converges to the optimal value function \(V_*\).
+    \item[Policy Iteration:] Alternates between policy evaluation 
+        (computing the value function for a fixed policy) and policy improvement 
+        (improving the policy based on the current value function) until convergence.
+\end{description}
+
+\subsection*{Monte Carlo Methods}
+Monte Carlo methods learn directly from episodes of experience, 
+estimating value functions by averaging the returns observed in actual episodes. 
+These methods are model-free and do not require knowledge of the environment's dynamics. 
+They can be \emph{First-Visit Monte Carlo}, averaging the returns of the first visit to each state.
+or \emph{Every-Visit Monte Carlo}, averaging the returns of every visit to each state.
+
+\subsection*{Temporal-Difference (TD) Learning}
+TD learning methods, such as Q-learning and SARSA (State-Action-Reward-State-Action), 
+combine ideas from dynamic programming and Monte Carlo methods. They update 
+value estimates based on observed transitions without waiting for the end of an episode.
+\begin{description}
+    \item[Q-Learning:] An off-policy TD control algorithm that updates the Q-value using the 
+        maximum Q-value of the next state-action pair:
+        \begin{equation}
+            Q(s, a) \leftarrow Q(s, a) 
+            + \alpha \left[ R + \gamma \max_{a^\prime} Q(s^\prime, a^\prime) - Q(s, a) \right]
+        \end{equation}
+    \item[SARSA:] An on-policy TD control algorithm that updates the Q-value using the Q-value of 
+        the actual next state-action pair:
+        \begin{equation}
+            Q(s, a) \leftarrow Q(s, a) 
+            + \alpha \left[ R + \gamma Q(s^\prime, a^\prime) - Q(s, a) \right]
+        \end{equation}
+\end{description}
+
+\subsection*{Exploration vs. Exploitation}
+A fundamental challenge in RL is balancing exploration (trying new actions to discover their 
+effects) and exploitation (choosing actions known to yield high rewards). 
+Common strategies for addressing this balance include \(\epsilon\)-greedy policies and 
+softmax action selection.
+
+\section{Evolution to Multi-Agent Systems}
+
+The evolution from single-agent \gls{rl} to multi-agent systems introduces new 
+complexities and opportunities, reflecting more realistic scenarios where 
+multiple agents interact within a shared environment. 
+\Gls{marl} extends the principles of single-agent RL to settings where agents must learn to 
+cooperate, compete, or coexist, each influencing the other's learning process.
+
+\subsection*{Cooperative and Competitive Multi-Agent Systems}
+In cooperative multi-agent systems, agents work together to achieve a common goal. 
+This requires coordination and communication to ensure that their actions complement each other. 
+Cooperative MARL is often applied in tasks where the joint effort of multiple agents can lead to 
+better performance than individual efforts~\cite{littman1994}.
+
+The primary challenge in cooperative \gls{marl} is to develop strategies that maximize the 
+collective reward. This can involve decentralized training, where each agent learns independently, 
+or centralized training with decentralized execution, where agents are trained with a global 
+perspective but act independently during execution.
+
+In competitive multi-agent systems, agents have conflicting goals. The success of one agent 
+typically comes at the expense of another,and thus are often modeled as zero-sum games, 
+where the gain of one agent is exactly balanced by the loss of another.
+
+Thus competitive \gls{marl} typically involves strategies where agents must predict and 
+counteract the actions of their opponents. Techniques from game theory, such as Nash equilibrium, 
+are often employed to find stable strategies in these adversarial environments~\cite{busoniu2008}.
+
+\subsection*{Advances in MARL}
+The field of \gls{marl} has seen significant advancements, driven by the need to handle 
+increasingly complex environments and interactions. 
 
 
+Key areas of research and development seek to address concerns regarding
+centralized vs. decentralized training;
+communication and coordination;
+scalability and efficiency; and
+stability and convergence.
+
+%\subsubsection*{Centralized and Decentralized Training}
+\Gls{ctde} has become a popular paradigm in \gls{marl}~\cite{rashid2018,foerster2017,lowe2020}. 
+During training, agents have access to a central controller or shared information, 
+allowing them to learn coordinated strategies. 
+However, during execution, they act independently based on their local observations.
+
+%\subsubsection*{Communication and Coordination}
+Effective communication and coordination mechanisms are crucial for cooperative \gls{marl}. 
+Agents need to share information and synchronize their actions to achieve common goals. 
+Research in this area focuses on developing protocols and algorithms that enable efficient and 
+robust communication among agents~\cite{sukhbaatar2016,fotouhi2019,hoang2023}.
+
+%\subsubsection*{Scalability and Efficiency}
+Scalability is a significant challenge in MARL due to the exponential growth of the state and 
+action spaces with the number of agents\cite{cao2012,busoniu2008}. 
+Recent research efforts aim to develop algorithms that can efficiently scale to large numbers 
+of agents and complex environments without compromising performance~\cite{smit2023,sun2023}.
+
+%\subsubsection*{Stability and Convergence}
+Ensuring the stability and convergence of learning algorithms in multi-agent settings is 
+critical~\cite{papoudakis2021}. 
+Unlike single-agent \gls{rl}, where convergence is well-understood, 
+the dynamics of multiple learning agents can lead to instability and non-convergence.
+Research in this area seeks to establish theoretical guarantees and practical methods 
+for stable learning.
+
+\subsection*{Applications of MARL}
+
+\Gls{marl}
+
+has been applied to a wide range of domains, demonstrating its versatility and effectiveness in solving complex, real-world problems. Notable applications include:
 
 
+\begin{comment}
+    3.3 Applications of MARL
 
+	•	Autonomous Driving: Coordinated control of multiple autonomous vehicles to improve traffic flow and safety.
+	•	Robotics: Multi-robot systems for tasks such as search and rescue, where robots must collaborate to achieve a common objective.
+	•	Economics and Finance: Modeling and simulation of market dynamics involving multiple agents with competing interests.
+	•	Healthcare: Optimizing the allocation of resources and coordination of treatments across multiple healthcare providers.
+	•	Key Paper: Yang, Y. et al. (2023). Efficient policy learning in large-scale heterogeneous-agent environments.
+
+
+\end{comment}
+\section{Introduction to Heterogeneous-Agent Reinforcement Learning (HARL)}
 \clearpage
 \begin{comment}
-
-
-
-2.2 Single-Agent Reinforcement Learning --
-
-3. Evolution to Multi-Agent Systems
-
-3.1 Cooperative and Competitive Multi-Agent Systems
-
-Multi-agent reinforcement learning (MARL) introduces scenarios where multiple agents interact, either cooperatively or competitively. These interactions add layers of complexity, as agents must consider not only their actions but also the actions of other agents.
-
-	•	Key Paper: Littman, M.L. (1994). Markov games as a framework for multi-agent reinforcement learning.
-
 3.2 Advances in MARL
-
 The advancement of MARL includes the development of algorithms that allow agents to learn in environments with other learning agents, leading to applications in fields such as robotics, game theory, and economics.
-
 	•	Key Paper: Busoniu, L., Babuska, R., & De Schutter, B. (2008). A comprehensive survey of multi-agent reinforcement learning.
 	•	Key Paper: Mnih, V. et al. (2015). Human-level control through deep reinforcement learning.
 	•	Key Paper: Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
-
-4. Introduction to Heterogeneous-Agent Reinforcement Learning (HARL)
-
+4. HARL
 4.1 Definition and Significance
-
 HARL extends MARL by allowing agents with different capabilities and knowledge to interact. This heterogeneity mirrors real-world scenarios more closely, where agents (e.g., robots, drones) often have diverse functionalities.
-
 	•	Key Paper: Lowe, R. et al. (2017). Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments.
-
 4.2 Applications of HARL
-
 HARL has been applied in various domains such as autonomous driving, smart grids, and collaborative robotics, demonstrating its potential to solve complex, real-world problems.
-
 	•	Key Paper: Kraemer, L., & Banerjee, B. (2020). Multi-agent reinforcement learning as a rehearsal for decentralized planning.
-
-5. Current State of the Art in HARL
-
+5. \section{Current State of the Art in HARL}
 5.1 Recent Advances
-
 Recent research has focused on enhancing the efficiency, scalability, and robustness of HARL algorithms. Significant contributions include the development of new learning paradigms and the application of HARL in increasingly complex environments.
-
 	•	Key Paper: Zhou, Y. et al. (2023). The role of hierarchy in multi-agent learning.
 	•	Key Paper: Yang, Y. et al. (2023). Efficient policy learning in large-scale heterogeneous-agent environments.
-
 5.2 Addressing Strategic Collapse
-
 One critical challenge in HARL is the risk of strategic collapse, where agents’ strategies become suboptimal when scaling up the number of agents or increasing environmental complexity. Addressing this issue is crucial for the practical deployment of HARL systems.
-
 	•	Key Paper: Papoudakis, G. et al. (2021). Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms.
 	•	Key Paper: Foerster, J. et al. (2018). Learning with Opponent-Learning Awareness.
-
 6. Open Challenges and Future Directions
-
 6.1 Scalability and Efficiency
-
 Improving the scalability and computational efficiency of HARL algorithms remains a significant challenge. Research in this area focuses on optimizing algorithms to handle large-scale agent populations without sacrificing performance.
-
 	•	Key Paper: Baker, B. et al. (2020). Emergent Tool Use from Multi-Agent Autocurricula.
-
 6.2 Policy Generalization
-
 Ensuring that HARL policies generalize well across different environments and agent configurations is essential for real-world applications. This involves developing robust learning strategies that can adapt to varying conditions.
-
 	•	Key Paper: Shao, K. et al. (2020). Is Multi-Agent Deep Reinforcement Learning the Answer or the Question? A Brief Survey.
-
 7. Conclusion
-
 The field of HARL holds great promise for advancing multi-agent systems, offering solutions to complex problems through the interaction of diverse agents. However, significant challenges remain, particularly in addressing strategic collapse and ensuring scalability and policy generalization. Future research must continue to push the boundaries of HARL, focusing on these critical issues to unlock its full potential.
 
 
-
-
-\subsection*{Single-Agent Reinforcement Learning}
 \section{Multi-Agent Reinforcement Learning}
 \subsection*{Multi-Agent Advantage Decomposition}
 \subsection*{Simultaneous Update}
@@ -208,7 +290,6 @@ The field of HARL holds great promise for advancing multi-agent systems, offerin
 \subsection*{Joint Action Learners}
 \subsection*{MAPPO}
 \subsection*{HAPPO}
-
 
 
 %Additionally, mediated reinforcement learning introduces the concept of mediators to ensure 
