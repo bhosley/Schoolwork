@@ -187,15 +187,11 @@ counteract the actions of their opponents. Techniques from game theory, such as 
 are often employed to find stable strategies in these adversarial environments~\cite{busoniu2008}.
 
 \subsection*{Advances in MARL}
-The field of \gls{marl} has seen significant advancements, driven by the need to handle 
-increasingly complex environments and interactions. 
-
-
-Key areas of research and development seek to address concerns regarding
-centralized vs. decentralized training;
-communication and coordination;
-scalability and efficiency; and
-stability and convergence.
+The advances in \gls{marl} have laid a robust foundation for addressing complex, 
+dynamic environments where multiple agents must learn to interact effectively.
+Key developments in centralized and decentralized training, communication and coordination, 
+scalability, and stability have significantly expanded the applicability of 
+\gls{marl} across various domains. 
 
 %\subsubsection*{Centralized and Decentralized Training}
 \Gls{ctde} has become a popular paradigm in \gls{marl}~\cite{rashid2018,foerster2017,lowe2020}. 
@@ -223,35 +219,145 @@ the dynamics of multiple learning agents can lead to instability and non-converg
 Research in this area seeks to establish theoretical guarantees and practical methods 
 for stable learning.
 
-\subsection*{Applications of MARL}
+\section{Evolution of MARL through the Lens of Games}
 
-\Gls{marl}
+Building upon these foundational advancements, the exploration of 
+\gls{marl} through gameplay has provided a rich and challenging testbed for further innovation. 
+Notably, the strategic complexity and real-time decision-making required in games have driven 
+remarkable progress in \gls{marl} algorithms, as exemplified by pioneering projects such as 
+DeepMind's AlphaGo\cite{silver2016}, AlphaGo Zero\cite{silver2017},
+AlphaZero\cite{silver2017a} and AlphaStar\cite{vinyals2019}. 
+These projects not only showcase the potential of \gls{marl} to achieve superhuman performance 
+but also highlight the broader implications and applications of these advancements 
+beyond the realm of gaming.
 
-has been applied to a wide range of domains, demonstrating its versatility and effectiveness in solving complex, real-world problems. Notable applications include:
+\subsection*{AlphaGo: The First* Milestone}
+AlphaGo, developed by DeepMind and presented in~\cite{silver2016}, 
+marked perhaps the largest milestone in \gls{ai} since Deep Blue~\cite{campbell2002}
+with its victory over a world champion Go player.
+Where Deep Blue was an expert system that leveraged an Alpha-Beta pruning algorithm
+and \glspl{asic} designed to execute the algorithm in parallel,
+the state-space of Go was so much larger that this approach would not likely ever be tractable. 
+AlphaGo achieved this success using \glspl{dnn} to approximating a value function and a policy.
+
+An initial approximate policy was trained on 29.4 million states from 160,000 games
+using supervised gradient descent to predict the next move of a game given the current state.
+An initial value function was approximated by sampling moves made during a game
+and assigning value according to the outcome of the game.
+
+With initial approximate functions as a starting point,
+a policy-gradient method in conjunction with \gls{mcts}
+would provide the the framework for further improvement through \gls{rl}.
+
+\subsection*{AlphaGo Zero: A Leap Forward}
+AlphaGo's success demonstrated the power of combining deep learning with traditional 
+search techniques. However, the research team acknowledged potential problems associated with 
+the original approach's reliance on prepared data. 
+In~\cite{silver2017}, Silver et al. express a concern regarding 
+possible expense, unreliability, or unavailability of relevant data for pre-training.
+They developed a new approach to address these concerns and titled it AlphaGo Zero.
+Here we focus on two key factors that made this possible.
+
+
+
+
+First,
+the employment of the \gls{dnn}
+was simplified by combining the value function and policy into a single network 
+that would take a state input and return a vector of move probabilities and a state value,
+this substantially reduced the cost of updating the network(s) during training.
+
+Second,
+training using self-play.
+
+
+
+
+The transition from 
+
+
+
+
 
 
 \begin{comment}
-    3.3 Applications of MARL
+AlphaGo Zero’s Innovation
+AlphaGo Zero represented a significant leap forward by eliminating the need for human expert knowledge. Unlike its predecessor, AlphaGo Zero learned to play Go entirely from self-play, starting with random moves and improving solely through reinforcement learning.
+	•	Key Techniques:
+	•	Self-Play Learning: AlphaGo Zero trained by playing games against itself, using a single neural network that combined the policy and value functions.
+	•	Simplified Architecture: The simplified neural network architecture and reliance on self-play allowed for more efficient training and faster improvement.
+	•	Key Paper: Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
+Impact
+AlphaGo Zero’s success underscored the potential of self-play and reinforcement learning to achieve superhuman performance without human intervention. This approach demonstrated the scalability and generality of MARL techniques, opening new possibilities for their application in other domains.
 
+AlphaStar: Expanding to Real-Time Strategy Games
+AlphaStar’s Achievement
+AlphaStar extended the principles of MARL to the domain of real-time strategy (RTS) games by achieving grandmaster-level performance in StarCraft II, a game known for its strategic depth, real-time decision-making, and partial observability.
+
+	•	Key Techniques:
+	•	Multi-Agent Learning: AlphaStar was trained using a league of agents that played against each other, promoting diverse strategies and robust learning.
+	•	Imitation and Reinforcement Learning: AlphaStar initially used imitation learning from human expert games, followed by reinforcement learning through self-play to refine its strategies.
+	•	Modular Neural Network Architecture: The architecture included components for managing different aspects of the game, such as strategy, tactics, and unit control.
+	•	Key Paper: Vinyals, O. et al. (2019). Grandmaster level in StarCraft II using multi-agent reinforcement learning.
+
+Broader Implications
+
+AlphaStar’s success highlighted the adaptability of MARL to more complex, dynamic, and partially observable environments. The techniques developed for AlphaStar are applicable to a wide range of real-world problems, such as autonomous vehicle coordination, resource management, and robotic control.
+
+Additional Achievements and Related Developments
+
+OpenAI Five
+
+OpenAI’s Dota 2 project, OpenAI Five, further showcased the capabilities of MARL in complex, team-based, real-time strategy games. By training a team of agents to play against top human players, OpenAI demonstrated the potential for AI to handle teamwork, strategy, and adaptation in highly dynamic environments.
+
+	•	Key Techniques:
+	•	Self-Play and Reinforcement Learning: Similar to AlphaStar, OpenAI Five used extensive self-play and reinforcement learning to develop sophisticated strategies.
+	•	Curriculum Learning: The training process involved progressively increasing the difficulty of opponents to ensure continuous improvement.
+	•	Key Paper: Berner, C. et al. (2019). Dota 2 with Large Scale Deep Reinforcement Learning.
+
+Summary
+
+The evolution of MARL through the lens of game-playing AI demonstrates the transformative impact of reinforcement learning and self-play on achieving superhuman performance in complex environments. The successes of AlphaGo, AlphaGo Zero, AlphaStar, and OpenAI Five illustrate the potential for MARL to tackle a wide range of strategic and real-time challenges, paving the way for future advancements in both theoretical research and practical applications.
+
+	•	Key Papers:
+	•	Silver, D. et al. (2016). Mastering the game of Go with deep neural networks and tree search.
+	•	Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
+	•	Vinyals, O. et al. (2019). Grandmaster level in StarCraft II using multi-agent reinforcement learning.
+	•	Berner, C. et al. (2019). Dota 2 with Large Scale Deep Reinforcement Learning.
+
+
+
+
+%\subsection*{Applications of MARL}
+%\Gls{marl}has been applied to a wide range of domains, 
+%demonstrating its versatility and effectiveness in solving complex, real-world problems. 
+%Notable applications include:
+    3.3 Applications of MARL
 	•	Autonomous Driving: Coordinated control of multiple autonomous vehicles to improve traffic flow and safety.
 	•	Robotics: Multi-robot systems for tasks such as search and rescue, where robots must collaborate to achieve a common objective.
 	•	Economics and Finance: Modeling and simulation of market dynamics involving multiple agents with competing interests.
 	•	Healthcare: Optimizing the allocation of resources and coordination of treatments across multiple healthcare providers.
 	•	Key Paper: Yang, Y. et al. (2023). Efficient policy learning in large-scale heterogeneous-agent environments.
-
-
+    3.2 Advances in MARL
+    The advancement of MARL includes the development of algorithms that allow agents to learn in environments with other learning agents, leading to applications in fields such as robotics, game theory, and economics.
+        •	Key Paper: Busoniu, L., Babuska, R., & De Schutter, B. (2008). A comprehensive survey of multi-agent reinforcement learning.
+        •	Key Paper: Mnih, V. et al. (2015). Human-level control through deep reinforcement learning.
+        •	Key Paper: Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
 \end{comment}
+
+
 \section{Introduction to Heterogeneous-Agent Reinforcement Learning (HARL)}
+
+
+
+
+
 \clearpage
 \begin{comment}
-3.2 Advances in MARL
-The advancement of MARL includes the development of algorithms that allow agents to learn in environments with other learning agents, leading to applications in fields such as robotics, game theory, and economics.
-	•	Key Paper: Busoniu, L., Babuska, R., & De Schutter, B. (2008). A comprehensive survey of multi-agent reinforcement learning.
-	•	Key Paper: Mnih, V. et al. (2015). Human-level control through deep reinforcement learning.
-	•	Key Paper: Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
-4. HARL
+    4. HARL
+    HARL extends MARL by allowing agents with different capabilities and knowledge to interact. 
+    This heterogeneity mirrors real-world scenarios more closely, where agents (e.g., robots, drones) often have diverse functionalities.
 4.1 Definition and Significance
-HARL extends MARL by allowing agents with different capabilities and knowledge to interact. This heterogeneity mirrors real-world scenarios more closely, where agents (e.g., robots, drones) often have diverse functionalities.
 	•	Key Paper: Lowe, R. et al. (2017). Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments.
 4.2 Applications of HARL
 HARL has been applied in various domains such as autonomous driving, smart grids, and collaborative robotics, demonstrating its potential to solve complex, real-world problems.
