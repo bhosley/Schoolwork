@@ -188,6 +188,8 @@
     \end{description}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \begin{frame} %% TRPO(schulman2017)
     \stepcounter{papercounter}
     \frametitle{Paper \thepapercounter - Trust Region Policy Optimization (TRPO)%
@@ -211,9 +213,31 @@
     \end{description}
 \end{frame}
 
-\begin{frame} %PPO(schulman2017a)
+\begin{frame} %% MATRPO(li2023c)
     \stepcounter{papercounter}
-    \frametitle{Paper \thepapercounter - Proximal Policy Optimization Algorithms (PPO)%
+    \frametitle{Paper \thepapercounter - Multi-Agent Trust Region Policy Optimization (MATRPO)%
+    \footfullcite{li2023c}}
+    \begin{description} 
+        \item[Environments:] Multi-Agent Particle Environment (MPE)
+        \item[Model:]
+        \begin{itemize}
+            \item Agent: Particles
+            \item $S$: continuous, 2D position
+            \item $A$: continuous, 2D movement
+            \item $P$: deterministic
+            \item $R$: game dependent
+        \end{itemize}
+        \item[Algorithm:]
+        \begin{itemize}
+            \item Uses a consensus algorithm for updating trust region
+            \item Constrained policy optimization using augmented Lagrangian Multipliers
+            \item Each agent contributes a local gradient
+        \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame} %PPO(schulman2017a) -- Lad
+    \frametitle{Paper X - Proximal Policy Optimization Algorithms (PPO)%
     \footfullcite{schulman2017a}}
     \begin{description}
         \item[Environment:] MuJoCo 
@@ -233,6 +257,40 @@
         \end{itemize}
         \item[Weakness:] Same group as TRPO but did not test on the same environments.
     \end{description}
+\end{frame}
+
+\begin{frame} %% COMA(Foerster2018)
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - Counterfactual Multi-Agent Policy Gradients (COMA)
+    \footfullcite{foerster2018}}
+    \begin{description}
+        \item[Environment:] StarCraft
+        \item[] \item[Model:]
+        \begin{itemize}
+            \item Agent: Individual units
+            \item $S$: Local observations and global observations
+            \item $A$: Move, Attack, Stop, No-op
+            \item $P$: Non-deterministic
+            \item $R$: $(dmg inflicted) - 1/2(dmg taken) + 10(kill) 
+            + \mathbb{I}_{win}(team health + 200)$
+        \end{itemize}
+        \item[Algorithm:] 
+        \begin{itemize}
+            \item Centralized Critic, used during training, not during execution
+        \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame} %% COMA(Foerster2018)
+    \frametitle{Paper \thepapercounter - Counterfactual Multi-Agent Policy Gradients (COMA)
+    \cite{foerster2018}}
+    \begin{description}
+        \item[Algorithm:] 
+    \end{description}
+    \begin{figure}\small
+        \includegraphics[width=0.9\linewidth]{images/coma.png}
+        \caption{Mixing network structure\cite{foerster2018}}
+    \end{figure}
 \end{frame}
 
 \begin{frame}% QMIX(Rashid2018)
@@ -270,9 +328,8 @@
     \end{figure}
 \end{frame}
 
-\begin{frame} % DDPG(lillicrap2019) 
-    \stepcounter{papercounter}
-    \frametitle{Paper \thepapercounter - Continuous Control with Deep Reinforcement Learning%
+\begin{frame} % DDPG(lillicrap2019) -- Whitehead
+    \frametitle{Paper X - Continuous Control with Deep Reinforcement Learning%
     \footfullcite{lillicrap2019}}
     \begin{description}
         \item[Environment:] MuJuCo
@@ -293,9 +350,8 @@
     \end{description}
 \end{frame}
 
-\begin{frame} % TD3(Fujimoto2018)
-    \stepcounter{papercounter}
-    \frametitle{Paper \thepapercounter - Addressing Function Approximation Error in Actor-Critic 
+\begin{frame} % TD3(Fujimoto2018) -- Wilson
+    \frametitle{Paper X - Addressing Function Approximation Error in Actor-Critic 
     Methods\footfullcite{fujimoto2018}}
     \begin{description}
         \item[Environment:] MuJuCo
@@ -316,7 +372,7 @@
     \end{description}
 \end{frame}
 
-\begin{frame}
+\begin{frame} % MAA2C(Lowe)
     \stepcounter{papercounter}
     \frametitle{Paper \thepapercounter - Multi-Agent Actor-Critic for Mixed 
     Cooperative-Competitive Environments\footfullcite{lowe2020}}
@@ -343,6 +399,38 @@
     \end{figure}
 \end{frame}
 
+\begin{frame} %% F2A2(li2023d)
+    \stepcounter{papercounter}
+    \frametitle{Paper \thepapercounter - F2A2: Flexible Fully-decentralized Approximate 
+    Actor-critic for Cooperative Multi-agent Reinforcement Learning\footfullcite{li2023d}}
+    \begin{description}
+        \item[Environment:] MPE / StarCraft II
+        \item[Model:]
+        \begin{itemize}
+            \item Agent:  Particles / Individual units
+            \item $S$: Position of self, others, obstacles / 
+            local observations and global observations
+            \item $A$: Move, speak, listen / Move, Attack, Stop, No-op
+            \item $P$: Deterministic
+            \item $R$: Game mode dependent / Game outcomes
+        \end{itemize}
+        \item[Algorithm:] 
+        \begin{itemize}
+            \item Fully decentrallized version of MAA2C
+            \item Soft-actor critic version was the only version with notable improved performance
+        \end{itemize}
+    \end{description}
+\end{frame}
+
+\begin{frame} %% F2A2(li2023)
+    \frametitle{Paper \thepapercounter - F2A2: Flexible Fully-decentralized Approximate 
+    Actor-critic for Cooperative Multi-agent Reinforcement Learning\cite{li2023d}}
+    \begin{figure}\small
+        \includegraphics[width=\linewidth]{images/f2a2.png}
+        \caption{CTDE v. DTDE\cite{li2023d}}
+    \end{figure}
+\end{frame}
+
 \begin{frame} %MATD3(Ackerman2019)
     \stepcounter{papercounter}
     \frametitle{Paper \thepapercounter - Reducing Overestimation Bias in Multi-Agent Domains 
@@ -364,7 +452,7 @@
     \end{description}
 \end{frame}
 
-\begin{frame} 
+\begin{frame} % MAPPO(Yu2022)
     \stepcounter{papercounter}
     \frametitle{Paper \thepapercounter - The Surprising Effectiveness of PPO in Cooperative, 
     Multi-Agent Games\footfullcite{yu2022}}

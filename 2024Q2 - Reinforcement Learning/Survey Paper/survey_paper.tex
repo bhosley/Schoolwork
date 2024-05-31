@@ -2,6 +2,7 @@
 
 % Packages
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{graphicx}
 \graphicspath{./images/}
 \usepackage[table,dvipsnames]{xcolor}
@@ -79,6 +80,9 @@ iii. Solution approaches, algorithmic features, novel extensions
 iv. tuning and/or testing adequate?
 
 
+\subsection{Environments}
+
+
 
 % Analysis of Selected Papers
 \section{Analysis of Selected Papers}
@@ -142,11 +146,15 @@ tuning, making it a reliable choice for policy optimization in diverse environme
 
 
 
-
+\subsection{MATRPO}
+\cite{li2023c}
 
 \subsection{Proximal Policy Optimization Algorithms}
 This paper proposes Proximal Policy Optimization (PPO), a new family of policy gradient methods for reinforcement learning. PPO alternates between sampling data from the environment and optimizing a surrogate objective function using stochastic gradient ascent. Unlike standard policy gradient methods, PPO's objective function allows multiple epochs of minibatch updates, improving sample efficiency. The algorithm retains the benefits of Trust Region Policy Optimization (TRPO) but is simpler to implement and more general. Empirical results show that PPO outperforms other online policy gradient methods on benchmark tasks, including simulated robotic locomotion and Atari games, striking a favorable balance between sample complexity, simplicity, and performance.
 \cite{schulman2017a}
+
+\subsection{COMA}
+\cite{foerster2018}
 
 \subsection{QMIX: Monotonic Value Function Factorization for Deep Multi-Agent Reinforcement Learning}
 This paper introduces QMIX, a value-based multi-agent reinforcement learning (MARL) method that facilitates centralized training and decentralized execution. QMIX estimates joint action-values as a non-linear combination of per-agent values conditioned on local observations, with a structural monotonicity constraint ensuring consistency between centralized and decentralized policies. The method is evaluated on StarCraft II micromanagement tasks, showing significant performance improvements over existing value-based MARL methods. QMIX effectively leverages centralized training to derive robust decentralized policies, making it a strong approach for complex coordination tasks in multi-agent settings.
@@ -164,6 +172,9 @@ This paper tackles the issue of function approximation errors in actor-critic me
 %\subsection{Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments}
 This paper explores deep reinforcement learning methods for multi-agent domains, specifically focusing on mixed cooperative-competitive environments. Traditional algorithms like Q-learning and policy gradient face challenges in multi-agent settings due to non-stationarity and high variance. The authors propose an adaptation of actor-critic methods that takes into account the action policies of other agents, enabling the learning of complex coordination strategies. Additionally, an ensemble of policies for each agent is introduced, resulting in more robust multi-agent policies. The approach is validated in various cooperative and competitive scenarios, demonstrating superior performance and robustness compared to existing methods.
 \cite{lowe2020}
+
+\subsection{F2A2}
+\cite{li2023d}
 
 \subsection{Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized Critics}
 This paper addresses the issue of value function overestimation bias in multi-agent reinforcement learning (MARL). The authors propose using double centralized critics to mitigate this bias, drawing inspiration from Double Q-Learning in single-agent RL. The proposed method is evaluated on six mixed cooperative-competitive tasks, showing significant improvements over current methods. Additionally, the approach is tested on high-dimensional robotic tasks, demonstrating its capability to learn decentralized policies in complex environments. The results highlight the effectiveness of reducing overestimation bias and the potential for broader applications in MARL.

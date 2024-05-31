@@ -22,6 +22,23 @@
   file = {/Users/brandonhosley/Zotero/storage/4WHREMZZ/gradient-descent-algorithm-and-its-variants-10f652806a3.html}
 }
 
+@article{foerster2018,
+  title = {Counterfactual {{Multi-Agent Policy Gradients}}},
+  author = {Foerster, Jakob and Farquhar, Gregory and Afouras, Triantafyllos and Nardelli, Nantas and Whiteson, Shimon},
+  date = {2018-04-29},
+  journaltitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  shortjournal = {AAAI},
+  volume = {32},
+  number = {1},
+  issn = {2374-3468, 2159-5399},
+  doi = {10.1609/aaai.v32i1.11794},
+  url = {https://ojs.aaai.org/index.php/AAAI/article/view/11794},
+  urldate = {2024-05-30},
+  abstract = {Many real-world problems, such as network packet routing and the coordination of autonomous vehicles, are naturally modelled as cooperative multi-agent systems. There is a great need for new reinforcement learning methods that can efficiently learn decentralised policies for such systems. To this end, we propose a new multi-agent actor-critic method called counterfactual multi-agent (COMA) policy gradients. COMA uses a centralised critic to estimate the Q-function and decentralised actors to optimise the agents’ policies. In addition, to address the challenges of multi-agent credit assignment, it uses a counterfactual baseline that marginalises out a single agent’s action, while keeping the other agents’ actions fixed. COMA also uses a critic representation that allows the counterfactual baseline to be computed efficiently in a single forward pass. We evaluate COMA in the testbed of StarCraft unit micromanagement, using a decentralised variant with significant partial observability. COMA significantly improves average performance over other multi-agent actorcritic methods in this setting, and the best performing agents are competitive with state-of-the-art centralised controllers that get access to the full state.},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/8B7JFA9Y/Foerster et al. - 2018 - Counterfactual Multi-Agent Policy Gradients.pdf}
+}
+
 @online{fujimoto2018,
   title = {Addressing {{Function Approximation Error}} in {{Actor-Critic Methods}}},
   author = {Fujimoto, Scott and van Hoof, Herke and Meger, David},
@@ -50,6 +67,38 @@
   doi = {10.3390/app10124236},
   abstract = {Non-orthogonal multiple access (NOMA) is considered a potential technique in fifth-generation (5G). Nevertheless, it is relatively complex when applying NOMA to a massive access scenario. Thus, in this paper, a hybrid NOMA/OMA scheme is considered for uplink wireless transmission systems where multiple cognitive users (CUs) can simultaneously transmit their data to a cognitive base station (CBS). We adopt a user-pairing algorithm in which the CUs are grouped into multiple pairs, and each group is assigned to an orthogonal sub-channel such that each user in a pair applies NOMA to transmit data to the CBS without causing interference with other groups. Subsequently, the signal transmitted by the CUs of each NOMA group can be independently retrieved by using successive interference cancellation (SIC). The CUs are assumed to harvest solar energy to maintain operations. Moreover, joint power and bandwidth allocation is taken into account at the CBS to optimize energy and spectrum efficiency in order to obtain the maximum long-term data rate for the system. To this end, we propose a deep actor-critic reinforcement learning (DACRL) algorithm to respectively model the policy function and value function for the actor and critic of the agent (i.e., the CBS), in which the actor can learn about system dynamics by interacting with the environment. Meanwhile, the critic can evaluate the action taken such that the CBS can optimally assign power and bandwidth to the CUs when the training phase finishes. Numerical results validate the superior performance of the proposed scheme, compared with other conventional schemes.},
   file = {/Users/brandonhosley/Zotero/storage/2UHZBJ64/Giang et al_2020_Hybrid NOMA-OMA-Based Dynamic Power Allocation Scheme Using Deep Reinforcement.pdf}
+}
+
+@online{li2023c,
+  title = {Multi-{{Agent Trust Region Policy Optimization}}},
+  author = {Li, Hepeng and He, Haibo},
+  date = {2023-08-04},
+  eprint = {2010.07916},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2010.07916},
+  url = {http://arxiv.org/abs/2010.07916},
+  urldate = {2024-05-30},
+  abstract = {We extend trust region policy optimization (TRPO) to multi-agent reinforcement learning (MARL) problems. We show that the policy update of TRPO can be transformed into a distributed consensus optimization problem for multi-agent cases. By making a series of approximations to the consensus optimization model, we propose a decentralized MARL algorithm, which we call multi-agent TRPO (MATRPO). This algorithm can optimize distributed policies based on local observations and private rewards. The agents do not need to know observations, rewards, policies or value/action-value functions of other agents. The agents only share a likelihood ratio with their neighbors during the training process. The algorithm is fully decentralized and privacy-preserving. Our experiments on two cooperative games demonstrate its robust performance on complicated MARL tasks.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/QRM8IW7W/Li_He_2023_Multi-Agent Trust Region Policy Optimization.pdf;/Users/brandonhosley/Zotero/storage/Y6EAEDL4/2010.html}
+}
+
+@article{li2023d,
+  title = {{{F2A2}}: {{Flexible Fully-decentralized Approximate Actor-critic}} for {{Cooperative Multi-agent Reinforcement Learning}}},
+  shorttitle = {{{F2A2}}},
+  author = {Li, Wenhao and Jin, Bo and Wang, Xiangfeng and Yan, Junchi and Zha, Hongyuan},
+  date = {2023},
+  journaltitle = {Journal of Machine Learning Research},
+  volume = {24},
+  number = {178},
+  pages = {1--75},
+  issn = {1533-7928},
+  url = {http://jmlr.org/papers/v24/20-700.html},
+  urldate = {2024-05-30},
+  abstract = {Traditional centralized multi-agent reinforcement learning (MARL) algorithms are sometimes unpractical in complicated applications due to non-interactivity between agents, the curse of dimensionality, and computation complexity. Hence, several decentralized MARL algorithms are motivated. However, existing decentralized methods only handle the fully cooperative setting where massive information needs to be transmitted in training. The block coordinate gradient descent scheme they used for successive independent actor and critic steps can simplify the calculation, but it causes serious bias. This paper proposes a flexible fully decentralized actor-critic MARL framework, which can combine most of the actor-critic methods and handle large-scale general cooperative multi-agent settings. A primal-dual hybrid gradient descent type algorithm framework is designed to learn individual agents separately for decentralization. From the perspective of each agent, policy improvement and value evaluation are jointly optimized, which can stabilize multi-agent policy learning. Furthermore, the proposed framework can achieve scalability and stability for the large-scale environment. This framework also reduces information transmission by the parameter sharing mechanism and novel modeling-other-agents methods based on theory-of-mind and online supervised learning. Sufficient experiments in cooperative Multi-agent Particle Environment and StarCraft II show that the proposed decentralized MARL instantiation algorithms perform competitively against conventional centralized and decentralized methods.},
+  file = {/Users/brandonhosley/Zotero/storage/DJAXR86Q/Li et al_2023_F2A2.pdf}
 }
 
 @online{lillicrap2019,
