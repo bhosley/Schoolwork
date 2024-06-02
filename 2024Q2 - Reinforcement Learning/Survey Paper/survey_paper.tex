@@ -11,6 +11,7 @@
 \usepackage{tabularx}
 \usepackage{multirow}
 \usepackage{pgfplotstable}
+\pgfplotsset{compat=1.7}
 
 \usepackage{wrapfig}
 \usepackage{float}
@@ -39,6 +40,17 @@
 \maketitle
 % Abstract
 \begin{abstract}
+Reinforcement Learning (RL) has emerged as a powerful framework for solving complex 
+decision-making problems across various domains. This survey reviews 13 influential papers 
+published over the past decade, highlighting significant theoretical advancements and 
+practical applications. Each paper is examined to assess the core components of 
+Markov Decision Processes (MDPs), including environments, agents, states, actions, and rewards. 
+The survey aims to provide a comprehensive understanding of the modeling approaches, 
+solution techniques, and outcomes achieved in these studies. 
+By evaluating the strengths and weaknesses of each paper, this review underscores the 
+versatility and impact of RL in addressing a wide range of problems. 
+Additionally, the survey identifies common trends and challenges, 
+offering insights into future research directions in the field of RL.
 \end{abstract}
 % Introduction
 \section{Introduction}
@@ -73,53 +85,77 @@ For each of the analyzed papers we will examine core MDP components;
     \item \textbf{Rewards:} Feedback from the environment based on the actions taken.
 \end{itemize}
 
+The papers reviewed generally utilize a narrow set of environments, 
+often featuring predefined agents, states, actions, and rewards. 
+This results in relatively similar MDP models across different studies. 
+The common features of these environments are summarized in Table~\ref{tab:environments}.
 
-(b) Summarize results, creating a table summarizing key information with one row for each paper 
-i. Authors, topic or application area
-iii. Solution approaches, algorithmic features, novel extensions
-iv. tuning and/or testing adequate?
+\begin{figure}
+    \includegraphics[width=\linewidth]{images/yu2020_envs.png}
+    \caption{Example images from environments as presented in~\cite{yu2022}}
+\end{figure}
 
-
-\subsection{Environments}
-
-
+\begin{table*}
+    \caption[]{Simulation Environments}
+    \label{tab:environments}
+    \renewcommand{\arraystretch}{1.25}
+    \pgfplotstabletypeset[
+    col sep=comma,
+    string type,
+    every head row/.style={after row=\midrule},
+    every last row/.style={after row=\bottomrule},
+    every even row/.style={after row={\rowcolor[gray]{0.9}}},
+    columns/Environment/.style={column type= >{\raggedright\arraybackslash}p{23.5mm}},
+    columns/Agents/.style={column type= >{\centering\arraybackslash}p{19.5mm}},
+    columns/States/.style={column type= >{\centering\arraybackslash}p{24mm}},
+    columns/Actions/.style={column type= >{\centering\arraybackslash}p{35.5mm}},
+    columns/Default Rewards/.style={column type= >{\centering\arraybackslash}p{33mm}},
+    columns/Transitions/.style={column type= >{\centering\arraybackslash}p{19.5mm}},
+    ]{lit_review/Environments-Table 1.csv}
+\end{table*}
 
 % Analysis of Selected Papers
 \section{Analysis of Selected Papers}
 \label{sec:selected_papers}
 
 \begin{table*}
-    \begin{tabularx}{\textwidth}{cX X ccc}
-        Citation & Short-Title & MDP Characteristics & Solution Approaches & Algorithm &
-        Novel Extensions\\
-        \midrule
-        \cite{giang2020} & Hybrid NOMA/OMA Power Allocation Using Deep RL in 5G Network & 
-        $S$: \# Users and transmission requests \newline
-        $A$: Channel and Power Allocation \newline
-        $R$: Data Throughput &
-        & A3C\cite{mnih2016} & Application
-    \end{tabularx}
-\end{table*}
-
-\newcolumntype{C}{>{\centering\arraybackslash}p{60mm}}%
-\newcolumntype{L}{>{\raggedright\arraybackslash}p{60mm}}%
-\begin{table*}
+    \caption[]{Summary of Paper Features}
+    \label{tab:papers}
+    \renewcommand{\arraystretch}{1.5}
     \pgfplotstabletypeset[
-    %columns={citekey,Short-Title,MDP Characteristics,Extended Algorithm,Novel Extensions},
+    every head row/.style={
+        before row={&& \multicolumn{7}{c}{Environment} && \multicolumn{2}{c}{Testing}\\
+                    \cmidrule(lr){3-9}\cmidrule(lr){11-12}}, 
+        after row=\midrule,},
     col sep=comma,
     string type,
-    every head row/.style={after row=\midrule},
-    every last row/.style={after row=\bottomrule},
-    columns/citekey/.style={column name=Citation, column type=c},
-    columns/Short-Title/.style={column name=Short-Title, column type=L},
-    ]{lit_review_table.csv}
+    column type={@{ }c@{ }},
+    every even row/.style={after row={\rowcolor[gray]{0.9}}},
+    columns = {citekey, Short, Atari,MuJoCo,MPE,SC,SC2,GRF,Custom, Tuning, Baseline,Ablations},
+    columns/citekey/.style = {column name= },
+    columns/Short/.style = {column name=Algorithm},
+    %columns/Tuning/.style={column type= >{\centering\arraybackslash}p{19.5mm}},
+    ]{lit_review/Papers-Table 1.csv}
 \end{table*}
+
+In this section we provide a brief analysis of selected papers. 
+In Table~\ref{tab:papers} we summarize a few of the major features of interest.
+The citation is followed by the short name of the algorithm proposed in the paper.
+The one exception is \cite{zhong2024}, where they propose a change that is applied to several
+of the algorithms discussed before HARL.
+
+The columns that follow show which of the environments described in Section~\ref{sec:overview}
+are used in the paper to evaluate their proposed algorithm(s).
+
+The next column is labeled tuning; and indicates whether or not the authors performed 
+hyperparameter tuning on their proposed algorithm. 
+
+Finally, the final column describes the amount of testing that the authors performed.
 
 
 \subsection{Hybrid NOMA/OMA-Based Dynamic Power Allocation Scheme 
-Using Deep Reinforcement Learning in 5G Networks}
-
-In their paper\cite{giang2020}, Giang et al discuss the evolution of wireless communication systems
+Using Deep Reinforcement Learning in 5G Networks} In their 
+paper~\cite{giang2020}, Giang et al discuss the evolution of wireless communication systems
 from 4G to 5G, emphasizing the need for efficient spectrum utilization due to the explosive growth 
 in devices and data volumes. Non-orthogonal multiple access (NOMA) is identified as a promising 
 candidate for 5G due to its ability to allow multiple users to share time and spectrum resources.
@@ -133,73 +169,180 @@ They use a deep actor-critic reinforcement learning (DACRL) framework for effici
 bandwidth allocation in hybrid NOMA/OMA CRNs, where solar-powered users are assigned optimal 
 transmission power and bandwidth to maximize long-term data transmission rates.
 
-\subsection{Trust Region Policy Optimization}
-In \cite{schulman2017} Schulman et. al. introduce Trust Region Policy Optimization (TRPO), 
-an iterative method for optimizing policies with guaranteed monotonic improvement. 
+\subsection{Trust Region Policy Optimization} % http://arxiv.org/abs/1502.05477
+Schulman et al. (2017) introduce Trust Region Policy Optimization (TRPO), an iterative 
+method designed to optimize policies with guaranteed monotonic improvement~\cite{schulman2017}. 
 TRPO combines theoretical rigor with practical approximations to develop a robust algorithm 
 suitable for large nonlinear policies, such as neural networks. 
-The algorithm is evaluated on various tasks, including simulated robotic control in MuJoCo
-(swimming, hopping, walking) and Atari games using raw pixel inputs. 
+The algorithm is evaluated on various tasks, including simulated robotic control in MuJoCo 
+(e.g., swimming, hopping, walking) and Atari games using raw pixel inputs. 
 TRPO consistently shows monotonic improvement and robust performance with minimal hyperparameter 
 tuning, making it a reliable choice for policy optimization in diverse environments.
 
+\subsection{Multi-Agent Trust Region Policy Optimization} % http://arxiv.org/abs/2010.07916
+Extending Trust Region Policy Optimization (TRPO) to multi-agent reinforcement learning (MARL) 
+scenarios, the authors of this paper transform the TRPO policy update into a distributed consensus 
+optimization problem~\cite{li2023c}. They propose a decentralized MARL algorithm called 
+multi-agent TRPO (MATRPO), which allows agents to optimize distributed policies based on local 
+observations and private rewards without needing to know the details of other agents. 
+MATRPO is fully decentralized and privacy-preserving, 
+sharing only a likelihood ratio with neighbors during training. 
+Experiments on cooperative games demonstrate MATRPO's robust performance on complex MARL tasks.
 
+\subsection{Proximal Policy Optimization Algorithms} % http://arxiv.org/abs/1707.06347
+Proximal Policy Optimization (PPO), introduced by Schulman et al. (2017), proposes a new family 
+of policy gradient methods for reinforcement learning~\cite{schulman2017a}. 
+PPO alternates between sampling data from the environment and optimizing a surrogate objective 
+function using stochastic gradient ascent. Unlike standard policy gradient methods, PPO's 
+objective function allows multiple epochs of minibatch updates, improving sample efficiency. 
+The algorithm retains the benefits of Trust Region Policy Optimization (TRPO) but is simpler to 
+implement and more general. Empirical results show that PPO outperforms other online policy 
+gradient methods on benchmark tasks, including simulated robotic locomotion and Atari games, 
+striking a favorable balance between sample complexity, simplicity, and performance.
 
+\subsection{Counterfactual Multi-Agent Policy Gradients} % https://arxiv.org/abs/1705.08926
+Foerster et al. (2018) introduce Counterfactual Multi-Agent (COMA) policy gradients, a multi-agent 
+actor-critic method designed to efficiently learn decentralized policies~\cite{foerster2018}. 
+COMA uses a centralized critic to estimate the Q-function and decentralized actors to optimize 
+agent policies. It addresses multi-agent credit assignment challenges by using a counterfactual 
+baseline that marginalizes out a single agent's action while keeping others fixed. 
+Evaluated in the StarCraft unit micromanagement testbed, COMA significantly improves 
+performance over other multi-agent actor-critic methods and achieves results competitive with 
+state-of-the-art centralized controllers.
 
-\subsection{MATRPO}
-\cite{li2023c}
+\subsection{QMIX: Monotonic Value Function Factorization for Deep Multi-Agent 
+Reinforcement Learning} % http://arxiv.org/abs/1803.11485
+Rashid et al. (2018) introduce QMIX, a value-based multi-agent reinforcement learning (MARL) 
+method that facilitates centralized training and decentralized execution~\cite{rashid2018}. 
+QMIX estimates joint action-values as a non-linear combination of per-agent values conditioned on 
+local observations, with a structural monotonicity constraint ensuring consistency between 
+centralized and decentralized policies. The method is evaluated on StarCraft II micromanagement 
+tasks, showing significant performance improvements over existing value-based MARL methods. 
+QMIX effectively leverages centralized training to derive robust decentralized policies, 
+making it a strong approach for complex coordination tasks in multi-agent settings.
 
-\subsection{Proximal Policy Optimization Algorithms}
-This paper proposes Proximal Policy Optimization (PPO), a new family of policy gradient methods for reinforcement learning. PPO alternates between sampling data from the environment and optimizing a surrogate objective function using stochastic gradient ascent. Unlike standard policy gradient methods, PPO's objective function allows multiple epochs of minibatch updates, improving sample efficiency. The algorithm retains the benefits of Trust Region Policy Optimization (TRPO) but is simpler to implement and more general. Empirical results show that PPO outperforms other online policy gradient methods on benchmark tasks, including simulated robotic locomotion and Atari games, striking a favorable balance between sample complexity, simplicity, and performance.
-\cite{schulman2017a}
-
-\subsection{COMA}
-\cite{foerster2018}
-
-\subsection{QMIX: Monotonic Value Function Factorization for Deep Multi-Agent Reinforcement Learning}
-This paper introduces QMIX, a value-based multi-agent reinforcement learning (MARL) method that facilitates centralized training and decentralized execution. QMIX estimates joint action-values as a non-linear combination of per-agent values conditioned on local observations, with a structural monotonicity constraint ensuring consistency between centralized and decentralized policies. The method is evaluated on StarCraft II micromanagement tasks, showing significant performance improvements over existing value-based MARL methods. QMIX effectively leverages centralized training to derive robust decentralized policies, making it a strong approach for complex coordination tasks in multi-agent settings.
-\cite{rashid2018}
-
-\subsection{Continuous Control with Deep Reinforcement Learning}
-This paper presents an adaptation of Deep Q-Learning (DQN) for continuous action domains through an actor-critic, model-free algorithm based on deterministic policy gradients (DPG). The proposed algorithm effectively solves over 20 simulated physics tasks, such as cartpole swing-up, dexterous manipulation, legged locomotion, and car driving, using the same learning algorithm, network architecture, and hyperparameters. It achieves performance competitive with planning algorithms that have full access to the domain dynamics and derivatives. Additionally, the algorithm can learn policies directly from raw pixel inputs, demonstrating robustness and flexibility across various tasks.
-\cite{lillicrap2019}
+\subsection{Continuous Control with Deep Reinforcement Learning} % http://arxiv.org/abs/1509.02971
+Lillicrap et al. (2019) present an adaptation of Deep Q-Learning (DQN) 
+for continuous action domains through an actor-critic, 
+model-free algorithm based on deterministic policy gradients (DPG)~\cite{lillicrap2019}. 
+The proposed algorithm effectively solves over 20 simulated physics tasks, 
+such as cartpole swing-up, dexterous manipulation, legged locomotion, and car driving, 
+using the same learning algorithm, network architecture, and hyperparameters. 
+It achieves performance competitive with planning algorithms that have full access to the 
+domain dynamics and derivatives. Additionally, the algorithm can learn policies directly from 
+raw pixel inputs, demonstrating robustness and flexibility across various tasks.
 
 \subsection{Addressing Function Approximation Error in Actor-Critic Methods}
-This paper tackles the issue of function approximation errors in actor-critic methods, which can lead to overestimated value estimates and suboptimal policies. The authors propose mechanisms to minimize these errors on both the actor and the critic. The algorithm builds on Double Q-learning by taking the minimum value between a pair of critics to limit overestimation. Additionally, delaying policy updates is suggested to reduce per-update error. Evaluations on the OpenAI gym tasks show that the proposed method outperforms state-of-the-art approaches in every tested environment, demonstrating its robustness and effectiveness in addressing approximation errors.
-\cite{fujimoto2018}
+% http://arxiv.org/abs/1802.09477
+Fujimoto et al. (2018) tackle the issue of function approximation errors in actor-critic methods, 
+which can lead to overestimated value estimates and suboptimal policies~\cite{fujimoto2018}. 
+They propose mechanisms to minimize these errors on both the actor and the critic. The algorithm 
+builds on Double Q-learning by taking the minimum value between a pair of critics to limit 
+overestimation. Additionally, delaying policy updates is suggested to reduce per-update error. 
+Evaluations on the OpenAI gym tasks show that the proposed method outperforms state-of-the-art 
+approaches in every tested environment, demonstrating its robustness and effectiveness in 
+addressing approximation errors.
 
-\subsection{MA2C for Mixed Environments}
-%\subsection{Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments}
-This paper explores deep reinforcement learning methods for multi-agent domains, specifically focusing on mixed cooperative-competitive environments. Traditional algorithms like Q-learning and policy gradient face challenges in multi-agent settings due to non-stationarity and high variance. The authors propose an adaptation of actor-critic methods that takes into account the action policies of other agents, enabling the learning of complex coordination strategies. Additionally, an ensemble of policies for each agent is introduced, resulting in more robust multi-agent policies. The approach is validated in various cooperative and competitive scenarios, demonstrating superior performance and robustness compared to existing methods.
-\cite{lowe2020}
+\subsection{Multi-Agent Actor-Critic for Mixed Cooperative Competitive Environments} 
+% http://arxiv.org/abs/1706.02275
+Lowe et al. (2020) explore deep reinforcement learning methods for multi-agent domains, 
+specifically focusing on mixed cooperative-competitive environments~\cite{lowe2020}. 
+Traditional algorithms like Q-learning and policy gradient face challenges in multi-agent settings 
+due to non-stationarity and high variance. The authors propose an adaptation of actor-critic 
+methods that takes into account the action policies of other agents, 
+enabling the learning of complex coordination strategies. 
+Additionally, an ensemble of policies for each agent is introduced, resulting in more robust 
+multi-agent policies. The approach is validated in various cooperative and competitive scenarios, 
+demonstrating superior performance and robustness compared to existing methods.
 
-\subsection{F2A2}
-\cite{li2023d}
+\subsection{F2A2: Flexible Fully-decentralized Approximate Actor-critic for Cooperative 
+Multi-agent Reinforcement Learning} % http://jmlr.org/papers/v24/20-700.html
+Li et al. (2023) present F2A2, a fully decentralized actor-critic framework for cooperative 
+multi-agent reinforcement learning (MARL)~\cite{li2023d}. They address the limitations of 
+centralized MARL algorithms, such as the curse of dimensionality and computational complexity. 
+F2A2 employs a primal-dual hybrid gradient descent algorithm to learn individual agents separately,
+reducing information transmission through parameter sharing and novel modeling-other-agents 
+methods. Experiments in cooperative Multi-agent Particle Environment and StarCraft II demonstrate 
+that F2A2 performs competitively against conventional centralized and decentralized methods, 
+achieving scalability and stability in large-scale environments.
 
-\subsection{Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized Critics}
-This paper addresses the issue of value function overestimation bias in multi-agent reinforcement learning (MARL). The authors propose using double centralized critics to mitigate this bias, drawing inspiration from Double Q-Learning in single-agent RL. The proposed method is evaluated on six mixed cooperative-competitive tasks, showing significant improvements over current methods. Additionally, the approach is tested on high-dimensional robotic tasks, demonstrating its capability to learn decentralized policies in complex environments. The results highlight the effectiveness of reducing overestimation bias and the potential for broader applications in MARL.
-\cite{ackermann2019}
+\subsection{Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized Critics} 
+% https://arxiv.org/abs/1910.01465v2
+Ackermann et al. (2019) address the issue of value function overestimation bias in multi-agent 
+reinforcement learning (MARL) by proposing the use of double centralized critics to mitigate 
+this bias~\cite{ackermann2019}. Drawing inspiration from Double Q-Learning in single-agent RL, 
+the proposed method is evaluated on six mixed cooperative-competitive tasks, 
+showing significant improvements over current methods. 
+Additionally, the approach is tested on high-dimensional robotic tasks, 
+demonstrating its capability to learn decentralized policies in complex environments. 
+The results highlight the effectiveness of reducing overestimation bias and the potential for 
+broader applications in MARL.
 
-\subsection{The Surprising Effectiveness of PPO in Cooperative, Multi-Agent Games}
-This paper investigates the performance of Proximal Policy Optimization (PPO) in cooperative multi-agent reinforcement learning (MARL) settings. Despite being less utilized than off-policy algorithms due to perceived sample inefficiency, PPO demonstrates strong performance in four multi-agent testbeds: particle-world environments, StarCraft multi-agent challenge, Google Research Football, and the Hanabi challenge. With minimal hyperparameter tuning and without domain-specific modifications, PPO often achieves competitive or superior results compared to off-policy methods. The study includes ablation analyses to identify key implementation factors, providing practical suggestions for optimizing PPO's performance. These findings suggest that PPO can serve as a strong baseline in cooperative MARL.
-\cite{yu2022}
+\subsection{The Surprising Effectiveness of PPO in Cooperative, Multi-Agent Games} 
+% http://arxiv.org/abs/2103.01955
+Yu et al. (2022) investigate the performance of Proximal Policy Optimization (PPO) 
+in cooperative multi-agent reinforcement learning (MARL) settings~\cite{yu2022}. 
+Despite being less utilized than off-policy algorithms due to perceived sample inefficiency, 
+PPO demonstrates strong performance in four multi-agent testbeds: particle-world environments, 
+StarCraft multi-agent challenge, Google Research Football, and the Hanabi challenge. 
+With minimal hyperparameter tuning and without domain-specific modifications, 
+PPO often achieves competitive or superior results compared to off-policy methods. 
+The study includes ablation analyses to identify key implementation factors, 
+providing practical suggestions for optimizing PPO's performance. 
+These findings suggest that PPO can serve as a strong baseline in cooperative MARL.
 
-\subsection{Heterogeneous-Agent Reinforcement Learning}
-This paper addresses the challenges in cooperative multi-agent reinforcement learning (MARL) with heterogeneous agents. Traditional approaches often rely on parameter sharing among agents, limiting their applicability to homogeneous-agent settings and resulting in training instability and lack of convergence guarantees. The authors propose Heterogeneous-Agent Reinforcement Learning (HARL) algorithms to overcome these issues. Key contributions include the multi-agent advantage decomposition lemma and the sequential update scheme. The paper introduces Heterogeneous-Agent Trust Region Learning (HATRL) and its approximations, HATRPO and HAPPO, which provide stability and convergence guarantees. Additionally, the Heterogeneous-Agent Mirror Learning (HAML) framework strengthens theoretical guarantees and facilitates the design of new cooperative MARL algorithms. The proposed algorithms are comprehensively tested on six challenging benchmarks, demonstrating superior effectiveness and stability compared to existing methods like MAPPO and QMIX.
-\cite{zhong2024}
-
-
+\subsection{Heterogeneous-Agent Reinforcement Learning} % http://jmlr.org/papers/v25/23-0488.html
+Zhong et al. (2024) address the challenges in cooperative multi-agent reinforcement learning (MARL)
+with heterogeneous agents~\cite{zhong2024}. 
+Traditional approaches often rely on parameter sharing among agents, limiting their applicability 
+to homogeneous-agent settings and resulting in training instability and lack of convergence 
+guarantees. The authors propose Heterogeneous-Agent Reinforcement Learning (HARL) algorithms 
+to overcome these issues. Key contributions include the multi-agent 
+advantage decomposition lemma and the sequential update scheme. 
+The paper introduces Heterogeneous-Agent Trust Region Learning (HATRL) and its approximations, 
+HATRPO and HAPPO, which provide stability and convergence guarantees. 
+Additionally, the Heterogeneous-Agent Mirror Learning (HAML) framework strengthens theoretical 
+guarantees and facilitates the design of new cooperative MARL algorithms. 
+The proposed algorithms are comprehensively tested on six challenging benchmarks, demonstrating 
+superior effectiveness and stability compared to existing methods like MAPPO and QMIX.
 
 % Conclusion
 \section{Conclusion}
 \label{sec:conclusion}
 
 \subsection{Summary of Key Insights}
+\subsubsection{Addressing Bias and Errors}
+Multiple papers (Ackermann et al.~\cite{ackermann2019}, Fujimoto et al.~\cite{fujimoto2018}) 
+focus on mitigating biases and errors in reinforcement learning, 
+such as overestimation bias and function approximation errors. 
+These efforts improve the reliability and performance of reinforcement learning algorithms.
 
+\subsubsection{Policy Optimization} 
+Schulman et al.'s work on TRPO\cite{schulman2017} and PPO\cite{schulman2017a} 
+highlight the importance of stable and efficient policy optimization methods.
+Both methods introduce mechanisms to ensure monotonic improvement and sample efficiency, 
+which are crucial for robust learning.
+
+\subsubsection{Multi-Agent Coordination} 
+Papers by Zhong et al.~\cite{zhong2024}, Yu et al.~\cite{yu2022}, and Lowe et al.~\cite{lowe2020}
+address the challenges of multi-agent coordination in both cooperative and competitive settings. 
+These studies emphasize the need for algorithms that can handle the complexities of 
+multi-agent interactions.
+
+\subsubsection{Robustness and Versatility} 
+The versatility of reinforcement learning algorithms is demonstrated across various tasks, 
+from robotic control to game playing. Methods like PPO and continuous control algorithms show 
+that well-designed algorithms can generalize across different domains.
+
+\subsubsection{Centralized Training for Decentralized Execution} 
+The concept of centralized training for decentralized execution is a recurring theme 
+(Rashid et al.~\cite{rashid2018}, Ackermann et al.~\cite{ackermann2019}), highlighting the benefits
+of leveraging global information during training to derive effective decentralized policies.
 
 \subsection{Overall Impact on the Field}
-How the reviewed literature has shaped the current state of RL
-
+Overall, these papers collectively advance the field of reinforcement learning by addressing key 
+challenges and proposing innovative solutions that enhance the robustness, efficiency, and 
+applicability of reinforcement learning algorithms across diverse environments.
 
 % References
 \label{sec:references}
@@ -210,3 +353,7 @@ How the reviewed literature has shaped the current state of RL
 %\end{appendices}
 
 \end{document}
+
+
+Connections and Insights
+Several common themes and connections can be drawn from these papers:
