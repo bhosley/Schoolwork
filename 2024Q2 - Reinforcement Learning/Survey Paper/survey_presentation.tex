@@ -215,7 +215,7 @@
         \begin{itemize}
             \item Iterative
             \item Approximate: Trajectory sampling
-            \item Monotonic: Constrained policy gradient
+            \item Monotonic: Constrained (lower bound) policy gradient
         \end{itemize}
     \end{description}
 \end{frame}
@@ -262,7 +262,7 @@
             \item Advantage values
             \item Batch updates
         \end{itemize}
-        \item[Weakness:] Same group as TRPO but did not test on the same environments.
+        \item[Weakness:] Same first author as TRPO but did not test on the same environments.
     \end{description}
 \end{frame}
 
@@ -284,6 +284,7 @@
         \item[Algorithm:] 
         \begin{itemize}
             \item Centralized Critic, used during training, not during execution
+            \item In figure~\ref{fig:COMA} COMA represents a gradient based Advantage function
         \end{itemize}
     \end{description}
 \end{frame}
@@ -297,6 +298,7 @@
     \begin{figure}\small
         \includegraphics[width=0.9\linewidth]{images/coma.png}
         \caption{Mixing network structure\cite{foerster2018}}
+        \label{fig:COMA}
     \end{figure}
 \end{frame}
 
@@ -394,6 +396,11 @@
             \item $R$: Dependent on game-mode. 
         \end{itemize}
         \item[Algorithm:] DDPG $\rightarrow$ MADDPG
+        \begin{itemize}
+            \item Decentralized actors
+            \item Independent policies 
+            \item Centralized critic
+        \end{itemize}
     \end{description}
 \end{frame}
 
@@ -433,7 +440,7 @@
     \frametitle{Paper \thepapercounter - F2A2: Flexible Fully-decentralized Approximate 
     Actor-critic for Cooperative Multi-agent Reinforcement Learning\cite{li2023d}}
     \begin{figure}\small
-        \includegraphics[width=\linewidth]{images/f2a2.png}
+        \includegraphics[width=0.7\linewidth]{images/f2a2.png}
         \caption{CTDE v. DTDE\cite{li2023d}}
     \end{figure}
 \end{frame}
@@ -454,7 +461,8 @@
         \end{itemize}
         \item[Algorithm:] TD3 $\rightarrow$ MATD3
         \begin{itemize}
-            \item Takes twin critic and extends it to be centralized critic
+            \item Takes twin critic of TD3 and extends it to be the centralized critic
+            \item Clipping thus applies to all agents
         \end{itemize}
     \end{description}
 \end{frame}
@@ -521,6 +529,24 @@
             \end{itemize}
         \end{multicols*}
     \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Paper \thepapercounter - Heterogeneous-Agent Reinforcement Learning~
+    \cite{zhong2024}}
+    \begin{multicols}{2}
+        \begin{description} \small
+            \item[Algorithms:]
+            \begin{itemize}
+                \item Sequential updates
+                \item Multi-agent Advantage Decomposition 
+            \end{itemize}
+            \vfill\phantom{}
+        \end{description}
+        \includegraphics[width=\linewidth]{images/sequential_update.png}
+    \end{multicols}
+    \centering
+    \includegraphics[width=0.7\linewidth]{images/maa_decomp.png}
 \end{frame}
 
 \section{References}
