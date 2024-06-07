@@ -1,0 +1,67 @@
+\documentclass{beamer}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{libertinus}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage[backend=biber,style=ieee]{biblatex}
+\addbibresource{survey.bib}
+\usepackage{comment}
+
+
+\title{DSOR 646~-~Reinforcement Learning Final Project}
+\author{Capt. Brandon Hosley\inst{1}}
+\institute[ENS]{
+    \inst{1}
+    Department of Operational Sciences\\
+    Air Force Institute of Technology}
+\date{\today}
+
+\AtBeginSection[]{
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\mode<presentation>
+
+\begin{document}
+\frame{\titlepage}
+\begin{frame}
+    \tableofcontents
+\end{frame}
+
+\section{}
+
+\begin{frame}
+    \frametitle{}
+    \begin{description}
+        \item[]
+    \end{description}
+    
+    \vspace*{1em}
+    
+    \begin{block}{Objective}
+        Introduce a lightweight framework for deep reinforcement learning (DRL).
+        Use asynchronous gradient descent for optimizing deep neural network controllers.
+    \end{block}
+\end{frame}
+
+\section{Survey}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{References}
+
+\renewcommand*{\bibfont}{\tiny}
+\frame[allowframebreaks]{\printbibliography}
+
+\begin{frame}
+    Questions?
+\end{frame}
+
+\end{document}
