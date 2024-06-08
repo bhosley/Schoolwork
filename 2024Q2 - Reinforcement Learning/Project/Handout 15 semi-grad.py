@@ -151,7 +151,7 @@ def update_best_scores(mean, hw, w, iht, best_scores):
     for i in range(len(best_scores)):
         if mean-hw > best_scores[i]['ETDR'] -best_scores[i]['ETDR_hw']:
             # Shift scores and parameters
-            best_scores.insert(1, {'ETDR': np.copy(mean), 'ETDR_hw': np.copy(hw), 'w': np.copy(w),'iht': copy.deepcopy(iht)})
+            best_scores.insert(i, {'ETDR': np.copy(mean), 'ETDR_hw': np.copy(hw), 'w': np.copy(w),'iht': copy.deepcopy(iht)})
             # We only want the top scores, so remove the last one 
             best_scores.pop()
             return True
@@ -201,7 +201,7 @@ for z in range(Z):
         # initialize reward array, record of rewards
         reward_queue = collections.deque([])
 
-        # SARSA main loop (first nml transitions)
+        # SARSA main loop (first nm1 transitions)
         for _ in range(nm1):
             # apply action and observe system information 
             next_state, reward, terminated, truncated, _ = env.step(action)
@@ -251,7 +251,7 @@ for z in range(Z):
             Δ = qhat - Qbar(state_queue[0],action_queue[0],w,iht_VFA)
 
             # update w vector
-            active_tiles = gradQbar(state_queue[0], action_queue[0],w,iht_VFA)
+            active_tiles = gradQbar(state_queue[0], action_queue[0],iht_VFA)
             C[active_tiles] += 1 # update state-action counter 
             w[active_tiles] += alpha(C[active_tiles])*Δ
 
@@ -270,7 +270,7 @@ for z in range(Z):
             Δ = qhat - Qbar(state_queue[0],action_queue[0],w,iht_VFA)
 
             # update w vector
-            active_tiles = gradQbar(state_queue[0], action_queue[0],w,iht_VFA)
+            active_tiles = gradQbar(state_queue[0], action_queue[0], iht_VFA)
             C[active_tiles] += 1 # update state-action counter 
             w[active_tiles] += alpha(C[active_tiles])*Δ
 

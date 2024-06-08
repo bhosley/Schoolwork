@@ -135,7 +135,7 @@ def update_best_scores(mean, hw, w, best_scores):
     for i in range(len(best_scores)):
         if mean-hw > best_scores[i]['ETDR']-best_scores[i]['ETDR_hw']:
             # Shift scores and parameters
-            best_scores.insert(1, {'ETDR': np.copy(mean), 'ETDR_hw': np.copy(hw), 'w': np.copy(w)})
+            best_scores.insert(i, {'ETDR': np.copy(mean), 'ETDR_hw': np.copy(hw), 'w': np.copy(w)})
             # We only want the top scores, so remove the last one 
             best_scores.pop()
             return True
@@ -151,7 +151,7 @@ def confinterval(data,alpha=0.05):
     return mean, halfwidth
 
 # define test function
-def evaluate_policy(w,iht, num_reps, seed_mult=1):
+def evaluate_policy(w,num_reps, seed_mult=1):
     # initialize_test_data_structure
     test_data = np.zeros((num_reps))
     # run num_test_reps replication per test
@@ -165,7 +165,7 @@ def evaluate_policy(w,iht, num_reps, seed_mult=1):
         state = env.reset(seed=seed_mult*1000+rep)[0]
         while not (terminated or truncated):
             # take action according to current policy, using theta
-            action = argmaxQbar(state,w,iht)
+            action = argmaxQbar(state,w)
             # apply action and observe system information
             state, reward, terminated, truncated, _ = env.step(action)
             # update episode cumulative reward
@@ -305,7 +305,7 @@ hw_values = []
 
 # loop through top policies stored in best_scores to find superlative policy
 for i, score in enumerate(best_scores):
-    mean, hw = evaluate_policy(score['w'], score['iht'], 2*num_test_reps, 2)
+    mean, hw = evaluate_policy(score['w'], 2*num_test_reps, 2)
     print(f"\nBest VFA ({ordinal(i+1)}) test... EETDR CI: {mean:>6.1f} +/- {hw:4.1f}")
     mean_values.append(mean)
     hw_values.append(hw)

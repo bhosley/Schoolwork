@@ -5,7 +5,63 @@ from scipy.stats import t
 from sklearn import metrics
 from abc import abstractmethod
 
+
 class MDPBase():
+    """
+    Base class for Markov Decision Process (MDP) algorithms.
+
+    This class provides common functionalities and parameters for reinforcement learning
+    algorithms that interact with an environment defined by an MDP. It includes methods
+    for handling hyperparameters, discretizing state spaces, and evaluating policies.
+
+    Attributes:
+        env: The environment in which the agent will be trained.
+        algorithm_name (str): The name of the algorithm.
+        eps_a (float): Epsilon-Greedy stepsize rule parameter a, default is 1.0.
+        eps_b (float): Epsilon-Greedy stepsize rule parameter b, default is 0.5.
+        alpha_a (float): Learning rate parameter a, default is 1.0.
+        alpha_b (float): Learning rate parameter b, default is 0.5.
+        qinit (float): Initial Q-value, default is 1.0.
+        gamma (float): Discount rate, default is 0.999.
+        num_actions (int): Number of discrete actions available in the environment.
+        Sintervals (int): Number of intervals for discretizing the state space.
+        Slow (ndarray): Lower bound of the state space.
+        Shigh (ndarray): Upper bound of the state space.
+        Srange (ndarray): Range of the state space.
+        Sunit (ndarray): Unit size for discretizing the state space.
+        SAsize (ndarray): Size of the state-action space.
+        test_freq (int): Policy evaluation test frequency, default is 25.
+        num_test_reps (int): Number of replications per test, default is 30.
+        offset (int): Random number generator seed manual offset, default is 0.
+        Gzm (list): List to record each episode's cumulative reward for measuring online performance.
+        GzmTest (list): List to record test episode results.
+        num_best_scores (int): Number of top scores to keep track of, default is 10.
+        best_scores (list): List of dictionaries containing the top scores and corresponding Q-values.
+        total_training_reps (int): Total number of training replications.
+        avg_execution_time (float): Average execution time per replication.
+        total_episodes (int): Total number of episodes.
+        qrange (list): Range of Q-values for the environment.
+
+    Methods:
+        ordinal(n): Converts a number to its ordinal representation.
+        epsilon(n): Computes the epsilon value for the nth episode.
+        alpha(n): Computes the alpha value for the nth episode.
+        phi(Scont): Converts a continuous state to a discrete state variable representation.
+        confinterval(data, alpha=0.05): Computes the confidence interval for the given data.
+        update_best_scores(mean, hw, Q): Updates the list of best scores with a new score if it is among the top.
+        update_and_print(episode_number, mean, hw, Q): Updates the best scores and prints the current status.
+        evaluate_policy(Q, num_reps=30, seed_mult=1): Evaluates the policy using the Q-values over multiple replications.
+        title(reps): Generates a title string for the performance results.
+        show_results(): Displays the performance results as a plot.
+        display_best_policy(): Displays the best policy using a greedy approach as an animation.
+        find_superlative(num_test_reps=30): Finds and returns the superlative policy from the list of best scores.
+        get_results(): Computes and returns the key performance metrics.
+
+    Abstract Methods:
+        name: Returns the name of the algorithm.
+        train(num_replications, num_episodes, verbose=False): Trains the agent using the specified number of replications and episodes.
+    """
+
     def __init__(self, env, **kwargs) -> None:
         self.env = env
         self.algorithm_name = kwargs.get('self.algorithm_name', '')
@@ -24,8 +80,8 @@ class MDPBase():
         self.Sintervals = discrete_states - 1
         self.Slow       = np.array(env.observation_space.low)
         self.Shigh      = np.array(env.observation_space.high)
-        Srange          = self.Shigh-self.Slow
-        self.Sunit      = Srange/self.Sintervals
+        self.Srange     = self.Shigh-self.Slow
+        self.Sunit      = self.Srange/self.Sintervals
         Ssize           = discrete_states * np.ones(len(env.observation_space.low)).astype(int)
         self.SAsize     = np.append(Ssize,self.num_actions)  # state-action space
 
@@ -50,6 +106,7 @@ class MDPBase():
         match self.env.spec.id:
             case 'CartPole-v1' : self.qrange = [0,500]
             case 'MountainCar-v0' : self.qrange = [-200,-100]
+            case 'LunarLander-v2' : self.qrange = [-200,200]
             case _: self.qrange = [-200,200] # A WAG if unknown environment
 
 
@@ -100,13 +157,9 @@ class MDPBase():
             print(f"   Test... Episode: {episode_number:>4}, "
                   + f"EETDR CI: {mean:>6.2f} +/- {hw:4.2f}\n"
                   + f"*------* Current Top 5 Reliable EETDRs: "
-                  + "".join([f"{best_scores[i]['ETDR']:>6.2f}, " for i in range(5)])
-                  #+ f"{best_scores[0]['ETDR']:>6.2f}, {best_scores[1]['ETDR']:>6.2f}, \
-                  #{best_scores[2]['ETDR']:>6.2f}, {best_scores[3]['ETDR']:>6.2f}, \
-                  #{best_scores[4]['ETDR']:>6.2f}"
-                  )
+                  + "".join([f"{best_scores[i]['ETDR']:>6.2f}, " for i in range(5)])    )
 
-    def evaluate_policy_test(self, Q, num_reps=30, seed_mult=1):
+    def evaluate_policy(self, Q, num_reps=30, seed_mult=1):
         # initialize test data structure
         test_data = np.zeros((num_reps))
         # run num_test_reps replications per test
@@ -212,7 +265,7 @@ class MDPBase():
         mean_values, hw_values = [], []
         # loop through top policies stored in best_scores to find superlative policy
         for i, score in enumerate(self.best_scores):
-            mean, hw = self.evaluate_policy_test(score['Q'], num_test_reps,2)
+            mean, hw = self.evaluate_policy(score['Q'], num_test_reps,2)
             print(f"\nBest VFA ({self.ordinal (i+1)}) test... \EETDR CI: {mean:>6.2f}+/-{hw:4.2f}")
             mean_values.append(mean)
             hw_values.append(hw)
@@ -248,6 +301,96 @@ class MDPBase():
     @abstractmethod
     def train(self, num_replications, num_episodes, verbose=False):
         pass
+
+
+from tiles3 import tiles, IHT
+from copy import deepcopy
+#from typing import override # Needs Python >3.12
+
+class MDP_Tiled(MDPBase):
+    def __init__(self, env, **kwargs) -> None:
+        super().__init__(env, **kwargs)
+        self.max_size       = kwargs.get('max_size',2**10)   # Tile coding scheme for state-action space
+        self.num_tiles      = kwargs.get('num_tiles',4)  #
+        self.scale_factor   = kwargs.get('scale_factor',self.num_tiles/self.Srange)  # for use in tiles function
+        self.best_scores    = [{'ETDR': -np.inf, 'ETDR_hw': np.inf, 'w': None, 'iht': None} 
+                               for _ in range(self.num_best_scores)]
+
+
+    #@override(MDPBase) # Needs Python >3.12
+    def phi(self,s,a,iht):
+        return tiles(iht, self.num_tiles,list(s*self.scale_factor),[a])
+
+    def gradQbar(self,s,a,iht):
+        return self.phi(s,a,iht)
+
+    def Qbar(self,s,a,w,iht):
+        qhat = 0
+        tiles = self.phi(s,a,iht)
+        for tile in tiles:
+            qhat += w[tile]
+        return qhat[0]
+
+    def argmaxQbar(self,s,w,iht):
+        Qvals = [self.Qbar(s,a,w,iht) for a in range(self.num_actions)]
+        return np.argmax(Qvals)
+
+    #@override(MDPBase) # Needs Python >3.12
+    def update_best_scores(self, mean, hw, w, iht):
+        # Find the first score that mean is greater than 
+        for i in range(len(self.best_scores)):
+            if mean-hw > self.best_scores[i]['ETDR'] - self.best_scores[i]['ETDR_hw']:
+                # Shift scores and parameters
+                self.best_scores.insert(i, {'ETDR': np.copy(mean), 'ETDR_hw': np.copy(hw), 
+                                            'w': np.copy(w),'iht': deepcopy(iht)})
+                # We only want the top scores, so remove the last one 
+                self.best_scores.pop()
+                return True
+        return False
+
+    #@override(MDPBase) # Needs Python >3.12
+    def evaluate_policy(self, w, iht, num_reps, seed_mult=1):
+        # initialize_test_data_structure
+        test_data = np.zeros((num_reps))
+        # run num_test_reps replication per test
+        for rep in range(num_reps):
+            # initialize episode conditions
+            terminated = False
+            truncated = False
+            # Initialize episode reward
+            Gtest = 0
+            # Initialize the system by resetting the environment, obtain state var
+            state = self.env.reset(seed=seed_mult*1000+rep)[0]
+            while not (terminated or truncated):
+                # select action with highest q-value
+                action = self.argmaxQbar(state,w,iht)
+                # apply action and observe system information
+                state, reward, terminated, truncated, _ = self.env.step(action)
+                # update episode cumulative reward
+                Gtest += reward
+            test_data[rep] = Gtest
+        mean, hw = self.confinterval(test_data)
+        return mean, hw
+
+    #@override(MDPBase) # Needs Python >3.12
+    def find_superlative(self, num_test_reps=30):
+        # initialize list of means and half-widths for testing top policies
+        mean_values, hw_values = [], []
+        # loop through top policies stored in best_scores to find superlative policy
+        for i, score in enumerate(self.best_scores):
+            mean, hw = self.evaluate_policy(score['w'], score['iht'], num_test_reps, 2)
+            print(f"\nBest VFA ({self.ordinal(i+1)}) test... EETDR CI: {mean:>6.1f} +/- {hw:4.1f}")
+            mean_values.append(mean)
+            hw_values.append(hw)
+        # determine superlative policy and record its mean and half-width
+        indBestCILB = np.argmax(np.array(mean_values)-np.array(hw_values))
+        maxETDR = mean_values[indBestCILB]
+        maxETDRhw = hw_values[indBestCILB]
+        return indBestCILB, maxETDR, maxETDRhw
+
+
+
+
 
 
 
@@ -400,5 +543,3 @@ class LHS_Experiment():
         plt.legend(loc='upper left', fontsize=7)
         # display the plot
         plt.show()
-
-

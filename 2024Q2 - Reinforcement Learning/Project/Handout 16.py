@@ -127,7 +127,7 @@ def update_best_scores(mean, hw, w, iht, best_scores):
     for i in range(len(best_scores)):
         if mean-hw > best_scores[i]['ETDR'] -best_scores[i]['ETDR_hw']:
             # Shift scores and parameters
-            best_scores.insert(1, {'ETDR': np.copy(mean), 'ETDR_hw': np.copy(hw), 'w': np.copy(w),'iht': copy.deepcopy(iht)})
+            best_scores.insert(i, {'ETDR': np.copy(mean), 'ETDR_hw': np.copy(hw), 'w': np.copy(w),'iht': copy.deepcopy(iht)})
             # We only want the top scores, so remove the last one 
             best_scores.pop()
             return True
@@ -203,7 +203,7 @@ for z in range(Z):
             action = np.random.randint(0,num_actions)
 
 
-        # SARSA main loop (first nml transitions until end of episode)
+        # SARSA main loop (first nm1 transitions until end of episode)
         while not (terminated or truncated):
             # Apply action and observe system information
             next_state, reward, terminated, truncated, _ = env.step(action)

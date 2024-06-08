@@ -1,0 +1,33 @@
+{
+    "cSpell.words": [
+        "AULC",
+        "CILB",
+        "confinterval",
+        "EETDR",
+        "ETDR",
+        "facecolor",
+        "Gtest",
+        "halfwidth",
+        "hstack",
+        "joblib",
+        "Laquerre",
+        "linestyle",
+        "LSPI",
+        "popleft",
+        "Qbar",
+        "qhat",
+        "qinit",
+        "qrange",
+        "Qvals",
+        "savetxt",
+        "Scont",
+        "Shigh",
+        "Sintervals",
+        "Srange",
+        "Ssize",
+        "statsmodels",
+        "Sunit",
+        "triu",
+        "wandb"
+    ]
+}
