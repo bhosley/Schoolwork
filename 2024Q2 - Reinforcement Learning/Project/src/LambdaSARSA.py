@@ -39,10 +39,7 @@ class LambdaSARSA(MDP_Tiled):
                 state = self.env.reset(seed=int(z + 1e6 + m + 1e5*self.offset))[0]
 
                 # select action based on epsilon-greedy exploration mechanism
-                if np.random.rand() > self.epsilon(m):          # With probability epsilon:
-                    action = self.argmaxQbar(state,w,iht_VFA)   # Act greedy, using Qbar
-                else:
-                    action = self.env.action_space.sample()     # Act randomly to explore
+                action = self.get_action(state,(w,iht_VFA),self.epsilon(m))
 
                 # SARSA main loop (first nm1 transitions until end of episode)
                 while not(terminated or truncated):
@@ -51,10 +48,7 @@ class LambdaSARSA(MDP_Tiled):
                     Gm += reward    # Update episode cumulative reward
 
                     # select action based on epsilon-greedy exploration mechanism
-                    if np.random.rand() > self.epsilon(m):              # With probability epsilon:
-                        next_action = self.argmaxQbar(state,w,iht_VFA)  # Act greedy, using Qbar
-                    else:
-                        next_action = self.env.action_space.sample()    # Act randomly to explore
+                    next_action = self.get_action(state,(w,iht_VFA),self.epsilon(m))
 
                     # Compute qhat and TD error
                     qhat = reward + (1-terminated)*self.gamma*self.Qbar(next_state,next_action,w,iht_VFA)
@@ -74,7 +68,7 @@ class LambdaSARSA(MDP_Tiled):
 
                 # test current policy (as represented by current Q) every test_freq episodes
                 if m % self.test_freq == 0:
-                    mean, hw = self.evaluate_policy(w, iht_VFA, self.num_test_reps)
+                    mean, hw = self.evaluate_policy((w, iht_VFA), self.num_test_reps)
                     self.GzmTest.append((z, m, mean, hw))
 
                     # update best scores if necessary
@@ -84,7 +78,7 @@ class LambdaSARSA(MDP_Tiled):
                         self.update_best_scores(mean, hw, w, iht_VFA)
 
             # last test of current algorithm replication
-            mean, hw = self.evaluate_policy(w, iht_VFA, self.num_test_reps)
+            mean, hw = self.evaluate_policy((w, iht_VFA), self.num_test_reps)
             self.GzmTest.append((z, num_episodes, mean, hw))
 
             # update best EETDR scores if necessary

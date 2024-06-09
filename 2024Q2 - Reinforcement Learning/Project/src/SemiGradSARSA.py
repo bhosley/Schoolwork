@@ -33,10 +33,11 @@ class SemiGradSARSA(MDP_Tiled):
                 state_queue = collections.deque([state])            # State record array
 
                 # select action based on epsilon-greedy exploration mechanism
-                if np.random.rand() > self.epsilon(m):          # With probability epsilon:
-                    action = self.argmaxQbar(state, w, iht_VFA) # Act greedy, using Qbar
-                else:
-                    action = self.env.action_space.sample()     # Act randomly to explore
+                action = self.get_action(state,(w,iht_VFA),self.epsilon(m))
+                #if np.random.rand() > self.epsilon(m):          # With probability epsilon:
+                #    action = self.argmaxQbar(state, w, iht_VFA) # Act greedy, using Qbar
+                #else:
+                #    action = self.env.action_space.sample()     # Act randomly to explore
 
                 action_queue = collections.deque([action])      # Action array, record of actions
                 reward_queue = collections.deque([])            # Reward array, record of rewards
@@ -50,10 +51,11 @@ class SemiGradSARSA(MDP_Tiled):
                     Gm += reward                        # Update episode cumulative reward
 
                     # select action based on epsilon-greedy exploration mechanism
-                    if np.random.rand() > self.epsilon(m):              # With probability epsilon:
-                        next_action = self.argmaxQbar(state,w,iht_VFA)  # Act greedy, using Qbar
-                    else:
-                        next_action = self.env.action_space.sample()    # Act randomly to explore
+                    next_action = self.get_action(state,(w,iht_VFA),self.epsilon(m))
+                    #if np.random.rand() > self.epsilon(m):              # With probability epsilon:
+                    #    next_action = self.argmaxQbar(state,w,iht_VFA)  # Act greedy, using Qbar
+                    #else:
+                    #    next_action = self.env.action_space.sample()    # Act randomly to explore
                     action_queue.append(next_action)
 
                 # SARSA main loop (> first mm1 transitions until end of episode 
@@ -65,10 +67,11 @@ class SemiGradSARSA(MDP_Tiled):
                     Gm += reward                        # Update episode cumulative reward
 
                     # select action based on epsilon-greedy exploration mechanism
-                    if np.random.rand() > self.epsilon(m):              # With probability epsilon:
-                        next_action = self.argmaxQbar(state,w,iht_VFA)  # Act greedy, using Qbar
-                    else:
-                        next_action = self.env.action_space.sample()    # Act randomly to explore
+                    next_action = self.get_action(state,(w,iht_VFA),self.epsilon(m))
+                    #if np.random.rand() > self.epsilon(m):              # With probability epsilon:
+                    #    next_action = self.argmaxQbar(state,w,iht_VFA)  # Act greedy, using Qbar
+                    #else:
+                    #    next_action = self.env.action_space.sample()    # Act randomly to explore
                     action_queue.append(next_action)
 
                     # Temporal-Difference learning mechanism
@@ -107,7 +110,7 @@ class SemiGradSARSA(MDP_Tiled):
 
                 # test current policy (as represented by current Q) every test_freq episodes
                 if m % self.test_freq == 0:
-                    mean, hw = self.evaluate_policy(w, iht_VFA, self.num_test_reps)
+                    mean, hw = self.evaluate_policy((w, iht_VFA), self.num_test_reps)
                     self.GzmTest.append((z, m, mean, hw))
 
                     # update best scores if necessary
@@ -117,7 +120,7 @@ class SemiGradSARSA(MDP_Tiled):
                         self.update_best_scores(mean, hw, w, iht_VFA)
 
             # last test of current algorithm replication
-            mean, hw = self.evaluate_policy(w, iht_VFA, self.num_test_reps)
+            mean, hw = self.evaluate_policy((w, iht_VFA), self.num_test_reps)
             self.GzmTest.append((z, num_episodes, mean, hw))
 
             # update best EETDR scores if necessary

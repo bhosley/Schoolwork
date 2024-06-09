@@ -29,6 +29,14 @@ class LSPI(MDPBase):
         self.best_scores = [{'ETDR': -np.inf, 'ETDR_hw': np.inf, 'w': None}
                             for _ in range(self.num_best_scores)]
 
+        """ Tunable Hyperparameters with new defaults"""
+        self.alpha_a    = kwargs.get('alpha_a',0.25)    # Learning Rate
+        self.alpha_b    = kwargs.get('alpha_b',0.75)    # Learning Rate
+        self.eps_a      = kwargs.get('eps_a',1.0)       # Eps-Greedy stepsize rule
+        self.eps_b      = kwargs.get('eps_b',0.25)      # Eps-Greedy stepsize rule
+        self.qinit      = kwargs.get('qinit',1.0)
+        self.gamma      = kwargs.get('gamma',0.99)      # discount rate
+
     #@override(MDPBase) # Needs Python >3.12
     def phi(self,s,a):
         sa = np.hstack(((s-self.Slow)/self.Srange,((s-self.Slow)/self.Srange)**2,a-1))
@@ -53,7 +61,7 @@ class LSPI(MDPBase):
     def argmaxQbar(self,s,w):
         Qvals = [self.Qbar(s,a,w) for a in range(self.num_actions)]
         return np.argmax(Qvals)
-    
+
     #@override(MDPBase)
     def update_best_scores(self, mean, hw, w):
     # Find the first score that mean is greater than 
@@ -178,7 +186,11 @@ class LSPI(MDPBase):
                     Phi_next[done_flags_batch==1,1:] = 0
                     # determine w by solving normal equation with L2 regularization 
                     what = np.ravel(np.linalg.solve(Phi_curr.T*(Phi_curr-self.gamma*Phi_next)
-                                                    +self.eta, Phi_curr.T*r))
+                                                    +self.eta*np.eye(Phi_curr.shape[1]), Phi_curr.T*r))
+                    #                                +self.eta, Phi_curr.T*r))
+                    #+self.eta*np.eye(Phi_curr.shape[0]), Phi_curr.T*r))
+                    #what = np.ravel(np.linalg.lstsq(Phi_curr.T*(Phi_curr-self.gamma*Phi_next)
+                    #                                +self.eta, Phi_curr.T*r)[0])
                     # Polyak averaging
                     w = (1-self.alpha(m))*w + self.alpha(m)*what
 

@@ -106,7 +106,7 @@ class MDPBase():
         match self.env.spec.id:
             case 'CartPole-v1' : self.qrange = [0,500]
             case 'MountainCar-v0' : self.qrange = [-200,-100]
-            case 'LunarLander-v2' : self.qrange = [-200,200]
+            case 'LunarLander-v2' : self.qrange = [0,200]
             case _: self.qrange = [-200,200] # A WAG if unknown environment
 
 
@@ -159,23 +159,16 @@ class MDPBase():
                   + f"*------* Current Top 5 Reliable EETDRs: "
                   + "".join([f"{best_scores[i]['ETDR']:>6.2f}, " for i in range(5)])    )
 
-    def evaluate_policy(self, Q, num_reps=30, seed_mult=1):
-        # initialize test data structure
+    def evaluate_policy(self, policy, num_reps=30, seed_mult=1):
         test_data = np.zeros((num_reps))
-        # run num_test_reps replications per test
         for rep in range(num_reps):
-            # initialize episode complete flag (i.e., when system enters terminal state)
             terminated, truncated = False, False
-            # initialize episode reward
-            Gtest = 0
-            # initialize the system by resetting the environment, obtain state var
-            state = self.env.reset(seed=seed_mult*1000+rep)[0]
-            while not (terminated or truncated) :
-                # select action with highest q-value
-                action = np.argmax(Q[tuple(self.phi(state))])
-                # apply action and observe system information
+            Gtest = 0       # Episode reward
+            state = self.env.reset(seed=seed_mult*1000+rep)[0]  # Reset the environment, get state
+            while not (terminated or truncated):
+                action = self.get_action(state, policy)         # Eps=0, deterministically
                 state, reward, terminated, truncated, _ = self.env.step(action)
-                Gtest += reward    # update episode cumulative reward
+                Gtest += reward     # update episode cumulative reward
             test_data[rep] = Gtest
         mean, hw = self.confinterval(test_data)
         return mean, hw
@@ -269,7 +262,6 @@ class MDPBase():
             print(f"\nBest VFA ({self.ordinal (i+1)}) test... \EETDR CI: {mean:>6.2f}+/-{hw:4.2f}")
             mean_values.append(mean)
             hw_values.append(hw)
-        
         # determine superlative policy and record its mean and half-width
         indBestCILB = np.argmax(np.array(mean_values)-np.array(hw_values))
         maxETDR = mean_values[indBestCILB]
@@ -296,10 +288,43 @@ class MDPBase():
     @property
     @abstractmethod
     def name(self):
+        """ The name of the implemented algorithm. """
+        pass
+
+    @abstractmethod
+    def get_action(self, state, policy, epsilon=0) -> int:
+        """
+        Selects an action based on the current state and policy.
+
+        Args:
+            state: The current state of the environment.
+            policy: The policy to be followed for action selection.
+            epsilon (float): The probability of selecting a random action 
+                (for epsilon-greedy policies), default is 0, which is deterministic.
+
+        Returns:
+            int: The selected action.
+        """
         pass
 
     @abstractmethod
     def train(self, num_replications, num_episodes, verbose=False):
+        """
+        Trains the agent using the specified number of replications and episodes.
+
+        This method should be implemented by inheritors to define the training
+        process of the agent. It typically involves running multiple episodes 
+        of interaction with the environment, updating the policy, and optionally 
+        logging training progress.
+
+        Args:
+            num_replications (int): The number of replications to run for training.
+            num_episodes (int): The number of episodes to run per replication.
+            verbose (bool): If True, print detailed training progress. Default is False.
+
+        Returns:
+            None
+        """
         pass
 
 
@@ -336,49 +361,30 @@ class MDP_Tiled(MDPBase):
         return np.argmax(Qvals)
 
     #@override(MDPBase) # Needs Python >3.12
+    def get_action(self, state, policy, epsilon=0) -> int:
+        w, iht = policy
+        if np.random.rand() > epsilon:
+            return self.argmaxQbar(state,w,iht)
+        else:
+            return self.env.action_space.sample()
+
+    #@override(MDPBase) # Needs Python >3.12
     def update_best_scores(self, mean, hw, w, iht):
         # Find the first score that mean is greater than 
         for i in range(len(self.best_scores)):
             if mean-hw > self.best_scores[i]['ETDR'] - self.best_scores[i]['ETDR_hw']:
                 # Shift scores and parameters
                 self.best_scores.insert(i, {'ETDR': np.copy(mean), 'ETDR_hw': np.copy(hw), 
-                                            'w': np.copy(w),'iht': deepcopy(iht)})
-                # We only want the top scores, so remove the last one 
-                self.best_scores.pop()
+                                            'w': deepcopy(w),'iht': deepcopy(iht)})
+                self.best_scores.pop()  # We only want the top scores, so remove the last one
                 return True
         return False
 
     #@override(MDPBase) # Needs Python >3.12
-    def evaluate_policy(self, w, iht, num_reps, seed_mult=1):
-        # initialize_test_data_structure
-        test_data = np.zeros((num_reps))
-        # run num_test_reps replication per test
-        for rep in range(num_reps):
-            # initialize episode conditions
-            terminated = False
-            truncated = False
-            # Initialize episode reward
-            Gtest = 0
-            # Initialize the system by resetting the environment, obtain state var
-            state = self.env.reset(seed=seed_mult*1000+rep)[0]
-            while not (terminated or truncated):
-                # select action with highest q-value
-                action = self.argmaxQbar(state,w,iht)
-                # apply action and observe system information
-                state, reward, terminated, truncated, _ = self.env.step(action)
-                # update episode cumulative reward
-                Gtest += reward
-            test_data[rep] = Gtest
-        mean, hw = self.confinterval(test_data)
-        return mean, hw
-
-    #@override(MDPBase) # Needs Python >3.12
     def find_superlative(self, num_test_reps=30):
-        # initialize list of means and half-widths for testing top policies
-        mean_values, hw_values = [], []
-        # loop through top policies stored in best_scores to find superlative policy
+        mean_values, hw_values = [], []         # lists of means and half-widths for top policies
         for i, score in enumerate(self.best_scores):
-            mean, hw = self.evaluate_policy(score['w'], score['iht'], num_test_reps, 2)
+            mean, hw = self.evaluate_policy((score['w'], score['iht']), num_test_reps, 2)
             print(f"\nBest VFA ({self.ordinal(i+1)}) test... EETDR CI: {mean:>6.1f} +/- {hw:4.1f}")
             mean_values.append(mean)
             hw_values.append(hw)
@@ -387,6 +393,37 @@ class MDP_Tiled(MDPBase):
         maxETDR = mean_values[indBestCILB]
         maxETDRhw = hw_values[indBestCILB]
         return indBestCILB, maxETDR, maxETDRhw
+
+    #@override(MDPBase) # Needs Python >3.12
+    def display_best_policy(self, num_reps_show = 10):
+        """display best policy using greedy-only approach as an animation"""
+        id = self.env.spec.id
+        self.env.close()
+        self.env = gym.make(id, render_mode='human')
+        indBestCILB,_,_ = self.find_superlative()
+        test_data = np.zeros((num_reps_show))
+
+        w = np.copy(self.best_scores[indBestCILB]['w'])
+        iht = np.copy(self.best_scores[indBestCILB]['iht'])
+        # perform test replications
+        for rep in range(num_reps_show):
+            terminated, truncated = False, False
+            # initialize episode reward
+            Gtest = 0
+            # initialize the system by resetting the environment, obtain state var
+            state = self.env.reset(seed=self.offset*1000+rep)[0]
+            while not (terminated or truncated):
+                action = self.argmaxQbar(state,w,iht)
+                # apply action and observe system information
+                state, reward, terminated, truncated, _ = self.env.step(action)
+                # update episode cumulative reward
+                Gtest += reward
+            test_data[rep] = Gtest
+            print(f"Episode {rep} ETDR: {np.round(Gtest,4)}")
+        self.env.close()
+        mean, hw = self.confinterval(test_data)
+        print (f"\n Rendered episodes... ETDR CI: {np.round(mean,1)} +/- {np.round(hw,1)}")
+        return
 
 
 import pandas as pd
@@ -494,8 +531,7 @@ class LHS_Experiment():
         results = model.fit()
 
         # Display the summary
-        print ("\n\n" )
-        print (results.summary())
+        print ("\n\n" + results.summary())
 
         # Perform ANOVA and display the table
         anova_results = sm.stats.anova_lm(results, typ=2)
@@ -513,28 +549,19 @@ class LHS_Experiment():
         plt.title(f"{self.algorithm.name} LHS DOE Performance Results")
         plt.xlabel(x_var)
         plt.ylabel(y_var)
-        # grid on
-        plt.grid()
-        # legend on
-        plt.legend(loc='upper left', fontsize=7)
-        # display the plot
-        plt.show()
+        plt.grid()                                  # grid on
+        plt.legend(loc='upper left', fontsize=7)    # legend on
+        plt.show()                                  # display the plot
 
     def plot_param_comparison(self):
         y = np.array(self.results_table[1:,-1],float) # 0-index appears to be title
         # create scatter plot
         for i,param in enumerate(self.features):
             plt.scatter(np.array(self.results_table[1:,i+1],float), y , label=param)
-        #plt.scatter(np.array(self.results_table[1:,1],float), y, label="eps_a")
-        #plt.scatter(np.array(self.results_table[1:,2],float), y, label="eps_b")
-        #plt.scatter(np.array(self.results_table[1:,3],float), y, label="Q-init")
         # setting title and labels
         plt.title(f"{self.algorithm.name} LHS DOE Performance Results -- "
                      + f"{self.replications} reps per run, {self.num_episodes} episodes per rep")
         plt.ylabel("Score")
-        # grid on
-        plt.grid()
-        # legend on
-        plt.legend(loc='upper left', fontsize=7)
-        # display the plot
-        plt.show()
+        plt.grid()                                  # grid on
+        plt.legend(loc='upper left', fontsize=7)    # legend on
+        plt.show()                                  # display the plot
