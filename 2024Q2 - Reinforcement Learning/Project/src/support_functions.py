@@ -389,11 +389,6 @@ class MDP_Tiled(MDPBase):
         return indBestCILB, maxETDR, maxETDRhw
 
 
-
-
-
-
-
 import pandas as pd
 from sklearn.preprocessing import PolynomialFeatures
 from scipy.stats.qmc import LatinHypercube
