@@ -28,7 +28,9 @@
     on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15,%
     colframe=white, fontupper={\ttfamily \footnotesize}%
 }
-\usepackage[]{algorithm2e}
+
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 % Title
 \title{DSOR 646 Survey of Applications of Reinforcement Learning}
@@ -184,6 +186,26 @@ For this project two algorithms that were discussed in class will be implemented
 
 
 \subsection{Semi-Gradient $n$-step SARSA}
+
+\begin{algorithm}
+    \caption{Episodic semi-gradient n-step Sarsa}
+    \label{alg:semi-grad_sarsa}
+    \begin{algorithmic}
+        
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+    \caption{Euclid's algorithm}
+    \label{euclid}
+    \begin{algorithmic}[1] % The number tells where the line numbering should start
+        \State Input: a differentiable action-value function parameterization \(\hat{q}:\mathcal{S}A ⇥ Rd ! R\)
+        \State Input: a policy \(\pi\) (if estimating \(q_\pi\)) 
+        \State Algorithm parameters: step size ↵>0, small ">0, a positive integer n 
+        \State Initialize value-function weights w 2 Rd arbitrarily (e.g., w = 0) 
+        \State All store and access operations (St, At, and Rt) can take their index mod n +1
+    \end{algorithmic}
+\end{algorithm}
 
 
 \subsection{}

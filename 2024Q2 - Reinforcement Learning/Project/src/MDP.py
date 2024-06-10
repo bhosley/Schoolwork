@@ -82,8 +82,8 @@ class MDPBase():
         self.Shigh      = np.array(env.observation_space.high)
         self.Srange     = self.Shigh-self.Slow
         self.Sunit      = self.Srange/self.Sintervals
-        Ssize           = discrete_states * np.ones(len(env.observation_space.low)).astype(int)
-        self.SAsize     = np.append(Ssize,self.num_actions)  # state-action space
+        self.Ssize      = discrete_states * np.ones(len(env.observation_space.low)).astype(int)
+        self.SAsize     = np.append(self.Ssize,self.num_actions)  # state-action space
 
         """ Testing Parameters """
         self.test_freq = 25 # policy evaluation test frequency (1/test_freq)
@@ -335,9 +335,9 @@ from copy import deepcopy
 class MDP_Tiled(MDPBase):
     def __init__(self, env, **kwargs) -> None:
         super().__init__(env, **kwargs)
-        self.max_size       = kwargs.get('max_size',2**10)   # Tile coding scheme for state-action space
-        self.num_tiles      = kwargs.get('num_tiles',4)  #
-        self.scale_factor   = kwargs.get('scale_factor',self.num_tiles/self.Srange)  # for use in tiles function
+        self.max_size       = kwargs.get('max_size',2**10)  # Tile coding for state-action space
+        self.num_tiles      = kwargs.get('num_tiles',4)
+        self.scale_factor   = kwargs.get('scale_factor',self.num_tiles/self.Srange)  # for tiles
         self.best_scores    = [{'ETDR': -np.inf, 'ETDR_hw': np.inf, 'w': None, 'iht': None} 
                                for _ in range(self.num_best_scores)]
 
@@ -434,8 +434,10 @@ class FourierBasis:
 
     def generate_coefficients(self):
         # Generate all coefficient vectors with values between 0 and order
-        return np.array(np.meshgrid(
-            *[range(self.order + 1)] * self.state_dim)).T.reshape(-1, self.state_dim)
+        coeffs = np.array(np.meshgrid(
+            *([range(self.order+1)]*len(self.state_dim))
+            )).T.reshape(-1, len(self.state_dim))
+        return coeffs
 
     def transform(self, state):
         # Compute the Fourier basis functions for a given state

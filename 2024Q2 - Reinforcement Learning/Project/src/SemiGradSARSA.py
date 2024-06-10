@@ -34,10 +34,6 @@ class SemiGradSARSA(MDP_Tiled):
 
                 # select action based on epsilon-greedy exploration mechanism
                 action = self.get_action(state,(w,iht_VFA),self.epsilon(m))
-                #if np.random.rand() > self.epsilon(m):          # With probability epsilon:
-                #    action = self.argmaxQbar(state, w, iht_VFA) # Act greedy, using Qbar
-                #else:
-                #    action = self.env.action_space.sample()     # Act randomly to explore
 
                 action_queue = collections.deque([action])      # Action array, record of actions
                 reward_queue = collections.deque([])            # Reward array, record of rewards
@@ -52,10 +48,6 @@ class SemiGradSARSA(MDP_Tiled):
 
                     # select action based on epsilon-greedy exploration mechanism
                     next_action = self.get_action(state,(w,iht_VFA),self.epsilon(m))
-                    #if np.random.rand() > self.epsilon(m):              # With probability epsilon:
-                    #    next_action = self.argmaxQbar(state,w,iht_VFA)  # Act greedy, using Qbar
-                    #else:
-                    #    next_action = self.env.action_space.sample()    # Act randomly to explore
                     action_queue.append(next_action)
 
                 # SARSA main loop (> first mm1 transitions until end of episode 
@@ -68,10 +60,6 @@ class SemiGradSARSA(MDP_Tiled):
 
                     # select action based on epsilon-greedy exploration mechanism
                     next_action = self.get_action(state,(w,iht_VFA),self.epsilon(m))
-                    #if np.random.rand() > self.epsilon(m):              # With probability epsilon:
-                    #    next_action = self.argmaxQbar(state,w,iht_VFA)  # Act greedy, using Qbar
-                    #else:
-                    #    next_action = self.env.action_space.sample()    # Act randomly to explore
                     action_queue.append(next_action)
 
                     # Temporal-Difference learning mechanism
