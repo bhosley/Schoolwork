@@ -17,13 +17,18 @@
 \usepackage{float}
 \usepackage{url}
 \usepackage[backend=biber,style=ieee]{biblatex}
-\addbibresource{survey.bib}
+\addbibresource{project.bib}
 
-% Drafting Utility Package
 \usepackage{comment}
-\usepackage{blindtext}
 \usepackage{hyperref}
-%\usepackage[toc,page]{appendix}
+\usepackage{csquotes}
+
+\usepackage{tcolorbox}
+\newtcbox{\inlinecode}{%
+    on line, boxrule=0pt, boxsep=0pt, top=2pt, left=2pt, bottom=2pt, right=2pt, colback=gray!15,%
+    colframe=white, fontupper={\ttfamily \footnotesize}%
+}
+\usepackage[]{algorithm2e}
 
 % Title
 \title{DSOR 646 Survey of Applications of Reinforcement Learning}
@@ -45,13 +50,149 @@
 \section{Introduction}
 \label{sec:introduction}
 
+To demonstrate proficiency in the material presented in \emph{DSOR 646 - Reinforcement Learning}
+this report will describe a project applying the course knowledge objective to solving
+the Lunar Lander problem presented by Oleg Klimov and maintained by the Farama Foundation.
+
+\section{Background}
+
+\subsection{Problem Description}
+
+The Lunar Lander problem is described on the Farama Foundation's webpage as
+\begin{displayquote}
+    This environment is a classic rocket trajectory optimization problem. According to Pontryagin's 
+    maximum principle, it is optimal to fire the engine at full throttle or turn it off. 
+    This is the reason why this environment has discrete actions: engine on or off
+    ~\cite{farama}.
+\end{displayquote}
+The principle objective is to use three thrusters, located on the left, right, and bottom of the
+lunar lander module to guide the module onto a landing pad.
+It is further intended that the module will descend at a speed deemed reasonable
+and maintain a generally upright position.
+Both of these are described more explicitly in the following section under the reward function.
+
+\subsection{MDP Model}
+\label{sec:MDP Model}
+
+For this project the actual Markov Decision Process (MDP) model established in the Lunar Lander
+environment remains unchanged. In this section we will describe the constituent parts of its 
+construction.
+
+\subsubsection{Agent}
+The agent in this problem is the lander module. It is modeled in a Python implementation of
+the Box2D physics environment. A rendering of the module can be seen in figure \ref{fig:lander}.
+
+\begin{figure}
+    \center
+    \includegraphics[width=0.7\linewidth]{images/lander_screen.png}
+    \caption{Lunar Lander Module with left and right thruster particles visible.}
+    \label{fig:lander}
+\end{figure}
+
+\subsubsection{State Space}
+The state-space for Lunar Lander is presented as a tuple with 8 elements.
+These elements are the \(x\) and \(y\) components of position and velocity of the module within
+the 2D space, the angle and angular velocity of the module, and a pair of boolean values that 
+correspond to each of the module's legs and take the value \(1\) when the leg is in contact with
+with the lunar surface, and \(0\) otherwise.
+
+For a given time-step \(t\), the state \(s_t \in S\) represents,
+\[s_t = \begin{cases}
+    x_t \in [-1.5,1.5]   & \text{Position in } x \\
+    y_t \in [-1.5,1.5]   & \text{Position in } y \\
+    \vec{x}_t \in [-5,5] & \text{Velocity in } x \\
+    \vec{y}_t \in [-5,5] & \text{Velocity in } y \\
+    \omega_t \in [-\pi,\pi] & \text{Angle}\\
+    \vec{\omega}_t \in [-5,5] & \text{Angular Velocity}\\
+    \mathbb{I}_{t}(\text{leg 1}) \in\{0,1\} & \text{Leg on ground}\\
+    \mathbb{I}_{t}(\text{leg 2}) \in\{0,1\} & \text{Leg on ground}
+\end{cases}\]
+
+\subsubsection{Action Space}
+The action-space available to the lander is a discrete space with four values.
+The action associated with each value is enumerated below. 
+Consequently, not only does the lander fire a thruster at full whenever the action is chosen 
+(per Pontryagin maximum principle~\cite{kaufman1964}),
+the lander may only fire one thruster at a time.
+\[a_t \in A = 
+    \begin{cases}
+        0 & \text{No-Op} \\
+        1 & \text{Fire Left Engine} \\
+        2 & \text{Fire Main Engine} \\
+        3 & \text{Fire Right Engine}
+    \end{cases}
+\]
+
+\subsubsection{Transition Probabilities}
+Unlike previous environments used in DSOR 646, Lunar Lander does not progress deterministically.
+There are several features that can modify the stochasticity of the transition process.
+Dispersion is a value sampled from a uniform distribution between \(-1\) and \(1\).
+This value perturbs the effect of the thrusters on the velocity of the lander module.
+
+While dispersion is always represented in the model, wind effects are optional and can make the
+transitions more dynamic and might be considered to represent some orbital effects on the lander.
+There are two values associated with the `wind' effect, \inlinecode{wind\_power}
+and \inlinecode{turbulence\_power} the former controlling the lateral effect and the latter
+the rotational effect on the lander module. By default \(k=0.1\).
+\begin{equation*}
+    \resizebox{\linewidth}{!}{
+        \(P(s_{t+1}|s_t,a_t) \cong 
+        \begin{cases}
+            \text{Dispersion} \sim U(-1,1) \\
+            \text{Wind} = \tanh(\sin(2 k x) + \sin(\pi k x)) \\
+            \text{Turbulence} = \tanh(\sin(2 k x) + \sin(\pi k x))
+        \end{cases}\) 
+    }
+\end{equation*}
+
+\subsubsection{Reward Function}
+The reward function for this problem has two principle parts.
+The first applies only to the final state. The episode is terminated 
+if the lander module leaves the viewport (regardless of if it is rendered),
+the lander body contacts the lunar surface, or the lander has ceased to move.
+If the body of the module contacts the the surface, 
+it is determined to be a crash and a \(-100\) reward is returned. 
+If the module comes to rest and is between the landing pad flags a \(+100\) reward is returned.
+
+Per step rewards are calculated based on several factors corresponding to desired behavior.
+A positive reward is given for each leg that contacts the ground. Negative rewards are given
+for firing each thruster, \(0.03\) for lateral, \(0.3\) for the main; the Euclidean 
+distance from the landing pad; the velocity of the module; and the tilt of the module.
+\begin{align*}
+    r_t = \\
+    & +10 (s_{t,6} + s_{t,7})   & \text{leg(s) on ground} \\
+    & - \{0,0.03,0.3,0.03\}[a_t] & \text{thruster cost} \\
+    & - 100\sqrt{a_{t,0}^2+a_{t,1}^2} & \text{Distance} \\
+    & - 100\sqrt{a_{t,2}^2+a_{t,3}^2} & \text{Velocity} \\
+    & - 100|\omega_t| & \text{Tilt}
+\end{align*}
+
+\subsubsection{Objective}
+Here we restate the objective of the simulation with these MDP components in mind.
+
+The expectation is that the solution policy will move at a velocity proportional to 
+its distance from the objective, attempting to remain as upright as possible given the lateral
+distance that needs to be covered, and get at least one leg on the ground.
+To continue receiving rewards it may be ideal to continue moving with one or both legs resting on 
+the ground, but instability and the risk of crashing should prevent this and cause the lander 
+to come to rest and receive a successful landing reward.
 
 \section{Methodology}
 \label{sec:methodology}
+In this section we will discuss the solution methodology and approaches.
+For this project two algorithms that were discussed in class will be implemented.
 
+
+\subsection{Semi-Gradient $n$-step SARSA}
+
+
+\subsection{}
 
 \section{Results and Analysis}
 \label{sec:results}
+Two algorithms were discussed in the previous section. 
+The third option that was presented was Least-Squares Policy Iteration (LSPI).
+The LSPI algorithm was implemented as well, with code included in the supplementary material.
 
 
 % Conclusion

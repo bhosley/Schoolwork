@@ -6,11 +6,13 @@
 \usepackage{graphicx}
 \usepackage{multicol}
 \usepackage[backend=biber,style=ieee]{biblatex}
-\addbibresource{survey.bib}
+\addbibresource{project.bib}
+
+\usepackage[]{algorithm2e}
 \usepackage{comment}
 
 
-\title{DSOR 646~-~Reinforcement Learning Final Project}
+\title{DSOR646 - Reinforcement Learning Final Project}
 \author{Capt. Brandon Hosley\inst{1}}
 \institute[ENS]{
     \inst{1}
@@ -35,30 +37,110 @@
     \tableofcontents
 \end{frame}
 
-\section{}
+\section{Problem Description}
 
 \begin{frame}
     \frametitle{}
-    \begin{description}
-        \item[]
-    \end{description}
-    
-    \vspace*{1em}
-    
     \begin{block}{Objective}
-        Introduce a lightweight framework for deep reinforcement learning (DRL).
-        Use asynchronous gradient descent for optimizing deep neural network controllers.
+        Develop an autonomous agent that can control the descent and landing of a lunar module 
+        on a specified landing pad, simulating the challenges faced during space missions.
     \end{block}
+    \begin{figure}
+        \includegraphics[width=0.6\linewidth]{images/lander_screen.png}
+        \caption{An un-animated frame of Lunar Lander}
+    \end{figure}
 \end{frame}
 
-\section{Survey}
+\section{MDP Model}
+
+\begin{frame}
+    \frametitle{MDP Model}
+    \begin{description}
+        \item[Agent] The Lander
+        \item[State]
+            \[s_t = \begin{cases}
+                x_t \in [-1.5,1.5]   & \text{Position in } x \\
+                y_t \in [-1.5,1.5]   & \text{Position in } y \\
+                \vec{x}_t \in [-5,5] & \text{Velocity in } x \\
+                \vec{y}_t \in [-5,5] & \text{Velocity in } y \\
+                \omega_t \in [-\pi,\pi] & \text{Angle}\\
+                \vec{\omega}_t \in [-5,5] & \text{Angular Velocity}\\
+                \mathbb{I}_{t}(\text{leg 1}) \in\{0,1\}  & \text{Leg on ground}\\
+                \mathbb{I}_{t}(\text{leg 2}) \in\{0,1\}  & \text{Leg on ground}
+            \end{cases}\]
+        \item[Action] 
+        \item[Probability] 
+        \item[Reward] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{MDP Model}
+    \begin{description}
+        \item[Agent] The Lander
+        \item[State] \(s_t\)
+        \item[Action] 
+            \[a_t \in A = 
+                \begin{cases}
+                    0 & \text{No-Op} \\
+                    1 & \text{Fire Left Engine} \\
+                    2 & \text{Fire Main Engine} \\
+                    3 & \text{Fire Right Engine}
+                \end{cases}
+            \]
+        \item[Probability] 
+        \item[Reward] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{MDP Model}
+    \begin{description}
+        \item[Agent] The Lander
+        \item[State] \(s_t\)
+        \item[Action] \(a_t\)
+        \item[Probability] 
+            \[P(s_{t+1}|s_t,a_t) \cong \begin{cases}
+                \text{Dispersion} \sim U(-1,1) \\
+                \text{Wind(Linear)} = \tanh(\sin(2 k x) + \sin(\pi k x)) \\
+                \text{Wind(Rotate)} = \tanh(\sin(2 k x) + \sin(\pi k x)) \\
+            \end{cases}\]
+        \item[Reward] 
+    \end{description}
+\end{frame}
+
+\begin{frame}
+    \frametitle{MDP Model}
+    \begin{description}
+        \item[Agent] The Lander
+        \item[State] \(s_t\)
+        \item[Action] \(a_t\)
+        \item[Probability] \(P(s_{t+1}|s_t,a_t)\)
+        \item[Reward] 
+    \end{description}
+    \begin{align*}
+        r_t = \\
+        & \pm 100                   & \text{End-state, crash or land} \\
+        & +10 (s_{t,6} + s_{t,7})   & \text{leg(s) on ground} \\
+        & -a_t\cdot [0,0.03,0.3,0.03] & \text{thruster cost} \\
+        & - 100\sqrt{a_{t,0}^2+a_{t,1}^2} & \text{Distance} \\
+        & - 100\sqrt{a_{t,2}^2+a_{t,3}^2} & \text{Velocity} \\
+        & - 100|\omega_t| & \text{Tilt}
+    \end{align*}
+\end{frame}
+
+\section{Solution Approach}
+
+\section{Results and Analysis}
+
+\section{Conclusion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{References}
+%\section{References}
 
-\renewcommand*{\bibfont}{\tiny}
-\frame[allowframebreaks]{\printbibliography}
+%\renewcommand*{\bibfont}{\tiny}
+%\frame[allowframebreaks]{\printbibliography}
 
 \begin{frame}
     Questions?

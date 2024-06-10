@@ -1,4 +1,4 @@
-from support_functions import MDPBase
+from MDP import MDPBase
 
 import numpy as np
 from time import perf_counter
@@ -226,3 +226,15 @@ class LSPI(MDPBase):
         # Update execution time record
         total_time = (self.total_training_reps * self.avg_execution_time) + time_elapsed
         self.avg_execution_time = total_time / self.total_training_reps
+
+
+
+#import gymnasium as gym
+#env = gym.make('LunarLander-v2')
+#lspi = LSPI(env)
+#lspi.train(num_replications=5, num_episodes=100)
+#lspi.get_results()
+#lspi.show_results()
+#lspi.display_best_policy()
+#   KeyError: 'Q'
+#print(lspi.find_superlative())

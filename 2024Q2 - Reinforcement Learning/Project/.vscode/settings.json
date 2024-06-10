@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "argmin",
         "AULC",
         "CILB",
         "confinterval",
@@ -13,6 +14,11 @@
         "Laquerre",
         "linestyle",
         "LSPI",
+        "lstsq",
+        "meshgrid",
+        "Oleg",
+        "Pontryagin",
+        "Pontryagin's",
         "popleft",
         "Qbar",
         "qhat",
@@ -26,6 +32,7 @@
         "Srange",
         "Ssize",
         "statsmodels",
+        "stochasticity",
         "Sunit",
         "triu",
         "wandb"

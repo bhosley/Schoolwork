@@ -1,4 +1,4 @@
-from support_functions import MDP_Tiled
+from MDP import MDP_Tiled
 
 import numpy as np
 from time import perf_counter
