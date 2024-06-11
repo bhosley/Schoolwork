@@ -11,7 +11,6 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{comment}
-\usepackage{minted}
 
 
 \title{DSOR646 - Reinforcement Learning Final Project}
@@ -187,9 +186,115 @@
     \end{figure}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Parameter Sweep}
+    \begin{figure}
+        \includegraphics[width=0.9\linewidth]{images/Sweep_SemiGradSarsa.png}
+        \caption{Parameter Sweep for Semi-Gradient \emph{n}-step SARSA}
+        \label{fig:SemiGrad_SARSA_Sweep}
+    \end{figure}
+\end{frame}
+
 \section{Results and Analysis}
 
+\begin{frame}
+    \frametitle{Parameter Sweep}
+    \begin{figure}
+        \includegraphics[width=0.9\linewidth]{images/Sweep_LambdaSarsa.png}
+        \caption{Parameter Sweep for SARSA(\(\lambda\))}
+        \label{fig:SARSA_Lambda_Sweep}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Parameter Sweep}
+    \begin{figure}
+        \includegraphics[width=0.9\linewidth]{images/Sweep_SemiGrad_Boltzmann.png}
+        \caption{Parameter Sweep for Semi-Gradient \emph{n}-step SARSA with Boltzmann Exploration}
+        \label{fig:SemiGrad_SARSA_Boltzmann_Sweep}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Parameter Sweep}
+    \begin{figure}
+        \includegraphics[width=0.9\linewidth]{images/Sweep_LambdaSarsa_Boltzmann.png}
+        \caption{Parameter Sweep for SARSA(\(\lambda\)) with Boltzmann Exploration}
+        \label{fig:SARSA_Lambda_Boltzmann_Sweep}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Parameter Importance}
+    \begin{multicols}{2}
+        \begin{figure}
+            \includegraphics[width=\linewidth]{images/Importance_SemiGrad.png}
+            \caption{Parameter Importance and Correlation for Semi-Gradient \emph{n}-step SARSA}
+            \label{fig:SemiGrad_SARSA_Importance}
+          \end{figure}
+          \begin{figure}
+            \includegraphics[width=\linewidth]{images/Importance_LambdaSarsa.png}
+            \caption{Parameter Importance and Correlation for SARSA(\(\lambda\))}
+            \label{fig:SARSA_Lambda_Importance}
+          \end{figure}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Parameter Importance}
+    \begin{multicols}{2}
+          \begin{figure}
+            \includegraphics[width=\linewidth]{images/Importance_SGLam_Boltzmann.png}
+            \caption{Parameter Importance and Correlation for Semi-Gradient \emph{n}-step 
+            SARSA with Boltzmann Exploration}
+            \label{fig:SemiGrad_SARSA_Boltz_Importance}
+          \end{figure}
+          \begin{figure}
+            \includegraphics[width=0.9\linewidth]{images/Importance_Lambda_Boltzmann.png}
+            \caption{Parameter Importance and Correlation for SARSA(\(\lambda\)) with Boltzmann Exploration}
+            \label{fig:SARSA_Lambda_Boltz_Importance}
+          \end{figure}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Semi-Gradient \emph{n}-step SARSA with Boltzmann Exploration}
+    \begin{figure}
+        \includegraphics[width=0.75\linewidth]{images/curve_sarsa_boltz.png}
+        %\caption{} %\label{fig:}
+      \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{SARSA(\(\lambda\))}
+    \begin{figure}
+        \includegraphics[width=0.8\linewidth]{images/curve_sarsa_lam.png}
+        %\caption{} %\label{fig:}
+      \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{SARSA(\(\lambda\)) with Boltzmann Exploration}
+    \begin{figure}
+        \includegraphics[width=0.9\linewidth]{images/curve_sarsa_lam_boltz.png}
+        %\caption{} %\label{fig:}
+      \end{figure}
+\end{frame}
+
 \section{Conclusion}
+
+\begin{frame}
+    \frametitle{Conclusion}
+    \begin{itemize}
+        \item Boltzmann Exploration \(>\) \(\epsilon\)-greedy
+        \begin{itemize}
+            \item Perhaps proper annealing would be even better
+        \end{itemize}
+        \item Neural Net Superiority
+        \item MLOPs APIs
+    \end{itemize}
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

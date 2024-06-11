@@ -46,15 +46,25 @@
 \maketitle
 
 \begin{abstract}
-
+This report demonstrates the application of reinforcement learning techniques to the Lunar Lander 
+problem using the Semi-Gradient \emph{n}-step SARSA, SARSA($\lambda$), and 
+Least-Squares Policy Iteration (LSPI) algorithms. We implemented these algorithms with 
+enhancements such as Fourier Cosine Basis and Boltzmann exploration. 
+Our results show that the SARSA algorithms, particularly when combined with Boltzmann exploration,
+achieve robust performance with stable learning curves. We also explored the parameter sensitivity 
+and found the algorithms to be resilient to a range of parameter values. 
+The results highlight the effectiveness of these algorithms in controlling the lunar lander module,
+paving the way for more complex implementations using neural networks in future work.
 \end{abstract}
 
 \section{Introduction}
 \label{sec:introduction}
-
-To demonstrate proficiency in the material presented in \emph{DSOR 646 - Reinforcement Learning}
-this report will describe a project applying the course knowledge objective to solving
-the Lunar Lander problem presented by Oleg Klimov and maintained by the Farama Foundation.
+To demonstrate proficiency in the material presented in \emph{DSOR 646 - Reinforcement Learning}, 
+this report will describe a project applying the course knowledge objectives to solving the 
+Lunar Lander problem presented by Oleg Klimov and maintained by the Farama Foundation. 
+The objective is to apply reinforcement learning techniques, specifically 
+Semi-Gradient \emph{n}-step SARSA and SARSA($\lambda$), to solve the Lunar Lander problem and 
+to evaluate the performance of these algorithms.
 
 \section{Background}
 
@@ -319,6 +329,28 @@ Two algorithms were discussed in the previous section.
 The third option that was presented was Least-Squares Policy Iteration (LSPI).
 The LSPI algorithm was implemented as well, leveraging code provided during the course.
 
+\begin{figure}[H]
+  \includegraphics[width=0.8\linewidth]{images/Importance_SemiGrad.png}
+  \caption{Parameter Importance and Correlation for Semi-Gradient \emph{n}-step SARSA}
+  \label{fig:SemiGrad_SARSA_Importance}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.8\linewidth]{images/Importance_LambdaSarsa.png}
+  \caption{Parameter Importance and Correlation for SARSA(\(\lambda\))}
+  \label{fig:SARSA_Lambda_Importance}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.8\linewidth]{images/Importance_SGLam_Boltzmann.png}
+  \caption{Parameter Importance and Correlation for Semi-Gradient \emph{n}-step 
+  SARSA with Boltzmann Exploration}
+  \label{fig:SemiGrad_SARSA_Boltz_Importance}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.75\linewidth]{images/Importance_Lambda_Boltzmann.png}
+  \caption{Parameter Importance and Correlation for SARSA(\(\lambda\)) with Boltzmann Exploration}
+  \label{fig:SARSA_Lambda_Boltz_Importance}
+\end{figure}
+
 Parameter sweeps were performed on each of the implementations listed in the 
 section~\ref{sec:methodology}. Figures \ref{fig:SemiGrad_SARSA_Sweep}, \ref{fig:SARSA_Lambda_Sweep},
 \ref{fig:SemiGrad_SARSA_Boltzmann_Sweep}, and \ref{fig:SARSA_Lambda_Boltzmann_Sweep} 
@@ -345,46 +377,68 @@ show simple coordinate comparison of the parameters with the algorithm score.
   \label{fig:SARSA_Lambda_Boltzmann_Sweep}
 \end{figure*}
 
-\begin{figure}
-  \includegraphics[width=\linewidth]{images/Importance_SemiGrad.png}
-  \caption{Parameter Importance and Correlation for Semi-Gradient \emph{n}-step SARSA}
-  \label{fig:SemiGrad_SARSA_Importance}
-\end{figure}
-\begin{figure}
-  \includegraphics[width=\linewidth]{images/Importance_LambdaSarsa.png}
-  \caption{Parameter Importance and Correlation for SARSA(\(\lambda\))}
-  \label{fig:SARSA_Lambda_Importance}
-\end{figure}
-\begin{figure}
-  \includegraphics[width=\linewidth]{images/Importance_SGLam_Boltzmann.png}
-  \caption{Parameter Importance and Correlation for Semi-Gradient \emph{n}-step 
-  SARSA with Boltzmann Exploration}
-  \label{fig:SemiGrad_SARSA_Boltz_Importance}
-\end{figure}
-\begin{figure}
-  \includegraphics[width=0.9\linewidth]{images/Importance_Lambda_Boltzmann.png}
-  \caption{Parameter Importance and Correlation for SARSA(\(\lambda\)) with Boltzmann Exploration}
-  \label{fig:SARSA_Lambda_Boltz_Importance}
-\end{figure}
-
 Figures \ref{fig:SemiGrad_SARSA_Importance}, \ref{fig:SARSA_Lambda_Importance},
 \ref{fig:SemiGrad_SARSA_Boltz_Importance}, \ref{fig:SARSA_Lambda_Boltz_Importance}
 show importance and correlation of the parameters.
 Importance is determined by a Random Forest Regression algorithm~\cite{probst2019}.
 
+The combination of these figures demonstrate that the algorithms are not overly sensitive to
+the parameter values. Further, we may see that there are consistent clusters of resulting models
+in the Semi-Gradient \emph{n}-step SARSA and SARSA(\(\lambda\)) with Boltzmann Exploration.
+
+It may be noted that none of these figures show results for algorithms 
+that utilize theFourier basis transformation. 
+This is because the change incurred a substantial increase in the training time for the algorithm, 
+further, the few training iterations that did complete did not demonstrate any improvement
+over the lower bounds of the baseline implementations.
+
+Example learning curves of superlative performing policies from each are presented in figures
+\ref{fig:curve_sgsarsa}, \ref{fig:curve_sgsarsa_boltz}, \ref{fig:curve_sarsalam}, and
+\ref{fig:curve_sarsalam_boltz}.
+
+\begin{figure}[H]
+  \includegraphics[width=0.9\linewidth]{images/curve_sarsa_boltz.png}
+  \caption{Semi-Gradient \emph{n}-step SARSA with Boltzmann Exploration} 
+  \label{fig:curve_sgsarsa}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.9\linewidth]{images/curve_sg_sarsa.png}
+  \caption{Semi-Gradient \emph{n}-step SARSA} 
+  \label{fig:curve_sgsarsa_boltz}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=0.9\linewidth]{images/curve_sarsa_lam.png}
+  \caption{SARSA(\(\lambda\))} 
+  \label{fig:curve_sarsalam}
+\end{figure}
+\begin{figure}[H]
+  \includegraphics[width=\linewidth]{images/curve_sarsa_lam_boltz.png}
+  \caption{SARSA(\(\lambda\)) with Boltzmann Exploration} 
+  \label{fig:curve_sarsalam_boltz}
+\end{figure}
+
 % Conclusion
 \section{Conclusion}
 \label{sec:conclusion}
+The assignment provided a limitation to three algorithms. Between the three, the two SARSA 
+algorithms proved to be most expedient in their implementation for this problem. 
+Our experiments demonstrate that both Semi-Gradient \emph{n}-step SARSA and SARSA($\lambda$) with 
+Boltzmann exploration achieve stable and effective control of the lunar lander module. 
 
-The assignment provided a limitation to three algorithms.
-Between the three the 
+Parameter sweeps indicate that the performance of these algorithms is robust to a range of 
+parameter settings, and the Boltzmann exploration strategy effectively balances exploration and 
+exploitation. While the Fourier Cosine Basis did not yield significant improvements, 
+it highlights the potential for more sophisticated feature representations in future work.
+
+Future work would include the usage of neural networks, which we believe would substantially 
+improve the ability of the algorithm to model the complexity of the environment. 
+Integrating neural networks could enable the learning of more intricate patterns 
+and lead to further performance enhancements. Additionally, exploring other advanced 
+reinforcement learning techniques, such as deep Q-networks (DQN) or 
+proximal policy optimization (PPO), could provide deeper insights and potentially better 
+solutions for the Lunar Lander problem.
 
 % References
 \label{sec:references}
 \printbibliography
-
-%\clearpage
-%\begin{appendices}
-%\end{appendices}
-
 \end{document}
