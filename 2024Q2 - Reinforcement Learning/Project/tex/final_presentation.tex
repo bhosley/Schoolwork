@@ -11,6 +11,7 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{comment}
+\usepackage{minted}
 
 
 \title{DSOR646 - Reinforcement Learning Final Project}
@@ -131,6 +132,60 @@
 \end{frame}
 
 \section{Solution Approach}
+
+\begin{frame}
+    \frametitle{Vanilla Algorithms}
+    \begin{figure}
+        \includegraphics[width=0.75\linewidth]{images/semigrad_sarsa_algo.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Vanilla Algorithms}
+    \begin{figure}
+        \includegraphics[width=0.75\linewidth]{images/lam_sarsa_algo.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Fourier Cosine Basis}
+    \[ \phi_i(s)=\cos(\pi\mathbf{c}_i\cdot\mathbf{s}) \]
+    \begin{itemize}
+        \item \(\mathbf{c}_i\) is a vector of coefficients (frequencies)
+        \item \(\mathbf{s}\) is the state vector
+        \item \(i\) is the index of the basis function
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Fourier Cosine Basis}
+    \begin{figure}
+        \includegraphics[width=0.75\linewidth]{images/fourierclass.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Fourier Cosine Basis}
+    \begin{figure}
+        \includegraphics[width=0.9\linewidth]{images/fourier_imple.png}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Boltzmann Exploration}
+    \begin{itemize}
+        \item Replace \(\epsilon\)-greedy with: \\[2em]
+        \[ P(a|s) = \frac{e^{Q(s,a)/\tau}}{\sum_{\alpha\in A} e^{Q(s,\alpha)/\tau}} \] \\[2em]
+        \item Where \(\tau\) is a 'temperature' parameter (not unlike \(\epsilon\))
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Boltzmann Exploration}
+    \begin{figure}
+        \includegraphics[width=0.9\linewidth]{images/boltzmann_code.png}
+    \end{figure}
+\end{frame}
 
 \section{Results and Analysis}
 

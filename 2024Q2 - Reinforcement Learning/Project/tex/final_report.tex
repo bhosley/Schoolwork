@@ -188,7 +188,7 @@ For this project two algorithms that were discussed in class will be implemented
 \subsection{Semi-Gradient \emph{n}-step SARSA}
 
 \begin{algorithm}
-    \caption{Episodic semi-gradient n-step Sarsa~\cite{sutton2018}}
+    \caption{Episodic semi-gradient n-step SARSA~\cite{sutton2018}}
     \label{alg:semi-grad_sarsa}
     \begin{algorithmic}\small
       \State \textbf{Input:} a differentiable action-value function parameterization 
@@ -241,20 +241,143 @@ The baseline for the algorithm was tested based on a script provided in class.
 Additional implementations using a Fourier Cosine Basis and Boltzmann exploration were 
 also implemented. The specifics will be discussed later in this section.
 
-\subsection{SARSA($\lambda$)}
+\subsection[SARSA(Lambda)]{SARSA($\lambda$)}
+
+\begin{algorithm}
+    \caption{True Online SARSA(\(\lambda\))~\cite{sutton2018}}
+    \label{alg:lambda_sarsa}
+    \begin{algorithmic}\small
+      \State \textbf{Input:} a feature function \(\mathbf{x}:\mathcal{S}^+\times\mathcal{A}
+        \rightarrow\mathbb{R}^d\) such that \(\mathbf{x}(terminal,\cdot)=\mathbf{0}\)
+      \State \textbf{Input:} \(a\) policy \(\pi\) (if estimating \(q_\pi\)) 
+      \State \textbf{Algorithm parameters:} step size \(\alpha>0\),
+      \State \quad trace decay rate \(\lambda\in[0,1]\), small \(\epsilon>0\)
+      \State Initialize value-function weights \(\mathbf{w} \in \mathbb{R}^d\) arbitrarily 
+          (e.g., \(\mathbf{w} = \mathbf{0}\)) 
+      \For{each episode}
+        \State Initialize \(S\)
+        \State Choose \(A\sim\pi(\cdot|S)\) or \(\epsilon\)-greedy according to 
+            \(\hat{q}(S,\cdot,\mathbf{w})\)
+        \State \(\mathbf{x} \leftarrow \mathbf{x}(S, A) \)
+        \State \(\mathbf{z} \leftarrow 0\)
+        \State \(Q_{old} \leftarrow 0\)
+        \For{Each Episode}
+          \State Take action \(A\), observe \(R,S^\prime\)
+          \State Choose \(A^\prime\sim\pi(\cdot|S^\prime)\) or \(\epsilon\)-greedy according to 
+            \(\hat{q}(S^\prime,\cdot,\mathbf{w}\))
+          \State \(\mathbf{x}^\prime \leftarrow \mathbf{x}(S^\prime,A^\prime)\)
+          \State \(Q \leftarrow \mathbf{w}^\top\mathbf{x}\)
+          \State \(Q^\prime \leftarrow \mathbf{w}^\top\mathbf{x}^\prime\)
+          \State \(\delta \leftarrow R + \gamma Q^\prime - Q\)
+          \State \(\mathbf{z} \leftarrow \gamma\lambda\mathbf{z} + (1-\alpha\gamma\lambda\mathbf{z}^\top\mathbf{x})\mathbf{x}\)
+          \State \(\mathbf{w} \leftarrow \mathbf{w} + \alpha(\delta + Q - Q_{old})\mathbf{z} -\alpha(Q-Q_{old})\mathbf{x}\)
+          \State \(Q_{old} \leftarrow Q^\prime\)
+          \State \(\mathbf{x} \leftarrow \mathbf{x}^\prime\)
+          \State \(A \leftarrow A^\prime\)
+        \EndFor
+        \State until \(S^\prime\) is terminal
+      \EndFor
+    \end{algorithmic}
+\end{algorithm}
+
+The second algorithm is the SARSA(\(\lambda\)) presented by Sutton and Barto in~\cite{sutton2018}.
+The baseline script for this was also provided during the period of normal coursework.
+As with algorithm \ref{alg:semi-grad_sarsa} we implemented versions with a Fourier Cosine Basis
+and Boltzmann exploration, discussed in the next two sections.
+
 \subsection{Fourier Cosine Basis}
+A Fourier basis represents the state using a series of cosine functions. 
+The basis functions are defined as:
+\[ \phi_i(s)=\cos(\pi\mathbf{c}_i\cdot\mathbf{s}) \]
+where \(\mathbf{c}_i\) is a vector of coefficients (frequencies), 
+\(\mathbf{s}\) is the state vector, and \(i\) is the index of the basis function.
+
+For each coefficient vector, \(\mathbf{c}_i = [c_{i1},c_{i2},\ldots,c_{in}]\), where 
+\(c_{ij}\) can take integer values from \(0\) to \(m\), where \(m\) is the basis order.
+
 \subsection{Boltzmann Exploration}
+Boltzmann exploration is a strategy used to balance exploration and exploitation. 
+This method allows the agent to explore less frequently as it becomes more confident about its 
+action-value estimates. This implementation uses a Boltzmann probability \(P(a|s)\) based
+on action-value estimates \(Q(s,a)\) with a temperature parameter \(\tau\),
+\[ P(a|s) = \frac{e^{Q(s,a)/\tau}}{\sum_{\alpha\in A} e^{Q(s,\alpha)/\tau}} .\]
+We further tune this effect by reducing the value of \(\tau\) over time using a cooling parameter.
+
+\subsection{Tile Coding}
+Both the Semi-Gradient \emph{n}-step SARSA and SARSA($\lambda$) utilized tile coding,
+a type of coarse encoding, to translate the continuous state-space into a discrete one.
+The coarse coding, despite the name, allows for a more refined encoding of the space
+than basic discretization. In particular, the coding scheme implemented in the
+\inlinecode{tiles3.py} from Richard S. Sutton's personal website
+implements a series of overlapping tiles covering the state-space, where each set of tiles
+is offset from each other and a continuous space state is represented by its membership to each
+of the subsets of tiles.
 
 \section{Results and Analysis}
 \label{sec:results}
 Two algorithms were discussed in the previous section. 
 The third option that was presented was Least-Squares Policy Iteration (LSPI).
-The LSPI algorithm was implemented as well, with code included in the supplementary material.
+The LSPI algorithm was implemented as well, leveraging code provided during the course.
 
+Parameter sweeps were performed on each of the implementations listed in the 
+section~\ref{sec:methodology}. Figures \ref{fig:SemiGrad_SARSA_Sweep}, \ref{fig:SARSA_Lambda_Sweep},
+\ref{fig:SemiGrad_SARSA_Boltzmann_Sweep}, and \ref{fig:SARSA_Lambda_Boltzmann_Sweep} 
+show simple coordinate comparison of the parameters with the algorithm score.
+
+\begin{figure*}
+  \includegraphics[width=0.8\linewidth]{images/Sweep_SemiGradSarsa.png}
+  \caption{Parameter Sweep for Semi-Gradient \emph{n}-step SARSA}
+  \label{fig:SemiGrad_SARSA_Sweep}
+\end{figure*}
+\begin{figure*}
+  \includegraphics[width=0.8\linewidth]{images/Sweep_LambdaSarsa.png}
+  \caption{Parameter Sweep for SARSA(\(\lambda\))}
+  \label{fig:SARSA_Lambda_Sweep}
+\end{figure*}
+\begin{figure*}
+  \includegraphics[width=0.8\linewidth]{images/Sweep_SemiGrad_Boltzmann.png}
+  \caption{Parameter Sweep for Semi-Gradient \emph{n}-step SARSA with Boltzmann Exploration}
+  \label{fig:SemiGrad_SARSA_Boltzmann_Sweep}
+\end{figure*}
+\begin{figure*}
+  \includegraphics[width=0.8\linewidth]{images/Sweep_LambdaSarsa_Boltzmann.png}
+  \caption{Parameter Sweep for SARSA(\(\lambda\)) with Boltzmann Exploration}
+  \label{fig:SARSA_Lambda_Boltzmann_Sweep}
+\end{figure*}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{images/Importance_SemiGrad.png}
+  \caption{Parameter Importance and Correlation for Semi-Gradient \emph{n}-step SARSA}
+  \label{fig:SemiGrad_SARSA_Importance}
+\end{figure}
+\begin{figure}
+  \includegraphics[width=\linewidth]{images/Importance_LambdaSarsa.png}
+  \caption{Parameter Importance and Correlation for SARSA(\(\lambda\))}
+  \label{fig:SARSA_Lambda_Importance}
+\end{figure}
+\begin{figure}
+  \includegraphics[width=\linewidth]{images/Importance_SGLam_Boltzmann.png}
+  \caption{Parameter Importance and Correlation for Semi-Gradient \emph{n}-step 
+  SARSA with Boltzmann Exploration}
+  \label{fig:SemiGrad_SARSA_Boltz_Importance}
+\end{figure}
+\begin{figure}
+  \includegraphics[width=0.9\linewidth]{images/Importance_Lambda_Boltzmann.png}
+  \caption{Parameter Importance and Correlation for SARSA(\(\lambda\)) with Boltzmann Exploration}
+  \label{fig:SARSA_Lambda_Boltz_Importance}
+\end{figure}
+
+Figures \ref{fig:SemiGrad_SARSA_Importance}, \ref{fig:SARSA_Lambda_Importance},
+\ref{fig:SemiGrad_SARSA_Boltz_Importance}, \ref{fig:SARSA_Lambda_Boltz_Importance}
+show importance and correlation of the parameters.
+Importance is determined by a Random Forest Regression algorithm~\cite{probst2019}.
 
 % Conclusion
 \section{Conclusion}
 \label{sec:conclusion}
+
+The assignment provided a limitation to three algorithms.
+Between the three the 
 
 % References
 \label{sec:references}
