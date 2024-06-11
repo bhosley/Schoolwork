@@ -107,6 +107,8 @@ class SemiGradSARSA(MDP_Tiled):
                     else:
                         self.update_best_scores(mean, hw, w, iht_VFA)
 
+                self.end_episode_callbacks()
+
             # last test of current algorithm replication
             mean, hw = self.evaluate_policy((w, iht_VFA), self.num_test_reps)
             self.GzmTest.append((z, num_episodes, mean, hw))

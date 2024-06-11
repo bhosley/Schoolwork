@@ -185,30 +185,65 @@ In this section we will discuss the solution methodology and approaches.
 For this project two algorithms that were discussed in class will be implemented.
 
 
-\subsection{Semi-Gradient $n$-step SARSA}
+\subsection{Semi-Gradient \emph{n}-step SARSA}
 
 \begin{algorithm}
-    \caption{Episodic semi-gradient n-step Sarsa}
+    \caption{Episodic semi-gradient n-step Sarsa~\cite{sutton2018}}
     \label{alg:semi-grad_sarsa}
-    \begin{algorithmic}
-        
+    \begin{algorithmic}\small
+      \State \textbf{Input:} a differentiable action-value function parameterization 
+      \(\hat{q}:\mathcal{S} \times \mathcal{A} \times \mathbb{R}^d \rightarrow \mathbb{R}\)
+      \State \textbf{Input:} \(a\) policy \(\pi\) (if estimating \(q_\pi\)) 
+      \State \textbf{Algorithm parameters:} step size \(\alpha>0\), small \(\epsilon>0\), 
+          a positive integer \(n\)
+      \State Initialize value-function weights \(\mathbf{w} \in \mathbb{R}^d\) arbitrarily 
+          (e.g., \(\mathbf{w} = \mathbf{0}\)) 
+      \State All store and access operations (\(S_t\), \(A_t\), and \(R_t\)) 
+          can take their index \(\mod n+1\)
+
+      \For{each episode}
+        \State Initialize and store \(S_0\neq\) terminal
+        \State Select and store an action \(A_0\sim\pi(\cdot|S_0)\) 
+        \State \quad or \(\epsilon\)-greedy wrt \(\hat{q}(S_0,\cdot,\mathbf{w})\)
+        \State \(T\leftarrow\infty\)
+
+        \For{\(t=0,1,2,\ldots\)}
+          \If{\(t<T\)}
+            \State Take action \(A_t\) 
+            \State Observe and store the next reward as \(R_{t+1}\) 
+            \State \quad and the next state as \(S_{t+1}\)
+            \If{\(S_{t+1}\) is terminal}
+              \State \(T \leftarrow t+1\)
+            \Else
+              \State Select and store an action \(A_{t+1}\sim\pi(\cdot|S_{t+1})\) or 
+              \State \quad \(\epsilon\)-greedy wrt \(\hat{q}(S_{t+1},\cdot,\mathbf{w})\)
+            \EndIf
+            \State \(\tau \leftarrow t-n+1\)\qquad (\(\tau\) is the time estimate being updated)
+          \EndIf
+          \If{\(\tau\geq0\)}
+            \State \(G \leftarrow \sum^{min(\tau+n,T)}_{i=\tau+1}\gamma^{i-\tau-1}R_i \)
+            \If{\(\tau+n<T\)} 
+              \State\(G\leftarrow G+\gamma^n \hat{q}(S_{\tau+n},A_{\tau+n},\mathbf{w})\)
+              \Comment \(G_{\tau:\tau+n}\)
+            \EndIf
+            \State \(\mathbf{w}\leftarrow\mathbf{w}+\alpha[G-\hat{q}(S_\tau,A_\tau,\mathbf{w})] 
+                \nabla\hat{q}(S_\tau,A_\tau,\mathbf{w})\)
+          \EndIf
+        \EndFor
+        \State \textbf{Until} \(\tau = T-1\)
+      \EndFor
     \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}
-    \caption{Euclid's algorithm}
-    \label{euclid}
-    \begin{algorithmic}[1] % The number tells where the line numbering should start
-        \State Input: a differentiable action-value function parameterization \(\hat{q}:\mathcal{S}A ⇥ Rd ! R\)
-        \State Input: a policy \(\pi\) (if estimating \(q_\pi\)) 
-        \State Algorithm parameters: step size ↵>0, small ">0, a positive integer n 
-        \State Initialize value-function weights w 2 Rd arbitrarily (e.g., w = 0) 
-        \State All store and access operations (St, At, and Rt) can take their index mod n +1
-    \end{algorithmic}
-\end{algorithm}
+The first algorithm is the Semi-Gradient \emph{n}-step SARSA as presented by Sutton and Barto
+in~\cite{sutton2018}. 
+The baseline for the algorithm was tested based on a script provided in class.
+Additional implementations using a Fourier Cosine Basis and Boltzmann exploration were 
+also implemented. The specifics will be discussed later in this section.
 
-
-\subsection{}
+\subsection{SARSA($\lambda$)}
+\subsection{Fourier Cosine Basis}
+\subsection{Boltzmann Exploration}
 
 \section{Results and Analysis}
 \label{sec:results}

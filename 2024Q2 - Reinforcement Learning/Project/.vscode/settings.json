@@ -28,6 +28,7 @@
         "randn",
         "savetxt",
         "Scont",
+        "sgsb",
         "sgsf",
         "Shigh",
         "Sintervals",

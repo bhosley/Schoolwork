@@ -327,6 +327,13 @@ class MDPBase():
         """
         pass
 
+    @abstractmethod
+    def end_episode_callbacks(self) -> None:
+        """
+        A holder function that should execute at the end of each episode
+        """
+        pass
+
 
 from tiles3 import tiles, IHT
 from copy import deepcopy
