@@ -1,0 +1,33 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\DeclareUnicodeCharacter{0394}{$\Delta$}
+
+\usepackage{minted}
+\setminted[python3]{
+    fontsize=\footnotesize,
+    %bgcolor=lightgray!10,
+    linenos}
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+
+\section{Semi-Gradient \emph{n}-step SARSA}
+\inputminted{python3}{../src/SemiGradSARSA.py}
+\clearpage
+
+\section{SARSA(\(\lambda\))}
+\inputminted{python3}{../src/LambdaSARSA.py}
+\clearpage
+
+\section{With Boltzmann Exploration}
+\inputminted{python3}{../src/boltzmann.py}
+\clearpage
+
+\section{MDP Base Class}
+\inputminted{python3}{../src/MDP.py}
+
+\end{document}
