@@ -697,6 +697,7 @@
 % Document type
 \def\@doctype{thesis}
 \newcommand\doctype[1]{\def\@doctype{#1}}
+\newcommand\printdoctype{\@doctype\ }
 
 % Document designator
 \def\@docdesignator{Set document designator with $\backslash$docdesignator}

@@ -2,17 +2,21 @@
 \section{Motivation}%
 \label{sec:motivation}
 
-In the rapidly evolving field of artificial intelligence, reinforcement learning has become a 
+In the rapidly evolving field of artificial intelligence, \gls{rl} has become a 
 cornerstone for developing autonomous decision-making systems~\cite{sutton2018}.
 However, the complexity of real-world challenges often surpasses the capabilities of solitary 
 agents, necessitating a shift towards more collaborative solutions~\cite{cao2012}.
-This dissertation is driven by the potential of \gls{harl}, an extension of \gls{marl}
-wherein multiple agents with varied capabilities work together to accomplish common objectives. 
-Such systems are anticipated to significantly improve problem-solving efficiency and adaptability, 
-surpassing the performance of homogeneous agent groups~\cite{calvo2018}.
+\Gls{marl} extends beyond single-agent \gls{rl} to provide solutions to many such problems,
+even significantly exceeding the capabilities of the latter 
+within certain domains that do not necessitate multiple agents. \Gls{harl}, is an extension of 
+\gls{marl} characterized by agents having distinct roles, capabilities, policies, or objectives.
+This \printdoctype is driven by the potential of such systems
+to significantly improve problem-solving efficiency and adaptability, 
+potentially surpassing the performance of homogeneous agent groups~\cite{calvo2018}.
 
-The concept of heterogeneity among agents—featuring diverse skills, perspectives, 
-and problem-solving strategies—reflects the complexity of collaborative human endeavors, 
+The concept of heterogeneity among agents
+—featuring diverse skills, perspectives, and problem-solving strategies—
+reflects the complexity of collaborative human endeavors, 
 providing a robust framework for navigating complex, dynamic environments. 
 The practical applications of this approach are vast, 
 particularly in scenarios where coordination and cooperation are crucial. 
@@ -24,12 +28,13 @@ execute multiple tasks—ranging from harvesting to soil analysis and pest contr
 thereby substantially enhancing efficiency and increasing crop yields~%
 \cite{carbone2018,amarasinghe2019}.
 
-%This dissertation seeks to advance the growing body of research in this field by developing 
-%methodologies and frameworks that enable effective collaboration among heterogeneous agents. 
-%By exploring the synergy between diverse agents, this work aims to harness their collective 
-%potential to address challenges currently unmanageable by homogeneous systems. 
-%Specifically, it will explore novel strategies for coordination and decision-making 
-%that enhance adaptability and efficiency in complex scenarios.
+To fully realize the potential benefits of \gls{harl}, it is crucial to understand the trade-offs 
+involved. This \printdoctype will survey current approaches for training multiple agents, 
+identifying the strengths and limitations of each. 
+In \cref{sec:problem_statement,sec:research_question}
+we will highlight several under-explored areas that warrant further investigation. 
+By addressing these gaps, we aim to advance the field and enhance the effectiveness of 
+multi-agent systems in real-world applications.
 
 \section{Background}%
 \label{sec:background}
@@ -46,9 +51,9 @@ the stage for the broader application of \gls{ai} in complex strategic games.
 The field progressed significantly with DeepMind's introduction of AlphaGo in 2015. AlphaGo 
 employed a combination of deep neural networks and Monte Carlo tree search~\cite{silver2016},
 initially trained on human expert games and further improved through self-play.
-This method enabled AlphaGo to defeat one of the world's top Go players, illustrating \gls{rl}'s
-potential to tackle challenges in games with vast state spaces and decisions typically driven by
-human intuition.
+This method enabled AlphaGo to defeat Lee Sedol, one of the world's top Go players, 
+illustrating \gls{rl}'s potential to tackle challenges in games with vast state spaces and 
+decisions typically driven by human intuition.
 
 This breakthrough was quickly followed by the development of AlphaZero~\cite{silver2017},
 which revolutionized the field by mastering chess, Go, and Shogi through self-play alone,
@@ -66,7 +71,6 @@ To achieve the level of proficiency demonstrated in AlphaStar, Vinyals et al.~em
 multifaceted approach that integrated deep learning, imitation learning, reinforcement learning, 
 and multi-agent learning. The specifics of these contributions will be explored in 
 detail in~\Cref{ch:literature_review}.
-
 
     \subsection*{Multi-agent Reinforcement Learning}%: Learning to Work Together}
 
@@ -106,55 +110,66 @@ This milestone not only demonstrated the capability of \gls{marl} systems to man
 intricate, dynamically shifting competitive environments but also showcased the potential for 
 these systems to develop and refine collaborative strategies among heterogeneous agents.
 
+\subsection*{The Game Theoretical Concerns}%:
 
-    \subsection*{Strategic Collapse}%:
+In both papers describing AlphaStar~\cite{vinyals2019} and OpenAI Five~\cite{berner2019}, 
+the authors mention in sparse detail the ``game theoretic'' concerns their respective frameworks 
+seek to address. These concerns are primarily attributed to the potential pitfalls of self-play. 
+Two major problems are highlighted.
 
-Balduzzi et al. (2019) discuss the phenomenon of cyclic strategy chasing, 
-a form of strategic collapse where a policy becomes overly specialized. 
-This issue often becomes apparent in self-play environments, 
-where the cumulative rewards per episode may suddenly drop if the strategy overfit is 
-inherently self-defeating~\cite{balduzzi2019}. 
-When a policy is not directly self-defeating, its flaws may remain hidden until the 
-agent encounters another with a different policy.
+The first problem, often called strategic collapse~\cite{berner2019, vinyals2019}, 
+describes a phenomenon where an agent overfits to a self-defeating strategy, 
+resulting in a feedback loop and a counter-intuitive observation where cumulative 
+rewards per episode may suddenly drop and become unrecoverable during continued training.
 
-Both OpenAI Five and AlphaStar have encountered and addressed the potential pitfalls of 
-self-play in their development. These systems, which heavily utilized self-play, 
-were particularly vulnerable to strategic collapse due to their deployment in competitive 
-environments with skilled human players~\cite{berner2019, vinyals2019}. 
-To mitigate these risks, AlphaStar implemented a structured league-play schema that 
-continuously pitted different agent policies against each other. 
-OpenAI Five, on the other hand, used a simpler approach by maintaining a pool of 
-previous milestone agents for ongoing comparison and refinement.
+The second problem is cyclic strategy chasing, where multiple agents converge on a set of 
+strategies that balance wins against one strategy with losses to another. 
+An example of this is the game rock-paper-scissors. 
+Balduzzi et al. (2019) discuss this phenomenon in~\cite{balduzzi2019}.
+
+To mitigate these risks, AlphaStar implemented a structured league-play schema that continuously 
+pitted different agent policies against each other. OpenAI Five, on the other hand, 
+used a simpler approach by maintaining a pool of previous milestone agents for ongoing 
+comparison and refinement.
 
 
 \section{Problem statement}%
 \label{sec:problem_statement}
 
-The field of \gls{rl} in heterogeneous agents, while growing, remains narrowly focused. 
-Current research predominantly addresses the cooperative dynamics of agents working together to 
-achieve objectives within a given environment, as evidenced by studies such as those by 
-~\cite*{zhong2024, zheng2020, wakilpoor2020, kapetanakis2005}. 
-Conversely, the competitive application of these agents is considerably less developed. 
+\begin{comment}
+Current research predominantly tests these algorithms in a narrow manner.
+Studies such as~\cite*{zheng2020, wakilpoor2020, kapetanakis2005}
+exclusively tested their algorithms in cooperative scenarios.
+%
+Others such as~\cite*{zhong2024, yu2022} do include competitive environments in their tests.
+\end{comment}
+
+%Conversely, the competitive application of these agents is considerably less developed. 
 While significant achievements in competitive environments have been demonstrated by 
 AlphaStar~\cite{vinyals2019} and OpenAI Five~\cite{berner2019}, 
-these projects have relied on extensive resources, which may not be accessible to all 
-researchers or practitioners.
+these projects have relied on substantial resources, which may not be accessible to all 
+researchers or practitioners, to execute their extensive frameworks and achieve unique successes, 
+competing and achieving top rankings in online match-making against numerous human players.
 
-This dissertation seeks to conduct a deeper examination of the conditions that lead to strategic
-collapse in \gls{harl} and to identify effective and efficient methods to address these issues. 
-There is a critical need to understand how competitive strategies can fail or succeed in diverse 
-settings, which will be crucial for enabling broader applications of \gls{harl} technologies.
-
-Additionally, the identification and understanding of pitfall strategies in \gls{harl} 
-could be immensely beneficial. Being able to recognize and enumerate strategies that are prone 
-to risks during training and before deployment could greatly enhance the trust and 
-reliability of these systems for future users. This study aims to fill these gaps, 
-contributing to a more robust understanding of competitive heterogeneous-agent environments.
+This \printdoctype aims to examine the effectiveness and efficiency of current methods 
+used to address the game-theoretic challenges impacting \gls{marl}. 
+Understanding how different components of these training frameworks contribute to the 
+effectiveness of the resulting agents and their relative costs is crucial for enabling 
+further research and broader applications of \gls{marl} technologies. 
+Additionally, we hypothesize that \gls{harl} techniques will offer observable benefits 
+during the training process, not only in addressing game-theoretic problems but also in 
+enhancing the resulting agents' flexibility when deployed in novel configurations.
 
 
 \section{Research Questions}%
 \label{sec:research_question}%
 \label{sec:relevance_and_importance}
+
+\begin{tcolorbox}[colback=red!5,colframe=red!50!black,title=Note to Self]
+    Re-write after doing some more work on \cref{ch:methodology}
+    %For example,~\cite{smit2023} was unable to train agents in 4v4 that generalized 
+    %well to 11v11 (for Football/American Soccer).
+\end{tcolorbox}
 
 \begin{description}
     \item[Question 1:] 
@@ -189,47 +204,33 @@ contributing to a more robust understanding of competitive heterogeneous-agent e
     % thereby enhancing their reliability and performance in real-world applications.
 \end{description}
 
-\begin{comment}
-    
-\end{comment}
-
-\begin{tcolorbox}[colback=blue!5,colframe=blue!50!black,title=Note to Editor]
-    Among the current questions I don't believe that I have effectively communicated the
-    objective where it comes to examining training that is robust to various team sizes/
-    compositions. For example,~\cite{smit2023} was unable to train agents in 4v4 that generalized
-    well to 11v11 (for Football/American Soccer).
-
-    I think that a rewrite on Q2 is the appropriate place. 
-    And would be most consistent with previous plans.
-\end{tcolorbox}
 
 \section{Outline}
 
+\begin{comment} %%%% Dissertation Version %%%%
 The remainder of this document is designed to systematically explore the complex field of 
 multi-agent reinforcement learning, particularly focusing on heterogeneous-agent systems.
-Following this introductory chapter,~\ref{ch:literature_review}: Literature Review provides a 
-comprehensive analysis of the seminal and recent literature pertinent to our research focus.%
-%\ref*{ch:methodology} outlines the essential theories that underpin our methodologies.
-\ref{ch:methodology} details the experimental and analytical techniques employed.
-~\ref{ch:results} presents the data and findings from our research, followed by 
-~\ref{ch:discussion}, where these results are interpreted in the context of existing 
+Following this introductory chapter, \ref{ch:literature_review}: Literature Review provides a 
+comprehensive analysis of the seminal and recent literature pertinent to our research focus. 
+\Cref{ch:methodology} details the experimental and analytical techniques employed. 
+\Cref{ch:results} presents the data and findings from our research, followed by 
+\cref{ch:discussion}, where these results are interpreted in the context of existing 
 knowledge and their implications for future research are explored.
-The \emph{dissertation} will conclude with~\ref{ch:conclusion}, 
+The \emph{dissertation} will conclude with~\cref{ch:conclusion}, 
 which summarizes the research and suggests avenues for further investigation. 
 Each chapter builds upon the previous to provide a comprehensive understanding of the topic, 
 aiming to contribute valuable insights to the field of \gls{harl}.
-
-\begin{comment}
-    The structure of this dissertation is designed to systematically explore the complex field of 
-    multi-agent reinforcement learning, particularly focusing on heterogeneous-agent systems. 
-    Following this introductory chapter,~\ref*{ch:literature_review}: Literature Review provides a 
-    comprehensive analysis of the seminal and recent literature pertinent to our research focus. 
-    Chapter 3: Theoretical Foundations lays out the essential theories that underpin our methodologies. 
-    Chapter 4: Methodology details the experimental and analytical techniques employed. 
-    ~\ref*{ch:results} presents the data and findings from our research, followed by 
-    Chapter 6: Discussion, where these results are interpreted in the context of existing knowledge and 
-    their implications for future research are explored. The dissertation concludes with
-    ~\ref*{ch:conclusion}, which summarizes the research and suggests avenues for further investigation. 
-    Each chapter builds upon the previous to provide a comprehensive understanding of the topic, 
-    aiming to contribute valuable insights to the field of multi-agent reinforcement learning.
 \end{comment}
+
+%%%% Prospectus Version %%%%
+The remainder of this document is organized into two main sections. 
+In \cref{ch:literature_review}, we conduct a comprehensive literature review, 
+maintaining a scholarly tone that aligns with the style of the eventual dissertation. 
+This section will examine existing research, identify gaps, 
+and establish the foundational knowledge necessary for our study. 
+In \cref{ch:methodology}, we outline a proposed research plan, 
+shifting to a more proposal-oriented tone appropriate for a prospectus. 
+This section will detail the research methods, experimental design, and analytical approaches 
+we intend to employ to investigate the identified challenges and hypotheses. 
+By clearly delineating these sections, we aim to provide a structured and 
+coherent roadmap for our research journey.

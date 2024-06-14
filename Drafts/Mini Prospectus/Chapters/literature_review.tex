@@ -258,14 +258,12 @@ possible expense, unreliability, or unavailability of relevant data for pre-trai
 They developed a new approach to address these concerns and titled it AlphaGo Zero.
 Here we focus on two key factors that made this possible.
 
+First, the employment of the \gls{dnn} was simplified by combining the value function and policy 
+into a single network that would take a state input and return a vector of move probabilities and 
+a state value, this substantially reduced the cost of updating the network(s) during training.
 
 
 
-First,
-the employment of the \gls{dnn}
-was simplified by combining the value function and policy into a single network 
-that would take a state input and return a vector of move probabilities and a state value,
-this substantially reduced the cost of updating the network(s) during training.
 
 Second,
 training using self-play.
