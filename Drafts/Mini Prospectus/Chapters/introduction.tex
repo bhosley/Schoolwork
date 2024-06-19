@@ -135,73 +135,52 @@ comparison and refinement.
 
 \section{Problem statement}%
 \label{sec:problem_statement}
-
-\begin{comment}
-Current research predominantly tests these algorithms in a narrow manner.
-Studies such as~\cite*{zheng2020, wakilpoor2020, kapetanakis2005}
-exclusively tested their algorithms in cooperative scenarios.
-%
-Others such as~\cite*{zhong2024, yu2022} do include competitive environments in their tests.
-\end{comment}
-
-%Conversely, the competitive application of these agents is considerably less developed. 
 While significant achievements in competitive environments have been demonstrated by 
 AlphaStar~\cite{vinyals2019} and OpenAI Five~\cite{berner2019}, 
 these projects have relied on substantial resources, which may not be accessible to all 
-researchers or practitioners, to execute their extensive frameworks and achieve unique successes, 
-competing and achieving top rankings in online match-making against numerous human players.
+researchers or practitioners, to implement their extensive frameworks and achieve unique successes.
+These systems have competed and achieved top rankings in online matchmaking against numerous human 
+players.
 
-This \printdoctype aims to examine the effectiveness and efficiency of current methods 
-used to address the game-theoretic challenges impacting \gls{marl}. 
-Understanding how different components of these training frameworks contribute to the 
-effectiveness of the resulting agents and their relative costs is crucial for enabling 
-further research and broader applications of \gls{marl} technologies. 
+This \printdoctype aims to examine several key aspects that contributed to the success of those 
+projects, with the overarching goal of identifying how these methods can be applied not only to 
+address the game-theoretic challenges impacting \gls{marl} but also to improve scalability and 
+flexibility in other contexts. Understanding how different components of these training frameworks 
+contribute to the effectiveness of the resulting agents and their relative costs is crucial for 
+enabling further research and broader applications of \gls{marl} technologies. 
 Additionally, we hypothesize that \gls{harl} techniques will offer observable benefits 
 during the training process, not only in addressing game-theoretic problems but also in 
 enhancing the resulting agents' flexibility when deployed in novel configurations.
-
 
 \section{Research Questions}%
 \label{sec:research_question}%
 \label{sec:relevance_and_importance}
 
-\begin{tcolorbox}[colback=red!5,colframe=red!50!black,title=Note to Self]
-    Re-write after doing some more work on \cref{ch:methodology}
-    %For example,~\cite{smit2023} was unable to train agents in 4v4 that generalized 
-    %well to 11v11 (for Football/American Soccer).
-\end{tcolorbox}
+%\begin{tcolorbox}[colback=red!5,colframe=red!50!black,title=Note to Self]
+%    Re-write after doing some more work on \cref{ch:methodology}
+%    %For example,~\cite{smit2023} was unable to train agents in 4v4 that generalized 
+%    %well to 11v11 (for Football/American Soccer).
+%\end{tcolorbox}
 
 \begin{description}
-    \item[Question 1:] 
-    What are the key factors contributing to strategic collapse in \gls{harl} environments?
-    % This question aims to identify and analyze the conditions under which strategies fail, 
-    % particularly in \emph{competitive} \gls*{harl} settings. 
-    % Understanding these factors is crucial for developing robust and resilient AI systems.
+    % Q1 Which of the current SOTA algos are best suited?
     \item[Question 1.1:] 
-    What methods can prevent or mitigate strategic collapse in \gls{harl} without compromising the 
-    learning efficiency and effectiveness of the agents?
-    % Focusing on solutions, this question investigates the techniques and approaches that can be 
-    % employed to address the issues of strategic collapse, 
-    % ensuring that agents remain effective in their tasks while avoiding over-specialization 
-    % and other pitfalls.
+    How do \gls{marl} and \gls{harl} algorithms compare in terms of 
+    generalizability when agents trained under a given policy are required to 
+    cooperate with teammates trained under separate instances?
+    \item[Question 1.2:] 
+    What impact does non-stationarity introduced by adversarial agents have on the 
+    performance of \gls{marl} and \gls{harl} algorithms in competitive settings?
+    %
     \item[Question 2:] 
-    How can competitive \gls{harl} be effectively managed with limited resources compared to the 
-    extensive resources used in projects like AlphaStar and OpenAI Five?
-    % This question seeks to explore methods and strategies that can optimize resource use in \gls*{harl}, 
-    % making competitive applications more accessible and feasible for a wider range of researchers and 
-    % practitioners.
-    %%  Question 2.1:
-    %%  What role does the interaction between cooperation and competition play in the strategic 
-    %%  dynamics of \gls*{harl}, and how can this balance be optimized?
-    %%  % By examining the interplay between cooperative and competitive behaviors, 
-    %%  % this question aims to understand how these dynamics influence overall system 
-    %%  % performance and strategy development in heterogeneous-agent settings.
+    Given a small set of trained agents, can they be further trained to effectively 
+    operate as a larger team? Conversely, can a multi-agent system be effectively 
+    trained using only a subset of agents?
+    %
     \item[Question 3:] 
-    Can pitfall strategies in \gls{harl} be identified and enumerated during the training phase to 
-    prevent potential failures post-deployment?
-    % This question addresses the predictive aspects of HARL, exploring whether it is possible 
-    % to foresee and correct risky strategies during the development phase of AI systems,
-    % thereby enhancing their reliability and performance in real-world applications.
+    What methods and features can be leveraged to enhance the scalability and adaptability of 
+    training methodologies in complex, variable-scale \gls{marl} environments?
+    %
 \end{description}
 
 

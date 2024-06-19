@@ -9,7 +9,7 @@
 
 % Main document information
 \title{ WORKING TITLE:\\
-    Efficiency, Efficacy, and Explainability in\\
+    Efficiency, Efficacy, and Extensibility in\\
     Heterogeneous Agent Reinforcement Learning }
 \author{Brandon Hosley}
 % \authorsecond{}
@@ -95,11 +95,12 @@
 \usepackage{cleveref}
 
 % NOTE: Google "Overleaf Getting started with BibLaTeX" for guidance.
-\usepackage[style=ieee]{biblatex} % bibliographies
-\addbibresource{other/Prospectus.bib} % name of the bibliography file
+\usepackage[style=ieee]{biblatex}       % bibliographies
+\addbibresource{other/Prospectus.bib}   % name of the bibliography file
+\usepackage{xurl}                       % fix under-full warnings when compiling bib
 
 % Define the default location to look for figures.
-% \graphicspath{{fig}} % Uncomment to use
+\graphicspath{{Figures}}    % Uncomment to use
 
 % Define types and file locations of glossaries
 \usepackage[nomain,abbreviations,symbols,section]{glossaries-extra}
@@ -112,6 +113,9 @@
 \usepackage{titlesec}
 %\titleformat{\subsection}[runin]
 %  {\normalfont\bfseries\itshape}{\thesubsection}{1em}{}
+
+
+\usepackage{pgfgantt}
 
 % ------------------------------ body of paper ---------------------------------
 
