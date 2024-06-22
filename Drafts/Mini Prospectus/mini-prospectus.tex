@@ -1,5 +1,43 @@
 \documentclass{afitthesis}
 
+
+
+
+
+% --- references ---
+
+\makeatletter
+\def\input@path{{Chapters/}{other/}}
+\makeatother
+\usepackage{cleveref}
+
+% NOTE: Google "Overleaf Getting started with BibLaTeX" for guidance.
+\usepackage[style=ieee]{biblatex}       % bibliographies
+\addbibresource{other/Prospectus.bib}   % name of the bibliography file
+\usepackage{xurl}                       % fix under-full warnings when compiling bib
+
+% --- 
+
+% Define the default location to look for figures.
+\graphicspath{{Figures}}    % Uncomment to use
+
+% Define types and file locations of glossaries
+\usepackage[nomain,abbreviations,symbols,section]{glossaries-extra}
+\makeglossaries%
+\input{abbreviations}
+\input{symbols}
+
+% Formatting tools
+\usepackage{tcolorbox}  % For call out boxes
+\usepackage{titlesec}
+%\titleformat{\subsection}[runin]
+%  {\normalfont\bfseries\itshape}{\thesubsection}{1em}{}
+
+
+\usepackage{pgfgantt}
+
+
+
 % --------------------------------- preamble -----------------------------------
 
 % NOTE: The following macros are the meta data of your document, like the title,
@@ -32,9 +70,7 @@
     {Bruce Cox, Ph.D.\\Chair},
     {Matthew Robbins, Ph.D.\\Member},
     {Maj Nicholas Yielding, Ph.D.\\Member}}
-%\abstract{Write your abstract here. This text should probably stay under 100
-%    words or so. Make sure to not put any personally-identifiable information
-%    about others in this text.}
+\abstract{\input{Chapters/abstract.tex}}
 %\keywords{earth; water; air; fire}
 %\dedication{To the one who loves me most.}
 %\acknowledgments{I would like to thank the entire committee for your great
@@ -89,39 +125,10 @@
     % \sfPageCount{}
     % \sfClassification{}
 
-\makeatletter
-\def\input@path{{Chapters/}{other/}}
-\makeatother
-\usepackage{cleveref}
-
-% NOTE: Google "Overleaf Getting started with BibLaTeX" for guidance.
-\usepackage[style=ieee]{biblatex}       % bibliographies
-\addbibresource{other/Prospectus.bib}   % name of the bibliography file
-\usepackage{xurl}                       % fix under-full warnings when compiling bib
-
-% Define the default location to look for figures.
-\graphicspath{{Figures}}    % Uncomment to use
-
-% Define types and file locations of glossaries
-\usepackage[nomain,abbreviations,symbols,section]{glossaries-extra}
-\makeglossaries%
-\input{abbreviations}
-\input{symbols}
-
-% Formatting tools
-\usepackage{tcolorbox}  % For call out boxes
-\usepackage{titlesec}
-%\titleformat{\subsection}[runin]
-%  {\normalfont\bfseries\itshape}{\thesubsection}{1em}{}
-
-
-\usepackage{pgfgantt}
-
 % ------------------------------ body of paper ---------------------------------
 
 \begin{document}
 \maketitle % This command will create all the prefatory pages.
-
 
 % --------------------
 \chapter{Introduction}

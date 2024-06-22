@@ -1,14 +1,25 @@
 %   \glsxtrnewsymbol[description={}]{}{\ensuremath{}}
 %   Description, label, math symbol
-\glsxtrnewsymbol[description={policy (decision-making rule)}]{pi}{\ensuremath{\pi}}
 \glsxtrnewsymbol[description={set of real numbers}]{reals}{\ensuremath{\mathbb{R}}}
 \glsxtrnewsymbol[description={discount-rate}]{discount}{\ensuremath{\gamma}}
 
+% MDPs and Basic RL
 \glsxtrnewsymbol[description={set of states}]{S}{\ensuremath{S}}
 \glsxtrnewsymbol[description={set of actions}]{A}{\ensuremath{A}}
 \glsxtrnewsymbol[description={probability transition matrix}]{P}{\ensuremath{P}}
 \glsxtrnewsymbol[description={reward function}]{R}{\ensuremath{R}}
-%\glsxtrnewsymbol[description={}]{}{\ensuremath{}}
+\glsxtrnewsymbol[description={return at time \(t\)}]{G_t}{\ensuremath{G_t}}
+\glsxtrnewsymbol[description={policy (decision-making rule)}]{pi}{\ensuremath{\pi}}
+\glsxtrnewsymbol[description={value of state \(s\) given under policy \gls{pi}}]
+    {v_pi(s)}{\ensuremath{v_\pi(s)}}
+\glsxtrnewsymbol[description={value of action\(a\) given state \(s\) under policy \gls{pi}}]
+    {q_pi(a|s)}{\ensuremath{q_\pi(a|s)}}
+\glsxtrnewsymbol[description={true value of state \(s\)}]
+    {v_*(s)}{\ensuremath{v_*(s)}}
+\glsxtrnewsymbol[description={true value of action\(a\) given state \(s\)}]
+    {q_*(a|s)}{\ensuremath{q_*(a|s)}}
+
+
 %\glsxtrnewsymbol[description={}]{}{\ensuremath{}}
 %\glsxtrnewsymbol[description={}]{}{\ensuremath{}}
 %\glsxtrnewsymbol[description={}]{}{\ensuremath{}}

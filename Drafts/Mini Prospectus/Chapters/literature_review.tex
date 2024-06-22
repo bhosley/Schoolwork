@@ -7,85 +7,96 @@ of reinforcement learning, the evolution to multi-agent systems, and the progres
 heterogeneous-agent systems. The chapter will conclude by examining some of the open questions, 
 unaddressed challenges, and potential future directions in the field.
 
-\section{Reinforcement Learning Foundations}
+\section{Reinforcement Learning Foundations}%
 
-\subsection*{Markov Decision Processes}
+    \subsection*{Markov Decision Processes}%
 
-\Glsplural{mdp} form the foundation of reinforcement learning by providing a formal framework for 
+\Glspl{mdp} form the foundation of reinforcement learning by providing a formal framework for 
 modeling decision-making in environments with stochastic dynamics~\cite{puterman2005}.
-An MDP is defined by a tuple \((S, A, P, R, \gamma)\), where:
+
+An MDP is defined by a tuple (\gls{S}, \gls{A}, \gls{P}, \gls{R}, \gls{discount}), where:
 \begin{itemize}
     \item \gls{S} is a finite set of states.
     \item \gls{A} is a finite set of actions.
-    \item \(\gls{P}: S\times A\times S\rightarrow [0,1]\) is the state transition 
-    probability function.
-    \item \(\gls{R}: S \times A \rightarrow \gls{reals}\) is the reward function.
-    \item \(\gls{discount} \in [0, 1]\) is the discount factor.
+    \item \(\gls{P}: S\times A\times S\rightarrow [0,1]\) is the state transition probability 
+        function, where \(P(s^\prime|s, a)\) represents the probability of transitioning to state 
+        \(s^\prime\in S\) given the current state \(s\in S\) and action \(a\in A\).
+        This captures the stochastic nature of the environment.
+    \item \(\gls{R}: S \times A \rightarrow \gls{reals}\) is the reward function and written as
+        \(R(s, a)\) defines the immediate reward received after taking action \(a\in A\) in state 
+        \(s\in S\). This reward guides the agent's learning process.
+    \item \(\gls{discount} \in [0, 1]\) is the discount factor, which determines the level of 
+        importance given to estimated future rewards. Specifically, \(\gls{discount}=1\) implies 
+        that a reward estimate is given equal value regardless of how many steps in the future it 
+        may be while \(\gls{discount}=0\) implies that only the value of a reward in the next step 
+        is considered.
 \end{itemize}
 
-\subsubsection*{State Transition Probability Function}
-The state transition probability function \(P(s^\prime|s, a)\) represents the probability of 
-transitioning to state \(s^\prime\) given the current state \(s\) and action \(a\). 
-This captures the stochastic nature of the environment.
+\begin{figure}
+    \caption{Fully reduced \gls{mdp} representation of \gls{rl}.}
+    \label{fig:mdp_cycle}
+\end{figure}
 
-\subsubsection*{Reward Function}
-The reward function \(R(s, a)\) defines the immediate reward received after taking 
-action \(a\) in state \(s\). This reward guides the agent's learning process.
+    \subsection*{Objectives in MDPs}%
 
-\subsubsection*{Discount Factor}
-The discount factor \(\gamma\) determines the importance of future rewards. 
-A discount factor close to \(1\) values future rewards similarly to immediate rewards, 
-while a factor close to \(0\) prioritizes immediate rewards.
-
-\subsubsection*{Objective in MDPs}
-The objective in an \gls{mdp} is to find a policy \(\pi: S \rightarrow A\) 
-that maximizes the expected cumulative reward, often referred to as the return. 
-The return \(G_t\) at time \(t\) is defined as the sum of discounted rewards:
+The objective in an \gls{mdp} is to find a policy \(\gls{pi}: \gls{S} \rightarrow \gls{A}\) 
+that maximizes a return value. In the context of an episode it may be referred to as 
+expected cumulative reward or \gls{etdr}, and in the context of a single time-step, 
+the return \gls{G_t} at time \(t\) is defined as the sum of discounted rewards:
 \begin{equation}
-    G_t = \sum_{k=0}^{\infty} \gamma^k R_{t+k+1}
+    \gls{G_t} = \sum_{k=0}^{\infty} \gls{discount}^k \gls{R}_{t+k+1}
+    \label{eq:sum_discounted_rewards}
 \end{equation}
-where \(R_{t+k+1}\) is the reward received \(k+1\) time steps after time \(t\).
-
-\subsubsection*{Value Functions}
-The value function \(V^\pi(s)\) represents the expected return starting from state \(s\) and 
-following policy \(\pi\). It is defined as:
+where \(\gls{R}_{t+k+1}\) is the reward received following time step \(t+k\).
+At the simplest level, reward is translated into a policy using either a value function;
+which may be a state-value or an action-value function 
+(\cref{eq:state-value_function,eq:action-value_function} respectively).
+A state-value function \gls{v_pi(s)} represents the expected return starting 
+from state \(s\) and following policy \gls{pi}. It is generally defined as:
 \begin{equation}
-    v_\pi(s) = \mathbb{E}\pi [G_t | S_t = s] = \mathbb{E}\pi 
-    \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \middle| S_t = s \right]
+    \gls{v_pi(s)} = \mathbb{E}_\pi [\gls{G_t}| \gls{S}_t = s] = \mathbb{E}_\pi 
+    \left[ \sum_{k=0}^{\infty} \gls{discount}^k \gls{R}_{t+k+1} \middle| \gls{S}_t = s \right]
+    \label{eq:state-value_function}
 \end{equation}
-The action-value function \(Q^\pi(s, a)\) represents the expected return starting from state \(s\),
-taking action \(a\), and thereafter following policy \(\pi\):
+The action-value function \gls{q_pi(a|s)} represents the expected return starting from state \(s\),
+taking action \(a\), and thereafter following policy \gls{pi}:
 \begin{equation}
-    q_\pi(s, a) = \mathbb{E}\pi [G_t | S_t = s, A_t = a] 
-    = \mathbb{E}\pi \left[ \sum_{k=0}^{\infty} \gamma^k R_{t+k+1} \middle| S_t =s, A_t =a \right]
+    \gls{q_pi(a|s)} = \mathbb{E}_\pi [\gls{G_t}| \gls{S}_t = s, \gls{A}_t = a] = \mathbb{E}_\pi 
+    \left[ \sum_{k=0}^{\infty} \gls{discount}^k \gls{R}_{t+k+1} \middle| \gls{S}_t=s, \gls{A}_t=a
+    \right]
+    \label{eq:action-value_function}
 \end{equation}
 
-\subsection*{Bellman Equations}
+    \subsection*{Bellman Equations and Optimal Policies}%
+
 The Bellman equations provide recursive definitions for the value functions. 
-For the state-value function, the Bellman equation is:
+\Cref{eq:bellman_state-value,eq:bellman_action-value} are the Bellman equations of the
+state-value and action-value functions for a given policy \gls{pi} respectively.
 \begin{equation}
-    v_\pi(s) = \sum_{a \in A} \pi(a|s) \sum_{s^\prime \in S} P(s^\prime|s, a) 
-    \left[R(s, a) + \gamma V^\pi(s^\prime)\right]
+    \gls{v_pi(s)} = \sum_{a \in \gls{A}} \gls{pi}(a|s) \sum_{s^\prime \in \gls{S}} 
+    \gls{P}(s^\prime|s, a) \left[\gls{R}(s, a) + \gls{discount} v_\pi(s^\prime)\right]
+    \label{eq:bellman_state-value}
+\end{equation} \begin{equation}
+    \gls{q_pi(a|s)} = \sum_{s^\prime \in \gls{S}} \gls{P}(s^\prime|s, a)\left[\gls{R}(s, a) 
+    + \gls{discount} \sum_{a^\prime \in \gls{A}} \gls{pi}(a^\prime|s^\prime) 
+    q_\pi(s^\prime, a^\prime)\right]
+    \label{eq:bellman_action-value}
 \end{equation}
-For the action-value function, the Bellman equation is:
+The goal is to find (or approximate) the optimal policy \gls{pi} that maximizes the 
+value functions for all states. The optimal Bellman equations are those that 
+satisfy \cref*{eq:bellman_optimal_state-value,eq:bellman_optimal_action-value}:
 \begin{equation}
-    q_\pi(s, a) = \sum_{s^\prime \in S} P(s^\prime|s, a)\left[R(s, a) 
-    + \gamma \sum_{a^\prime \in A} \pi(a^\prime|s^\prime) Q^\pi(s^\prime, a^\prime)\right]
+    \gls{v_*(s)} = \max_a \sum_{s^\prime \in \gls{S}} \gls{P}(s^\prime|s, a)
+    [\gls{R}(s, a) + \gls{discount} v_*(s^\prime)]
+    \label{eq:bellman_optimal_state-value}
+\end{equation} \begin{equation}
+    \gls{q_*(a|s)} = \sum_{s^\prime \in \gls{S}} \gls{P}(s^\prime|s, a) 
+    [\gls{R}(s, a) + \gls{discount} \max_{a^\prime} q_*(s^\prime, a^\prime)]
+    \label{eq:bellman_optimal_action-value}
 \end{equation}
 
-\subsection*{Optimal Policy}
-The goal is to find the optimal policy \(\pi\) that maximizes the value function for all states. 
-The optimal value function \(V_*(s)\) satisfies the Bellman optimality equation:
-\begin{equation}
-    v_*(s) = \max_a \sum_{s^\prime \in S} P(s^\prime|s, a) [R(s, a) + \gamma V^(s^\prime)] 
-\end{equation}
-Similarly, the optimal action-value function \(Q^*(s, a)\) satisfies:
-\begin{equation}
-    q_*(s, a) = \sum_{s^\prime \in S} P(s^\prime|s, a) 
-    [R(s, a) + \gamma \max_{a^\prime} Q^(s^\prime, a^\prime)] 
-\end{equation}
+    \subsection*{Solution Methods}%
 
-\subsection*{Solution Methods}
 There are numerous methods for solving \glspl{mdp}, including exact methods like 
 value iteration and policy iteration, as well as approximate methods such as \gls{rl} techniques. 
 Exact methods iteratively compute the value functions and improve 
@@ -103,38 +114,36 @@ This will provide a comprehensive understanding of how MDPs evolve into more com
 suitable for real-world applications involving multiple, diverse agents.
 
 
-\section{Single-Agent Reinforcement Learning}
+\section{Single-Agent Reinforcement Learning}%
 
 Single-agent \glsentrylong{rl} extends the foundational principles of \glspl{mdp} by enabling an 
 agent to learn optimal policies through direct interaction with the environment~\cite{sutton2018}.
 In single-agent \gls{rl}, the agent learns by trial and error, using feedback in the form of 
 rewards to adjust its actions and maximize cumulative rewards over time.
-
-\subsection*{Learning Algorithms}
 Single-agent \gls{rl} employs various algorithms to learn the optimal policy by approximating 
 the value functions. These algorithms can be broadly categorized into dynamic programming, 
 Monte Carlo methods, and \gls{td} learning.
 
-\subsection*{Dynamic Programming}
-Dynamic programming methods, such as value iteration and policy iteration, 
-require a complete model of the environment's dynamics. 
-They iteratively update value functions and policies until convergence.
-\begin{description}
-    \item[Value Iteration:] Updates the value function based on the Bellman optimality equation 
-        until it converges to the optimal value function \(V_*\).
-    \item[Policy Iteration:] Alternates between policy evaluation 
-        (computing the value function for a fixed policy) and policy improvement 
-        (improving the policy based on the current value function) until convergence.
-\end{description}
+    \subsection*{Dynamic Programming}%
 
-\subsection*{Monte Carlo Methods}
+Dynamic programming methods, such as value iteration and policy iteration, 
+require a complete model of the environment's dynamics~\cite{sutton2018}.
+They iteratively update value functions and policies until convergence. 
+\textbf{Value Iteration} updates the value function based on the Bellman optimality 
+equation until it converges to the optimal value function \(v_*\).
+\textbf{Policy Iteration} alternates between policy evaluation 
+(computing the value function for a fixed policy) and policy improvement 
+(improving the policy based on the current value function) until convergence.
+
+    \subsection*{Monte Carlo Methods}%
+
 Monte Carlo methods learn directly from episodes of experience, 
 estimating value functions by averaging the returns observed in actual episodes. 
-These methods are model-free and do not require knowledge of the environment's dynamics. 
-They can be \emph{First-Visit Monte Carlo}, averaging the returns of the first visit to each state.
-or \emph{Every-Visit Monte Carlo}, averaging the returns of every visit to each state.
+These methods are model-free and do not require knowledge of the environment's dynamics. They can 
+be \textbf{First-Visit Monte Carlo}, averaging the returns of the first visit to each state.
+or \textbf{Every-Visit Monte Carlo}, averaging the returns of every visit to each state.
 
-\subsection*{Temporal-Difference (TD) Learning}
+\subsection*{Temporal-Difference (TD) Learning}%
 TD learning methods, such as Q-learning and SARSA (State-Action-Reward-State-Action), 
 combine ideas from dynamic programming and Monte Carlo methods. They update 
 value estimates based on observed transitions without waiting for the end of an episode.
