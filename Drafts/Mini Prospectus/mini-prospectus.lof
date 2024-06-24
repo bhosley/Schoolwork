@@ -1,7 +1,9 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Fully reduced \gls {mdp} representation of \gls {rl}.\relax }}{6}{figure.caption.3}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Fully reduced MDP representation of RL.\relax }}{6}{figure.caption.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2}{\ignorespaces Planned Timeline\relax }}{13}{figure.caption.4}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Generalized Policy Iteration.\relax }}{9}{figure.caption.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3}{\ignorespaces Multi-agent support in RLlib\nobreakspace {}\cite {zotero-2599}\relax }}{15}{figure.caption.5}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Planned Timeline\relax }}{13}{figure.caption.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {4}{\ignorespaces Multi-agent support in RLlib\nobreakspace {}\cite {zotero-2599}\relax }}{15}{figure.caption.6}%

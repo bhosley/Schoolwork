@@ -1,0 +1,15 @@
+\begin{tikzpicture}[>=stealth, node distance=1.5cm, on grid, auto,
+    arrow/.style = {thick,-stealth}]
+
+    % States
+    \node [] (center) {};
+    \node [] (policy) [left=of center ] {\Large \(\gls{pi}\)};
+    \node [] (values) [right=of center] {\Large \(\gls{Q}\)};
+
+    % Transitions
+    \draw [arrow] (policy) edge[bend left=70] node(E) {evaluation} (values);
+    \draw [arrow] (values) edge[bend left=70] node(I) {improvement} (policy);
+    \node [] () [below=15pt of E] {\scriptsize\(\gls{Q}\rightsquigarrow q_pi\)};
+    \node [] () [above=20pt of I] {\scriptsize\(\gls{pi}\rightsquigarrow\) 
+        greedy(\gls{Q})};
+\end{tikzpicture}

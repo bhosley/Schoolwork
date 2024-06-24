@@ -1,44 +1,37 @@
 \documentclass{afitthesis}
 
+% --------------------------------- Preamble -----------------------------------
 
-
-
-
-% --- references ---
-
+% --- Paths ---
 \makeatletter
-\def\input@path{{Chapters/}{other/}}
+\def\input@path{{Chapters/}{other/}{Figures/}}
 \makeatother
-\usepackage{cleveref}
+\graphicspath{{Figures}}
 
-% NOTE: Google "Overleaf Getting started with BibLaTeX" for guidance.
+% --- References ---
+\usepackage{cleveref}
 \usepackage[style=ieee]{biblatex}       % bibliographies
 \addbibresource{other/Prospectus.bib}   % name of the bibliography file
-\usepackage{xurl}                       % fix under-full warnings when compiling bib
-
-% --- 
-
-% Define the default location to look for figures.
-\graphicspath{{Figures}}    % Uncomment to use
-
-% Define types and file locations of glossaries
+\usepackage{xurl}                       % fix under-full warnings when compiling
 \usepackage[nomain,abbreviations,symbols,section]{glossaries-extra}
 \makeglossaries%
 \input{abbreviations}
 \input{symbols}
 
-% Formatting tools
+% --- Figures ---
+\usepackage{pgfgantt}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+\usepackage{wrapfig}
+
+% --- Formatting Tools ---
 \usepackage{tcolorbox}  % For call out boxes
 \usepackage{titlesec}
 %\titleformat{\subsection}[runin]
 %  {\normalfont\bfseries\itshape}{\thesubsection}{1em}{}
 
 
-\usepackage{pgfgantt}
-
-
-
-% --------------------------------- preamble -----------------------------------
+% ------------------------------- Front Matter ---------------------------------
 
 % NOTE: The following macros are the meta data of your document, like the title,
 % author, and department. Some of these apply to the whole document. Some, like
@@ -125,13 +118,13 @@
     % \sfPageCount{}
     % \sfClassification{}
 
-% ------------------------------ body of paper ---------------------------------
+% ------------------------------ Body of Paper ---------------------------------
 
 \begin{document}
 \maketitle % This command will create all the prefatory pages.
 
 % --------------------
-\chapter{Introduction}
+\chapter{Introduction}%
 \input{introduction.tex}
 
 % -------------------------
@@ -139,7 +132,7 @@
 \label{ch:literature_review}
 \input{literature_review.tex}
 
-% -------------------
+% -------------------------
 \chapter{Proposed Research}%
 \label{ch:methodology}
 \input{design_and_methodology.tex}
@@ -155,32 +148,21 @@
 %\label{ch:conclusion}% chktex 24
 %\input{conclusion.tex}
 
-%
-%Research schedule
-%	Research phase
-%	Objectives
-%	Deadline
-%
-%references
-
-
-% --------------------------------- optional -----------------------------------
-\appendix % This command is necessary before any appendix chapters.
-
+% --------------------------------- Optional -----------------------------------
+\appendix   % This command is necessary before any appendix chapters.
 \chapter{Glossary}
 %\printunsrtglossary[type=symbols,title=Summary of Notation]
 \printglossaries%
 %\printabbreviations[title=]
 %\printunsrtglossary[type=symbols,style=long]
 
-
-% ------------------------------- bibliography ---------------------------------
+% ------------------------------- Bibliography ---------------------------------
 \nocite{*} % Uncomment to print all .bib entries, regardless of citation.
 \clearpage\phantomsection% Creates new page and section for bibliography.
 \addcontentsline{toc}{appendix}{\bibname} % Adds bib to table of contents.
 \printbibliography% Prints the bibliography.
 
-% --------------------------------- optional -----------------------------------
+% --------------------------------- Optional -----------------------------------
 %\begin{vita} % Add name within brackets for multiple vitas.
 %    If you are adding a description about yourself. Use the \verb|vita|
 %    environment. Keep the contents to one page. If for some reason there is
