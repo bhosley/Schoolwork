@@ -9,6 +9,7 @@ and the progression to heterogeneous-agent systems.
 The chapter will conclude by examining some of the open questions, 
 unaddressed challenges, and potential future directions in the field.
 
+% ------------------------------------------------------------------------------
 \section{Reinforcement Learning Foundations}%
 
     \subsection*{Markov Decision Processes}%
@@ -98,7 +99,8 @@ respectively.
     = \sum_{s^\prime \in \gls{S}} \gls{P}(s^\prime|s, a) \left[
         \gls{R}(s, a) + \gls{discount} \sum_{a^\prime \in \gls{A}} 
         \gls{pi}(a^\prime|s^\prime) q_\pi(s^\prime, a^\prime)\right]
-    \label{eq:bellman_action-value}
+    \label{eq:bellman_action-value} 
+    \vspace*{1em}
 \end{equation}
 The goal is to find (or approximate) the optimal policy \gls{pi} that maximizes
 the value functions for all states. The optimal Bellman equations are those that
@@ -130,7 +132,7 @@ handle large, complex problems where exact methods are intractable.
 Before examining \gls{rl} approaches to multi-agent systems, we will cover 
 several important concepts from the perspective of a single agent system.
 
-
+% ------------------------------------------------------------------------------
 \section{Single-Agent Reinforcement Learning}%
 
 Single-agent \gls{rl} extends the foundational principles of \glspl{mdp} 
@@ -156,25 +158,161 @@ optimality equation until it converges to the optimal value function \(v_*\).
 
     \subsection*{Monte Carlo Methods}%
 
-Monte Carlo methods learn directly from episodes of experience, 
+Monte Carlo methods learn directly from an agent's experience in an episode, 
 estimating value functions by averaging the returns observed in actual episodes.
 These methods are model-free and do not require knowledge of the environment's 
 dynamics. They are generally divided into two categories; 
 \textbf{First-Visit Monte Carlo}, averaging the returns of the first visit to 
 each state, or \textbf{Every-Visit Monte Carlo}, averaging the returns of every
 visit to each state in a given episode.
-
-\begin{wrapfigure}[7]{r}{0.45\textwidth}
+%
+\begin{wrapfigure}[7]{R}{0.4\textwidth}
+    \vspace*{-4em}
     \centering
-    \vspace*{-1em}
-    \input{gpi}
-    \caption{Generalized Policy\\Iteration.}
+    \resizebox{0.3\textwidth}{!}{%
+        \input{gpi}
+    }
+    \captionsetup{margin=1.2em}
+    \caption{Generalized Policy Iteration.}
     \label{fig:gpi_cycle}
 \end{wrapfigure}
-
+%
 In either method, the policy and action values are updated iteratively.
 Sutton and Barto~\cite{sutton2018} provide a graphic intuition for this 
 iterative cycle, which we have replicated in~\cref{fig:gpi_cycle}.
+
+A key distinction between Monte Carlo in this context and methods described 
+later is that Monte Carlo methods execute an entire episode. In the following 
+section, this principle will be applied to smaller segments of experience. 
+Additionally, we will reference \gls{mcts}, 
+a heuristic that simulates the results of future actions. Despite its name, 
+\gls{mcts} is distinct from the Monte Carlo methods discussed here.
+
+    \subsection*{Temporal-Difference (TD) Learning}%
+
+\Gls{td} learning methods, such as Q-learning and SARSA 
+(State-Action-Reward-State-Action), combine ideas from 
+dynamic programming and Monte Carlo methods. They update value estimates 
+based on observed transitions without waiting for the end of an episode.
+Both methods use an \gls{step-size} parameter to determine the size of 
+the update based on \cref{eq:action-value_function}.
+
+\textbf{SARSA} is an on-policy \gls{td} control algorithm that updates the 
+\gls{Q}-value using the \gls{Q}-value of the actual next state-action pair:
+%
+\begin{equation}
+    \gls{Q}(s, a) \leftarrow \gls{Q}(s, a) + \gls{step-size} \left[ 
+        \gls{R} + \gls{discount} \gls{Q}(s^\prime, a^\prime) - \gls{Q}(s, a) 
+    \right]
+    \label{eq:sarsa_action-value}
+\end{equation}
+%
+\textbf{Q-Learning}~\cite{watkins1992} is an off-policy \gls{td} control 
+algorithm that updates the \gls{Q}-value using the maximum \gls{Q}-value of 
+from all actions available to the next state:
+%
+\begin{equation}
+    \gls{Q}(s, a) \leftarrow \gls{Q}(s, a) + \gls{step-size} \left[ 
+        \gls{R} + \gls{discount} \max_{a^\prime} 
+        \gls{Q}(s^\prime, a^\prime) - \gls{Q}(s, a)
+    \right]
+    \label{eq:q-learning_action-value}
+\end{equation}
+%
+Consequently, Q-learning has a tendency to converge faster than SARSA,
+which may or may not be a desirable feature.
+
+    \subsection*{Exploration vs. Exploitation}
+
+A fundamental challenge in \gls{rl}, as it is in all of machine learning, 
+is balancing exploration (trying new actions to discover their effects) 
+and exploitation (choosing actions known to yield high rewards). 
+Common strategies for addressing this balance include \(\epsilon\)-greedy 
+policies and Boltzmann exploration.
+\(\epsilon\)-greedy increases the exploration of an algorithm by selecting
+a random action \(\epsilon\) percent of the time.
+%
+Boltzmann exploration, commonly using a softmax function~\cite{pan2021}, 
+normalizes estimated action-values to reduce bias during action selection. 
+A temperature parameter \(\tau\) may be included to control the exploration 
+rate over time, similar to a simulated annealing heuristic. 
+%\Cref{eq:softmax_action-value} shows an example of this.
+For example,
+%
+\begin{equation}
+    P(A=a|S=s) =
+    \frac{\exp\left\{\gls{Q}(a|s)/\tau\right\}}{
+        \sum_{a^\prime\in A}\exp\left\{\gls{Q}(a^\prime|s)/\tau\right\}}
+    \label{eq:softmax_action-value}
+\end{equation}
+However, \cite{cesa-bianchi2017} argue that this manner of 
+implementation fails to minimize regret compared to \(\epsilon\)-greedy 
+and attribute it to the difficulty in tuning a \(\tau\) decay schedule~
+\cite{kaelbling1996,vermorel2005}.
+
+% ------------------------------------------------------------------------------
+\section{Evolution to Multi-Agent Systems}%
+
+The evolution from single-agent \gls{rl} to multi-agent systems introduces new 
+complexities and opportunities, reflecting more realistic scenarios where 
+multiple agents interact within a shared environment. \Gls{marl} extends the 
+principles of single-agent RL to settings where agents must learn to 
+cooperate, compete, or coexist, each influencing the other's learning process.
+Key developments in centralized and decentralized training, communication and 
+coordination, scalability, and stability have significantly expanded the 
+applicability of \gls{marl} across various domains. 
+
+    \subsection*{Cooperative and Competitive Multi-Agent Systems}%
+
+In cooperative multi-agent systems, agents work together to achieve a 
+common goal. This requires coordination and communication to ensure that 
+their actions complement each other. Cooperative MARL is often applied 
+in tasks where the joint effort of multiple agents can lead to better 
+performance than individual efforts~\cite{littman1994}.
+
+The primary challenge in cooperative \gls{marl} is to develop 
+strategies that maximize the collective reward~\cite{albrecht2024}. 
+This involves a spectrum of approaches to the level of interaction 
+between agents. Here we focus on interactions at the algorithmic level, 
+rather than within the environment. On one end, 
+a set of agents may be trained and deployed in a fully decentralized
+manner~\cite{li2023d} and on the other,
+we have integration such that the agents are simply copies of each other,
+updating a shared policy~\cite{zheng2017}.
+
+Rather than emphasizing either extreme, the majority of research in \gls{marl} 
+has focused on leveraging interactions to produce more effective results. 
+The most popular approaches fall under the label \gls{ctde}~%
+\cite{foerster2017,rashid2018,fotouhi2019,lowe2020,pan2021,%
+papoudakis2021,li2023d,zhou2023}, 
+%
+\begin{wrapfigure}[9]{R}{0.4\textwidth}
+    \vspace*{-2.5em}
+    \centering
+    %\includegraphics[width=0.3\textwidth]{basic_ctde.png}
+    %\resizebox{0.3\textwidth}{!}{%
+        \input{basic_ctde}
+    %}
+    %\captionsetup{margin=1.2em}
+    \caption{Basic \gls{ctde}.}
+    \label{fig:basic_ctde}
+\end{wrapfigure}
+%
+a broad term encompassing any algorithm with an arbitrary centralizing 
+mechanism. We assert that the term's breadth and ubiquity have made it 
+a defining trait of mainstream \gls{marl} and that it will remain the 
+norm until we begin to examine \gls{harl} algorithms.
+
+Within the \gls{ctde} paradigm, we wish to draw particular attention to 
+actor-critic training, derived from an almost identical single-agent 
+training method. It is an intuitive implementation of \gls{ctde}, 
+where the critic performs the role of mixing for the agents. 
+The majority of the algorithms we will examine in our experiments 
+will either be actor-critic~\cite{foerster2017,lowe2020,li2023c} 
+or will aim to reduce the bias that occurs with a singular, 
+shared critic~\cite{rashid2018,ackermann2019,li2023d,zhou2023}.
+
+
 
 
 
@@ -186,70 +324,21 @@ iterative cycle, which we have replicated in~\cref{fig:gpi_cycle}.
 
 
 
-\subsection*{Temporal-Difference (TD) Learning}%
-TD learning methods, such as Q-learning and SARSA (State-Action-Reward-State-Action), 
-combine ideas from dynamic programming and Monte Carlo methods. They update 
-value estimates based on observed transitions without waiting for the end of an episode.
-\begin{description}
-    \item[Q-Learning:] An off-policy TD control algorithm that updates the Q-value using the 
-        maximum Q-value of the next state-action pair:
-        \begin{equation}
-            Q(s, a) \leftarrow Q(s, a) 
-            + \alpha \left[ R + \gamma \max_{a^\prime} Q(s^\prime, a^\prime) - Q(s, a) \right]
-        \end{equation}
-    \item[SARSA:] An on-policy TD control algorithm that updates the Q-value using the Q-value of 
-        the actual next state-action pair:
-        \begin{equation}
-            Q(s, a) \leftarrow Q(s, a) 
-            + \alpha \left[ R + \gamma Q(s^\prime, a^\prime) - Q(s, a) \right]
-        \end{equation}
-\end{description}
 
-\subsection*{Exploration vs. Exploitation}
-A fundamental challenge in RL is balancing exploration (trying new actions to discover their 
-effects) and exploitation (choosing actions known to yield high rewards). 
-Common strategies for addressing this balance include \(\epsilon\)-greedy policies and 
-softmax action selection.
 
-\section{Evolution to Multi-Agent Systems}
 
-The evolution from single-agent \gls{rl} to multi-agent systems introduces new 
-complexities and opportunities, reflecting more realistic scenarios where 
-multiple agents interact within a shared environment. 
-\Gls{marl} extends the principles of single-agent RL to settings where agents must learn to 
-cooperate, compete, or coexist, each influencing the other's learning process.
 
-\subsection*{Cooperative and Competitive Multi-Agent Systems}
-In cooperative multi-agent systems, agents work together to achieve a common goal. 
-This requires coordination and communication to ensure that their actions complement each other. 
-Cooperative MARL is often applied in tasks where the joint effort of multiple agents can lead to 
-better performance than individual efforts~\cite{littman1994}.
+In competitive multi-agent systems, agents have conflicting goals. 
+The success of one agent typically comes at the expense of another,
+and thus are often modeled as zero-sum games, where the 
+gain of one agent is exactly balanced by the loss of another.
 
-The primary challenge in cooperative \gls{marl} is to develop strategies that maximize the 
-collective reward. This can involve decentralized training, where each agent learns independently, 
-or centralized training with decentralized execution, where agents are trained with a global 
-perspective but act independently during execution.
+Thus competitive \gls{marl} typically involves strategies where agents 
+must predict and counteract the actions of their opponents. 
+Techniques from game theory, such as Nash equilibrium, are often employed 
+to find stable strategies in these adversarial environments~\cite{busoniu2008}.
 
-In competitive multi-agent systems, agents have conflicting goals. The success of one agent 
-typically comes at the expense of another,and thus are often modeled as zero-sum games, 
-where the gain of one agent is exactly balanced by the loss of another.
 
-Thus competitive \gls{marl} typically involves strategies where agents must predict and 
-counteract the actions of their opponents. Techniques from game theory, such as Nash equilibrium, 
-are often employed to find stable strategies in these adversarial environments~\cite{busoniu2008}.
-
-\subsection*{Advances in MARL}
-The advances in \gls{marl} have laid a robust foundation for addressing complex, 
-dynamic environments where multiple agents must learn to interact effectively.
-Key developments in centralized and decentralized training, communication and coordination, 
-scalability, and stability have significantly expanded the applicability of 
-\gls{marl} across various domains. 
-
-%\subsubsection*{Centralized and Decentralized Training}
-\Gls{ctde} has become a popular paradigm in \gls{marl}~\cite{rashid2018,foerster2017,lowe2020}. 
-During training, agents have access to a central controller or shared information, 
-allowing them to learn coordinated strategies. 
-However, during execution, they act independently based on their local observations.
 
 %\subsubsection*{Communication and Coordination}
 Effective communication and coordination mechanisms are crucial for cooperative \gls{marl}. 
@@ -271,7 +360,8 @@ the dynamics of multiple learning agents can lead to instability and non-converg
 Research in this area seeks to establish theoretical guarantees and practical methods 
 for stable learning.
 
-\section{Evolution of MARL through the Lens of Games}
+% ------------------------------------------------------------------------------
+\section{Evolution of MARL through the Lens of Games}%
 
 Building upon these foundational advancements, the exploration of 
 \gls{marl} through gameplay has provided a rich and challenging testbed for further innovation. 
