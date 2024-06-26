@@ -262,7 +262,7 @@ Key developments in centralized and decentralized training, communication and
 coordination, scalability, and stability have significantly expanded the 
 applicability of \gls{marl} across various domains. 
 
-    \subsection*{Cooperative and Competitive Multi-Agent Systems}%
+    \subsection*{Cooperative Multi-Agent Systems}%
 
 In cooperative multi-agent systems, agents work together to achieve a 
 common goal. This requires coordination and communication to ensure that 
@@ -289,11 +289,7 @@ papoudakis2021,li2023d,zhou2023},
 \begin{wrapfigure}[9]{R}{0.4\textwidth}
     \vspace*{-2.5em}
     \centering
-    %\includegraphics[width=0.3\textwidth]{basic_ctde.png}
-    %\resizebox{0.3\textwidth}{!}{%
-        \input{basic_ctde}
-    %}
-    %\captionsetup{margin=1.2em}
+    \input{basic_ctde}
     \caption{Basic \gls{ctde}.}
     \label{fig:basic_ctde}
 \end{wrapfigure}
@@ -306,15 +302,184 @@ norm until we begin to examine \gls{harl} algorithms.
 Within the \gls{ctde} paradigm, we wish to draw particular attention to 
 actor-critic training, derived from an almost identical single-agent 
 training method. It is an intuitive implementation of \gls{ctde}, 
-where the critic performs the role of mixing for the agents. 
+where the critic performs the role of mixing for the agents.
+
 The majority of the algorithms we will examine in our experiments 
 will either be actor-critic~\cite{foerster2017,lowe2020,li2023c} 
 or will aim to reduce the bias that occurs with a singular, 
 shared critic~\cite{rashid2018,ackermann2019,li2023d,zhou2023}.
 
+\begin{wrapfigure}[9]{R}{0.4\textwidth}
+    \vspace*{-1em}
+    \centering
+    \includegraphics[width=0.4\textwidth]{ctde_actor-critic.png}
+    % #TODO:
+    %\resizebox{0.3\textwidth}{!}{%
+    %    \input{ctde_actor-critic}
+    %}
+    %\captionsetup{margin=1.2em}
+    \caption{Actor-Critic \gls{ctde}.}
+    \label{fig:ctde_actor-critic}
+\end{wrapfigure}
+
+    %\subsection*{Competitive Multi-Agent Systems}
+    % To fix a subsection to wrap figure collision.
+    \paragraph*{\emph{Competitive Multi-Agent Systems}} \hfil 
+
+In competitive multi-agent systems, agents have conflicting goals. 
+The success of one agent typically comes at the expense of another,
+and thus are often modeled as zero-sum games, where the gain of 
+one agent is exactly balanced by the loss of another~\cite{leonardos2021}.
+
+Thus competitive \gls{marl} typically involves strategies where agents 
+must predict and counteract the actions of their opponents. 
+Techniques from game theory, such as Nash equilibrium, are often employed 
+to find stable strategies in these adversarial environments~\cite{busoniu2008}.
+
+    \subsection*{Communication and Coordination}
+
+Effective communication and coordination mechanisms are crucial 
+for cooperative \gls{marl}. Agents need to share information and 
+synchronize their actions to achieve common goals. 
+Research in this area focuses on developing protocols and algorithms that 
+enable efficient and robust communication among agents~%
+\cite{sukhbaatar2016,fotouhi2019,hoang2023}.
+
+    \subsection*{Scalability and Efficiency}
+
+Scalability is a significant challenge in MARL due to the exponential 
+growth of the state and action spaces with the number of agents~%
+\cite{cao2012,busoniu2008}. 
+Recent research efforts aim to develop algorithms that can efficiently 
+scale to large numbers of agents and complex environments without 
+compromising performance~\cite{smit2023,sun2023}.
+
+    \subsection*{Stability and Convergence}
+
+Ensuring the stability and convergence of learning algorithms in 
+multi-agent settings is critical~\cite{papoudakis2021}. 
+Unlike single-agent \gls{rl}, where convergence is well-understood, 
+the dynamics of multiple learning agents can lead to instability 
+and non-convergence. Research in this area seeks to establish 
+theoretical guarantees and practical methods for stable learning.
 
 
+% ------------------------------------------------------------------------------
+\section{Evolution of MARL through the Lens of Games}%
 
+Building upon these foundational advancements, the exploration of \gls{marl} 
+through gameplay has provided a rich and challenging testbed for further 
+innovation. Notably, the strategic complexity and real-time decision-making 
+required in games have driven remarkable progress in \gls{marl} algorithms, 
+as exemplified by pioneering projects such as 
+DeepMind's AlphaGo\cite{silver2016}, AlphaGo Zero\cite{silver2017},
+AlphaZero\cite{silver2017a} and AlphaStar\cite{vinyals2019}. 
+These projects not only showcase the potential of \gls{marl} to 
+achieve superhuman performance but also highlight the broader implications 
+and applications of these advancements beyond the realm of gaming.
+
+    \subsection*{AlphaGo: The First* Milestone}
+
+AlphaGo, developed by DeepMind and presented in~\cite{silver2016}, 
+marked perhaps the largest milestone in \gls{ai} since Deep Blue~%
+\cite{campbell2002} with its victory over a world champion Go player.
+Where Deep Blue was an expert system that leveraged an Alpha-Beta pruning 
+algorithm and \glspl{asic} designed to execute the algorithm in parallel,
+the state-space of Go was so much larger that this approach would not 
+likely ever be tractable. AlphaGo achieved this success using 
+\glspl{dnn} to approximating a value function and a policy.
+
+An initial approximate policy was trained on 29.4 million states 
+from 160,000 games using supervised gradient descent to predict 
+the next move of a game given the current state.
+An initial value function was approximated by sampling moves made 
+during a game and assigning value according to the outcome of the game.
+%
+With initial approximate functions as a starting point,
+a policy-gradient method in conjunction with \gls{mcts}
+would provide the the framework for further improvement through \gls{rl}.
+
+    \subsection*{AlphaGo Zero: A Leap Forward}
+
+AlphaGo's success demonstrated the power of combining deep learning with 
+traditional search techniques. However, the research team acknowledged potential
+problems associated with the original approach's reliance on prepared data. 
+In~\cite{silver2017}, Silver et al. express a concern regarding possible 
+expense, unreliability, or unavailability of relevant data for pre-training.
+They developed a new approach to address these concerns and titled it 
+AlphaGo Zero. Here we focus on two key factors that made this possible.
+
+First, the employment of the \gls{dnn} was simplified by combining the 
+value function and policy into a single network that would take a state 
+input and return a vector of move probabilities and a state value, 
+this substantially reduced the cost of updating the network(s) during training.
+%
+Second, an increased reliance on training using self-play
+eliminated the need for a collection of pre-played games.
+Further, this reduced the influence that pre-established strategies 
+used by human players would have on the training of the agent.
+
+    \subsection*{AlphaStar: Expanding to Real-Time Strategy Games}
+
+AlphaStar extended the principles of MARL to the domain of \gls{rts} 
+games by achieving grandmaster-level performance in StarCraft II, 
+a game known for its strategic depth, real-time decision-making, 
+and partial observability. Vinyals et al.~\cite{vinyals2019} accomplished 
+this using a large, modular neural network and a novel training curriculum.
+
+The neural network interfaced with the game environment, which provided an 
+observation space significantly larger than any previously examined games. 
+The curriculum (\cref{fig:alphastar_league}) addressed the complexity 
+and `game-theoretic' concerns of StarCraft II. Similar to AlphaGo, 
+but unlike its Zero counterpart, Vinyals et al. used a supervised baseline 
+with imitation learning trained on recorded games from human experts. 
+This was followed by \gls{rl} in a league-play format.
+
+\begin{figure}[t]
+    %\vspace*{-1em}
+    \centering
+    \includegraphics[width=0.75\textwidth]{alphastar_league.png}
+    \caption{League-play implemented by Vinyals et al.~\cite{vinyals2019}.}
+    \label{fig:alphastar_league}
+\end{figure}
+
+Rather than utilizing pure self-play, a collection of agents is used 
+to form the "league." This collection consists of older copies of the 
+different types of agents, encompassing an exhaustive combination of 
+each available faction and league role. There are three factions, 
+each with distinct capabilities and representing different action 
+spaces for this work.
+
+Within the league, there are three roles. Main agents are trained 
+against the pool of all past agents. Main exploiters are trained 
+specifically to beat the main agents; once they achieve this, 
+a copy is placed within the league. League exploiters are trained 
+against the entire league, similar to main agents, but do not have 
+any agents targeting them specifically. Once they achieve a certain 
+win rate against the league, a copy is also placed within the league.
+
+While it is not clear to what extent each component of the curriculum 
+was necessary or how much each contributed to the final agents, 
+it was demonstrably effective in training a grandmaster-level 
+agent for each of the factions.
+
+    \subsection*{OpenAI Five: Cooperative Agents in Competitive Settings}
+
+In a similar success, an OpenAI research team trained a group of agents 
+capable of world-class performance in the game Dota 2~\cite{berner2019}.
+Dota 2 bears some similarities to an \gls*{rts}; however, instead 
+of managing several units, the player controls a single unit. 
+The trade-off is that the single unit is more complex than those 
+featured in a typical \gls{rts}, and they are drawn from a pool that is 
+``massive and limitlessly diverse''~\cite{zotero-2643}.
+
+This complexity makes it difficult to compare the action space 
+between Dota 2 and StarCraft II. Additionally, the game is played 
+between two teams of five players. Thus, it would be necessary to 
+train an agent that could manage five complex units and decide which 
+units to choose, or to train multiple agents to specialize in 
+specific units and cooperate with different agents. 
+Berner et al.~\cite{berner2019} succeeded using the latter approach.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -323,151 +488,34 @@ shared critic~\cite{rashid2018,ackermann2019,li2023d,zhou2023}.
 
 
 
+The massive resources needed to accomplish this task 
+bolsters the success against would-be challengers.
 
+Much like Vinyals et al. the OpenAI team needed to develop a curriculum
+that could effectively train their agents.
+Consistent with standard software engineering practices 
+(Gall's Law~\cite{gall1975}) they developed the training curriculum iteratively.
 
+They contended with periodic updates to the game, which typically featured
+changes that effected gameplay.
 
+The general architecture that they used for the agents
+had the appearance of modularity, but none of the components 
+were directly shared between agents.
 
+To improve training time and to recover agent effectiveness after
+significant updates they utilized a set of procedures that they called 
+``surgery'' which allowed offline updates to existing agents.
 
-In competitive multi-agent systems, agents have conflicting goals. 
-The success of one agent typically comes at the expense of another,
-and thus are often modeled as zero-sum games, where the 
-gain of one agent is exactly balanced by the loss of another.
-
-Thus competitive \gls{marl} typically involves strategies where agents 
-must predict and counteract the actions of their opponents. 
-Techniques from game theory, such as Nash equilibrium, are often employed 
-to find stable strategies in these adversarial environments~\cite{busoniu2008}.
-
-
-
-%\subsubsection*{Communication and Coordination}
-Effective communication and coordination mechanisms are crucial for cooperative \gls{marl}. 
-Agents need to share information and synchronize their actions to achieve common goals. 
-Research in this area focuses on developing protocols and algorithms that enable efficient and 
-robust communication among agents~\cite{sukhbaatar2016,fotouhi2019,hoang2023}.
-
-%\subsubsection*{Scalability and Efficiency}
-Scalability is a significant challenge in MARL due to the exponential growth of the state and 
-action spaces with the number of agents\cite{cao2012,busoniu2008}. 
-Recent research efforts aim to develop algorithms that can efficiently scale to large numbers 
-of agents and complex environments without compromising performance~\cite{smit2023,sun2023}.
-
-%\subsubsection*{Stability and Convergence}
-Ensuring the stability and convergence of learning algorithms in multi-agent settings is 
-critical~\cite{papoudakis2021}. 
-Unlike single-agent \gls{rl}, where convergence is well-understood, 
-the dynamics of multiple learning agents can lead to instability and non-convergence.
-Research in this area seeks to establish theoretical guarantees and practical methods 
-for stable learning.
-
-% ------------------------------------------------------------------------------
-\section{Evolution of MARL through the Lens of Games}%
-
-Building upon these foundational advancements, the exploration of 
-\gls{marl} through gameplay has provided a rich and challenging testbed for further innovation. 
-Notably, the strategic complexity and real-time decision-making required in games have driven 
-remarkable progress in \gls{marl} algorithms, as exemplified by pioneering projects such as 
-DeepMind's AlphaGo\cite{silver2016}, AlphaGo Zero\cite{silver2017},
-AlphaZero\cite{silver2017a} and AlphaStar\cite{vinyals2019}. 
-These projects not only showcase the potential of \gls{marl} to achieve superhuman performance 
-but also highlight the broader implications and applications of these advancements 
-beyond the realm of gaming.
-
-\subsection*{AlphaGo: The First* Milestone}
-AlphaGo, developed by DeepMind and presented in~\cite{silver2016}, 
-marked perhaps the largest milestone in \gls{ai} since Deep Blue~\cite{campbell2002}
-with its victory over a world champion Go player.
-Where Deep Blue was an expert system that leveraged an Alpha-Beta pruning algorithm
-and \glspl{asic} designed to execute the algorithm in parallel,
-the state-space of Go was so much larger that this approach would not likely ever be tractable. 
-AlphaGo achieved this success using \glspl{dnn} to approximating a value function and a policy.
-
-An initial approximate policy was trained on 29.4 million states from 160,000 games
-using supervised gradient descent to predict the next move of a game given the current state.
-An initial value function was approximated by sampling moves made during a game
-and assigning value according to the outcome of the game.
-
-With initial approximate functions as a starting point,
-a policy-gradient method in conjunction with \gls{mcts}
-would provide the the framework for further improvement through \gls{rl}.
-
-\subsection*{AlphaGo Zero: A Leap Forward}
-AlphaGo's success demonstrated the power of combining deep learning with traditional 
-search techniques. However, the research team acknowledged potential problems associated with 
-the original approach's reliance on prepared data. 
-In~\cite{silver2017}, Silver et al. express a concern regarding 
-possible expense, unreliability, or unavailability of relevant data for pre-training.
-They developed a new approach to address these concerns and titled it AlphaGo Zero.
-Here we focus on two key factors that made this possible.
-
-First, the employment of the \gls{dnn} was simplified by combining the value function and policy 
-into a single network that would take a state input and return a vector of move probabilities and 
-a state value, this substantially reduced the cost of updating the network(s) during training.
-
-
-
-
-Second,
-training using self-play.
-
-
-
-
-The transition from 
-
-
-
+The surgery highlighted in their paper~\cite{berner2019}
+was a \emph{Net2Net}~\cite{chen2016} knowledge transfer 
+which allowed them to begin the training of an agent 
+after a significant change without having to discard the
+previous neural networks used prior to the change.
 
 
 
 \begin{comment}
-AlphaGo Zero’s Innovation
-AlphaGo Zero represented a significant leap forward by eliminating the need for human expert knowledge. Unlike its predecessor, AlphaGo Zero learned to play Go entirely from self-play, starting with random moves and improving solely through reinforcement learning.
-	•	Key Techniques:
-	•	Self-Play Learning: AlphaGo Zero trained by playing games against itself, using a single neural network that combined the policy and value functions.
-	•	Simplified Architecture: The simplified neural network architecture and reliance on self-play allowed for more efficient training and faster improvement.
-	•	Key Paper: Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
-Impact
-AlphaGo Zero’s success underscored the potential of self-play and reinforcement learning to achieve superhuman performance without human intervention. This approach demonstrated the scalability and generality of MARL techniques, opening new possibilities for their application in other domains.
-
-AlphaStar: Expanding to Real-Time Strategy Games
-AlphaStar’s Achievement
-AlphaStar extended the principles of MARL to the domain of real-time strategy (RTS) games by achieving grandmaster-level performance in StarCraft II, a game known for its strategic depth, real-time decision-making, and partial observability.
-
-	•	Key Techniques:
-	•	Multi-Agent Learning: AlphaStar was trained using a league of agents that played against each other, promoting diverse strategies and robust learning.
-	•	Imitation and Reinforcement Learning: AlphaStar initially used imitation learning from human expert games, followed by reinforcement learning through self-play to refine its strategies.
-	•	Modular Neural Network Architecture: The architecture included components for managing different aspects of the game, such as strategy, tactics, and unit control.
-	•	Key Paper: Vinyals, O. et al. (2019). Grandmaster level in StarCraft II using multi-agent reinforcement learning.
-
-Broader Implications
-
-AlphaStar’s success highlighted the adaptability of MARL to more complex, dynamic, and partially observable environments. The techniques developed for AlphaStar are applicable to a wide range of real-world problems, such as autonomous vehicle coordination, resource management, and robotic control.
-
-Additional Achievements and Related Developments
-
-OpenAI Five
-
-OpenAI’s Dota 2 project, OpenAI Five, further showcased the capabilities of MARL in complex, team-based, real-time strategy games. By training a team of agents to play against top human players, OpenAI demonstrated the potential for AI to handle teamwork, strategy, and adaptation in highly dynamic environments.
-
-	•	Key Techniques:
-	•	Self-Play and Reinforcement Learning: Similar to AlphaStar, OpenAI Five used extensive self-play and reinforcement learning to develop sophisticated strategies.
-	•	Curriculum Learning: The training process involved progressively increasing the difficulty of opponents to ensure continuous improvement.
-	•	Key Paper: Berner, C. et al. (2019). Dota 2 with Large Scale Deep Reinforcement Learning.
-
-Summary
-
-The evolution of MARL through the lens of game-playing AI demonstrates the transformative impact of reinforcement learning and self-play on achieving superhuman performance in complex environments. The successes of AlphaGo, AlphaGo Zero, AlphaStar, and OpenAI Five illustrate the potential for MARL to tackle a wide range of strategic and real-time challenges, paving the way for future advancements in both theoretical research and practical applications.
-
-	•	Key Papers:
-	•	Silver, D. et al. (2016). Mastering the game of Go with deep neural networks and tree search.
-	•	Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
-	•	Vinyals, O. et al. (2019). Grandmaster level in StarCraft II using multi-agent reinforcement learning.
-	•	Berner, C. et al. (2019). Dota 2 with Large Scale Deep Reinforcement Learning.
-
-
-
-
 %\subsection*{Applications of MARL}
 %\Gls{marl}has been applied to a wide range of domains, 
 %demonstrating its versatility and effectiveness in solving complex, real-world problems. 
@@ -487,9 +535,6 @@ The evolution of MARL through the lens of game-playing AI demonstrates the trans
 
 
 \section{Introduction to Heterogeneous-Agent Reinforcement Learning}
-
-
-
 
 
 \clearpage

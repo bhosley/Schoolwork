@@ -1,11 +1,15 @@
 \boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Fully reduced MDP representation of RL.\relax }}{6}{figure.caption.3}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Fully reduced MDP representation of RL.\relax }}{7}{figure.caption.3}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2}{\ignorespaces Generalized Policy Iteration.\relax }}{9}{figure.caption.4}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Generalized Policy Iteration.\relax }}{10}{figure.caption.4}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3}{\ignorespaces Basic \gls {ctde}.\relax }}{11}{figure.caption.5}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Basic \gls {ctde}.\relax }}{12}{figure.caption.5}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {4}{\ignorespaces Planned Timeline\relax }}{14}{figure.caption.6}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Actor-Critic \gls {ctde}.\relax }}{12}{figure.caption.6}%
 \defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5}{\ignorespaces Multi-agent support in RLlib\nobreakspace {}\cite {zotero-2599}\relax }}{16}{figure.caption.7}%
+\contentsline {figure}{\numberline {5}{\ignorespaces League-play implemented by Vinyals et al.\nobreakspace {}\cite {vinyals2019}.\relax }}{15}{figure.caption.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {6}{\ignorespaces Planned Timeline\relax }}{17}{figure.caption.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {figure}{\numberline {7}{\ignorespaces Multi-agent support in RLlib\nobreakspace {}\cite {zotero-2599}\relax }}{19}{figure.caption.9}%
