@@ -265,6 +265,23 @@
   file = {/Users/brandonhosley/Zotero/storage/JRZPUISW/Chen et al_2016_Net2Net.pdf;/Users/brandonhosley/Zotero/storage/2RZBC4W3/1511.html}
 }
 
+@online{espeholt2018,
+  title = {{{IMPALA}}: {{Scalable Distributed Deep-RL}} with {{Importance Weighted Actor-Learner Architectures}}},
+  shorttitle = {{{IMPALA}}},
+  author = {Espeholt, Lasse and Soyer, Hubert and Munos, Remi and Simonyan, Karen and Mnih, Volodymir and Ward, Tom and Doron, Yotam and Firoiu, Vlad and Harley, Tim and Dunning, Iain and Legg, Shane and Kavukcuoglu, Koray},
+  date = {2018-06-28},
+  eprint = {1802.01561},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1802.01561},
+  url = {http://arxiv.org/abs/1802.01561},
+  urldate = {2024-06-26},
+  abstract = {In this work we aim to solve a large collection of tasks using a single reinforcement learning agent with a single set of parameters. A key challenge is to handle the increased amount of data and extended training time. We have developed a new distributed agent IMPALA (Importance Weighted Actor-Learner Architecture) that not only uses resources more efficiently in single-machine training but also scales to thousands of machines without sacrificing data efficiency or resource utilisation. We achieve stable learning at high throughput by combining decoupled acting and learning with a novel off-policy correction method called V-trace. We demonstrate the effectiveness of IMPALA for multi-task reinforcement learning on DMLab-30 (a set of 30 tasks from the DeepMind Lab environment (Beattie et al., 2016)) and Atari-57 (all available Atari games in Arcade Learning Environment (Bellemare et al., 2013a)). Our results show that IMPALA is able to achieve better performance than previous agents with less data, and crucially exhibits positive transfer between tasks as a result of its multi-task approach.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/HLB5SX6X/Espeholt et al_2018_IMPALA.pdf;/Users/brandonhosley/Zotero/storage/L8QQH9KD/1802.html}
+}
+
 @online{foerster2017,
   title = {Counterfactual {{Multi-Agent Policy Gradients}}},
   author = {Foerster, Jakob and Farquhar, Gregory and Afouras, Triantafyllos and Nardelli, Nantas and Whiteson, Shimon},
@@ -292,6 +309,23 @@
   eventtitle = {2019 {{IEEE Globecom Workshops}} ({{GC Wkshps}})},
   keywords = {Base stations,Cellular networks,Drones,Learning (artificial intelligence),Optimization,Satellite broadcasting},
   file = {/Users/brandonhosley/Library/Mobile Documents/com~apple~CloudDocs/ZotFile/Fotouhi et al_2019_Joint Optimization of Access and Backhaul Links for UAVs Based on Reinforcement.pdf;/Users/brandonhosley/Zotero/storage/4WI354EX/stamp.html}
+}
+
+@online{fujimoto2018,
+  title = {Addressing {{Function Approximation Error}} in {{Actor-Critic Methods}}},
+  author = {Fujimoto, Scott and van Hoof, Herke and Meger, David},
+  options = {useprefix=true},
+  date = {2018-10-22},
+  eprint = {1802.09477},
+  eprinttype = {arxiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1802.09477},
+  url = {http://arxiv.org/abs/1802.09477},
+  urldate = {2024-05-25},
+  abstract = {In value-based reinforcement learning methods such as deep Q-learning, function approximation errors are known to lead to overestimated value estimates and suboptimal policies. We show that this problem persists in an actor-critic setting and propose novel mechanisms to minimize its effects on both the actor and the critic. Our algorithm builds on Double Q-learning, by taking the minimum value between a pair of critics to limit overestimation. We draw the connection between target networks and overestimation bias, and suggest delaying policy updates to reduce per-update error and further improve performance. We evaluate our method on the suite of OpenAI gym tasks, outperforming the state of the art in every environment tested.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/53LNWQEE/Fujimoto et al_2018_Addressing Function Approximation Error in Actor-Critic Methods.pdf;/Users/brandonhosley/Zotero/storage/HKDN2XRX/1802.html}
 }
 
 @book{gall1975,
@@ -373,6 +407,14 @@
   urldate = {2024-06-25},
   abstract = {This paper surveys the field of reinforcement learning from    a computer-science perspective. It is written to be accessible to    researchers familiar with machine learning.  Both the historical basis    of the field and a broad selection of current work are summarized.    Reinforcement learning is the problem faced by an agent that learns    behavior through trial-and-error interactions with a dynamic    environment.  The work described here has a resemblance to work in    psychology, but differs considerably in the details and in the use of    the word ``reinforcement.''  The paper discusses central issues of    reinforcement learning, including trading off exploration and    exploitation, establishing the foundations of the field via Markov    decision theory, learning from delayed reinforcement, constructing    empirical models to accelerate learning, making use of generalization    and hierarchy, and coping with hidden state.  It concludes with a    survey of some implemented systems and an assessment of the practical    utility of current methods for reinforcement learning.},
   file = {/Users/brandonhosley/Zotero/storage/CAYL6YGI/Kaelbling et al_1996_Reinforcement Learning.pdf}
+}
+
+@online{kakade2002,
+  title = {Approximately {{Optimal Approximate Reinforcement Learning}}},
+  author = {Kakade, Sham and Langford, John},
+  date = {2002},
+  location = {Proceedings of the Nineteenth International Conference on Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/CV4MXZ2Q/approximately-optimal-approximate-reinforcement-learning.html}
 }
 
 @inproceedings{kapetanakis2005,
@@ -518,6 +560,22 @@
   file = {/Users/brandonhosley/Zotero/storage/Q54TTJQQ/Lowe et al. - 2020 - Multi-Agent Actor-Critic for Mixed Cooperative-Com.pdf;/Users/brandonhosley/Zotero/storage/F3DU3EG3/1706.html}
 }
 
+@online{mnih2016,
+  title = {Asynchronous {{Methods}} for {{Deep Reinforcement Learning}}},
+  author = {Mnih, Volodymyr and Badia, Adrià Puigdomènech and Mirza, Mehdi and Graves, Alex and Lillicrap, Timothy P. and Harley, Tim and Silver, David and Kavukcuoglu, Koray},
+  date = {2016-06-16},
+  eprint = {1602.01783},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1602.01783},
+  url = {http://arxiv.org/abs/1602.01783},
+  urldate = {2024-05-05},
+  abstract = {We propose a conceptually simple and lightweight framework for deep reinforcement learning that uses asynchronous gradient descent for optimization of deep neural network controllers. We present asynchronous variants of four standard reinforcement learning algorithms and show that parallel actor-learners have a stabilizing effect on training allowing all four methods to successfully train neural network controllers. The best performing method, an asynchronous variant of actor-critic, surpasses the current state-of-the-art on the Atari domain while training for half the time on a single multi-core CPU instead of a GPU. Furthermore, we show that asynchronous actor-critic succeeds on a wide variety of continuous motor control problems as well as on a new task of navigating random 3D mazes using a visual input.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/ZNCS528Y/Mnih et al. - 2016 - Asynchronous Methods for Deep Reinforcement Learni.pdf;/Users/brandonhosley/Zotero/storage/MJV4AMZK/1602.html}
+}
+
 @inproceedings{pan2021,
   title = {Regularized {{Softmax Deep Multi-Agent Q-Learning}}},
   booktitle = {Advances in {{Neural Information Processing Systems}}},
@@ -589,6 +647,38 @@
   langid = {english},
   organization = {Defense News},
   file = {/Users/brandonhosley/Zotero/storage/BUYKV3CJ/pentagon-unveils-replicator-drone-program-to-compete-with-china.html}
+}
+
+@online{schulman2017,
+  title = {Trust {{Region Policy Optimization}}},
+  author = {Schulman, John and Levine, Sergey and Moritz, Philipp and Jordan, Michael I. and Abbeel, Pieter},
+  date = {2017-04-20},
+  eprint = {1502.05477},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1502.05477},
+  url = {http://arxiv.org/abs/1502.05477},
+  urldate = {2024-05-25},
+  abstract = {We describe an iterative procedure for optimizing policies, with guaranteed monotonic improvement. By making several approximations to the theoretically-justified procedure, we develop a practical algorithm, called Trust Region Policy Optimization (TRPO). This algorithm is similar to natural policy gradient methods and is effective for optimizing large nonlinear policies such as neural networks. Our experiments demonstrate its robust performance on a wide variety of tasks: learning simulated robotic swimming, hopping, and walking gaits; and playing Atari games using images of the screen as input. Despite its approximations that deviate from the theory, TRPO tends to give monotonic improvement, with little tuning of hyperparameters.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/WB9X428C/Schulman et al_2017_Trust Region Policy Optimization.pdf;/Users/brandonhosley/Zotero/storage/N4BJ2EUW/1502.html}
+}
+
+@online{schulman2017a,
+  title = {Proximal {{Policy Optimization Algorithms}}},
+  author = {Schulman, John and Wolski, Filip and Dhariwal, Prafulla and Radford, Alec and Klimov, Oleg},
+  date = {2017-08-28},
+  eprint = {1707.06347},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1707.06347},
+  url = {http://arxiv.org/abs/1707.06347},
+  urldate = {2024-05-25},
+  abstract = {We propose a new family of policy gradient methods for reinforcement learning, which alternate between sampling data through interaction with the environment, and optimizing a "surrogate" objective function using stochastic gradient ascent. Whereas standard policy gradient methods perform one gradient update per data sample, we propose a novel objective function that enables multiple epochs of minibatch updates. The new methods, which we call proximal policy optimization (PPO), have some of the benefits of trust region policy optimization (TRPO), but they are much simpler to implement, more general, and have better sample complexity (empirically). Our experiments test PPO on a collection of benchmark tasks, including simulated robotic locomotion and Atari game playing, and we show that PPO outperforms other online policy gradient methods, and overall strikes a favorable balance between sample complexity, simplicity, and wall-time.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/XDWVYD3Y/Schulman et al_2017_Proximal Policy Optimization Algorithms.pdf;/Users/brandonhosley/Zotero/storage/5UT3G33Z/1707.html}
 }
 
 @article{shoham2007a,

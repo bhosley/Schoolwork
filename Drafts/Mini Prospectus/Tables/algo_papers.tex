@@ -1,0 +1,19 @@
+\begin{table*}
+    \caption[]{Summary of Paper Features}
+    \label{tab:papers}
+    \renewcommand{\arraystretch}{1.5}
+    \pgfplotstabletypeset[
+    every head row/.style={
+        before row={&& \multicolumn{7}{c}{Environment} && \multicolumn{2}{c}{Testing}\\
+                    \cmidrule(lr){3-9}\cmidrule(lr){11-12}}, 
+        after row=\midrule,},
+    col sep=comma,
+    string type,
+    column type={@{ }c@{ }},
+    every even row/.style={after row={\rowcolor[gray]{0.9}}},
+    columns = {citekey, Short, Atari,MuJoCo,MPE,SC,SC2,GRF,Custom, Tuning, Baseline,Ablations},
+    columns/citekey/.style = {column name= },
+    columns/Short/.style = {column name=Algorithm},
+    %columns/Tuning/.style={column type= >{\centering\arraybackslash}p{19.5mm}},
+    ]{Papers-Table.csv}
+\end{table*}

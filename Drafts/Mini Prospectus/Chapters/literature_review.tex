@@ -3,13 +3,32 @@
 
 This chapter delves deeper into the current \gls{sota} and the 
 foundational work that has contributed to its development. 
-It is divided into sections covering the foundational elements 
-of reinforcement learning, the evolution to multi-agent systems, 
-and the progression to heterogeneous-agent systems. 
-The chapter will conclude by examining some of the open questions, 
-unaddressed challenges, and potential future directions in the field.
+It is divided into two main parts, the first a primer on relevant
+background material and the second a review of related work.
 
-% ------------------------------------------------------------------------------
+The background is further divided into sections covering the foundational 
+elements of reinforcement learning, the evolution to multi-agent systems
+as the logical extension of single-agent \gls{rl}, 
+the evolution to multi-agent systems from a game-theoretic perspective.
+%
+The related works is further divided into sections covering
+the algorithms of interest, simulation environments,
+and application papers.
+
+% Surveys
+% Algorithms
+% Environments
+% Applications
+
+% #TODO:
+% We need to do a related work section first.
+% Cover the works that Directly inform ours
+% Following the Related work, enter primer?
+
+%\section{Related Work}
+
+
+% ---------------------------------------------------------------------------- %
 \section{Reinforcement Learning Foundations}%
 
     \subsection*{Markov Decision Processes}%
@@ -132,7 +151,7 @@ handle large, complex problems where exact methods are intractable.
 Before examining \gls{rl} approaches to multi-agent systems, we will cover 
 several important concepts from the perspective of a single agent system.
 
-% ------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------- %
 \section{Single-Agent Reinforcement Learning}%
 
 Single-agent \gls{rl} extends the foundational principles of \glspl{mdp} 
@@ -196,7 +215,7 @@ dynamic programming and Monte Carlo methods. They update value estimates
 based on observed transitions without waiting for the end of an episode.
 Both methods use an \gls{step-size} parameter to determine the size of 
 the update based on \cref{eq:action-value_function}.
-
+%
 \textbf{SARSA} is an on-policy \gls{td} control algorithm that updates the 
 \gls{Q}-value using the \gls{Q}-value of the actual next state-action pair:
 %
@@ -220,7 +239,8 @@ from all actions available to the next state:
 \end{equation}
 %
 Consequently, Q-learning has a tendency to converge faster than SARSA,
-which may or may not be a desirable feature.
+which may or may not be a desirable feature, depending on the needs
+of the use-case.
 
     \subsection*{Exploration vs. Exploitation}
 
@@ -245,12 +265,14 @@ For example,
         \sum_{a^\prime\in A}\exp\left\{\gls{Q}(a^\prime|s)/\tau\right\}}
     \label{eq:softmax_action-value}
 \end{equation}
-However, \cite{cesa-bianchi2017} argue that this manner of 
-implementation fails to minimize regret compared to \(\epsilon\)-greedy 
+However, Cesa-Bianchi et al.~\cite{cesa-bianchi2017} argue that this manner 
+of implementation fails to minimize regret compared to \(\epsilon\)-greedy 
 and attribute it to the difficulty in tuning a \(\tau\) decay schedule~
 \cite{kaelbling1996,vermorel2005}.
 
-% ------------------------------------------------------------------------------
+% --- #TODO: Need a section on Neural Networks?
+
+% ---------------------------------------------------------------------------- %
 \section{Evolution to Multi-Agent Systems}%
 
 The evolution from single-agent \gls{rl} to multi-agent systems introduces new 
@@ -296,8 +318,7 @@ papoudakis2021,li2023d,zhou2023},
 %
 a broad term encompassing any algorithm with an arbitrary centralizing 
 mechanism. We assert that the term's breadth and ubiquity have made it 
-a defining trait of mainstream \gls{marl} and that it will remain the 
-norm until we begin to examine \gls{harl} algorithms.
+a defining trait of mainstream \gls{marl}.
 
 Within the \gls{ctde} paradigm, we wish to draw particular attention to 
 actor-critic training, derived from an almost identical single-agent 
@@ -321,6 +342,11 @@ shared critic~\cite{rashid2018,ackermann2019,li2023d,zhou2023}.
     \caption{Actor-Critic \gls{ctde}.}
     \label{fig:ctde_actor-critic}
 \end{wrapfigure}
+
+Rashid et al.~\cite*{rashid2018} and Li et al.~\cite*{li2023d}
+proposed algorithms that decrease the amount of centralization 
+of the critic functions, a change that will motivate later research
+into \gls{harl} algorithms.
 
     %\subsection*{Competitive Multi-Agent Systems}
     % To fix a subsection to wrap figure collision.
@@ -364,7 +390,7 @@ and non-convergence. Research in this area seeks to establish
 theoretical guarantees and practical methods for stable learning.
 
 
-% ------------------------------------------------------------------------------
+% ---------------------------------------------------------------------------- %
 \section{Evolution of MARL through the Lens of Games}%
 
 Building upon these foundational advancements, the exploration of \gls{marl} 
@@ -465,122 +491,71 @@ agent for each of the factions.
 
     \subsection*{OpenAI Five: Cooperative Agents in Competitive Settings}
 
-In a similar success, an OpenAI research team trained a group of agents 
-capable of world-class performance in the game Dota 2~\cite{berner2019}.
-Dota 2 bears some similarities to an \gls*{rts}; however, instead 
-of managing several units, the player controls a single unit. 
-The trade-off is that the single unit is more complex than those 
-featured in a typical \gls{rts}, and they are drawn from a pool that is 
-``massive and limitlessly diverse''~\cite{zotero-2643}.
+Similarly, an OpenAI research team achieved world-class performance 
+with a group of agents in the game Dota 2~\cite{berner2019}. 
+Dota 2 shares some similarities with \gls{rts} games; 
+however, instead of managing several units, players control a single, 
+more complex unit drawn from a ``massive and limitlessly diverse''
+pool~\cite{zotero-2643}.
 
-This complexity makes it difficult to compare the action space 
-between Dota 2 and StarCraft II. Additionally, the game is played 
-between two teams of five players. Thus, it would be necessary to 
-train an agent that could manage five complex units and decide which 
-units to choose, or to train multiple agents to specialize in 
-specific units and cooperate with different agents. 
+This complexity makes it difficult to compare the action space between 
+Dota 2 and StarCraft II. Additionally, Dota 2 is played between two 
+teams of five players. Therefore, training an agent for this game 
+involves either managing five complex units or training multiple agents 
+to specialize in specific units and cooperate with each other. 
 Berner et al.~\cite{berner2019} succeeded using the latter approach.
+
+Similar to the approach by Vinyals et al., the OpenAI team developed 
+a curriculum to effectively train their agents. Consistent with 
+standard software engineering practices (Gall's Law~\cite{gall1975}), 
+they developed the training curriculum iteratively.
+%
+They also had to contend with periodic software updates that affected gameplay.
+The general architecture they used for the agents appeared modular, 
+but none of the components were directly shared between agents.
+
+To improve training time and recover agent effectiveness after 
+significant updates, they employed a set of procedures called 
+``surgery,'' allowing offline updates to existing agents. 
+A notable surgery procedure highlighted in their paper~\cite{berner2019} 
+was the \emph{Net2Net}~\cite{chen2016} knowledge transfer, 
+enabling the training of an agent after a significant change 
+without discarding the previously used neural networks.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % --------------------------------- Edit Bar --------------------------------- %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%\section{Introduction to Heterogeneous-Agent Reinforcement Learning}
 
 
-The massive resources needed to accomplish this task 
-bolsters the success against would-be challengers.
 
-Much like Vinyals et al. the OpenAI team needed to develop a curriculum
-that could effectively train their agents.
-Consistent with standard software engineering practices 
-(Gall's Law~\cite{gall1975}) they developed the training curriculum iteratively.
+% ---------------------------------------------------------------------------- %
+%\section{Related Work}
+% --- Begin Related Work
+% Surveys
+% Algorithms
+% Environments
+% Applications
 
-They contended with periodic updates to the game, which typically featured
-changes that effected gameplay.
-
-The general architecture that they used for the agents
-had the appearance of modularity, but none of the components 
-were directly shared between agents.
-
-To improve training time and to recover agent effectiveness after
-significant updates they utilized a set of procedures that they called 
-``surgery'' which allowed offline updates to existing agents.
-
-The surgery highlighted in their paper~\cite{berner2019}
-was a \emph{Net2Net}~\cite{chen2016} knowledge transfer 
-which allowed them to begin the training of an agent 
-after a significant change without having to discard the
-previous neural networks used prior to the change.
+% #TODO: Lit Review Table
 
 
 
 \begin{comment}
-%\subsection*{Applications of MARL}
-%\Gls{marl}has been applied to a wide range of domains, 
-%demonstrating its versatility and effectiveness in solving complex, real-world problems. 
-%Notable applications include:
-    3.3 Applications of MARL
-	•	Autonomous Driving: Coordinated control of multiple autonomous vehicles to improve traffic flow and safety.
-	•	Robotics: Multi-robot systems for tasks such as search and rescue, where robots must collaborate to achieve a common objective.
-	•	Economics and Finance: Modeling and simulation of market dynamics involving multiple agents with competing interests.
-	•	Healthcare: Optimizing the allocation of resources and coordination of treatments across multiple healthcare providers.
-	•	Key Paper: Yang, Y. et al. (2023). Efficient policy learning in large-scale heterogeneous-agent environments.
-    3.2 Advances in MARL
-    The advancement of MARL includes the development of algorithms that allow agents to learn in environments with other learning agents, leading to applications in fields such as robotics, game theory, and economics.
-        •	Key Paper: Busoniu, L., Babuska, R., & De Schutter, B. (2008). A comprehensive survey of multi-agent reinforcement learning.
-        •	Key Paper: Mnih, V. et al. (2015). Human-level control through deep reinforcement learning.
-        •	Key Paper: Silver, D. et al. (2017). Mastering the game of Go without human knowledge.
-\end{comment}
+Related Surveys:
+Shao, K. et al. (2020). Is Multi-Agent Deep Reinforcement Learning the Answer or the Question? A Brief Survey.
+Papoudakis, G. et al. (2021). Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms.
 
+% ------    \section{Current State of the Art in HARL}
+\cite*{zhong2024} for HARL
 
-\section{Introduction to Heterogeneous-Agent Reinforcement Learning}
-
-
-\clearpage
-\begin{comment}
-    4. HARL
-    HARL extends MARL by allowing agents with different capabilities and knowledge to interact. 
-    This heterogeneity mirrors real-world scenarios more closely, where agents (e.g., robots, drones) often have diverse functionalities.
-4.1 Definition and Significance
-	•	Key Paper: Lowe, R. et al. (2017). Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments.
-4.2 Applications of HARL
-HARL has been applied in various domains such as autonomous driving, smart grids, and collaborative robotics, demonstrating its potential to solve complex, real-world problems.
-	•	Key Paper: Kraemer, L., & Banerjee, B. (2020). Multi-agent reinforcement learning as a rehearsal for decentralized planning.
-5. \section{Current State of the Art in HARL}
-5.1 Recent Advances
-Recent research has focused on enhancing the efficiency, scalability, and robustness of HARL algorithms. Significant contributions include the development of new learning paradigms and the application of HARL in increasingly complex environments.
-	•	Key Paper: Zhou, Y. et al. (2023). The role of hierarchy in multi-agent learning.
-	•	Key Paper: Yang, Y. et al. (2023). Efficient policy learning in large-scale heterogeneous-agent environments.
-5.2 Addressing Strategic Collapse
-One critical challenge in HARL is the risk of strategic collapse, where agents’ strategies become suboptimal when scaling up the number of agents or increasing environmental complexity. Addressing this issue is crucial for the practical deployment of HARL systems.
-	•	Key Paper: Papoudakis, G. et al. (2021). Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms.
-	•	Key Paper: Foerster, J. et al. (2018). Learning with Opponent-Learning Awareness.
-6. Open Challenges and Future Directions
-6.1 Scalability and Efficiency
-Improving the scalability and computational efficiency of HARL algorithms remains a significant challenge. Research in this area focuses on optimizing algorithms to handle large-scale agent populations without sacrificing performance.
-	•	Key Paper: Baker, B. et al. (2020). Emergent Tool Use from Multi-Agent Autocurricula.
-6.2 Policy Generalization
-Ensuring that HARL policies generalize well across different environments and agent configurations is essential for real-world applications. This involves developing robust learning strategies that can adapt to varying conditions.
-	•	Key Paper: Shao, K. et al. (2020). Is Multi-Agent Deep Reinforcement Learning the Answer or the Question? A Brief Survey.
-7. Conclusion
-The field of HARL holds great promise for advancing multi-agent systems, offering solutions to complex problems through the interaction of diverse agents. However, significant challenges remain, particularly in addressing strategic collapse and ensuring scalability and policy generalization. Future research must continue to push the boundaries of HARL, focusing on these critical issues to unlock its full potential.
-
-
-\section{Multi-Agent Reinforcement Learning}
 \subsection*{Multi-Agent Advantage Decomposition}
 \subsection*{Simultaneous Update}
 \subsection*{Sequential Update}
-\section{Heterogeneous-Agent Reinforcement Learning}
-\section{Self-play}
-\section{Strategic Collapse}
-\section{Key Algorithms}
-\subsection*{Multi-Agent DQNs}
-\subsection*{Actor-Critic methods} % (lowe2020)
-\subsection*{Counterfactual Regret Minimization }
-\subsection*{Joint Action Learners}
-\subsection*{MAPPO}
-\subsection*{HAPPO}
+
+Foerster, J. et al. (2018). Learning with Opponent-Learning Awareness.
 
 
 %Additionally, mediated reinforcement learning introduces the concept of mediators to ensure 
@@ -592,20 +567,205 @@ The field of HARL holds great promise for advancing multi-agent systems, offerin
 %capability to handle complex interactions and achieve high performance without human data 
 %(Sun et al., 2023).
 
-\cite*{zhong2024} for HARL
+Baker, B. et al. (2020). Emergent Tool Use from Multi-Agent Autocurricula.
+6.1 Scalability and Efficiency
+Improving the scalability and computational efficiency of HARL algorithms remains a significant challenge. Research in this area focuses on optimizing algorithms to handle large-scale agent populations without sacrificing performance.
 
+Kraemer, L., & Banerjee, B. (2020). Multi-agent reinforcement learning as a rehearsal for decentralized planning.
+Zhou, Y. et al. (2023). The role of hierarchy in multi-agent learning.
+Yang, Y. et al. (2023). Efficient policy learning in large-scale 
+Yang, Y. et al. (2023). Efficient policy learning in large-scale heterogeneous-agent environments.
+
+Traffic Light Control \cite{calvo2018}
 \end{comment}
+
+% Algorithms
+\section{SOTA Algorithms}
+
+In this section we review current \gls{sota} algorithms
+applicable to the multi-agent setting.
+These are the algorithms that this research is interested 
+in evaluating to determine if any have distinct advantages
+in extensibility, when applied to novel team configurations.
+
+% #TODO: Algo Table
+%\input{algo_papers}
+
+    \subsection*{Trust Region Policy Optimization}
+
+Schulman et al.~\cite{schulman2017} introduce \gls{trpo}, an iterative 
+method designed to optimize policies with guaranteed monotonic improvement. 
+\Gls{trpo} combines theoretical rigor with practical approximations to 
+develop a robust algorithm suitable for large nonlinear policies, 
+such as neural networks. Additionally, they sought to develop 
+an algorithm that required minimal hyperparameter tuning.
+%
+The trust region refers to a subspace within the agent's action
+space that is created using a \gls{kl} lower bound~%
+\cite{kakade2002} for policy improvement.
+
+Li et al.~\cite{li2023c} extend \gls{trpo} to multi-agent systems
+utilizing a distributed consensus optimization mechanism to 
+evaluate trust region. They propose a decentralized MARL algorithm called 
+\gls{matrpo}, which allows agents to optimize 
+distributed policies based on local observations and private rewards 
+without needing to know the details of other agents. 
+\gls{matrpo} is fully decentralized and privacy-preserving, 
+sharing only a likelihood ratio with neighbors during training. 
+
+Zhong et al.~\cite{zhong2024} take \gls{matrpo} and weight the 
+trust region using a \gls{kl} bound calculated for each agent.
+They call this extension \gls{hatrpo}.
+
+\subsection*{Proximal Policy Optimization}
+Schulman et al.~\cite{schulman2017a} also introduced \gls{ppo}.
+\Gls{ppo} is a policy gradient algorithm, but unlike previous 
+policy gradient methods, the \gls{ppo} objective function allows 
+multiple epochs of minibatch updates, improving sample efficiency. 
+\Gls{ppo} alternates between sampling data from the environment and 
+optimizing a surrogate objective function using stochastic gradient ascent. 
+The algorithm retains the benefits of \gls{trpo} but is simpler to 
+implement and more generalizable.
+
+% -- MAPPO
+Yu et al.~\cite*{yu2022} apply \gls{ppo} to multi-agent environments
+by implementing a number of agents with shared parameters.
+They observe that without any further changes this implementation,
+they call \gls{mappo}, performs \emph{surprisingly} well.
+They compare to a baseline of a team of completely independent 
+\gls{ppo} agents, labeled IPPO.
+
+% -- HAPPO
+Zhong et al.~\cite{zhong2024} extend \gls{mappo} 
+into \gls{happo} by taking the shared action-values of 
+\gls{mappo} and scaling by an individual action-value function.
+
+
+
+% -- IMPALA
+% -- APPO
+
+\subsection*{Asynchronous Actor-Critic}
+
+When investigating a way to apply principles of deep learning to \gls{rl}
+problems, Mnih et al.~\cite{mnih2016} observed that the structure of
+Actor-Critic algorithms were extremely amenable to batch updates.
+Further, batch updating allows for asynchronous execution of 
+the episodes that would comprise the batch between updates.
+This did not reduce the compute time requirement for training, 
+but it allowed users to leverage multiple workers, 
+greatly reducing real-world training time.
+Further, they proposed a compromise between off-policy and on-policy
+methods using an advantage calculation;
+\begin{equation}
+    A(s,a) = \gls{Q}(s,a) - \gls{V}(s)
+\end{equation}
+They named their proposed algorithm \gls{a3c}.
+
+Lowe et al.~\cite{lowe2020} described a difficulty in applying traditional 
+algorithms like Q-learning and policy gradient to multi-agent settings.
+Their proposed approach, called \gls{maddpg} would combine \gls{a3c} 
+with a deep-deterministic policy gradient algorithm.
+Their algorithm is the example used in \cref{fig:ctde_actor-critic}.
+
+Fujimoto et al.~\cite{fujimoto2018} take a similar approach to address 
+a concern of function approximation errors in actor-critic methods, 
+which can lead to overestimated value estimates and suboptimal policies.
+Their approach is first to employ Double Q-learning, taking the 
+minimum value between a pair of critics to limit overestimation;
+second to delay policy updates.
+Hence, they call their proposed algorithm 
+
+
+
+
+% -- HAA2C
+% -- HADDPG & HATD3
+
+
+
 \begin{comment}
-We intend to use this section for accomplish three things;
-\begin{enumerate}
-    \item Convince the committee that this is important
-    \item Convince the committee that this is an open question
-    \item Convince the committee that we understand the current state of the literature and the 
-    scope of the intended research. (Implicitly indicating the feasibility of the research)
-\end{enumerate}
+\subsection{Addressing Function Approximation Error in Actor-Critic Methods}
+% http://arxiv.org/abs/1802.09477
+Fujimoto et al. (2018) tackle the issue of function approximation errors in actor-critic methods, 
+which can lead to overestimated value estimates and suboptimal policies~\cite{fujimoto2018}. 
+They propose mechanisms to minimize these errors on both the actor and the critic. The algorithm 
+builds on Double Q-learning by taking the minimum value between a pair of critics to limit 
+overestimation. Additionally, delaying policy updates is suggested to reduce per-update error. 
+Evaluations on the OpenAI gym tasks show that the proposed method outperforms state-of-the-art 
+approaches in every tested environment, demonstrating its robustness and effectiveness in 
+addressing approximation errors.
 
-Include a lit review table.
-\begin{tabular}{ccc}
-    Paper & contributions & ref 
-\end{tabular}
+\subsection{Counterfactual Multi-Agent Policy Gradients} % https://arxiv.org/abs/1705.08926
+Foerster et al. (2018) introduce Counterfactual Multi-Agent (COMA) policy gradients, a multi-agent 
+actor-critic method designed to efficiently learn decentralized policies~\cite{foerster2018}. 
+COMA uses a centralized critic to estimate the Q-function and decentralized actors to optimize 
+agent policies. It addresses multi-agent credit assignment challenges by using a counterfactual 
+baseline that marginalizes out a single agent's action while keeping others fixed. 
+Evaluated in the StarCraft unit micromanagement testbed, COMA significantly improves 
+performance over other multi-agent actor-critic methods and achieves results competitive with 
+state-of-the-art centralized controllers.
+
+\subsection{QMIX: Monotonic Value Function Factorization for Deep Multi-Agent 
+Reinforcement Learning} % http://arxiv.org/abs/1803.11485
+Rashid et al. (2018) introduce QMIX, a value-based multi-agent reinforcement learning (MARL) 
+method that facilitates centralized training and decentralized execution~\cite{rashid2018}. 
+QMIX estimates joint action-values as a non-linear combination of per-agent values conditioned on 
+local observations, with a structural monotonicity constraint ensuring consistency between 
+centralized and decentralized policies. The method is evaluated on StarCraft II micromanagement 
+tasks, showing significant performance improvements over existing value-based MARL methods. 
+QMIX effectively leverages centralized training to derive robust decentralized policies, 
+making it a strong approach for complex coordination tasks in multi-agent settings.
+
+\subsection{Continuous Control with Deep Reinforcement Learning} % http://arxiv.org/abs/1509.02971
+Lillicrap et al. (2019) present an adaptation of Deep Q-Learning (DQN) 
+for continuous action domains through an actor-critic, 
+model-free algorithm based on deterministic policy gradients (DPG)~\cite{lillicrap2019}. 
+The proposed algorithm effectively solves over 20 simulated physics tasks, 
+such as cartpole swing-up, dexterous manipulation, legged locomotion, and car driving, 
+using the same learning algorithm, network architecture, and hyperparameters. 
+It achieves performance competitive with planning algorithms that have full access to the 
+domain dynamics and derivatives. Additionally, the algorithm can learn policies directly from 
+raw pixel inputs, demonstrating robustness and flexibility across various tasks.
+
+\subsection{F2A2: Flexible Fully-decentralized Approximate Actor-critic for Cooperative 
+Multi-agent Reinforcement Learning} % http://jmlr.org/papers/v24/20-700.html
+Li et al. (2023) present F2A2, a fully decentralized actor-critic framework for cooperative 
+multi-agent reinforcement learning (MARL)~\cite{li2023d}. They address the limitations of 
+centralized MARL algorithms, such as the curse of dimensionality and computational complexity. 
+F2A2 employs a primal-dual hybrid gradient descent algorithm to learn individual agents separately,
+reducing information transmission through parameter sharing and novel modeling-other-agents 
+methods. Experiments in cooperative Multi-agent Particle Environment and StarCraft II demonstrate 
+that F2A2 performs competitively against conventional centralized and decentralized methods, 
+achieving scalability and stability in large-scale environments.
+
+\subsection{Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized Critics} 
+% https://arxiv.org/abs/1910.01465v2
+Ackermann et al. (2019) address the issue of value function overestimation bias in multi-agent 
+reinforcement learning (MARL) by proposing the use of double centralized critics to mitigate 
+this bias~\cite{ackermann2019}. Drawing inspiration from Double Q-Learning in single-agent RL, 
+the proposed method is evaluated on six mixed cooperative-competitive tasks, 
+showing significant improvements over current methods. 
+Additionally, the approach is tested on high-dimensional robotic tasks, 
+demonstrating its capability to learn decentralized policies in complex environments. 
+The results highlight the effectiveness of reducing overestimation bias and the potential for 
+broader applications in MARL.
+
+
+
+\subsection{Heterogeneous-Agent Reinforcement Learning} % http://jmlr.org/papers/v25/23-0488.html
+Zhong et al. (2024) address the challenges in cooperative multi-agent reinforcement learning (MARL)
+with heterogeneous agents~\cite{zhong2024}. 
+Traditional approaches often rely on parameter sharing among agents, limiting their applicability 
+to homogeneous-agent settings and resulting in training instability and lack of convergence 
+guarantees. The authors propose Heterogeneous-Agent Reinforcement Learning (HARL) algorithms 
+to overcome these issues. Key contributions include the multi-agent 
+advantage decomposition lemma and the sequential update scheme. 
+The paper introduces Heterogeneous-Agent Trust Region Learning (HATRL) and its approximations, 
+HATRPO and HAPPO, which provide stability and convergence guarantees. 
+Additionally, the Heterogeneous-Agent Mirror Learning (HAML) framework strengthens theoretical 
+guarantees and facilitates the design of new cooperative MARL algorithms. 
+The proposed algorithms are comprehensively tested on six challenging benchmarks, demonstrating 
+superior effectiveness and stability compared to existing methods like MAPPO and QMIX.
 \end{comment}
+

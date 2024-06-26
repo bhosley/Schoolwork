@@ -1,12 +1,13 @@
 In this chapter we propose contributions divided into three sections.
 The sections are intended to represent coherent groups of publishable results.
-The target venue of publication is \emph{Autonomous Agents and Multi-Agent Systems}
-~\cite{zotero-2605} or publication with similar objectives.
+The target venue of publication is \emph{Autonomous Agents and Multi-Agent 
+Systems}~\cite{zotero-2605} or publication with similar objectives.
 
-\Cref{fig:timeline} details the proposed timeline for the contributions listed in the following
-sections. The bars of the gantt chart represent the period time during with the subject of the
-bar is expected to be a primary focus. The end of the bar coincides with the point at which
-the associated paper is finished and has been submitted to some publication.
+\Cref{fig:timeline} details the proposed timeline for the contributions listed 
+in the following sections. The bars of the gantt chart represent the period 
+time during with the subject of the bar is expected to be a primary focus. 
+The end of the bar coincides with the point at which the associated paper 
+is finished and has been submitted to some publication.
 
 \begin{figure}[htbp]
     \begin{center}
@@ -79,60 +80,69 @@ the associated paper is finished and has been submitted to some publication.
 \label{sec:contribution1}
 
 \subsection{Motivation}
-Contribution 1 is motivated by the need to establish a broader baseline evaluation of relevant 
-\gls{marl} and \gls{harl} algorithms. Specifically, we aim to determine if there are significant 
-differences in the generalizability of the resulting policies given a fixed model class.
-We will measure generalizability by assessing solution quality under deviations from the training 
-conditions, i.e., when agents trained under a given policy are tasked with solving problems 
-alongside teammates trained under separate instances.
-This exploratory study aims to evaluate candidate training algorithms for use in the 
-latter stages of our research.
+Contribution 1 is motivated by the need to establish a broader baseline 
+evaluation of relevant \gls{marl} and \gls{harl} algorithms. Specifically, 
+we aim to determine if there are significant differences in the 
+generalizability of the resulting policies given a fixed model class.
+We will measure generalizability by assessing solution quality under 
+deviations from the training conditions, i.e., when agents trained under a 
+given policy are tasked with solving problems alongside teammates trained 
+under separate instances. This exploratory study aims to evaluate candidate 
+training algorithms for use in the latter stages of our research.
 
 \subsection{Methodology}
-We will train a set of \gls{marl} and \gls{harl} algorithms across candidate scenarios 
-multiple times, with the number of iterations determined by the available time and 
-computational resources on the university cluster. This phase will provide data on training time, 
-consistency of performance, and variance in training curves.
+We will train a set of \gls{marl} and \gls{harl} algorithms across candidate 
+scenarios multiple times, with the number of iterations determined by the 
+available time and computational resources on the university cluster. 
+This phase will provide data on training time, consistency of performance, 
+and variance in training curves.
 
-Next, we will evaluate the algorithms in purely cooperative tasks using teams constructed from 
-agents drawn from separate training instances. We expect \gls{marl} training instances to produce 
-agents with sufficiently similar policies, resulting in teams that demonstrate similar, 
-albeit slightly reduced, levels of effectiveness. In contrast, \gls{harl} allows 
-agents to converge on distinct policies, potentially leading to diverse team behaviors. 
-The absence of existing research on this scenario suggests a wide range of possible outcomes.
+Next, we will evaluate the algorithms in purely cooperative tasks using 
+teams constructed from agents drawn from separate training instances. 
+We expect \gls{marl} training instances to produce agents with sufficiently 
+similar policies, resulting in teams that demonstrate similar, 
+albeit slightly reduced, levels of effectiveness. In contrast, 
+\gls{harl} allows agents to converge on distinct policies, 
+potentially leading to diverse team behaviors. The absence of existing 
+research on this scenario suggests a wide range of possible outcomes.
 
-For tasks where training instances converge on distinct agent roles, we hypothesize that evaluation
-teams composed of similarly specialized agents will significantly under-perform compared to teams 
-with appropriately diverse agents. Finally, we will assess the algorithms in competitive settings, 
-introducing non-stationarity from adversarial agents. 
-This allows for testing team mixing in a manner similar to the cooperative tasks and 
-evaluating performance against adversarial agents trained in separate instances.
+For tasks where training instances converge on distinct agent roles, 
+we hypothesize that evaluation teams composed of similarly specialized 
+agents will significantly under-perform compared to teams 
+with appropriately diverse agents. Finally, we will assess the algorithms 
+in competitive settings, introducing non-stationarity from adversarial agents. 
+This allows for testing team mixing in a manner similar to the cooperative 
+tasks and evaluating performance against adversarial agents trained in 
+separate instances.
 
 \subsection{Resources}
-To perform this battery of tests, we intend to use a framework that facilitates the application 
-of each algorithm to various environments, thereby improving interoperability. 
-We believe that RLlib~\cite{liang2018}, part of the larger Ray project~\cite{zotero-2599}, 
-is the ideal tool for this line of research. RLlib offers several important features that 
-streamline the construction of the appropriate pipeline, integrating well with the \glspl{api} 
-of other mature frameworks that provide beneficial functionalities.
+To perform this battery of tests, we intend to use a framework that 
+facilitates the application of each algorithm to various environments, 
+thereby improving interoperability. We believe that RLlib~\cite{liang2018}, 
+part of the larger Ray project~\cite{zotero-2599}, 
+is the ideal tool for this line of research. RLlib offers several important 
+features that streamline the construction of the appropriate pipeline, 
+integrating well with the \glspl{api} of other mature frameworks that 
+provide beneficial functionalities.
 
 \begin{description}
     \item[Data Collection:] 
-    There are multiple options for data collection such as \emph{Tensorboard}~\cite{zotero-2601} 
-    and \emph{Weights and Balances}~\cite{zotero-2603}. 
+    There are multiple options for data collection such as \emph{Tensorboard}~%
+    \cite{zotero-2601} and \emph{Weights and Balances}~\cite{zotero-2603}. 
     The most common metrics observed in the papers reviewed for this \printdoctype 
     were episode returns and win rates, typically recorded at intervals~
     \cite{zhong2024,yu2022,papoudakis2021,lowe2020,zheng2020}.
     \item[Algorithms:] 
-    RLlib already implements several popular algorithms, though not all algorithms of interest are 
-    included. Some algorithms may need to be developed within the existing framework standards.
+    RLlib already implements several popular algorithms, though not all 
+    algorithms of interest are included. Some algorithms may need to be 
+    developed within the existing framework standards.
     \item[Environments:] 
-    RLlib supports a wide variety of environments. Most of the environments used in 
-    the referenced papers are already implemented within this framework.
+    RLlib supports a wide variety of environments. Most of the environments 
+    used in the referenced papers are already implemented within this framework.
     \item[Policy Management:] 
     RLlib includes functions for exporting policies in a pickled format. 
-    More importantly, it offers functions for loading policies and managing agents 
-    independently in \gls{marl} settings.
+    More importantly, it offers functions for loading policies and managing 
+    agents independently in \gls{marl} settings.
 \end{description}
 \begin{figure}[htbp]
     \includegraphics[width=\linewidth]{rllib_marl_policies.png}
@@ -141,31 +151,35 @@ of other mature frameworks that provide beneficial functionalities.
 \end{figure}
 
 \subsection{Anticipated Obstacles}
-One anticipated obstacle is that some of the algorithms of interest are not currently 
-implemented within the RLlib framework. While this does not prevent experimentation, 
-it does limit the scope of our study. To address this, we plan to either translate 
-these algorithms into the RLlib framework or build wrappers to ensure compatibility.
+One anticipated obstacle is that some of the algorithms of interest 
+are not currently implemented within the RLlib framework. While this 
+does not prevent experimentation, it does limit the scope of our study. 
+To address this, we plan to either translate these algorithms into 
+the RLlib framework or build wrappers to ensure compatibility.
 
 \subsection{Expected Contributions}
 \begin{description}
     \item[Baseline Evaluation:] 
-    Establishing a comprehensive baseline for \gls{marl} and \gls{harl} algorithms, 
-    particularly those presented in \cite{zhong2024}, by rigorously examining their 
-    performance across various scenarios.
+    Establishing a comprehensive baseline for \gls{marl} and \gls{harl} 
+    algorithms, particularly those presented in \cite{zhong2024}, 
+    by rigorously examining their performance across various scenarios.
     \item[Training Consistency:] 
-    Providing insights into the relationship between training time, consistency of performance, 
-    and variance in training curves for \gls{marl} and \gls{harl} algorithms.
+    Providing insights into the relationship between training time, 
+    consistency of performance, and variance in training curves for 
+    \gls{marl} and \gls{harl} algorithms.
     \item[Cooperative Task Performance:] 
-    Evaluating the performance of agents in cooperative tasks when teams are constructed from 
-    agents trained in separate instances, highlighting the differences between 
-    \gls{marl} and \gls{harl} in terms of policy convergence and team effectiveness.
+    Evaluating the performance of agents in cooperative tasks when teams are 
+    constructed from agents trained in separate instances, highlighting the 
+    differences between \gls{marl} and \gls{harl} in terms of policy 
+    convergence and team effectiveness.
     \item[Competitive Task Evaluation:] 
-    Assessing the performance of algorithms in competitive settings, examining the impact of 
-    non-stationarity introduced by adversarial agents, and the effectiveness of team mixing.
+    Assessing the performance of algorithms in competitive settings, 
+    examining the impact of non-stationarity introduced by adversarial agents, 
+    and the effectiveness of team mixing.
     \item[Novel Insights:] 
-    Generating new insights into the behavior of agents when deployed in novel configurations, 
-    contributing to the broader understanding of multi-agent reinforcement 
-    learning and its practical applications.
+    Generating new insights into the behavior of agents when deployed in novel 
+    configurations, contributing to the broader understanding of 
+    multi-agent reinforcement learning and its practical applications.
     \item[Algorithm Implementations:] 
     Contributing to a growing, open source project.
 \end{description}

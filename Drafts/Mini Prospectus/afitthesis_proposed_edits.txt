@@ -1,0 +1,2 @@
+@ line 700
++ \newcommand\printdoctype{\@doctype\ }

@@ -56,8 +56,7 @@ and capabilities, maximizing the potential of each agent within the swarm.
 distinct roles, capabilities, policies, or objectives. It is an 
 underexplored area, but early results suggest that \gls{harl} algorithms
 have the potential to significantly improve problem-solving efficiency 
-and adaptability, potentially surpassing the performance of homogeneous agent 
-groups~\cite{calvo2018}.
+and adaptability~\cite{calvo2018}.
 
 The practical applications of heterogeneous actors are vast, particularly in 
 scenarios where coordination and cooperation are crucial. For example, 
@@ -74,7 +73,7 @@ While some scenarios necessitate a \gls{harl} approach, it remains to
 be seen if the inherent flexibility of such systems can be effectively 
 leveraged to address the variable team size problem described earlier, 
 or if it can improve the efficiency of training in situations where 
-\gls{marl} is otherwise effective.
+\gls{marl} is otherwise effective and sufficient.
 
 %To fully realize the potential benefits of \gls{harl}, it is crucial to 
 %understand the trade-offs involved. This \printdoctype will survey current 
@@ -124,7 +123,7 @@ To achieve the level of proficiency demonstrated in AlphaStar,
 Vinyals et al.~\cite{vinyals2019} employed a multifaceted approach 
 that integrated deep learning, imitation learning, 
 reinforcement learning, and multi-agent learning. 
-The specifics of these contributions will be explored in detail 
+The specifics of these contributions are explored in detail 
 in~\Cref{ch:literature_review}.
 
     \subsection*{Multi-agent Reinforcement Learning}%:Learning to Work Together}
@@ -210,14 +209,15 @@ OpenAI Five~\cite{berner2019} have underscored the potential of \gls{marl}
 to achieve superhuman performance in complex, dynamic environments,
 and inspired a large amount of follow-on research.
 However, their approaches still involve training agents to 
-operate as a team with a predefined number of members 
-(the former being even more limited than the latter).
+operate as a team with a predefined number of members;
+AlphaStar~\cite{vinyals2019} effectively a team of one,
+and OpenAI Five~\cite{berner2019} always a team of five.
 
 Smit et al.~\cite{smit2023} was inspired by AlphaStar~\cite{vinyals2019},
 and attempted to make significant efficiency improvements.
 One of the methods that they tried (ultimately unsuccessfully) was to train a 
 subset of the final team, effectively the same as the scalability problem.
-We will revisit Smit et al.~\cite{smit2023} in \cref{ch:literature_review}.
+We revisit Smit et al.~\cite{smit2023} in \cref{ch:literature_review}.
 
 While these pioneering efforts have demonstrated remarkable achievements, 
 they also highlight significant challenges that remain unresolved. 

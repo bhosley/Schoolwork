@@ -5,7 +5,7 @@
 
 % --- Paths ---
 \makeatletter
-\def\input@path{{Chapters/}{other/}{Figures/}}
+\def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
 \makeatother
 \graphicspath{{Figures}}
 
@@ -24,6 +24,12 @@
 \usepackage{tikz}
 \usetikzlibrary{automata, positioning}
 \usepackage{wrapfig}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.7}
 
 % --- Formatting Tools ---
 \usepackage{tcolorbox}  % For call out boxes
@@ -123,6 +129,8 @@
 
 \begin{document}
 \maketitle % This command will create all the prefatory pages.
+
+% Perhaps this should be added to the \chapter command (cls line 1205)
 
 % --------------------
 \chapter{Introduction}%
