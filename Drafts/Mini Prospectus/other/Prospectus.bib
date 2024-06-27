@@ -265,6 +265,19 @@
   file = {/Users/brandonhosley/Zotero/storage/JRZPUISW/Chen et al_2016_Net2Net.pdf;/Users/brandonhosley/Zotero/storage/2RZBC4W3/1511.html}
 }
 
+@inproceedings{ellis2023,
+  title = {{{SMACv2}}: {{An Improved Benchmark}} for {{Cooperative Multi-Agent Reinforcement Learning}}},
+  shorttitle = {{{SMACv2}}},
+  author = {Ellis, Benjamin and Cook, Jonathan and Moalla, Skander and Samvelyan, Mikayel and Sun, Mingfei and Mahajan, Anuj and Foerster, Jakob Nicolaus and Whiteson, Shimon},
+  date = {2023-11-02},
+  url = {https://openreview.net/forum?id=5OjLGiJW3u},
+  urldate = {2024-04-24},
+  abstract = {The availability of challenging benchmarks has played a key role in the recent progress of machine learning. In cooperative multi-agent reinforcement learning, the StarCraft Multi-Agent Challenge (SMAC) has become a popular testbed for centralised training with decentralised execution. However, after years of sustained improvement on SMAC, algorithms now achieve near-perfect performance. In this work, we conduct new analysis demonstrating that SMAC lacks the stochasticity and partial observability to require complex *closed-loop* policies. In particular, we show that an *open-loop* policy conditioned only on the timestep can achieve non-trivial win rates for many SMAC scenarios. To address this limitation, we introduce SMACv2, a new version of the benchmark where scenarios are procedurally generated and require agents to generalise to previously unseen settings (from the same distribution) during evaluation. We also introduce the extended partial observability challenge (EPO), which augments SMACv2 to ensure meaningful partial observability. We show that these changes ensure the benchmark requires the use of *closed-loop* policies. We evaluate state-of-the-art algorithms on SMACv2 and show that it presents significant challenges not present in the original benchmark. Our analysis illustrates that SMACv2 addresses the discovered deficiencies of SMAC and can help benchmark the next generation of MARL methods. Videos of training are available on our [website](https://sites.google.com/view/smacv2).},
+  eventtitle = {Thirty-Seventh {{Conference}} on {{Neural Information Processing Systems Datasets}} and {{Benchmarks Track}}},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/JQSY6GHU/Ellis et al_2023_SMACv2.pdf}
+}
+
 @online{espeholt2018,
   title = {{{IMPALA}}: {{Scalable Distributed Deep-RL}} with {{Importance Weighted Actor-Learner Architectures}}},
   shorttitle = {{{IMPALA}}},
@@ -372,6 +385,27 @@
   langid = {english},
   keywords = {Deep learning,Machine learning,Multi-agent learning,Multi-agent systems,Reinforcement learning,Survey},
   file = {/Users/brandonhosley/Zotero/storage/UJLZVR4C/Gronauer_Diepold_2022_Multi-agent deep reinforcement learning.pdf}
+}
+
+@article{hernandez-leal2019,
+  title = {A {{Survey}} and {{Critique}} of {{Multiagent Deep Reinforcement Learning}}},
+  author = {Hernandez-Leal, Pablo and Kartal, Bilal and Taylor, Matthew E.},
+  date = {2019-11},
+  journaltitle = {Autonomous Agents and Multi-Agent Systems},
+  shortjournal = {Auton Agent Multi-Agent Syst},
+  volume = {33},
+  number = {6},
+  eprint = {1810.05587},
+  eprinttype = {arxiv},
+  eprintclass = {cs},
+  pages = {750--797},
+  issn = {1387-2532, 1573-7454},
+  doi = {10.1007/s10458-019-09421-1},
+  url = {http://arxiv.org/abs/1810.05587},
+  urldate = {2024-06-26},
+  abstract = {Deep reinforcement learning (RL) has achieved outstanding results in recent years. This has led to a dramatic increase in the number of applications and methods. Recent works have explored learning beyond single-agent scenarios and have considered multiagent learning (MAL) scenarios. Initial results report successes in complex multiagent domains, although there are several challenges to be addressed. The primary goal of this article is to provide a clear overview of current multiagent deep reinforcement learning (MDRL) literature. Additionally, we complement the overview with a broader analysis: (i) we revisit previous key components, originally presented in MAL and RL, and highlight how they have been adapted to multiagent deep reinforcement learning settings. (ii) We provide general guidelines to new practitioners in the area: describing lessons learned from MDRL works, pointing to recent benchmarks, and outlining open avenues of research. (iii) We take a more critical tone raising practical challenges of MDRL (e.g., implementation and computational demands). We expect this article will help unify and motivate future research to take advantage of the abundant literature that exists (e.g., RL and MAL) in a joint effort to promote fruitful research in the multiagent community.},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/8DGHEDHI/Hernandez-Leal et al_2019_A Survey and Critique of Multiagent Deep Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/BY8BGNZ9/1810.html}
 }
 
 @incollection{hoang2023,
@@ -544,6 +578,14 @@
   langid = {english}
 }
 
+@misc{liu2022light,
+  title = {Light {{Aircraft Game}}: {{A}} Lightweight, Scalable, Gym-Wrapped Aircraft Competitive Environment with Baseline Reinforcement Learning Algorithms},
+  author = {Liu, Qihan and Jiang, Yuhua and Ma, Xiaoteng},
+  date = {2022},
+  url = {https://github.com/liuqh16/CloseAirCombat},
+  organization = {GitHub}
+}
+
 @online{lowe2020,
   title = {Multi-{{Agent Actor-Critic}} for {{Mixed Cooperative-Competitive Environments}}},
   author = {Lowe, Ryan and Wu, Yi and Tamar, Aviv and Harb, Jean and Abbeel, Pieter and Mordatch, Igor},
@@ -647,6 +689,23 @@
   langid = {english},
   organization = {Defense News},
   file = {/Users/brandonhosley/Zotero/storage/BUYKV3CJ/pentagon-unveils-replicator-drone-program-to-compete-with-china.html}
+}
+
+@online{samvelyan2019,
+  title = {The {{StarCraft Multi-Agent Challenge}}},
+  author = {Samvelyan, Mikayel and Rashid, Tabish and de Witt, Christian Schroeder and Farquhar, Gregory and Nardelli, Nantas and Rudner, Tim G. J. and Hung, Chia-Man and Torr, Philip H. S. and Foerster, Jakob and Whiteson, Shimon},
+  options = {useprefix=true},
+  date = {2019-12-09},
+  eprint = {1902.04043},
+  eprinttype = {arxiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1902.04043},
+  url = {http://arxiv.org/abs/1902.04043},
+  urldate = {2024-06-26},
+  abstract = {In the last few years, deep multi-agent reinforcement learning (RL) has become a highly active area of research. A particularly challenging class of problems in this area is partially observable, cooperative, multi-agent learning, in which teams of agents must learn to coordinate their behaviour while conditioning only on their private observations. This is an attractive research area since such problems are relevant to a large number of real-world systems and are also more amenable to evaluation than general-sum problems. Standardised environments such as the ALE and MuJoCo have allowed single-agent RL to move beyond toy domains, such as grid worlds. However, there is no comparable benchmark for cooperative multi-agent RL. As a result, most papers in this field use one-off toy problems, making it difficult to measure real progress. In this paper, we propose the StarCraft Multi-Agent Challenge (SMAC) as a benchmark problem to fill this gap. SMAC is based on the popular real-time strategy game StarCraft II and focuses on micromanagement challenges where each unit is controlled by an independent agent that must act based on local observations. We offer a diverse set of challenge maps and recommendations for best practices in benchmarking and evaluations. We also open-source a deep multi-agent RL learning framework including state-of-the-art algorithms. We believe that SMAC can provide a standard benchmark environment for years to come. Videos of our best agents for several SMAC scenarios are available at: https://youtu.be/VZ7zmQ\_obZ0.},
+  pubstate = {preprint},
+  keywords = {Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/TJCL63RQ/Samvelyan et al_2019_The StarCraft Multi-Agent Challenge.pdf;/Users/brandonhosley/Zotero/storage/N4RKHKPB/1902.html}
 }
 
 @online{schulman2017,
