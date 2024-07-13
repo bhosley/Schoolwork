@@ -1,0 +1,125 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[letterpaper,left=0.5in,right=0.5in,top=0.5in,bottom=0.5in]{geometry}
+%\usepackage{toc}
+
+% --- Fonts ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{libertine}
+
+% --- Math ---
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+% --- References ---
+\usepackage{hyperref}
+
+% --- Other Common Packages ---
+%\usepackage{booktabs}
+%\usepackage{graphicx}
+%\usepackage{multicol}
+%\usepackage[shortlabels]{enumitem}
+%\usepackage[table]{xcolor}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+\usepackage{comment}
+
+%\newcommand\chapter{ X }
+\renewcommand{\thequestion}{\textbf{\thesection.\arabic{question}}}
+\renewcommand{\questionlabel}{\thequestion}
+
+% -------------------------------- Top Matter -------------------------------- %
+\newcommand{\class}{PhD Specialty} % This is the name of the course 
+\newcommand{\assignmentname}{Examination} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+%\printanswers % this includes the solutions sections
+
+% --------------------------------- Document --------------------------------- %
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+ 
+% ---------------------------------- Header ---------------------------------- %
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname} &\\%Your name here instead, obviously
+	\textbf{\assignmentname } & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+
+% ----------------------------------- Body ----------------------------------- %
+\tableofcontents
+\hrule
+
+
+\section{Dr. Yielding's Questions}
+
+
+While HARL is a subfield of MARL, the distinction is one that seems to be ill-%
+defined int he literature. 
+
+In the broadest sense the term could accurately refer to any case of MARL
+in which the agents are not identical copies. 
+
+
+
+
+	% What is the clear distinction between HARL and MARL? 
+	% Is HARL just MARL where the agents may not share the same policy? 
+	% Is it a distinct family of RL algorithms? 
+	% There seems to be a whirlwind of terminology use of "HARL" and "heterogeneous" that would be wise to clarify. 
+	% The only reference that specifically coins the term "HARL" seems to be an Irish conference paper in the intro, reference [9].
+	% For this distinction, please clarify how it is, relates to, and/or is distinguished from the following, and where the concepts may overlap:
+
+\begin{questions}
+	\question
+	% Specific heterogeneous versions of RL algorithms such as HAA2C (from A3C), 
+	% HADDPG (from DDPG) etc (reference [53]). 
+	% If it is specifically meant to be this, will you be implementing them yourself as policy classes in Rllib for your experiments? This is perhaps hinted at on page 25 under Contribution 1
+
+	% -------------------------- End Question -------------------------- %
+
+
+	\question 
+	% How agents' policy (and thus ANNs), observations, and actions align during training or execution:
+	% a. Training multiple agents under a single policy that controls all agents in the same action space (overlord ie one 'agent' controlling multiple actors)
+	% VS
+	% b. Training multiple agents that share the same policy but have individual observation/action (swarm/flock ie each actor is its own agent but the same policy)
+	% VS
+	% c. Training multiple agents that may or not share a policy in the same environment (ie a policy mapping function used like in Rllib, as shown in your Figure 9 from Rllib docs)
+
+\begin{comment}
+a - Decidedly not, I would argue that this may not even necessarily qual as MARL
+b - Def MARL not HARL
+c - * Here is were we live. Circumstantially HARL
+\end{comment}
+
+	% -------------------------- End Question -------------------------- %
+
+
+	\question
+	% 3. Training vs execution methods:
+	% a. Training multiple agents together in an environment, then executing separately in different environments. 
+	% Reference [37] calls this CTDE - Centralized Training Decentralized Execution Cooperative MARL, and might be the same as (a) above
+	% b. Training multiple agents separately then executing in different environments. Reference [37] calls this DTDE - Decentralized Training Decentralized Execution Cooperative MARL and might be the same as (b) above
+	
+	% -------------------------- End Question -------------------------- %
+	
+	% This could be done perhaps as a mixture of an extra paragraph or two in the intro defining terminology
+	% and editing elsewhere in the doc to use said terminology or adding 1-2 clarifying sentences throughout
+	% the doc where relevant
+
+\end{questions}
+
+\section{Dr. Cox's Questions}
+\section{Dr. Robbins' Questions}
+
+\end{document}
