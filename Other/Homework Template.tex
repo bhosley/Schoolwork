@@ -1,22 +1,24 @@
 \documentclass[12pt,letterpaper]{exam}
-\usepackage[utf8]{inputenc}
+\usepackage[letterpaper,left=0.5in,right=0.5in,top=0.5in,bottom=0.5in]{geometry}
+
+% --- Fonts ---
 \usepackage[T1]{fontenc}
-\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
-
+\usepackage[utf8]{inputenc}
 \usepackage{libertine}
-\usepackage{multicol}
-\usepackage[shortlabels]{enumitem}
 
-\usepackage{booktabs}
-\usepackage[table]{xcolor}
-
+% --- Math ---
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{bbm}
 
-\usepackage{hyperref}
-\usepackage{graphicx}
+% --- Other Common Packages ---
+%\usepackage{booktabs}
+%\usepackage{graphicx}
+%\usepackage{multicol}
+%\usepackage[shortlabels]{enumitem}
+%\usepackage[table]{xcolor}
+%\usepackage{hyperref}
 %\usepackage{wrapfig}
 %\usepackage{capt-of}
 %\usepackage{tikz}
@@ -24,34 +26,32 @@
 %\usetikzlibrary{shapes,arrows,positioning,patterns}
 %\usepackage{pythonhighlight}
 
+% --- Question Numbering ---
 \newcommand\chapter{ X }
 \renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
 \renewcommand{\questionlabel}{\thequestion}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% -------------------------------- Top Matter -------------------------------- %
 \newcommand{\class}{  } % This is the name of the course 
 \newcommand{\assignmentname}{Homework \# \chapter} % 
 \newcommand{\authorname}{Hosley, Brandon} % 
 \newcommand{\workdate}{\today} % 
 \printanswers % this includes the solutions sections
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 \begin{document}
 \pagestyle{plain}
 \thispagestyle{empty}
 \noindent
  
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ---------------------------------- Header ---------------------------------- %
 \noindent
 \begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
-	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\class} & \textbf{\authorname} &\\%Your name here instead, obviously
 	\textbf{\assignmentname } & \textbf{\workdate} & \\
 \end{tabular*}\\ 
 \rule{\textwidth}{2pt}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+% ----------------------------------- Body ----------------------------------- %
 \begin{questions}
 
 	\setcounter{question}{1-1}
@@ -60,7 +60,7 @@
 	\begin{solution}
 	
 	\end{solution}
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	% -------------------------- End Question -------------------------- %
 		
 
 \end{questions}
