@@ -21,7 +21,8 @@
 
 % --- Other Common Packages ---
 %\usepackage{booktabs}
-%\usepackage{graphicx}
+\usepackage{graphicx}
+\graphicspath{{/figures/}}
 %\usepackage{multicol}
 %\usepackage[shortlabels]{enumitem}
 %\usepackage[table]{xcolor}
@@ -79,8 +80,9 @@ interactions within the system, not just minor variations.
 
 Prior to my literature review, I would have considered HARL to apply 
 specifically to cases where agents are distinct from the outset, 
-either in their capabilities (\(A_1 \neq A_2\)) or their observations 
-(\(O_1 \neq O_2\)). 
+either in their capabilities (For action-space \(\mathcal{A}\), 
+\(\mathcal{A}_1 \neq \mathcal{A}_2\)) or their observation spaces
+(\(\mathcal{O}_1 \neq \mathcal{O}_2\)). 
 This intrinsic heterogeneity is evident in works like \cite{calvo2018} 
 (the Irish conference paper mentioned in Dr. Yielding's question)
 and implicitly reflected in \cite{berner2019} (OpenAI Five), 
@@ -166,32 +168,42 @@ Below, I apply these distinctions to the cases proposed:
 	\end{parts}
 	% -------------------------- End Question -------------------------- %
 
-	
-	
+	\question
+	Referencing Centralized Training Decentralized Execution (CTDE) 
+	and Decentralized Training Decentralized Execution (DTDE) as employed 
+	by Li et al. in their FA2A paper \cite{li2023d}, we see that CTDE is 
+	the most common format for Actor-Critic based MARL algorithms 
+	\cite{foerster2017, rashid2018, lowe2020, li2023d, zhou2023}.
+
+	Li et al. \cite{li2023d} and Wen et al. \cite{wen2021} are the only 
+	papers I found that discuss the contrary implementation, DTDE. 
+	In both cases, the authors motivate DTDE with practical concerns, 
+	particularly the limitations of inter-agent communication in 
+	distributed systems. These considerations are important, but the 
+	relation to HARL remains the same as described in answer 1.2 (c).
+	% -------------------------- End Question -------------------------- %
+\end{questions}
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % --------------------------------- Edit Bar --------------------------------- %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-	\question
-	\begin{parts}
-		\part
-		\part
-	\end{parts}
-
-
-
-
-
-	% 3. Training vs execution methods:
-	% a. Training multiple agents together in an environment, then executing separately in different environments. 
-	% Reference [37] calls this CTDE - Centralized Training Decentralized Execution Cooperative MARL, and might be the same as (a) above
-	% b. Training multiple agents separately then executing in different environments. Reference [37] calls this DTDE - Decentralized Training Decentralized Execution Cooperative MARL and might be the same as (b) above
-	
-	% -------------------------- End Question -------------------------- %
-\end{questions}
 
 \section{Dr. Robbins' Questions}
+
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.3\linewidth]{figures/single_lander.png}
+	\caption{Lunar Lander}
+\end{figure}
+
+
 
 \section{Dr. Cox's Questions}
 
