@@ -1,0 +1,451 @@
+\documentclass[12 pt,letterpaper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+
+\usepackage{mathptmx}
+\SetSymbolFont{letters}{bold}{OML}{cmm}{b}{it}
+\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\allowdisplaybreaks
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{Homework 1}
+\fancyhead[C]{Due: October 11, 2024}
+\fancyhead[R]{Page \thepage\ of \pageref{LastPage}}
+\fancyfoot[L]{Air Force Institute of Technology}
+\fancyfoot[R]{Fall 2024 (Hosley)}
+\fancyfoot[C]{MATH 600: Mathematical Analysis}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\newcommand{\la}{\lambda}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+\newcommand{\brI}{\mathbf{I}}
+\newcommand{\brJ}{\mathbf{J}}
+\newcommand{\brM}{\mathbf{M}}
+\newcommand{\brR}{\mathbf{R}}
+\newcommand{\brT}{\mathbf{T}}
+
+\newcommand{\bfa}{\boldsymbol{a}}
+\newcommand{\bfA}{\boldsymbol{A}}
+\newcommand{\bfb}{\boldsymbol{b}}
+\newcommand{\bfB}{\boldsymbol{B}}
+\newcommand{\bfc}{\boldsymbol{c}}
+\newcommand{\bfC}{\boldsymbol{C}}
+\newcommand{\bfD}{\boldsymbol{D}}
+\newcommand{\bfe}{\boldsymbol{e}}
+\newcommand{\bfE}{\boldsymbol{E}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bfF}{\boldsymbol{F}}
+\newcommand{\bfG}{\boldsymbol{G}}
+\newcommand{\bfH}{\boldsymbol{H}}
+\newcommand{\bfI}{\boldsymbol{I}}
+\newcommand{\bfJ}{\boldsymbol{J}}
+\newcommand{\bfK}{\boldsymbol{K}}
+\newcommand{\bfL}{\boldsymbol{L}}
+\newcommand{\bfM}{\boldsymbol{M}}
+\newcommand{\bfp}{\boldsymbol{p}}
+\newcommand{\bfP}{\boldsymbol{P}}
+\newcommand{\bfR}{\boldsymbol{R}}
+\newcommand{\bfT}{\boldsymbol{T}}
+\newcommand{\bfu}{\boldsymbol{u}}
+\newcommand{\bfU}{\boldsymbol{U}}
+\newcommand{\bfv}{\boldsymbol{v}}
+\newcommand{\bfV}{\boldsymbol{V}}
+\newcommand{\bfw}{\boldsymbol{w}}
+\newcommand{\bfW}{\boldsymbol{W}}
+\newcommand{\bfx}{\boldsymbol{x}}
+\newcommand{\bfX}{\boldsymbol{X}}
+\newcommand{\bfy}{\boldsymbol{y}}
+\newcommand{\bfY}{\boldsymbol{Y}}
+\newcommand{\bfz}{\boldsymbol{z}}
+\newcommand{\bfZ}{\boldsymbol{Z}}
+
+\newcommand{\bfone}{\boldsymbol{1}}
+\newcommand{\bfzero}{\boldsymbol{0}}
+\newcommand{\bfxi}{\boldsymbol{\xi}}
+\newcommand{\bfXi}{\boldsymbol{\Xi}}
+\newcommand{\bfphi}{\boldsymbol{\varphi}}
+\newcommand{\bfPhi}{\boldsymbol{\varPhi}}
+\newcommand{\bfPi}{\boldsymbol{\varPi}}
+\newcommand{\bfpsi}{\boldsymbol{\psi}}
+\newcommand{\bfPsi}{\boldsymbol{\varPsi}}
+\newcommand{\bfchi}{\boldsymbol{\chi}}
+\newcommand{\bfzeta}{\boldsymbol{\zeta}}
+\newcommand{\bfdelta}{\boldsymbol{\delta}}
+\newcommand{\bfDelta}{\boldsymbol{\varDelta}}
+\newcommand{\bfGamma}{\boldsymbol{\varGamma}}
+\newcommand{\bfOmega}{\boldsymbol{\varOmega}}
+\newcommand{\bfSigma}{\boldsymbol{\varSigma}}
+\newcommand{\bfLambda}{\boldsymbol{\varLambda}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+
+\newcommand{\rmA}{\mathrm{A}}
+\newcommand{\rmB}{\mathrm{B}}
+\newcommand{\rmc}{\mathrm{c}}
+\newcommand{\rmC}{\mathrm{C}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\rme}{\mathrm{e}}
+\newcommand{\rmi}{\mathrm{i}}
+\newcommand{\rmj}{\mathrm{j}}
+\newcommand{\rmk}{\mathrm{k}}
+\newcommand{\rms}{\mathrm{s}}
+\newcommand{\rmS}{\mathrm{S}}
+\newcommand{\rmT}{\mathrm{T}}
+
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Part}{\mathrm{part}}
+\newcommand{\Null}{\mathrm{null}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\real}{\operatorname{Re}}
+\newcommand{\imag}{\operatorname{Im}}
+\newcommand{\cond}{\operatorname{cond}}
+
+\newcommand{\im}{\operatorname{im}}
+
+\newcommand{\conv}[2]{{#1}\ast{#2}}
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}}
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}}
+
+\newcommand{\mat}[2]{\left[\begin{array}{#1}#2\end{array}\right]}
+\newcommand{\dmat}[2]{\left|\begin{array}{#1}#2\end{array}\right|}
+\newcommand{\arbset}[1]{\left\{{#1}\right\}}
+\newcommand{\arbparen}[1]{\left({#1}\right)}
+\newcommand{\sign}{\operatorname{sign}}
+
+\newcommand{\abs}[1]{|{#1}|}
+\newcommand{\bigabs}[1]{\bigl|{#1}\bigr|}
+\newcommand{\Bigabs}[1]{\Bigl|{#1}\Bigr|}
+\newcommand{\biggabs}[1]{\biggl|{#1}\biggr|}
+\newcommand{\Biggabs}[1]{\Biggl|{#1}\Biggr|}
+
+\newcommand{\paren}[1]{({#1})}
+\newcommand{\bigparen}[1]{\bigl({#1}\bigr)}
+\newcommand{\Bigparen}[1]{\Bigl({#1}\Bigr)}
+\newcommand{\biggparen}[1]{\biggl({#1}\biggr)}
+\newcommand{\Biggparen}[1]{\Biggl({#1}\Biggr)}
+
+\newcommand{\bracket}[1]{[{#1}]}
+\newcommand{\bigbracket}[1]{\bigl[{#1}\bigr]}
+\newcommand{\Bigbracket}[1]{\Bigl[{#1}\Bigr]}
+\newcommand{\biggbracket}[1]{\biggl[{#1}\biggr]}
+\newcommand{\Biggbracket}[1]{\Biggl[{#1}\Biggr]}
+
+\newcommand{\set}[1]{\{{#1}\}}
+\newcommand{\bigset}[1]{\bigl\{{#1}\bigr\}}
+\newcommand{\Bigset}[1]{\Bigl\{{#1}\Bigr\}}
+\newcommand{\biggset}[1]{\biggl\{{#1}\biggr\}}
+\newcommand{\Biggset}[1]{\Biggl\{{#1}\Biggr\}}
+
+\newcommand{\norm}[1]{\|{#1}\|}
+\newcommand{\bignorm}[1]{\bigl\|{#1}\bigr\|}
+\newcommand{\Bignorm}[1]{\Bigl\|{#1}\Bigr\|}
+\newcommand{\biggnorm}[1]{\biggl\|{#1}\biggr\|}
+\newcommand{\Biggnorm}[1]{\Biggl\|{#1}\Biggr\|}
+
+\newcommand{\ip}[2]{\langle{#1},{#2}\rangle}
+\newcommand{\bigip}[2]{\bigl\langle{#1},{#2}\bigr\rangle}
+\newcommand{\Bigip}[2]{\Bigl\langle{#1},{#2}\Bigr\rangle}
+\newcommand{\biggip}[2]{\biggl\langle{#1},{#2}\biggr\rangle}
+\newcommand{\Biggip}[2]{\Biggl\langle{#1},{#2}\Biggr\rangle}
+
+\newcommand{\alphi}{\renewcommand{\labelenumi}{(\alph{enumi})}}
+\newcommand{\alphii}{\renewcommand{\labelenumii}{(\alph{enumii})}}
+\newcommand{\alphiii}{\renewcommand{\labelenumiii}{(\alph{enumiii})}}
+\newcommand{\romani}{\renewcommand{\labelenumi}{(\roman{enumi})}}
+\newcommand{\romanii}{\renewcommand{\labelenumii}{(\roman{enumii})}}
+\newcommand{\romaniii}{\renewcommand{\labelenumiii}{(\roman{enumiii})}}
+\newcommand{\arabici}{\renewcommand{\labelenumi}{(\arabic{enumi})}}
+\newcommand{\arabicii}{\renewcommand{\labelenumii}{(\arabic{enumii})}}
+\newcommand{\arabiciii}{\renewcommand{\labelenumiii}{(\arabic{enumiii})}}
+
+\begin{document}
+
+\noindent
+Let $\calX$ be a set,
+and let $\set{\calS_n}_{n\in\calN}$ be a collection of subsets of $\calX$, indexed by the members of an (arbitrary) set $\calN$.
+The \textit{union} of $\set{\calS_n}_{n\in\calN}$ is defined to be the set of all points in $\calX$ that are contained in at least one subset $\calS_n$:
+\begin{equation*}
+\bigcup_{n\in\calN}\calS_n
+:=\set{x\in\calX: \exists\, n_0\in\calN\text{ such that }x\in\calS_{n_0}}.
+\end{equation*}
+Meanwhile, the \textit{intersection} of $\set{\calS_n}_{n\in\calN}$ is defined to be the set of all points in $\calX$ that are contained in every $\calS_n$:
+\begin{equation*}
+\bigcap_{n\in\calN}\calS_n
+:=\set{x\in\calX: x\in\calS_n\ \forall\,n\in\calN}.
+\end{equation*}
+For example, when $\calX=\bbR$, $\calN=\bbN=\set{1,2,3,\dotsc}$ and $\calS_n=(-\frac1n,\frac1n)=\set{x\in\bbR: -\frac1n<x<\frac1n}$ for each $n\in\bbN$,
+\begin{equation*}
+\bigcup_{n\in\calN}\calS_n
+=\bigcup_{n=1}^\infty(-\tfrac1n,\tfrac1n)=(-1,1),
+\quad
+\bigcap_{n\in\calN}\calS_n
+=\bigcap_{n=1}^\infty(-\tfrac1n,\tfrac1n)=\set{0}.
+\end{equation*}
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+The \textit{complement} of a subset $\calS$ of $\calX$ is defined to be the set of all points in $\calX$ that are not members of $\calS$:
+\begin{equation*}
+\calS^\rmc:=\set{x\in\calX: x\notin\calS}.
+\end{equation*}
+Clearly, we have $(\calS^\rmc)^\rmc=\calS$ for any $\calS\subseteq\calX$.
+Prove \textit{De Morgan's Laws}, namely that:
+\begin{equation*}
+\Bigparen{\,\bigcup_{n\in\calN}\calS_n}^\rmc
+=\bigcap_{n\in\calN}\calS_n^\rmc,
+\quad
+\Bigparen{\,\bigcap_{n\in\calN}\calS_n}^\rmc
+=\bigcup_{n\in\calN}\calS_n^\rmc.
+\end{equation*}
+\end{enumerate}
+
+\noindent
+A \textit{function} from $\calX$ to $\calY$ is a fixed rule that assigns an element $f(x)$ of $\calY$ to every element $x$ of $\calX$.
+(More formally, a \textit{function} is a subset $\calF$ of
+$\calX\times\calY:=\set{(x,y): x\in\calX, y\in\calY}$
+that ``passes the vertical line test," that is,
+has the property that if $(x_1,y_1),(x_2,y_2)\in\calF$ and $x_1=x_2$ then $y_1=y_2$.)
+We usually denote such a function as ``$f:\calX\rightarrow\calY$,"
+and refer to $\calX$ as the \textit{domain} of $f$ and to $\calY$ as the \textit{codomain} of $f$.
+Meanwhile the \textit{image (range)} of $f$ is
+\begin{equation*}
+f(\calX)
+:=\set{f(x): x\in\calX}
+=\set{y\in\calY: \exists\, x\in\calX\text{ such that }f(x)=y},
+\end{equation*}
+which is a subset of $\calY$.
+
+\begin{enumerate}
+\setcounter{enumi}{1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Let $f:\calX\rightarrow\calY$.
+The \textit{image (under $f$)} of a subset $\calS$ of $\calX$ is the set
+$f(\calS):=\set{f(x): x\in\calS}$.
+
+For any subsets $\set{\calS_n}_{n\in\calN}$ of $\calX$, show that
+\begin{equation*}
+f\Bigparen{\,\bigcup_{n\in\calN}\calS_n}
+=\,\bigcup_{n\in\calN}f(\calS_n),
+\qquad
+f\Bigparen{\,\bigcap_{n\in\calN}\calS_n}
+\subseteq\bigcap_{n\in\calN}f(\calS_n).
+\end{equation*}
+
+Moreover, by means of an example, prove that the second statement can not be strengthened to an equality in general:
+give an example of $f:\bbR\rightarrow\bbR$ and subsets $\calS_1,\calS_2$ of $\bbR$ such that $f(\calS_1\cap\calS_2)\neq f(\calS_1)\cap f(\calS_2)$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Let $f:\calX\rightarrow\calY$.
+The \textit{preimage (under $f$)} of a subset $\calS$ of $\calY$ is the set
+$f^{-1}(\calS):=\set{x\in\calX: f(x)\in\calS}$.
+
+\textit{Note: This notation is standard but can be misleading.
+To be clear, we are NOT assuming here that $f$ is invertible and taking the image of $\calS$ under $f^{-1}$.}
+
+Though this is not obvious, preimages behave more nicely with complements, unions and intersections than images do;
+for any subsets $\calS$ and $\set{\calS_n}_{n\in\calN}$ of $\calY$, show that:
+\begin{equation*}
+f^{-1}(\calS^\rmc)
+=[f^{-1}(\calS)]^\rmc,
+\qquad
+f^{-1}\Bigparen{\,\bigcup_{n\in\calN}\calS_n}
+=\,\bigcup_{n\in\calN}f^{-1}(\calS_n),
+\qquad
+f^{-1}\Bigparen{\,\bigcap_{n\in\calN}\calS_n}
+=\bigcap_{n\in\calN}f^{-1}(\calS_n).
+\end{equation*}
+Later on, we will use these facts to help understand \textit{continuous} functions.
+
+\end{enumerate}
+
+\clearpage
+\section*{Question 1}
+
+At risk of being unnecessarily verbose,
+we will leverage three corollaries drawn from the definitions outlined in question 1.
+
+\emph{Corollary 1.1:}
+Because \(\mathcal{S}\) are defined as subsets of \(\mathcal{X}\),
+then by the definition of complement,
+\[x\notin\mathcal{S} \Leftrightarrow x\in\mathcal{S}^c\] 
+
+\emph{Corollary 1.2:}
+For an arbitrary element \(x_0\in\mathcal{X}\) and arbitrary \(\mathcal{S}\subseteq\mathcal{X}\),
+the following statements are equivalent;
+\begin{itemize}
+    \item Element \(x_0\) is not within set \(\mathcal{S}\),
+    \item Every element within \(\mathcal{S}\) is not equal to element \(x_0\),
+    \item There does not exist any element in \(\mathcal{S}\) that is equal to \(x_0\).
+\end{itemize}
+\[
+    x_0 \notin \mathcal{S}
+    \quad \Leftrightarrow \quad
+    x_0 \neq x \,\forall\ x \in \mathcal{S}
+    \quad \Leftrightarrow \quad
+    \nexists\ x \in \mathcal{S} \text{ s.t. } x = x_0
+\]
+
+\emph{Corollary 1.3:}
+Combining the two previous corollaries we may further assert that the non-existence of element 
+\(x_0\) within a set implies existence within the complimentary set,
+\[
+    \nexists\ x \in \mathcal{S} \text{ s.t. } x = x_0
+    \quad \Leftrightarrow \quad
+    x_0 \notin \mathcal{S}
+    \quad \Leftrightarrow \quad
+    x\in\mathcal{S}^c
+    \quad \Leftrightarrow \quad
+    \exists\ x \in \mathcal{S}^c \text{ s.t. } x = x_0
+\]
+
+Then, we demonstrate the first part of De Morgan's Law as follows,
+
+\begin{align*}
+    \left(\bigcup_{n\in\mathcal{N}} \mathcal{S}_n\right)^c
+    &= \left\{x \in \mathcal{X} : \exists\, n_0 \in \mathcal{N}
+        \text{ s.t. } x \in \mathcal{S}_{n_0}\right\}^c && \text{by definition of union}\\
+    &= \left\{x \in \mathcal{X} : \nexists\, n_0 \in \mathcal{N}
+        \text{ s.t. } x \in \mathcal{S}_{n_0}\right\} && \text{by Corollary 1.3}\\
+    &= \left\{x \in \mathcal{X} : x \notin \mathcal{S}_{n}
+        \,\forall\, n \in \mathcal{N} \right\} && \text{by Corollary 1.2}\\
+    &= \left\{x \in \mathcal{X} : x \in \mathcal{S}_{n}^{c}
+        \,\forall\, n \in \mathcal{N} \right\} && \text{by Corollary 1.1}\\
+    &= \bigcap_{n\in\calN}\calS_n^\rmc, && \text{by definition of intersection}.
+\end{align*}
+
+The second part of DeMorgan's Law is shown by,
+
+\begin{align*}
+    \left(\bigcap_{n\in\mathcal{N}} \mathcal{S}_n\right)^c
+    &= \left\{x \in \mathcal{X} : x \in \mathcal{S}_{n} 
+        \,\forall\, n \in \mathcal{N}\right\}^c && \text{by definition of intersection} \\
+    &= \left\{x \in \mathcal{X} : x \notin \mathcal{S}_{n}^{c} 
+        \,\forall\, n \in \mathcal{N}\right\}^c && \text{by Corollary 1.1} \\
+    &= \left\{x \in \mathcal{X} : \nexists\, n_0 \in \mathcal{N}
+        \text{ s.t. } x \in \mathcal{S}_{n_0}^{c}\right\}^c && \text{by Corollary 1.2} \\
+    &= \left\{x \in \mathcal{X} : \exists\, n_0 \in \mathcal{N}
+        \text{ s.t. } x \in \mathcal{S}_{n_0}^{c}\right\} && \text{by Corollary 1.3} \\
+    &= \bigcup_{n\in\calN}\calS_n^\rmc, && \text{by definition of union}.
+\end{align*}
+
+\clearpage
+\section*{Question 2}
+
+Let \(\mathcal{A} := \bigcup_{n\in\mathcal{N}} \mathcal{S}_n\), 
+then \(\mathcal{S}_n \subseteq \mathcal{A}\ \forall n\in\mathcal{N}\).
+That is, for arbitrary \(x\in\mathcal{X}, n\in\mathcal{N}\) such that 
+\(x\in\mathcal{S}_n\) it is also the case that \(x\in\mathcal{A}\).
+Explicating the elements of \(f(\mathcal{A})\) and elements of the union of \(f(\mathcal{S}_n)\)
+we see that they are equivalent,
+\begin{align*}
+    \bigcup_{n\in\mathcal{N}} f(S_n) 
+    &= \bigcup_{n\in\mathcal{N}} \left\{f(x): x\in\mathcal{S}_n \right\} \\
+    &= \left\{f(x): \exists n\in\mathcal{N}\text{ s.t. }x\in\mathcal{S}_n\right\} \\
+    &= \left\{f(x): x\in\mathcal{X}\exists n\in\mathcal{N}\text{ s.t. }x\in\mathcal{S}_n\right\} \\
+    &= \left\{f(x): x\in\mathcal{A} \right\} \\
+    &= f(\mathcal{A})
+\end{align*}
+\\
+Next, let \(\mathcal{B} := \bigcap_{n\in\mathcal{N}} \mathcal{S}_n\).
+Consequently, \(\forall n\in\mathcal{N},\ \mathcal{B} \subseteq \mathcal{S}_n\).
+Which is, \[x\in\mathcal{B} \Rightarrow x\in\mathcal{S}_n,\ \forall n\in\mathcal{N},\]
+thus, \[f(x)\in f(\mathcal{B}) \Rightarrow f(x)\in f(\mathcal{S}_n),\ \forall n\in\mathcal{N}.\]
+Then, note that,
+\[
+    \{f(x)\in f(\mathcal{S}_n) \forall n\in\mathcal{N}\}
+    = \bigcap_{n\in\mathcal{N}} f(\mathcal{S}_n),
+\]
+and we see that 
+\[f(\mathcal{B}) \subseteq f(\bigcap_{n\in\mathcal{N}} f(\mathcal{S}_n)).\]
+Next, we would show equality by completing mutual containment; showing that
+\(f(\bigcap_{n\in\mathcal{N}} f(\mathcal{S}_n)) \subseteq f(\mathcal{B})\).
+\\
+However, this is not always the case, which will be shown in answer to the 
+final part of the homework question.
+\\[2em]
+\emph{Counter Example:}
+
+Let \(S_1:=\mathbb{N}=\mathbb{Z}^+_0\), \(S_2:=-\mathbb{N}=\mathbb{Z}^-_0\), and \(f(x) = \abs{x}\) 
+(explicitly: the absolute value of x).
+Then,
+\[f(S_1\cap S_2) = \{0\} \quad \text{ and } \quad f(S_1)\cap f(S_2) = \mathbb{N} .\]
+
+
+\clearpage
+\section*{Question 3}
+
+\setcounter{section}{3}
+\subsection{}
+For the first identity given in the question, the equality can be shown more explicitly
+as follows:
+\begin{align*}
+    f^{-1}(\mathcal{S}^c)
+    &= \left\{x\in\mathcal{X} : f^{-1}(x)\in\mathcal{S}^c\right\} \\
+    &= \left\{x\in\mathcal{X}: f^{-1}(x)\notin\mathcal{S}\right\} \\
+    &= \left\{x\in\mathcal{X}: f^{-1}(x)\in\mathcal{S}\right\}^c \\
+    &= \left[f^{-1}(\mathcal{S})\right]^c.
+\end{align*}
+
+\subsection{}
+Although the preimage concept itself is unintuitive, its behavior when using 
+$f^{-1}(\calS):=\set{x\in\calX: f(x)\in\calS}$
+makes showing the next two identities fairly straight-forward.
+First,
+
+\begin{align*}
+    \bigcup_{n\in\mathcal{N}} f^{-1}\left(\mathcal{S}_n\right)
+    &= \bigcup_{n\in\mathcal{N}} \left\{x\in\mathcal{X} : f^{-1}(x)\in\mathcal{S}_n\right\} \\
+    &= \left\{x\in\mathcal{X} : \exists n_0\in\mathcal{N} \text{ s.t. }
+    f^{-1}(x)\in\mathcal{S}_{n_0}\right\} \\
+    &= \left\{x\in\mathcal{X} : f^{-1}(x)\in\bigcup_{n\in\mathcal{N}} \mathcal{S}_n\right\} \\
+    &= f^{-1}\left(\bigcup_{n\in\mathcal{N}} \mathcal{S}_n\right).
+\end{align*}
+
+\subsection{}
+Finally,
+
+\begin{align*}
+    \bigcap_{n\in\mathcal{N}} f^{-1}\left(\mathcal{S}_n\right)
+    &= \bigcap_{n\in\mathcal{N}} \left\{x\in\mathcal{X} : f^{-1}(x)\in\mathcal{S}_n\right\} \\
+    &= \left\{x\in\mathcal{X} : f^{-1}(x)\in\mathcal{S}_n \forall n\in\mathcal{N}\right\} \\
+    &= \left\{x\in\mathcal{X} : f^{-1}(x)\in \bigcap_{n\in\mathcal{N}} \mathcal{S}_n \right\} \\
+    &= f^{-1}\left(\bigcap_{n\in\mathcal{N}} \mathcal{S}_n\right).
+\end{align*}
+
+\end{document} 
