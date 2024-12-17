@@ -1,135 +1,150 @@
-@article{abeywickrama2022,
-  title = {Emergence of Norms in Interactions with Complex Rewards},
-  author = {Abeywickrama, Dhaminda B. and Griffiths, Nathan and Xu, Zhou and Mouzakitis, Alex},
-  date = {2022-10-26},
-  journaltitle = {Autonomous Agents and Multi-Agent Systems},
-  shortjournal = {Auton Agent Multi-Agent Syst},
-  volume = {37},
+@online{lowe2020,
+  title = {Multi-{{Agent Actor-Critic}} for {{Mixed Cooperative-Competitive Environments}}},
+  author = {Lowe, Ryan and Wu, Yi and Tamar, Aviv and Harb, Jean and Abbeel, Pieter and Mordatch, Igor},
+  date = {2020-03-14},
+  eprint = {1706.02275},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1706.02275},
+  url = {http://arxiv.org/abs/1706.02275},
+  urldate = {2023-02-12},
+  abstract = {We explore deep reinforcement learning methods for multi-agent domains. We begin by analyzing the difficulty of traditional algorithms in the multi-agent case: Q-learning is challenged by an inherent non-stationarity of the environment, while policy gradient suffers from a variance that increases as the number of agents grows. We then present an adaptation of actor-critic methods that considers action policies of other agents and is able to successfully learn policies that require complex multi-agent coordination. Additionally, we introduce a training regimen utilizing an ensemble of policies for each agent that leads to more robust multi-agent policies. We show the strength of our approach compared to existing methods in cooperative as well as competitive scenarios, where agent populations are able to discover various physical and informational coordination strategies.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing},
+  file = {/Users/brandonhosley/Zotero/storage/Q54TTJQQ/Lowe et al. - 2020 - Multi-Agent Actor-Critic for Mixed Cooperative-Com.pdf;/Users/brandonhosley/Zotero/storage/F3DU3EG3/1706.html}
+}
+
+@article{wei2022,
+  title = {Low-{{Latency Federated Learning Over Wireless Channels With Differential Privacy}}},
+  author = {Wei, Kang and Li, Jun and Ma, Chuan and Ding, Ming and Chen, Cailian and Jin, Shi and Han, Zhu and Poor, H. Vincent},
+  date = {2022-01},
+  journaltitle = {IEEE Journal on Selected Areas in Communications},
+  volume = {40},
   number = {1},
-  pages = {2},
-  issn = {1573-7454},
-  doi = {10.1007/s10458-022-09585-3},
-  url = {https://doi.org/10.1007/s10458-022-09585-3},
-  urldate = {2024-06-18},
-  abstract = {Autonomous agents are becoming increasingly ubiquitous and are playing an increasing role in wide range of safety-critical systems, such as driverless cars, exploration robots and unmanned aerial vehicles. These agents operate in highly dynamic and heterogeneous environments, resulting in complex behaviour and interactions. Therefore, the need arises to model and understand more complex and nuanced agent interactions than have previously been studied. In this paper, we propose a novel agent-based modelling approach to investigating norm emergence, in which such interactions can be investigated. To this end, while there may be an ideal set of optimally compatible actions there are also combinations that have positive rewards and are also compatible. Our approach provides a step towards identifying the conditions under which globally compatible norms are likely to emerge in the context of complex rewards. Our model is illustrated using the motivating example of self-driving cars, and we present the scenario of an autonomous vehicle performing a left-turn at a T-intersection.},
-  langid = {english},
-  keywords = {Agent interactions,Agent-based modelling,Norm emergence,Reinforcement learning},
-  file = {/Users/brandonhosley/Zotero/storage/YYXAD6N3/Abeywickrama et al_2022_Emergence of norms in interactions with complex rewards.pdf}
+  pages = {290--307},
+  issn = {1558-0008},
+  doi = {10.1109/JSAC.2021.3126052},
+  abstract = {In federated learning (FL), model training is distributed over clients and local models are aggregated by a central server. The performance of uploaded models in such situations can vary widely due to imbalanced data distributions, potential demands on privacy protections, and quality of transmissions. In this paper, we aim to minimize FL training delay over wireless channels, constrained by overall training performance as well as each client’s differential privacy (DP) requirement. We solve this problem in a multi-agent multi-armed bandit (MAMAB) framework to deal with the situation where there are multiple clients confronting different unknown transmission environments, e.g., channel fading and interference. Specifically, we first transform long-term constraints on both training performance and each client’s DP into a virtual queue based on the Lyapunov drift technique. Then, we convert the MAMAB to a max-min bipartite matching problem at each communication round, by estimating rewards with the upper confidence bound (UCB) approach. More importantly, we propose two efficient solutions to this matching problem, i.e., a modified Hungarian algorithm and greedy matching with a better alternative (GMBA), of which the former can achieve the optimal solution with high complexity while the latter approaches a better trade-off by enabling verified low-complexity with little performance loss. In addition, we develop an upper bound on the expected regret of this MAMAB based FL framework, which shows a linear growth over the logarithm of communication rounds, justifying its theoretical feasibility. Extensive experimental results are conducted to validate the effectiveness of our proposed algorithms, and the impacts of various parameters on the FL performance over wireless edge networks are also discussed.},
+  eventtitle = {{{IEEE Journal}} on {{Selected Areas}} in {{Communications}}},
+  keywords = {Computational modeling,Data models,differential privacy,Federated learning,Interference,max-min bipartite matching,multi-agent multi-armed bandit,Servers,Training,Wireless communication,Wireless sensor networks},
+  file = {/Users/brandonhosley/Library/Mobile Documents/com~apple~CloudDocs/ZotFile/Wei et al_2022_Low-Latency Federated Learning Over Wireless Channels With Differential Privacy.pdf}
 }
 
-@online{ackermann2019,
-  title = {Reducing {{Overestimation Bias}} in {{Multi-Agent Domains Using Double Centralized Critics}}},
-  author = {Ackermann, Johannes and Gabler, Volker and Osa, Takayuki and Sugiyama, Masashi},
-  date = {2019-10-03},
-  url = {https://arxiv.org/abs/1910.01465v2},
-  urldate = {2024-05-26},
-  abstract = {Many real world tasks require multiple agents to work together. Multi-agent reinforcement learning (RL) methods have been proposed in recent years to solve these tasks, but current methods often fail to efficiently learn policies. We thus investigate the presence of a common weakness in single-agent RL, namely value function overestimation bias, in the multi-agent setting. Based on our findings, we propose an approach that reduces this bias by using double centralized critics. We evaluate it on six mixed cooperative-competitive tasks, showing a significant advantage over current methods. Finally, we investigate the application of multi-agent methods to high-dimensional robotic tasks and show that our approach can be used to learn decentralized policies in this domain.},
-  langid = {english},
-  organization = {arXiv.org},
-  file = {/Users/brandonhosley/Zotero/storage/3DUYWQRZ/Ackermann et al_2019_Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized.pdf}
+@inproceedings{fotouhi2019,
+  title = {Joint {{Optimization}} of {{Access}} and {{Backhaul Links}} for {{UAVs Based}} on {{Reinforcement Learning}}},
+  booktitle = {2019 {{IEEE Globecom Workshops}} ({{GC Wkshps}})},
+  author = {Fotouhi, Azade and Ding, Ming and Galati Giordano, Lorenzo and Hassan, Mahbub and Li, Jun and Lin, Zihuai},
+  date = {2019-12},
+  pages = {1--6},
+  doi = {10.1109/GCWkshps45667.2019.9024685},
+  abstract = {In this paper, we study the application of unmanned aerial vehicle (UAV) base stations (BSs) in order to improve the cellular network capacity. We consider flying BSs where BS equipments are mounted on UAVs, making it possible to move BSs freely in space. We study the optimization of UAVs' trajectory in a network with mobile users to improve the system throughput. We consider practical two-hop communications, i.e., the access link between a user and the UAV BS, and the backhaul link between the UAV BS and a macrocell BS plugged into the core network. We propose a reinforcement learning based algorithm to control the UAVs' mobility. Additionally, the proposed algorithm is subject to physical constraints of UAV mobility. Simulation results show that considering both the backhaul and access links in the UAV mobility optimization is highly effective in improving the system performance than only focusing on the access link.},
+  eventtitle = {2019 {{IEEE Globecom Workshops}} ({{GC Wkshps}})},
+  keywords = {Base stations,Cellular networks,Drones,Learning (artificial intelligence),Optimization,Satellite broadcasting},
+  file = {/Users/brandonhosley/Library/Mobile Documents/com~apple~CloudDocs/ZotFile/Fotouhi et al_2019_Joint Optimization of Access and Backhaul Links for UAVs Based on Reinforcement.pdf;/Users/brandonhosley/Zotero/storage/4WI354EX/stamp.html}
 }
 
-@book{albrecht2024,
-  title = {Multi-Agent Reinforcement Learning: Foundations and Modern Approaches},
-  shorttitle = {Multi-Agent Reinforcement Learning},
-  author = {Albrecht, Stefano V. and Christianos, Filippos and Schäfer, Lukas},
-  date = {2024},
+@book{sutton2018,
+  title = {Reinforcement Learning: An Introduction},
+  shorttitle = {Reinforcement Learning},
+  author = {Sutton, Richard S. and Barto, Andrew G.},
+  date = {2018},
+  series = {Adaptive Computation and Machine Learning Series},
+  edition = {Second edition},
   publisher = {The MIT Press},
   location = {Cambridge, Massachusetts},
-  abstract = {"This book provides an accessible technical introduction to the field of Multi-Agent Reinforcement Learning (MARL)"--},
-  isbn = {978-0-262-04937-5},
+  abstract = {"Reinforcement learning, one of the most active research areas in artificial intelligence, is a computational approach to learning whereby an agent tries to maximize the total amount of reward it receives while interacting with a complex, uncertain environment. In Reinforcement Learning, Richard Sutton and Andrew Barto provide a clear and simple account of the field's key ideas and algorithms."--},
+  isbn = {978-0-262-03924-6},
   langid = {english},
-  keywords = {Intelligent agents (Computer software),Reinforcement learning},
-  file = {/Users/brandonhosley/Zotero/storage/BNWH6I6A/Albrecht et al. - 2024 - Multi-agent reinforcement learning foundations an.pdf}
+  pagetotal = {526},
+  keywords = {Reinforcement learning},
+  file = {/Users/brandonhosley/Zotero/storage/WBG2QEG6/Sutton and Barto - 2018 - Reinforcement learning an introduction.pdf}
 }
 
-@inproceedings{amarasinghe2019,
-  title = {A Swarm of Crop Spraying Drones Solution for Optimising Safe Pesticide Usage in Arable Lands: Poster Abstract},
-  shorttitle = {A Swarm of Crop Spraying Drones Solution for Optimising Safe Pesticide Usage in Arable Lands},
-  booktitle = {Proceedings of the 17th {{Conference}} on {{Embedded Networked Sensor Systems}}},
-  author = {Amarasinghe, Akarshani and Wijesuriya, Viraj B. and Ganepola, Dilshan and Jayaratne, Lakshman},
-  date = {2019-11-10},
-  series = {{{SenSys}} '19},
-  pages = {410--411},
-  publisher = {Association for Computing Machinery},
-  location = {New York, NY, USA},
-  doi = {10.1145/3356250.3361948},
-  url = {https://doi.org/10.1145/3356250.3361948},
-  urldate = {2024-05-12},
-  abstract = {Pesticides are detrimental to the well-being of all living beings. Inappropriate pesticide usage has been identified as a major health hazard. Therefore, it is important to devise solutions that enable agricultural pest control without excessive use of pesticides. At present, drone technology is being increasingly applied in agriculture through soil and field analysis, planting, crop spraying, crop monitoring, irrigation and health assessment. The primary focus of this ongoing work is to leverage a swarm of drones solution that includes precision agriculture techniques, to efficiently spray pesticides in arable lands with optimal pesticides usage and minimum human intervention.},
-  isbn = {978-1-4503-6950-3},
-  keywords = {drone systems,swarm of drones}
-}
-
-@online{bajak2023,
-  title = {Pentagon's {{AI}} Initiatives Accelerate Hard Decisions on Lethal Autonomous Weapons},
-  author = {Bajak, Frank},
-  date = {2023-11-25T15:49:50},
-  url = {https://apnews.com/article/us-military-ai-projects-0773b4937801e7a0573f44b57a9a5942},
-  urldate = {2024-06-25},
-  abstract = {Artificial intelligence employed by the U.S. military has piloted pint-sized surveillance drones in special operations forces’ missions.},
+@book{puterman2005,
+  title = {Markov Decision Processes: Discrete Stochastic Dynamic Programming},
+  shorttitle = {Markov Decision Processes},
+  author = {Puterman, Martin L.},
+  date = {2005},
+  series = {Wiley Series in Probability and Statistics},
+  publisher = {Wiley-Interscience},
+  location = {Hoboken, NJ},
+  isbn = {978-0-471-72782-8},
   langid = {english},
-  organization = {AP News}
+  pagetotal = {649},
+  file = {/Users/brandonhosley/Zotero/storage/ZEEACZCB/Puterman - 2005 - Markov decision processes discrete stochastic dyn.pdf}
 }
 
-@online{bajak2023a,
-  title = {Drone Advances in {{Ukraine}} Could Bring Dawn of Killer Robots},
-  author = {Bajak, Frank},
-  date = {2023-01-03T22:04:55},
-  url = {https://apnews.com/article/technology-science-politics-military-drones-f4a42279515a067c6db2ce75128328c4},
-  urldate = {2024-06-25},
-  abstract = {KYIV, Ukraine (AP) — Drone advances in Ukraine have accelerated a long-anticipated technology trend that could soon bring the world's first fully autonomous fighting robots to the battlefield, inaugurating a new age of warfare.},
+@article{vinyals2019,
+  title = {Grandmaster Level in {{StarCraft II}} Using Multi-Agent Reinforcement Learning},
+  author = {Vinyals, Oriol and Babuschkin, Igor and Czarnecki, Wojciech M. and Mathieu, Michaël and Dudzik, Andrew and Chung, Junyoung and Choi, David H. and Powell, Richard and Ewalds, Timo and Georgiev, Petko and Oh, Junhyuk and Horgan, Dan and Kroiss, Manuel and Danihelka, Ivo and Huang, Aja and Sifre, Laurent and Cai, Trevor and Agapiou, John P. and Jaderberg, Max and Vezhnevets, Alexander S. and Leblond, Rémi and Pohlen, Tobias and Dalibard, Valentin and Budden, David and Sulsky, Yury and Molloy, James and Paine, Tom L. and Gulcehre, Caglar and Wang, Ziyu and Pfaff, Tobias and Wu, Yuhuai and Ring, Roman and Yogatama, Dani and Wünsch, Dario and McKinney, Katrina and Smith, Oliver and Schaul, Tom and Lillicrap, Timothy and Kavukcuoglu, Koray and Hassabis, Demis and Apps, Chris and Silver, David},
+  date = {2019-11-14},
+  journaltitle = {Nature},
+  shortjournal = {Nature},
+  volume = {575},
+  number = {7782},
+  pages = {350--354},
+  issn = {0028-0836, 1476-4687},
+  doi = {10.1038/s41586-019-1724-z},
+  url = {https://www.nature.com/articles/s41586-019-1724-z},
+  urldate = {2023-12-24},
   langid = {english},
-  organization = {AP News},
-  file = {/Users/brandonhosley/Zotero/storage/V7BS8YJ5/technology-science-politics-military-drones-f4a42279515a067c6db2ce75128328c4.html}
+  file = {/Users/brandonhosley/Zotero/storage/97RK6RVS/Vinyals et al. - 2019 - Grandmaster level in StarCraft II using multi-agen.pdf}
 }
 
-@online{balduzzi2019,
-  title = {Open-Ended {{Learning}} in {{Symmetric Zero-sum Games}}},
-  author = {Balduzzi, David and Garnelo, Marta and Bachrach, Yoram and Czarnecki, Wojciech M. and Perolat, Julien and Jaderberg, Max and Graepel, Thore},
-  date = {2019-05-13},
-  eprint = {1901.08106},
-  eprinttype = {arXiv},
-  eprintclass = {cs, stat},
-  doi = {10.48550/arXiv.1901.08106},
-  url = {http://arxiv.org/abs/1901.08106},
+@article{silver2017,
+  title = {Mastering the Game of {{Go}} without Human Knowledge},
+  author = {Silver, David and Schrittwieser, Julian and Simonyan, Karen and Antonoglou, Ioannis and Huang, Aja and Guez, Arthur and Hubert, Thomas and Baker, Lucas and Lai, Matthew and Bolton, Adrian and Chen, Yutian and Lillicrap, Timothy and Hui, Fan and Sifre, Laurent and van den Driessche, George and Graepel, Thore and Hassabis, Demis},
+  options = {useprefix=true},
+  date = {2017-10},
+  journaltitle = {Nature},
+  volume = {550},
+  number = {7676},
+  pages = {354--359},
+  publisher = {Nature Publishing Group},
+  issn = {1476-4687},
+  doi = {10.1038/nature24270},
+  url = {https://www.nature.com/articles/nature24270},
   urldate = {2024-03-15},
-  abstract = {Zero-sum games such as chess and poker are, abstractly, functions that evaluate pairs of agents, for example labeling them `winner' and `loser'. If the game is approximately transitive, then self-play generates sequences of agents of increasing strength. However, nontransitive games, such as rock-paper-scissors, can exhibit strategic cycles, and there is no longer a clear objective -- we want agents to increase in strength, but against whom is unclear. In this paper, we introduce a geometric framework for formulating agent objectives in zero-sum games, in order to construct adaptive sequences of objectives that yield open-ended learning. The framework allows us to reason about population performance in nontransitive games, and enables the development of a new algorithm (rectified Nash response, PSRO\_rN) that uses game-theoretic niching to construct diverse populations of effective agents, producing a stronger set of agents than existing algorithms. We apply PSRO\_rN to two highly nontransitive resource allocation games and find that PSRO\_rN consistently outperforms the existing alternatives.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Computer Science and Game Theory,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/JIHZMJL2/Balduzzi et al. - 2019 - Open-ended Learning in Symmetric Zero-sum Games.pdf;/Users/brandonhosley/Zotero/storage/NWLIW2GL/1901.html}
-}
-
-@article{berger2005,
-  title = {Fictitious Play in 2×n Games},
-  author = {Berger, Ulrich},
-  date = {2005-02},
-  journaltitle = {Journal of Economic Theory},
-  shortjournal = {Journal of Economic Theory},
-  volume = {120},
-  number = {2},
-  pages = {139--154},
-  issn = {00220531},
-  doi = {10.1016/j.jet.2004.02.003},
-  url = {https://linkinghub.elsevier.com/retrieve/pii/S0022053104000626},
-  urldate = {2024-05-13},
-  abstract = {It is known that every discrete-time fictitious play process approaches equilibrium in nondegenerate 2 Â 2 games, and that every continuous-time fictitious play process approaches equilibrium in nondegenerate 2 Â 2 and 2 Â 3 games. It has also been conjectured that convergence to the set of equilibria holds generally for nondegenerate 2 Â n games. We give a simple geometric proof of this for the continuous-time process, and also extend the result to discrete-time fictitious play.},
+  abstract = {A long-standing goal of artificial intelligence is an algorithm that learns, tabula rasa, superhuman proficiency in challenging domains. Recently, AlphaGo became the first program to defeat a world champion in the game of Go. The tree search in AlphaGo evaluated positions and selected moves using deep neural networks. These neural networks were trained by supervised learning from human expert moves, and by reinforcement learning from self-play. Here we introduce an algorithm based solely on reinforcement learning, without human data, guidance or domain knowledge beyond game rules. AlphaGo becomes its own teacher: a neural network is trained to predict AlphaGo’s own move selections and also the winner of AlphaGo’s games. This neural network improves the strength of the tree search, resulting in higher quality move selection and stronger self-play in the next iteration. Starting tabula rasa, our new program AlphaGo Zero achieved superhuman performance, winning 100–0 against the previously published, champion-defeating AlphaGo. Starting from zero knowledge and without human data, AlphaGo Zero was able to teach itself to play Go and to develop novel strategies that provide new insights into the oldest of games. To beat world champions at the game of Go, the computer program AlphaGo has relied largely on supervised learning from millions of human expert moves. David Silver and colleagues have now produced a system called AlphaGo Zero, which is based purely on reinforcement learning and learns solely from self-play. Starting from random moves, it can reach superhuman level in just a couple of days of training and five million games of self-play, and can now beat all previous versions of AlphaGo. Because the machine independently discovers the same fundamental principles of the game that took humans millennia to conceptualize, the work suggests that such principles have some universal character, beyond human bias.},
   langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/2QRP9GVP/Berger - 2005 - Fictitious play in 2×n games.pdf}
+  keywords = {Computational science,Computer science,Reward},
+  file = {/Users/brandonhosley/Zotero/storage/RCPCCGV2/Silver et al. - 2017 - Mastering the game of Go without human knowledge.pdf}
 }
 
-@article{berger2007,
-  title = {Brown's {{Original Fictitious Play}}},
-  author = {Berger, Ulrich},
-  date = {2007},
-  journaltitle = {Journal of Economic Theory},
-  volume = {135},
-  number = {1},
-  pages = {572--578},
-  issn = {0022-0531},
-  doi = {10.1016/j.jet.2005.12.010},
-  abstract = {What modern game theorists describe as fictitious play is not the learning process George W. Brown defined in his 1951 paper. Brown's original version differs in a subtle detail, namely the order of belief updating. In this note we revive Brown's original fictitious play process and demonstrate that this seemingly innocent detail allows for an extremely simple and intuitive proof of convergence in an interesting and large class of games: nondegenerate ordinal potential games.},
-  file = {/Users/brandonhosley/Zotero/storage/XLUDA35I/Berger_2007_Brown's Original Fictitious Play.pdf}
+@article{silver2016,
+  title = {Mastering the Game of {{Go}} with Deep Neural Networks and Tree Search},
+  author = {Silver, David and Huang, Aja and Maddison, Chris J. and Guez, Arthur and Sifre, Laurent and van den Driessche, George and Schrittwieser, Julian and Antonoglou, Ioannis and Panneershelvam, Veda and Lanctot, Marc and Dieleman, Sander and Grewe, Dominik and Nham, John and Kalchbrenner, Nal and Sutskever, Ilya and Lillicrap, Timothy and Leach, Madeleine and Kavukcuoglu, Koray and Graepel, Thore and Hassabis, Demis},
+  options = {useprefix=true},
+  date = {2016-01},
+  journaltitle = {Nature},
+  volume = {529},
+  number = {7587},
+  pages = {484--489},
+  publisher = {Nature Publishing Group},
+  issn = {1476-4687},
+  doi = {10.1038/nature16961},
+  url = {https://www.nature.com/articles/nature16961},
+  urldate = {2024-03-15},
+  abstract = {The game of Go has long been viewed as the most challenging of classic games for artificial intelligence owing to its enormous search space and the difficulty of evaluating board positions and moves. Here we introduce a new approach to computer Go that uses ‘value networks’ to evaluate board positions and ‘policy networks’ to select moves. These deep neural networks are trained by a novel combination of supervised learning from human expert games, and reinforcement learning from games of self-play. Without any lookahead search, the neural networks play Go at the level of state-of-the-art Monte Carlo tree search programs that simulate thousands of random games of self-play. We also introduce a new search algorithm that combines Monte Carlo simulation with value and policy networks. Using this search algorithm, our program AlphaGo achieved a 99.8\% winning rate against other Go programs, and defeated the human European Go champion by 5 games to 0. This is the first time that a computer program has defeated a human professional player in the full-sized game of Go, a feat previously thought to be at least a decade away.},
+  langid = {english},
+  keywords = {Computational science,Computer science,Reward},
+  file = {/Users/brandonhosley/Zotero/storage/F29T7VGP/Silver et al. - 2016 - Mastering the game of Go with deep neural networks.pdf}
+}
+
+@online{silver2017a,
+  title = {Mastering {{Chess}} and {{Shogi}} by {{Self-Play}} with a {{General Reinforcement Learning Algorithm}}},
+  author = {Silver, David and Hubert, Thomas and Schrittwieser, Julian and Antonoglou, Ioannis and Lai, Matthew and Guez, Arthur and Lanctot, Marc and Sifre, Laurent and Kumaran, Dharshan and Graepel, Thore and Lillicrap, Timothy and Simonyan, Karen and Hassabis, Demis},
+  date = {2017-12-05},
+  eprint = {1712.01815},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1712.01815},
+  url = {http://arxiv.org/abs/1712.01815},
+  urldate = {2024-03-15},
+  abstract = {The game of chess is the most widely-studied domain in the history of artificial intelligence. The strongest programs are based on a combination of sophisticated search techniques, domain-specific adaptations, and handcrafted evaluation functions that have been refined by human experts over several decades. In contrast, the AlphaGo Zero program recently achieved superhuman performance in the game of Go, by tabula rasa reinforcement learning from games of self-play. In this paper, we generalise this approach into a single AlphaZero algorithm that can achieve, tabula rasa, superhuman performance in many challenging domains. Starting from random play, and given no domain knowledge except the game rules, AlphaZero achieved within 24 hours a superhuman level of play in the games of chess and shogi (Japanese chess) as well as Go, and convincingly defeated a world-champion program in each case.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/PFGFAPGW/Silver et al. - 2017 - Mastering Chess and Shogi by Self-Play with a Gene.pdf;/Users/brandonhosley/Zotero/storage/SR3IRUXR/1712.html}
 }
 
 @online{berner2019,
@@ -148,43 +163,40 @@
   file = {/Users/brandonhosley/Zotero/storage/GIAX6G7H/OpenAI et al. - 2019 - Dota 2 with Large Scale Deep Reinforcement Learnin.pdf;/Users/brandonhosley/Zotero/storage/HM7FXNK8/1912.html}
 }
 
-@article{brown1951iterative,
-  title = {Iterative Solution of Games by Fictitious Play},
-  author = {Brown, George W},
-  date = {1951},
-  journaltitle = {Act. Anal. Prod Allocation},
-  volume = {13},
+@online{balduzzi2019,
+  title = {Open-Ended {{Learning}} in {{Symmetric Zero-sum Games}}},
+  author = {Balduzzi, David and Garnelo, Marta and Bachrach, Yoram and Czarnecki, Wojciech M. and Perolat, Julien and Jaderberg, Max and Graepel, Thore},
+  date = {2019-05-13},
+  eprint = {1901.08106},
+  eprinttype = {arXiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1901.08106},
+  url = {http://arxiv.org/abs/1901.08106},
+  urldate = {2024-03-15},
+  abstract = {Zero-sum games such as chess and poker are, abstractly, functions that evaluate pairs of agents, for example labeling them `winner' and `loser'. If the game is approximately transitive, then self-play generates sequences of agents of increasing strength. However, nontransitive games, such as rock-paper-scissors, can exhibit strategic cycles, and there is no longer a clear objective -- we want agents to increase in strength, but against whom is unclear. In this paper, we introduce a geometric framework for formulating agent objectives in zero-sum games, in order to construct adaptive sequences of objectives that yield open-ended learning. The framework allows us to reason about population performance in nontransitive games, and enables the development of a new algorithm (rectified Nash response, PSRO\_rN) that uses game-theoretic niching to construct diverse populations of effective agents, producing a stronger set of agents than existing algorithms. We apply PSRO\_rN to two highly nontransitive resource allocation games and find that PSRO\_rN consistently outperforms the existing alternatives.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Computer Science and Game Theory,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/JIHZMJL2/Balduzzi et al. - 2019 - Open-ended Learning in Symmetric Zero-sum Games.pdf;/Users/brandonhosley/Zotero/storage/NWLIW2GL/1901.html}
+}
+
+@article{smit2023,
+  title = {Scaling Multi-Agent Reinforcement Learning to Full 11 versus 11 Simulated Robotic Football},
+  author = {Smit, Andries and Engelbrecht, Herman A. and Brink, Willie and Pretorius, Arnu},
+  date = {2023-03-24},
+  journaltitle = {Autonomous Agents and Multi-Agent Systems},
+  shortjournal = {Auton Agent Multi-Agent Syst},
+  volume = {37},
   number = {1},
-  pages = {374}
-}
-
-@article{busoniu2008,
-  title = {A {{Comprehensive Survey}} of {{Multiagent Reinforcement Learning}}},
-  author = {Busoniu, Lucian and Babuska, Robert and De Schutter, Bart},
-  date = {2008-03},
-  journaltitle = {IEEE Transactions on Systems, Man, and Cybernetics, Part C (Applications and Reviews)},
-  shortjournal = {IEEE Trans. Syst., Man, Cybern. C},
-  volume = {38},
-  number = {2},
-  pages = {156--172},
-  issn = {1094-6977, 1558-2442},
-  doi = {10.1109/TSMCC.2007.913919},
-  url = {https://ieeexplore.ieee.org/document/4445757/},
-  urldate = {2024-05-12},
-  abstract = {Multiagent systems are rapidly finding applications in a variety of domains, including robotics, distributed control, telecommunications, and economics. The complexity of many tasks arising in these domains makes them difficult to solve with preprogrammed agent behaviors. The agents must, instead, discover a solution on their own, using learning. A significant part of the research on multiagent learning concerns reinforcement learning techniques. This paper provides a comprehensive survey of multiagent reinforcement learning (MARL). A central issue in the field is the formal statement of the multiagent learning goal. Different viewpoints on this issue have led to the proposal of many different goals, among which two focal points can be distinguished: stability of the agents’ learning dynamics, and adaptation to the changing behavior of the other agents. The MARL algorithms described in the literature aim—either explicitly or implicitly—at one of these two goals or at a combination of both, in a fully cooperative, fully competitive, or more general setting. A representative selection of these algorithms is discussed in detail in this paper, together with the specific issues that arise in each category. Additionally, the benefits and challenges of MARL are described along with some of the problem domains where the MARL techniques have been applied. Finally, an outlook for the field is provided.},
+  pages = {20},
+  issn = {1573-7454},
+  doi = {10.1007/s10458-023-09603-y},
+  url = {https://doi.org/10.1007/s10458-023-09603-y},
+  urldate = {2024-03-16},
+  abstract = {Robotic football has long been seen as a grand challenge in artificial intelligence. Despite recent success of learned policies over heuristics and handcrafted rules in general, current teams in the simulated RoboCup football leagues, where autonomous agents compete against each other, still rely on handcrafted strategies with only a few using reinforcement learning directly. This limits a learning agent’s ability to find stronger high-level strategies for the full game. In this paper, we show that it is possible for agents to learn competent football strategies on a full 22 player setting using limited computation resources (one GPU and one CPU), from tabula rasa through self-play. To do this, we build a 2D football simulator with faster simulation times than the RoboCup simulator. We propose various improvements to the standard single-agent PPO training algorithm which help it scale to our multi-agent setting. These improvements include (1) using a policy and critic network with an attention mechanism that scales linearly in the number of agents, (2) sharing networks between agents which allow for faster throughput using batching, and (3) using Polyak averaged opponents, league opponents and freezing the opponent team when necessary. We show through experimental results that stable training in the full 22 player setting is possible. Agents trained in the 22 player setting learn to defeat a variety of handcrafted strategies, and also achieve a higher win rate compared to agents trained in the 4 player setting and evaluated in the full game.},
   langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/VC8GVJJT/Busoniu et al. - 2008 - A Comprehensive Survey of Multiagent Reinforcement.pdf}
-}
-
-@article{calvo2018,
-  title = {Heterogeneous {{Multi-Agent Deep Reinforcement Learning}} for {{Traﬃc Lights Control}}},
-  author = {Calvo, Jeancarlo Arguello and Dusparic, Ivana},
-  date = {2018-12},
-  journaltitle = {AICS},
-  pages = {2--13},
-  abstract = {Reinforcement Learning (RL) has been extensively used in Urban Traffic Control (UTC) optimization due its capability to learn the dynamics of complex problems from interactions with the environment. Recent advances in Deep Reinforcement Learning (DRL) have opened up the possibilities for extending this work to more complex situations due to it overcoming the curse of dimensionality resulting from the exponential growth of the state and action spaces when incorporating fine-grained information. DRL has been shown to work very well for UTC on a single intersection, however, due to large training times, multi-junction implementations have been limited to training a single agent and replicating behaviour to other junctions, assuming homogeneity of all agents.},
-  langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/KIDZZFHR/Calvo and Dusparic - Heterogeneous Multi-Agent Deep Reinforcement Learn.pdf}
+  keywords = {11 versus 11 football,Multi-agent reinforcement learning,RoboCup,RoboCup 2D,Simulated robotic football,Soccer},
+  annotation = {https://github.com/DriesSmit/MARL2DSoccer},
+  file = {/Users/brandonhosley/Zotero/storage/5UPXMZ63/Smit et al. - 2023 - Scaling multi-agent reinforcement learning to full.pdf}
 }
 
 @article{campbell2002,
@@ -205,94 +217,22 @@
   file = {/Users/brandonhosley/Zotero/storage/4HB7XQYF/S0004370201001291.html}
 }
 
-@online{cao2012,
-  title = {An {{Overview}} of {{Recent Progress}} in the {{Study}} of {{Distributed Multi-agent Coordination}}},
-  author = {Cao, Yongcan and Yu, Wenwu and Ren, Wei and Chen, Guanrong},
-  date = {2012-09-04},
-  eprint = {1207.3231},
+@online{rashid2018,
+  title = {{{QMIX}}: {{Monotonic Value Function Factorisation}} for {{Deep Multi-Agent Reinforcement Learning}}},
+  shorttitle = {{{QMIX}}},
+  author = {Rashid, Tabish and Samvelyan, Mikayel and de Witt, Christian Schroeder and Farquhar, Gregory and Foerster, Jakob and Whiteson, Shimon},
+  options = {useprefix=true},
+  date = {2018-06-06},
+  eprint = {1803.11485},
   eprinttype = {arXiv},
-  eprintclass = {math},
-  doi = {10.48550/arXiv.1207.3231},
-  url = {http://arxiv.org/abs/1207.3231},
-  urldate = {2024-05-12},
-  abstract = {This article reviews some main results and progress in distributed multi-agent coordination, focusing on papers published in major control systems and robotics journals since 2006. Distributed coordination of multiple vehicles, including unmanned aerial vehicles, unmanned ground vehicles and unmanned underwater vehicles, has been a very active research subject studied extensively by the systems and control community. The recent results in this area are categorized into several directions, such as consensus, formation control, optimization, task assignment, and estimation. After the review, a short discussion section is included to summarize the existing research and to propose several promising research directions along with some open problems that are deemed important for further investigations.},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1803.11485},
+  url = {http://arxiv.org/abs/1803.11485},
+  urldate = {2024-04-04},
+  abstract = {In many real-world settings, a team of agents must coordinate their behaviour while acting in a decentralised way. At the same time, it is often possible to train the agents in a centralised fashion in a simulated or laboratory setting, where global state information is available and communication constraints are lifted. Learning joint action-values conditioned on extra state information is an attractive way to exploit centralised learning, but the best strategy for then extracting decentralised policies is unclear. Our solution is QMIX, a novel value-based method that can train decentralised policies in a centralised end-to-end fashion. QMIX employs a network that estimates joint action-values as a complex non-linear combination of per-agent values that condition only on local observations. We structurally enforce that the joint-action value is monotonic in the per-agent values, which allows tractable maximisation of the joint action-value in off-policy learning, and guarantees consistency between the centralised and decentralised policies. We evaluate QMIX on a challenging set of StarCraft II micromanagement tasks, and show that QMIX significantly outperforms existing value-based multi-agent reinforcement learning methods.},
   pubstate = {prepublished},
-  keywords = {Mathematics - Optimization and Control},
-  file = {/Users/brandonhosley/Zotero/storage/WDMRVX7F/Cao et al_2012_An Overview of Recent Progress in the Study of Distributed Multi-agent.pdf;/Users/brandonhosley/Zotero/storage/IICE6PDC/1207.html}
-}
-
-@article{carbone2018,
-  title = {Swarm {{Robotics}} as a {{Solution}} to {{Crops Inspection}} for {{Precision Agriculture}}},
-  author = {Carbone, Carlos and Garibaldi, Oscar and Kurt, Zohre},
-  date = {2018-02-11},
-  journaltitle = {KnE Engineering},
-  pages = {552--562},
-  issn = {2518-6841},
-  doi = {10.18502/keg.v3i1.1459},
-  url = {https://knepublishing.com/index.php/KnE-Engineering/article/view/1459},
-  urldate = {2024-05-12},
-  abstract = {This paper summarizes the concept of swarm robotics and its applicability to crop inspections. To increase the agricultural yield it is essential to monitor the crop health. Hence, precision agriculture is becoming a common practice for farmers providing a system that can inspect the state of the plants (Khosla and others, 2010). One of the rising technologies used for agricultural inspections is the use of unmaned air vehicles (UAVs) which are used to take aerial pictures of the farms so that the images could be processed to extract data about the state of the crops (Das et al., 2015). For this process both fixed wings and quadrotors UAVs are used with a preference over the quadrotor since it’s easier to operate and has a milder learning curve compared to fixed wings (Kolodny, 2017). UAVs require battery replacement especially when the environmental conditions result in longer inspection times (“Agriculture - Maximize Yields with Aerial Imaging,” n.d., “Matrice 100 - DJI Wiki,” n.d.). As a result, inspection systems for crops using commercial quadrotors are limited by the quadrotor´s maximum flight speed, maximum flight height, quadrotor´s battery time, crops area, wind conditions, etc. (“Mission Estimates,” n.d.).Keywords: Swarm Robotics, Precision Agriculture, Unmanned Air Vehicle, Quadrotor, inspection.},
-  langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/ABHP2XRH/Carbone et al_2018_Swarm Robotics as a Solution to Crops Inspection for Precision Agriculture.pdf}
-}
-
-@inproceedings{cesa-bianchi2017,
-  title = {Boltzmann {{Exploration Done Right}}},
-  booktitle = {Advances in {{Neural Information Processing Systems}}},
-  author = {Cesa-Bianchi, Nicolò and Gentile, Claudio and Lugosi, Gabor and Neu, Gergely},
-  date = {2017},
-  volume = {30},
-  publisher = {Curran Associates, Inc.},
-  url = {https://proceedings.neurips.cc/paper/2017/hash/b299ad862b6f12cb57679f0538eca514-Abstract.html},
-  urldate = {2024-06-25},
-  file = {/Users/brandonhosley/Zotero/storage/C356RIX8/Cesa-Bianchi et al_2017_Boltzmann Exploration Done Right.pdf}
-}
-
-@online{chen2016,
-  title = {{{Net2Net}}: {{Accelerating Learning}} via {{Knowledge Transfer}}},
-  shorttitle = {{{Net2Net}}},
-  author = {Chen, Tianqi and Goodfellow, Ian and Shlens, Jonathon},
-  date = {2016-04-23},
-  eprint = {1511.05641},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1511.05641},
-  url = {http://arxiv.org/abs/1511.05641},
-  urldate = {2024-06-25},
-  abstract = {We introduce techniques for rapidly transferring the information stored in one neural net into another neural net. The main purpose is to accelerate the training of a significantly larger neural net. During real-world workflows, one often trains very many different neural networks during the experimentation and design process. This is a wasteful process in which each new model is trained from scratch. Our Net2Net technique accelerates the experimentation process by instantaneously transferring the knowledge from a previous network to each new deeper or wider network. Our techniques are based on the concept of function-preserving transformations between neural network specifications. This differs from previous approaches to pre-training that altered the function represented by a neural net when adding layers to it. Using our knowledge transfer mechanism to add depth to Inception modules, we demonstrate a new state of the art accuracy rating on the ImageNet dataset.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/JRZPUISW/Chen et al_2016_Net2Net.pdf;/Users/brandonhosley/Zotero/storage/2RZBC4W3/1511.html}
-}
-
-@inproceedings{ellis2023,
-  title = {{{SMACv2}}: {{An Improved Benchmark}} for {{Cooperative Multi-Agent Reinforcement Learning}}},
-  shorttitle = {{{SMACv2}}},
-  author = {Ellis, Benjamin and Cook, Jonathan and Moalla, Skander and Samvelyan, Mikayel and Sun, Mingfei and Mahajan, Anuj and Foerster, Jakob Nicolaus and Whiteson, Shimon},
-  date = {2023-11-02},
-  url = {https://openreview.net/forum?id=5OjLGiJW3u},
-  urldate = {2024-04-24},
-  abstract = {The availability of challenging benchmarks has played a key role in the recent progress of machine learning. In cooperative multi-agent reinforcement learning, the StarCraft Multi-Agent Challenge (SMAC) has become a popular testbed for centralised training with decentralised execution. However, after years of sustained improvement on SMAC, algorithms now achieve near-perfect performance. In this work, we conduct new analysis demonstrating that SMAC lacks the stochasticity and partial observability to require complex *closed-loop* policies. In particular, we show that an *open-loop* policy conditioned only on the timestep can achieve non-trivial win rates for many SMAC scenarios. To address this limitation, we introduce SMACv2, a new version of the benchmark where scenarios are procedurally generated and require agents to generalise to previously unseen settings (from the same distribution) during evaluation. We also introduce the extended partial observability challenge (EPO), which augments SMACv2 to ensure meaningful partial observability. We show that these changes ensure the benchmark requires the use of *closed-loop* policies. We evaluate state-of-the-art algorithms on SMACv2 and show that it presents significant challenges not present in the original benchmark. Our analysis illustrates that SMACv2 addresses the discovered deficiencies of SMAC and can help benchmark the next generation of MARL methods. Videos of training are available on our [website](https://sites.google.com/view/smacv2).},
-  eventtitle = {Thirty-Seventh {{Conference}} on {{Neural Information Processing Systems Datasets}} and {{Benchmarks Track}}},
-  langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/JQSY6GHU/Ellis et al_2023_SMACv2.pdf}
-}
-
-@online{espeholt2018,
-  title = {{{IMPALA}}: {{Scalable Distributed Deep-RL}} with {{Importance Weighted Actor-Learner Architectures}}},
-  shorttitle = {{{IMPALA}}},
-  author = {Espeholt, Lasse and Soyer, Hubert and Munos, Remi and Simonyan, Karen and Mnih, Volodymir and Ward, Tom and Doron, Yotam and Firoiu, Vlad and Harley, Tim and Dunning, Iain and Legg, Shane and Kavukcuoglu, Koray},
-  date = {2018-06-28},
-  eprint = {1802.01561},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1802.01561},
-  url = {http://arxiv.org/abs/1802.01561},
-  urldate = {2024-06-26},
-  abstract = {In this work we aim to solve a large collection of tasks using a single reinforcement learning agent with a single set of parameters. A key challenge is to handle the increased amount of data and extended training time. We have developed a new distributed agent IMPALA (Importance Weighted Actor-Learner Architecture) that not only uses resources more efficiently in single-machine training but also scales to thousands of machines without sacrificing data efficiency or resource utilisation. We achieve stable learning at high throughput by combining decoupled acting and learning with a novel off-policy correction method called V-trace. We demonstrate the effectiveness of IMPALA for multi-task reinforcement learning on DMLab-30 (a set of 30 tasks from the DeepMind Lab environment (Beattie et al., 2016)) and Atari-57 (all available Atari games in Arcade Learning Environment (Bellemare et al., 2013a)). Our results show that IMPALA is able to achieve better performance than previous agents with less data, and crucially exhibits positive transfer between tasks as a result of its multi-task approach.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/HLB5SX6X/Espeholt et al_2018_IMPALA.pdf;/Users/brandonhosley/Zotero/storage/L8QQH9KD/1802.html}
+  keywords = {Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/9U68HQRD/Rashid et al_2018_QMIX.pdf;/Users/brandonhosley/Zotero/storage/4FPV8YXI/1803.html}
 }
 
 @online{foerster2017,
@@ -311,110 +251,108 @@
   file = {/Users/brandonhosley/Zotero/storage/2XKJVLZB/Foerster et al_2017_Counterfactual Multi-Agent Policy Gradients.pdf;/Users/brandonhosley/Zotero/storage/CUA5ZIGJ/1705.html}
 }
 
-@inproceedings{fotouhi2019,
-  title = {Joint {{Optimization}} of {{Access}} and {{Backhaul Links}} for {{UAVs Based}} on {{Reinforcement Learning}}},
-  booktitle = {2019 {{IEEE Globecom Workshops}} ({{GC Wkshps}})},
-  author = {Fotouhi, Azade and Ding, Ming and Galati Giordano, Lorenzo and Hassan, Mahbub and Li, Jun and Lin, Zihuai},
-  date = {2019-12},
-  pages = {1--6},
-  doi = {10.1109/GCWkshps45667.2019.9024685},
-  abstract = {In this paper, we study the application of unmanned aerial vehicle (UAV) base stations (BSs) in order to improve the cellular network capacity. We consider flying BSs where BS equipments are mounted on UAVs, making it possible to move BSs freely in space. We study the optimization of UAVs' trajectory in a network with mobile users to improve the system throughput. We consider practical two-hop communications, i.e., the access link between a user and the UAV BS, and the backhaul link between the UAV BS and a macrocell BS plugged into the core network. We propose a reinforcement learning based algorithm to control the UAVs' mobility. Additionally, the proposed algorithm is subject to physical constraints of UAV mobility. Simulation results show that considering both the backhaul and access links in the UAV mobility optimization is highly effective in improving the system performance than only focusing on the access link.},
-  eventtitle = {2019 {{IEEE Globecom Workshops}} ({{GC Wkshps}})},
-  keywords = {Base stations,Cellular networks,Drones,Learning (artificial intelligence),Optimization,Satellite broadcasting},
-  file = {/Users/brandonhosley/Library/Mobile Documents/com~apple~CloudDocs/ZotFile/Fotouhi et al_2019_Joint Optimization of Access and Backhaul Links for UAVs Based on Reinforcement.pdf;/Users/brandonhosley/Zotero/storage/4WI354EX/stamp.html}
-}
-
-@online{fujimoto2018,
-  title = {Addressing {{Function Approximation Error}} in {{Actor-Critic Methods}}},
-  author = {Fujimoto, Scott and van Hoof, Herke and Meger, David},
-  options = {useprefix=true},
-  date = {2018-10-22},
-  eprint = {1802.09477},
-  eprinttype = {arXiv},
-  eprintclass = {cs, stat},
-  doi = {10.48550/arXiv.1802.09477},
-  url = {http://arxiv.org/abs/1802.09477},
-  urldate = {2024-05-25},
-  abstract = {In value-based reinforcement learning methods such as deep Q-learning, function approximation errors are known to lead to overestimated value estimates and suboptimal policies. We show that this problem persists in an actor-critic setting and propose novel mechanisms to minimize its effects on both the actor and the critic. Our algorithm builds on Double Q-learning, by taking the minimum value between a pair of critics to limit overestimation. We draw the connection between target networks and overestimation bias, and suggest delaying policy updates to reduce per-update error and further improve performance. We evaluate our method on the suite of OpenAI gym tasks, outperforming the state of the art in every environment tested.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/53LNWQEE/Fujimoto et al_2018_Addressing Function Approximation Error in Actor-Critic Methods.pdf;/Users/brandonhosley/Zotero/storage/HKDN2XRX/1802.html}
-}
-
-@book{gall1975,
-  title = {General {{Systemantics}}: {{An Essay}} on How {{Systems Work}}, and {{Especially}} How {{They Fail}}, {{Together}} with the {{Very First Annotated Compendium}} of {{Basic Systems Axioms}} : A {{Handbook}} and {{Ready Reference}} for {{Scientists}}, {{Engineers}}, {{Laboratory Workers}}, {{Administrators}}, {{Public Officials}}, {{Systems Analysts}}, {{Etc}}., {{Etc}}., {{Etc}}., and the {{General Public}}},
-  shorttitle = {General {{Systemantics}}},
-  author = {Gall, John},
-  date = {1975},
-  eprint = {6FgeAAAAMAAJ},
-  eprinttype = {googlebooks},
-  publisher = {General Systemantics Press},
+@inproceedings{ellis2023,
+  title = {{{SMACv2}}: {{An Improved Benchmark}} for {{Cooperative Multi-Agent Reinforcement Learning}}},
+  shorttitle = {{{SMACv2}}},
+  author = {Ellis, Benjamin and Cook, Jonathan and Moalla, Skander and Samvelyan, Mikayel and Sun, Mingfei and Mahajan, Anuj and Foerster, Jakob Nicolaus and Whiteson, Shimon},
+  date = {2023-11-02},
+  url = {https://openreview.net/forum?id=5OjLGiJW3u},
+  urldate = {2024-04-24},
+  abstract = {The availability of challenging benchmarks has played a key role in the recent progress of machine learning. In cooperative multi-agent reinforcement learning, the StarCraft Multi-Agent Challenge (SMAC) has become a popular testbed for centralised training with decentralised execution. However, after years of sustained improvement on SMAC, algorithms now achieve near-perfect performance. In this work, we conduct new analysis demonstrating that SMAC lacks the stochasticity and partial observability to require complex *closed-loop* policies. In particular, we show that an *open-loop* policy conditioned only on the timestep can achieve non-trivial win rates for many SMAC scenarios. To address this limitation, we introduce SMACv2, a new version of the benchmark where scenarios are procedurally generated and require agents to generalise to previously unseen settings (from the same distribution) during evaluation. We also introduce the extended partial observability challenge (EPO), which augments SMACv2 to ensure meaningful partial observability. We show that these changes ensure the benchmark requires the use of *closed-loop* policies. We evaluate state-of-the-art algorithms on SMACv2 and show that it presents significant challenges not present in the original benchmark. Our analysis illustrates that SMACv2 addresses the discovered deficiencies of SMAC and can help benchmark the next generation of MARL methods. Videos of training are available on our [website](https://sites.google.com/view/smacv2).},
+  eventtitle = {Thirty-Seventh {{Conference}} on {{Neural Information Processing Systems Datasets}} and {{Benchmarks Track}}},
   langid = {english},
-  pagetotal = {152}
+  file = {/Users/brandonhosley/Zotero/storage/JQSY6GHU/Ellis et al_2023_SMACv2.pdf}
 }
 
-@report{gerstein2024,
-  title = {Emerging {{Technology}} and {{Risk Analysis}}: {{Unmanned Aerial Systems Intelligent Swarm Technology}}},
-  shorttitle = {Emerging {{Technology}} and {{Risk Analysis}}},
-  author = {Gerstein, Daniel M. and Leidy, Erin N.},
-  date = {2024-02-15},
-  institution = {RAND Corporation},
-  url = {https://www.rand.org/pubs/research_reports/RRA2380-1.html},
-  urldate = {2024-06-25},
-  abstract = {{$<$}p{$>$}Researchers provide an assessment of the risk to the U.S. homeland from intelligent swarm technology using unmanned aerial systems or drones. They consider technology availability, threat, vulnerability, and consequences in the next three years, three to five years, and five to ten years.{$<$}/p{$>$}},
-  langid = {english},
-  keywords = {Civilian and Commercial Drones,Military Drones,Military Information Technology Systems,Threat Assessment},
-  file = {/Users/brandonhosley/Zotero/storage/9ZEMHAWQ/Gerstein_Leidy_2024_Emerging Technology and Risk Analysis.pdf}
-}
-
-@article{gronauer2022,
-  title = {Multi-Agent Deep Reinforcement Learning: A Survey},
-  shorttitle = {Multi-Agent Deep Reinforcement Learning},
-  author = {Gronauer, Sven and Diepold, Klaus},
-  date = {2022-02-01},
-  journaltitle = {Artificial Intelligence Review},
-  shortjournal = {Artif Intell Rev},
-  volume = {55},
-  number = {2},
-  pages = {895--943},
-  issn = {1573-7462},
-  doi = {10.1007/s10462-021-09996-w},
-  url = {https://doi.org/10.1007/s10462-021-09996-w},
-  urldate = {2024-06-26},
-  abstract = {The advances in reinforcement learning have recorded sublime success in various domains. Although the multi-agent domain has been overshadowed by its single-agent counterpart during this progress, multi-agent reinforcement learning gains rapid traction, and the latest accomplishments address problems with real-world complexity. This article provides an overview of the current developments in the field of multi-agent deep reinforcement learning. We focus primarily on literature from recent years that combines deep reinforcement learning methods with a multi-agent scenario. To survey the works that constitute the contemporary landscape, the main~contents are divided into three parts. First, we analyze the structure of training schemes that are applied to train multiple agents. Second, we consider the emergent patterns of agent behavior in cooperative, competitive and mixed scenarios. Third, we systematically enumerate challenges that exclusively arise in the multi-agent domain and review methods that are leveraged to cope with these challenges. To conclude this survey, we discuss advances, identify trends, and outline possible directions for future work in this research area.},
-  langid = {english},
-  keywords = {Deep learning,Machine learning,Multi-agent learning,Multi-agent systems,Reinforcement learning,Survey},
-  file = {/Users/brandonhosley/Zotero/storage/UJLZVR4C/Gronauer_Diepold_2022_Multi-agent deep reinforcement learning.pdf}
-}
-
-@inproceedings{gupta2017cooperative,
-  title = {Cooperative Multi-Agent Control Using Deep Reinforcement Learning},
-  booktitle = {International Conference on Autonomous Agents and Multiagent Systems},
-  author = {Gupta, Jayesh K and Egorov, Maxim and Kochenderfer, Mykel},
-  date = {2017},
-  pages = {66--83},
-  publisher = {Springer}
-}
-
-@article{hernandez-leal2019,
-  title = {A {{Survey}} and {{Critique}} of {{Multiagent Deep Reinforcement Learning}}},
-  author = {Hernandez-Leal, Pablo and Kartal, Bilal and Taylor, Matthew E.},
-  date = {2019-11},
-  journaltitle = {Autonomous Agents and Multi-Agent Systems},
-  shortjournal = {Auton Agent Multi-Agent Syst},
-  volume = {33},
-  number = {6},
-  eprint = {1810.05587},
+@online{mnih2016,
+  title = {Asynchronous {{Methods}} for {{Deep Reinforcement Learning}}},
+  author = {Mnih, Volodymyr and Badia, Adrià Puigdomènech and Mirza, Mehdi and Graves, Alex and Lillicrap, Timothy P. and Harley, Tim and Silver, David and Kavukcuoglu, Koray},
+  date = {2016-06-16},
+  eprint = {1602.01783},
   eprinttype = {arXiv},
   eprintclass = {cs},
-  pages = {750--797},
-  issn = {1387-2532, 1573-7454},
-  doi = {10.1007/s10458-019-09421-1},
-  url = {http://arxiv.org/abs/1810.05587},
-  urldate = {2024-06-26},
-  abstract = {Deep reinforcement learning (RL) has achieved outstanding results in recent years. This has led to a dramatic increase in the number of applications and methods. Recent works have explored learning beyond single-agent scenarios and have considered multiagent learning (MAL) scenarios. Initial results report successes in complex multiagent domains, although there are several challenges to be addressed. The primary goal of this article is to provide a clear overview of current multiagent deep reinforcement learning (MDRL) literature. Additionally, we complement the overview with a broader analysis: (i) we revisit previous key components, originally presented in MAL and RL, and highlight how they have been adapted to multiagent deep reinforcement learning settings. (ii) We provide general guidelines to new practitioners in the area: describing lessons learned from MDRL works, pointing to recent benchmarks, and outlining open avenues of research. (iii) We take a more critical tone raising practical challenges of MDRL (e.g., implementation and computational demands). We expect this article will help unify and motivate future research to take advantage of the abundant literature that exists (e.g., RL and MAL) in a joint effort to promote fruitful research in the multiagent community.},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
-  file = {/Users/brandonhosley/Zotero/storage/8DGHEDHI/Hernandez-Leal et al_2019_A Survey and Critique of Multiagent Deep Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/BY8BGNZ9/1810.html}
+  doi = {10.48550/arXiv.1602.01783},
+  url = {http://arxiv.org/abs/1602.01783},
+  urldate = {2024-05-05},
+  abstract = {We propose a conceptually simple and lightweight framework for deep reinforcement learning that uses asynchronous gradient descent for optimization of deep neural network controllers. We present asynchronous variants of four standard reinforcement learning algorithms and show that parallel actor-learners have a stabilizing effect on training allowing all four methods to successfully train neural network controllers. The best performing method, an asynchronous variant of actor-critic, surpasses the current state-of-the-art on the Atari domain while training for half the time on a single multi-core CPU instead of a GPU. Furthermore, we show that asynchronous actor-critic succeeds on a wide variety of continuous motor control problems as well as on a new task of navigating random 3D mazes using a visual input.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/ZNCS528Y/Mnih et al. - 2016 - Asynchronous Methods for Deep Reinforcement Learni.pdf;/Users/brandonhosley/Zotero/storage/MJV4AMZK/1602.html}
+}
+
+@article{zhong2024,
+  title = {Heterogeneous-{{Agent Reinforcement Learning}}},
+  author = {Zhong, Yifan and Kuba, Jakub Grudzien and Feng, Xidong and Hu, Siyi and Ji, Jiaming and Yang, Yaodong},
+  date = {2024},
+  journaltitle = {Journal of Machine Learning Research},
+  shortjournal = {JMLR},
+  volume = {25},
+  number = {32},
+  pages = {1--67},
+  url = {http://jmlr.org/papers/v25/23-0488.html},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/RP4HSFZU/Zhong et al. - Heterogeneous-Agent Reinforcement Learning.pdf}
+}
+
+@article{busoniu2008,
+  title = {A {{Comprehensive Survey}} of {{Multiagent Reinforcement Learning}}},
+  author = {Busoniu, Lucian and Babuska, Robert and De Schutter, Bart},
+  date = {2008-03},
+  journaltitle = {IEEE Transactions on Systems, Man, and Cybernetics, Part C (Applications and Reviews)},
+  shortjournal = {IEEE Trans. Syst., Man, Cybern. C},
+  volume = {38},
+  number = {2},
+  pages = {156--172},
+  issn = {1094-6977, 1558-2442},
+  doi = {10.1109/TSMCC.2007.913919},
+  url = {https://ieeexplore.ieee.org/document/4445757/},
+  urldate = {2024-05-12},
+  abstract = {Multiagent systems are rapidly finding applications in a variety of domains, including robotics, distributed control, telecommunications, and economics. The complexity of many tasks arising in these domains makes them difficult to solve with preprogrammed agent behaviors. The agents must, instead, discover a solution on their own, using learning. A significant part of the research on multiagent learning concerns reinforcement learning techniques. This paper provides a comprehensive survey of multiagent reinforcement learning (MARL). A central issue in the field is the formal statement of the multiagent learning goal. Different viewpoints on this issue have led to the proposal of many different goals, among which two focal points can be distinguished: stability of the agents’ learning dynamics, and adaptation to the changing behavior of the other agents. The MARL algorithms described in the literature aim—either explicitly or implicitly—at one of these two goals or at a combination of both, in a fully cooperative, fully competitive, or more general setting. A representative selection of these algorithms is discussed in detail in this paper, together with the specific issues that arise in each category. Additionally, the benefits and challenges of MARL are described along with some of the problem domains where the MARL techniques have been applied. Finally, an outlook for the field is provided.},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/VC8GVJJT/Busoniu et al. - 2008 - A Comprehensive Survey of Multiagent Reinforcement.pdf}
+}
+
+@online{cao2012,
+  title = {An {{Overview}} of {{Recent Progress}} in the {{Study}} of {{Distributed Multi-agent Coordination}}},
+  author = {Cao, Yongcan and Yu, Wenwu and Ren, Wei and Chen, Guanrong},
+  date = {2012-09-04},
+  eprint = {1207.3231},
+  eprinttype = {arXiv},
+  eprintclass = {math},
+  doi = {10.48550/arXiv.1207.3231},
+  url = {http://arxiv.org/abs/1207.3231},
+  urldate = {2024-05-12},
+  abstract = {This article reviews some main results and progress in distributed multi-agent coordination, focusing on papers published in major control systems and robotics journals since 2006. Distributed coordination of multiple vehicles, including unmanned aerial vehicles, unmanned ground vehicles and unmanned underwater vehicles, has been a very active research subject studied extensively by the systems and control community. The recent results in this area are categorized into several directions, such as consensus, formation control, optimization, task assignment, and estimation. After the review, a short discussion section is included to summarize the existing research and to propose several promising research directions along with some open problems that are deemed important for further investigations.},
+  pubstate = {prepublished},
+  keywords = {Mathematics - Optimization and Control},
+  file = {/Users/brandonhosley/Zotero/storage/WDMRVX7F/Cao et al_2012_An Overview of Recent Progress in the Study of Distributed Multi-agent.pdf;/Users/brandonhosley/Zotero/storage/IICE6PDC/1207.html}
+}
+
+@article{calvo2018,
+  title = {Heterogeneous {{Multi-Agent Deep Reinforcement Learning}} for {{Traﬃc Lights Control}}},
+  author = {Calvo, Jeancarlo Arguello and Dusparic, Ivana},
+  date = {2018-12},
+  journaltitle = {AICS},
+  pages = {2--13},
+  abstract = {Reinforcement Learning (RL) has been extensively used in Urban Traffic Control (UTC) optimization due its capability to learn the dynamics of complex problems from interactions with the environment. Recent advances in Deep Reinforcement Learning (DRL) have opened up the possibilities for extending this work to more complex situations due to it overcoming the curse of dimensionality resulting from the exponential growth of the state and action spaces when incorporating fine-grained information. DRL has been shown to work very well for UTC on a single intersection, however, due to large training times, multi-junction implementations have been limited to training a single agent and replicating behaviour to other junctions, assuming homogeneity of all agents.},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/KIDZZFHR/Calvo and Dusparic - Heterogeneous Multi-Agent Deep Reinforcement Learn.pdf}
+}
+
+@online{kouzeghar2023,
+  title = {Multi-{{Target Pursuit}} by a {{Decentralized Heterogeneous UAV Swarm}} Using {{Deep Multi-Agent Reinforcement Learning}}},
+  author = {Kouzeghar, Maryam and Song, Youngbin and Meghjani, Malika and Bouffanais, Roland},
+  date = {2023-03-03},
+  eprint = {2303.01799},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2303.01799},
+  url = {http://arxiv.org/abs/2303.01799},
+  urldate = {2024-05-12},
+  abstract = {Multi-agent pursuit-evasion tasks involving intelligent targets are notoriously challenging coordination problems. In this paper, we investigate new ways to learn such coordinated behaviors of unmanned aerial vehicles (UAVs) aimed at keeping track of multiple evasive targets. Within a Multi-Agent Reinforcement Learning (MARL) framework, we specifically propose a variant of the Multi-Agent Deep Deterministic Policy Gradient (MADDPG) method. Our approach addresses multi-target pursuit-evasion scenarios within non-stationary and unknown environments with random obstacles. In addition, given the critical role played by collective exploration in terms of detecting possible targets, we implement heterogeneous roles for the pursuers for enhanced exploratory actions balanced by exploitation (i.e. tracking) of previously identified targets. Our proposed role-based MADDPG algorithm is not only able to track multiple targets, but also is able to explore for possible targets by means of the proposed Voronoi-based rewarding policy. We implemented, tested and validated our approach in a simulation environment prior to deploying a real-world multi-robot system comprising of Crazyflie drones. Our results demonstrate that a multi-agent pursuit team has the ability to learn highly efficient coordinated control policies in terms of target tracking and exploration even when confronted with multiple fast evasive targets in complex environments.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Robotics},
+  file = {/Users/brandonhosley/Zotero/storage/N93MAVU3/Kouzeghar et al_2023_Multi-Target Pursuit by a Decentralized Heterogeneous UAV Swarm using Deep.pdf;/Users/brandonhosley/Zotero/storage/LF8UKJHP/2303.html}
 }
 
 @incollection{hoang2023,
@@ -435,39 +373,129 @@
   file = {/Users/brandonhosley/Zotero/storage/EWGATS8U/Hoang et al. - 2023 - Drone Swarms to Support Search and Rescue Operatio.pdf}
 }
 
-@book{howard2020deep,
-  title = {Deep Learning for Coders with Fastai and {{PyTorch}}: {{AI}} Applications without a {{PhD}}},
-  author = {Howard, J. and Gugger, S. and Chintala, S. and Safari, an O'Reilly Media Company},
-  date = {2020},
-  publisher = {O'Reilly Media, Incorporated},
-  url = {https://books.google.com/books?id=xd6LxgEACAAJ},
-  isbn = {978-1-4920-4552-6},
-  lccn = {2022278837}
+@inproceedings{amarasinghe2019,
+  title = {A Swarm of Crop Spraying Drones Solution for Optimising Safe Pesticide Usage in Arable Lands: Poster Abstract},
+  shorttitle = {A Swarm of Crop Spraying Drones Solution for Optimising Safe Pesticide Usage in Arable Lands},
+  booktitle = {Proceedings of the 17th {{Conference}} on {{Embedded Networked Sensor Systems}}},
+  author = {Amarasinghe, Akarshani and Wijesuriya, Viraj B. and Ganepola, Dilshan and Jayaratne, Lakshman},
+  date = {2019-11-10},
+  series = {{{SenSys}} '19},
+  pages = {410--411},
+  publisher = {Association for Computing Machinery},
+  location = {New York, NY, USA},
+  doi = {10.1145/3356250.3361948},
+  url = {https://doi.org/10.1145/3356250.3361948},
+  urldate = {2024-05-12},
+  abstract = {Pesticides are detrimental to the well-being of all living beings. Inappropriate pesticide usage has been identified as a major health hazard. Therefore, it is important to devise solutions that enable agricultural pest control without excessive use of pesticides. At present, drone technology is being increasingly applied in agriculture through soil and field analysis, planting, crop spraying, crop monitoring, irrigation and health assessment. The primary focus of this ongoing work is to leverage a swarm of drones solution that includes precision agriculture techniques, to efficiently spray pesticides in arable lands with optimal pesticides usage and minimum human intervention.},
+  isbn = {978-1-4503-6950-3},
+  keywords = {drone systems,swarm of drones}
 }
 
-@article{kaelbling1996,
-  title = {Reinforcement {{Learning}}: {{A Survey}}},
-  shorttitle = {Reinforcement {{Learning}}},
-  author = {Kaelbling, L. P. and Littman, M. L. and Moore, A. W.},
-  date = {1996-05-01},
-  journaltitle = {Journal of Artificial Intelligence Research},
-  shortjournal = {jair},
-  volume = {4},
-  pages = {237--285},
-  issn = {1076-9757},
-  doi = {10.1613/jair.301},
-  url = {https://www.jair.org/index.php/jair/article/view/10166},
-  urldate = {2024-06-25},
-  abstract = {This paper surveys the field of reinforcement learning from    a computer-science perspective. It is written to be accessible to    researchers familiar with machine learning.  Both the historical basis    of the field and a broad selection of current work are summarized.    Reinforcement learning is the problem faced by an agent that learns    behavior through trial-and-error interactions with a dynamic    environment.  The work described here has a resemblance to work in    psychology, but differs considerably in the details and in the use of    the word ``reinforcement.''  The paper discusses central issues of    reinforcement learning, including trading off exploration and    exploitation, establishing the foundations of the field via Markov    decision theory, learning from delayed reinforcement, constructing    empirical models to accelerate learning, making use of generalization    and hierarchy, and coping with hidden state.  It concludes with a    survey of some implemented systems and an assessment of the practical    utility of current methods for reinforcement learning.},
-  file = {/Users/brandonhosley/Zotero/storage/CAYL6YGI/Kaelbling et al_1996_Reinforcement Learning.pdf}
+@article{carbone2018,
+  title = {Swarm {{Robotics}} as a {{Solution}} to {{Crops Inspection}} for {{Precision Agriculture}}},
+  author = {Carbone, Carlos and Garibaldi, Oscar and Kurt, Zohre},
+  date = {2018-02-11},
+  journaltitle = {KnE Engineering},
+  pages = {552--562},
+  issn = {2518-6841},
+  doi = {10.18502/keg.v3i1.1459},
+  url = {https://knepublishing.com/index.php/KnE-Engineering/article/view/1459},
+  urldate = {2024-05-12},
+  abstract = {This paper summarizes the concept of swarm robotics and its applicability to crop inspections. To increase the agricultural yield it is essential to monitor the crop health. Hence, precision agriculture is becoming a common practice for farmers providing a system that can inspect the state of the plants (Khosla and others, 2010). One of the rising technologies used for agricultural inspections is the use of unmaned air vehicles (UAVs) which are used to take aerial pictures of the farms so that the images could be processed to extract data about the state of the crops (Das et al., 2015). For this process both fixed wings and quadrotors UAVs are used with a preference over the quadrotor since it’s easier to operate and has a milder learning curve compared to fixed wings (Kolodny, 2017). UAVs require battery replacement especially when the environmental conditions result in longer inspection times (“Agriculture - Maximize Yields with Aerial Imaging,” n.d., “Matrice 100 - DJI Wiki,” n.d.). As a result, inspection systems for crops using commercial quadrotors are limited by the quadrotor´s maximum flight speed, maximum flight height, quadrotor´s battery time, crops area, wind conditions, etc. (“Mission Estimates,” n.d.).Keywords: Swarm Robotics, Precision Agriculture, Unmanned Air Vehicle, Quadrotor, inspection.},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/ABHP2XRH/Carbone et al_2018_Swarm Robotics as a Solution to Crops Inspection for Precision Agriculture.pdf}
 }
 
-@online{kakade2002,
-  title = {Approximately {{Optimal Approximate Reinforcement Learning}}},
-  author = {Kakade, Sham and Langford, John},
-  date = {2002},
-  location = {Proceedings of the Nineteenth International Conference on Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/CV4MXZ2Q/approximately-optimal-approximate-reinforcement-learning.html}
+@article{shoham2007a,
+  title = {If Multi-Agent Learning Is the Answer, What Is the Question?},
+  author = {Shoham, Yoav and Powers, Rob and Grenager, Trond},
+  date = {2007-05},
+  journaltitle = {Artificial Intelligence},
+  shortjournal = {Artificial Intelligence},
+  volume = {171},
+  number = {7},
+  pages = {365--377},
+  issn = {00043702},
+  doi = {10.1016/j.artint.2006.02.006},
+  url = {https://linkinghub.elsevier.com/retrieve/pii/S0004370207000495},
+  urldate = {2024-05-12},
+  abstract = {The area of learning in multi-agent systems is today one of the most fertile grounds for interaction between game theory and artificial intelligence. We focus on the foundational questions in this interdisciplinary area, and identify several distinct agendas that ought to, we argue, be separated. The goal of this article is to start a discussion in the research community that will result in firmer foundations for the area.1 © 2007 Published by Elsevier B.V.},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/722AZMMT/Shoham et al. - 2007 - If multi-agent learning is the answer, what is the.pdf}
+}
+
+@article{berger2007,
+  title = {Brown's {{Original Fictitious Play}}},
+  author = {Berger, Ulrich},
+  date = {2007},
+  journaltitle = {Journal of Economic Theory},
+  volume = {135},
+  number = {1},
+  pages = {572--578},
+  issn = {0022-0531},
+  doi = {10.1016/j.jet.2005.12.010},
+  abstract = {What modern game theorists describe as fictitious play is not the learning process George W. Brown defined in his 1951 paper. Brown's original version differs in a subtle detail, namely the order of belief updating. In this note we revive Brown's original fictitious play process and demonstrate that this seemingly innocent detail allows for an extremely simple and intuitive proof of convergence in an interesting and large class of games: nondegenerate ordinal potential games.},
+  file = {/Users/brandonhosley/Zotero/storage/XLUDA35I/Berger_2007_Brown's Original Fictitious Play.pdf}
+}
+
+@article{brown1951iterative,
+  title = {Iterative Solution of Games by Fictitious Play},
+  author = {Brown, George W},
+  date = {1951},
+  journaltitle = {Act. Anal. Prod Allocation},
+  volume = {13},
+  number = {1},
+  pages = {374}
+}
+
+@article{berger2005,
+  title = {Fictitious Play in 2×n Games},
+  author = {Berger, Ulrich},
+  date = {2005-02},
+  journaltitle = {Journal of Economic Theory},
+  shortjournal = {Journal of Economic Theory},
+  volume = {120},
+  number = {2},
+  pages = {139--154},
+  issn = {00220531},
+  doi = {10.1016/j.jet.2004.02.003},
+  url = {https://linkinghub.elsevier.com/retrieve/pii/S0022053104000626},
+  urldate = {2024-05-13},
+  abstract = {It is known that every discrete-time fictitious play process approaches equilibrium in nondegenerate 2 Â 2 games, and that every continuous-time fictitious play process approaches equilibrium in nondegenerate 2 Â 2 and 2 Â 3 games. It has also been conjectured that convergence to the set of equilibria holds generally for nondegenerate 2 Â n games. We give a simple geometric proof of this for the continuous-time process, and also extend the result to discrete-time fictitious play.},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/2QRP9GVP/Berger - 2005 - Fictitious play in 2×n games.pdf}
+}
+
+@online{sun2023,
+  title = {Mastering {{Asymmetrical Multiplayer Game}} with {{Multi-Agent Asymmetric-Evolution Reinforcement Learning}}},
+  author = {Sun, Chenglu and Zhang, Yichi and Zhang, Yu and Lu, Ziling and Liu, Jingbin and Xu, Sijia and Zhang, Weidong},
+  date = {2023-04-20},
+  eprint = {2304.10124},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2304.10124},
+  url = {http://arxiv.org/abs/2304.10124},
+  urldate = {2024-05-13},
+  abstract = {Asymmetrical multiplayer (AMP) game is a popular game genre which involves multiple types of agents competing or collaborating with each other in the game. It is difficult to train powerful agents that can defeat top human players in AMP games by typical self-play training method because of unbalancing characteristics in their asymmetrical environments. We propose asymmetric-evolution training (AET), a novel multi-agent reinforcement learning framework that can train multiple kinds of agents simultaneously in AMP game. We designed adaptive data adjustment (ADA) and environment randomization (ER) to optimize the AET process. We tested our method in a complex AMP game named Tom \textbackslash\& Jerry, and our AIs trained without using any human data can achieve a win rate of 98.5\% against top human players over 65 matches. The ablation experiments indicated that the proposed modules are beneficial to the framework.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/SCS6KMAT/Sun et al_2023_Mastering Asymmetrical Multiplayer Game with Multi-Agent Asymmetric-Evolution.pdf;/Users/brandonhosley/Zotero/storage/IQIGRGZG/2304.html}
+}
+
+@online{wakilpoor2020,
+  title = {Heterogeneous {{Multi-Agent Reinforcement Learning}} for {{Unknown Environment Mapping}}},
+  author = {Wakilpoor, Ceyer and Martin, Patrick J. and Rebhuhn, Carrie and Vu, Amanda},
+  date = {2020-10-06},
+  eprint = {2010.02663},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2010.02663},
+  url = {http://arxiv.org/abs/2010.02663},
+  urldate = {2024-05-14},
+  abstract = {Reinforcement learning in heterogeneous multi-agent scenarios is important for real-world applications but presents challenges beyond those seen in homogeneous settings and simple benchmarks. In this work, we present an actor-critic algorithm that allows a team of heterogeneous agents to learn decentralized control policies for covering an unknown environment. This task is of interest to national security and emergency response organizations that would like to enhance situational awareness in hazardous areas by deploying teams of unmanned aerial vehicles. To solve this multi-agent coverage path planning problem in unknown environments, we augment a multi-agent actor-critic architecture with a new state encoding structure and triplet learning loss to support heterogeneous agent learning. We developed a simulation environment that includes real-world environmental factors such as turbulence, delayed communication, and agent loss, to train teams of agents as well as probe their robustness and flexibility to such disturbances.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/JRDBJMX5/Wakilpoor et al_2020_Heterogeneous Multi-Agent Reinforcement Learning for Unknown Environment Mapping.pdf;/Users/brandonhosley/Zotero/storage/G975SLIL/2010.html}
 }
 
 @inproceedings{kapetanakis2005,
@@ -485,52 +513,177 @@
   langid = {english}
 }
 
-@online{kouzeghar2023,
-  title = {Multi-{{Target Pursuit}} by a {{Decentralized Heterogeneous UAV Swarm}} Using {{Deep Multi-Agent Reinforcement Learning}}},
-  author = {Kouzeghar, Maryam and Song, Youngbin and Meghjani, Malika and Bouffanais, Roland},
-  date = {2023-03-03},
-  eprint = {2303.01799},
+@inproceedings{zheng2020,
+  title = {Cooperative {{Heterogeneous Deep Reinforcement Learning}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Zheng, Han and Wei, Pengfei and Jiang, Jing and Long, Guodong and Lu, Qinghua and Zhang, Chengqi},
+  date = {2020},
+  volume = {33},
+  pages = {17455--17465},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper/2020/hash/ca3a9be77f7e88708afb20c8cdf44b60-Abstract.html},
+  urldate = {2024-05-14},
+  abstract = {Numerous deep reinforcement learning agents have been proposed, and each of them has its strengths and flaws. In this work, we present a Cooperative Heterogeneous Deep Reinforcement Learning (CHDRL) framework that can learn a policy by integrating the advantages of heterogeneous agents. Specifically, we propose a cooperative learning framework that classifies heterogeneous agents into two classes: global agents and local agents. Global agents are off-policy agents that can utilize experiences from the other agents. Local agents are either on-policy agents or population-based evolutionary algorithms (EAs) agents that can explore the local area effectively. We employ global agents, which are sample-efficient, to guide the learning of local agents so that local agents can benefit from the sample-efficient agents and simultaneously maintain their advantages, e.g., stability. Global agents also benefit from effective local searches. Experimental studies on a range of continuous control tasks from the Mujoco benchmark show that CHDRL achieves better performance compared with state-of-the-art baselines.},
+  file = {/Users/brandonhosley/Zotero/storage/4XRVMVDD/Zheng et al_2020_Cooperative Heterogeneous Deep Reinforcement Learning.pdf}
+}
+
+@online{yu2022,
+  title = {The {{Surprising Effectiveness}} of {{PPO}} in {{Cooperative}}, {{Multi-Agent Games}}},
+  author = {Yu, Chao and Velu, Akash and Vinitsky, Eugene and Gao, Jiaxuan and Wang, Yu and Bayen, Alexandre and Wu, Yi},
+  date = {2022-11-04},
+  eprint = {2103.01955},
   eprinttype = {arXiv},
   eprintclass = {cs},
-  doi = {10.48550/arXiv.2303.01799},
-  url = {http://arxiv.org/abs/2303.01799},
-  urldate = {2024-05-12},
-  abstract = {Multi-agent pursuit-evasion tasks involving intelligent targets are notoriously challenging coordination problems. In this paper, we investigate new ways to learn such coordinated behaviors of unmanned aerial vehicles (UAVs) aimed at keeping track of multiple evasive targets. Within a Multi-Agent Reinforcement Learning (MARL) framework, we specifically propose a variant of the Multi-Agent Deep Deterministic Policy Gradient (MADDPG) method. Our approach addresses multi-target pursuit-evasion scenarios within non-stationary and unknown environments with random obstacles. In addition, given the critical role played by collective exploration in terms of detecting possible targets, we implement heterogeneous roles for the pursuers for enhanced exploratory actions balanced by exploitation (i.e. tracking) of previously identified targets. Our proposed role-based MADDPG algorithm is not only able to track multiple targets, but also is able to explore for possible targets by means of the proposed Voronoi-based rewarding policy. We implemented, tested and validated our approach in a simulation environment prior to deploying a real-world multi-robot system comprising of Crazyflie drones. Our results demonstrate that a multi-agent pursuit team has the ability to learn highly efficient coordinated control policies in terms of target tracking and exploration even when confronted with multiple fast evasive targets in complex environments.},
+  doi = {10.48550/arXiv.2103.01955},
+  url = {http://arxiv.org/abs/2103.01955},
+  urldate = {2024-05-25},
+  abstract = {Proximal Policy Optimization (PPO) is a ubiquitous on-policy reinforcement learning algorithm but is significantly less utilized than off-policy learning algorithms in multi-agent settings. This is often due to the belief that PPO is significantly less sample efficient than off-policy methods in multi-agent systems. In this work, we carefully study the performance of PPO in cooperative multi-agent settings. We show that PPO-based multi-agent algorithms achieve surprisingly strong performance in four popular multi-agent testbeds: the particle-world environments, the StarCraft multi-agent challenge, Google Research Football, and the Hanabi challenge, with minimal hyperparameter tuning and without any domain-specific algorithmic modifications or architectures. Importantly, compared to competitive off-policy methods, PPO often achieves competitive or superior results in both final returns and sample efficiency. Finally, through ablation studies, we analyze implementation and hyperparameter factors that are critical to PPO's empirical performance, and give concrete practical suggestions regarding these factors. Our results show that when using these practices, simple PPO-based methods can be a strong baseline in cooperative multi-agent reinforcement learning. Source code is released at \textbackslash url\{https://github.com/marlbenchmark/on-policy\}.},
   pubstate = {prepublished},
-  keywords = {Computer Science - Robotics},
-  file = {/Users/brandonhosley/Zotero/storage/N93MAVU3/Kouzeghar et al_2023_Multi-Target Pursuit by a Decentralized Heterogeneous UAV Swarm using Deep.pdf;/Users/brandonhosley/Zotero/storage/LF8UKJHP/2303.html}
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/SDH5KMVS/Yu et al_2022_The Surprising Effectiveness of PPO in Cooperative, Multi-Agent Games.pdf;/Users/brandonhosley/Zotero/storage/3KM2DXK5/2103.html}
 }
 
-@online{kurach2020,
-  title = {Google {{Research Football}}: {{A Novel Reinforcement Learning Environment}}},
-  shorttitle = {Google {{Research Football}}},
-  author = {Kurach, Karol and Raichuk, Anton and Stańczyk, Piotr and Zając, Michał and Bachem, Olivier and Espeholt, Lasse and Riquelme, Carlos and Vincent, Damien and Michalski, Marcin and Bousquet, Olivier and Gelly, Sylvain},
-  date = {2020-04-14},
-  eprint = {1907.11180},
+@online{schulman2017,
+  title = {Trust {{Region Policy Optimization}}},
+  author = {Schulman, John and Levine, Sergey and Moritz, Philipp and Jordan, Michael I. and Abbeel, Pieter},
+  date = {2017-04-20},
+  eprint = {1502.05477},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1502.05477},
+  url = {http://arxiv.org/abs/1502.05477},
+  urldate = {2024-05-25},
+  abstract = {We describe an iterative procedure for optimizing policies, with guaranteed monotonic improvement. By making several approximations to the theoretically-justified procedure, we develop a practical algorithm, called Trust Region Policy Optimization (TRPO). This algorithm is similar to natural policy gradient methods and is effective for optimizing large nonlinear policies such as neural networks. Our experiments demonstrate its robust performance on a wide variety of tasks: learning simulated robotic swimming, hopping, and walking gaits; and playing Atari games using images of the screen as input. Despite its approximations that deviate from the theory, TRPO tends to give monotonic improvement, with little tuning of hyperparameters.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/WB9X428C/Schulman et al_2017_Trust Region Policy Optimization.pdf;/Users/brandonhosley/Zotero/storage/N4BJ2EUW/1502.html}
+}
+
+@online{lillicrap2019,
+  title = {Continuous Control with Deep Reinforcement Learning},
+  author = {Lillicrap, Timothy P. and Hunt, Jonathan J. and Pritzel, Alexander and Heess, Nicolas and Erez, Tom and Tassa, Yuval and Silver, David and Wierstra, Daan},
+  date = {2019-07-05},
+  eprint = {1509.02971},
   eprinttype = {arXiv},
   eprintclass = {cs, stat},
-  doi = {10.48550/arXiv.1907.11180},
-  url = {http://arxiv.org/abs/1907.11180},
-  urldate = {2024-06-18},
-  abstract = {Recent progress in the field of reinforcement learning has been accelerated by virtual learning environments such as video games, where novel algorithms and ideas can be quickly tested in a safe and reproducible manner. We introduce the Google Research Football Environment, a new reinforcement learning environment where agents are trained to play football in an advanced, physics-based 3D simulator. The resulting environment is challenging, easy to use and customize, and it is available under a permissive open-source license. In addition, it provides support for multiplayer and multi-agent experiments. We propose three full-game scenarios of varying difficulty with the Football Benchmarks and report baseline results for three commonly used reinforcement algorithms (IMPALA, PPO, and Ape-X DQN). We also provide a diverse set of simpler scenarios with the Football Academy and showcase several promising research directions.},
+  doi = {10.48550/arXiv.1509.02971},
+  url = {http://arxiv.org/abs/1509.02971},
+  urldate = {2024-05-25},
+  abstract = {We adapt the ideas underlying the success of Deep Q-Learning to the continuous action domain. We present an actor-critic, model-free algorithm based on the deterministic policy gradient that can operate over continuous action spaces. Using the same learning algorithm, network architecture and hyper-parameters, our algorithm robustly solves more than 20 simulated physics tasks, including classic problems such as cartpole swing-up, dexterous manipulation, legged locomotion and car driving. Our algorithm is able to find policies whose performance is competitive with those found by a planning algorithm with full access to the dynamics of the domain and its derivatives. We further demonstrate that for many of the tasks the algorithm can learn policies end-to-end: directly from raw pixel inputs.},
   pubstate = {prepublished},
   keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/DNBMDCA2/Kurach et al_2020_Google Research Football.pdf;/Users/brandonhosley/Zotero/storage/3X73G4DX/1907.html}
+  file = {/Users/brandonhosley/Zotero/storage/4SDUFMAZ/Lillicrap et al_2019_Continuous control with deep reinforcement learning.pdf;/Users/brandonhosley/Zotero/storage/YUCJ4FU9/1509.html}
 }
 
-@inproceedings{leonardos2021,
-  title = {Exploration-{{Exploitation}} in {{Multi-Agent Competition}}: {{Convergence}} with {{Bounded Rationality}}},
-  shorttitle = {Exploration-{{Exploitation}} in {{Multi-Agent Competition}}},
-  booktitle = {Advances in {{Neural Information Processing Systems}}},
-  author = {Leonardos, Stefanos and Piliouras, Georgios and Spendlove, Kelly},
-  date = {2021},
-  volume = {34},
-  pages = {26318--26331},
-  publisher = {Curran Associates, Inc.},
-  url = {https://proceedings.neurips.cc/paper/2021/hash/dd1970fb03877a235d530476eb727dab-Abstract.html},
-  urldate = {2024-06-25},
-  abstract = {The interplay between exploration and exploitation in competitive multi-agent learning is still far from being well understood. Motivated by this, we study smooth Q-learning, a prototypical learning model that explicitly captures the balance between game rewards and exploration costs. We show that Q-learning always converges to the unique quantal-response equilibrium (QRE), the standard solution concept for games under bounded rationality, in weighted zero-sum polymatrix games with heterogeneous learning agents using positive exploration rates. Complementing recent results about convergence in weighted potential games [16,34], we show that fast convergence of Q-learning in competitive settings obtains regardless of the number of agents and without any need for parameter fine-tuning. As showcased by our experiments in network zero-sum games, these theoretical results provide the necessary guarantees for an algorithmic approach to the currently open problem of equilibrium selection in competitive multi-agent settings.},
-  file = {/Users/brandonhosley/Zotero/storage/NHZ3NPT4/Leonardos et al_2021_Exploration-Exploitation in Multi-Agent Competition.pdf}
+@online{fujimoto2018,
+  title = {Addressing {{Function Approximation Error}} in {{Actor-Critic Methods}}},
+  author = {Fujimoto, Scott and van Hoof, Herke and Meger, David},
+  options = {useprefix=true},
+  date = {2018-10-22},
+  eprint = {1802.09477},
+  eprinttype = {arXiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1802.09477},
+  url = {http://arxiv.org/abs/1802.09477},
+  urldate = {2024-05-25},
+  abstract = {In value-based reinforcement learning methods such as deep Q-learning, function approximation errors are known to lead to overestimated value estimates and suboptimal policies. We show that this problem persists in an actor-critic setting and propose novel mechanisms to minimize its effects on both the actor and the critic. Our algorithm builds on Double Q-learning, by taking the minimum value between a pair of critics to limit overestimation. We draw the connection between target networks and overestimation bias, and suggest delaying policy updates to reduce per-update error and further improve performance. We evaluate our method on the suite of OpenAI gym tasks, outperforming the state of the art in every environment tested.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/53LNWQEE/Fujimoto et al_2018_Addressing Function Approximation Error in Actor-Critic Methods.pdf;/Users/brandonhosley/Zotero/storage/HKDN2XRX/1802.html}
+}
+
+@online{schulman2017a,
+  title = {Proximal {{Policy Optimization Algorithms}}},
+  author = {Schulman, John and Wolski, Filip and Dhariwal, Prafulla and Radford, Alec and Klimov, Oleg},
+  date = {2017-08-28},
+  eprint = {1707.06347},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1707.06347},
+  url = {http://arxiv.org/abs/1707.06347},
+  urldate = {2024-05-25},
+  abstract = {We propose a new family of policy gradient methods for reinforcement learning, which alternate between sampling data through interaction with the environment, and optimizing a "surrogate" objective function using stochastic gradient ascent. Whereas standard policy gradient methods perform one gradient update per data sample, we propose a novel objective function that enables multiple epochs of minibatch updates. The new methods, which we call proximal policy optimization (PPO), have some of the benefits of trust region policy optimization (TRPO), but they are much simpler to implement, more general, and have better sample complexity (empirically). Our experiments test PPO on a collection of benchmark tasks, including simulated robotic locomotion and Atari game playing, and we show that PPO outperforms other online policy gradient methods, and overall strikes a favorable balance between sample complexity, simplicity, and wall-time.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/XDWVYD3Y/Schulman et al_2017_Proximal Policy Optimization Algorithms.pdf;/Users/brandonhosley/Zotero/storage/5UT3G33Z/1707.html}
+}
+
+@online{ackermann2019,
+  title = {Reducing {{Overestimation Bias}} in {{Multi-Agent Domains Using Double Centralized Critics}}},
+  author = {Ackermann, Johannes and Gabler, Volker and Osa, Takayuki and Sugiyama, Masashi},
+  date = {2019-10-03},
+  url = {https://arxiv.org/abs/1910.01465v2},
+  urldate = {2024-05-26},
+  abstract = {Many real world tasks require multiple agents to work together. Multi-agent reinforcement learning (RL) methods have been proposed in recent years to solve these tasks, but current methods often fail to efficiently learn policies. We thus investigate the presence of a common weakness in single-agent RL, namely value function overestimation bias, in the multi-agent setting. Based on our findings, we propose an approach that reduces this bias by using double centralized critics. We evaluate it on six mixed cooperative-competitive tasks, showing a significant advantage over current methods. Finally, we investigate the application of multi-agent methods to high-dimensional robotic tasks and show that our approach can be used to learn decentralized policies in this domain.},
+  langid = {english},
+  organization = {arXiv.org},
+  file = {/Users/brandonhosley/Zotero/storage/3DUYWQRZ/Ackermann et al_2019_Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized.pdf}
+}
+
+@inproceedings{littman1994,
+  title = {Markov Games as a Framework for Multi-Agent Reinforcement Learning},
+  booktitle = {Machine {{Learning Proceedings}} 1994},
+  author = {Littman, Michael L.},
+  date = {1994},
+  pages = {157--163},
+  publisher = {Elsevier},
+  doi = {10.1016/B978-1-55860-335-6.50027-1},
+  url = {https://linkinghub.elsevier.com/retrieve/pii/B9781558603356500271},
+  urldate = {2024-05-28},
+  abstract = {Semantic Scholar extracted view of "Markov Games as a Framework for Multi-Agent Reinforcement Learning" by M. Littman},
+  isbn = {978-1-55860-335-6},
+  langid = {english}
+}
+
+@online{sukhbaatar2016,
+  title = {Learning {{Multiagent Communication}} with {{Backpropagation}}},
+  author = {Sukhbaatar, Sainbayar and Szlam, Arthur and Fergus, Rob},
+  date = {2016-10-31},
+  eprint = {1605.07736},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1605.07736},
+  url = {http://arxiv.org/abs/1605.07736},
+  urldate = {2024-05-28},
+  abstract = {Many tasks in AI require the collaboration of multiple agents. Typically, the communication protocol between agents is manually specified and not altered during training. In this paper we explore a simple neural model, called CommNet, that uses continuous communication for fully cooperative tasks. The model consists of multiple agents and the communication between them is learned alongside their policy. We apply this model to a diverse set of tasks, demonstrating the ability of the agents to learn to communicate amongst themselves, yielding improved performance over non-communicative agents and baselines. In some cases, it is possible to interpret the language devised by the agents, revealing simple but effective strategies for solving the task at hand.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/LFWPCTDS/Sukhbaatar et al_2016_Learning Multiagent Communication with Backpropagation.pdf;/Users/brandonhosley/Zotero/storage/R7FJJZ2M/1605.html}
+}
+
+@online{papoudakis2021,
+  title = {Benchmarking {{Multi-Agent Deep Reinforcement Learning Algorithms}} in {{Cooperative Tasks}}},
+  author = {Papoudakis, Georgios and Christianos, Filippos and Schäfer, Lukas and Albrecht, Stefano V.},
+  date = {2021-11-09},
+  eprint = {2006.07869},
+  eprinttype = {arXiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.2006.07869},
+  url = {http://arxiv.org/abs/2006.07869},
+  urldate = {2024-05-28},
+  abstract = {Multi-agent deep reinforcement learning (MARL) suffers from a lack of commonly-used evaluation tasks and criteria, making comparisons between approaches difficult. In this work, we provide a systematic evaluation and comparison of three different classes of MARL algorithms (independent learning, centralised multi-agent policy gradient, value decomposition) in a diverse range of cooperative multi-agent learning tasks. Our experiments serve as a reference for the expected performance of algorithms across different learning tasks, and we provide insights regarding the effectiveness of different learning approaches. We open-source EPyMARL, which extends the PyMARL codebase to include additional algorithms and allow for flexible configuration of algorithm implementation details such as parameter sharing. Finally, we open-source two environments for multi-agent research which focus on coordination under sparse rewards.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/X55NBJGK/Papoudakis et al_2021_Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms in Cooperative.pdf;/Users/brandonhosley/Zotero/storage/9S95S7UZ/2006.html}
+}
+
+@article{williams1992,
+  title = {Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning},
+  author = {Williams, Ronald J.},
+  date = {1992-05-01},
+  journaltitle = {Machine Learning},
+  shortjournal = {Mach Learn},
+  volume = {8},
+  number = {3},
+  pages = {229--256},
+  issn = {1573-0565},
+  doi = {10.1007/BF00992696},
+  url = {https://doi.org/10.1007/BF00992696},
+  urldate = {2024-05-28},
+  abstract = {This article presents a general class of associative reinforcement learning algorithms for connectionist networks containing stochastic units. These algorithms, called REINFORCE algorithms, are shown to make weight adjustments in a direction that lies along the gradient of expected reinforcement in both immediate-reinforcement tasks and certain limited forms of delayed-reinforcement tasks, and they do this without explicitly computing gradient estimates or even storing information from which such estimates could be computed. Specific examples of such algorithms are presented, some of which bear a close relationship to certain existing algorithms while others are novel but potentially interesting in their own right. Also given are results that show how such algorithms can be naturally integrated with backpropagation. We close with a brief discussion of a number of additional issues surrounding the use of such algorithms, including what is known about their limiting behaviors as well as further considerations that might be used to help develop similar but potentially more powerful reinforcement learning algorithms.},
+  langid = {english},
+  keywords = {connectionist networks,gradient descent,mathematical analysis,Reinforcement learning},
+  file = {/Users/brandonhosley/Zotero/storage/ZP3SL2Z8/Williams_1992_Simple statistical gradient-following algorithms for connectionist.pdf}
 }
 
 @online{li2023c,
@@ -565,6 +718,24 @@
   file = {/Users/brandonhosley/Zotero/storage/DJAXR86Q/Li et al_2023_F2A2.pdf}
 }
 
+@online{rutherford2023,
+  title = {{{JaxMARL}}: {{Multi-Agent RL Environments}} in {{JAX}}},
+  shorttitle = {{{JaxMARL}}},
+  author = {Rutherford, Alexander and Ellis, Benjamin and Gallici, Matteo and Cook, Jonathan and Lupu, Andrei and Ingvarsson, Gardar and Willi, Timon and Khan, Akbir and de Witt, Christian Schroeder and Souly, Alexandra and Bandyopadhyay, Saptarashmi and Samvelyan, Mikayel and Jiang, Minqi and Lange, Robert Tjarko and Whiteson, Shimon and Lacerda, Bruno and Hawes, Nick and Rocktaschel, Tim and Lu, Chris and Foerster, Jakob Nicolaus},
+  options = {useprefix=true},
+  date = {2023-12-19},
+  eprint = {2311.10090},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  url = {http://arxiv.org/abs/2311.10090},
+  urldate = {2024-06-04},
+  abstract = {Benchmarks play an important role in the development of machine learning algorithms. For example, research in reinforcement learning (RL) has been heavily influenced by available environments and benchmarks. However, RL environments are traditionally run on the CPU, limiting their scalability with typical academic compute. Recent advancements in JAX have enabled the wider use of hardware acceleration to overcome these computational hurdles, enabling massively parallel RL training pipelines and environments. This is particularly useful for multi-agent reinforcement learning (MARL) research. First of all, multiple agents must be considered at each environment step, adding computational burden, and secondly, the sample complexity is increased due to non-stationarity, decentralised partial observability, or other MARL challenges. In this paper, we present JaxMARL, the first open-source code base that combines ease-of-use with GPU enabled efficiency, and supports a large number of commonly used MARL environments as well as popular baseline algorithms. When considering wall clock time, our experiments show that per-run our JAX-based training pipeline is up to 12500x faster than existing approaches. This enables efficient and thorough evaluations, with the potential to alleviate the evaluation crisis of the field. We also introduce and benchmark SMAX, a vectorised, simplified version of the popular StarCraft Multi-Agent Challenge, which removes the need to run the StarCraft II game engine. This not only enables GPU acceleration, but also provides a more flexible MARL environment, unlocking the potential for self-play, meta-learning, and other future applications in MARL. We provide code at https://github.com/flairox/jaxmarl.},
+  langid = {english},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/DNRUI6S2/Rutherford et al. - 2023 - JaxMARL Multi-Agent RL Environments in JAX.pdf}
+}
+
 @online{liang2018,
   title = {{{RLlib}}: {{Abstractions}} for {{Distributed Reinforcement Learning}}},
   shorttitle = {{{RLlib}}},
@@ -580,579 +751,6 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Distributed Parallel and Cluster Computing,Computer Science - Machine Learning},
   file = {/Users/brandonhosley/Zotero/storage/YGAES56T/Liang et al_2018_RLlib.pdf;/Users/brandonhosley/Zotero/storage/M8KXJK8I/1712.html}
-}
-
-@unpublished{liaw2018tune,
-  title = {Tune: A Research Platform for Distributed Model Selection and Training},
-  author = {Liaw, Richard and Liang, Eric and Nishihara, Robert and Moritz, Philipp and Gonzalez, Joseph E and Stoica, Ion},
-  date = {2018},
-  eprint = {1807.05118},
-  eprinttype = {arXiv}
-}
-
-@inproceedings{littman1994,
-  title = {Markov Games as a Framework for Multi-Agent Reinforcement Learning},
-  booktitle = {Machine {{Learning Proceedings}} 1994},
-  author = {Littman, Michael L.},
-  date = {1994},
-  pages = {157--163},
-  publisher = {Elsevier},
-  doi = {10.1016/B978-1-55860-335-6.50027-1},
-  url = {https://linkinghub.elsevier.com/retrieve/pii/B9781558603356500271},
-  urldate = {2024-05-28},
-  abstract = {Semantic Scholar extracted view of "Markov Games as a Framework for Multi-Agent Reinforcement Learning" by M. Littman},
-  isbn = {978-1-55860-335-6},
-  langid = {english}
-}
-
-@misc{liu2022light,
-  title = {Light {{Aircraft Game}}: {{A}} Lightweight, Scalable, Gym-Wrapped Aircraft Competitive Environment with Baseline Reinforcement Learning Algorithms},
-  author = {Liu, Qihan and Jiang, Yuhua and Ma, Xiaoteng},
-  date = {2022},
-  url = {https://github.com/liuqh16/CloseAirCombat},
-  organization = {GitHub}
-}
-
-@online{lowe2020,
-  title = {Multi-{{Agent Actor-Critic}} for {{Mixed Cooperative-Competitive Environments}}},
-  author = {Lowe, Ryan and Wu, Yi and Tamar, Aviv and Harb, Jean and Abbeel, Pieter and Mordatch, Igor},
-  date = {2020-03-14},
-  eprint = {1706.02275},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1706.02275},
-  url = {http://arxiv.org/abs/1706.02275},
-  urldate = {2023-02-12},
-  abstract = {We explore deep reinforcement learning methods for multi-agent domains. We begin by analyzing the difficulty of traditional algorithms in the multi-agent case: Q-learning is challenged by an inherent non-stationarity of the environment, while policy gradient suffers from a variance that increases as the number of agents grows. We then present an adaptation of actor-critic methods that considers action policies of other agents and is able to successfully learn policies that require complex multi-agent coordination. Additionally, we introduce a training regimen utilizing an ensemble of policies for each agent that leads to more robust multi-agent policies. We show the strength of our approach compared to existing methods in cooperative as well as competitive scenarios, where agent populations are able to discover various physical and informational coordination strategies.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing},
-  file = {/Users/brandonhosley/Zotero/storage/Q54TTJQQ/Lowe et al. - 2020 - Multi-Agent Actor-Critic for Mixed Cooperative-Com.pdf;/Users/brandonhosley/Zotero/storage/F3DU3EG3/1706.html}
-}
-
-@online{mnih2013,
-  title = {Playing {{Atari}} with {{Deep Reinforcement Learning}}},
-  author = {Mnih, Volodymyr and Kavukcuoglu, Koray and Silver, David and Graves, Alex and Antonoglou, Ioannis and Wierstra, Daan and Riedmiller, Martin},
-  date = {2013-12-19},
-  eprint = {1312.5602},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1312.5602},
-  url = {http://arxiv.org/abs/1312.5602},
-  urldate = {2024-07-21},
-  abstract = {We present the first deep learning model to successfully learn control policies directly from high-dimensional sensory input using reinforcement learning. The model is a convolutional neural network, trained with a variant of Q-learning, whose input is raw pixels and whose output is a value function estimating future rewards. We apply our method to seven Atari 2600 games from the Arcade Learning Environment, with no adjustment of the architecture or learning algorithm. We find that it outperforms all previous approaches on six of the games and surpasses a human expert on three of them.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/6NYMSJY3/Mnih et al_2013_Playing Atari with Deep Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/PADLGVEM/1312.html}
-}
-
-@article{mnih2015,
-  title = {Human-Level Control through Deep Reinforcement Learning},
-  author = {Mnih, Volodymyr and Kavukcuoglu, Koray and Silver, David and Rusu, Andrei A. and Veness, Joel and Bellemare, Marc G. and Graves, Alex and Riedmiller, Martin and Fidjeland, Andreas K. and Ostrovski, Georg and Petersen, Stig and Beattie, Charles and Sadik, Amir and Antonoglou, Ioannis and King, Helen and Kumaran, Dharshan and Wierstra, Daan and Legg, Shane and Hassabis, Demis},
-  date = {2015-02-26},
-  journaltitle = {Nature},
-  shortjournal = {Nature},
-  volume = {518},
-  number = {7540},
-  pages = {529--533},
-  issn = {0028-0836, 1476-4687},
-  doi = {10.1038/nature14236},
-  url = {https://www.nature.com/articles/nature14236},
-  urldate = {2024-07-21},
-  langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/MCMU6TN4/Mnih et al. - 2015 - Human-level control through deep reinforcement lea.pdf}
-}
-
-@online{mnih2016,
-  title = {Asynchronous {{Methods}} for {{Deep Reinforcement Learning}}},
-  author = {Mnih, Volodymyr and Badia, Adrià Puigdomènech and Mirza, Mehdi and Graves, Alex and Lillicrap, Timothy P. and Harley, Tim and Silver, David and Kavukcuoglu, Koray},
-  date = {2016-06-16},
-  eprint = {1602.01783},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1602.01783},
-  url = {http://arxiv.org/abs/1602.01783},
-  urldate = {2024-05-05},
-  abstract = {We propose a conceptually simple and lightweight framework for deep reinforcement learning that uses asynchronous gradient descent for optimization of deep neural network controllers. We present asynchronous variants of four standard reinforcement learning algorithms and show that parallel actor-learners have a stabilizing effect on training allowing all four methods to successfully train neural network controllers. The best performing method, an asynchronous variant of actor-critic, surpasses the current state-of-the-art on the Atari domain while training for half the time on a single multi-core CPU instead of a GPU. Furthermore, we show that asynchronous actor-critic succeeds on a wide variety of continuous motor control problems as well as on a new task of navigating random 3D mazes using a visual input.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/ZNCS528Y/Mnih et al. - 2016 - Asynchronous Methods for Deep Reinforcement Learni.pdf;/Users/brandonhosley/Zotero/storage/MJV4AMZK/1602.html}
-}
-
-@unpublished{mordatch2017emergence,
-  title = {Emergence of Grounded Compositional Language in Multi-Agent Populations},
-  author = {Mordatch, Igor and Abbeel, Pieter},
-  date = {2017},
-  eprint = {1703.04908},
-  eprinttype = {arXiv}
-}
-
-@inproceedings{pan2021,
-  title = {Regularized {{Softmax Deep Multi-Agent Q-Learning}}},
-  booktitle = {Advances in {{Neural Information Processing Systems}}},
-  author = {Pan, Ling and Rashid, Tabish and Peng, Bei and Huang, Longbo and Whiteson, Shimon},
-  date = {2021},
-  volume = {34},
-  pages = {1365--1377},
-  publisher = {Curran Associates, Inc.},
-  url = {https://proceedings.neurips.cc/paper/2021/hash/0a113ef6b61820daa5611c870ed8d5ee-Abstract.html},
-  urldate = {2024-06-25},
-  file = {/Users/brandonhosley/Zotero/storage/UB6KUNBL/Pan et al_2021_Regularized Softmax Deep Multi-Agent Q-Learning.pdf}
-}
-
-@online{papoudakis2021,
-  title = {Benchmarking {{Multi-Agent Deep Reinforcement Learning Algorithms}} in {{Cooperative Tasks}}},
-  author = {Papoudakis, Georgios and Christianos, Filippos and Schäfer, Lukas and Albrecht, Stefano V.},
-  date = {2021-11-09},
-  eprint = {2006.07869},
-  eprinttype = {arXiv},
-  eprintclass = {cs, stat},
-  doi = {10.48550/arXiv.2006.07869},
-  url = {http://arxiv.org/abs/2006.07869},
-  urldate = {2024-05-28},
-  abstract = {Multi-agent deep reinforcement learning (MARL) suffers from a lack of commonly-used evaluation tasks and criteria, making comparisons between approaches difficult. In this work, we provide a systematic evaluation and comparison of three different classes of MARL algorithms (independent learning, centralised multi-agent policy gradient, value decomposition) in a diverse range of cooperative multi-agent learning tasks. Our experiments serve as a reference for the expected performance of algorithms across different learning tasks, and we provide insights regarding the effectiveness of different learning approaches. We open-source EPyMARL, which extends the PyMARL codebase to include additional algorithms and allow for flexible configuration of algorithm implementation details such as parameter sharing. Finally, we open-source two environments for multi-agent research which focus on coordination under sparse rewards.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/X55NBJGK/Papoudakis et al_2021_Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms in Cooperative.pdf;/Users/brandonhosley/Zotero/storage/9S95S7UZ/2006.html}
-}
-
-@book{puterman2005,
-  title = {Markov Decision Processes: Discrete Stochastic Dynamic Programming},
-  shorttitle = {Markov Decision Processes},
-  author = {Puterman, Martin L.},
-  date = {2005},
-  series = {Wiley Series in Probability and Statistics},
-  publisher = {Wiley-Interscience},
-  location = {Hoboken, NJ},
-  isbn = {978-0-471-72782-8},
-  langid = {english},
-  pagetotal = {649},
-  file = {/Users/brandonhosley/Zotero/storage/ZEEACZCB/Puterman - 2005 - Markov decision processes discrete stochastic dyn.pdf}
-}
-
-@online{rashid2018,
-  title = {{{QMIX}}: {{Monotonic Value Function Factorisation}} for {{Deep Multi-Agent Reinforcement Learning}}},
-  shorttitle = {{{QMIX}}},
-  author = {Rashid, Tabish and Samvelyan, Mikayel and de Witt, Christian Schroeder and Farquhar, Gregory and Foerster, Jakob and Whiteson, Shimon},
-  options = {useprefix=true},
-  date = {2018-06-06},
-  eprint = {1803.11485},
-  eprinttype = {arXiv},
-  eprintclass = {cs, stat},
-  doi = {10.48550/arXiv.1803.11485},
-  url = {http://arxiv.org/abs/1803.11485},
-  urldate = {2024-04-04},
-  abstract = {In many real-world settings, a team of agents must coordinate their behaviour while acting in a decentralised way. At the same time, it is often possible to train the agents in a centralised fashion in a simulated or laboratory setting, where global state information is available and communication constraints are lifted. Learning joint action-values conditioned on extra state information is an attractive way to exploit centralised learning, but the best strategy for then extracting decentralised policies is unclear. Our solution is QMIX, a novel value-based method that can train decentralised policies in a centralised end-to-end fashion. QMIX employs a network that estimates joint action-values as a complex non-linear combination of per-agent values that condition only on local observations. We structurally enforce that the joint-action value is monotonic in the per-agent values, which allows tractable maximisation of the joint action-value in off-policy learning, and guarantees consistency between the centralised and decentralised policies. We evaluate QMIX on a challenging set of StarCraft II micromanagement tasks, and show that QMIX significantly outperforms existing value-based multi-agent reinforcement learning methods.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/9U68HQRD/Rashid et al_2018_QMIX.pdf;/Users/brandonhosley/Zotero/storage/4FPV8YXI/1803.html}
-}
-
-@online{robertson2023,
-  title = {Pentagon Unveils ‘{{Replicator}}’ Drone Program to Compete with {{China}}},
-  author = {Robertson, Noah},
-  date = {2023-08-28T15:50:14},
-  url = {https://www.defensenews.com/pentagon/2023/08/28/pentagon-unveils-replicator-drone-program-to-compete-with-china/},
-  urldate = {2024-06-25},
-  abstract = {The program will seek to scale unmanned, attritable systems to offset China's bulk capacity, Hicks said.},
-  langid = {english},
-  organization = {Defense News},
-  file = {/Users/brandonhosley/Zotero/storage/BUYKV3CJ/pentagon-unveils-replicator-drone-program-to-compete-with-china.html}
-}
-
-@online{samvelyan2019,
-  title = {The {{StarCraft Multi-Agent Challenge}}},
-  author = {Samvelyan, Mikayel and Rashid, Tabish and de Witt, Christian Schroeder and Farquhar, Gregory and Nardelli, Nantas and Rudner, Tim G. J. and Hung, Chia-Man and Torr, Philip H. S. and Foerster, Jakob and Whiteson, Shimon},
-  options = {useprefix=true},
-  date = {2019-12-09},
-  eprint = {1902.04043},
-  eprinttype = {arXiv},
-  eprintclass = {cs, stat},
-  doi = {10.48550/arXiv.1902.04043},
-  url = {http://arxiv.org/abs/1902.04043},
-  urldate = {2024-06-26},
-  abstract = {In the last few years, deep multi-agent reinforcement learning (RL) has become a highly active area of research. A particularly challenging class of problems in this area is partially observable, cooperative, multi-agent learning, in which teams of agents must learn to coordinate their behaviour while conditioning only on their private observations. This is an attractive research area since such problems are relevant to a large number of real-world systems and are also more amenable to evaluation than general-sum problems. Standardised environments such as the ALE and MuJoCo have allowed single-agent RL to move beyond toy domains, such as grid worlds. However, there is no comparable benchmark for cooperative multi-agent RL. As a result, most papers in this field use one-off toy problems, making it difficult to measure real progress. In this paper, we propose the StarCraft Multi-Agent Challenge (SMAC) as a benchmark problem to fill this gap. SMAC is based on the popular real-time strategy game StarCraft II and focuses on micromanagement challenges where each unit is controlled by an independent agent that must act based on local observations. We offer a diverse set of challenge maps and recommendations for best practices in benchmarking and evaluations. We also open-source a deep multi-agent RL learning framework including state-of-the-art algorithms. We believe that SMAC can provide a standard benchmark environment for years to come. Videos of our best agents for several SMAC scenarios are available at: https://youtu.be/VZ7zmQ\_obZ0.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/TJCL63RQ/Samvelyan et al_2019_The StarCraft Multi-Agent Challenge.pdf;/Users/brandonhosley/Zotero/storage/N4RKHKPB/1902.html}
-}
-
-@online{schulman2017,
-  title = {Trust {{Region Policy Optimization}}},
-  author = {Schulman, John and Levine, Sergey and Moritz, Philipp and Jordan, Michael I. and Abbeel, Pieter},
-  date = {2017-04-20},
-  eprint = {1502.05477},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1502.05477},
-  url = {http://arxiv.org/abs/1502.05477},
-  urldate = {2024-05-25},
-  abstract = {We describe an iterative procedure for optimizing policies, with guaranteed monotonic improvement. By making several approximations to the theoretically-justified procedure, we develop a practical algorithm, called Trust Region Policy Optimization (TRPO). This algorithm is similar to natural policy gradient methods and is effective for optimizing large nonlinear policies such as neural networks. Our experiments demonstrate its robust performance on a wide variety of tasks: learning simulated robotic swimming, hopping, and walking gaits; and playing Atari games using images of the screen as input. Despite its approximations that deviate from the theory, TRPO tends to give monotonic improvement, with little tuning of hyperparameters.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/WB9X428C/Schulman et al_2017_Trust Region Policy Optimization.pdf;/Users/brandonhosley/Zotero/storage/N4BJ2EUW/1502.html}
-}
-
-@online{schulman2017a,
-  title = {Proximal {{Policy Optimization Algorithms}}},
-  author = {Schulman, John and Wolski, Filip and Dhariwal, Prafulla and Radford, Alec and Klimov, Oleg},
-  date = {2017-08-28},
-  eprint = {1707.06347},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1707.06347},
-  url = {http://arxiv.org/abs/1707.06347},
-  urldate = {2024-05-25},
-  abstract = {We propose a new family of policy gradient methods for reinforcement learning, which alternate between sampling data through interaction with the environment, and optimizing a "surrogate" objective function using stochastic gradient ascent. Whereas standard policy gradient methods perform one gradient update per data sample, we propose a novel objective function that enables multiple epochs of minibatch updates. The new methods, which we call proximal policy optimization (PPO), have some of the benefits of trust region policy optimization (TRPO), but they are much simpler to implement, more general, and have better sample complexity (empirically). Our experiments test PPO on a collection of benchmark tasks, including simulated robotic locomotion and Atari game playing, and we show that PPO outperforms other online policy gradient methods, and overall strikes a favorable balance between sample complexity, simplicity, and wall-time.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/XDWVYD3Y/Schulman et al_2017_Proximal Policy Optimization Algorithms.pdf;/Users/brandonhosley/Zotero/storage/5UT3G33Z/1707.html}
-}
-
-@article{shoham2007a,
-  title = {If Multi-Agent Learning Is the Answer, What Is the Question?},
-  author = {Shoham, Yoav and Powers, Rob and Grenager, Trond},
-  date = {2007-05},
-  journaltitle = {Artificial Intelligence},
-  shortjournal = {Artificial Intelligence},
-  volume = {171},
-  number = {7},
-  pages = {365--377},
-  issn = {00043702},
-  doi = {10.1016/j.artint.2006.02.006},
-  url = {https://linkinghub.elsevier.com/retrieve/pii/S0004370207000495},
-  urldate = {2024-05-12},
-  abstract = {The area of learning in multi-agent systems is today one of the most fertile grounds for interaction between game theory and artificial intelligence. We focus on the foundational questions in this interdisciplinary area, and identify several distinct agendas that ought to, we argue, be separated. The goal of this article is to start a discussion in the research community that will result in firmer foundations for the area.1 © 2007 Published by Elsevier B.V.},
-  langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/722AZMMT/Shoham et al. - 2007 - If multi-agent learning is the answer, what is the.pdf}
-}
-
-@article{silver2016,
-  title = {Mastering the Game of {{Go}} with Deep Neural Networks and Tree Search},
-  author = {Silver, David and Huang, Aja and Maddison, Chris J. and Guez, Arthur and Sifre, Laurent and van den Driessche, George and Schrittwieser, Julian and Antonoglou, Ioannis and Panneershelvam, Veda and Lanctot, Marc and Dieleman, Sander and Grewe, Dominik and Nham, John and Kalchbrenner, Nal and Sutskever, Ilya and Lillicrap, Timothy and Leach, Madeleine and Kavukcuoglu, Koray and Graepel, Thore and Hassabis, Demis},
-  options = {useprefix=true},
-  date = {2016-01},
-  journaltitle = {Nature},
-  volume = {529},
-  number = {7587},
-  pages = {484--489},
-  publisher = {Nature Publishing Group},
-  issn = {1476-4687},
-  doi = {10.1038/nature16961},
-  url = {https://www.nature.com/articles/nature16961},
-  urldate = {2024-03-15},
-  abstract = {The game of Go has long been viewed as the most challenging of classic games for artificial intelligence owing to its enormous search space and the difficulty of evaluating board positions and moves. Here we introduce a new approach to computer Go that uses ‘value networks’ to evaluate board positions and ‘policy networks’ to select moves. These deep neural networks are trained by a novel combination of supervised learning from human expert games, and reinforcement learning from games of self-play. Without any lookahead search, the neural networks play Go at the level of state-of-the-art Monte Carlo tree search programs that simulate thousands of random games of self-play. We also introduce a new search algorithm that combines Monte Carlo simulation with value and policy networks. Using this search algorithm, our program AlphaGo achieved a 99.8\% winning rate against other Go programs, and defeated the human European Go champion by 5 games to 0. This is the first time that a computer program has defeated a human professional player in the full-sized game of Go, a feat previously thought to be at least a decade away.},
-  langid = {english},
-  keywords = {Computational science,Computer science,Reward},
-  file = {/Users/brandonhosley/Zotero/storage/F29T7VGP/Silver et al. - 2016 - Mastering the game of Go with deep neural networks.pdf}
-}
-
-@article{silver2017,
-  title = {Mastering the Game of {{Go}} without Human Knowledge},
-  author = {Silver, David and Schrittwieser, Julian and Simonyan, Karen and Antonoglou, Ioannis and Huang, Aja and Guez, Arthur and Hubert, Thomas and Baker, Lucas and Lai, Matthew and Bolton, Adrian and Chen, Yutian and Lillicrap, Timothy and Hui, Fan and Sifre, Laurent and van den Driessche, George and Graepel, Thore and Hassabis, Demis},
-  options = {useprefix=true},
-  date = {2017-10},
-  journaltitle = {Nature},
-  volume = {550},
-  number = {7676},
-  pages = {354--359},
-  publisher = {Nature Publishing Group},
-  issn = {1476-4687},
-  doi = {10.1038/nature24270},
-  url = {https://www.nature.com/articles/nature24270},
-  urldate = {2024-03-15},
-  abstract = {A long-standing goal of artificial intelligence is an algorithm that learns, tabula rasa, superhuman proficiency in challenging domains. Recently, AlphaGo became the first program to defeat a world champion in the game of Go. The tree search in AlphaGo evaluated positions and selected moves using deep neural networks. These neural networks were trained by supervised learning from human expert moves, and by reinforcement learning from self-play. Here we introduce an algorithm based solely on reinforcement learning, without human data, guidance or domain knowledge beyond game rules. AlphaGo becomes its own teacher: a neural network is trained to predict AlphaGo’s own move selections and also the winner of AlphaGo’s games. This neural network improves the strength of the tree search, resulting in higher quality move selection and stronger self-play in the next iteration. Starting tabula rasa, our new program AlphaGo Zero achieved superhuman performance, winning 100–0 against the previously published, champion-defeating AlphaGo. Starting from zero knowledge and without human data, AlphaGo Zero was able to teach itself to play Go and to develop novel strategies that provide new insights into the oldest of games. To beat world champions at the game of Go, the computer program AlphaGo has relied largely on supervised learning from millions of human expert moves. David Silver and colleagues have now produced a system called AlphaGo Zero, which is based purely on reinforcement learning and learns solely from self-play. Starting from random moves, it can reach superhuman level in just a couple of days of training and five million games of self-play, and can now beat all previous versions of AlphaGo. Because the machine independently discovers the same fundamental principles of the game that took humans millennia to conceptualize, the work suggests that such principles have some universal character, beyond human bias.},
-  langid = {english},
-  keywords = {Computational science,Computer science,Reward},
-  file = {/Users/brandonhosley/Zotero/storage/RCPCCGV2/Silver et al. - 2017 - Mastering the game of Go without human knowledge.pdf}
-}
-
-@online{silver2017a,
-  title = {Mastering {{Chess}} and {{Shogi}} by {{Self-Play}} with a {{General Reinforcement Learning Algorithm}}},
-  author = {Silver, David and Hubert, Thomas and Schrittwieser, Julian and Antonoglou, Ioannis and Lai, Matthew and Guez, Arthur and Lanctot, Marc and Sifre, Laurent and Kumaran, Dharshan and Graepel, Thore and Lillicrap, Timothy and Simonyan, Karen and Hassabis, Demis},
-  date = {2017-12-05},
-  eprint = {1712.01815},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1712.01815},
-  url = {http://arxiv.org/abs/1712.01815},
-  urldate = {2024-03-15},
-  abstract = {The game of chess is the most widely-studied domain in the history of artificial intelligence. The strongest programs are based on a combination of sophisticated search techniques, domain-specific adaptations, and handcrafted evaluation functions that have been refined by human experts over several decades. In contrast, the AlphaGo Zero program recently achieved superhuman performance in the game of Go, by tabula rasa reinforcement learning from games of self-play. In this paper, we generalise this approach into a single AlphaZero algorithm that can achieve, tabula rasa, superhuman performance in many challenging domains. Starting from random play, and given no domain knowledge except the game rules, AlphaZero achieved within 24 hours a superhuman level of play in the games of chess and shogi (Japanese chess) as well as Go, and convincingly defeated a world-champion program in each case.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/PFGFAPGW/Silver et al. - 2017 - Mastering Chess and Shogi by Self-Play with a Gene.pdf;/Users/brandonhosley/Zotero/storage/SR3IRUXR/1712.html}
-}
-
-@article{smit2023,
-  title = {Scaling Multi-Agent Reinforcement Learning to Full 11 versus 11 Simulated Robotic Football},
-  author = {Smit, Andries and Engelbrecht, Herman A. and Brink, Willie and Pretorius, Arnu},
-  date = {2023-03-24},
-  journaltitle = {Autonomous Agents and Multi-Agent Systems},
-  shortjournal = {Auton Agent Multi-Agent Syst},
-  volume = {37},
-  number = {1},
-  pages = {20},
-  issn = {1573-7454},
-  doi = {10.1007/s10458-023-09603-y},
-  url = {https://doi.org/10.1007/s10458-023-09603-y},
-  urldate = {2024-03-16},
-  abstract = {Robotic football has long been seen as a grand challenge in artificial intelligence. Despite recent success of learned policies over heuristics and handcrafted rules in general, current teams in the simulated RoboCup football leagues, where autonomous agents compete against each other, still rely on handcrafted strategies with only a few using reinforcement learning directly. This limits a learning agent’s ability to find stronger high-level strategies for the full game. In this paper, we show that it is possible for agents to learn competent football strategies on a full 22 player setting using limited computation resources (one GPU and one CPU), from tabula rasa through self-play. To do this, we build a 2D football simulator with faster simulation times than the RoboCup simulator. We propose various improvements to the standard single-agent PPO training algorithm which help it scale to our multi-agent setting. These improvements include (1) using a policy and critic network with an attention mechanism that scales linearly in the number of agents, (2) sharing networks between agents which allow for faster throughput using batching, and (3) using Polyak averaged opponents, league opponents and freezing the opponent team when necessary. We show through experimental results that stable training in the full 22 player setting is possible. Agents trained in the 22 player setting learn to defeat a variety of handcrafted strategies, and also achieve a higher win rate compared to agents trained in the 4 player setting and evaluated in the full game.},
-  langid = {english},
-  keywords = {11 versus 11 football,Multi-agent reinforcement learning,RoboCup,RoboCup 2D,Simulated robotic football,Soccer},
-  annotation = {https://github.com/DriesSmit/MARL2DSoccer},
-  file = {/Users/brandonhosley/Zotero/storage/5UPXMZ63/Smit et al. - 2023 - Scaling multi-agent reinforcement learning to full.pdf}
-}
-
-@online{sukhbaatar2016,
-  title = {Learning {{Multiagent Communication}} with {{Backpropagation}}},
-  author = {Sukhbaatar, Sainbayar and Szlam, Arthur and Fergus, Rob},
-  date = {2016-10-31},
-  eprint = {1605.07736},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1605.07736},
-  url = {http://arxiv.org/abs/1605.07736},
-  urldate = {2024-05-28},
-  abstract = {Many tasks in AI require the collaboration of multiple agents. Typically, the communication protocol between agents is manually specified and not altered during training. In this paper we explore a simple neural model, called CommNet, that uses continuous communication for fully cooperative tasks. The model consists of multiple agents and the communication between them is learned alongside their policy. We apply this model to a diverse set of tasks, demonstrating the ability of the agents to learn to communicate amongst themselves, yielding improved performance over non-communicative agents and baselines. In some cases, it is possible to interpret the language devised by the agents, revealing simple but effective strategies for solving the task at hand.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/LFWPCTDS/Sukhbaatar et al_2016_Learning Multiagent Communication with Backpropagation.pdf;/Users/brandonhosley/Zotero/storage/R7FJJZ2M/1605.html}
-}
-
-@online{sun2023,
-  title = {Mastering {{Asymmetrical Multiplayer Game}} with {{Multi-Agent Asymmetric-Evolution Reinforcement Learning}}},
-  author = {Sun, Chenglu and Zhang, Yichi and Zhang, Yu and Lu, Ziling and Liu, Jingbin and Xu, Sijia and Zhang, Weidong},
-  date = {2023-04-20},
-  eprint = {2304.10124},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.2304.10124},
-  url = {http://arxiv.org/abs/2304.10124},
-  urldate = {2024-05-13},
-  abstract = {Asymmetrical multiplayer (AMP) game is a popular game genre which involves multiple types of agents competing or collaborating with each other in the game. It is difficult to train powerful agents that can defeat top human players in AMP games by typical self-play training method because of unbalancing characteristics in their asymmetrical environments. We propose asymmetric-evolution training (AET), a novel multi-agent reinforcement learning framework that can train multiple kinds of agents simultaneously in AMP game. We designed adaptive data adjustment (ADA) and environment randomization (ER) to optimize the AET process. We tested our method in a complex AMP game named Tom \textbackslash\& Jerry, and our AIs trained without using any human data can achieve a win rate of 98.5\% against top human players over 65 matches. The ablation experiments indicated that the proposed modules are beneficial to the framework.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
-  file = {/Users/brandonhosley/Zotero/storage/SCS6KMAT/Sun et al_2023_Mastering Asymmetrical Multiplayer Game with Multi-Agent Asymmetric-Evolution.pdf;/Users/brandonhosley/Zotero/storage/IQIGRGZG/2304.html}
-}
-
-@book{sutton2018,
-  title = {Reinforcement Learning: An Introduction},
-  shorttitle = {Reinforcement Learning},
-  author = {Sutton, Richard S. and Barto, Andrew G.},
-  date = {2018},
-  series = {Adaptive Computation and Machine Learning Series},
-  edition = {Second edition},
-  publisher = {The MIT Press},
-  location = {Cambridge, Massachusetts},
-  abstract = {"Reinforcement learning, one of the most active research areas in artificial intelligence, is a computational approach to learning whereby an agent tries to maximize the total amount of reward it receives while interacting with a complex, uncertain environment. In Reinforcement Learning, Richard Sutton and Andrew Barto provide a clear and simple account of the field's key ideas and algorithms."--},
-  isbn = {978-0-262-03924-6},
-  langid = {english},
-  pagetotal = {526},
-  keywords = {Reinforcement learning},
-  file = {/Users/brandonhosley/Zotero/storage/WBG2QEG6/Sutton and Barto - 2018 - Reinforcement learning an introduction.pdf}
-}
-
-@inproceedings{vermorel2005,
-  title = {Multi-Armed {{Bandit Algorithms}} and {{Empirical Evaluation}}},
-  booktitle = {Machine {{Learning}}: {{ECML}} 2005},
-  author = {Vermorel, Joannès and Mohri, Mehryar},
-  editor = {Gama, João and Camacho, Rui and Brazdil, Pavel B. and Jorge, Alípio Mário and Torgo, Luís},
-  date = {2005},
-  pages = {437--448},
-  publisher = {Springer},
-  location = {Berlin, Heidelberg},
-  doi = {10.1007/11564096_42},
-  abstract = {The multi-armed bandit problem for a gambler is to decide which arm of a K-slot machine to pull to maximize his total reward in a series of trials. Many real-world learning and optimization problems can be modeled in this way. Several strategies or algorithms have been proposed as a solution to this problem in the last two decades, but, to our knowledge, there has been no common evaluation of these algorithms.},
-  isbn = {978-3-540-31692-3},
-  langid = {english},
-  keywords = {Bandit Problem,Content Distribution Network,Empirical Evaluation,Greedy Strategy,Reward Distribution},
-  file = {/Users/brandonhosley/Zotero/storage/M3DJXLRA/Vermorel_Mohri_2005_Multi-armed Bandit Algorithms and Empirical Evaluation.pdf}
-}
-
-@article{vinyals2019,
-  title = {Grandmaster Level in {{StarCraft II}} Using Multi-Agent Reinforcement Learning},
-  author = {Vinyals, Oriol and Babuschkin, Igor and Czarnecki, Wojciech M. and Mathieu, Michaël and Dudzik, Andrew and Chung, Junyoung and Choi, David H. and Powell, Richard and Ewalds, Timo and Georgiev, Petko and Oh, Junhyuk and Horgan, Dan and Kroiss, Manuel and Danihelka, Ivo and Huang, Aja and Sifre, Laurent and Cai, Trevor and Agapiou, John P. and Jaderberg, Max and Vezhnevets, Alexander S. and Leblond, Rémi and Pohlen, Tobias and Dalibard, Valentin and Budden, David and Sulsky, Yury and Molloy, James and Paine, Tom L. and Gulcehre, Caglar and Wang, Ziyu and Pfaff, Tobias and Wu, Yuhuai and Ring, Roman and Yogatama, Dani and Wünsch, Dario and McKinney, Katrina and Smith, Oliver and Schaul, Tom and Lillicrap, Timothy and Kavukcuoglu, Koray and Hassabis, Demis and Apps, Chris and Silver, David},
-  date = {2019-11-14},
-  journaltitle = {Nature},
-  shortjournal = {Nature},
-  volume = {575},
-  number = {7782},
-  pages = {350--354},
-  issn = {0028-0836, 1476-4687},
-  doi = {10.1038/s41586-019-1724-z},
-  url = {https://www.nature.com/articles/s41586-019-1724-z},
-  urldate = {2023-12-24},
-  langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/97RK6RVS/Vinyals et al. - 2019 - Grandmaster level in StarCraft II using multi-agen.pdf}
-}
-
-@online{wakilpoor2020,
-  title = {Heterogeneous {{Multi-Agent Reinforcement Learning}} for {{Unknown Environment Mapping}}},
-  author = {Wakilpoor, Ceyer and Martin, Patrick J. and Rebhuhn, Carrie and Vu, Amanda},
-  date = {2020-10-06},
-  eprint = {2010.02663},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.2010.02663},
-  url = {http://arxiv.org/abs/2010.02663},
-  urldate = {2024-05-14},
-  abstract = {Reinforcement learning in heterogeneous multi-agent scenarios is important for real-world applications but presents challenges beyond those seen in homogeneous settings and simple benchmarks. In this work, we present an actor-critic algorithm that allows a team of heterogeneous agents to learn decentralized control policies for covering an unknown environment. This task is of interest to national security and emergency response organizations that would like to enhance situational awareness in hazardous areas by deploying teams of unmanned aerial vehicles. To solve this multi-agent coverage path planning problem in unknown environments, we augment a multi-agent actor-critic architecture with a new state encoding structure and triplet learning loss to support heterogeneous agent learning. We developed a simulation environment that includes real-world environmental factors such as turbulence, delayed communication, and agent loss, to train teams of agents as well as probe their robustness and flexibility to such disturbances.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Multiagent Systems},
-  file = {/Users/brandonhosley/Zotero/storage/JRDBJMX5/Wakilpoor et al_2020_Heterogeneous Multi-Agent Reinforcement Learning for Unknown Environment Mapping.pdf;/Users/brandonhosley/Zotero/storage/G975SLIL/2010.html}
-}
-
-@article{watkins1992,
-  title = {Q-Learning},
-  author = {Watkins, Christopher J. C. H. and Dayan, Peter},
-  date = {1992-05-01},
-  journaltitle = {Machine Learning},
-  shortjournal = {Mach Learn},
-  volume = {8},
-  number = {3},
-  pages = {279--292},
-  issn = {1573-0565},
-  doi = {10.1007/BF00992698},
-  url = {https://doi.org/10.1007/BF00992698},
-  urldate = {2024-06-24},
-  abstract = {Q-learning (Watkins, 1989) is a simple way for agents to learn how to act optimally in controlled Markovian domains. It amounts to an incremental method for dynamic programming which imposes limited computational demands. It works by successively improving its evaluations of the quality of particular actions at particular states.},
-  langid = {english},
-  keywords = {asynchronous dynamic programming,Q-learning,reinforcement learning,temporal differences},
-  file = {/Users/brandonhosley/Zotero/storage/AY54AD37/Watkins_Dayan_1992_Q-learning.pdf}
-}
-
-@article{wei2022,
-  title = {Low-{{Latency Federated Learning Over Wireless Channels With Differential Privacy}}},
-  author = {Wei, Kang and Li, Jun and Ma, Chuan and Ding, Ming and Chen, Cailian and Jin, Shi and Han, Zhu and Poor, H. Vincent},
-  date = {2022-01},
-  journaltitle = {IEEE Journal on Selected Areas in Communications},
-  volume = {40},
-  number = {1},
-  pages = {290--307},
-  issn = {1558-0008},
-  doi = {10.1109/JSAC.2021.3126052},
-  abstract = {In federated learning (FL), model training is distributed over clients and local models are aggregated by a central server. The performance of uploaded models in such situations can vary widely due to imbalanced data distributions, potential demands on privacy protections, and quality of transmissions. In this paper, we aim to minimize FL training delay over wireless channels, constrained by overall training performance as well as each client’s differential privacy (DP) requirement. We solve this problem in a multi-agent multi-armed bandit (MAMAB) framework to deal with the situation where there are multiple clients confronting different unknown transmission environments, e.g., channel fading and interference. Specifically, we first transform long-term constraints on both training performance and each client’s DP into a virtual queue based on the Lyapunov drift technique. Then, we convert the MAMAB to a max-min bipartite matching problem at each communication round, by estimating rewards with the upper confidence bound (UCB) approach. More importantly, we propose two efficient solutions to this matching problem, i.e., a modified Hungarian algorithm and greedy matching with a better alternative (GMBA), of which the former can achieve the optimal solution with high complexity while the latter approaches a better trade-off by enabling verified low-complexity with little performance loss. In addition, we develop an upper bound on the expected regret of this MAMAB based FL framework, which shows a linear growth over the logarithm of communication rounds, justifying its theoretical feasibility. Extensive experimental results are conducted to validate the effectiveness of our proposed algorithms, and the impacts of various parameters on the FL performance over wireless edge networks are also discussed.},
-  eventtitle = {{{IEEE Journal}} on {{Selected Areas}} in {{Communications}}},
-  keywords = {Computational modeling,Data models,differential privacy,Federated learning,Interference,max-min bipartite matching,multi-agent multi-armed bandit,Servers,Training,Wireless communication,Wireless sensor networks},
-  file = {/Users/brandonhosley/Library/Mobile Documents/com~apple~CloudDocs/ZotFile/Wei et al_2022_Low-Latency Federated Learning Over Wireless Channels With Differential Privacy.pdf}
-}
-
-@article{wen2021,
-  title = {{{DTDE}}: {{A}} New Cooperative Multi-Agent Reinforcement Learning Framework},
-  shorttitle = {{{DTDE}}},
-  author = {Wen, Guanghui and Fu, Junjie and Dai, Pengcheng and Zhou, Jialing},
-  date = {2021-09-01},
-  journaltitle = {The Innovation},
-  shortjournal = {The Innovation},
-  volume = {2},
-  pages = {100162},
-  doi = {10.1016/j.xinn.2021.100162},
-  file = {/Users/brandonhosley/Zotero/storage/UA7JZT92/Wen et al_2021_DTDE.pdf}
-}
-
-@article{williams1992,
-  title = {Simple Statistical Gradient-Following Algorithms for Connectionist Reinforcement Learning},
-  author = {Williams, Ronald J.},
-  date = {1992-05-01},
-  journaltitle = {Machine Learning},
-  shortjournal = {Mach Learn},
-  volume = {8},
-  number = {3},
-  pages = {229--256},
-  issn = {1573-0565},
-  doi = {10.1007/BF00992696},
-  url = {https://doi.org/10.1007/BF00992696},
-  urldate = {2024-05-28},
-  abstract = {This article presents a general class of associative reinforcement learning algorithms for connectionist networks containing stochastic units. These algorithms, called REINFORCE algorithms, are shown to make weight adjustments in a direction that lies along the gradient of expected reinforcement in both immediate-reinforcement tasks and certain limited forms of delayed-reinforcement tasks, and they do this without explicitly computing gradient estimates or even storing information from which such estimates could be computed. Specific examples of such algorithms are presented, some of which bear a close relationship to certain existing algorithms while others are novel but potentially interesting in their own right. Also given are results that show how such algorithms can be naturally integrated with backpropagation. We close with a brief discussion of a number of additional issues surrounding the use of such algorithms, including what is known about their limiting behaviors as well as further considerations that might be used to help develop similar but potentially more powerful reinforcement learning algorithms.},
-  langid = {english},
-  keywords = {connectionist networks,gradient descent,mathematical analysis,Reinforcement learning},
-  file = {/Users/brandonhosley/Zotero/storage/ZP3SL2Z8/Williams_1992_Simple statistical gradient-following algorithms for connectionist.pdf}
-}
-
-@thesis{yielding2023,
-  title = {{{MARSS}}: {{Multi-Agent Reinforcement}} Learning for {{Satellite Swarms}}},
-  author = {Yielding, Nicholas},
-  date = {2023-12},
-  institution = {Air Force Institute of Technology},
-  langid = {american},
-  pagetotal = {153},
-  file = {/Users/brandonhosley/Zotero/storage/4GSNP4L7/Yielding_2023_MARSS.pdf}
-}
-
-@online{yu2022,
-  title = {The {{Surprising Effectiveness}} of {{PPO}} in {{Cooperative}}, {{Multi-Agent Games}}},
-  author = {Yu, Chao and Velu, Akash and Vinitsky, Eugene and Gao, Jiaxuan and Wang, Yu and Bayen, Alexandre and Wu, Yi},
-  date = {2022-11-04},
-  eprint = {2103.01955},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.2103.01955},
-  url = {http://arxiv.org/abs/2103.01955},
-  urldate = {2024-05-25},
-  abstract = {Proximal Policy Optimization (PPO) is a ubiquitous on-policy reinforcement learning algorithm but is significantly less utilized than off-policy learning algorithms in multi-agent settings. This is often due to the belief that PPO is significantly less sample efficient than off-policy methods in multi-agent systems. In this work, we carefully study the performance of PPO in cooperative multi-agent settings. We show that PPO-based multi-agent algorithms achieve surprisingly strong performance in four popular multi-agent testbeds: the particle-world environments, the StarCraft multi-agent challenge, Google Research Football, and the Hanabi challenge, with minimal hyperparameter tuning and without any domain-specific algorithmic modifications or architectures. Importantly, compared to competitive off-policy methods, PPO often achieves competitive or superior results in both final returns and sample efficiency. Finally, through ablation studies, we analyze implementation and hyperparameter factors that are critical to PPO's empirical performance, and give concrete practical suggestions regarding these factors. Our results show that when using these practices, simple PPO-based methods can be a strong baseline in cooperative multi-agent reinforcement learning. Source code is released at \textbackslash url\{https://github.com/marlbenchmark/on-policy\}.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
-  file = {/Users/brandonhosley/Zotero/storage/SDH5KMVS/Yu et al_2022_The Surprising Effectiveness of PPO in Cooperative, Multi-Agent Games.pdf;/Users/brandonhosley/Zotero/storage/3KM2DXK5/2103.html}
-}
-
-@online{zheng2017,
-  title = {{{MAgent}}: {{A Many-Agent Reinforcement Learning Platform}} for {{Artificial Collective Intelligence}}},
-  shorttitle = {{{MAgent}}},
-  author = {Zheng, Lianmin and Yang, Jiacheng and Cai, Han and Zhang, Weinan and Wang, Jun and Yu, Yong},
-  date = {2017-12-02},
-  eprint = {1712.00600},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1712.00600},
-  url = {http://arxiv.org/abs/1712.00600},
-  urldate = {2024-06-25},
-  abstract = {We introduce MAgent, a platform to support research and development of many-agent reinforcement learning. Unlike previous research platforms on single or multi-agent reinforcement learning, MAgent focuses on supporting the tasks and the applications that require hundreds to millions of agents. Within the interactions among a population of agents, it enables not only the study of learning algorithms for agents' optimal polices, but more importantly, the observation and understanding of individual agent's behaviors and social phenomena emerging from the AI society, including communication languages, leaderships, altruism. MAgent is highly scalable and can host up to one million agents on a single GPU server. MAgent also provides flexible configurations for AI researchers to design their customized environments and agents. In this demo, we present three environments designed on MAgent and show emerged collective intelligence by learning from scratch.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
-  file = {/Users/brandonhosley/Zotero/storage/6KKHUIZ4/Zheng et al_2017_MAgent.pdf;/Users/brandonhosley/Zotero/storage/UU2EXIJC/1712.html}
-}
-
-@inproceedings{zheng2020,
-  title = {Cooperative {{Heterogeneous Deep Reinforcement Learning}}},
-  booktitle = {Advances in {{Neural Information Processing Systems}}},
-  author = {Zheng, Han and Wei, Pengfei and Jiang, Jing and Long, Guodong and Lu, Qinghua and Zhang, Chengqi},
-  date = {2020},
-  volume = {33},
-  pages = {17455--17465},
-  publisher = {Curran Associates, Inc.},
-  url = {https://proceedings.neurips.cc/paper/2020/hash/ca3a9be77f7e88708afb20c8cdf44b60-Abstract.html},
-  urldate = {2024-05-14},
-  abstract = {Numerous deep reinforcement learning agents have been proposed, and each of them has its strengths and flaws. In this work, we present a Cooperative Heterogeneous Deep Reinforcement Learning (CHDRL) framework that can learn a policy by integrating the advantages of heterogeneous agents. Specifically, we propose a cooperative learning framework that classifies heterogeneous agents into two classes: global agents and local agents. Global agents are off-policy agents that can utilize experiences from the other agents. Local agents are either on-policy agents or population-based evolutionary algorithms (EAs) agents that can explore the local area effectively. We employ global agents, which are sample-efficient, to guide the learning of local agents so that local agents can benefit from the sample-efficient agents and simultaneously maintain their advantages, e.g., stability. Global agents also benefit from effective local searches. Experimental studies on a range of continuous control tasks from the Mujoco benchmark show that CHDRL achieves better performance compared with state-of-the-art baselines.},
-  file = {/Users/brandonhosley/Zotero/storage/4XRVMVDD/Zheng et al_2020_Cooperative Heterogeneous Deep Reinforcement Learning.pdf}
-}
-
-@article{zhong2024,
-  title = {Heterogeneous-{{Agent Reinforcement Learning}}},
-  author = {Zhong, Yifan and Kuba, Jakub Grudzien and Feng, Xidong and Hu, Siyi and Ji, Jiaming and Yang, Yaodong},
-  date = {2024},
-  journaltitle = {Journal of Machine Learning Research},
-  shortjournal = {JMLR},
-  volume = {25},
-  number = {32},
-  pages = {1--67},
-  url = {http://jmlr.org/papers/v25/23-0488.html},
-  langid = {english},
-  file = {/Users/brandonhosley/Zotero/storage/RP4HSFZU/Zhong et al. - Heterogeneous-Agent Reinforcement Learning.pdf}
-}
-
-@online{zhou2023,
-  title = {Is {{Centralized Training}} with {{Decentralized Execution Framework Centralized Enough}} for {{MARL}}?},
-  author = {Zhou, Yihe and Liu, Shunyu and Qing, Yunpeng and Chen, Kaixuan and Zheng, Tongya and Huang, Yanhao and Song, Jie and Song, Mingli},
-  date = {2023-05-26},
-  eprint = {2305.17352},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.2305.17352},
-  url = {http://arxiv.org/abs/2305.17352},
-  urldate = {2024-06-25},
-  abstract = {Centralized Training with Decentralized Execution (CTDE) has recently emerged as a popular framework for cooperative Multi-Agent Reinforcement Learning (MARL), where agents can use additional global state information to guide training in a centralized way and make their own decisions only based on decentralized local policies. Despite the encouraging results achieved, CTDE makes an independence assumption on agent policies, which limits agents to adopt global cooperative information from each other during centralized training. Therefore, we argue that existing CTDE methods cannot fully utilize global information for training, leading to an inefficient joint-policy exploration and even suboptimal results. In this paper, we introduce a novel Centralized Advising and Decentralized Pruning (CADP) framework for multi-agent reinforcement learning, that not only enables an efficacious message exchange among agents during training but also guarantees the independent policies for execution. Firstly, CADP endows agents the explicit communication channel to seek and take advices from different agents for more centralized training. To further ensure the decentralized execution, we propose a smooth model pruning mechanism to progressively constraint the agent communication into a closed one without degradation in agent cooperation capability. Empirical evaluations on StarCraft II micromanagement and Google Research Football benchmarks demonstrate that the proposed framework achieves superior performance compared with the state-of-the-art counterparts. Our code will be made publicly available.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
-  file = {/Users/brandonhosley/Zotero/storage/EMWBIU4Q/Zhou et al_2023_Is Centralized Training with Decentralized Execution Framework Centralized.pdf;/Users/brandonhosley/Zotero/storage/MBC3AKQ9/2305.html}
 }
 
 @online{zotero-2599,
@@ -1193,11 +791,252 @@
   file = {/Users/brandonhosley/Zotero/storage/XCU7R6JA/aims-and-scope.html}
 }
 
+@article{abeywickrama2022,
+  title = {Emergence of Norms in Interactions with Complex Rewards},
+  author = {Abeywickrama, Dhaminda B. and Griffiths, Nathan and Xu, Zhou and Mouzakitis, Alex},
+  date = {2022-10-26},
+  journaltitle = {Autonomous Agents and Multi-Agent Systems},
+  shortjournal = {Auton Agent Multi-Agent Syst},
+  volume = {37},
+  number = {1},
+  pages = {2},
+  issn = {1573-7454},
+  doi = {10.1007/s10458-022-09585-3},
+  url = {https://doi.org/10.1007/s10458-022-09585-3},
+  urldate = {2024-06-18},
+  abstract = {Autonomous agents are becoming increasingly ubiquitous and are playing an increasing role in wide range of safety-critical systems, such as driverless cars, exploration robots and unmanned aerial vehicles. These agents operate in highly dynamic and heterogeneous environments, resulting in complex behaviour and interactions. Therefore, the need arises to model and understand more complex and nuanced agent interactions than have previously been studied. In this paper, we propose a novel agent-based modelling approach to investigating norm emergence, in which such interactions can be investigated. To this end, while there may be an ideal set of optimally compatible actions there are also combinations that have positive rewards and are also compatible. Our approach provides a step towards identifying the conditions under which globally compatible norms are likely to emerge in the context of complex rewards. Our model is illustrated using the motivating example of self-driving cars, and we present the scenario of an autonomous vehicle performing a left-turn at a T-intersection.},
+  langid = {english},
+  keywords = {Agent interactions,Agent-based modelling,Norm emergence,Reinforcement learning},
+  file = {/Users/brandonhosley/Zotero/storage/YYXAD6N3/Abeywickrama et al_2022_Emergence of norms in interactions with complex rewards.pdf}
+}
+
+@online{kurach2020,
+  title = {Google {{Research Football}}: {{A Novel Reinforcement Learning Environment}}},
+  shorttitle = {Google {{Research Football}}},
+  author = {Kurach, Karol and Raichuk, Anton and Stańczyk, Piotr and Zając, Michał and Bachem, Olivier and Espeholt, Lasse and Riquelme, Carlos and Vincent, Damien and Michalski, Marcin and Bousquet, Olivier and Gelly, Sylvain},
+  date = {2020-04-14},
+  eprint = {1907.11180},
+  eprinttype = {arXiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1907.11180},
+  url = {http://arxiv.org/abs/1907.11180},
+  urldate = {2024-06-18},
+  abstract = {Recent progress in the field of reinforcement learning has been accelerated by virtual learning environments such as video games, where novel algorithms and ideas can be quickly tested in a safe and reproducible manner. We introduce the Google Research Football Environment, a new reinforcement learning environment where agents are trained to play football in an advanced, physics-based 3D simulator. The resulting environment is challenging, easy to use and customize, and it is available under a permissive open-source license. In addition, it provides support for multiplayer and multi-agent experiments. We propose three full-game scenarios of varying difficulty with the Football Benchmarks and report baseline results for three commonly used reinforcement algorithms (IMPALA, PPO, and Ape-X DQN). We also provide a diverse set of simpler scenarios with the Football Academy and showcase several promising research directions.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/DNBMDCA2/Kurach et al_2020_Google Research Football.pdf;/Users/brandonhosley/Zotero/storage/3X73G4DX/1907.html}
+}
+
+@thesis{yielding2023,
+  title = {{{MARSS}}: {{Multi-Agent Reinforcement}} Learning for {{Satellite Swarms}}},
+  author = {Yielding, Nicholas},
+  date = {2023-12},
+  institution = {Air Force Institute of Technology},
+  langid = {american},
+  pagetotal = {153},
+  file = {/Users/brandonhosley/Zotero/storage/4GSNP4L7/Yielding_2023_MARSS.pdf}
+}
+
+@article{watkins1992,
+  title = {Q-Learning},
+  author = {Watkins, Christopher J. C. H. and Dayan, Peter},
+  date = {1992-05-01},
+  journaltitle = {Machine Learning},
+  shortjournal = {Mach Learn},
+  volume = {8},
+  number = {3},
+  pages = {279--292},
+  issn = {1573-0565},
+  doi = {10.1007/BF00992698},
+  url = {https://doi.org/10.1007/BF00992698},
+  urldate = {2024-06-24},
+  abstract = {Q-learning (Watkins, 1989) is a simple way for agents to learn how to act optimally in controlled Markovian domains. It amounts to an incremental method for dynamic programming which imposes limited computational demands. It works by successively improving its evaluations of the quality of particular actions at particular states.},
+  langid = {english},
+  keywords = {asynchronous dynamic programming,Q-learning,reinforcement learning,temporal differences},
+  file = {/Users/brandonhosley/Zotero/storage/AY54AD37/Watkins_Dayan_1992_Q-learning.pdf}
+}
+
+@inproceedings{cesa-bianchi2017,
+  title = {Boltzmann {{Exploration Done Right}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Cesa-Bianchi, Nicolò and Gentile, Claudio and Lugosi, Gabor and Neu, Gergely},
+  date = {2017},
+  volume = {30},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper/2017/hash/b299ad862b6f12cb57679f0538eca514-Abstract.html},
+  urldate = {2024-06-25},
+  file = {/Users/brandonhosley/Zotero/storage/C356RIX8/Cesa-Bianchi et al_2017_Boltzmann Exploration Done Right.pdf}
+}
+
+@inproceedings{pan2021,
+  title = {Regularized {{Softmax Deep Multi-Agent Q-Learning}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Pan, Ling and Rashid, Tabish and Peng, Bei and Huang, Longbo and Whiteson, Shimon},
+  date = {2021},
+  volume = {34},
+  pages = {1365--1377},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper/2021/hash/0a113ef6b61820daa5611c870ed8d5ee-Abstract.html},
+  urldate = {2024-06-25},
+  file = {/Users/brandonhosley/Zotero/storage/UB6KUNBL/Pan et al_2021_Regularized Softmax Deep Multi-Agent Q-Learning.pdf}
+}
+
+@article{kaelbling1996,
+  title = {Reinforcement {{Learning}}: {{A Survey}}},
+  shorttitle = {Reinforcement {{Learning}}},
+  author = {Kaelbling, L. P. and Littman, M. L. and Moore, A. W.},
+  date = {1996-05-01},
+  journaltitle = {Journal of Artificial Intelligence Research},
+  shortjournal = {jair},
+  volume = {4},
+  pages = {237--285},
+  issn = {1076-9757},
+  doi = {10.1613/jair.301},
+  url = {https://www.jair.org/index.php/jair/article/view/10166},
+  urldate = {2024-06-25},
+  abstract = {This paper surveys the field of reinforcement learning from    a computer-science perspective. It is written to be accessible to    researchers familiar with machine learning.  Both the historical basis    of the field and a broad selection of current work are summarized.    Reinforcement learning is the problem faced by an agent that learns    behavior through trial-and-error interactions with a dynamic    environment.  The work described here has a resemblance to work in    psychology, but differs considerably in the details and in the use of    the word ``reinforcement.''  The paper discusses central issues of    reinforcement learning, including trading off exploration and    exploitation, establishing the foundations of the field via Markov    decision theory, learning from delayed reinforcement, constructing    empirical models to accelerate learning, making use of generalization    and hierarchy, and coping with hidden state.  It concludes with a    survey of some implemented systems and an assessment of the practical    utility of current methods for reinforcement learning.},
+  file = {/Users/brandonhosley/Zotero/storage/CAYL6YGI/Kaelbling et al_1996_Reinforcement Learning.pdf}
+}
+
+@inproceedings{vermorel2005,
+  title = {Multi-Armed {{Bandit Algorithms}} and {{Empirical Evaluation}}},
+  booktitle = {Machine {{Learning}}: {{ECML}} 2005},
+  author = {Vermorel, Joannès and Mohri, Mehryar},
+  editor = {Gama, João and Camacho, Rui and Brazdil, Pavel B. and Jorge, Alípio Mário and Torgo, Luís},
+  date = {2005},
+  pages = {437--448},
+  publisher = {Springer},
+  location = {Berlin, Heidelberg},
+  doi = {10.1007/11564096_42},
+  abstract = {The multi-armed bandit problem for a gambler is to decide which arm of a K-slot machine to pull to maximize his total reward in a series of trials. Many real-world learning and optimization problems can be modeled in this way. Several strategies or algorithms have been proposed as a solution to this problem in the last two decades, but, to our knowledge, there has been no common evaluation of these algorithms.},
+  isbn = {978-3-540-31692-3},
+  langid = {english},
+  keywords = {Bandit Problem,Content Distribution Network,Empirical Evaluation,Greedy Strategy,Reward Distribution},
+  file = {/Users/brandonhosley/Zotero/storage/M3DJXLRA/Vermorel_Mohri_2005_Multi-armed Bandit Algorithms and Empirical Evaluation.pdf}
+}
+
+@book{albrecht2024,
+  title = {Multi-Agent Reinforcement Learning: Foundations and Modern Approaches},
+  shorttitle = {Multi-Agent Reinforcement Learning},
+  author = {Albrecht, Stefano V. and Christianos, Filippos and Schäfer, Lukas},
+  date = {2024},
+  publisher = {The MIT Press},
+  location = {Cambridge, Massachusetts},
+  abstract = {"This book provides an accessible technical introduction to the field of Multi-Agent Reinforcement Learning (MARL)"--},
+  isbn = {978-0-262-04937-5},
+  langid = {english},
+  keywords = {Intelligent agents (Computer software),Reinforcement learning},
+  file = {/Users/brandonhosley/Zotero/storage/BNWH6I6A/Albrecht et al. - 2024 - Multi-agent reinforcement learning foundations an.pdf}
+}
+
+@online{zhou2023,
+  title = {Is {{Centralized Training}} with {{Decentralized Execution Framework Centralized Enough}} for {{MARL}}?},
+  author = {Zhou, Yihe and Liu, Shunyu and Qing, Yunpeng and Chen, Kaixuan and Zheng, Tongya and Huang, Yanhao and Song, Jie and Song, Mingli},
+  date = {2023-05-26},
+  eprint = {2305.17352},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2305.17352},
+  url = {http://arxiv.org/abs/2305.17352},
+  urldate = {2024-06-25},
+  abstract = {Centralized Training with Decentralized Execution (CTDE) has recently emerged as a popular framework for cooperative Multi-Agent Reinforcement Learning (MARL), where agents can use additional global state information to guide training in a centralized way and make their own decisions only based on decentralized local policies. Despite the encouraging results achieved, CTDE makes an independence assumption on agent policies, which limits agents to adopt global cooperative information from each other during centralized training. Therefore, we argue that existing CTDE methods cannot fully utilize global information for training, leading to an inefficient joint-policy exploration and even suboptimal results. In this paper, we introduce a novel Centralized Advising and Decentralized Pruning (CADP) framework for multi-agent reinforcement learning, that not only enables an efficacious message exchange among agents during training but also guarantees the independent policies for execution. Firstly, CADP endows agents the explicit communication channel to seek and take advices from different agents for more centralized training. To further ensure the decentralized execution, we propose a smooth model pruning mechanism to progressively constraint the agent communication into a closed one without degradation in agent cooperation capability. Empirical evaluations on StarCraft II micromanagement and Google Research Football benchmarks demonstrate that the proposed framework achieves superior performance compared with the state-of-the-art counterparts. Our code will be made publicly available.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/EMWBIU4Q/Zhou et al_2023_Is Centralized Training with Decentralized Execution Framework Centralized.pdf;/Users/brandonhosley/Zotero/storage/MBC3AKQ9/2305.html}
+}
+
+@online{zheng2017,
+  title = {{{MAgent}}: {{A Many-Agent Reinforcement Learning Platform}} for {{Artificial Collective Intelligence}}},
+  shorttitle = {{{MAgent}}},
+  author = {Zheng, Lianmin and Yang, Jiacheng and Cai, Han and Zhang, Weinan and Wang, Jun and Yu, Yong},
+  date = {2017-12-02},
+  eprint = {1712.00600},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1712.00600},
+  url = {http://arxiv.org/abs/1712.00600},
+  urldate = {2024-06-25},
+  abstract = {We introduce MAgent, a platform to support research and development of many-agent reinforcement learning. Unlike previous research platforms on single or multi-agent reinforcement learning, MAgent focuses on supporting the tasks and the applications that require hundreds to millions of agents. Within the interactions among a population of agents, it enables not only the study of learning algorithms for agents' optimal polices, but more importantly, the observation and understanding of individual agent's behaviors and social phenomena emerging from the AI society, including communication languages, leaderships, altruism. MAgent is highly scalable and can host up to one million agents on a single GPU server. MAgent also provides flexible configurations for AI researchers to design their customized environments and agents. In this demo, we present three environments designed on MAgent and show emerged collective intelligence by learning from scratch.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/6KKHUIZ4/Zheng et al_2017_MAgent.pdf;/Users/brandonhosley/Zotero/storage/UU2EXIJC/1712.html}
+}
+
+@inproceedings{leonardos2021,
+  title = {Exploration-{{Exploitation}} in {{Multi-Agent Competition}}: {{Convergence}} with {{Bounded Rationality}}},
+  shorttitle = {Exploration-{{Exploitation}} in {{Multi-Agent Competition}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Leonardos, Stefanos and Piliouras, Georgios and Spendlove, Kelly},
+  date = {2021},
+  volume = {34},
+  pages = {26318--26331},
+  publisher = {Curran Associates, Inc.},
+  url = {https://proceedings.neurips.cc/paper/2021/hash/dd1970fb03877a235d530476eb727dab-Abstract.html},
+  urldate = {2024-06-25},
+  abstract = {The interplay between exploration and exploitation in competitive multi-agent learning is still far from being well understood. Motivated by this, we study smooth Q-learning, a prototypical learning model that explicitly captures the balance between game rewards and exploration costs. We show that Q-learning always converges to the unique quantal-response equilibrium (QRE), the standard solution concept for games under bounded rationality, in weighted zero-sum polymatrix games with heterogeneous learning agents using positive exploration rates. Complementing recent results about convergence in weighted potential games [16,34], we show that fast convergence of Q-learning in competitive settings obtains regardless of the number of agents and without any need for parameter fine-tuning. As showcased by our experiments in network zero-sum games, these theoretical results provide the necessary guarantees for an algorithmic approach to the currently open problem of equilibrium selection in competitive multi-agent settings.},
+  file = {/Users/brandonhosley/Zotero/storage/NHZ3NPT4/Leonardos et al_2021_Exploration-Exploitation in Multi-Agent Competition.pdf}
+}
+
 @online{zotero-2643,
   title = {Dota 2 {{Heroes}}},
   url = {https://www.dota2.com/heroes/><meta property=},
   urldate = {2024-06-25},
   abstract = {The list of all Heroes in Dota 2}
+}
+
+@book{gall1975,
+  title = {General {{Systemantics}}: {{An Essay}} on How {{Systems Work}}, and {{Especially}} How {{They Fail}}, {{Together}} with the {{Very First Annotated Compendium}} of {{Basic Systems Axioms}} : A {{Handbook}} and {{Ready Reference}} for {{Scientists}}, {{Engineers}}, {{Laboratory Workers}}, {{Administrators}}, {{Public Officials}}, {{Systems Analysts}}, {{Etc}}., {{Etc}}., {{Etc}}., and the {{General Public}}},
+  shorttitle = {General {{Systemantics}}},
+  author = {Gall, John},
+  date = {1975},
+  eprint = {6FgeAAAAMAAJ},
+  eprinttype = {googlebooks},
+  publisher = {General Systemantics Press},
+  langid = {english},
+  pagetotal = {152}
+}
+
+@online{chen2016,
+  title = {{{Net2Net}}: {{Accelerating Learning}} via {{Knowledge Transfer}}},
+  shorttitle = {{{Net2Net}}},
+  author = {Chen, Tianqi and Goodfellow, Ian and Shlens, Jonathon},
+  date = {2016-04-23},
+  eprint = {1511.05641},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1511.05641},
+  url = {http://arxiv.org/abs/1511.05641},
+  urldate = {2024-06-25},
+  abstract = {We introduce techniques for rapidly transferring the information stored in one neural net into another neural net. The main purpose is to accelerate the training of a significantly larger neural net. During real-world workflows, one often trains very many different neural networks during the experimentation and design process. This is a wasteful process in which each new model is trained from scratch. Our Net2Net technique accelerates the experimentation process by instantaneously transferring the knowledge from a previous network to each new deeper or wider network. Our techniques are based on the concept of function-preserving transformations between neural network specifications. This differs from previous approaches to pre-training that altered the function represented by a neural net when adding layers to it. Using our knowledge transfer mechanism to add depth to Inception modules, we demonstrate a new state of the art accuracy rating on the ImageNet dataset.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/JRZPUISW/Chen et al_2016_Net2Net.pdf;/Users/brandonhosley/Zotero/storage/2RZBC4W3/1511.html}
+}
+
+@report{gerstein2024,
+  title = {Emerging {{Technology}} and {{Risk Analysis}}: {{Unmanned Aerial Systems Intelligent Swarm Technology}}},
+  shorttitle = {Emerging {{Technology}} and {{Risk Analysis}}},
+  author = {Gerstein, Daniel M. and Leidy, Erin N.},
+  date = {2024-02-15},
+  institution = {RAND Corporation},
+  url = {https://www.rand.org/pubs/research_reports/RRA2380-1.html},
+  urldate = {2024-06-25},
+  abstract = {{$<$}p{$>$}Researchers provide an assessment of the risk to the U.S. homeland from intelligent swarm technology using unmanned aerial systems or drones. They consider technology availability, threat, vulnerability, and consequences in the next three years, three to five years, and five to ten years.{$<$}/p{$>$}},
+  langid = {english},
+  keywords = {Civilian and Commercial Drones,Military Drones,Military Information Technology Systems,Threat Assessment},
+  file = {/Users/brandonhosley/Zotero/storage/9ZEMHAWQ/Gerstein_Leidy_2024_Emerging Technology and Risk Analysis.pdf}
+}
+
+@online{robertson2023,
+  title = {Pentagon Unveils ‘{{Replicator}}’ Drone Program to Compete with {{China}}},
+  author = {Robertson, Noah},
+  date = {2023-08-28T15:50:14},
+  url = {https://www.defensenews.com/pentagon/2023/08/28/pentagon-unveils-replicator-drone-program-to-compete-with-china/},
+  urldate = {2024-06-25},
+  abstract = {The program will seek to scale unmanned, attritable systems to offset China's bulk capacity, Hicks said.},
+  langid = {english},
+  organization = {Defense News},
+  file = {/Users/brandonhosley/Zotero/storage/BUYKV3CJ/pentagon-unveils-replicator-drone-program-to-compete-with-china.html}
 }
 
 @online{zotero-2656,
@@ -1208,4 +1047,200 @@
   langid = {american},
   organization = {U.S. Department of Defense},
   file = {/Users/brandonhosley/Zotero/storage/PB7VWMBI/hicks-discusses-replicator-initiative.html}
+}
+
+@online{bajak2023,
+  title = {Pentagon's {{AI}} Initiatives Accelerate Hard Decisions on Lethal Autonomous Weapons},
+  author = {Bajak, Frank},
+  date = {2023-11-25T15:49:50},
+  url = {https://apnews.com/article/us-military-ai-projects-0773b4937801e7a0573f44b57a9a5942},
+  urldate = {2024-06-25},
+  abstract = {Artificial intelligence employed by the U.S. military has piloted pint-sized surveillance drones in special operations forces’ missions.},
+  langid = {english},
+  organization = {AP News}
+}
+
+@online{bajak2023a,
+  title = {Drone Advances in {{Ukraine}} Could Bring Dawn of Killer Robots},
+  author = {Bajak, Frank},
+  date = {2023-01-03T22:04:55},
+  url = {https://apnews.com/article/technology-science-politics-military-drones-f4a42279515a067c6db2ce75128328c4},
+  urldate = {2024-06-25},
+  abstract = {KYIV, Ukraine (AP) — Drone advances in Ukraine have accelerated a long-anticipated technology trend that could soon bring the world's first fully autonomous fighting robots to the battlefield, inaugurating a new age of warfare.},
+  langid = {english},
+  organization = {AP News},
+  file = {/Users/brandonhosley/Zotero/storage/V7BS8YJ5/technology-science-politics-military-drones-f4a42279515a067c6db2ce75128328c4.html}
+}
+
+@article{gronauer2022,
+  title = {Multi-Agent Deep Reinforcement Learning: A Survey},
+  shorttitle = {Multi-Agent Deep Reinforcement Learning},
+  author = {Gronauer, Sven and Diepold, Klaus},
+  date = {2022-02-01},
+  journaltitle = {Artificial Intelligence Review},
+  shortjournal = {Artif Intell Rev},
+  volume = {55},
+  number = {2},
+  pages = {895--943},
+  issn = {1573-7462},
+  doi = {10.1007/s10462-021-09996-w},
+  url = {https://doi.org/10.1007/s10462-021-09996-w},
+  urldate = {2024-06-26},
+  abstract = {The advances in reinforcement learning have recorded sublime success in various domains. Although the multi-agent domain has been overshadowed by its single-agent counterpart during this progress, multi-agent reinforcement learning gains rapid traction, and the latest accomplishments address problems with real-world complexity. This article provides an overview of the current developments in the field of multi-agent deep reinforcement learning. We focus primarily on literature from recent years that combines deep reinforcement learning methods with a multi-agent scenario. To survey the works that constitute the contemporary landscape, the main~contents are divided into three parts. First, we analyze the structure of training schemes that are applied to train multiple agents. Second, we consider the emergent patterns of agent behavior in cooperative, competitive and mixed scenarios. Third, we systematically enumerate challenges that exclusively arise in the multi-agent domain and review methods that are leveraged to cope with these challenges. To conclude this survey, we discuss advances, identify trends, and outline possible directions for future work in this research area.},
+  langid = {english},
+  keywords = {Deep learning,Machine learning,Multi-agent learning,Multi-agent systems,Reinforcement learning,Survey},
+  file = {/Users/brandonhosley/Zotero/storage/UJLZVR4C/Gronauer_Diepold_2022_Multi-agent deep reinforcement learning.pdf}
+}
+
+@online{kakade2002,
+  title = {Approximately {{Optimal Approximate Reinforcement Learning}}},
+  author = {Kakade, Sham and Langford, John},
+  date = {2002},
+  location = {Proceedings of the Nineteenth International Conference on Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/CV4MXZ2Q/approximately-optimal-approximate-reinforcement-learning.html}
+}
+
+@online{espeholt2018,
+  title = {{{IMPALA}}: {{Scalable Distributed Deep-RL}} with {{Importance Weighted Actor-Learner Architectures}}},
+  shorttitle = {{{IMPALA}}},
+  author = {Espeholt, Lasse and Soyer, Hubert and Munos, Remi and Simonyan, Karen and Mnih, Volodymir and Ward, Tom and Doron, Yotam and Firoiu, Vlad and Harley, Tim and Dunning, Iain and Legg, Shane and Kavukcuoglu, Koray},
+  date = {2018-06-28},
+  eprint = {1802.01561},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1802.01561},
+  url = {http://arxiv.org/abs/1802.01561},
+  urldate = {2024-06-26},
+  abstract = {In this work we aim to solve a large collection of tasks using a single reinforcement learning agent with a single set of parameters. A key challenge is to handle the increased amount of data and extended training time. We have developed a new distributed agent IMPALA (Importance Weighted Actor-Learner Architecture) that not only uses resources more efficiently in single-machine training but also scales to thousands of machines without sacrificing data efficiency or resource utilisation. We achieve stable learning at high throughput by combining decoupled acting and learning with a novel off-policy correction method called V-trace. We demonstrate the effectiveness of IMPALA for multi-task reinforcement learning on DMLab-30 (a set of 30 tasks from the DeepMind Lab environment (Beattie et al., 2016)) and Atari-57 (all available Atari games in Arcade Learning Environment (Bellemare et al., 2013a)). Our results show that IMPALA is able to achieve better performance than previous agents with less data, and crucially exhibits positive transfer between tasks as a result of its multi-task approach.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/HLB5SX6X/Espeholt et al_2018_IMPALA.pdf;/Users/brandonhosley/Zotero/storage/L8QQH9KD/1802.html}
+}
+
+@online{samvelyan2019,
+  title = {The {{StarCraft Multi-Agent Challenge}}},
+  author = {Samvelyan, Mikayel and Rashid, Tabish and de Witt, Christian Schroeder and Farquhar, Gregory and Nardelli, Nantas and Rudner, Tim G. J. and Hung, Chia-Man and Torr, Philip H. S. and Foerster, Jakob and Whiteson, Shimon},
+  options = {useprefix=true},
+  date = {2019-12-09},
+  eprint = {1902.04043},
+  eprinttype = {arXiv},
+  eprintclass = {cs, stat},
+  doi = {10.48550/arXiv.1902.04043},
+  url = {http://arxiv.org/abs/1902.04043},
+  urldate = {2024-06-26},
+  abstract = {In the last few years, deep multi-agent reinforcement learning (RL) has become a highly active area of research. A particularly challenging class of problems in this area is partially observable, cooperative, multi-agent learning, in which teams of agents must learn to coordinate their behaviour while conditioning only on their private observations. This is an attractive research area since such problems are relevant to a large number of real-world systems and are also more amenable to evaluation than general-sum problems. Standardised environments such as the ALE and MuJoCo have allowed single-agent RL to move beyond toy domains, such as grid worlds. However, there is no comparable benchmark for cooperative multi-agent RL. As a result, most papers in this field use one-off toy problems, making it difficult to measure real progress. In this paper, we propose the StarCraft Multi-Agent Challenge (SMAC) as a benchmark problem to fill this gap. SMAC is based on the popular real-time strategy game StarCraft II and focuses on micromanagement challenges where each unit is controlled by an independent agent that must act based on local observations. We offer a diverse set of challenge maps and recommendations for best practices in benchmarking and evaluations. We also open-source a deep multi-agent RL learning framework including state-of-the-art algorithms. We believe that SMAC can provide a standard benchmark environment for years to come. Videos of our best agents for several SMAC scenarios are available at: https://youtu.be/VZ7zmQ\_obZ0.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/TJCL63RQ/Samvelyan et al_2019_The StarCraft Multi-Agent Challenge.pdf;/Users/brandonhosley/Zotero/storage/N4RKHKPB/1902.html}
+}
+
+@article{hernandez-leal2019,
+  title = {A {{Survey}} and {{Critique}} of {{Multiagent Deep Reinforcement Learning}}},
+  author = {Hernandez-Leal, Pablo and Kartal, Bilal and Taylor, Matthew E.},
+  date = {2019-11},
+  journaltitle = {Autonomous Agents and Multi-Agent Systems},
+  shortjournal = {Auton Agent Multi-Agent Syst},
+  volume = {33},
+  number = {6},
+  eprint = {1810.05587},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  pages = {750--797},
+  issn = {1387-2532, 1573-7454},
+  doi = {10.1007/s10458-019-09421-1},
+  url = {http://arxiv.org/abs/1810.05587},
+  urldate = {2024-06-26},
+  abstract = {Deep reinforcement learning (RL) has achieved outstanding results in recent years. This has led to a dramatic increase in the number of applications and methods. Recent works have explored learning beyond single-agent scenarios and have considered multiagent learning (MAL) scenarios. Initial results report successes in complex multiagent domains, although there are several challenges to be addressed. The primary goal of this article is to provide a clear overview of current multiagent deep reinforcement learning (MDRL) literature. Additionally, we complement the overview with a broader analysis: (i) we revisit previous key components, originally presented in MAL and RL, and highlight how they have been adapted to multiagent deep reinforcement learning settings. (ii) We provide general guidelines to new practitioners in the area: describing lessons learned from MDRL works, pointing to recent benchmarks, and outlining open avenues of research. (iii) We take a more critical tone raising practical challenges of MDRL (e.g., implementation and computational demands). We expect this article will help unify and motivate future research to take advantage of the abundant literature that exists (e.g., RL and MAL) in a joint effort to promote fruitful research in the multiagent community.},
+  keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/8DGHEDHI/Hernandez-Leal et al_2019_A Survey and Critique of Multiagent Deep Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/BY8BGNZ9/1810.html}
+}
+
+@misc{liu2022light,
+  title = {Light {{Aircraft Game}}: {{A}} Lightweight, Scalable, Gym-Wrapped Aircraft Competitive Environment with Baseline Reinforcement Learning Algorithms},
+  author = {Liu, Qihan and Jiang, Yuhua and Ma, Xiaoteng},
+  date = {2022},
+  url = {https://github.com/liuqh16/CloseAirCombat},
+  organization = {GitHub}
+}
+
+@article{wen2021,
+  title = {{{DTDE}}: {{A}} New Cooperative Multi-Agent Reinforcement Learning Framework},
+  shorttitle = {{{DTDE}}},
+  author = {Wen, Guanghui and Fu, Junjie and Dai, Pengcheng and Zhou, Jialing},
+  date = {2021-09-01},
+  journaltitle = {The Innovation},
+  shortjournal = {The Innovation},
+  volume = {2},
+  pages = {100162},
+  doi = {10.1016/j.xinn.2021.100162},
+  file = {/Users/brandonhosley/Zotero/storage/UA7JZT92/Wen et al_2021_DTDE.pdf}
+}
+
+@unpublished{liaw2018tune,
+  title = {Tune: A Research Platform for Distributed Model Selection and Training},
+  author = {Liaw, Richard and Liang, Eric and Nishihara, Robert and Moritz, Philipp and Gonzalez, Joseph E and Stoica, Ion},
+  date = {2018},
+  eprint = {1807.05118},
+  eprinttype = {arXiv}
+}
+
+@online{mnih2013,
+  title = {Playing {{Atari}} with {{Deep Reinforcement Learning}}},
+  author = {Mnih, Volodymyr and Kavukcuoglu, Koray and Silver, David and Graves, Alex and Antonoglou, Ioannis and Wierstra, Daan and Riedmiller, Martin},
+  date = {2013-12-19},
+  eprint = {1312.5602},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1312.5602},
+  url = {http://arxiv.org/abs/1312.5602},
+  urldate = {2024-07-21},
+  abstract = {We present the first deep learning model to successfully learn control policies directly from high-dimensional sensory input using reinforcement learning. The model is a convolutional neural network, trained with a variant of Q-learning, whose input is raw pixels and whose output is a value function estimating future rewards. We apply our method to seven Atari 2600 games from the Arcade Learning Environment, with no adjustment of the architecture or learning algorithm. We find that it outperforms all previous approaches on six of the games and surpasses a human expert on three of them.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/6NYMSJY3/Mnih et al_2013_Playing Atari with Deep Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/PADLGVEM/1312.html}
+}
+
+@article{mnih2015,
+  title = {Human-Level Control through Deep Reinforcement Learning},
+  author = {Mnih, Volodymyr and Kavukcuoglu, Koray and Silver, David and Rusu, Andrei A. and Veness, Joel and Bellemare, Marc G. and Graves, Alex and Riedmiller, Martin and Fidjeland, Andreas K. and Ostrovski, Georg and Petersen, Stig and Beattie, Charles and Sadik, Amir and Antonoglou, Ioannis and King, Helen and Kumaran, Dharshan and Wierstra, Daan and Legg, Shane and Hassabis, Demis},
+  date = {2015-02-26},
+  journaltitle = {Nature},
+  shortjournal = {Nature},
+  volume = {518},
+  number = {7540},
+  pages = {529--533},
+  issn = {0028-0836, 1476-4687},
+  doi = {10.1038/nature14236},
+  url = {https://www.nature.com/articles/nature14236},
+  urldate = {2024-07-21},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/MCMU6TN4/Mnih et al. - 2015 - Human-level control through deep reinforcement lea.pdf}
+}
+
+@book{howard2020deep,
+  title = {Deep Learning for Coders with Fastai and {{PyTorch}}: {{AI}} Applications without a {{PhD}}},
+  author = {Howard, J. and Gugger, S. and Chintala, S. and Safari, an O'Reilly Media Company},
+  date = {2020},
+  publisher = {O'Reilly Media, Incorporated},
+  url = {https://books.google.com/books?id=xd6LxgEACAAJ},
+  isbn = {978-1-4920-4552-6},
+  lccn = {2022278837}
+}
+
+@inproceedings{gupta2017cooperative,
+  title = {Cooperative Multi-Agent Control Using Deep Reinforcement Learning},
+  booktitle = {International Conference on Autonomous Agents and Multiagent Systems},
+  author = {Gupta, Jayesh K and Egorov, Maxim and Kochenderfer, Mykel},
+  date = {2017},
+  pages = {66--83},
+  publisher = {Springer},
+  file = {/Users/brandonhosley/Zotero/storage/2FJVAMV9/Gupta et al_2017_Cooperative multi-agent control using deep reinforcement learning.pdf}
+}
+
+@unpublished{mordatch2017emergence,
+  title = {Emergence of Grounded Compositional Language in Multi-Agent Populations},
+  author = {Mordatch, Igor and Abbeel, Pieter},
+  date = {2017},
+  eprint = {1703.04908},
+  eprinttype = {arXiv}
 }
