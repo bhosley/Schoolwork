@@ -1,0 +1,420 @@
+\documentclass[12 pt,letterpaper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+
+\usepackage{mathptmx}
+\SetSymbolFont{letters}{bold}{OML}{cmm}{b}{it}
+\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\allowdisplaybreaks
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{Homework 6}
+\fancyhead[C]{Due: November 22, 2024}
+\fancyhead[R]{Page \thepage\ of \pageref{LastPage}}
+\fancyfoot[L]{Air Force Institute of Technology}
+\fancyfoot[R]{Fall 2024 (Hosley)}
+\fancyfoot[C]{MATH 600: Mathematical Analysis}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\newcommand{\la}{\lambda}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+\newcommand{\brI}{\mathbf{I}}
+\newcommand{\brJ}{\mathbf{J}}
+\newcommand{\brM}{\mathbf{M}}
+\newcommand{\brR}{\mathbf{R}}
+\newcommand{\brT}{\mathbf{T}}
+
+\newcommand{\bfa}{\boldsymbol{a}}
+\newcommand{\bfA}{\boldsymbol{A}}
+\newcommand{\bfb}{\boldsymbol{b}}
+\newcommand{\bfB}{\boldsymbol{B}}
+\newcommand{\bfc}{\boldsymbol{c}}
+\newcommand{\bfC}{\boldsymbol{C}}
+\newcommand{\bfD}{\boldsymbol{D}}
+\newcommand{\bfe}{\boldsymbol{e}}
+\newcommand{\bfE}{\boldsymbol{E}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bfF}{\boldsymbol{F}}
+\newcommand{\bfG}{\boldsymbol{G}}
+\newcommand{\bfH}{\boldsymbol{H}}
+\newcommand{\bfI}{\boldsymbol{I}}
+\newcommand{\bfJ}{\boldsymbol{J}}
+\newcommand{\bfK}{\boldsymbol{K}}
+\newcommand{\bfL}{\boldsymbol{L}}
+\newcommand{\bfM}{\boldsymbol{M}}
+\newcommand{\bfp}{\boldsymbol{p}}
+\newcommand{\bfP}{\boldsymbol{P}}
+\newcommand{\bfR}{\boldsymbol{R}}
+\newcommand{\bfT}{\boldsymbol{T}}
+\newcommand{\bfu}{\boldsymbol{u}}
+\newcommand{\bfU}{\boldsymbol{U}}
+\newcommand{\bfv}{\boldsymbol{v}}
+\newcommand{\bfV}{\boldsymbol{V}}
+\newcommand{\bfw}{\boldsymbol{w}}
+\newcommand{\bfW}{\boldsymbol{W}}
+\newcommand{\bfx}{\boldsymbol{x}}
+\newcommand{\bfX}{\boldsymbol{X}}
+\newcommand{\bfy}{\boldsymbol{y}}
+\newcommand{\bfY}{\boldsymbol{Y}}
+\newcommand{\bfz}{\boldsymbol{z}}
+\newcommand{\bfZ}{\boldsymbol{Z}}
+
+\newcommand{\bfone}{\boldsymbol{1}}
+\newcommand{\bfzero}{\boldsymbol{0}}
+\newcommand{\bfxi}{\boldsymbol{\xi}}
+\newcommand{\bfXi}{\boldsymbol{\Xi}}
+\newcommand{\bfphi}{\boldsymbol{\varphi}}
+\newcommand{\bfPhi}{\boldsymbol{\varPhi}}
+\newcommand{\bfPi}{\boldsymbol{\varPi}}
+\newcommand{\bfpsi}{\boldsymbol{\psi}}
+\newcommand{\bfPsi}{\boldsymbol{\varPsi}}
+\newcommand{\bfchi}{\boldsymbol{\chi}}
+\newcommand{\bfzeta}{\boldsymbol{\zeta}}
+\newcommand{\bfdelta}{\boldsymbol{\delta}}
+\newcommand{\bfDelta}{\boldsymbol{\varDelta}}
+\newcommand{\bfGamma}{\boldsymbol{\varGamma}}
+\newcommand{\bfOmega}{\boldsymbol{\varOmega}}
+\newcommand{\bfSigma}{\boldsymbol{\varSigma}}
+\newcommand{\bfLambda}{\boldsymbol{\varLambda}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+
+\newcommand{\rmA}{\mathrm{A}}
+\newcommand{\rmB}{\mathrm{B}}
+\newcommand{\rmc}{\mathrm{c}}
+\newcommand{\rmC}{\mathrm{C}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\rme}{\mathrm{e}}
+\newcommand{\rmi}{\mathrm{i}}
+\newcommand{\rmj}{\mathrm{j}}
+\newcommand{\rmk}{\mathrm{k}}
+\newcommand{\rms}{\mathrm{s}}
+\newcommand{\rmS}{\mathrm{S}}
+\newcommand{\rmT}{\mathrm{T}}
+
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Part}{\mathrm{part}}
+\newcommand{\Null}{\mathrm{null}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\real}{\operatorname{Re}}
+\newcommand{\imag}{\operatorname{Im}}
+\newcommand{\cond}{\operatorname{cond}}
+
+\newcommand{\inte}{\operatorname{int}}
+\newcommand{\cl}{\operatorname{cl}}
+
+\newcommand{\im}{\operatorname{im}}
+
+\newcommand{\conv}[2]{{#1}\ast{#2}}
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}}
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}}
+
+\newcommand{\mat}[2]{\left[\begin{array}{#1}#2\end{array}\right]}
+\newcommand{\dmat}[2]{\left|\begin{array}{#1}#2\end{array}\right|}
+\newcommand{\arbset}[1]{\left\{{#1}\right\}}
+\newcommand{\arbparen}[1]{\left({#1}\right)}
+\newcommand{\sign}{\operatorname{sign}}
+
+\newcommand{\abs}[1]{|{#1}|}
+\newcommand{\bigabs}[1]{\bigl|{#1}\bigr|}
+\newcommand{\Bigabs}[1]{\Bigl|{#1}\Bigr|}
+\newcommand{\biggabs}[1]{\biggl|{#1}\biggr|}
+\newcommand{\Biggabs}[1]{\Biggl|{#1}\Biggr|}
+
+\newcommand{\paren}[1]{({#1})}
+\newcommand{\bigparen}[1]{\bigl({#1}\bigr)}
+\newcommand{\Bigparen}[1]{\Bigl({#1}\Bigr)}
+\newcommand{\biggparen}[1]{\biggl({#1}\biggr)}
+\newcommand{\Biggparen}[1]{\Biggl({#1}\Biggr)}
+
+\newcommand{\bracket}[1]{[{#1}]}
+\newcommand{\bigbracket}[1]{\bigl[{#1}\bigr]}
+\newcommand{\Bigbracket}[1]{\Bigl[{#1}\Bigr]}
+\newcommand{\biggbracket}[1]{\biggl[{#1}\biggr]}
+\newcommand{\Biggbracket}[1]{\Biggl[{#1}\Biggr]}
+
+\newcommand{\set}[1]{\{{#1}\}}
+\newcommand{\bigset}[1]{\bigl\{{#1}\bigr\}}
+\newcommand{\Bigset}[1]{\Bigl\{{#1}\Bigr\}}
+\newcommand{\biggset}[1]{\biggl\{{#1}\biggr\}}
+\newcommand{\Biggset}[1]{\Biggl\{{#1}\Biggr\}}
+
+\newcommand{\norm}[1]{\|{#1}\|}
+\newcommand{\bignorm}[1]{\bigl\|{#1}\bigr\|}
+\newcommand{\Bignorm}[1]{\Bigl\|{#1}\Bigr\|}
+\newcommand{\biggnorm}[1]{\biggl\|{#1}\biggr\|}
+\newcommand{\Biggnorm}[1]{\Biggl\|{#1}\Biggr\|}
+
+\newcommand{\ip}[2]{\langle{#1},{#2}\rangle}
+\newcommand{\bigip}[2]{\bigl\langle{#1},{#2}\bigr\rangle}
+\newcommand{\Bigip}[2]{\Bigl\langle{#1},{#2}\Bigr\rangle}
+\newcommand{\biggip}[2]{\biggl\langle{#1},{#2}\biggr\rangle}
+\newcommand{\Biggip}[2]{\Biggl\langle{#1},{#2}\Biggr\rangle}
+
+\newcommand{\alphi}{\renewcommand{\labelenumi}{(\alph{enumi})}}
+\newcommand{\alphii}{\renewcommand{\labelenumii}{(\alph{enumii})}}
+\newcommand{\alphiii}{\renewcommand{\labelenumiii}{(\alph{enumiii})}}
+\newcommand{\romani}{\renewcommand{\labelenumi}{(\roman{enumi})}}
+\newcommand{\romanii}{\renewcommand{\labelenumii}{(\roman{enumii})}}
+\newcommand{\romaniii}{\renewcommand{\labelenumiii}{(\roman{enumiii})}}
+\newcommand{\arabici}{\renewcommand{\labelenumi}{(\arabic{enumi})}}
+\newcommand{\arabicii}{\renewcommand{\labelenumii}{(\arabic{enumii})}}
+\newcommand{\arabiciii}{\renewcommand{\labelenumiii}{(\arabic{enumiii})}}
+
+\begin{document}
+
+\noindent
+On this assignment, we consider \textit{series} of real numbers.
+For any sequence $(x_n)_{n=1}^{\infty}$ of real numbers,
+and each natural number $m$,
+we define the \textit{$m$th partial sum} of $(x_n)_{n=1}^{\infty}$ to be
+$s_m:=\sum_{n=1}^{m}x_n$.
+If the sequence $(s_m)_{m=1}^{\infty}$ of these partial sums converges to some real number $s_\infty$,
+we refer to $s_\infty$ as the \textit{series} of $(x_n)_{n=1}^{\infty}$,
+and denote it as
+\begin{equation*}
+\sum_{n=1}^{\infty}x_n
+:=\lim_{m\rightarrow\infty}\sum_{n=1}^{m}x_n
+=\lim_{m\rightarrow\infty}s_m
+=s_\infty.
+\end{equation*}
+When instead $(s_m)_{m=1}^{\infty}$ does not converge,
+we say that the series $\displaystyle\sum_{n=1}^{\infty}x_n$ \textit{diverges}.
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For any sequences $(x_n)_{n=1}^{\infty}$ and $(y_n)_{n=1}^{\infty}$ of real numbers whose series converge, show that the series of $(x_n+y_n)_{n=1}^{\infty}$ converges with
+\begin{equation*}
+\sum_{n=1}^{\infty}(x_n+y_n)
+=\sum_{n=1}^{\infty}x_n+\sum_{n=1}^{\infty}y_n.
+\end{equation*}
+
+\textit{Hint: Use (don't reprove) facts from class about limits of sequences and sums.  No $\varepsilon$'s needed!}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For any $c\in\bbR$ and sequence $(x_n)_{n=1}^{\infty}$ of real numbers whose series converges,
+show that the series of $(cx_n)_{n=1}^{\infty}$ converges with
+\begin{equation*}
+\sum_{n=1}^{\infty}cx_n
+=c\sum_{n=1}^{\infty}x_n.
+\end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Prove the \textit{geometric series formula}: if $\abs{x}<1$ then
+$\displaystyle\sum_{n=0}^{\infty}x^n=\frac{1}{1-x}$.
+
+\textit{Hint:
+Without further justification,
+you may use the geometric sum formula,
+namely that $\sum_{n=0}^{m-1}x^n=\frac{1-x^m}{1-x}$ for any $m\in\bbN$ and $x\neq 1$,
+and moreover the fact from class that $\lim_{m\rightarrow\infty} y^m=0$ for any $y\in[0,1)$.}
+
+\end{enumerate}
+
+\newpage
+
+\noindent
+Series of real numbers are particularly well-behaved in the special case where the terms are nonnegative.
+To be precise, if $x_n\geq0$ for all $n\in\bbN$,
+the sequence $(s_m)_{m=1}^{\infty}$ of partial sums of $(x_n)_{n=1}^{\infty}$ is increasing,
+satisfying
+\begin{equation*}
+s_{m+1}
+=\sum_{n=1}^{m+1}x_n
+=\sum_{n=1}^{m}x_n+x_{m+1}
+=s_m+x_{m+1}
+\geq s_m,
+\end{equation*}
+for all $m\in\bbN$.
+From class,
+we moreover know that any increasing sequence of real numbers is either bounded above or not, in which cases it converges to its supremum or diverges, respectively.
+In particular,
+if $x_n\geq0$ for all $n\in\bbN$,
+then either there exists $b\in\bbR$ such that $\sum_{n=1}^{m}x_n\leq b$ for all $m$,
+in which case $\sum_{n=1}^{\infty}x_n$ converges to $\sup\set{s_m: m\in\bbN}$,
+or no such $b$ exists, in which case $\sum_{n=1}^{\infty}x_n$ diverges.
+As shorthand notation,
+we denote these two scenarios as ``$\sum_{n=1}^{\infty}x_n<\infty$" and ``$\sum_{n=1}^{\infty}x_n=\infty$," respectively.
+That is, for any sequence $(x_n)_{n=1}^\infty$ of real numbers:
+\begin{itemize}
+
+\item
+We use ``$\sum_{n=1}^{\infty}x_n<\infty$" as an abbreviation for the scenario in which both $x_n\geq0$ for all $n\in\bbN$ and there exists $b\in\bbR$ such that $\sum_{n=1}^{m}x_n\leq b$ for all $m\in\bbN$, in which case the series converges to
+\begin{equation*}
+\sum_{n=1}^{\infty}x_n
+=\lim_{m\rightarrow\infty}\sum_{n=1}^m x_n
+=\sup\biggset{\sum_{n=1}^{m}x_n : m\in\bbN}.
+\end{equation*}
+
+\item
+We use ``$\sum_{n=1}^{\infty}x_n=\infty$" as an abbreviation for the scenario in which both $x_n\geq0$ for all $n\in\bbN$ and, for any $b\in\bbR$,
+there exists $m\in\bbN$ such that $\sum_{n=1}^{m}x_n> b$, in which case the series diverges.
+
+\end{itemize}
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+We say that the series of a sequence $(x_n)_{n=1}^{\infty}$ of real numbers \textit{converges absolutely} if $\displaystyle\sum_{n=1}^{\infty}\abs{x_n}<\infty$.
+
+Show that if this occurs then $\displaystyle\sum_{n=1}^\infty x_n$ converges,
+namely that absolute convergence implies convergence.
+
+\textit{Hint: For each $m\in\bbN$, let
+$\displaystyle s_m:=\sum_{n=1}^{m}x_n$
+and $\displaystyle t_m:=\sum_{n=1}^{m}\abs{x_n}$.
+Since $(t_m)_{m=1}^{\infty}$ converges, it is Cauchy.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Prove the \textit{comparison test}:
+if $(x_n)_{n=1}^{\infty}$ and $(y_n)_{n=1}^{\infty}$ are sequences of real numbers with $\abs{x_n}\leq y_n$ for all $n\in\bbN$ and $\sum_{n=1}^{\infty}y_n<\infty$ then
+$\sum_{n=1}^{\infty}x_n$ converges absolutely.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Using the comparison test, show that the \textit{harmonic series}
+$\sum_{n=1}^{\infty}\frac1n$ diverges.
+
+\textit{Hint:
+$1+\frac12+\frac13+\frac14+\frac15+\frac16+\frac17+\frac18+\dotsb
+\geq1+\frac12+\frac14+\frac14+\frac18+\frac18+\frac18+\frac18+\dotsb$.}
+\end{enumerate}
+
+\clearpage
+\section{}
+To show that for convergent sequences \((x_n)_{n=1}^\infty\), \((y_n)_{n=1}^\infty\)
+the sequence \((x_n+y_n)_{n=1}^\infty\) also converges we can utilize the identities
+provided in this question supplemented with the in-class theorem 4.5.a,
+\begin{align*}
+    \sum_{n=1}^{\infty}(x_n+y_n)
+    = \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m}(x_n+y_n)
+    = \lim\limits_{m\rightarrow\infty} \left( \sum_{n=1}^{m}x_n + \sum_{n=1}^{m}y_n \right)
+    = \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m}x_n 
+    + \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m}y_n
+    = \sum_{n=1}^{\infty}x_n + \sum_{n=1}^{\infty}y_n.
+\end{align*}
+
+\section{}
+To show that \(\sum_{n=1}^{\infty}cx_n = c\sum_{n=1}^{\infty}x_n\)
+with a convergent sequence \((x_n)_{n=1}^\infty\), we will use the in-class theorem 4.5.b,
+\begin{align*}
+    \sum_{n=1}^{\infty}cx_n
+    = \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m}cx_n
+    = \lim\limits_{m\rightarrow\infty} c \sum_{n=1}^{m}x_n
+    = \lim\limits_{m\rightarrow\infty} c \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m}x_n
+    = c \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m}x_n
+    = c \sum_{n=1}^{\infty}x_n.
+\end{align*}
+
+\section{}
+We claim that if \(|x|<1\) then \(\sum_{n=1}^{\infty}x^n = \frac{1}{1-x}\).
+Using the identities shown in the previous two problems, the geometric sum formula,
+and that \(\lim\limits_{n\rightarrow\infty}y^n=0\) for \(y\in[0,1)\),
+our claim can be shown by as follows:
+\begin{align*}
+    \sum_{n=1}^{\infty}x^n
+    &= \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m}x^n \\
+    &= \lim\limits_{m\rightarrow\infty} \left( x^m + \sum_{n=1}^{m-1}x^n \right) \\
+    &= \lim\limits_{m\rightarrow\infty} x^m 
+    + \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m-1}x^n \\
+    % n -> \infty, x<1, x^n = 0 \\
+    &= 0 + \lim\limits_{m\rightarrow\infty} \frac{1-x^m}{1-x} \\
+    &= \lim\limits_{m\rightarrow\infty} \left( \frac{1}{1-x} - \frac{x^m}{1-x} \right) \\
+    &= \frac{1}{1-x} - \lim\limits_{m\rightarrow\infty} \frac{x^m}{1-x} \\
+    &= \frac{1}{1-x} - \frac{1}{1-x}\lim\limits_{m\rightarrow\infty} x^m \\
+    &= \frac{1}{1-x} - \frac{1}{1-x}(0) \\
+    &= \frac{1}{1-x}.
+\end{align*}
+
+\clearpage
+\section{}
+Without loss of generality let $m_1,m_2\in\mathbb{N}$ be such that $m_1<m_2$.
+Then we can see that the distance between two partial sums \(s_m\) is
+\begin{align*}
+    |s_{m_1} - s_{m_2}|
+    = \left|\sum_{n=1}^{m_1} x_n - \sum_{n=1}^{m_2} x_n \right|
+    = \left|\sum_{n=m_1}^{m_2} x_n \right|
+    \leq \sum_{n=m_1}^{m_2} |x_n|
+    = \sum_{n=1}^{m_2} |x_n| - \sum_{n=1}^{m_1} |x_n|
+    = |t_{m_2}| - |t_{m_1}|
+    \leq |t_{m_2} - t_{m_1}|.
+\end{align*}
+Since \(t_m\) converges, it is cauchy; and since the distance between two \(s_m\)
+is less than or equal to the corresponding pairs of \(t_m\) it is also cauchy.
+Additionally, \(|s_\infty|\leq t_\infty <\infty\) provides bounds for \(s_\infty\).
+Since \(s_\infty\) is Cauchy and bounded it converges,
+which is true of all Cauchy sequences in \(\mathbb{R}\) (theorem 3.9.e).
+
+\section{}
+Because \(|x_n|<y_n\) for all \(n\in \mathbb{N}\); for all \(m\in\mathbb{N}\),
+\[\sum_{n=1}^{m} |x_n| \leq \sum_{n=1}^{m} y_n.\]
+Using this in conjunction with the properties used in problems 1 and 2 we have,
+\begin{align*}
+    \sum_{n=1}^{\infty} |x_n| =
+    \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m} |x_n|
+    &\leq \lim\limits_{m\rightarrow\infty} \sum_{n=1}^{m} y_n
+    = \sum_{n=1}^{\infty} y_n
+    < \infty.
+\end{align*}
+
+\section{}
+Consider the series \(1+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}
++\frac{1}{8}+\frac{1}{8}+\frac{1}{8}+\frac{1}{8}+\ldots\)
+That is, a series constructed from concatenating \(1\) 
+with \(2^{k-1}\) elements of \(\frac{1}{2^k}\).
+We can compare these two series as provided in the \emph{hint}.
+\[
+    1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\frac{1}{5}+\frac{1}{6}+\frac{1}{7}+\frac{1}{8}+\ldots
+    \geq
+    1+\frac{1}{2}+\frac{1}{4}+\frac{1}{4}+\frac{1}{8}+\frac{1}{8}+\frac{1}{8}+\frac{1}{8}+\ldots
+\]
+From this hint we can derive an intuition for how the harmonic series is element-wise 
+greater-than or equal to this \emph{power of two} series.
+There is perhaps a more elegant method to compare the two using methods outside the 
+scope of this course; we instead compare a sub-series of each using powers of two elements.
+\[s_k:= \sum_{n=1}^{2^k}\frac{1}{n} \geq 1+\frac{k}{2} =: t_k.\]
+As the number of elements approaches infinity, \(k\) in the subseries also
+approaches infinity, as such,
+\[\lim\limits_{k\rightarrow\infty} s_k \geq \lim\limits_{k\rightarrow\infty} t_k = \infty.\]
+Which allows us to conclude that the harmonic series is also divergent.
+
+\end{document} 
