@@ -1,0 +1,505 @@
+\documentclass[12 pt,letterpaper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+
+\usepackage{comment}
+
+\usepackage{mathptmx}
+\SetSymbolFont{letters}{bold}{OML}{cmm}{b}{it}
+\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\allowdisplaybreaks
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{Homework 2 Solutions}
+\fancyhead[C]{Due: October 18, 2024}
+\fancyhead[R]{Page \thepage\ of \pageref{LastPage}}
+\fancyfoot[L]{Air Force Institute of Technology}
+\fancyfoot[R]{Fall 2024 (Hosley)}
+\fancyfoot[C]{MATH 600: Mathematical Analysis}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\newcommand{\la}{\lambda}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+\newcommand{\brI}{\mathbf{I}}
+\newcommand{\brJ}{\mathbf{J}}
+\newcommand{\brM}{\mathbf{M}}
+\newcommand{\brR}{\mathbf{R}}
+\newcommand{\brT}{\mathbf{T}}
+
+\newcommand{\bfa}{\boldsymbol{a}}
+\newcommand{\bfA}{\boldsymbol{A}}
+\newcommand{\bfb}{\boldsymbol{b}}
+\newcommand{\bfB}{\boldsymbol{B}}
+\newcommand{\bfc}{\boldsymbol{c}}
+\newcommand{\bfC}{\boldsymbol{C}}
+\newcommand{\bfD}{\boldsymbol{D}}
+\newcommand{\bfe}{\boldsymbol{e}}
+\newcommand{\bfE}{\boldsymbol{E}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bfF}{\boldsymbol{F}}
+\newcommand{\bfG}{\boldsymbol{G}}
+\newcommand{\bfH}{\boldsymbol{H}}
+\newcommand{\bfI}{\boldsymbol{I}}
+\newcommand{\bfJ}{\boldsymbol{J}}
+\newcommand{\bfK}{\boldsymbol{K}}
+\newcommand{\bfL}{\boldsymbol{L}}
+\newcommand{\bfM}{\boldsymbol{M}}
+\newcommand{\bfp}{\boldsymbol{p}}
+\newcommand{\bfP}{\boldsymbol{P}}
+\newcommand{\bfR}{\boldsymbol{R}}
+\newcommand{\bfT}{\boldsymbol{T}}
+\newcommand{\bfu}{\boldsymbol{u}}
+\newcommand{\bfU}{\boldsymbol{U}}
+\newcommand{\bfv}{\boldsymbol{v}}
+\newcommand{\bfV}{\boldsymbol{V}}
+\newcommand{\bfw}{\boldsymbol{w}}
+\newcommand{\bfW}{\boldsymbol{W}}
+\newcommand{\bfx}{\boldsymbol{x}}
+\newcommand{\bfX}{\boldsymbol{X}}
+\newcommand{\bfy}{\boldsymbol{y}}
+\newcommand{\bfY}{\boldsymbol{Y}}
+\newcommand{\bfz}{\boldsymbol{z}}
+\newcommand{\bfZ}{\boldsymbol{Z}}
+
+\newcommand{\bfone}{\boldsymbol{1}}
+\newcommand{\bfzero}{\boldsymbol{0}}
+\newcommand{\bfxi}{\boldsymbol{\xi}}
+\newcommand{\bfXi}{\boldsymbol{\Xi}}
+\newcommand{\bfphi}{\boldsymbol{\varphi}}
+\newcommand{\bfPhi}{\boldsymbol{\varPhi}}
+\newcommand{\bfPi}{\boldsymbol{\varPi}}
+\newcommand{\bfpsi}{\boldsymbol{\psi}}
+\newcommand{\bfPsi}{\boldsymbol{\varPsi}}
+\newcommand{\bfchi}{\boldsymbol{\chi}}
+\newcommand{\bfzeta}{\boldsymbol{\zeta}}
+\newcommand{\bfdelta}{\boldsymbol{\delta}}
+\newcommand{\bfDelta}{\boldsymbol{\varDelta}}
+\newcommand{\bfGamma}{\boldsymbol{\varGamma}}
+\newcommand{\bfOmega}{\boldsymbol{\varOmega}}
+\newcommand{\bfSigma}{\boldsymbol{\varSigma}}
+\newcommand{\bfLambda}{\boldsymbol{\varLambda}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+
+\newcommand{\rmA}{\mathrm{A}}
+\newcommand{\rmB}{\mathrm{B}}
+\newcommand{\rmc}{\mathrm{c}}
+\newcommand{\rmC}{\mathrm{C}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\rme}{\mathrm{e}}
+\newcommand{\rmi}{\mathrm{i}}
+\newcommand{\rmj}{\mathrm{j}}
+\newcommand{\rmk}{\mathrm{k}}
+\newcommand{\rms}{\mathrm{s}}
+\newcommand{\rmS}{\mathrm{S}}
+\newcommand{\rmT}{\mathrm{T}}
+
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Part}{\mathrm{part}}
+\newcommand{\Null}{\mathrm{null}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\real}{\operatorname{Re}}
+\newcommand{\imag}{\operatorname{Im}}
+\newcommand{\cond}{\operatorname{cond}}
+
+\newcommand{\im}{\operatorname{im}}
+
+\newcommand{\conv}[2]{{#1}\ast{#2}}
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}}
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}}
+
+\newcommand{\mat}[2]{\left[\begin{array}{#1}#2\end{array}\right]}
+\newcommand{\dmat}[2]{\left|\begin{array}{#1}#2\end{array}\right|}
+\newcommand{\arbset}[1]{\left\{{#1}\right\}}
+\newcommand{\arbparen}[1]{\left({#1}\right)}
+\newcommand{\sign}{\operatorname{sign}}
+
+\newcommand{\abs}[1]{|{#1}|}
+\newcommand{\bigabs}[1]{\bigl|{#1}\bigr|}
+\newcommand{\Bigabs}[1]{\Bigl|{#1}\Bigr|}
+\newcommand{\biggabs}[1]{\biggl|{#1}\biggr|}
+\newcommand{\Biggabs}[1]{\Biggl|{#1}\Biggr|}
+
+\newcommand{\paren}[1]{({#1})}
+\newcommand{\bigparen}[1]{\bigl({#1}\bigr)}
+\newcommand{\Bigparen}[1]{\Bigl({#1}\Bigr)}
+\newcommand{\biggparen}[1]{\biggl({#1}\biggr)}
+\newcommand{\Biggparen}[1]{\Biggl({#1}\Biggr)}
+
+\newcommand{\bracket}[1]{[{#1}]}
+\newcommand{\bigbracket}[1]{\bigl[{#1}\bigr]}
+\newcommand{\Bigbracket}[1]{\Bigl[{#1}\Bigr]}
+\newcommand{\biggbracket}[1]{\biggl[{#1}\biggr]}
+\newcommand{\Biggbracket}[1]{\Biggl[{#1}\Biggr]}
+
+\newcommand{\set}[1]{\{{#1}\}}
+\newcommand{\bigset}[1]{\bigl\{{#1}\bigr\}}
+\newcommand{\Bigset}[1]{\Bigl\{{#1}\Bigr\}}
+\newcommand{\biggset}[1]{\biggl\{{#1}\biggr\}}
+\newcommand{\Biggset}[1]{\Biggl\{{#1}\Biggr\}}
+
+\newcommand{\norm}[1]{\|{#1}\|}
+\newcommand{\bignorm}[1]{\bigl\|{#1}\bigr\|}
+\newcommand{\Bignorm}[1]{\Bigl\|{#1}\Bigr\|}
+\newcommand{\biggnorm}[1]{\biggl\|{#1}\biggr\|}
+\newcommand{\Biggnorm}[1]{\Biggl\|{#1}\Biggr\|}
+
+\newcommand{\ip}[2]{\langle{#1},{#2}\rangle}
+\newcommand{\bigip}[2]{\bigl\langle{#1},{#2}\bigr\rangle}
+\newcommand{\Bigip}[2]{\Bigl\langle{#1},{#2}\Bigr\rangle}
+\newcommand{\biggip}[2]{\biggl\langle{#1},{#2}\biggr\rangle}
+\newcommand{\Biggip}[2]{\Biggl\langle{#1},{#2}\Biggr\rangle}
+
+\newcommand{\alphi}{\renewcommand{\labelenumi}{(\alph{enumi})}}
+\newcommand{\alphii}{\renewcommand{\labelenumii}{(\alph{enumii})}}
+\newcommand{\alphiii}{\renewcommand{\labelenumiii}{(\alph{enumiii})}}
+\newcommand{\romani}{\renewcommand{\labelenumi}{(\roman{enumi})}}
+\newcommand{\romanii}{\renewcommand{\labelenumii}{(\roman{enumii})}}
+\newcommand{\romaniii}{\renewcommand{\labelenumiii}{(\roman{enumiii})}}
+\newcommand{\arabici}{\renewcommand{\labelenumi}{(\arabic{enumi})}}
+\newcommand{\arabicii}{\renewcommand{\labelenumii}{(\arabic{enumii})}}
+\newcommand{\arabiciii}{\renewcommand{\labelenumiii}{(\arabic{enumiii})}}
+
+\begin{document}
+
+\noindent
+On this homework we discuss a proof technique known as \textit{(mathematical) induction}:
+in essence,
+to prove that a certain statement holds for all natural numbers,
+it suffices to (i) show that it holds for the number $1$, and (ii) show that if it holds for a given number $n$ then it also holds for $n+1$.
+
+(As a technical aside,
+in this class we formally define the set of natural numbers as a subset of the set of real numbers as follows.
+Let $\bbR$ be the set of real numbers, that is, an ordered field that has the supremum property.
+We say that a subset $\calS$ of $\bbR$ is an \textit{inductive set} if it has both the property that $1\in\calS$ and the property that if $x\in\calS$ then $x+1\in\calS$.
+For example, the set $\bbR$ of all real numbers is an inductive set,
+as is the set of all positive real numbers.
+Note that by definition, any inductive set contains $1$, $2:=1+1$, $3:=2+1$, etc., namely every number obtained by adding $1$ to itself any finite number of times.
+It is straightforward to show that the intersection of (any number of) inductive sets is itself an inductive set.
+Formally, we define the set $\bbN$ of natural numbers to be the intersection of all inductive sets.
+Thus, $\bbN$ is both a subset of any inductive set and is itself an inductive set.
+The former implies that the aforementioned proof technique of induction is valid.
+The latter implies that $\bbN$ contains $1$, $2$, $3$, etc., that is, every number that can be obtained by adding $1$ to itself any finite number of times.
+Since the set $\set{1,2,3,\dotsc}$ of all such numbers is itself an inductive set,
+we have that $\bbN$ equals this set, i.e., $\bbN=\set{1,2,3,\dotsc}$.)
+
+For example,
+we now use induction to prove that the following is true for every $n\in\bbN$:
+\begin{equation}
+\label{eq.sum}
+\sum_{k=1}^{n}k
+=\tfrac{n(n+1)}{2}.
+\end{equation}
+To see that~\eqref{eq.sum} holds when $n=1$ note $\sum_{k=1}^{1}k=1=\tfrac{1(1+1)}{2}$.
+Next, if~\eqref{eq.sum} holds for a particular $n$ then it also holds when ``$n$" is replaced with $n+1$:
+\begin{equation*}
+\sum_{k=1}^{n+1}k
+=\sum_{k=1}^{n}k+(n+1)
+=\tfrac{n(n+1)}{2}+(n+1)
+=(n+1)\bigparen{\tfrac n2+1}
+=\tfrac{(n+1)(n+2)}{2}
+=\tfrac{(n+1)[(n+1)+1]}{2}.
+\end{equation*}
+(In such proofs, the assumption that a given property holds for a given $n$ is called the \textit{inductive hypothesis}.)
+To be clear, results proven with induction can sometimes be proven directly.
+For example, \eqref{eq.sum} can alternatively be proven by writing two copies of this sum, one with its terms in increasing order and the other with its terms in decreasing order,
+and then dividing the result by $2$:
+\begin{align*}
+\label{eq.sum}
+2\sum_{k=1}^{n}k
+&=\sum_{k=1}^{n}k+\sum_{k=1}^{n}k\\
+&=[1+2+\dotsb+(n-1)+n]+[n+(n-1)+\dotsb+2+1]\\
+&=(1+n)+[2+(n-1)]+\dotsb+[(n-1)+2]+(n+1)\\
+&=(n+1)+(n+1)+\dotsb+(n+1)+(n+1)\\
+&=n(n+1).
+\end{align*}
+
+\begin{enumerate}
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Use induction to prove that
+$\displaystyle\sum_{k=1}^{n}k^2=\tfrac{n(n+1)(2n+1)}{6}$ for all $n\in\bbN$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For any $x\geq -1$,
+use induction to prove \textit{Bernoulli's inequality},
+namely that for all $n\in\bbN$,
+\begin{equation*}
+(1+x)^n\geq 1+nx.
+\end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For all $x\neq 1$,
+use induction to prove the \textit{geometric sum formula},
+namely that $\displaystyle\sum_{k=0}^{n}x^k=\tfrac{1-x^{n+1}}{1-x}$ for all $n\in\bbN$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Give a direct (noninductive) proof of the previous result,
+namely that $\displaystyle\sum_{k=0}^{n}x^k=\tfrac{1-x^{n+1}}{1-x}$ for all $x\neq1$, $n\in\bbN$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For any $n\in\bbN$, define the \textit{factorial} of $n$ as
+\begin{equation*}
+n!:=\prod_{k=1}^{n}k=(1)(2)\cdots(n).
+\end{equation*}
+That is, $1!=1$, $2!=(1)(2)=2$, $3!=(1)(2)(3)=6$, $4!=(1)(2)(3)(4)=24$, etc.
+By convention, we also define the factorial of $0$ to be $0!=1$.
+For any integers $n\geq k\geq0$,
+the corresponding binomial coefficient is:
+\begin{equation*}
+\binom{n}{k}
+:=\frac{n!}{k!(n-k)!}.
+\end{equation*}
+Though we do not prove this,
+this number is the number of distinct $k$-element subsets of a set of cardinality $n$,
+and so is often read aloud as ``$n$ choose $k$".
+
+For any integers $n\geq k\geq 1$,
+show that $\displaystyle\binom{n+1}{0}=\binom{n+1}{n+1}=1$ and that $\displaystyle\binom{n}{k-1}+\binom{n}{k}=\binom{n+1}{k}$.\medskip
+
+\textit{Note:
+You are not required to use induction to prove these facts.
+Direct proofs are preferable.
+These results mean that binomial coefficients are natural numbers, and are moreover given by Pascal's triangle:}
+\begin{equation*}
+\begin{array}{ccccccccc}
+ & & & &1& & & & \\
+ & & &1& &1& & & \\
+ & &1& &2& &1& & \\
+ &1& &3& &3& &1& \\
+1& &4& &6& &4& &1\\
+ & & & &\vdots
+\end{array}
+\end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For all $x,y\in\bbR$,
+use induction and the previous problem to prove the \textit{binomial theorem}:
+for any $n\in\bbN$,
+\begin{equation*}
+(x+y)^n=\sum_{k=0}^{n}\binom{n}{k}x^ky^{n-k}.
+\end{equation*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Find the flaw in the following ``proof" by induction of the ``fact" that all horses are of the same color,
+specifically the claim that for every $n\in\bbN$,
+any $n$ horses are of the same color.
+This is true when $n=1$, since any single horse is of a single color.
+Next, for any $n\in\bbN$,
+assume that any $n$ horses are of the same color,
+and take any $n+1$ horses.
+Number these horses as $1$, $2$, up to $n+1$.
+By the inductive hypothesis, the horses numbered $\set{1,2,\dotsc,n}$ are of the same color, and the horses numbered $\set{2,\dotsc,n,n+1}$ are of the same color.
+In particular, all $n+1$ horses are of the same color,
+being that of horse $2$.
+\end{enumerate}
+
+\clearpage
+\section*{Question 1.}
+Let \(n:=1\) then,
+\[\sum_{k=1}^{n} k^2 = (1)^2 = 1 = \frac{1(2)(3)}{6} = \frac{n(n+1)(2n+1)}{6}.\]
+Next, let \(m:=n+1\), then,
+\begin{align*}
+    \sum_{k=1}^{m} k^2
+    &= \frac{m(m+1)(2m+1)}{6} \\
+    &= \frac{(n+1)((n+1)+1)(2(n+1)+1)}{6} \\
+    &= \frac{(n+1)(n+2)(2n+3)}{6} \\
+    &= \frac{2n^3+9n^2+13n+6}{6} \\
+    &= \frac{6n^2+12n+6}{6} + \frac{2n^3+3n^2+n}{6} \\
+    &= (n^2+2n+1) + \frac{n(2n^2+3n+1)}{6} \\
+    &= (n+1)^2 + \frac{n(n+1)(2n+1)}{6} \\
+    &= (n+1)^2 + \sum_{k=1}^{n} k^2 \\
+    &= \sum_{k=1}^{n+1} k^2.
+\end{align*}
+
+\clearpage
+
+\section*{Question 2.}
+First, we evaluate the base case starting with, 
+\(n:=1\),
+\[1+x = (1+x)^1 = (1+x)^n \geq  1 + nx = 1 + (1)x = 1+x.\]
+%
+Next we evaluate the base case at \(n:=0\),
+resolving the potential ambiguity of \(\mathbb{N}\),
+\[1 = (1+x)^0 = (1+x)^n \geq 1 + nx = 1 + (0)x = 1 + 0 = 1.\]
+%
+Then to show the inductive case,
+\(n+1\),
+we start with the base case multiplied by \((1+x)\),
+which recalls the assumption \(x\geq-1\) to maintain the inequality,
+\begin{flalign*} &&
+    (1+x)^n(1+x) &\geq (1 + nx)(1 + x) \\ &&
+    &= 1 + nx + x + nx^2 \\ &&
+    &= 1 + (n+1)x + nx^2 \hspace{5em} (\text{since }nx^2\geq0, n\in\mathbb{N},x\in\mathbb{R})\\ &&
+    &\geq 1 + (n + 1)x.
+\end{flalign*}
+Thus via transitivity we have,
+\[(1+x)^n(1+x) \geq 1 + (n+1)x\]
+which is
+\[(1+x)^{n+1} \geq 1 + (n+1)x.\]
+
+
+\clearpage
+
+\section*{Question 3.}
+
+First, we consider the base cases \(n:=0\)
+\[
+    \sum_{k=0}^{0}x^k = x^0 = 1 
+    = \frac{1}{1} = \frac{1-x}{1-x} = \frac{1-x^{0+1}}{1-x},
+\]
+and \(n:=1\)
+\[
+\sum_{k=0}^{1}x^k = x^0 + x^1 = 1+x 
+= (1+x)\frac{1+x}{1+x} = \frac{(1-x)^2}{1-x} = \frac{1-x^{1+1}}{1-x}.
+\]
+Next, given the base case, we consider the inductive case \(m:=n+1\)
+\begin{align*}
+    \sum_{k=0}^{m}x^k
+    = \sum_{k=0}^{n+1}x^k
+    &= x^{n+1} + \sum_{k=0}^{n}x^k \\
+    &= x^{n+1} + \frac{1-x^{n+1}}{1-x} \\
+    &= \frac{x^{n+1}(1-x)}{1-x} + \frac{1-x^{n+1}}{1-x} \\
+    &= \frac{x^{n+1}-x^{n+2}}{1-x} + \frac{1-x^{n+1}}{1-x} \\
+    &= \frac{1-x^{n+2}}{1-x} \\
+    &= \frac{1-x^{(n+1)+1}}{1-x} \\
+    &= \frac{1-x^{m+1}}{1-x}.
+\end{align*}
+
+\clearpage
+\section*{Question 4.}
+One direct proof can be shown by first multiplying by \((1-x)\).
+\begin{align*}
+    (1-x) \sum_{k=0}^{n}x^k
+    &= \sum_{k=0}^{n}x^k - x \sum_{k=0}^{n}x^k \\
+    &= \sum_{k=0}^{n}x^k - \sum_{k=0}^{n}x^{k+1} \\
+    &= \sum_{k=0}^{n}x^k - \sum_{k=1}^{n+1}x^k \\
+    &= x^0 + \sum_{k=1}^{n}x^k - \sum_{k=1}^{n}x^k - x^{n+1} \\
+    &= x^0 - x^{n+1} \\
+    &= 1 - x^{n+1}.
+\end{align*}
+Dividing the last expression by \((1-x)\) completes the proof.
+
+\section*{Question 5.}
+
+For the first identity, we can see equality with each side and \(1\) as follows,
+\begin{align*}
+    \binom{n+1}{0}
+    &= \frac{(n+1)!}{(0)!((n+1)-(0))!}
+    = \frac{(n+1)!}{(1)(n+1)!}
+    = 1 \\ \\ 1
+    &= \frac{(n+1)!}{(n+1)!}
+    = \frac{(n+1)!}{(n+1)!(1)}
+    = \frac{(n+1)!}{(n+1)!(0)!}
+    = \frac{(n+1)!}{(n+1)!((n+1)-(n+1))!}
+    = \binom{n+1}{n+1}.
+\end{align*}
+The second identity can be shown as,
+\begin{align*}
+    \binom{n}{k-1} + \binom{n}{k}
+    &= \frac{n!}{(k-1)!(n-k+1)!} + \frac{n!}{(k)!(n-k)!} \\
+    &= \frac{n!(k)}{k!(n-k+1)!} + \frac{n!(n-k+1)}{(k)!(n-k+1)!} \\
+    &= \frac{n!(k)+ n!(n-k+1)}{k!(n-k+1)!} \\
+    &= \frac{n!(n-k+1+k)}{k!(n-k+1)!} \\
+    &= \frac{n!(n+1)}{k!(n-k+1)!} \\
+    &= \frac{(n+1)!}{k!((n+1)-k)!} \\
+    &= \binom{n+1}{k}.
+\end{align*}
+
+\clearpage
+\section*{Question 6.}
+
+For base case \(n=1\) we have,
+\[
+    (x+y)^1
+    = x + y
+    = \binom{1}{1}x + \binom{1}{0}y
+    = \sum_{k=0}^{1} \binom{1}{k} x^{k} y^{n-k}.
+\]
+Next, we evaluate the inductive case \(n+1\),
+\begin{align*}
+    (x+y)^{n+1}
+    &= (x+y)(x+y)^{n} \\
+    &= (x+y)\sum_{k=0}^{n} \binom{1}{k} x^{k} y^{n-k} & \text{(assuming base-case)}\\
+    &= x\sum_{k=0}^{n} \binom{n}{k} x^{k} y^{n-k} + y\sum_{k=0}^{n} \binom{n}{k} x^{k} y^{n-k} \\
+    &= \sum_{k=0}^{n} \binom{n}{k} x^{k+1} y^{n-k} + \sum_{k=0}^{n} \binom{n}{k} x^{k} y^{n-k+1} \\
+    &= x^{n+1} + \sum_{k=0}^{n-1} \binom{n}{k} x^{k+1} y^{n-k}
+        + y^{n+1} + \sum_{k=1}^{n} \binom{n}{k} x^{k} y^{n-k+1}
+        & \text{(\(k=n\) and \(k=0\) respectively)} \\
+    &= x^{n+1} + y^{n+1} + \sum_{k=1}^{n} \binom{n}{k-1} x^{(k-1)+1} y^{n-(k-1)}
+        + \sum_{k=1}^{n} \binom{n}{k} x^{k} y^{n-k+1} & \text{(shift index on first sum)} \\
+    &= x^{n+1} + y^{n+1} + \sum_{k=1}^{n} \binom{n}{k-1} x^{k} y^{n-k+1}
+        + \sum_{k=1}^{n} \binom{n}{k} x^{k} y^{n-k+1} \\
+    &= x^{n+1} + y^{n+1} + \sum_{k=1}^{n} \binom{n}{k-1} + \binom{n}{k} x^{k} y^{n-k+1} \\
+    &= x^{n+1} + y^{n+1} + \sum_{k=1}^{n} \binom{n+1}{k} x^{k} y^{(n+1)-k} &\text{(Problem 5.2)} \\
+    &= \binom{n+1}{n+1}x^{n+1} + \binom{n+1}{0}y^{n+1} 
+        + \sum_{k=1}^{n} \binom{n+1}{k} x^{k} y^{(n+1)-k} & \text{(Problem 5.1)} \\
+    &= \sum_{k=0}^{n+1} \binom{n+1}{k} x^{k} y^{(n+1)-k} & \text{(\(k=0\) and \(k=n+1\) terms)} \\
+\end{align*}
+Concluding the proof.
+
+\clearpage
+\section*{Question 7.}
+
+One possible critique of this example proof
+is a problem with the ambiguity in the definition and application of the function.
+
+Adding some precision to the function is necessary;
+similarities between two things are generally only interesting if they are distinct.
+That is, if the color of horse \(x\) is \(f(x)\), then we might interpret all horses 
+being the same color as \(f(x_1)=f(x_2) \forall\ x_1,x_2\in \{x_i\}_{i\in n}\).
+This is vacuously true for the base case, 
+which might be considered pathological for the assumed intent of the problem.
+The base case is indistinct from the assertion,
+\(f(x_1)=f(x_1) \forall\ x_1\in \{x_i\}_{i\in n}\).
+This version may be used to (correctly) arrive at the wholly uninteresting conclusion
+that all horses are the same color as themselves.
+
+By explicitly omitting comparison of the same horse we might model the question instead as,
+\(f(x_1)=f(x_2), x_1\neq x_2 \forall\ x_1,x_2\in \{x_i\}_{i\in n}\).
+Under this representation the pathology of the \(n=1\) case should become more clear.
+Thus it becomes necessary to prove the base case for \(n\geq 2\);
+that every two horses share the same color.
+
+
+\end{document} 
