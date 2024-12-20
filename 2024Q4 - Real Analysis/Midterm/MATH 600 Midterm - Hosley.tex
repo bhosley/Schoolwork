@@ -1,0 +1,269 @@
+\documentclass[12pt,letterpaper]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[width=8.50in, height=11.00in, left=0.50in, right=0.50in, top=0.50in, bottom=0.50in]{geometry}
+
+\usepackage{libertine}
+\usepackage{multicol}
+\usepackage[shortlabels]{enumitem}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{wrapfig}
+%\usepackage{capt-of}
+%\usepackage{tikz}
+%\usepackage{pgfplots}
+%\usetikzlibrary{shapes,arrows,positioning,patterns}
+%\usepackage{pythonhighlight}
+
+%\renewcommand{\thequestion}{\textbf{\chapter.\arabic{question}}}
+%\renewcommand{\questionlabel}{\thequestion}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\class}{MATH 600} % This is the name of the course 
+\newcommand{\assignmentname}{Midterm} % 
+\newcommand{\authorname}{Hosley, Brandon} % 
+\newcommand{\workdate}{\today} % 
+\printanswers % this includes the solutions sections
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{mathptmx}
+\SetSymbolFont{letters}{bold}{OML}{cmm}{b}{it}
+\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\begin{document}
+\pagestyle{plain}
+\thispagestyle{empty}
+\noindent
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\begin{tabular*}{\textwidth}{l @{\extracolsep{\fill}} r @{\extracolsep{10pt}} l}
+	\textbf{\class} & \textbf{\authorname}  &\\ %Your name here instead, obviously 
+	\textbf{\assignmentname } & \textbf{\workdate} & \\
+\end{tabular*}\\ 
+\rule{\textwidth}{2pt}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Instructions: Answers all five problems. Each is worth four points,
+for a total of twenty points. You have three hours to take the exam.
+You can use any results from Sections 1-4 of our notes and 
+Homework Solutions 1-4 without further justification. 
+You are moreover permitted to consult any books and notes that you wish,
+but if your arguments rely on results from them,
+you should cite those results and moreover explain (prove) them
+from basic principles and/or results that we have already covered.
+Interactive resources are prohibited (including
+conversations with anyone besides the instructor, search engines, AIs, etc.).
+
+\begin{questions}
+\question
+Use mathematical induction to prove that
+\(\overset{n}{\underset{k=1}{\sum}}\frac{1}{k(k+1)} = \frac{n}{n+1}\)
+for any natural number \(n\).
+
+\begin{solution}
+    First, let us evaluate a base case in which \(n=1\).
+    \begin{align*}
+        \sum_{k=1}^{n} \frac{1}{k(k+1)}
+        &= \frac{1}{1(1+1)}
+        &= \frac{1}{(1+1)}
+        &= \frac{n}{(n+1)}.
+    \end{align*}
+    Next, we evaluate the inductive case of \(n+1\) to conclude the proof,
+    \begin{align*}
+        \sum_{k=1}^{n+1} \frac{1}{k(k+1)}
+        &= \frac{1}{(n+1)((n+1)+1)} + \sum_{k=1}^{n} \frac{1}{k(k+1)} \\
+        &= \frac{1}{(n+1)(n+2)} + \frac{n}{(n+1)} \hspace{4em}\text{(base case)}\\
+        &= \frac{n(n+2) + 1}{(n+1)(n+2)} \\
+        &= \frac{n^2 + 2n + 1}{(n+1)(n+2)} \\
+        &= \frac{(n+1)^2}{(n+1)(n+2)} \\
+        &= \frac{(n+1)}{(n+1)+1}.
+    \end{align*}
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\question
+A function \(f:\mathbb{R}^N \rightarrow \mathbb{R}\) is said to be convex if for every 
+\(x_1,x_2 \in\mathbb{R}^N\) and every \(t \in [0,1]\),
+\[f(tx_1 + (1-t)x2) \leq t f(x_1)+ (1-t)f(x_2).\]
+Show that each norm on \(\mathbb{R}^N\) is convex. 
+That is, recalling the definition of a norm on \(\mathbb{R}^N\) given on Homework 3, show that 
+the function \(f:\mathbb{R}^N \rightarrow \mathbb{R}, f(x) := \|x\|\) has the above property.
+\begin{solution}
+    To show that an arbitrary norm in \(\mathbb{R}^N\) is convex,
+    we may use the properties of a norm.
+    Using properties 1 (\(\|cx\| = |c|\|x\| \)) and 3 (\(\|x_1 + x_2\| \leq \|x_1\| + \|x_2\|\))
+    and noting that \(t,(1-t)\geq0\),
+    we can see,
+    \begin{align}
+        \|x_1 + x_2\|
+        &= \|tx_1 + (1-t)x_1 + tx_2 + (1-t)x_2\| \\
+        &= \|tx_1 + (1-t)x_2 + tx_2 + (1-t)x_1\| \\ 
+        &\leq \|tx_1 + (1-t)x_2\| + \|tx_2 + (1-t)x_1\| \\
+        &\leq \|tx_1\| + \|(1-t)x_2\| + \|tx_2\| + \|(1-t)x_1\| \\
+        &= t\|x_1\| + (1-t)\|x_2\| + t\|x_2\| + (1-t)\|x_1\| \\
+        &= t\|x_1\| + (1-t)\|x_1\| + (1-t)\|x_2\| + t\|x_2\| \\
+        &= \|x_1\| + \|x_2\|.
+    \end{align}
+    From this series of expressions, we take 3 and 6,
+    \[\|tx_1 + (1-t)x_2\| + \|tx_2 + (1-t)x_1\| 
+        \leq t\|x_1\| + (1-t)\|x_1\| + (1-t)\|x_2\| + t\|x_2\|.\]
+    To see this more clearly we may subtract
+    \[ \|tx_2 + (1-t)x_1\| \leq \|tx_2\| + \|(1-t)x_1\| = t\|x_2\| + (1-t)\|x_1\|.\]
+    Showing that not only does the convexity property hold,
+    it is implied by the other properties of a norm.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\question
+The \emph{characteristic function} of a given subset \(\mathcal{S}\) of a set \(\mathcal{X}\) is
+\[
+    \chi\mathcal{S}: \mathcal{X}\rightarrow\mathbb{R},\quad
+    \chi\mathcal{S}(x)=
+    \begin{cases}
+        1, & x\in \mathcal{S},\\
+        0, & x\notin \mathcal{S}.
+    \end{cases}
+\]
+For any subsets \(\mathcal{A}\), \(\mathcal{B}\) and \(\mathcal{C}\) of \(\mathcal{X}\), show that
+\[
+    \chi\mathcal{A}\cup\mathcal{B}\cup\mathcal{C}
+    = \chi\mathcal{A} + \chi\mathcal{B} + \chi\mathcal{C}
+    - \chi\mathcal{A}\cap\mathcal{B} - \chi\mathcal{A}\cap\mathcal{C} 
+    - \chi\mathcal{B}\cap\mathcal{C} + \chi\mathcal{A}\cap\mathcal{B}\cap\mathcal{C}.
+\]
+\emph{Hint: Without further justification, you may use two basic facts about such functions,
+namely that the characteristic function of the complement of a subset \(\mathcal{S}\)
+of \(\mathcal{X}\) is obtained by subtracting that of \(\mathcal{S}\) from the
+constant function 1, and that the characteristic function of the intersection of two subsets
+\(\mathcal{A}\) and \(\mathcal{B}\) of \(\mathcal{X}\) is
+the termwise product of their characteristic functions, namely that}
+\[
+    \chi\mathcal{S}^c(x) = 1-\chi\mathcal{S}(x), \quad
+    \chi\mathcal{A}\cap\mathcal{B}(x) = \chi\mathcal{A}(x) \chi\mathcal{B}(x), \quad
+    \forall x\in\mathcal{X}.
+\]
+\begin{solution}
+    To show this equality, we can leverage DeMorgan's law 
+    and the provided identities as follows:
+    \begin{align*}
+        \chi\mathcal{A}\cup\mathcal{B}\cup\mathcal{C}
+        &= \left(\left(\chi\mathcal{A}\cup\mathcal{B}\cup\mathcal{C}\right)^c\right)^c\\
+        &= 1-\left(\chi\mathcal{A}^c\cap\mathcal{B}^c\cap\mathcal{C}^c\right)\\
+        &= 1-\chi\mathcal{A}^c\chi\mathcal{B}^c\chi\mathcal{C}^c\\
+        &= 1-(1-\chi\mathcal{A})(1-\chi\mathcal{B})(1-\chi\mathcal{C})\\
+        &= 1-\left(1 - \chi\mathcal{A} - \chi\mathcal{B} - \chi\mathcal{A}
+            + \chi\mathcal{B}\chi\mathcal{C} + \chi\mathcal{A}\chi\mathcal{B}
+            + \chi\mathcal{A}\chi\mathcal{C} 
+            -\chi\mathcal{A}\chi\mathcal{B}\chi\mathcal{C}\right)\\
+        &= \chi\mathcal{A} + \chi\mathcal{B} + \chi\mathcal{A}
+            - \chi\mathcal{B}\chi\mathcal{C} - \chi\mathcal{A}\chi\mathcal{B}
+            - \chi\mathcal{A}\chi\mathcal{C}
+            + \chi\mathcal{A}\chi\mathcal{B}\chi\mathcal{C} \\
+        &= \chi\mathcal{A} + \chi\mathcal{B} + \chi\mathcal{A}
+            - \chi\mathcal{B}\cap\mathcal{C} - \chi\mathcal{A}\cap\mathcal{B}
+            - \chi\mathcal{A}\cap\mathcal{C}
+            + \chi\mathcal{A}\cap\mathcal{B}\cap\mathcal{C}.\\
+    \end{align*}
+    
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\question
+From Homework 2, recall Bernoulli's inequality, 
+namely that \((1+x)^n \geq 1+nx\) for any \(x \geq -1\) and \(n \in\mathbb{N}\).
+Using this inequality, show that if \(0 < y < 1\) then 
+\(\lim\limits_{n\rightarrow\infty} y^n=0\).\\
+\emph{Hint: Let } \(x = \frac{1}{y}-1\).
+\begin{solution}
+    \emph{I struggled to find a method to use Bernoulli's inequality for this. I instead tried
+    a different substitution.} \\[1em]
+    For \(y\in(0,1)\) there exists an \(x\geq1\)
+    such that \(x=\frac{1}{y}\).
+    Then
+    \(\lim\limits_{n\rightarrow\infty} y^n 
+    = \lim\limits_{n\rightarrow\infty} \left(\frac{1}{x}\right)^n
+    = \lim\limits_{n\rightarrow\infty} \frac{1}{x^n}\).
+    Thus it suffices to show \(\lim\limits_{n\rightarrow\infty} \frac{1}{x^n}=0\)
+
+    Note that for any \(n\geq N, x\geq 1\)
+    we have \(x^n \geq x^N\)
+    and thus, \(\frac{1}{x^n} \leq\frac{1}{x^N}\).
+
+    Then, take \(\varepsilon>0\).
+    There exists \(N\) such that
+    \(\text{d}\left(\frac{1}{x^N},0\right) = \frac{1}{x^N} < \varepsilon\).
+    Then for any \(n\geq N\) we have,
+    \(\text{d}\left(\frac{1}{x^n},0\right) = \frac{1}{x^n}\leq\frac{1}{x^N} <\epsilon\).
+
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\clearpage
+
+\question
+Let \((\mathcal{X},\text{d})\) be a complete metric space. For each \(n\in\mathbb{N}\),
+let \(\mathcal{S}_n\) be a closed and nonempty subset of \(\mathcal{X}\).
+Further suppose that \(\mathcal{S}_{n+1} \subseteq \mathcal{S}_n\) for all \(n\in\mathbb{N}\),
+and that there exists a sequence \((z_n)_{n=1}^{\infty}\) of nonnegative real
+numbers such that d\((x,y)\leq z_n\) for all for all \(n\in\mathbb{N}\) and
+\(x,y\in\mathcal{S}_n\), and such that \(\lim\limits_{n\rightarrow\infty} z_n =0\). \\
+Show that there exists a unique element \(x_\infty\) of \(\mathcal{X}\) such that
+\(\overset{\infty}{\underset{n=1}{\bigcap}}\mathcal{S}_n = \{x_\infty\}\).
+
+\begin{solution}
+    Since \(\mathcal{S}_{n+1} \subseteq \mathcal{S}_n\)
+    we also have,
+    \(\mathcal{S}_N = \cap_{n=1}^N \mathcal{S}_n\).
+    Additionally, because
+    d\((x,y)\leq z_n\) for all \(x,y\in\mathcal{S}_n\),
+    we consequently have,
+    \[\mathcal{S}_n \subset \text{b}(x,z_n)\quad \forall x\in \mathcal{S}_n.\]
+
+
+    Next, because \((z_n)_{n=1}^{\infty}\) is a convergent sequence,
+    for all \(\delta>0\) 
+    there exists a \(N\in\mathbb{N}\)
+    such that for all \(n>N\), we have
+    \(z_n \leq z_N \leq \delta\)
+    thus,
+    \[\text{b}(x,z_n) \subseteq \text{b}(x,z_N) \subseteq \text{b}(x,\delta)
+        \forall x\in \mathcal{S}_n.\]
+
+    Let \(\mathcal{S}_\infty = \cap_{n=1}^\infty \mathcal{S}_n\).
+    Then,
+    \(\mathcal{S}_\infty \subset \text{b}(x,z_\infty)\)
+    \vspace{2em}
+
+    For this problem we wish to show that given a \(\mathcal{S}_n \subset \text{b}(x,z_n)\)
+    that the convergent sequence \((z_n)_{n=1}^{\infty}\) contains a unique element.
+    Given that the sequence \((z_n)_{n=1}^{\infty}\) converges to 0,
+    we know that \(z_n \leq z_N\) for all \(n\geq N\).
+    Thus, \(\text{b}(x,z_n) \subseteq \text{b}(x,z_N)\).
+
+    Next, let \(\mathcal{S}_\infty = \cap_{n=1}^\infty \mathcal{S}_n\).
+    \(\mathcal{S}_\infty\) is then the closed set that is contained within
+    \(\text{b}(x,z_\infty)\).
+    For the sake of contradiction,
+    let \(x_1,x_2\) be distinct elements in \(\mathcal{S}_\infty\).
+    Then d\((x_1,x_2)\leq z_\infty = 0\).
+    Therefore, d\((x_1,x_2)=0\) which means that \(x_1=x_2\),
+    and will be that element \(x_\infty\).
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\end{questions}
+\end{document}
