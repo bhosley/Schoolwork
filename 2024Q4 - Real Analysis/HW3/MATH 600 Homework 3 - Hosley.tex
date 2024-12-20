@@ -1,0 +1,611 @@
+\documentclass[12 pt,letterpaper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+
+\usepackage{mathptmx}
+\SetSymbolFont{letters}{bold}{OML}{cmm}{b}{it}
+\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\allowdisplaybreaks
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{Homework 3}
+\fancyhead[C]{Due: October 25, 2024}
+\fancyhead[R]{Page \thepage\ of \pageref{LastPage}}
+\fancyfoot[L]{Air Force Institute of Technology}
+\fancyfoot[R]{Fall 2024 (Hosley)}
+\fancyfoot[C]{MATH 600: Mathematical Analysis}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\newcommand{\la}{\lambda}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+\newcommand{\brI}{\mathbf{I}}
+\newcommand{\brJ}{\mathbf{J}}
+\newcommand{\brM}{\mathbf{M}}
+\newcommand{\brR}{\mathbf{R}}
+\newcommand{\brT}{\mathbf{T}}
+
+\newcommand{\bfa}{\boldsymbol{a}}
+\newcommand{\bfA}{\boldsymbol{A}}
+\newcommand{\bfb}{\boldsymbol{b}}
+\newcommand{\bfB}{\boldsymbol{B}}
+\newcommand{\bfc}{\boldsymbol{c}}
+\newcommand{\bfC}{\boldsymbol{C}}
+\newcommand{\bfD}{\boldsymbol{D}}
+\newcommand{\bfe}{\boldsymbol{e}}
+\newcommand{\bfE}{\boldsymbol{E}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bfF}{\boldsymbol{F}}
+\newcommand{\bfG}{\boldsymbol{G}}
+\newcommand{\bfH}{\boldsymbol{H}}
+\newcommand{\bfI}{\boldsymbol{I}}
+\newcommand{\bfJ}{\boldsymbol{J}}
+\newcommand{\bfK}{\boldsymbol{K}}
+\newcommand{\bfL}{\boldsymbol{L}}
+\newcommand{\bfM}{\boldsymbol{M}}
+\newcommand{\bfp}{\boldsymbol{p}}
+\newcommand{\bfP}{\boldsymbol{P}}
+\newcommand{\bfR}{\boldsymbol{R}}
+\newcommand{\bfT}{\boldsymbol{T}}
+\newcommand{\bfu}{\boldsymbol{u}}
+\newcommand{\bfU}{\boldsymbol{U}}
+\newcommand{\bfv}{\boldsymbol{v}}
+\newcommand{\bfV}{\boldsymbol{V}}
+\newcommand{\bfw}{\boldsymbol{w}}
+\newcommand{\bfW}{\boldsymbol{W}}
+\newcommand{\bfx}{\boldsymbol{x}}
+\newcommand{\bfX}{\boldsymbol{X}}
+\newcommand{\bfy}{\boldsymbol{y}}
+\newcommand{\bfY}{\boldsymbol{Y}}
+\newcommand{\bfz}{\boldsymbol{z}}
+\newcommand{\bfZ}{\boldsymbol{Z}}
+
+\newcommand{\bfone}{\boldsymbol{1}}
+\newcommand{\bfzero}{\boldsymbol{0}}
+\newcommand{\bfxi}{\boldsymbol{\xi}}
+\newcommand{\bfXi}{\boldsymbol{\Xi}}
+\newcommand{\bfphi}{\boldsymbol{\varphi}}
+\newcommand{\bfPhi}{\boldsymbol{\varPhi}}
+\newcommand{\bfPi}{\boldsymbol{\varPi}}
+\newcommand{\bfpsi}{\boldsymbol{\psi}}
+\newcommand{\bfPsi}{\boldsymbol{\varPsi}}
+\newcommand{\bfchi}{\boldsymbol{\chi}}
+\newcommand{\bfzeta}{\boldsymbol{\zeta}}
+\newcommand{\bfdelta}{\boldsymbol{\delta}}
+\newcommand{\bfDelta}{\boldsymbol{\varDelta}}
+\newcommand{\bfGamma}{\boldsymbol{\varGamma}}
+\newcommand{\bfOmega}{\boldsymbol{\varOmega}}
+\newcommand{\bfSigma}{\boldsymbol{\varSigma}}
+\newcommand{\bfLambda}{\boldsymbol{\varLambda}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+
+\newcommand{\rmA}{\mathrm{A}}
+\newcommand{\rmB}{\mathrm{B}}
+\newcommand{\rmc}{\mathrm{c}}
+\newcommand{\rmC}{\mathrm{C}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\rme}{\mathrm{e}}
+\newcommand{\rmi}{\mathrm{i}}
+\newcommand{\rmj}{\mathrm{j}}
+\newcommand{\rmk}{\mathrm{k}}
+\newcommand{\rms}{\mathrm{s}}
+\newcommand{\rmS}{\mathrm{S}}
+\newcommand{\rmT}{\mathrm{T}}
+
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Part}{\mathrm{part}}
+\newcommand{\Null}{\mathrm{null}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\real}{\operatorname{Re}}
+\newcommand{\imag}{\operatorname{Im}}
+\newcommand{\cond}{\operatorname{cond}}
+
+\newcommand{\im}{\operatorname{im}}
+
+\newcommand{\conv}[2]{{#1}\ast{#2}}
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}}
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}}
+
+\newcommand{\mat}[2]{\left[\begin{array}{#1}#2\end{array}\right]}
+\newcommand{\dmat}[2]{\left|\begin{array}{#1}#2\end{array}\right|}
+\newcommand{\arbset}[1]{\left\{{#1}\right\}}
+\newcommand{\arbparen}[1]{\left({#1}\right)}
+\newcommand{\sign}{\operatorname{sign}}
+
+\newcommand{\abs}[1]{|{#1}|}
+\newcommand{\bigabs}[1]{\bigl|{#1}\bigr|}
+\newcommand{\Bigabs}[1]{\Bigl|{#1}\Bigr|}
+\newcommand{\biggabs}[1]{\biggl|{#1}\biggr|}
+\newcommand{\Biggabs}[1]{\Biggl|{#1}\Biggr|}
+
+\newcommand{\paren}[1]{({#1})}
+\newcommand{\bigparen}[1]{\bigl({#1}\bigr)}
+\newcommand{\Bigparen}[1]{\Bigl({#1}\Bigr)}
+\newcommand{\biggparen}[1]{\biggl({#1}\biggr)}
+\newcommand{\Biggparen}[1]{\Biggl({#1}\Biggr)}
+
+\newcommand{\bracket}[1]{[{#1}]}
+\newcommand{\bigbracket}[1]{\bigl[{#1}\bigr]}
+\newcommand{\Bigbracket}[1]{\Bigl[{#1}\Bigr]}
+\newcommand{\biggbracket}[1]{\biggl[{#1}\biggr]}
+\newcommand{\Biggbracket}[1]{\Biggl[{#1}\Biggr]}
+
+\newcommand{\set}[1]{\{{#1}\}}
+\newcommand{\bigset}[1]{\bigl\{{#1}\bigr\}}
+\newcommand{\Bigset}[1]{\Bigl\{{#1}\Bigr\}}
+\newcommand{\biggset}[1]{\biggl\{{#1}\biggr\}}
+\newcommand{\Biggset}[1]{\Biggl\{{#1}\Biggr\}}
+
+\newcommand{\norm}[1]{\|{#1}\|}
+\newcommand{\bignorm}[1]{\bigl\|{#1}\bigr\|}
+\newcommand{\Bignorm}[1]{\Bigl\|{#1}\Bigr\|}
+\newcommand{\biggnorm}[1]{\biggl\|{#1}\biggr\|}
+\newcommand{\Biggnorm}[1]{\Biggl\|{#1}\Biggr\|}
+
+\newcommand{\ip}[2]{\langle{#1},{#2}\rangle}
+\newcommand{\bigip}[2]{\bigl\langle{#1},{#2}\bigr\rangle}
+\newcommand{\Bigip}[2]{\Bigl\langle{#1},{#2}\Bigr\rangle}
+\newcommand{\biggip}[2]{\biggl\langle{#1},{#2}\biggr\rangle}
+\newcommand{\Biggip}[2]{\Biggl\langle{#1},{#2}\Biggr\rangle}
+
+\newcommand{\alphi}{\renewcommand{\labelenumi}{(\alph{enumi})}}
+\newcommand{\alphii}{\renewcommand{\labelenumii}{(\alph{enumii})}}
+\newcommand{\alphiii}{\renewcommand{\labelenumiii}{(\alph{enumiii})}}
+\newcommand{\romani}{\renewcommand{\labelenumi}{(\roman{enumi})}}
+\newcommand{\romanii}{\renewcommand{\labelenumii}{(\roman{enumii})}}
+\newcommand{\romaniii}{\renewcommand{\labelenumiii}{(\roman{enumiii})}}
+\newcommand{\arabici}{\renewcommand{\labelenumi}{(\arabic{enumi})}}
+\newcommand{\arabicii}{\renewcommand{\labelenumii}{(\arabic{enumii})}}
+\newcommand{\arabiciii}{\renewcommand{\labelenumiii}{(\arabic{enumiii})}}
+
+
+\begin{document}
+
+\noindent
+For any natural number $N$,
+let $\bbR^N$ be the set $\bigset{\bfx:[N]\rightarrow\bbR}$ of all functions from $[N]:=\set{1,\dotsc,N}$ into $\bbR$,
+equipped with usual (termwise) \textit{scalar multiplication} and \textit{addition},
+defined by
+\begin{equation*}
+c\bfx,\,\bfx+\bfy\in\bbR^N,
+\quad
+(c\bfx)(n):=c(\bfx(n)),
+\quad
+(\bfx+\bfy)(n):=\bfx(n)+\bfy(n),
+\quad
+\forall\,c\in\bbR,\,\bfx,\bfy\in\bbR^{N},\,n\in[N].
+\end{equation*}
+We typically depict each vector in $\bbR^N$ as a table of real numbers that has $N$ rows and a single column, and so
+\begin{equation*}
+c\bfx
+=c\mat{c}{\bfx(1)\\\vdots\\\bfx(N)}
+=\mat{c}{c\bfx(1)\\\vdots\\c\bfx(N)},
+\quad
+\bfx+\bfy
+=\mat{c}{\bfx(1)\\\vdots\\\bfx(N)}+\mat{c}{\bfy(1)\\\vdots\\\bfy(N)}
+=\mat{c}{\bfx(1)+\bfy(1)\\\vdots\\\bfx(N)+\bfy(N)},
+\end{equation*}
+for all $c\in\bbR$ and $\bfx,\bfy\in\bbR^N$.
+(Under these definitions, $\bbR^N$ is a \textit{vector space over the field $\bbR$}.)
+When $N=1$, we usually identify $\bbR^1$ with $\bbR$,
+identifying each $\bfx\in\bbR^1$ with the real number $\bfx(1)$.
+A \textit{norm} on $\bbR^N$ is any function that assigns a real number $\norm{\bfx}$ to every vector $\bfx\in\bbR^N$ that satisfies the following three properties:
+\begin{enumerate}
+\romani
+\item
+$\norm{c\bfx}=\abs{c}\norm{\bfx}$ for all $c\in\bbR$, $\bfx\in\bbR^N$,
+\item
+$\norm{\bfx}>0$ for any $\bfx\in\bbR^N$, $\bfx\neq\bfzero$,
+\item
+$\norm{\bfx+\bfy}\leq\norm{\bfx}+\norm{\bfy}$.
+\end{enumerate}
+On this assignment, we consider various examples of norms on $\bbR^N$.
+In class, we discuss how any norm on $\bbR^N$ induces a metric on $\bbR^N$, namely $\rmd(\bfx,\bfy):=\norm{\bfx-\bfy}$.
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+The \textit{absolute value} $\abs{x}$ of any $x\in\bbR$ is defined by
+$\abs{x}:=\left\{\begin{array}{rl}x,&\ x\geq 0,\\-x,&\ x<0.\end{array}\right.$
+
+\begin{enumerate}
+\alphii
+
+\item
+For any $x,y\in\bbR$,
+show that $\abs{x}\leq y$ if and only if $-y\leq x\leq y$.
+
+\item
+Show that $\abs{\cdot}$ is a norm on $\bbR$.
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that $\displaystyle\norm{\bfx}:=\sum_{n=1}^{N}\abs{\bfx(n)}$ defines a norm on $\bbR^N$.
+
+\textit{Note: This norm is usually called the $1$-norm or the ``taxicab" norm.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that $\displaystyle\norm{\bfx}:=\max_{n\in[N]}\abs{\bfx(n)}$ defines a norm on $\bbR^N$.
+
+\textit{Note: This norm is usually called the $\infty$-norm or the ``max" norm.}
+
+\end{enumerate}
+
+\newpage
+
+In class (using the intermediate value theorem),
+we show that any nonnegative real number $x$ has a square root,
+namely a (unique) nonnegative real number $\sqrt{x}$ such that $(\sqrt{x})^2=x$.
+Here, since $(xy)^2=x^2y^2$ and $\abs{x}^2=x^2$ for any $x,y\in\bbR$,
+it follows that $\sqrt{xy}=\sqrt{x}\sqrt{y}$ for any $x,y\geq0$ and that $\sqrt{x^2}=\abs{x}$ for any $x\in\bbR$.
+For the remainder of this assignment,
+feel free to assume that these and other basic properties of the square root (such as $0\leq x\leq y$ implies $\sqrt{x}\leq \sqrt{y}$) are true without further justification.
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that $\displaystyle\norm{\bfx}:=\sqrt{\sum_{n=1}^{N}[\bfx(n)]^2}$ defines a norm on $\bbR^N$.
+
+\textit{Note: This norm is usually called the $2$-norm or the Euclidean norm.}
+
+To do this, use the following proof outline:
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+For any $\bfx\in\bbR^N$,
+show that $\displaystyle\sum_{n=1}^N[\bfx(n)]^2\geq0$ and moreover that
+$\displaystyle\sum_{n=1}^N[\bfx(n)]^2>0$ if $\bfx\neq\bfzero$.
+
+\textit{Note: Given the aforementioned facts about square roots,
+this immediately implies that $\norm{\bfx}$ is a well-defined nonnegative real number,
+and moreover that $\norm{\bfx}>0$ if $\bfx\neq\bfzero$.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Prove that $\norm{c\bfx}=\abs{c}\norm{\bfx}$ for any $c\in\bbR$ and $\bfx\in\bbR^N$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Prove that $ab\leq\frac12(a^2+b^2)$ for any $a,b\in\bbR$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Prove the \textit{Cauchy-Schwarz inequality},
+namely that $\displaystyle\sum_{n=1}^{N}\bfx(n)\bfy(n)\leq\norm{\bfx}\norm{\bfy}$ for any $\bfx,\bfy\in\bbR^N$.
+
+\textit{Hint: Use (c) where $\displaystyle a=\frac{\bfx(n)}{\norm{\bfx}}$ and $\displaystyle b=\frac{\bfy(n)}{\norm{\bfy}}$.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Use (d) to prove that $\norm{\bfx+\bfy}\leq\norm{\bfx}+\norm{\bfy}$ for all $\bfx,\bfy\in\bbR^N$.
+\end{enumerate}
+\end{enumerate}
+
+
+\clearpage
+\section*{Question 1.}
+
+\begin{enumerate}
+    \item[a)]
+    \(|x| \leq y\)
+    might be rewritten into the constituent parts as:
+    if \(x \geq 0\) then \(x \leq y\)
+    and if \(x < 0\) then \(-x \leq y \Rightarrow x \geq -y\).
+    Combining the two we can see
+    \[-y\leq x\leq y.\]
+
+    \item[b)]
+    To show that absolute value is a norm we will show that it complies to
+    the three properties stated on page 1.
+    \begin{enumerate}
+        \item[i)]
+        Enumerating the possible cases for each side of the expression we have,
+        \begin{align*}
+            |cx| &=
+            \begin{cases}
+                cx & \text{if } c,x\geq0 \text{ or } c,x<0,\\
+                (-1)cx & \text{if } c \text{ exclusive or } x <0,
+            \end{cases} \quad
+            |c| &=
+            \begin{cases}
+                c & \text{if } c\geq0,\\
+                (-1)c & \text{if } c <0,
+            \end{cases} \quad
+            |x| &=
+            \begin{cases}
+                x & \text{if } x\geq0,\\
+                (-1)x & \text{if } x <0.
+            \end{cases}
+        \end{align*}
+        Then, in the case that only one of the variables is negative, we have
+        \[((-1)c)x = c((-1)x) = (-1)cx,\]
+        and in the case that the variables share the same sign, we have
+        \[((-1)c(-1)x) = (-1)(-1)cx = cx.\]
+        \item[ii)]
+        Given \(x\neq0\), the case statement evaluates to
+        \[x:=\begin{cases} 
+            x & \text{if } x > 0,\\
+            -x & \text{if } x < 0.
+        \end{cases}\]
+        The first case is the desired property,
+        the second case evaluates to the desired property as
+        \begin{align*}
+            -x &< 0,\\
+            (-1)(-x) &> (-1)(0),\\
+            x &> 0.
+        \end{align*}
+        \item[iii)]
+        Using Problem 1.a, 
+        we observed that
+        \begin{align*}
+            -|x|\leq &x \leq |x|
+            \intertext{and}
+            -|y|\leq &y \leq |y|.
+            \intertext{Adding the two expressions we get,}
+            (-|x|)+(-|y|)\leq x &+ y \leq |x| + |y| \\
+            (-1)|x|+(-1)|y|\leq x &+ y \leq (|x| + |y|) \\
+            (-1)(|x| + |y|)\leq x &+ y \leq (|x| + |y|) \\
+            \intertext{which by P1.a is equivalently,}
+            |x + y| &\leq |x| + |y|.
+        \end{align*}
+    \end{enumerate}
+\end{enumerate}
+
+
+\section*{Question 2.}
+To show that the taxicab is a valid norm, we will demonstrate that
+it holds for the three properties of a norm on page 1.
+\begin{enumerate}
+    \item[i)]
+    Let \(x\in\mathbb{R}^N\) and \(c\in\mathbb{R}\).
+    Then, using the result from problem 1.b.i we can evaluate
+    \begin{align*}
+        \|cx\|
+        = \sum_{n=1}^{N}|cx_n|
+        \ \overset{\text{(P1.b.i)}}{=} \
+        \sum_{n=1}^{N}\left(|c||x_n|\right)
+        = |c| \left(\sum_{n=1}^{N}|x_n|\right)
+        = |c|\|x\|.
+    \end{align*}
+    \item[ii)]
+    In Problem 1.b.ii we saw that \(|x|\geq0\).
+    Recalling that a sum of non-negative numbers is itself non-negative,
+    we see that \(\left(\sum_{n\in N}|x_n|\right)\geq0\).
+    Next, recalling that the sum of non-negative numbers \(=0\) if and only if
+    all of the operands are also \(0\), we conclude that 
+    \[\sum_{n\in N}|x_n| > 0 \quad\exists n\in N \text{ s.t. } x_n\neq0.\]
+    \item[iii)]
+    Using the result from problem 1.b.iii we can evaluate
+    \begin{align*}
+        \|x+y\|
+        = \sum_{n=1}^{N}|x_n+y_n|
+        \ \overset{\text{(P1.b.iii)}}{\leq} \
+        \sum_{n=1}^{N}\left(|x_n|+|y_n| \right)
+        = \left(\sum_{n=1}^{N}|x_n|\right) + \left(\sum_{n=1}^{N}|y_n|\right)
+        =\|x\|+\|y\|.
+    \end{align*}
+\end{enumerate}
+
+\clearpage
+
+\section*{Question 3.}
+
+\begin{enumerate}
+    \item[i)]
+    Do For this property we will leverage previous results and the property that
+    a scalar distributes equally over the elements of a set,
+    \begin{align*}
+        \|cx\|
+        &= \max_{n\in N}(|cx_n|) \\
+        &= \max_{n\in N}(|c||x_n|) \qquad \text{(by Problem 1.b.i)} \\
+        &= |c|\max_{n\in N}(|x_n|) \qquad \text{(distribution over a set)} \\
+        &= |c|\|x\|.\\
+    \end{align*}
+    \item[ii)]
+    Recalling from problem 1.b.ii 
+    we have, \(|x|>0, x\neq0\).
+    For a set \(\{|x_n|\}_{n\in N}\),
+    it follows that
+    \(x_n \geq 0\ \forall\ n\in N\).
+    Further, the only way for 
+    \(\max_{n\in N}(|x_n|) = 0\)
+    is for all \(|x_n|\leq0\),
+    in other words, for \(|x_n|=0 \forall\ n\in N\).
+    Thus we conclude that if \(\mathbf{x}\neq0\), then
+    \(\max_{n\in N}(|x_n|)>0\).
+    \item[iii)]
+    Recall that \(x(n) \leq \max_{n\in N}(|x|)\forall\ n\in N\).
+    Then, let \(n_0 \in N\) be such that \(|x(n_0) + y(n_0)| = \max_{n\in N}(|x+y|)\).
+    Leveraging the result of problem 1.b.iii,
+    \begin{align*}
+        \max_{n\in N}(|x+y|) =
+        |x(n_0) + y(n_0)| \overset{\text{(P1.b.iii)}}{\leq}
+        |x(n_0)| + |y(n_0)| \ \leq\
+        \max_{n\in N}(|x|) + \max_{n\in N}(|y|).
+    \end{align*}
+\end{enumerate}
+
+\clearpage
+\section*{Question 4.}
+
+\begin{enumerate}
+    \item[(a)]
+    First, recall that \(y^2\geq0\ \forall\ y\in\mathbb{R}\),
+    and further that if \(y\neq0\), this is \(y^2>0\);
+    also recall that the sum of non-negative numbers is also non-negative.
+    Thus, \[\sum_{n\in N}[x(n)]^2\geq0.\]
+
+    Next, in the context of this problem, \(x\neq0\) implies
+    \(\exists n_0\in N\) such that \(x(n_0)\neq0\).
+    Take such \(n_0\), then,
+    \begin{align*}
+        \sum_{n\in N}[x(n)]^2\
+        =\ [x(n_0)]^2 + \sum_{n\in N/\{n_0\}}[x(n)]^2\
+        \geq\ [x(n_0])^2 + 0 \
+        >\ 0.
+    \end{align*}
+    \item[(b)]
+    Let \(c\in\mathbb{R}\). Then,
+    \begin{align*}
+        \|cx\|
+        = \sqrt{\sum_{n=1}^{N}(cx(n))^2}
+        = \sqrt{\sum_{n=1}^{N}c^2[x(n)]^2}
+        = \sqrt{c^2\sum_{n=1}^{N}[x(n)]^2}
+        = \sqrt{c^2}\sqrt{\sum_{n=1}^{N}[x(n)]^2}
+        = |c|\sqrt{\sum_{n=1}^{N}[x(n)]^2}
+        = |c|\|x\|.
+    \end{align*}
+    \item[(c)]
+    Noting that \((a-b)^2\geq0 \forall\ a,b\in\mathbb{R}\).
+    We can evaluate,
+    \begin{align*}
+        ab &\leq \frac{1}{2}(a^2 + b^2),\\
+        2ab &\leq a^2 + b^2, \intertext{which is,}
+        0 &\leq a^2 - 2ab + b^2\\
+        &= (a-b)^2.
+    \end{align*}
+    Thus, we conclude that \(ab \leq \frac{1}{2}(a^2 + b^2)\)
+    is also true for \(a,b\in\mathbb{R}\).
+    \item[(d)]
+    Summarizing previous results we have, \(y^2\geq0\forall\ y\in\mathbb{R}\),
+    the sum of non-negative numbers is also non-negative,
+    and the square-root of a non-negative real number is also non-negative.
+    Combining these results,
+    \[\|x\|:=\sqrt{\sum_{n=1}^{N}[x(n)]^2}\geq0.\]
+
+    Next, to prove this version of the Cauchy-Schwarz inequality we will evaluate 
+    two cases of the left-hand side separately.
+    \begin{enumerate}
+        \item[i)]
+        Let \(x,y\in\mathbb{R}^N\) be such that \(\sum_{n=1}^{N}x(n)y(n) \leq0.\)
+        Because \(\|x\|\geq0\) and \(\|y\|\geq0\), for these \(x,y\) we have,
+        \begin{align*}
+            \sum_{n=1}^{N}x(n)y(n)
+            \leq 0
+            \leq \|x\| \|y\|.
+        \end{align*}
+        \item[ii)]
+        Let \(x,y\in\mathbb{R}^N\) be such that \(\sum_{n=1}^{N}x(n)y(n) >0.\)
+        We begin with
+        \[\sum_{n=1}^{N}x(n)y(n) \leq \|x\|\|y\|.\]
+        Since we have shown the right-hand side and assumed the left-hand side
+        to be strictly non-negative, we square both sides
+        (by corollary of axiom 5 shown in appendix).
+        The left hand side becomes,
+        \begin{align*}
+            \left(\sum_{n=1}^{N}x(n)y(n)\right)^2
+            = \left(\sum_{n=1}^{N}x(n)y(n)\right)\left(\sum_{m=1}^{N}x(m)y(m)\right)
+            = \sum_{n=1}^{N}\sum_{m=1}^{N}x(n)y(n)x(m)y(m).
+        \end{align*}
+        The right hand side,
+        \begin{align*}
+            (\|x\|\|y\|)^2
+            &= \|x\|^2\|y\|^2 \\
+            &= \sum_{n=1}^{N}x(n)^2 \sum_{n=1}^{N}y(n)^2 \\
+            &= \sum_{n=1}^{N}\sum_{m=1}^{N} x(n)^2 y(m)^2 \\
+            &= \sum_{n=1}^{N}\sum_{m=1}^{N} \Big(
+                \frac{1}{2}x(n)^2 y(m)^2 + \frac{1}{2}x(m)^2 y(n)^2 \Big)
+        \end{align*}
+        Thus,
+        \begin{align*}
+            \left(\sum_{n=1}^{N}x(n)y(n)\right)^2 &\leq (\|x\|\|y\|)^2
+            \intertext{becomes}
+            \sum_{n=1}^{N}\sum_{m=1}^{N}x(n)y(n)x(m)y(m) &\leq
+            \sum_{n=1}^{N}\sum_{m=1}^{N} \Big(
+                \frac{1}{2}x(n)^2 y(m)^2 + \frac{1}{2}x(m)^2 y(n)^2 \Big).
+        \end{align*}
+        Subtracting the left side from the right,
+        \begin{align*}
+            0 &\leq \sum_{n=1}^{N}\sum_{m=1}^{N} \Big(\frac{1}{2}x(n)^2 y(m)^2 
+                + \frac{1}{2}x(m)^2 y(n)^2 - x(n)y(n)x(m)y(m) \Big) \\
+            &= \sum_{n=1}^{N}\sum_{m=1}^{N} \frac{1}{2} \Big(x(n)^2 y(m)^2 
+                + x(m)^2 y(n)^2 - 2x(n)y(n)x(m)y(m) \Big) \\
+            &= \sum_{n=1}^{N}\sum_{m=1}^{N} \frac{1}{2} \Big(x(n)y(m) - x(m)y(n)\Big)^2. \\
+        \end{align*}
+        In the final term, we see an expression that is non-negative
+        as it is a sum of squares, i.e. a sum of non-negative numbers.
+        Thus, \(\sum_{n=1}^{N}x(n)y(n) \leq \|x\|\|y\|\)
+        also holds when \(\sum_{n=1}^{N}x(n)y(n) >0.\)
+    \end{enumerate}
+
+    \clearpage
+
+    \item[(e)]
+    In this section we will show that
+    \begin{align*}
+        \|x+y\| &\leq \|x\| + \|y\|.
+        \intertext{First, since both sides are non-negative, we may square each,}
+        (\|x+y\|)^2 &\leq (\|x\| + \|y\|)^2,
+        \intertext{applying the exponent removes the root on the left,
+            and distributing the exponent on the right gives,}
+        \sum_{n=1}^{N}(x(n)+y(n))^2 &\leq \|x\|^2 + \|y\|^2 + 2\|x\|\|y\|,
+        \intertext{then, distributing on the left, squaring roots on the right,}
+        \sum_{n=1}^{N}\Big((x(n))^2 + (y(n))^2 + 2x(n)y(n)\Big)
+        &\leq \sum_{n=1}^{N}(x(n))^2 + \sum_{n=1}^{N}(y(n))^2 + 2\|x\|\|y\|,
+        \intertext{separating the summation on the left,}
+        \sum_{n=1}^{N}(x(n))^2 + \sum_{n=1}^{N}(y(n))^2 + \sum_{n=1}^{N} 2x(n)y(n)
+        &\leq \sum_{n=1}^{N}(x(n))^2 + \sum_{n=1}^{N}(y(n))^2 + 2\|x\|\|y\|,
+        \intertext{then, subtracting the like terms from each side is}
+        2\sum_{n=1}^{N}x(n)y(n) &\leq 2\|x\|\|y\|.
+    \end{align*}
+    Dividing the last line by 2 results in the expression that was demonstrated to be
+    true in part d.
+\end{enumerate}
+
+\clearpage
+\section{Appendix.}
+
+For \(a,b,c,d\in\mathbb{R}\)
+and \(a,b,c,d\geq0\)
+let,
+\[a \leq b \text{ and } c \leq d.\]
+By axiom 5 of the ordered fields (as presented in class)
+\[ad\leq bd\]
+and
+\[ac\leq ad.\]
+Then, via transitive property,
+\[ac \leq ad \leq bd.\]
+Thus,
+\[ac \leq bd,\]
+and in the case that \(a=c,b=d\)
+\[a^2<b^2.\]
+
+\end{document} 
