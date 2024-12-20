@@ -1,0 +1,422 @@
+\documentclass[12 pt,letterpaper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+
+\usepackage{mathptmx}
+\SetSymbolFont{letters}{bold}{OML}{cmm}{b}{it}
+\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\allowdisplaybreaks
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{Homework 4}
+\fancyhead[C]{Due: November 4, 2024}
+\fancyhead[R]{Page \thepage\ of \pageref{LastPage}}
+\fancyfoot[L]{Air Force Institute of Technology}
+\fancyfoot[R]{Fall 2024 (Hosley)}
+\fancyfoot[C]{MATH 600: Mathematical Analysis}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\newcommand{\la}{\lambda}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+\newcommand{\brI}{\mathbf{I}}
+\newcommand{\brJ}{\mathbf{J}}
+\newcommand{\brM}{\mathbf{M}}
+\newcommand{\brR}{\mathbf{R}}
+\newcommand{\brT}{\mathbf{T}}
+
+\newcommand{\bfa}{\boldsymbol{a}}
+\newcommand{\bfA}{\boldsymbol{A}}
+\newcommand{\bfb}{\boldsymbol{b}}
+\newcommand{\bfB}{\boldsymbol{B}}
+\newcommand{\bfc}{\boldsymbol{c}}
+\newcommand{\bfC}{\boldsymbol{C}}
+\newcommand{\bfD}{\boldsymbol{D}}
+\newcommand{\bfe}{\boldsymbol{e}}
+\newcommand{\bfE}{\boldsymbol{E}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bfF}{\boldsymbol{F}}
+\newcommand{\bfG}{\boldsymbol{G}}
+\newcommand{\bfH}{\boldsymbol{H}}
+\newcommand{\bfI}{\boldsymbol{I}}
+\newcommand{\bfJ}{\boldsymbol{J}}
+\newcommand{\bfK}{\boldsymbol{K}}
+\newcommand{\bfL}{\boldsymbol{L}}
+\newcommand{\bfM}{\boldsymbol{M}}
+\newcommand{\bfp}{\boldsymbol{p}}
+\newcommand{\bfP}{\boldsymbol{P}}
+\newcommand{\bfR}{\boldsymbol{R}}
+\newcommand{\bfT}{\boldsymbol{T}}
+\newcommand{\bfu}{\boldsymbol{u}}
+\newcommand{\bfU}{\boldsymbol{U}}
+\newcommand{\bfv}{\boldsymbol{v}}
+\newcommand{\bfV}{\boldsymbol{V}}
+\newcommand{\bfw}{\boldsymbol{w}}
+\newcommand{\bfW}{\boldsymbol{W}}
+\newcommand{\bfx}{\boldsymbol{x}}
+\newcommand{\bfX}{\boldsymbol{X}}
+\newcommand{\bfy}{\boldsymbol{y}}
+\newcommand{\bfY}{\boldsymbol{Y}}
+\newcommand{\bfz}{\boldsymbol{z}}
+\newcommand{\bfZ}{\boldsymbol{Z}}
+
+\newcommand{\bfone}{\boldsymbol{1}}
+\newcommand{\bfzero}{\boldsymbol{0}}
+\newcommand{\bfxi}{\boldsymbol{\xi}}
+\newcommand{\bfXi}{\boldsymbol{\Xi}}
+\newcommand{\bfphi}{\boldsymbol{\varphi}}
+\newcommand{\bfPhi}{\boldsymbol{\varPhi}}
+\newcommand{\bfPi}{\boldsymbol{\varPi}}
+\newcommand{\bfpsi}{\boldsymbol{\psi}}
+\newcommand{\bfPsi}{\boldsymbol{\varPsi}}
+\newcommand{\bfchi}{\boldsymbol{\chi}}
+\newcommand{\bfzeta}{\boldsymbol{\zeta}}
+\newcommand{\bfdelta}{\boldsymbol{\delta}}
+\newcommand{\bfDelta}{\boldsymbol{\varDelta}}
+\newcommand{\bfGamma}{\boldsymbol{\varGamma}}
+\newcommand{\bfOmega}{\boldsymbol{\varOmega}}
+\newcommand{\bfSigma}{\boldsymbol{\varSigma}}
+\newcommand{\bfLambda}{\boldsymbol{\varLambda}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+
+\newcommand{\rmA}{\mathrm{A}}
+\newcommand{\rmB}{\mathrm{B}}
+\newcommand{\rmc}{\mathrm{c}}
+\newcommand{\rmC}{\mathrm{C}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\rme}{\mathrm{e}}
+\newcommand{\rmi}{\mathrm{i}}
+\newcommand{\rmj}{\mathrm{j}}
+\newcommand{\rmk}{\mathrm{k}}
+\newcommand{\rms}{\mathrm{s}}
+\newcommand{\rmS}{\mathrm{S}}
+\newcommand{\rmT}{\mathrm{T}}
+
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Part}{\mathrm{part}}
+\newcommand{\Null}{\mathrm{null}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\real}{\operatorname{Re}}
+\newcommand{\imag}{\operatorname{Im}}
+\newcommand{\cond}{\operatorname{cond}}
+
+\newcommand{\inte}{\operatorname{int}}
+\newcommand{\cl}{\operatorname{cl}}
+
+\newcommand{\im}{\operatorname{im}}
+
+\newcommand{\conv}[2]{{#1}\ast{#2}}
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}}
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}}
+
+\newcommand{\mat}[2]{\left[\begin{array}{#1}#2\end{array}\right]}
+\newcommand{\dmat}[2]{\left|\begin{array}{#1}#2\end{array}\right|}
+\newcommand{\arbset}[1]{\left\{{#1}\right\}}
+\newcommand{\arbparen}[1]{\left({#1}\right)}
+\newcommand{\sign}{\operatorname{sign}}
+
+\newcommand{\abs}[1]{|{#1}|}
+\newcommand{\bigabs}[1]{\bigl|{#1}\bigr|}
+\newcommand{\Bigabs}[1]{\Bigl|{#1}\Bigr|}
+\newcommand{\biggabs}[1]{\biggl|{#1}\biggr|}
+\newcommand{\Biggabs}[1]{\Biggl|{#1}\Biggr|}
+
+\newcommand{\paren}[1]{({#1})}
+\newcommand{\bigparen}[1]{\bigl({#1}\bigr)}
+\newcommand{\Bigparen}[1]{\Bigl({#1}\Bigr)}
+\newcommand{\biggparen}[1]{\biggl({#1}\biggr)}
+\newcommand{\Biggparen}[1]{\Biggl({#1}\Biggr)}
+
+\newcommand{\bracket}[1]{[{#1}]}
+\newcommand{\bigbracket}[1]{\bigl[{#1}\bigr]}
+\newcommand{\Bigbracket}[1]{\Bigl[{#1}\Bigr]}
+\newcommand{\biggbracket}[1]{\biggl[{#1}\biggr]}
+\newcommand{\Biggbracket}[1]{\Biggl[{#1}\Biggr]}
+
+\newcommand{\set}[1]{\{{#1}\}}
+\newcommand{\bigset}[1]{\bigl\{{#1}\bigr\}}
+\newcommand{\Bigset}[1]{\Bigl\{{#1}\Bigr\}}
+\newcommand{\biggset}[1]{\biggl\{{#1}\biggr\}}
+\newcommand{\Biggset}[1]{\Biggl\{{#1}\Biggr\}}
+
+\newcommand{\norm}[1]{\|{#1}\|}
+\newcommand{\bignorm}[1]{\bigl\|{#1}\bigr\|}
+\newcommand{\Bignorm}[1]{\Bigl\|{#1}\Bigr\|}
+\newcommand{\biggnorm}[1]{\biggl\|{#1}\biggr\|}
+\newcommand{\Biggnorm}[1]{\Biggl\|{#1}\Biggr\|}
+
+\newcommand{\ip}[2]{\langle{#1},{#2}\rangle}
+\newcommand{\bigip}[2]{\bigl\langle{#1},{#2}\bigr\rangle}
+\newcommand{\Bigip}[2]{\Bigl\langle{#1},{#2}\Bigr\rangle}
+\newcommand{\biggip}[2]{\biggl\langle{#1},{#2}\biggr\rangle}
+\newcommand{\Biggip}[2]{\Biggl\langle{#1},{#2}\Biggr\rangle}
+
+\newcommand{\alphi}{\renewcommand{\labelenumi}{(\alph{enumi})}}
+\newcommand{\alphii}{\renewcommand{\labelenumii}{(\alph{enumii})}}
+\newcommand{\alphiii}{\renewcommand{\labelenumiii}{(\alph{enumiii})}}
+\newcommand{\romani}{\renewcommand{\labelenumi}{(\roman{enumi})}}
+\newcommand{\romanii}{\renewcommand{\labelenumii}{(\roman{enumii})}}
+\newcommand{\romaniii}{\renewcommand{\labelenumiii}{(\roman{enumiii})}}
+\newcommand{\arabici}{\renewcommand{\labelenumi}{(\arabic{enumi})}}
+\newcommand{\arabicii}{\renewcommand{\labelenumii}{(\arabic{enumii})}}
+\newcommand{\arabiciii}{\renewcommand{\labelenumiii}{(\arabic{enumiii})}}
+
+\usepackage{parskip}
+
+\begin{document}
+
+\noindent
+Let $(\calX,\rmd)$ be a metric space.
+From class, recall that a subset $\calS$ of $\calX$ is \textit{open} if for every $x\in\calS$, there exists $\delta>0$ such that
+$\rmB(x,\delta)=\set{\hat{x}\in\calX: \rmd(x,\hat{x})<\delta}\subseteq\calS$.
+Also recall that $\calS\subseteq\calX$ is \textit{closed} if
+$\calS^\rmc=\set{x\in\calX: x\notin\calS}$ is open.
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that a union of an arbitrary number of open sets is an open set.
+
+That is, for each $n\in\calN$, let $\calS_n$ be any open set in $\calX$,
+and show that $\displaystyle\bigcup_{n\in\calN}\calS_n$ is open.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that the intersection of a finite number of open sets is an open set.
+
+That is, for each $n\in\set{1,\dotsc,N}$, let $\calS_n$ be any open set in $\calX$,
+and show that $\displaystyle\bigcap_{n=1}^N\calS_n$ is open.
+
+Also give an example of an infinite number of open sets in $\bbR$ whose intersection is not open.
+
+\end{enumerate}
+
+The results from Problems 1 and 2 can be restated in terms of closed sets:
+in light of De Morgan's laws, the intersection of any number of closed sets is a closed set,
+and the union of a finite number of closed sets is closed.
+Moreover, a union of an infinite number of closed sets is not necessarily closed.
+For example, $\bigcup_{n=1}^{\infty}[\tfrac1n,1]=(0,1]$.
+
+In light of these ideas, we now define the \textit{interior} of a subset $\calS$ of $\calX$ to be the union of all the open sets that it contains,
+and define the \textit{closure} of $\calS$ to be the intersection of all closed sets that contain it:
+\begin{equation*}
+\inte(\calS):=\bigcup_{\substack{\calE\subseteq\calS\\\calE\text{ is open}}}\calE,
+\qquad
+\cl(\calS):=\bigcap_{\substack{\calF\supseteq\calS\\\calF\text{ is closed}}}\calF.
+\end{equation*}
+Being a union of open subsets of $\calS$,
+$\inte(\calS)$ is itself an open subset of $\calS$.
+Moreover, by definition, any open set $\calE$ that is a subset of $\calS$ is also a subset of $\inte(\calS)$ (the union of all such sets).
+Together, these facts imply that
+$\inte(\calS)$ \textit{is the largest open set that $\calS$ contains}.
+A similar argument shows $\cl(\calS)$ is the \textit{smallest closed set that contains $\calS$}.
+
+\begin{enumerate}
+\setcounter{enumi}{2}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Using De Morgan's laws,
+show that $\cl(\calS)=[\inte(\calS^\rmc)]^\rmc$ for any subset $\calS$ of $\calX$.
+
+\textit{Note: Applying this result with ``$\calS$" being $\calS^\rmc$ and then taking complements gives $\inte(\calS)=[\cl(\calS^\rmc)]^\rmc$.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+A point $x\in\calX$ is called an \textit{interior point} of a subset $\calS$ of $\calX$ if there exists $\delta>0$ such that $\rmB(x,\delta)\subseteq\calS$.
+
+For any subset $\calS$ of $\calX$,
+show that $x\in\inte(\calS)$ if and only if $x$ is an interior point of $\calS$.
+
+\textit{Hint: From class, we know that open balls are open sets.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+A point $x\in\calX$ is called a \textit{limit point} of a subset $\calS$ of $\calX$ if for every $\delta>0$, there exists $\hat{x}\in\calS$ such that $0<\rmd(x,\hat{x})<\delta$.
+
+For any subset $\calS$ of $\calX$, show that $x\in\cl(\calS)$ if and only if $x$ is either a member of $\calS$ or is a limit point of $\calS$.
+
+\end{enumerate}
+
+\clearpage
+\section{}
+Let \(x\in\underset{n\in\mathcal{N}}{\bigcup} \mathcal{S}_n\) be arbitrary.
+Then, clearly, \(\exists n\in\mathcal{N}\) such that \(x\in \mathcal{S}_n\)
+further, since \(\mathcal{S}_n\) is open, \(\exists\delta>0\) such that
+\[
+    \text{B}(x,\delta) =\{\hat{x}\in\mathcal{X}:\text{d}(\hat{x},x)<\delta\}
+    \subseteq \mathcal{S}_n
+    \subseteq \bigcup_{n\in\mathcal{N}} \mathcal{S}_n.
+\]
+In words, every element in an open set has an open ball,
+contained within that sam open set, which implies containment
+in the unionized superset.
+
+\section{}
+
+Let \(x\in\underset{n\in N}{\bigcap} \mathcal{S}_n\) be arbitrary.
+Since all \(\mathcal{S}_n\) are open sets,
+\(\exists\delta_n>0\) such that \(\text{B}(x,\delta_n)\subseteq\mathcal{S}_n\).
+Let \(\delta=\underset{n\in N}{\min}(\delta_n)\).
+Then, 
+\[
+    \text{B}(x,\delta)
+    \subseteq\underset{n\in N}{\bigcap}\text{B}(x,\delta_n)
+    \subseteq\text{B}(x,\delta_n)\forall n\in N.
+\]
+Moreover, 
+\[
+    \text{B}(x,\delta)
+    \subseteq\underset{n\in N}{\bigcap}\text{B}(x,\delta_n)
+    \subseteq \underset{n\in N}{\bigcap}\mathcal{S}_n
+    \subseteq\mathcal{S}_n \forall n\in N.
+\]
+To close the proof we reflect upon the perhaps unintuitive need for a finite \(N\).
+Recall that \(\delta=\underset{n\in N}{\min}(\delta_n)\),
+while it is possible that an infinite set has a minimum,
+it is guaranteed for a non-empty finite set.
+An example of an intersection that is not open when \(N=\infty\) is
+\[  \bigcap_{n=1}^{\infty} \left(-\frac{1}{n},\frac{1}{n}\right) = \{0\} = 0.  \]
+For finite \(N\) we see that the intersection is instead \(\left(-\frac{1}{N},\frac{1}{N}\right)\).
+
+\section{}
+
+We start with the definition of interior, applied to the complement of subset \(\mathcal{S}\),
+\[
+    \text{int}(\mathcal{S}^c)
+    = \bigcup_{\substack{\mathcal{E}\subseteq\mathcal{S}^c\\\mathcal{E}\text{ is open}}}
+    \mathcal{E}.
+\]
+Using DeMorgan's law we can evaluate the compliment of the interior of \(\mathcal{S}^c\),
+\[
+    \left[\text{int}(\mathcal{S}^c)\right]^c
+    = \bigcap_{\substack{\mathcal{E}\subseteq\mathcal{S}^c\\\mathcal{E}\text{ is open}}}
+    \mathcal{E}^c
+\]
+Next, let \(\mathcal{E}^c := \mathcal{F}\). We may then rewrite the previous expression as
+\begin{align*}
+    \left[\text{int}(\mathcal{S}^c)\right]^c
+    &= \bigcap_{\substack{\mathcal{F}^c\subseteq\mathcal{S}^c\\\mathcal{F}^c\text{ is open}}}
+    \mathcal{F} \\
+    &= \bigcap_{\substack{\mathcal{F}\supseteq\mathcal{S}\\\mathcal{F}\text{ is closed}}}
+    \mathcal{F} \\
+    &= \text{cl}(\mathcal{S}).
+\end{align*}
+
+\clearpage
+
+\section{}
+(\(\Leftarrow\)) Assuming \(x\) is an interior point of \(\mathcal{S}\).
+
+This is defined as \(\exists\delta>0\) such that \(\text{B}(x,\delta)\subseteq\mathcal{S}\),
+\(x\in\text{B}(x,\delta)\).
+Referencing theorem 2.8.1, we know that an open ball is an open subset,
+thus containment in \(\mathcal{S}\) implies membership of the 
+open subsets of \(\mathcal{S}\) which is to be in the interior of \(\mathcal{S}\).
+
+(\(\Rightarrow\)) Assuming \(x\in\text{int}(\mathcal{S})\).
+
+This means that \(x\) is a member of the union of all empty sets \(\mathcal{S}\),
+which, as seen in problem 2, is not necessarily open itself,
+so we say there exists a an empty subset \(\mathcal{S}_0\subseteq\mathcal{S}\)
+such that \(x\in\mathcal{S}_0\).
+Recalling the in class theorem 2.8.2 an open set is a union of open balls,
+thus, \(\exists\delta>0\) such that
+\[
+    \text{B}(x,\delta)\subseteq\mathcal{S}_0 \subseteq
+    \bigcap_{\substack{\mathcal{E}\subseteq\mathcal{S}\\
+        \mathcal{E}\text{is open}}}\mathcal{E}.
+\]
+Because \(x\in\text{B}(x,\delta)\) we conclude that \(x\) is an interior point.
+
+\section{}
+(\(\Rightarrow\)) Assuming \(x\in\text{cl}(\mathcal{S})\).
+We wish to show that \(x\in\mathcal{S}\) or is a limit point of \(\mathcal{S}\).
+
+From problem 3 we saw that,
+\[ x\in\text{cl}(\mathcal{S}) = \left[\text{int}(\mathcal{S}^c)\right]^c, \]
+thus,
+\[ x\notin\text{int}(\mathcal{S}^c). \]
+This means that \(x\) is not a member of any open subset of \(\mathcal{S}^c\).
+Which implies that either \(x\notin\mathcal{S}^c\), and thus \(x\in\mathcal{S}\);
+or 
+\(\nexists\delta>0\) such that \(\text{B}(x,\delta)\subseteq\mathcal{S}^c\).
+Thus \(\forall\delta>0\), there exists \(\hat{x}\in\text{B}(x,\delta)\)
+where \(\hat{x}\notin\mathcal{S}^c\).
+Equivalently,
+\(\forall\delta>0\)
+\(\exists\hat{x}\in\mathcal{S}\)
+such that
+\(0<\text{d}(x,\hat{x})<\delta\),
+the definition of \(x\) being a limit point of \(\mathcal{S}\).
+
+(\(\Leftarrow\)) Assuming \(x\in\mathcal{S}\) or \(x\) is a limit point of \(\mathcal{S}\).
+We will show that \(x\in\text{cl}(\mathcal{S})\)
+
+In the first case we have,
+\[x\in\mathcal{S}\subseteq\text{cl}(\mathcal{S}).\]
+
+If \(x\notin\mathcal{S}\) but is a limit point, 
+then \(\forall\delta>0\)
+there exists an
+\(\hat{x}\in\mathcal{S}\)
+such that \(0<\text{d}(x,\hat{x})<\delta\).
+Thus, there does not exist
+\(\delta>0\)
+such that
+\(\text{B}(x,\delta)\subseteq\mathcal{S}^c\).
+Consequently, and as above,
+\[
+    x\notin\text{int}(\mathcal{S}^c) 
+    \Rightarrow x\in\left[\text{int}(\mathcal{S}^c)\right]^c
+    =\text{cl}(\mathcal{S}).\]
+
+
+
+\vspace{2em}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
