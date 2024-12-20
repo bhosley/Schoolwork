@@ -1,0 +1,582 @@
+\documentclass[12 pt,letterpaper]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage[left=0.5in, right=0.5in, bottom=0.75in, top=0.75in]{geometry}
+
+\usepackage{mathptmx}
+\SetSymbolFont{letters}{bold}{OML}{cmm}{b}{it}
+\SetSymbolFont{operators}{bold}{OT1}{cmr}{bx}{n}
+\DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+
+\allowdisplaybreaks
+
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead[L]{Homework 7}
+\fancyhead[C]{Due: December 3, 2024}
+\fancyhead[R]{Page \thepage\ of \pageref{LastPage}}
+\fancyfoot[L]{Air Force Institute of Technology}
+\fancyfoot[R]{Fall 2024 (Hosley)}
+\fancyfoot[C]{MATH 600: Mathematical Analysis}
+\renewcommand{\headrulewidth}{0.25pt}
+\renewcommand{\footrulewidth}{0.25pt}
+
+\usepackage{physics}
+
+\newcommand{\la}{\lambda}
+
+\newcommand{\bbC}{\mathbb{C}}
+\newcommand{\bbF}{\mathbb{F}}
+\newcommand{\bbN}{\mathbb{N}}
+\newcommand{\bbQ}{\mathbb{Q}}
+\newcommand{\bbR}{\mathbb{R}}
+\newcommand{\bbT}{\mathbb{T}}
+\newcommand{\bbZ}{\mathbb{Z}}
+
+\newcommand{\brI}{\mathbf{I}}
+\newcommand{\brJ}{\mathbf{J}}
+\newcommand{\brM}{\mathbf{M}}
+\newcommand{\brR}{\mathbf{R}}
+\newcommand{\brT}{\mathbf{T}}
+
+\newcommand{\bfa}{\boldsymbol{a}}
+\newcommand{\bfA}{\boldsymbol{A}}
+\newcommand{\bfb}{\boldsymbol{b}}
+\newcommand{\bfB}{\boldsymbol{B}}
+\newcommand{\bfc}{\boldsymbol{c}}
+\newcommand{\bfC}{\boldsymbol{C}}
+\newcommand{\bfD}{\boldsymbol{D}}
+\newcommand{\bfe}{\boldsymbol{e}}
+\newcommand{\bfE}{\boldsymbol{E}}
+\newcommand{\bff}{\boldsymbol{f}}
+\newcommand{\bfF}{\boldsymbol{F}}
+\newcommand{\bfG}{\boldsymbol{G}}
+\newcommand{\bfH}{\boldsymbol{H}}
+\newcommand{\bfI}{\boldsymbol{I}}
+\newcommand{\bfJ}{\boldsymbol{J}}
+\newcommand{\bfK}{\boldsymbol{K}}
+\newcommand{\bfL}{\boldsymbol{L}}
+\newcommand{\bfM}{\boldsymbol{M}}
+\newcommand{\bfp}{\boldsymbol{p}}
+\newcommand{\bfP}{\boldsymbol{P}}
+\newcommand{\bfR}{\boldsymbol{R}}
+\newcommand{\bfT}{\boldsymbol{T}}
+\newcommand{\bfu}{\boldsymbol{u}}
+\newcommand{\bfU}{\boldsymbol{U}}
+\newcommand{\bfv}{\boldsymbol{v}}
+\newcommand{\bfV}{\boldsymbol{V}}
+\newcommand{\bfw}{\boldsymbol{w}}
+\newcommand{\bfW}{\boldsymbol{W}}
+\newcommand{\bfx}{\boldsymbol{x}}
+\newcommand{\bfX}{\boldsymbol{X}}
+\newcommand{\bfy}{\boldsymbol{y}}
+\newcommand{\bfY}{\boldsymbol{Y}}
+\newcommand{\bfz}{\boldsymbol{z}}
+\newcommand{\bfZ}{\boldsymbol{Z}}
+
+\newcommand{\bfone}{\boldsymbol{1}}
+\newcommand{\bfzero}{\boldsymbol{0}}
+\newcommand{\bfxi}{\boldsymbol{\xi}}
+\newcommand{\bfXi}{\boldsymbol{\Xi}}
+\newcommand{\bfphi}{\boldsymbol{\varphi}}
+\newcommand{\bfPhi}{\boldsymbol{\varPhi}}
+\newcommand{\bfPi}{\boldsymbol{\varPi}}
+\newcommand{\bfpsi}{\boldsymbol{\psi}}
+\newcommand{\bfPsi}{\boldsymbol{\varPsi}}
+\newcommand{\bfchi}{\boldsymbol{\chi}}
+\newcommand{\bfzeta}{\boldsymbol{\zeta}}
+\newcommand{\bfdelta}{\boldsymbol{\delta}}
+\newcommand{\bfDelta}{\boldsymbol{\varDelta}}
+\newcommand{\bfGamma}{\boldsymbol{\varGamma}}
+\newcommand{\bfOmega}{\boldsymbol{\varOmega}}
+\newcommand{\bfSigma}{\boldsymbol{\varSigma}}
+\newcommand{\bfLambda}{\boldsymbol{\varLambda}}
+
+\newcommand{\calA}{\mathcal{A}}
+\newcommand{\calB}{\mathcal{B}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calE}{\mathcal{E}}
+\newcommand{\calF}{\mathcal{F}}
+\newcommand{\calG}{\mathcal{G}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calI}{\mathcal{I}}
+\newcommand{\calK}{\mathcal{K}}
+\newcommand{\calM}{\mathcal{M}}
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calS}{\mathcal{S}}
+\newcommand{\calT}{\mathcal{T}}
+\newcommand{\calU}{\mathcal{U}}
+\newcommand{\calV}{\mathcal{V}}
+\newcommand{\calX}{\mathcal{X}}
+\newcommand{\calY}{\mathcal{Y}}
+
+\newcommand{\rmA}{\mathrm{A}}
+\newcommand{\rmB}{\mathrm{B}}
+\newcommand{\rmc}{\mathrm{c}}
+\newcommand{\rmC}{\mathrm{C}}
+\newcommand{\rmd}{\mathrm{d}}
+\newcommand{\rme}{\mathrm{e}}
+\newcommand{\rmi}{\mathrm{i}}
+\newcommand{\rmj}{\mathrm{j}}
+\newcommand{\rmk}{\mathrm{k}}
+\newcommand{\rms}{\mathrm{s}}
+\newcommand{\rmS}{\mathrm{S}}
+\newcommand{\rmT}{\mathrm{T}}
+
+%\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\Part}{\mathrm{part}}
+\newcommand{\Null}{\mathrm{null}}
+\newcommand{\Span}{\operatorname{span}}
+%\newcommand{\rank}{\operatorname{rank}}
+%\newcommand{\real}{\operatorname{Re}}
+\newcommand{\imag}{\operatorname{Im}}
+\newcommand{\cond}{\operatorname{cond}}
+
+\newcommand{\inte}{\operatorname{int}}
+\newcommand{\cl}{\operatorname{cl}}
+
+\newcommand{\im}{\operatorname{im}}
+
+\newcommand{\conv}[2]{{#1}\ast{#2}}
+\newcommand{\argmin}[1]{\underset{#1}{\mathrm{argmin}}}
+\newcommand{\argmax}[1]{\underset{#1}{\mathrm{argmax}}}
+
+\newcommand{\mat}[2]{\left[\begin{array}{#1}#2\end{array}\right]}
+%\newcommand{\dmat}[2]{\left|\begin{array}{#1}#2\end{array}\right|}
+\newcommand{\arbset}[1]{\left\{{#1}\right\}}
+\newcommand{\arbparen}[1]{\left({#1}\right)}
+\newcommand{\sign}{\operatorname{sign}}
+
+%\newcommand{\abs}[1]{|{#1}|}
+\newcommand{\bigabs}[1]{\bigl|{#1}\bigr|}
+\newcommand{\Bigabs}[1]{\Bigl|{#1}\Bigr|}
+\newcommand{\biggabs}[1]{\biggl|{#1}\biggr|}
+\newcommand{\Biggabs}[1]{\Biggl|{#1}\Biggr|}
+
+\newcommand{\paren}[1]{({#1})}
+\newcommand{\bigparen}[1]{\bigl({#1}\bigr)}
+\newcommand{\Bigparen}[1]{\Bigl({#1}\Bigr)}
+\newcommand{\biggparen}[1]{\biggl({#1}\biggr)}
+\newcommand{\Biggparen}[1]{\Biggl({#1}\Biggr)}
+
+\newcommand{\bracket}[1]{[{#1}]}
+\newcommand{\bigbracket}[1]{\bigl[{#1}\bigr]}
+\newcommand{\Bigbracket}[1]{\Bigl[{#1}\Bigr]}
+\newcommand{\biggbracket}[1]{\biggl[{#1}\biggr]}
+\newcommand{\Biggbracket}[1]{\Biggl[{#1}\Biggr]}
+
+\newcommand{\set}[1]{\{{#1}\}}
+\newcommand{\bigset}[1]{\bigl\{{#1}\bigr\}}
+\newcommand{\Bigset}[1]{\Bigl\{{#1}\Bigr\}}
+\newcommand{\biggset}[1]{\biggl\{{#1}\biggr\}}
+\newcommand{\Biggset}[1]{\Biggl\{{#1}\Biggr\}}
+
+%\newcommand{\norm}[1]{\|{#1}\|}
+\newcommand{\bignorm}[1]{\bigl\|{#1}\bigr\|}
+\newcommand{\Bignorm}[1]{\Bigl\|{#1}\Bigr\|}
+\newcommand{\biggnorm}[1]{\biggl\|{#1}\biggr\|}
+\newcommand{\Biggnorm}[1]{\Biggl\|{#1}\Biggr\|}
+
+%\newcommand{\ip}[2]{\langle{#1},{#2}\rangle}
+\newcommand{\bigip}[2]{\bigl\langle{#1},{#2}\bigr\rangle}
+\newcommand{\Bigip}[2]{\Bigl\langle{#1},{#2}\Bigr\rangle}
+\newcommand{\biggip}[2]{\biggl\langle{#1},{#2}\biggr\rangle}
+\newcommand{\Biggip}[2]{\Biggl\langle{#1},{#2}\Biggr\rangle}
+
+\newcommand{\alphi}{\renewcommand{\labelenumi}{(\alph{enumi})}}
+\newcommand{\alphii}{\renewcommand{\labelenumii}{(\alph{enumii})}}
+\newcommand{\alphiii}{\renewcommand{\labelenumiii}{(\alph{enumiii})}}
+\newcommand{\romani}{\renewcommand{\labelenumi}{(\roman{enumi})}}
+\newcommand{\romanii}{\renewcommand{\labelenumii}{(\roman{enumii})}}
+\newcommand{\romaniii}{\renewcommand{\labelenumiii}{(\roman{enumiii})}}
+\newcommand{\arabici}{\renewcommand{\labelenumi}{(\arabic{enumi})}}
+\newcommand{\arabicii}{\renewcommand{\labelenumii}{(\arabic{enumii})}}
+\newcommand{\arabiciii}{\renewcommand{\labelenumiii}{(\arabic{enumiii})}}
+
+
+
+\begin{document}
+
+\noindent
+For this assignment,
+you may use any results from Sections~1--6 of our class notes without further justification.
+In particular, Section~6 discusses the fundamentals of differential calculus,
+and a number of its results are essential below.
+Further suppose that there exists a function, called the \textit{natural logarithm}, such that
+\begin{equation}
+\label{eq.properties of ln}
+\ln:(0,\infty)\rightarrow\bbR,
+\quad\text{such that}\quad
+\ln(1)=0
+\quad\text{and}\quad
+\frac{\rmd}{\rmd x}\ln(x)=\frac1x,\ \forall\,x>0.
+\end{equation}
+(As we will discuss in class,
+the existence of such a function follows from the second part of the fundamental theorem of calculus.)
+
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Using~\eqref{eq.properties of ln} and results from differential calculus,
+prove that $\ln$ is a \textit{logarithm}, that is, satisfies
+\begin{equation*}
+\ln(x_1x_2)=\ln(x_1)+\ln(x_2),\quad \forall\ x_1,x_2>0.
+\end{equation*}
+
+\textit{Hint:} For any fixed $c>0$, what is $\displaystyle\frac{\rmd}{\rmd x}\ln(cx)$?
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Using the previous result, show that $\ln(x^{\frac mn})=\frac mn\ln(x)$ for any $x>0$ and rational number $\frac mn\in\bbQ$.
+
+\textit{Hint: Fix $x>0$.
+Use induction to show that $\ln(x^y)=y\ln(x)$ for all positive integers $y$.
+Then prove that is true for all negative integers $y$, and then for $y$ that are reciprocals of positive integers.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that $\ln:(0,\infty)\rightarrow\bbR$ is invertible.
+
+\textit{Hint: The previous result helps you show that this function is onto.}
+
+\end{enumerate}
+
+\noindent
+The inverse of the natural logarithm $\ln:(0,\infty)\rightarrow\bbR$ is called the \textit{natural exponential} $\exp:\bbR\rightarrow(0,\infty)$.
+Thus, for any $x\in(0,\infty)$ and $y\in\bbR$ we have $\ln(x)=y$ if and only if $x=\exp(y)$, and moreover
+\begin{equation*}
+\exp(\ln(x))=x,\quad\forall\ x\in(0,\infty),
+\qquad
+\ln(\exp(y))=y,\quad\forall\ y\in\bbR.
+\end{equation*}
+In particular,
+$x^{\frac{m}{n}}=\exp(\ln(x^{\frac{m}{n}}))=\exp(\frac{m}{n}\ln(x))$ for any $x>0$ and $\frac{m}{n}\in\bbQ$.
+Motivated by this, we more generally define $x^y$ for any $x>0$ and any (possibly irrational) $y\in\bbR$ as
+\begin{equation*}
+x^y:=\exp(y\ln(x)).
+\end{equation*}
+In particular, we have $\exp(y)=\rme^{y}$ for all $y\in\bbR$,
+where \textit{Euler's number} $\rme$ is uniquely defined by having $\ln(\rme)=1$.
+Here, note that $\ln(x^y)=\ln(\exp(y\ln(x)))=y\ln(x)$ for all $x>0$ and $y\in\bbR$.
+In the next few problems,
+we verify that this generalized notion of exponentiation behaves as expected.
+
+\begin{enumerate}
+\setcounter{enumi}{3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that $x_1^y x_2^y=(x_1x_2)^y$ for any $x_1,x_2>0$ and $y\in\bbR$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that $x^{y_1}x^{y_2}=x^{y_1+y_2}$ for any $x>0$ and $y_1,y_2\in\bbR$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Show that $(x^{y_1})^{y_2}=x^{y_1y_2}$ for any $x>0$ and $y_1,y_2\in\bbR$.
+
+\end{enumerate}
+
+\newpage
+
+\noindent
+The remaining problem involves the derivatives of such functions.
+We caution that when a function $f$ from $[a,b]$ onto a subset of the real line is invertible and differentiable, its inverse is not necessarily differentiable.
+For example, the inverse of the function $f:[-1,1]\rightarrow[-1,1]$, $f(x)=x^3$ is not differentiable at $y=0$ (intuitively, since its tangent line at this point has infinite slope).
+That said,
+in cases where both $f$ and $f^{-1}$ are differentiable,
+taking the derivative of the equation $y=f(f^{-1}(y))$ via the chain rule gives
+\begin{equation*}
+1
+=\frac{\rmd}{\rmd y}y
+=\frac{\rmd}{\rmd y}f(f^{-1}(y))
+=f'(f^{-1}(y))(f^{-1})'(y),
+\quad\text{i.e.,}\quad
+(f^{-1})'(y)=\frac1{f'(f^{-1}(y))}.
+\end{equation*}
+Remarkably, even if we don't assume \textit{a priori} that $f^{-1}$ is differentiable,
+it is necessarily so if $f$ satisfies an additional mild hypothesis:\bigskip
+
+\noindent
+\textbf{Theorem:} Assume that $f:[a,b]\rightarrow\bbR$ is continuous,
+and that $f$ is differentiable at any $x\in(a,b)$ with $f'(x)>0$.
+Then $f:[a,b]\rightarrow[f(a),f(b)]$ is invertible,
+and $f^{-1}$ is differentiable at any $y\in(f(a),f(b))$ with
+\begin{equation*}
+(f^{-1})'(y)=\frac1{f'(f^{-1}(y))}.
+\end{equation*}
+
+\noindent(The proof of this theorem is given at the end of this assignment.)
+
+\begin{enumerate}
+\setcounter{enumi}{6}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+Using~\eqref{eq.properties of ln} and the above theorem,
+show that $\displaystyle\frac{\rmd}{\rmd y}\exp(y)=\exp(y)$ for any $y\in\bbR$.
+
+Conclude that $\displaystyle\frac{\rmd}{\rmd y}x^y=x^y\ln(x)$ for any $x>0$, $y\in\bbR$.
+
+\end{enumerate}
+
+\newpage
+
+\begin{proof}[Proof of theorem]
+Since $f$ is continuous on $[a,b]$ and $f'(x)>0$ for all $x\in(a,b)$,
+the mean value theorem gives that $f$ is strictly increasing on $[a,b]$.
+This implies $f$ is one-to-one: for any $x_1,x_2\in[a,b]$ with $x_1\neq x_2$ we without loss of generality have $x_1<x_2$ and so $f(x_1)<f(x_2)$.
+Clearly, the function $f$ is also onto its image $f([a,b])$.
+We moreover have that $f([a,b])=[f(a),f(b)]$:
+since $f$ is increasing on $[a,b]$, for any $x\in[a,b]$ we have $f(a)\leq f(x)\leq f(b)$ and so
+$f([a,b])\subseteq[f(a),f(b)]$;
+conversely, since $f$ is continuous on $[a,b]$,
+the intermediate value theorem implies that for any $y\in[f(a),f(b)]$,
+there exists $x\in[a,b]$ such that $y=f(x)\in f([a,b])$ and so $[f(a),f(b)]\subseteq f([a,b])$.\medskip
+
+\noindent
+To summarize, we have that $f:[a,b]\rightarrow[f(a),f(b)]$ is both one-to-one and onto, implying it has an inverse function $f^{-1}:[f(a),f(b)]\rightarrow[a,b]$.
+To prove that $f^{-1}$ is differentiable at any $y_0\in(f(a),f(b))$,
+we first show that it is continuous at $y_0$.
+To do so, let $x_0=f^{-1}(y_0)$ (and so $f(x_0)=y_0$),
+and take any $\varepsilon>0$.
+Since $f(a)<y_0<f(b)$ we have $a<x_0<b$.
+Letting $\varepsilon_0=\min\set{\varepsilon,x_0-a,b-x_0}$,
+we have $\varepsilon_0\leq\varepsilon$ and $(x_0-\varepsilon_0,x_0+\varepsilon_0)\subseteq(a,b)$.
+Since $f$ is strictly increasing on $[a,b]$ we have $f(x_0-\varepsilon_0)<f(x_0)=y_0<f(x_0+\varepsilon_0)$.
+Let $\delta=\min\set{y_0-f(x_0-\varepsilon_0),f(x_0+\varepsilon_0)-y_0}$.
+Then, for any $y\in[f(a),f(b)]$ such that $\abs{y-y_0}<\delta$,
+we have $y_0-\delta<y<y_0+\delta$ and so $y\in(y_0-\delta,y_0+\delta)\subseteq(f(x_0-\varepsilon_0),f(x_0+\varepsilon_0))$.
+Since $f^{-1}$ is increasing, this implies $f^{-1}(y)\in(x_0-\varepsilon_0,x_0+\varepsilon_0)$,
+that is, $f^{-1}(y)-x_0\in(-\varepsilon_0,\varepsilon_0)$ and so $\abs{f^{-1}(y)-f^{-1}(y_0)}=\abs{f^{-1}(y)-x_0}<\varepsilon_0\leq\varepsilon$.\medskip
+
+\noindent
+Having that $f^{-1}$ is continuous at $y_0=f(x_0)$,
+we next show that it is differentiable at $y_0$ and moreover that $f^{-1}(y_0)=\frac1{f'(x_0)}$.
+Since $f$ is differentiable at $x_0$ with $f'(x_0)>0$ we know
+\begin{equation*}
+\frac1{f'(x_0)}
+=\frac1{\displaystyle\lim_{x\rightarrow x_0}\frac{f(x)-f(x_0)}{x-x_0}}
+=\lim_{x\rightarrow x_0}\frac1{\displaystyle\frac{f(x)-f(x_0)}{x-x_0}}
+=\lim_{x\rightarrow x_0}\frac{x-x_0}{f(x)-f(x_0)}.
+\end{equation*}
+In particular, for any $\varepsilon>0$, there exists $\delta>0$ such that
+\begin{equation*}
+\biggabs{\frac{x-f^{-1}(y_0)}{f(x)-y_0}-\frac1{f'(f^{-1}(y_0))}}
+=\biggabs{\frac{x-x_0}{f(x)-f(x_0)}-\frac1{f'(x_0)}}
+<\varepsilon
+\end{equation*}
+for all $x\in(a,b)$ such that $0<\abs{x-x_0}<\delta$.
+Since $f^{-1}$ is continuous at $y_0$, there exists $\gamma>0$ such that $\abs{f^{-1}(y)-x_0}=\abs{f^{-1}(y)-f^{-1}(y_0)}<\delta$ for all $y\in[f(a),f(b)]$ such that $\abs{y-y_0}<\gamma$.
+In particular, for all $y\in[f(a),f(b)]$ such that $0<\abs{y-y_0}<\gamma$ we know $y\neq y_0$ (and so $f^{-1}(y)\neq f^{-1}(y_0)=x_0$) implying $0<\abs{f^{-1}(y)-x_0}<\delta$, meaning we can take $x=f^{-1}(y)$:
+\begin{equation*}
+\biggabs{\frac{f^{-1}(y)-f^{-1}(y_0)}{y-y_0}-\frac1{f'(f^{-1}(y_0))}}
+=\biggabs{\frac{f^{-1}(y)-f^{-1}(y_0)}{f(f^{-1}(y))-y_0}-\frac1{f'(f^{-1}(y_0))}}
+<\varepsilon.
+\end{equation*}
+To summarize, for any $\varepsilon>0$, there exists $\gamma>0$ so that for any $y\in[f(a),f(b)]$ with $0<\abs{y-y_0}<\delta$ we have
+\begin{equation*}
+\biggabs{\frac{f^{-1}(y)-f^{-1}(y_0)}{y-y_0}-\frac1{f'(f^{-1}(y_0))}}
+<\varepsilon.
+\end{equation*}
+This means $\displaystyle (f^{-1})'(y_0)=\lim_{y\rightarrow y_0}\frac{f^{-1}(y)-f^{-1}(y_0)}{y-y_0}=\frac1{f'(f^{-1}(y_0))}$.
+\end{proof}
+
+%%%
+\clearpage
+
+\section{}
+
+Let \(c\) be any positive real number, then note that \(\dv{x} \ln(c) = 0\).
+We define \(f(x):= \ln(cx) - \ln(x) - \ln(c)\). Then,
+\begin{align*}
+    \dv{x} f(x)
+    &= \dv{x}[\ln(cx) - \ln(x) - \ln(c)] \\
+    &= \dv{x}\ln(cx) - \dv{x}\ln(x) - \dv{x}\ln(c) \\
+    &= \frac{1}{cx}\,\dv{x}(cx) - \frac{1}{x} - 0 \\
+    &= \frac{1}{cx}(c) - \frac{1}{x} \\
+    &= \frac{1}{x} - \frac{1}{x} \\
+    &= 0.
+\end{align*}
+Because \(\dv{x}f(x)=0\) for all \(x>0\) we conclude that \(f(x)\) is constant.
+We then evaluate with \(x=1\)
+\[ \ln(cx) - \ln(x) - \ln(c) = \ln(c1) - \ln(1) - \ln(c) = \ln(1) = 0 \]
+to conclude that \(f(x)=0\) for all \(x>0\). Consequently,
+\begin{align*}
+    0 = \ln(cx) - \ln(x) - \ln(c)
+    \quad \Rightarrow \quad
+    \ln(cx) = \ln(x) + \ln(c).
+\end{align*}
+Let \(x_1,x_2>0\).
+Then because \(c\) was chosen as an arbitrary constant from the 
+same domain as \(x\) without loss of generality we rewrite the previous identity as
+\[ \ln(x_1x_2) = \ln(x_1) + \ln(x_2). \]
+
+\clearpage
+
+\section{}
+Fix \(x\) to be any positive real number.
+Next, let \(y=1\), then we establish a base case,
+\begin{align*}
+    \ln(x^y)
+    = \ln(x^1)
+    = \ln(x)
+    = (1)\ln(x)
+    = y\ln(x).
+\end{align*}
+Next, we present the inductive case for the remaining \(y\in\mathbb{Z}^+\)
+using the finding in problem 1,
+\begin{align*}
+    \ln(x^{y+1})
+    = \ln(x^y x)
+    = \ln(x^y) + \ln(x)
+    = y\ln(x) + \ln(x)
+    = (y+1)\ln(x).
+\end{align*}
+Next, we further extend these results to the negative integers, by showing first that,
+\begin{align*}
+    \ln(x^{y}) + \ln(x^{-y})
+    % by problem 1
+    = \ln(x^{y} x^{-y})
+    = \ln(x^0)
+    = \ln(1)
+    = 0,
+\end{align*}
+and therefore,
+\begin{align*}
+    \ln(x^{-y})
+    = -\ln(x^{y}).
+\end{align*}
+Next, we extend this result from integers to their reciprocals, first as,
+\begin{align*}
+    \ln(x)
+    = \ln((x^{1/y})^y)
+    % Shown earlier
+    = y \ln(x^{1/y}),
+\end{align*}
+and alternatively,
+\begin{align*}
+    \ln(x)
+    = \frac{1}{y} y\ln(x^{})
+    = \frac{1}{y} \ln(x^{y}).
+\end{align*}
+Combining these results we conclude that for \(m,n\in\mathbb{Z}\)
+(equivalently, \(\frac{m}{n}\in\mathbb{Q}\)),
+\begin{align*}
+    \ln(x^{\frac{m}{n}})
+    = \ln(x^{m\frac{1}{n}})
+    = m\ln(x^{\frac{1}{n}})
+    = m\frac{1}{n}\ln(x^{})
+    = \frac{m}{n}\ln(x^{}).
+\end{align*}
+
+\clearpage
+
+\section{}
+We will show that \(\ln:(0,\infty)\rightarrow\mathbb{R}\) is invertible
+by showing that it is bijective in general.
+
+First, we show that \(\ln(x)\) is \emph{one-to-one} by leveraging the principle outlined
+in Rolle's Theorem (Theorem 6.10.c in class) to show that for any \(y\in\mathbb{R}\)
+there is at most one \(x\in(0,\infty)\) such that \(f(x)=y\).
+For the sake of contradiction, let \(x_1,x_2\) be positive real numbers such 
+that \(f(x_1) = f(x_2)\). Without loss of generality let \(x_1<x_2\).
+%
+Then, (by Rolle's theorem) there exists \(x_0\in(x_1,x_2)\)
+such that \[0 = \dv{x}\ln(x_0) = \frac{1}{x_0},\]
+which is undefined, a contradiction. \\
+
+Next, we show that \(\ln(x)\) is \emph{onto}.
+%
+Since \(\ln(x)\) is differentiable over the domain \((0,\infty)\),
+it is continuous over the entire domain.
+Moreover, since 
+\[\dv{x}\ln(x)=\frac{1}{x}>0 \quad\forall x>0\]
+\(\ln(x)\) is strictly increasing.
+%
+From problem 2 we have that
+\begin{align*}
+    \ln(2^n) &= n\ln(2).
+\end{align*}
+Using this observation we can determine that for arbitrary \(y\in\mathbb{R}\)
+there exists some \(n\in\mathbb{N}\) such that \(n>\frac{y}{\ln(2)}\).
+Further, with the intermediate value theorem
+we can conclude that there exists some \(0<x<2^n\) such that \(\ln(x)=y\),
+and further, since every \(y\) in the codomain has at least one \(x\) in the domain
+such that \(ln(x) = y\) we conclude that \(\ln(x)\) is \emph{onto}.
+
+Since \(\ln(x)\) is bijective it is also invertible.
+
+
+\clearpage
+Let \(y,y_1,y_2 \in\mathbb{R}\) be arbitrary
+and let \(x,x_1,x_2 \in\mathbb{R}\)
+be \(x,x_1,x_2 >0\).
+
+\section{}
+We show that \(x^y_1 x^y_2 = (x_1x_2)^y\) through:
+\begin{align*}
+    x^y_1 x^y_2
+    &= \exp(\ln(x^y_1 x^y_2)) \\
+    &= \exp(\ln(x^y_1) + \ln(x^y_2)) \\
+    &= \exp(\ \ln(\exp(y\ln(x_1))) + \ln(\exp(y\ln(x_2)))\ ) \\
+    &= \exp(y\ln(x_1) + y\ln(x_2)) \\
+    &= \exp(y[\ln(x_1) + \ln(x_2)] ) \\
+    &= \exp(y\ln(x_1x_2)) \\
+    &= (x_1x_2)^y.
+\end{align*}
+
+\section{}
+We show that \(x^{y_1} x^{y_2} = x^{y_1+y_2}\) through:
+\begin{align*}
+    x^{y_1} x^{y_2}
+    &= \exp(\ln(x^{y_1} x^{y_2})) \\
+    &= \exp(\ln(x^{y_1}) + \ln(x^{y_2})) \\
+    &= \exp(\ln(\exp(y_1\ln(x))) + \ln(\exp(y_2\ln(x)))) \\
+    &= \exp(y_1\ln(x) + y_2\ln(x)) \\
+    &= \exp([y_1+y_2]\ln(x)) \\
+    &= x^{y_1+y_2}.
+\end{align*}
+
+\section{}
+We show that \((x^{y_1})^{y_2} = x^{y_1 y_2}\) through:
+\begin{align*}
+    (x^{y_1})^{y_2}
+    = \exp(y_2 \ln(x^{y_1}))
+    = \exp(y_2 \ln( \exp(y_1 \ln(x)) ))
+    = \exp(y_2 y_1 \ln(x) )
+    = x^{y_1 y_2}.
+\end{align*}
+
+\clearpage
+\section{}
+For clarity, let
+\begin{align*}
+    f(x)        = \ln(x), \qquad
+    f^\prime(x) = \frac{1}{x}, \qquad
+    f^{-1}(x)   = \exp(x) .
+\end{align*}
+Then, we will use the theorem provided by the preamble to
+this homework's problem 7 to evaluate \(\dv{y} \exp(y)\) as
+\begin{align*}
+    \dv{y} \exp(y)
+    = (f^{-1})^\prime(x)
+    = \frac{1}{f^\prime(f^{-1}(y))}
+    = \frac{1}{f^\prime(\exp(y))}
+    = \frac{1}{\frac{1}{(\exp(y))}}
+    = \exp(y).
+\end{align*}
+Next, using this result in conjunction with the chain rule
+we can evaluate \(\dv{y} x^y\) as,
+\begin{align*}
+    \dv{y} x^y
+    = \dv{y} \exp(y\ln(x))
+    %chain rule
+    = \exp(y\ln(x)) \dv{y} y\ln(x)
+    = x^y \ln(x).
+\end{align*}
+
+\end{document} 
