@@ -1,0 +1,508 @@
+\documentclass[xcolor={svgnames}]{beamer}
+\usepackage[english]{babel}
+\usepackage{lmodern}
+\usepackage{libertinus}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{multicol}
+%\usepackage[svgnames]{xcolor} % Must pass direct to beamer class
+\graphicspath{../images}
+
+\usepackage{caption}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{comment} 
+
+\usepackage[backend=biber,style=ieee,style=authortitle]{biblatex} %authortitle authoryear
+\addbibresource{Prospectus.bib}
+
+\usepackage{xpatch}
+\xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{year}}{}{}
+
+
+\title{Contribution 1 - Vector Check}
+\subtitle{Preliminary Results and Research Progress}
+\author{Capt. Brandon Hosley\inst{1}}
+\institute[ENS]{
+    \inst{1}
+    Department of Operational Sciences\\
+    Air Force Institute of Technology}
+\date{\today}
+
+\AtBeginSection[]{
+  \begin{frame}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\usetheme{Madrid}
+\usecolortheme{beaver}
+\mode<presentation>
+
+\begin{document}
+
+% Title slide
+\frame{\titlepage}
+\begin{frame}
+    \tableofcontents
+\end{frame}
+
+% Slide 1: Introduction and Objectives
+\section{Introduction}
+
+\begin{frame}{Research Overview}
+
+    %\textbf{Dissertation Theme:} 
+
+    \textbf{Motivating Problem:}
+    To enhance the usefulness of heterogeneous-agent reinforcement learning (HARL)
+    via efficiency and efficacy improvements through:
+    \begin{itemize}
+        \item Curriculum Design
+        \item Group Composition
+        \item Roles
+        \item Etc.
+        %\item \emph{Leveraging insights from game theory and evolutionary biology to inform agent cooperation and specialization.}
+    \end{itemize}
+    \vspace{0.5cm}
+
+    \textit{Objective:} Improve scalability, resource-efficiency, and adaptability
+    of HARL policies that adapt to changing environments and heterogeneous agent teams.
+\end{frame}
+
+% Begin Lit review
+
+% Evolution of RL in Games
+
+\begin{frame}{Evolution of Reinforcement Learning in Games}
+    \textbf{Key References:}
+    \begin{itemize}
+        \item Go \footcite{silver2016}$^,$\footcite{silver2017}
+        \item Chess\footcite{silver2017a}
+        \item StarCraft II\footcite{vinyals2019}
+        \item DOTA\footcite{berner2019}
+        \item \textbf{Challenge:} High resource demands highlight the need for more efficient 
+            training methods.
+    \end{itemize}
+\end{frame}
+
+% Foundations of MARL
+\begin{frame}{Foundations of MARL}
+    \textbf{Key References:}
+    \begin{itemize}
+        \item Shoham et al.\footcite{shoham2007a}, Busonui et al.\footcite{busoniu2008}, 
+            and Cao et al.\footcite{cao2012}.
+        \item Early concepts in multi-agent learning, distributed coordination.
+        \item \textbf{Challenges:} Non-stationarity, credit assignment, 
+            \textcolor{DarkBlue}{scalability issues}.
+    \end{itemize}
+\end{frame}
+
+% Scalability Challenges in MARL
+\begin{frame}{Scalability Challenges in MARL}
+    \textbf{Key Insights}
+    \begin{itemize}
+        \item \textbf{Agent Complexity:} Action-state space explosion.
+            \footcite{lillicrap2019}$^,$~\footcite{baker2019}$^,$~\footcite{leibo2021}
+        \item \textbf{Environment Complexity:} Increased observation-action space.
+            $^{11,}$~\footcite{ye2020}$^,$~\footcite{shukla2022}$^,$~\footcite{liang2024}
+        \item \textbf{Robustness:} Sensitivity to disturbances and adversarial influences.
+            \footcite{gleave2021}$^,$~\footcite{li2019}$^,$~\footcite{spooner2020}$^,$~\footcite{guo2022}
+    \end{itemize}
+    \vspace{0.5em}
+\end{frame}
+%(Liu et al., 2024) liu2024
+
+% MARL Scalability Strategies
+
+\begin{frame}{MARL Scalability Strategies}
+    \textbf{Notable Strategies:}
+    \begin{itemize}
+        \item Value decomposition to handle dynamic populations.
+            \footcite{zhang2021}$^,$~\footcite{nguyen2020}
+        \item Hierarchical learning and role assignment.
+            \footcite{cui2022}
+        \item \textcolor{DarkBlue}{Curriculum learning} and transfer learning for adaptability.
+            \footcite{shukla2022}$^,$~\footcite{shi2023}
+    \end{itemize}
+\end{frame}
+
+% TODO: Add HARL Slide
+
+\begin{frame}{Heterogeneous-Agent Reinforcement Learning (HARL)}
+    \textbf{Harl Extends MARL Challenges:}
+    \begin{itemize}
+        \item \textbf{Coordination Complexity:} Heterogeneous roles further complicate 
+            cooperation and strategic alignment.
+            ~\footcite{wakilpoor2020}$^,$~\footcite{yang2020a}$^,$~\footcite{gronauer2022}
+        \item \textbf{Scalability Issues:} Increased joint state-action space makes 
+            learning computationally expensive.
+            ~\footcite{leibo2021}$^,$~\footcite{rizk2019}
+        \item \textbf{Adaptability and Robustness:} Policies must generalize across 
+            changing agent compositions and dynamic environments.
+            ~\footcite{yang2021a}$^,$~\footcite{koster2020}
+    \end{itemize}
+\end{frame}
+
+% Distinction Between MARL and HARL Variants
+
+\begin{frame}{Defining MARL and HARL Variants}
+    \textbf{Proposed Distinctions:}
+    \begin{itemize}
+        \item \textbf{MARL (Multi-Agent Reinforcement Learning):}
+        \begin{itemize}
+            \item Agents may share identical structures or learn different behaviors.
+            \item Focuses on collaborative or competitive dynamics among agents.
+        \end{itemize}
+        \item \textbf{Heterodox-Agent RL (Behavioral Heterogeneity):}
+        \begin{itemize}
+            \item \emph{Structural Homogeneity:} Agents have identical observation and action spaces.
+            \item \emph{Behavioral Diversity:} Independent policies allow agents to learn unique behaviors.
+            \item \textit{Example:} Identical drones taking on distinct roles in a cooperative task.
+        \end{itemize}
+        \item \textbf{Heterogeneous-Agent RL (Intrinsic Heterogeneity):}
+        \begin{itemize}
+            \item \emph{Structural Heterogeneity:} Agents differ in observation or action spaces.
+            \item \emph{Behavioral Specialization:} Policies adapt to agents' intrinsic differences.
+            \item \textit{Example:} Combined arms.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+% Contextual Background
+
+\begin{frame}{Context for Contribution 1}
+    \textbf{Motivation:}
+    \begin{itemize}
+        \item Inspired by Smit et al.'s~\footcite{smit2023} 
+        work using MARL to scale training in 2v2 to playing 11v11 in a football-like game.
+    \end{itemize}
+
+    \begin{multicols}{2}
+        \textbf{Method:}
+        \begin{enumerate}
+            \item Trained teams with 4 methods
+            \begin{itemize}
+                \item Naive Heuristic
+                \item ``Team Work'' Heuristic
+                \item 2v2 Trained Agents
+                \item 11v11 Trained Agents
+            \end{itemize}
+            \item Evaluated through full games (11v11) against each other.
+        \end{enumerate}
+
+        \vfil
+
+        \begin{center}
+            \includegraphics[width=0.55\linewidth]{images/smit2v2.png}
+            \includegraphics[width=0.55\linewidth]{images/smit11v11.png}
+        \end{center}
+    \end{multicols}
+\end{frame}
+
+
+\begin{frame}{Context for Contribution 1}
+    \begin{table}
+        \centering
+        \includegraphics[width=0.75\linewidth]{images/smit_results.png}
+        \captionsetup{width=.75\linewidth}
+        \caption{\footnotesize Win rate of row teams vs column teams;
+            500 games of 11v11.~\footcite{smit2023}}
+        \label{table:smit_winrates}
+    \end{table}
+
+    \textbf{Key Insights from Prior Work}
+    \begin{itemize}
+        \item Challenges: computational limit and generalization issues.
+        \item Their findings suggest that agents trained in full-team settings demonstrated 
+            \emph{better differentiation of individual responsibilities}.
+    \end{itemize}
+\end{frame}
+
+
+
+% Contribution 1 Summary
+
+\begin{frame}{Contribution 1 Summary}
+    \textbf{Objective:}
+    \begin{itemize}
+        \item Investigate if a HARL approach can improve the cost or performance outcome of a
+        scaling curriculum.
+        %\item Examine conditions influencing performance trade-offs compared to full-scale training.
+    \end{itemize}
+
+    \vspace{0.5cm}
+    \textbf{Approach:}
+    \begin{itemize}
+        \item Use SISL environments to implement a scaling curriculum.
+        \item Compare training efficiency and task performance over different curriculum parameters.
+        \item Similar to Smit's method but using with heterodox agents.
+    \end{itemize}
+
+    %\vspace{0.5cm}
+    %\textbf{Expected Outcomes}
+    %\begin{itemize}
+    %    \item Identify conditions where reduced agent training remains viable.
+    %    \item Provide insights for scaling strategies in future MARL applications.
+    %\end{itemize}
+\end{frame}
+
+
+\section{Methodology}
+
+% Experimental Setup
+
+\begin{frame}{Experimental Setup}
+    \textbf{Environment(s):}
+    \begin{itemize}
+        \item Key attributes include:
+        \begin{itemize}
+            \item Agent count variability.
+            \item Task complexity.
+            \item Cooperation requirements.
+            \item Potential for role differentiation.
+        \end{itemize}
+        \item The chosen environments are:
+        \begin{itemize}
+            \item From the SISL package\footcite{gupta2017} in Farama's PettingZoo.
+            \item Continuous.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Environment Description
+\begin{frame}{Experimental Setup}
+    \begin{multicols}{2}
+        \textbf{Environments:}
+        \begin{itemize}
+            \item Waterworld
+            \begin{itemize}
+                \item Collect food while avoiding negative reward obstacles (poison).
+                \item Locating food provides a small reward, 
+                    while collecting food provides a large reward but requires multiple agents.
+            \end{itemize}
+            \item Multiwalker
+            \begin{itemize}
+                \item A team of robots carry a box.
+                \item A small reward is given for forward distance of the box.
+                \item Dropping the box is a large negative reward.
+            \end{itemize}
+        \end{itemize}
+
+        \vfil
+
+        \begin{figure}
+            \includegraphics[width=0.25\textwidth]{images/waterworld_screenshot.png}
+            \caption{Waterworld environment}
+        \end{figure}
+        \vspace{-1em}
+        \begin{figure}
+            \includegraphics[width=0.25\textwidth]{images/multiwalker_screenshot.png}
+            \caption{Multiwalker environment}
+        \end{figure}
+    \end{multicols}
+\end{frame}
+
+% Training
+
+\begin{frame}{Training}
+    \textbf{Algorithm:}
+    \begin{itemize}
+        \item PPO
+        \item Independent policies
+    \end{itemize}
+
+    \textbf{Curriculum:}
+    \begin{enumerate}
+        \item Pre-training
+        \begin{itemize}
+            \item $n$ iterations
+            \item With set of agents (fewer than target)
+            \item Exporting checkpoints periodically
+        \end{itemize}
+        \item Final Training
+        \begin{itemize}
+            \item With target number of agents
+            \item Instantiated from pre-trained checkpoints
+            \item Upsampling performed without replacement; 
+                randomly when target number is not a multiple of pretrained agents.
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% Evaluation Metrics
+
+\begin{frame}{Evaluation Metrics}
+    \textbf{Performance Metrics:}
+    \begin{itemize}
+        \item Reward progression (training curve) as the primary metric to measure performance and convergence.
+        \item Comparisons based on per-agent average rewards to account for differing agent counts.
+    \end{itemize}
+
+    \textbf{Computational Efficiency:}
+    \begin{itemize}
+        \item Comparisons are a ratio of time per training step
+        \item Must address concerns about possible variance in cluster resource provisioning.
+        \item CPU utilization metrics recorded but we considered of limited scientific value.
+    \end{itemize}
+\end{frame}
+
+
+\section{Preliminary Results}
+
+
+\begin{frame}{Relative Time Cost}
+    \begin{center}
+        %\colorbox{orange!40}{\small Placeholder graphic. Time axis probably isn't value added}
+        %\vspace{0.5em}
+        \includegraphics[width=0.7\linewidth]{../data/time_costs.png}
+    \end{center}
+    \textbf{Observation:} Linearity of increasing agent cost.
+    %\textbf{Follow-up Question:} Can this be shown (proven) generally?
+\end{frame}
+
+% 30 iterations for baseline (pre interval)
+
+% 30 reps of the retraining (May want more)
+
+\begin{frame}{Relative Time Cost to Adjusted Timestep}
+    \textbf{Observed Scaling:}
+    \begin{itemize}
+        \item Linear relationship measured with simple linear regression:
+        \[ \text{time(ms)} = 324.2441 + 7004.7673n \]
+        where \(n\) is the number of agents.
+        \item Adjusted \(R^2=0.999\).
+    \end{itemize}
+    
+    \textbf{Adjusted Time Steps:}
+    \begin{itemize}
+        \item Normalizes training duration based on equivalent cost.
+        \item Example: Training 2 agents for 40 steps costs the same as 4 agents for 20.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Retraining 2 vs 4 Agents}
+    \includegraphics[width=\linewidth]{../data/4task.png}
+\end{frame}
+
+\begin{frame}{Retraining 2 vs 6 Agents}
+    \includegraphics[width=\linewidth]{../data/6task.png}
+\end{frame}
+
+\begin{frame}{Retraining 2 vs 8 Agents}
+    \includegraphics[width=\linewidth]{../data/8task.png}
+\end{frame}
+
+% Observations
+
+\begin{frame}{Observations from Preliminary Results}
+    \begin{itemize}
+        \item Convergence can be reached earlier with pre-training a subset of agents.
+        \item This greater when the ratio between target number of agents to 
+            pre-training agents is larger.
+        \item Performance gains observed might be attributable to symmetry of agent roles; 
+            further investigation is warranted.
+    \end{itemize}
+\end{frame}
+
+
+\section{Next Steps}
+
+% Next Steps: Investigating Task Variability
+
+\begin{frame}{Next Steps: Investigating Task Variability}
+    \begin{itemize}
+        \item Assessing performance in an additional task (Miniwalker, SISL\footcite{gupta2017}) 
+            featuring asymmetric agent roles.
+        \item Miniwalker consists of one leader and multiple followers with distinct roles.
+        \item Assess with Waterworld task requiring 3 agent coop.
+    \end{itemize}
+\end{frame}
+
+% Predictive Analysis for Training Efficiency
+
+\begin{frame}{Predictive Analysis for Training Efficiency}
+    \begin{itemize}
+        \item Analyze training curves of two-agent training to identify regions of improved performance.
+        \item Investigate the potential to predict an optimal transition point to target tasks.
+        \item Determine feasibility of utilizing predictions to optimize training time allocation.
+    \end{itemize}
+\end{frame}
+
+% Contribution 2: Curriculum Design
+
+\begin{frame}{Contribution 2: Curriculum Design}
+    \textbf{Objective:}
+    \begin{itemize}
+        \item Apply insights from Contribution 1 to a more Intrinsically HARL task 
+        (ie. Combined arms wargaming a la AtlAtl).
+        %\item Investigate progressive scaling strategies for agent training 
+        %    (e.g. if Smit had trained 2, 4, 7, and 11 agents).
+        \item Investigate inclusion of credit assignment strategies.
+        %\item Explore strategies to transition agents smoothly across different training phases.
+    \end{itemize}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{images/atlatl.png}
+        \caption{AtlAtl scenario modeling.}
+    \end{figure}
+\end{frame}
+
+% Exploring Evolutionary Biology Insights
+
+\begin{comment}
+    
+
+\begin{frame}{Exploring Evolutionary Biology Insights}
+    \textbf{Research Interest:}
+    \begin{itemize}
+        \item Investigate how evolutionary principles can inform cooperation development.
+        \item Examine speciation and specialization as sub-populations find roles in complex tasks.
+        \item Apply biologically-inspired mechanisms to improve agent diversity and adaptability.
+    \end{itemize}
+\end{frame}
+
+\end{comment}
+
+% Contribution 3: Long-Term Vision
+
+\begin{frame}{Contribution 3: Long-Term Vision}
+    \textbf{Potential Directions:}
+    \begin{itemize}
+        %\item Further investigation into cooperation dynamics in heterogeneous agent teams.
+        \item Further investigation 
+        into cooperation dynamics in intrinsically heterogeneous agent teams.
+        %\item Scaling cooperative strategies to more complex, real-world scenarios.
+        \item Integration of findings from Contributions 1 and 2 into practical applications.
+    \end{itemize}
+    \textbf{Feedback Requested:}
+    \begin{itemize}
+        \item Guidance on refining research focus for the prospectus defense.
+        \item Recommendations on experimental design for future contributions.
+    \end{itemize}
+\end{frame}
+
+\section{Feedback and Discussion}
+
+\begin{frame}{Feedback and Discussion}
+    \begin{itemize}
+        \item Key questions for the committee:
+        \begin{itemize}
+            \item Is the research direction still aligned with the objectives?
+            \item Are there additional considerations or alternate approaches?
+        \end{itemize}
+        \item Open floor for suggestions and guidance.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \centering
+    \Huge
+    Questions?
+\end{frame}
+
+\section{References}
+
+\renewcommand*{\bibfont}{\tiny}
+\frame[allowframebreaks]{\printbibliography}
+
+\end{document}
