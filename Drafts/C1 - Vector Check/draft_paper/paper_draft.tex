@@ -1,0 +1,199 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+% \usepackage{cleveref}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage[T1]{fontenc}
+\usepackage[final]{microtype}
+\addbibresource{../slides/Prospectus.bib}
+
+\title{Investigating Training Efficiency of Direct Scaling in Multi-Agent Reinforcement Learning}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+    This paper investigates the feasibility of training multi-agent reinforcement learning (MARL) 
+    systems with a reduced number of agents before scaling up to full team sizes. 
+    Inspired by prior work, particularly Smit et al. (2023), 
+    we analyze whether pretraining smaller agent groups can improve training efficiency 
+    without sacrificing final performance. 
+    We introduce an agent-steps metric, which provides a standardized measure of 
+    total training effort across different agent counts.
+    Experiments conducted in the Waterworld, Multiwalker, and Level-based Foraging environments 
+    reveal that the effectiveness of this approach appears to be inversely related 
+    to the diversity required among agents in the final team. 
+    When tasks allow agents to adopt similar roles, 
+    pretraining on smaller groups accelerates learning; 
+    however, in environments where agents must specialize into distinct roles, 
+    the benefits of early training are diminished. 
+    These findings inform future work in curriculum learning and scalable 
+    heterogeneous-agent reinforcement learning (HARL).
+\end{abstract}
+
+\section{Introduction}
+
+Multi-agent reinforcement learning (MARL) has shown significant promise in solving complex 
+decision-making tasks across diverse domains, including strategic gameplay, robotics, 
+and autonomous systems \cite{silver2016, vinyals2019, berner2019}. 
+However, training MARL models at scale remains a computationally expensive process, 
+often requiring large amounts of data and extensive simulation time. 
+The challenge is further compounded in heterogeneous-agent reinforcement learning (HARL), 
+where agents may possess differing roles, observation spaces, or action capabilities, 
+leading to an increase in learning complexity \cite{rizk2019, yang2021a}. 
+Efficient training methodologies that reduce computational costs while maintaining 
+performance are crucial for enabling broader adoption of MARL and HARL systems.
+
+
+One potential strategy to improve training efficiency is pretraining a 
+smaller subset of agents before scaling up to the full target configuration. 
+By first learning policies in a reduced-agent setting , 
+it may be possible to accelerate convergence and reduce overall training time. 
+This concept was explored by Smit et al. in the context of multi-agent coordination, 
+but their results indicated that smaller-team training did not consistently yield 
+advantages when transitioning to full-team configurations \cite{smit2023}. 
+% Their findings suggest that the effectiveness of this approach may be highly task-dependent, 
+% particularly in scenarios requiring emergent cooperation and specialization among agents.
+
+% In this study, we examine the feasibility of pretraining smaller MARL teams 
+% and scaling up to larger configurations, 
+% focusing on identifying the conditions under which this method is beneficial. 
+% We utilize an agent-steps metric, which provides a standardized measure of 
+% training effort by accounting for both the number of training iterations and 
+% the number of agents present. Our experiments span three distinct environments: 
+% Waterworld \cite{gupta2017}, Multiwalker \cite{gupta2017}, 
+% and Level-Based Foraging (LBF) \cite{papoudakis2021}, 
+% allowing us to assess this method across a range of cooperative and semi-cooperative tasks. 
+% Through systematic evaluation, we seek to determine whether reducing agent count 
+% during pretraining provides meaningful computational savings and whether the 
+% learned policies remain effective when expanded to full-agent teams. 
+% The results of this study aim to inform future curriculum learning strategies and 
+% scalable MARL methodologies, contributing to the broader understanding of training 
+% efficiency in multi-agent systems.
+
+
+
+        % \section{Related Work}
+        % Prior research has explored MARL scalability \cite{shoham2007a, busoniu2008, foerster2017} and training efficiency in large-scale environments \cite{ackerman2019, lowe2020}. HARL studies have examined role differentiation and heterogeneous task assignments \cite{wakilpoor2020, koster2020}. Despite these advances, limited work has focused on evaluating pretraining smaller agent groups and scaling up, making our investigation a novel contribution.
+
+        % \includegraphics[width=0.75\linewidth]{2d_football.png}
+
+
+
+        % %% sub c1 - hetero rl
+        % % argue confusion
+        % % define terms
+        % % b. het
+        % % i. het
+        % \section{Methodology}
+
+        % \subsection{Experimental Setup}
+        % We conducted experiments in the Waterworld environment, a multi-agent domain within the SISL package. Agents navigate a continuous space, collecting resources and avoiding obstacles. Key attributes of the environment include:
+        % \begin{itemize}
+        %     \item Adjustable agent count with cooperative dynamics.
+        %     \item Potential for role differentiation through independent policy learning.
+        % \end{itemize}
+
+        % Our training protocol utilizes Proximal Policy Optimization (PPO) \cite{schulman2017}, implemented within the RLlib framework, providing flexibility for future algorithmic comparisons. Training is conducted over multiple iterations, with performance measured based on reward progression and convergence speed.
+
+        % \subsection{Adjusted Time Steps}
+        % To compare computational costs across agent counts, we introduce adjusted time steps, accounting for the linear scaling of per-step computation. The empirical relationship for training step duration is given by:
+        % \begin{equation}
+        %     \text{time(ms)} = 324.2441 + 7004.7673n
+        % \end{equation}
+        % where $n$ is the number of agents. Adjusted time steps enable fair cost comparisons across training configurations.
+
+        % \subsection{Training Process}
+        % Our approach involves:
+        % \begin{itemize}
+        %     \item Pretraining a smaller number of agents, saving policy checkpoints periodically.
+        %     \item Upsampling pretrained agents without replacement to instantiate larger environments.
+        %     \item Retraining the scaled-up agent team and comparing performance against a tabula rasa baseline.
+        % \end{itemize}
+
+
+A key challenge encountered when training in the Level-Based Foraging (LBF) environment 
+was handling variations in the observation space due to changes in the number of allied agents. 
+By default, LBF provides each agent with a fully observable state representation, 
+consisting of the objective location, self-information, and an ordered array of ally information. 
+However, when the number of allies changes—such that during the transition from pretraining 
+with fewer agents to full-scale training—the size of this observation array also changes, 
+making policy transfer between different team sizes nontrivial. 
+To ensure consistency, we implemented two approaches: 
+(1) restricted observation, where agents were blind to ally locations, 
+ensuring that observation size remained static across training phases, and 
+(2) structured observation abbreviation, where the observation size was fixed based 
+on the pretraining phase, and when the number of allies increased, the additional ally 
+information was sampled from the larger representation to maintain structural consistency. 
+These modifications allowed us to systematically evaluate the impact of observation 
+consistency on policy transfer and learning stability in heterogeneous-agent training scenarios.
+
+\vspace{3em}
+
+
+% \begin{figure}[h]
+%     \centering
+%     \begin{tikzpicture}
+%         % Small observation array (Pretraining Phase)
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm] (goal) at (0,0) {Goal};
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm, right=of goal] (self) {Self};
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm, right=of self, fill=blue!20] (ally1) {Ally 1};
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm, right=of ally1, fill=blue!20] (ally2) {Ally 2};
+        
+%         \node at (-2, 0) {Pretraining (Small Team)};
+        
+%         % Large observation array (Scaled-up Phase)
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm] (goal2) at (0,-2) {Goal};
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm, right=of goal2] (self2) {Self};
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm, right=of self2, fill=blue!20] (ally1_2) {Ally 1};
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm, right=of ally1_2, fill=blue!20] (ally2_2) {Ally 2};
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm, right=of ally2_2, fill=red!20] (sampled) {Sampled Ally};
+%         \node[draw, rectangle, minimum width=1cm, minimum height=0.8cm, right=of sampled, fill=red!20] (sampled2) {Sampled Ally};
+        
+%         \node at (-2, -2) {Full Training (Larger Team)};
+        
+%         % Arrows to indicate sampling process
+%         \draw[->, thick] (ally1) -- (ally1_2);
+%         \draw[->, thick] (ally2) -- (ally2_2);
+%         \draw[->, dashed, thick] (ally1) -- (sampled);
+%         \draw[->, dashed, thick] (ally2) -- (sampled2);
+%     \end{tikzpicture}
+%     \caption{Illustration of observation array handling when transitioning from a small-team configuration to a larger one. Dashed arrows indicate sampled ally data.}
+% \end{figure}
+
+
+\vspace{3em}
+
+
+        % \section{Results and Observations}
+        % Our findings indicate that convergence occurs earlier with fewer agents, particularly when agent counts differ significantly. Performance gains may be due to task tessellation, warranting further investigation. Key observations include:
+        % \begin{itemize}
+        %     \item Training time per step scales linearly with the number of agents.
+        %     \item Pretraining smaller groups can lead to faster convergence in certain scenarios.
+        %     \item Performance benefits diminish when tasks lack natural role division.
+        % \end{itemize}
+
+        % \section{Future Work}
+        % Building on these findings, Contribution 2 will explore curriculum-based training strategies, progressively increasing agent counts in complex tasks. Additionally, we aim to investigate biological models of cooperation and specialization for further insights into HARL systems.
+
+        % \section{Conclusion}
+        % This study demonstrates the potential benefits of pretraining smaller MARL teams before scaling up. By introducing adjusted time steps and analyzing training efficiency, we contribute to understanding scalable MARL techniques. Future work will refine these methods and expand the applicability to more complex environments.
+
+% \nocite{*}
+\printbibliography
+
+\end{document}
