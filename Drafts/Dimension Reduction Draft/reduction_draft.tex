@@ -1,0 +1,122 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{csquotes}
+
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+\graphicspath{{../images/}}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+
+% \usepackage{cleveref}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage[T1]{fontenc}
+\usepackage[final]{microtype}
+\addbibresource{../../2025Bibs/Prospectus.bib}
+
+\title{Dimension Reduction of Shared Observations in Multi-Agent Reinforcement Learning}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\section{Introduction}
+% We investigate improvements to training within cooperative settings
+% within it we observe that 
+
+
+\section{Related Work}
+
+\cite{busoniu2008} % An early survey of MARL
+% \cite{}
+
+
+\section{Methodology}
+% Default observation space
+% Reduced observation space
+% Egocentric observation space
+
+% Not ego-st (carried behavioral implication)
+
+
+% The environment: LBF
+
+\subsection{Environment}
+
+We use the Level-Based Foraging (LBF) environment \cite{papoudakis2021},
+a grid-based reinforcement learning benchmark designed to evaluate 
+coordination and cooperation in multi-agent settings,
+that requires agents to jointly collect food items scattered across a map. 
+
+Each agent and food item is assigned a discrete level, with the level representing 
+the agent's foraging capability and the food's consumption requirement, respectively.
+A food item can only be foraged when the sum of the levels of the agents 
+occupying adjacent cells meets or exceeds the food's level.
+
+The environment emphasizes multi-agent cooperation under spatial and temporal constraints. 
+Agents must learn to navigate the grid, identify appropriate foraging opportunities, 
+and coordinate with nearby teammates to successfully collect higher-level food items. 
+Rewards are sparse and granted only upon successful foraging, 
+making exploration and credit assignment particularly challenging. 
+The environment can be configured for partial observability by limiting agent vision range, 
+further increasing the need for implicit or explicit coordination.
+
+\subsubsection{Observation Space}
+
+In the default Level-Based Foraging environment, each agent receives a fixed-length, 
+observation vector encoding the fully observable global state of the environment. 
+This vector is constructed by concatenating three sets of state vectors, in the following order: 
+the agent's own state features, a set of all food states, and the states of all other agents.
+Each entity's state is a vector of its own level, row position, and column position.
+
+Thus for an agent \(n_i\) from the set of all agents \(N\), 
+uses the set of all food \(F\) to construct an observation vector as
+
+\[
+\underbrace{[\text{level}_{n_i},\ \text{row}_{n_i},\ \text{col}_{n_i}]}_{\text{Own Features}}
+++
+\underbrace{[f \in F]}_{\text{Food Matrix}} 
+++
+\underbrace{[n \in N_{/i}]}_{\text{Agent Matrix}}
+\]
+
+While the Level-Based Foraging environment offers a fully observable state representation, 
+its design assumes a fixed number of agents, which introduces a fundamental constraint when 
+studying variable agent populations. 
+Specifically, the size and semantics of each agent's observation are directly tied to the 
+total number of agents present in the environment. 
+As a result, even minor changes in team size lead to changes in observation dimensionality 
+or in the interpretation of vector components—compromising both compatibility with 
+trained policies and generalization across configurations. 
+This limitation impedes the use of standard deep reinforcement learning models, 
+which typically require fixed-size and fixed or semantically ordered inputs;
+% Need cite on neural network limit
+and makes it challenging to evaluate learning performance under varying team 
+compositions without significant engineering overhead or architectural changes.
+
+
+
+% Potential Solutions
+% Addressing this limitation requires restructuring the observation encoding to remove assumptions about fixed population size and ordering. One promising direction is the use of permutation-invariant encodings, such as processing sets of agent and food features using shared neural encoders followed by pooling operations (e.g., mean or max pooling). This approach treats agents and food items as unordered sets, enabling the network to learn representations that generalize across different configurations. Alternatively, graph-based representations can model the environment as a fully connected or spatially constrained graph, where nodes represent agents and food items, and edges encode relational features such as distance or potential cooperation. Graph neural networks (GNNs) can then be used to propagate information through the environment in a manner that naturally accommodates variable team sizes and agent heterogeneity.
+
+% These strategies require modifying the underlying environment or observation processing pipeline but enable broader experimentation with scalable and adaptive multi-agent learning. Incorporating such approaches may also facilitate transfer learning and robustness analyses by disentangling learned behaviors from the specific numerical configuration of the agent population.
+
+
+\section{Results}
+
+\section{Conclusion}
+
+
+% \nocite{*}
+\printbibliography
+
+\end{document}
