@@ -2348,8 +2348,22 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">../../2025Bibs/Prospectus.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">busoniu2008</bcf:citekey>
-    <bcf:citekey order="2">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="1">yang2021a</bcf:citekey>
+    <bcf:citekey order="2">brambilla2013</bcf:citekey>
+    <bcf:citekey order="3">vinyals2019</bcf:citekey>
+    <bcf:citekey order="3">berner2019</bcf:citekey>
+    <bcf:citekey order="4">huttenrauch2019</bcf:citekey>
+    <bcf:citekey order="5">rizk2019</bcf:citekey>
+    <bcf:citekey order="6">hoang2023</bcf:citekey>
+    <bcf:citekey order="7">kapetanakis2005</bcf:citekey>
+    <bcf:citekey order="7">hernandez-leal2019</bcf:citekey>
+    <bcf:citekey order="8">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="9">terry2021</bcf:citekey>
+    <bcf:citekey order="10">samvelyan2019</bcf:citekey>
+    <bcf:citekey order="11">kurach2020</bcf:citekey>
+    <bcf:citekey order="12">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="13">busoniu2008</bcf:citekey>
+    <bcf:citekey order="14">papoudakis2021</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

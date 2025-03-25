@@ -27,18 +27,91 @@
 \maketitle
 
 \begin{abstract}
+Heterogeneous multi-agent reinforcement learning (HARL) systems 
+often rely on architectures that assume a fixed number of agents, 
+embedding this assumption directly into each agent's observation space. 
+While such encodings simplify coordination and benchmarking, 
+they introduce rigidity that limits generalization to variable team 
+sizes or dynamic environments. 
+In this work, we focus on the Level-Based Foraging (LBF) environment, 
+a common benchmark for cooperative HARL, 
+and identify structural constraints in its default observation encoding. 
+We propose two observation reduction strategies that mitigate the dependence 
+on fixed agent populations while preserving access to task-relevant information. 
+Our experimental results demonstrate that these reductions enable more 
+flexible and efficient training while maintaining competitive 
+performance across varying team sizes.
 \end{abstract}
 
 \section{Introduction}
-% We investigate improvements to training within cooperative settings
-% within it we observe that 
+
+Multi-agent reinforcement learning (MARL) presents a compelling approach for training agents to 
+interact and cooperate in complex, dynamic environments. It has been applied to a wide range of 
+domains, including autonomous driving \cite{yang2021a}, swarm robotics, \cite{brambilla2013} 
+decentralized logistics, and multi-agent games \cite{vinyals2019,berner2019}.
+ 
+In MARL, agents must learn to optimize both individual and collective behavior in the presence 
+of other learning agents. A particularly challenging and increasingly relevant subfield is 
+heterogeneous MARL (HARL), in which agents differ in roles, capabilities, or observations. Such 
+heterogeneity arises in systems where specialized functions enable tailored coordination 
+strategies. For instance, drone swarms performing complex tasks have demonstrated improved 
+performance through specialized role allocation \cite{huttenrauch2019}, while multi-robot 
+systems in warehouse operations showcase the benefits of leveraging diverse capabilities 
+\cite{rizk2019}. Similarly, collaborative search-and-rescue operations, which require dynamic 
+role assignment and real-time coordination, highlight the necessity for flexible learning 
+strategies \cite{hoang2023}. Additional challenges in heterogeneous settings are discussed in 
+\cite{kapetanakis2005,hernandez-leal2019}.
+
+While many benchmark environments support large-scale homogeneous agent populations with
+shared policies (e.g., MAgent2 % [FLAG: Add MAgent2 reference]), heterogeneous MARL (HARL)
+settings often encode agent identity and role explicitly, leading to observation structures
+that assume a fixed number of uniquely-indexed agents. This approach restricts the observation
+space to a specific configuration, making it difficult to scale or generalize across variable
+team sizes. This limitation is evident in environments such as Level-Based Foraging (LBF)
+\cite{papoudakis2021}, Multiwalker and Waterworld in the PettingZoo SISL suite
+\cite{terry2021}, the StarCraft Multi-Agent Challenge (SMAC) \cite{samvelyan2019}, 
+and Google Research Football \cite{kurach2020}, 
+all of which embed the agent count into fixed-size observation spaces.
+
+A common consequence of this design choice is that each agent receives an observation vector
+whose size and semantics are tied to the total number of agents in the environment. 
+For example, in the Level-Based Foraging (LBF) environment \cite{papoudakis2021}, 
+agents observe the state of all teammates and all food items in a flat, concatenated format. 
+This encoding implicitly fixes the number of agents, as each additional teammate introduces 
+a new segment in the observation vector. As a result, policies trained on one team size cannot 
+be directly applied to another without architectural modifications or retraining.
+
+This constraint poses a significant barrier to the development of flexible and scalable HARL 
+systems. It limits the applicability of methods such as transfer learning, 
+zero-shot generalization, and curriculum learning, all of which depend on the ability 
+to vary team composition during training or deployment. 
+Moreover, it complicates experimentation by necessitating separate network architectures and 
+training loops for each agent count. Addressing this limitation is essential for building 
+general-purpose, adaptable multi-agent policies.
+
+In this paper, we examine structural constraints in the default observation design of the
+LBF environment and introduce two strategies to decouple observation size from agent count:
+\begin{itemize}
+    \item a minimal observation strategy that omits ally features entirely, and
+    \item a structured reduction strategy that encodes ally information into a fixed-size,
+    role-agnostic format.
+\end{itemize}
+
+We empirically evaluate these strategies against the default encoding across multiple team sizes.
+Our results demonstrate that observation reduction can preserve, and in some cases even improve,
+performance while enabling significantly more flexible training workflows.
+
+% We retain the formal definition of the original observation structure here for reference:
+% \[
+% \underbrace{[\text{level}_{n_i},\ \text{row}_{n_i},\ \text{col}_{n_i}]}_{\text{Own Features}} ++
+% \underbrace{[f \in F]}_{\text{Food Matrix}} ++
+% \underbrace{[n \in N_{/i}]}_{\text{Agent Matrix}}
+% \]
 
 
 \section{Related Work}
 
 \cite{busoniu2008} % An early survey of MARL
-% \cite{}
-
 
 \section{Methodology}
 % Default observation space
@@ -70,51 +143,9 @@ making exploration and credit assignment particularly challenging.
 The environment can be configured for partial observability by limiting agent vision range, 
 further increasing the need for implicit or explicit coordination.
 
-\subsubsection{Observation Space}
-
-In the default Level-Based Foraging environment, each agent receives a fixed-length, 
-observation vector encoding the fully observable global state of the environment. 
-This vector is constructed by concatenating three sets of state vectors, in the following order: 
-the agent's own state features, a set of all food states, and the states of all other agents.
-Each entity's state is a vector of its own level, row position, and column position.
-
-Thus for an agent \(n_i\) from the set of all agents \(N\), 
-uses the set of all food \(F\) to construct an observation vector as
-
-\[
-\underbrace{[\text{level}_{n_i},\ \text{row}_{n_i},\ \text{col}_{n_i}]}_{\text{Own Features}}
-++
-\underbrace{[f \in F]}_{\text{Food Matrix}} 
-++
-\underbrace{[n \in N_{/i}]}_{\text{Agent Matrix}}
-\]
-
-While the Level-Based Foraging environment offers a fully observable state representation, 
-its design assumes a fixed number of agents, which introduces a fundamental constraint when 
-studying variable agent populations. 
-Specifically, the size and semantics of each agent's observation are directly tied to the 
-total number of agents present in the environment. 
-As a result, even minor changes in team size lead to changes in observation dimensionality 
-or in the interpretation of vector components—compromising both compatibility with 
-trained policies and generalization across configurations. 
-This limitation impedes the use of standard deep reinforcement learning models, 
-which typically require fixed-size and fixed or semantically ordered inputs;
-% Need cite on neural network limit
-and makes it challenging to evaluate learning performance under varying team 
-compositions without significant engineering overhead or architectural changes.
-
-
-
-% Potential Solutions
-% Addressing this limitation requires restructuring the observation encoding to remove assumptions about fixed population size and ordering. One promising direction is the use of permutation-invariant encodings, such as processing sets of agent and food features using shared neural encoders followed by pooling operations (e.g., mean or max pooling). This approach treats agents and food items as unordered sets, enabling the network to learn representations that generalize across different configurations. Alternatively, graph-based representations can model the environment as a fully connected or spatially constrained graph, where nodes represent agents and food items, and edges encode relational features such as distance or potential cooperation. Graph neural networks (GNNs) can then be used to propagate information through the environment in a manner that naturally accommodates variable team sizes and agent heterogeneity.
-
-% These strategies require modifying the underlying environment or observation processing pipeline but enable broader experimentation with scalable and adaptive multi-agent learning. Incorporating such approaches may also facilitate transfer learning and robustness analyses by disentangling learned behaviors from the specific numerical configuration of the agent population.
-
-
 \section{Results}
 
 \section{Conclusion}
-
 
 % \nocite{*}
 \printbibliography
