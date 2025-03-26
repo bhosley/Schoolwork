@@ -47,7 +47,7 @@ performance across varying team sizes.
 
 Multi-agent reinforcement learning (MARL) presents a compelling approach for training agents to 
 interact and cooperate in complex, dynamic environments. It has been applied to a wide range of 
-domains, including autonomous driving \cite{yang2021a}, swarm robotics, \cite{brambilla2013} 
+domains, including autonomous driving \cite{yang2021a}, swarm robotics \cite{brambilla2013}, 
 decentralized logistics, and multi-agent games \cite{vinyals2019,berner2019}.
  
 In MARL, agents must learn to optimize both individual and collective behavior in the presence 
@@ -59,11 +59,11 @@ performance through specialized role allocation \cite{huttenrauch2019}, while mu
 systems in warehouse operations showcase the benefits of leveraging diverse capabilities 
 \cite{rizk2019}. Similarly, collaborative search-and-rescue operations, which require dynamic 
 role assignment and real-time coordination, highlight the necessity for flexible learning 
-strategies \cite{hoang2023}. Additional challenges in heterogeneous settings are discussed in 
+strategies \cite{hoang2023}, with further challenges in heterogeneous settings detailed in 
 \cite{kapetanakis2005,hernandez-leal2019}.
 
 While many benchmark environments support large-scale homogeneous agent populations with
-shared policies (e.g., MAgent2 % [FLAG: Add MAgent2 reference]), heterogeneous MARL (HARL)
+shared policies (e.g., MAgent2 \cite{zheng2017}), heterogeneous MARL (HARL)
 settings often encode agent identity and role explicitly, leading to observation structures
 that assume a fixed number of uniquely-indexed agents. This approach restricts the observation
 space to a specific configuration, making it difficult to scale or generalize across variable
@@ -90,7 +90,8 @@ training loops for each agent count. Addressing this limitation is essential for
 general-purpose, adaptable multi-agent policies.
 
 In this paper, we examine structural constraints in the default observation design of the
-LBF environment and introduce two strategies to decouple observation size from agent count:
+LBF environment and introduce two strategies to decouple observation vector dimensionality 
+from agent population size:
 \begin{itemize}
     \item a minimal observation strategy that omits ally features entirely, and
     \item a structured reduction strategy that encodes ally information into a fixed-size,
@@ -110,8 +111,84 @@ performance while enabling significantly more flexible training workflows.
 
 
 \section{Related Work}
+\subsection{Observation Design in Multi-Agent Systems}
 
-\cite{busoniu2008} % An early survey of MARL
+Observation space design plays a central role in the generalization, scalability, 
+and transferability of learned policies in reinforcement learning more broadly, 
+and presents unique challenges in the multi-agent setting that we focus on here. 
+In many environments—such as SMAC \cite{samvelyan2019}, Google Research Football \cite{kurach2020},
+and Level-Based Foraging (LBF) \cite{papoudakis2021}—the observation vector encodes fixed-size 
+segments that correspond to all agents and nearby objects. 
+This leads to observation dimensions that are tightly coupled to the number of agents
+in the environment, which complicates transfer to variable team sizes and undermines architectural
+modularity. 
+Such design choices limit the feasibility of curriculum learning, zero-shot generalization,
+and policy reuse across heterogeneous configurations.
+
+While few works frame this issue directly as a problem of \textit{dimension reduction}, 
+several methods indirectly address the challenge by compressing, pooling, 
+or abstracting over agent-specific information.
+Entity-centric approaches such as REFIL \cite{iqbal2021} and mean embedding strategies
+\cite{huttenrauch2019} represent a collection of agents or objects using permutation-invariant
+transformations, effectively decoupling policy input from team size. Similarly, attention-based methods
+(e.g., top-$k$ pooling) and mean-field approximations \cite{yang2021a} reduce observation complexity
+by focusing only on the most relevant entities. Role-conditioned architectures
+\cite{gupta2017, kouzeghar2023} also compress observations by filtering agent features through
+a low-dimensional role representation.
+
+These approaches, however, often introduce architectural complexity or assume centralized 
+training with shared state information \cite{foerster2017}. Moreover, they typically require 
+retraining or re-encoding when the agent pool or spatial layout changes significantly. 
+Our work takes a complementary approach: we treat the dimensionality of the observation vector 
+itself as a constraint and propose lightweight observation-level reductions that preserve 
+task-relevant structure while enabling flexible agent counts. 
+Related efforts in high-dimensional robotics and policy compression similarly 
+leverage latent representations to improve sample efficiency and structural 
+adaptability \cite{bitzer2010, tangkaratt2016}.
+
+% \todo{Consider adding citation for attention-based message pruning or top-k pooling.}
+
+\subsection{Heterogeneous MARL and Policy Transferability}
+
+Heterogeneous MARL (HARL) introduces additional complexity by requiring agents with differing
+roles, capabilities, or observation modalities to coordinate effectively. This setting reflects
+many real-world domains, including swarm robotics \cite{hoang2023}, traffic control \cite{calvo2018},
+and decentralized logistics \cite{rizk2019}, where adaptability to team composition and role diversity
+is essential.
+
+Prior work has explored architectures that support specialization and flexibility. 
+For example, Gupta et al. \cite{gupta2017a} and Hüttenrauch et al. \cite{huttenrauch2019} 
+both demonstrate techniques for encoding structured input using single-agent policies that 
+can generalize across role configurations, but do not address multi-agent coordination directly. 
+Iqbal et al. \cite{iqbal2021} introduce entity-centric methods in a homogeneous MARL setting, 
+which allow pooling across similar agents but still assume identical agent capabilities. 
+While these methods improve generalization within their respective assumptions, they often 
+maintain a fixed number of roles or homogeneous agent groups, limiting their applicability 
+in dynamic heterogeneous settings.
+
+Our work contributes to this space by focusing on observation-level design, offering strategies
+that allow agent populations to vary without modifying the underlying network architecture.
+This enables more efficient policy reuse and deployment across tasks with differing team sizes,
+a capability not well supported in most existing HARL approaches.
+
+\subsection{Benchmarks and Evaluation in HARL}
+
+Evaluating HARL systems under varying team configurations remains underexplored in most
+benchmark suites. While environments like LBF \cite{papoudakis2021} permit adjustable agent counts,
+their default observation encodings entangle observation length with the number of agents,
+hindering direct comparison across configurations. Other platforms, such as Melting Pot
+\cite{leibo2021} and MAgent2 \cite{zheng2017}, support large-scale simulations but typically focus
+on homogeneous populations with shared policies.
+
+Recent benchmarks such as SMACv2 \cite{ellis2023} introduce generalization challenges via
+procedural variation, and Google Research Football (GRF) \cite{kurach2020} provides rich agent
+coordination scenarios. However, both maintain fixed observation schemas and assume static team
+structures during training and evaluation.
+
+Our work complements these efforts by demonstrating how reduced and agent-count-invariant
+observation encodings can support variable-team evaluation within a consistent architecture.
+This approach enhances the flexibility of HARL evaluation protocols without requiring environment- or
+network-specific modifications.
 
 \section{Methodology}
 % Default observation space
@@ -119,9 +196,6 @@ performance while enabling significantly more flexible training workflows.
 % Egocentric observation space
 
 % Not ego-st (carried behavioral implication)
-
-
-% The environment: LBF
 
 \subsection{Environment}
 
