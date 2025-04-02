@@ -10,10 +10,12 @@
         "Multiwalker",
         "pretrained",
         "pretraining",
+        "REFIL",
         "RLLIB",
         "Shoham",
         "SISL",
         "Timestep",
+        "ttenrauch",
         "Upsampling",
         "Waterworld"
     ]

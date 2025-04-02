@@ -16,7 +16,7 @@
 \usepackage[backend=biber, style=ieee]{biblatex}
 \usepackage[T1]{fontenc}
 \usepackage[final]{microtype}
-\addbibresource{../../2025Bibs/Prospectus.bib}
+\addbibresource{../../../2025Bibs/Prospectus.bib}
 
 \title{Investigating Training Efficiency of Direct Scaling in Multi-Agent Reinforcement Learning}
 \author{Brandon Hosley}
@@ -58,122 +58,237 @@ leading to an increase in learning complexity \cite{rizk2019, yang2021a}.
 Efficient training methodologies that reduce computational costs while maintaining 
 performance are crucial for enabling broader adoption of MARL and HARL systems.
 
-\section{Introduction}
-
-Multi-agent reinforcement learning (MARL) has shown significant promise in solving complex 
-decision-making tasks across domains such as strategic gameplay, robotics, and 
-autonomous systems \cite{silver2016, vinyals2019, berner2019}. 
-However, training MARL models at scale remains computationally expensive, 
-often requiring vast data and simulation time. These challenges intensify in 
-heterogeneous-agent reinforcement learning (HARL), where agents differ in roles, 
-observations, or action capabilities \cite{rizk2019, yang2021a}. 
-Efficient training methodologies that reduce computational costs while maintaining 
-performance are therefore critical for the broader adoption of these systems.
-
 Beyond differences in architecture, HARL also encompasses what we refer to as 
-\emph{behavioral heterogeneity}, where agents may be structurally identical 
-but train independently, allowing their roles to diverge over time. 
+\emph{behavioral heterogeneity}, % a subtype of emergent heterogeneity
+where agents may be structurally identical but their policies are updated independently 
+during training, allowing their roles and behaviors to diverge over time.
 This framing captures a range of realistic deployments—such as drone swarms, 
 robotic warehouses \cite{rizk2019}, and cooperative games—where interchangeable agents 
 can evolve distinct roles through interaction and policy drift. 
 In these settings, the coordination burden increases even when agents are nominally homogeneous.
 
-One proposed strategy to improve training efficiency is to pretrain a smaller subset of agents 
-before scaling to the target configuration. By learning policies in reduced-team scenarios, 
-it may be possible to accelerate convergence and reduce total training time. 
-Smit et al.\ \cite{smit2023} explored this in cooperative football tasks, 
-but found inconsistent benefits when scaling up to full-team configurations. 
-Their results suggest that task structure—especially the need for specialization—can determine 
-whether scaling curricula are effective.
+One proposed strategy to improve training efficiency involves pretraining a reduced subset of agents 
+before scaling to the full target configuration. The intuition is that policies learned in smaller-team 
+scenarios may converge more quickly and subsequently transfer to larger-scale tasks with lower 
+overall cost. Smit et al.\ \cite{smit2023} evaluated this approach in cooperative football environments, 
+but observed mixed results when scaling to full-team configurations. Their findings suggest that 
+the effectiveness of such curricula is sensitive to task structure—particularly the degree to which 
+role specialization is required.
 
-In this study, we investigate the feasibility of this strategy in environments 
-that vary in their demands for specialization and coordination. 
-We introduce an agent-steps metric that standardizes training cost by accounting for 
-both agent count and time, enabling direct comparisons across curricula. 
-Our evaluation spans three benchmark environments—Waterworld \cite{gupta2017}, 
-Multiwalker \cite{gupta2017}, and Level-Based Foraging (LBF) \cite{papoudakis2021}—selected 
-for their varying degrees of behavioral symmetry and cooperative structure.
+We investigate the feasibility of a direct scaling strategy in environments with varying 
+demands for coordination and role specialization. Our experiments employ an agent-steps 
+metric that standardizes training cost by accounting for both agent count and time, 
+enabling direct comparisons across curricula. To evaluate the generality of this approach, 
+we test it on three benchmark environments—Waterworld \cite{gupta2017}, Multiwalker 
+\cite{gupta2017}, and Level-Based Foraging (LBF) \cite{papoudakis2021}—selected for their 
+differing degrees of behavioral symmetry and cooperative complexity. Building on prior work, 
+we extend the basic strategy with an additional retraining phase: policies trained with 
+fewer agents are used to initialize larger teams, which are then further adapted in the 
+target configuration. This approach enables evaluation of transferability across 
+configurations with varying degrees of agent specialization.
 
-While many MARL benchmarks, such as MAgent2 \cite{zheng2017}, 
-support large agent populations with shared policies, most HARL environments fix the number 
-of agents in observation structures. This coupling between team size and observation space 
-restricts transferability and impairs methods like curriculum learning and zero-shot generalization. 
-The LBF and Multiwalker environments in PettingZoo \cite{terry2021}, 
-as well as SMAC \cite{samvelyan2019} and GRF \cite{kurach2020}, all embed team size 
-into their input formats, making policy reuse across scales nontrivial.
+While environments such as MAgent2 \cite{zheng2017} support large agent populations through 
+shared policies, most HARL benchmarks fix the number of agents in their observation structures. 
+This entanglement of team size with input dimensionality restricts policy transfer across 
+configurations and complicates the use of curriculum learning or zero-shot generalization. 
+Environments like LBF and Multiwalker from PettingZoo \cite{terry2021}, as well as 
+SMAC \cite{samvelyan2019} and Google Research Football (GRF) \cite{kurach2020}, 
+encode team size directly into observation formats, making policy reuse across scales nontrivial.
 
-To enable fair comparisons, we adapted the observation space in LBF 
-using two lightweight reduction strategies that decouple agent count from input dimensionality. 
-These changes allow us to evaluate transferability and convergence without modifying 
-policy architectures mid-experiment. Our findings indicate that pretraining smaller teams 
-can improve training efficiency in environments with interchangeable roles, 
-but may be less effective when role differentiation emerges during learning. 
-These results provide new insights into the conditions under which scaling curricula are 
-most beneficial and offer practical tools for improving training in scalable HARL systems.
-
-% We retain the formal definition of the original observation structure here for reference:
-% \[
-% \underbrace{[\text{level}_{n_i},\ \text{row}_{n_i},\ \text{col}_{n_i}]}_{\text{Own Features}} ++
-% \underbrace{[f \in F]}_{\text{Food Matrix}} ++
-% \underbrace{[n \in N_{/i}]}_{\text{Agent Matrix}}
-% \]
-
+To enable fair comparisons, we adapted the observation structure in the Level-Based Foraging (LBF) 
+environment to decouple the number of agents from the observation dimensionality. 
+Each agent in LBF receives a fully observable state, which includes a structured array of 
+features for all teammates—an input that scales with the size of the team. As a result, changing 
+team size alters the observation dimensionality, making policy transfer across configurations 
+incompatible with fixed architectures. To address this, we implemented two lightweight 
+observation modifications: (1) a restricted mode that omits all ally-specific information, 
+maintaining a constant observation size across configurations, 
+and (2) an abbreviated format that retains a fixed number of teammate feature slots, 
+randomly sampling allies when the team exceeds the pretraining configuration. 
+These adaptations preserve architectural compatibility and facilitate systematic 
+evaluation of policy transferability across team sizes.
 
 
 \section{Related Work}
-        % Prior research has explored MARL scalability \cite{shoham2007a, busoniu2008, foerster2017} and training efficiency in large-scale environments \cite{ackerman2019, lowe2020}. HARL studies have examined role differentiation and heterogeneous task assignments \cite{wakilpoor2020, koster2020}. Despite these advances, limited work has focused on evaluating pretraining smaller agent groups and scaling up, making our investigation a novel contribution.
 
-        % \includegraphics[width=0.75\linewidth]{2d_football.png}
+\subsection{Training Efficiency and Curriculum Learning in MARL}
+
+Improving training efficiency in multi-agent reinforcement learning (MARL) has become a research 
+priority, given the high computational costs and sample complexity associated with scaling to 
+larger teams or more complex environments \cite{shoham2007a, busoniu2008, zhang2021, nguyen2020}. 
+Curriculum learning has emerged as a promising approach, where tasks are presented in a structured 
+sequence to facilitate progressive skill acquisition. This strategy can take many forms, 
+including environment simplification \cite{shukla2022}, task decomposition \cite{shi2023}, 
+or gradually increasing the number of agents during training \cite{smit2023, albrecht2024}.
+
+Transfer learning approaches have also been used to mitigate the cost of retraining agents 
+tabula rasa (i.e., without prior initialization) in each new configuration. 
+In typical applications, knowledge learned in a source task—often with reduced 
+complexity or smaller scale—is used to initialize agents, 
+which are then fine-tuned to adapt to a target task \cite{cui2022}. 
+These methods have shown success in domains where skills are composable 
+or generalize well across task variants. However, their effectiveness often 
+depends on architectural compatibility and the degree of agent or task homogeneity.
+
+Smit et al.\ \cite{smit2023} investigated curriculum learning in a simplified version of the 
+Google Research Football (GRF) environment, focused on player positioning rather than 
+fine-grained actions or physics simulation. Their approach trained agents in 2v2 scenarios 
+before scaling to full 11v11 teams, evaluating transfer performance using multiple baselines. 
+While conceptually appealing, their curriculum yielded mixed results: agents trained directly 
+in 11v11 settings consistently outperformed those pretrained in smaller games, exhibiting 
+stronger coordination and role differentiation. These findings suggest that when behavioral 
+specialization is critical, small-scale pretraining may not expose agents to sufficiently 
+diverse interactions to foster generalizable cooperation.
+
+Our work extends this line of research by evaluating how smaller-team pretraining followed 
+by retraining in the full agent configuration can accelerate learning. 
+Distinct from earlier efforts, we prioritize structural compatibility between 
+training phases through deliberate observation design. 
+We also examine the effects of this strategy in environments with varying degrees of 
+behavioral heterogeneity, offering insight into how task structure influences 
+transferability and efficiency.
+
+\subsection{Heterogeneous MARL and Policy Transferability}
+
+Heterogeneous MARL (HARL) introduces additional complexity by requiring agents with differing
+roles, capabilities, or observation modalities to coordinate effectively. This setting reflects
+many real-world domains, including swarm robotics \cite{hoang2023}, traffic control \cite{calvo2018},
+and decentralized logistics \cite{rizk2019}, where adaptability to team composition and role diversity
+is essential.
+
+Prior work has explored architectures that support specialization and flexibility. 
+For example, Gupta et al. \cite{gupta2017a} and H{\"u}ttenrauch et al. \cite{huttenrauch2019} 
+both demonstrate techniques for encoding structured input using single-agent policies that 
+can generalize across role configurations, but do not address multi-agent coordination directly. 
+Iqbal et al. \cite{iqbal2021} introduce entity-centric methods in a homogeneous MARL setting, 
+which allow pooling across similar agents but still assume identical agent capabilities. 
+While these methods improve generalization within their respective assumptions, they often 
+maintain a fixed number of roles or homogeneous agent groups, limiting their applicability 
+in dynamic heterogeneous settings.
+
+Our work contributes to this space by focusing on observation-level design, offering strategies
+that allow agent populations to vary without modifying the underlying network architecture.
+This enables more efficient policy reuse and deployment across tasks with differing team sizes,
+a capability not well supported in most existing HARL approaches.
+
+\subsection{Observation Design in Multi-Agent Systems}
+
+Observation space design plays a central role in the generalization, scalability, 
+and transferability of learned policies in reinforcement learning, 
+particularly in the multi-agent setting. 
+Many environments—such as SMAC \cite{samvelyan2019}, 
+Google Research Football (GRF) \cite{kurach2020}, 
+and Level-Based Foraging (LBF) \cite{papoudakis2021}—encode observations as fixed-size vectors, 
+with dedicated segments for each teammate or nearby object. 
+As a result, the dimensionality of the observation space scales with the 
+number of agents present in the environment. 
+This tight coupling between team size and observation format restricts the 
+reuse of trained policies across varying team configurations and undermines 
+modular architectural design. These limitations pose challenges for curriculum learning, 
+zero-shot generalization, and transfer learning—scenarios that require robust generalization 
+to variable input structures.
+
+% \includegraphics[width=0.75\linewidth]{2d_football.png}
+
+While few works frame this issue directly as a problem of \textit{dimension reduction}, 
+several methods address the challenge indirectly by compressing, pooling, 
+or abstracting over agent-specific information. 
+Entity-centric approaches such as REFIL \cite{iqbal2021} and mean embedding strategies 
+\cite{huttenrauch2019} represent collections of agents or objects using permutation-invariant 
+transformations, effectively decoupling policy input from team size. 
+Similarly, attention-based strategies (e.g., top-$k$ pooling) and mean-field approximations 
+\cite{yang2021a} reduce observation complexity by emphasizing only the most relevant entities.
+
+Some works explore architectural modifications to better accommodate agent specialization 
+or variability. Kouzeghar et al.~\cite{kouzeghar2023}, for example, adopt a decentralized 
+approach to UAV swarm coordination by training distinct policies for different drone types, 
+without employing role embeddings or shared parameterization. 
+Gupta et al.~\cite{gupta2017a}, in contrast, employ an embedding-based representation to 
+enable knowledge transfer across morphologically distinct robots, though their setting 
+involves single-agent learning. These studies reflect broader architectural strategies that 
+address variability in agent capabilities or embodiment, even if not in a MARL context.
+
+Despite their promise, these strategies often come with architectural overhead or assume 
+centralized training with shared state information \cite{foerster2017}. 
+Moreover, they typically require retraining or re-encoding when the agent pool or spatial 
+layout changes significantly. Our work takes a complementary approach: 
+we treat the dimensionality of the observation vector itself as a constraint and propose 
+lightweight observation-level reductions that preserve task-relevant structure 
+while enabling flexible agent counts. 
+Related efforts in high-dimensional robotics and policy compression similarly leverage 
+latent representations to improve sample efficiency and structural adaptability 
+\cite{bitzer2010, tangkaratt2016}.
+
+
+% Anchor 4: Benchmark Design and Evaluation Frameworks
+
+\subsection{Benchmarks and Evaluation}
+
+Benchmarking HARL systems under varying team configurations presents persistent
+challenges for experimental design and policy generalization. While many benchmarks 
+such as LBF \cite{papoudakis2021}, Melting Pot \cite{leibo2021}, and MAgent2 \cite{zheng2017} 
+support multi-agent setups, they are primarily designed for homogeneous MARL 
+and often rely on shared policies or fixed observation formats. This limits 
+their utility in studying systems with intrinsic heterogeneity—where agents possess 
+distinct capabilities or behaviors by design. As a result, dedicated HARL benchmarks 
+remain sparse, and evaluating emergent or role-specific behaviors is often constrained 
+by the assumptions and architectures of existing platforms.
+
+Recent benchmarks such as SMACv2 \cite{ellis2023} and 
+Google Research Football (GRF) \cite{kurach2020} offer rich multi-agent coordination scenarios 
+and introduce generalization challenges through procedural variation and strategic diversity. 
+While both environments often employ fixed team sizes, 
+they can be adapted to support varying agent counts.
+Our work complements these efforts by demonstrating how a simple, practical approach to observation 
+restructuring can enable policy evaluation across varying team sizes. By preserving a fixed 
+observation format through lightweight modifications, we support compatibility across configurations 
+without requiring architectural changes or complex preprocessing.
+This approach contributes toward scalable benchmarking practices and supports 
+more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) systems.
+
+% Prior research has explored MARL scalability \cite{shoham2007a, busoniu2008, foerster2017} 
+% and training efficiency in large-scale environments \cite{ackerman2019, lowe2020}. 
+% HARL studies have examined role differentiation and heterogeneous task assignments 
+% \cite{wakilpoor2020, koster2020}. 
+% Despite these advances, limited work has focused on evaluating pretraining smaller 
+% agent groups and scaling up, making our investigation a novel contribution.
 
 
 
-        % %% sub c1 - hetero rl
-        % % argue confusion
-        % % define terms
-        % % b. het
-        % % i. het
-        % \section{Methodology}
 
-        % \subsection{Experimental Setup}
-        % We conducted experiments in the Waterworld environment, a multi-agent domain within the SISL package. Agents navigate a continuous space, collecting resources and avoiding obstacles. Key attributes of the environment include:
-        % \begin{itemize}
-        %     \item Adjustable agent count with cooperative dynamics.
-        %     \item Potential for role differentiation through independent policy learning.
-        % \end{itemize}
+% %% sub c1 - hetero rl
+% % argue confusion
+% % define terms
+% % b. het
+% % i. het
 
-        % Our training protocol utilizes Proximal Policy Optimization (PPO) \cite{schulman2017}, implemented within the RLlib framework, providing flexibility for future algorithmic comparisons. Training is conducted over multiple iterations, with performance measured based on reward progression and convergence speed.
+\section{Methodology}
 
-        % \subsection{Adjusted Time Steps}
-        % To compare computational costs across agent counts, we introduce adjusted time steps, accounting for the linear scaling of per-step computation. The empirical relationship for training step duration is given by:
-        % \begin{equation}
-        %     \text{time(ms)} = 324.2441 + 7004.7673n
-        % \end{equation}
-        % where $n$ is the number of agents. Adjusted time steps enable fair cost comparisons across training configurations.
+    % \subsection{Experimental Setup}
+    % We conducted experiments in the Waterworld environment, a multi-agent domain within the SISL package. Agents navigate a continuous space, collecting resources and avoiding obstacles. Key attributes of the environment include:
+    % \begin{itemize}
+    %     \item Adjustable agent count with cooperative dynamics.
+    %     \item Potential for role differentiation through independent policy learning.
+    % \end{itemize}
 
-        % \subsection{Training Process}
-        % Our approach involves:
-        % \begin{itemize}
-        %     \item Pretraining a smaller number of agents, saving policy checkpoints periodically.
-        %     \item Upsampling pretrained agents without replacement to instantiate larger environments.
-        %     \item Retraining the scaled-up agent team and comparing performance against a tabula rasa baseline.
-        % \end{itemize}
+    % Our training protocol utilizes Proximal Policy Optimization (PPO) \cite{schulman2017}, implemented within the RLlib framework, providing flexibility for future algorithmic comparisons. Training is conducted over multiple iterations, with performance measured based on reward progression and convergence speed.
+
+    % \subsection{Adjusted Time Steps}
+    % To compare computational costs across agent counts, we introduce adjusted time steps, accounting for the linear scaling of per-step computation. The empirical relationship for training step duration is given by:
+    % \begin{equation}
+    %     \text{time(ms)} = 324.2441 + 7004.7673n
+    % \end{equation}
+    % where $n$ is the number of agents. Adjusted time steps enable fair cost comparisons across training configurations.
+
+    % \subsection{Training Process}
+    % Our approach involves:
+    % \begin{itemize}
+    %     \item Pretraining a smaller number of agents, saving policy checkpoints periodically.
+    %     \item Upsampling pretrained agents without replacement to instantiate larger environments.
+    %     \item Retraining the scaled-up agent team and comparing performance against a tabula rasa baseline.
+    % \end{itemize}
 
 
-A key challenge encountered when training in the Level-Based Foraging (LBF) environment 
-was handling variations in the observation space due to changes in the number of allied agents. 
-By default, LBF provides each agent with a fully observable state representation, 
-consisting of the objective location, self-information, and an ordered array of ally information. 
-However, when the number of allies changes—such that during the transition from pretraining 
-with fewer agents to full-scale training—the size of this observation array also changes, 
-making policy transfer between different team sizes nontrivial. 
-To ensure consistency, we implemented two approaches: 
-(1) restricted observation, where agents were blind to ally locations, 
-ensuring that observation size remained static across training phases, and 
-(2) structured observation abbreviation, where the observation size was fixed based 
-on the pretraining phase, and when the number of allies increased, the additional ally 
-information was sampled from the larger representation to maintain structural consistency. 
-These modifications allowed us to systematically evaluate the impact of observation 
-consistency on policy transfer and learning stability in heterogeneous-agent training scenarios.
 
 \vspace{3em}
 
@@ -211,127 +326,53 @@ consistency on policy transfer and learning stability in heterogeneous-agent tra
 
 \vspace{3em}
 
+% We retain the formal definition of the original observation structure here for reference:
+% \[
+% \underbrace{[\text{level}_{n_i},\ \text{row}_{n_i},\ \text{col}_{n_i}]}_{\text{Own Features}} ++
+% \underbrace{[f \in F]}_{\text{Food Matrix}} ++
+% \underbrace{[n \in N_{/i}]}_{\text{Agent Matrix}}
+% \]
 
-        % \section{Results and Observations}
-        % Our findings indicate that convergence occurs earlier with fewer agents, particularly when agent counts differ significantly. Performance gains may be due to task tessellation, warranting further investigation. Key observations include:
-        % \begin{itemize}
-        %     \item Training time per step scales linearly with the number of agents.
-        %     \item Pretraining smaller groups can lead to faster convergence in certain scenarios.
-        %     \item Performance benefits diminish when tasks lack natural role division.
-        % \end{itemize}
+    % \section{Results and Observations}
+    % Our findings indicate that convergence occurs earlier with fewer agents, particularly when agent counts differ significantly. Performance gains may be due to task tessellation, warranting further investigation. Key observations include:
+    % \begin{itemize}
+    %     \item Training time per step scales linearly with the number of agents.
+    %     \item Pretraining smaller groups can lead to faster convergence in certain scenarios.
+    %     \item Performance benefits diminish when tasks lack natural role division.
+    % \end{itemize}
 
-        % \section{Future Work}
-        % Building on these findings, Contribution 2 will explore curriculum-based training strategies, progressively increasing agent counts in complex tasks. Additionally, we aim to investigate biological models of cooperation and specialization for further insights into HARL systems.
+    % \section{Future Work}
+    % Building on these findings, Contribution 2 will explore curriculum-based training strategies, progressively increasing agent counts in complex tasks. Additionally, we aim to investigate biological models of cooperation and specialization for further insights into HARL systems.
 
-        % \section{Conclusion}
-        % This study demonstrates the potential benefits of pretraining smaller MARL teams before scaling up. By introducing adjusted time steps and analyzing training efficiency, we contribute to understanding scalable MARL techniques. Future work will refine these methods and expand the applicability to more complex environments.
+    % \section{Conclusion}
+    % This study demonstrates the potential benefits of pretraining smaller MARL teams before scaling up. By introducing adjusted time steps and analyzing training efficiency, we contribute to understanding scalable MARL techniques. Future work will refine these methods and expand the applicability to more complex environments.
 
 
-        \subsection{Observation Design in Multi-Agent Systems}
-
-        Observation space design plays a central role in the generalization, scalability, 
-        and transferability of learned policies in reinforcement learning more broadly, 
-        and presents unique challenges in the multi-agent setting that we focus on here. 
-        In many environments—such as SMAC \cite{samvelyan2019}, Google Research Football \cite{kurach2020},
-        and Level-Based Foraging (LBF) \cite{papoudakis2021}—the observation vector encodes fixed-size 
-        segments that correspond to all agents and nearby objects. 
-        This leads to observation dimensions that are tightly coupled to the number of agents
-        in the environment, which complicates transfer to variable team sizes and undermines architectural
-        modularity. 
-        Such design choices limit the feasibility of curriculum learning, zero-shot generalization,
-        and policy reuse across heterogeneous configurations.
-        
-        While few works frame this issue directly as a problem of \textit{dimension reduction}, 
-        several methods indirectly address the challenge by compressing, pooling, 
-        or abstracting over agent-specific information.
-        Entity-centric approaches such as REFIL \cite{iqbal2021} and mean embedding strategies
-        \cite{huttenrauch2019} represent a collection of agents or objects using permutation-invariant
-        transformations, effectively decoupling policy input from team size. Similarly, attention-based methods
-        (e.g., top-$k$ pooling) and mean-field approximations \cite{yang2021a} reduce observation complexity
-        by focusing only on the most relevant entities. Role-conditioned architectures
-        \cite{gupta2017, kouzeghar2023} also compress observations by filtering agent features through
-        a low-dimensional role representation.
-        
-        These approaches, however, often introduce architectural complexity or assume centralized 
-        training with shared state information \cite{foerster2017}. Moreover, they typically require 
-        retraining or re-encoding when the agent pool or spatial layout changes significantly. 
-        Our work takes a complementary approach: we treat the dimensionality of the observation vector 
-        itself as a constraint and propose lightweight observation-level reductions that preserve 
-        task-relevant structure while enabling flexible agent counts. 
-        Related efforts in high-dimensional robotics and policy compression similarly 
-        leverage latent representations to improve sample efficiency and structural 
-        adaptability \cite{bitzer2010, tangkaratt2016}.
-        
-        % \todo{Consider adding citation for attention-based message pruning or top-k pooling.}
-        
-        \subsection{Heterogeneous MARL and Policy Transferability}
-        
-        Heterogeneous MARL (HARL) introduces additional complexity by requiring agents with differing
-        roles, capabilities, or observation modalities to coordinate effectively. This setting reflects
-        many real-world domains, including swarm robotics \cite{hoang2023}, traffic control \cite{calvo2018},
-        and decentralized logistics \cite{rizk2019}, where adaptability to team composition and role diversity
-        is essential.
-        
-        Prior work has explored architectures that support specialization and flexibility. 
-        For example, Gupta et al. \cite{gupta2017a} and Hüttenrauch et al. \cite{huttenrauch2019} 
-        both demonstrate techniques for encoding structured input using single-agent policies that 
-        can generalize across role configurations, but do not address multi-agent coordination directly. 
-        Iqbal et al. \cite{iqbal2021} introduce entity-centric methods in a homogeneous MARL setting, 
-        which allow pooling across similar agents but still assume identical agent capabilities. 
-        While these methods improve generalization within their respective assumptions, they often 
-        maintain a fixed number of roles or homogeneous agent groups, limiting their applicability 
-        in dynamic heterogeneous settings.
-        
-        Our work contributes to this space by focusing on observation-level design, offering strategies
-        that allow agent populations to vary without modifying the underlying network architecture.
-        This enables more efficient policy reuse and deployment across tasks with differing team sizes,
-        a capability not well supported in most existing HARL approaches.
-        
-        \subsection{Benchmarks and Evaluation in HARL}
-        
-        Evaluating HARL systems under varying team configurations remains underexplored in most
-        benchmark suites. While environments like LBF \cite{papoudakis2021} permit adjustable agent counts,
-        their default observation encodings entangle observation length with the number of agents,
-        hindering direct comparison across configurations. Other platforms, such as Melting Pot
-        \cite{leibo2021} and MAgent2 \cite{zheng2017}, support large-scale simulations but typically focus
-        on homogeneous populations with shared policies.
-        
-        Recent benchmarks such as SMACv2 \cite{ellis2023} introduce generalization challenges via
-        procedural variation, and Google Research Football (GRF) \cite{kurach2020} provides rich agent
-        coordination scenarios. However, both maintain fixed observation schemas and assume static team
-        structures during training and evaluation.
-        
-        Our work complements these efforts by demonstrating how reduced and agent-count-invariant
-        observation encodings can support variable-team evaluation within a consistent architecture.
-        This approach enhances the flexibility of HARL evaluation protocols without requiring environment- or
-        network-specific modifications.
-        
-        \section{Methodology}
-        % Default observation space
-        % Reduced observation space
-        % Egocentric observation space
-        
-        % Not ego-st (carried behavioral implication)
-        
-        \subsection{Environment}
-        
-        We use the Level-Based Foraging (LBF) environment \cite{papoudakis2021},
-        a grid-based reinforcement learning benchmark designed to evaluate 
-        coordination and cooperation in multi-agent settings,
-        that requires agents to jointly collect food items scattered across a map. 
-        
-        Each agent and food item is assigned a discrete level, with the level representing 
-        the agent's foraging capability and the food's consumption requirement, respectively.
-        A food item can only be foraged when the sum of the levels of the agents 
-        occupying adjacent cells meets or exceeds the food's level.
-        
-        The environment emphasizes multi-agent cooperation under spatial and temporal constraints. 
-        Agents must learn to navigate the grid, identify appropriate foraging opportunities, 
-        and coordinate with nearby teammates to successfully collect higher-level food items. 
-        Rewards are sparse and granted only upon successful foraging, 
-        making exploration and credit assignment particularly challenging. 
-        The environment can be configured for partial observability by limiting agent vision range, 
-        further increasing the need for implicit or explicit coordination.
+    % Default observation space
+    % Reduced observation space
+    % Egocentric observation space
+    
+    % Not ego-st (carried behavioral implication)
+    
+    \subsection{Environment}
+    
+    We use the Level-Based Foraging (LBF) environment \cite{papoudakis2021},
+    a grid-based reinforcement learning benchmark designed to evaluate 
+    coordination and cooperation in multi-agent settings,
+    that requires agents to jointly collect food items scattered across a map. 
+    
+    Each agent and food item is assigned a discrete level, with the level representing 
+    the agent's foraging capability and the food's consumption requirement, respectively.
+    A food item can only be foraged when the sum of the levels of the agents 
+    occupying adjacent cells meets or exceeds the food's level.
+    
+    The environment emphasizes multi-agent cooperation under spatial and temporal constraints. 
+    Agents must learn to navigate the grid, identify appropriate foraging opportunities, 
+    and coordinate with nearby teammates to successfully collect higher-level food items. 
+    Rewards are sparse and granted only upon successful foraging, 
+    making exploration and credit assignment particularly challenging. 
+    The environment can be configured for partial observability by limiting agent vision range, 
+    further increasing the need for implicit or explicit coordination.
 
 
 % \nocite{*}
