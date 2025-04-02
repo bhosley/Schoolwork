@@ -114,8 +114,11 @@ evaluation of policy transferability across team sizes.
 \subsection{Training Efficiency and Curriculum Learning in MARL}
 
 Improving training efficiency in multi-agent reinforcement learning (MARL) has become a research 
-priority, given the high computational costs and sample complexity associated with scaling to 
-larger teams or more complex environments \cite{shoham2007a, busoniu2008, zhang2021, nguyen2020}. 
+priority, especially given the computational costs and sample complexity that scale with team 
+size and task difficulty. Prior research has explored MARL scalability and efficiency in 
+large-scale environments, investigating methods to reduce overestimation bias, 
+support policy decentralization, and optimize communication overheads 
+\cite{shoham2007a, busoniu2008, foerster2017, ackermann2019, lowe2020}.
 Curriculum learning has emerged as a promising approach, where tasks are presented in a structured 
 sequence to facilitate progressive skill acquisition. This strategy can take many forms, 
 including environment simplification \cite{shukla2022}, task decomposition \cite{shi2023}, 
@@ -224,6 +227,15 @@ latent representations to improve sample efficiency and structural adaptability
 
 \subsection{Benchmarks and Evaluation}
 
+Prior literature has explored alternative approaches to HARL evaluation. 
+Wakilpoor et al.~\cite{wakilpoor2020} introduce an attention-guided multi-agent actor-critic 
+that enables efficient coordination between agents with complementary abilities. 
+Koster et al.~\cite{koster2020} similarly propose an attention-based method for centralized 
+training of heterogeneous agents, enabling shared learning across distinct roles. 
+These works demonstrate scalable performance in specialized evaluation domains, 
+yet the broader field still lacks general-purpose benchmarks that support systematic 
+study of heterogeneity across configurations.
+
 Benchmarking HARL systems under varying team configurations presents persistent
 challenges for experimental design and policy generalization. While many benchmarks 
 such as LBF \cite{papoudakis2021}, Melting Pot \cite{leibo2021}, and MAgent2 \cite{zheng2017} 
@@ -245,16 +257,6 @@ observation format through lightweight modifications, we support compatibility a
 without requiring architectural changes or complex preprocessing.
 This approach contributes toward scalable benchmarking practices and supports 
 more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) systems.
-
-% Prior research has explored MARL scalability \cite{shoham2007a, busoniu2008, foerster2017} 
-% and training efficiency in large-scale environments \cite{ackerman2019, lowe2020}. 
-% HARL studies have examined role differentiation and heterogeneous task assignments 
-% \cite{wakilpoor2020, koster2020}. 
-% Despite these advances, limited work has focused on evaluating pretraining smaller 
-% agent groups and scaling up, making our investigation a novel contribution.
-
-
-
 
 % %% sub c1 - hetero rl
 % % argue confusion
@@ -288,10 +290,37 @@ more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) sy
     %     \item Retraining the scaled-up agent team and comparing performance against a tabula rasa baseline.
     % \end{itemize}
 
+This study evaluates the training efficiency of upsampling policies learned in smaller-team configurations, compared to baseline models trained tabula rasa with full team sizes. We conduct experiments in three multi-agent reinforcement learning (MARL) environments to assess the transferability and cost-effectiveness of this approach under varying heterogeneity conditions.
+
+\subsection{Environments}
+
+We selected three environments with distinct heterogeneity profiles:
+\begin{itemize}
+    \item \textbf{Waterworld} \cite{gupta2017} (from SISL in PettingZoo) exhibits \emph{emergent behavioral heterogeneity}, where agents begin identical but may develop distinct roles through independent policy updates.
+    \item \textbf{Multiwalker} \cite{gupta2017} includes \emph{static intrinsic heterogeneity}, as agents occupy fixed positions within a chain-like system that impacts their observations and coordination roles.
+    \item \textbf{Level-Based Foraging (LBF)} \cite{papoudakis2021} supports \emph{dynamic intrinsic heterogeneity}, as agents independently level up and adopt roles of varying effectiveness during training.
+\end{itemize}
+
+Among these, only LBF required modifications to its observation structure to decouple team size from input dimensionality. As detailed in Section~\ref{sec:observation}, we applied observation restrictions and fixed-length representations to enable policy reuse across team sizes.
+
+\subsection{Training and Evaluation Procedure}
+
+We adopted Proximal Policy Optimization (PPO) as implemented in RLlib, using default parameters for Waterworld and LBF, and a modified network architecture for Multiwalker. \textbf{[Placeholder: Insert Table with Environment-Specific Hyperparameters]}
+
+For each environment, we identified a minimal viable agent count for pretraining: 2 agents for Waterworld and LBF, and 3 agents for Multiwalker. These agents were trained until convergence, with periodic policy checkpoints saved throughout training.
+
+Upsampling was performed by duplicating pretrained policies to create larger teams of up to 8 agents for Waterworld and LBF, and up to 7 agents for Multiwalker. Duplication was performed without replacement, and when the target agent count exceeded a multiple of the pretrained pool, one additional copy was selected at random. For Waterworld and LBF, all agent IDs were treated as interchangeable. In Multiwalker, however, the leading agent was kept fixed, with the middle and rear agents selected from the checkpoint pool.
+
+Retraining was conducted using these upsampled teams, initializing each agent with one of the pretrained policies. During retraining, all agents updated their policies independently, allowing behavioral differentiation to emerge or continue from the initial state. Multiple checkpoints were tested to represent different pretraining durations.
+
+\subsection{Baseline and Metrics}
+
+To assess efficiency gains, we compared retrained configurations to baseline models trained tabula rasa with the same number of agents. Performance was evaluated using \textit{agent-steps}, defined as the product of the number of agents and training iterations. This metric accounts for the linear scaling of per-step computational cost with team size, as empirically observed in all environments. Agent-steps provides a standardized cost measure, enabling fair comparisons across curricula.
+
+Additional analyses in the Results section will investigate reward progression, convergence speed, and environmental sensitivity to policy transfer. This design allows us to isolate the effects of upsampling under different heterogeneity pressures, and to evaluate when this curriculum strategy may be most beneficial.
 
 
 \vspace{3em}
-
 
 % \begin{figure}[h]
 %     \centering
@@ -323,7 +352,6 @@ more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) sy
 %     \caption{Illustration of observation array handling when transitioning from a small-team configuration to a larger one. Dashed arrows indicate sampled ally data.}
 % \end{figure}
 
-
 \vspace{3em}
 
 % We retain the formal definition of the original observation structure here for reference:
@@ -333,46 +361,48 @@ more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) sy
 % \underbrace{[n \in N_{/i}]}_{\text{Agent Matrix}}
 % \]
 
-    % \section{Results and Observations}
-    % Our findings indicate that convergence occurs earlier with fewer agents, particularly when agent counts differ significantly. Performance gains may be due to task tessellation, warranting further investigation. Key observations include:
-    % \begin{itemize}
-    %     \item Training time per step scales linearly with the number of agents.
-    %     \item Pretraining smaller groups can lead to faster convergence in certain scenarios.
-    %     \item Performance benefits diminish when tasks lack natural role division.
-    % \end{itemize}
-
-    % \section{Future Work}
-    % Building on these findings, Contribution 2 will explore curriculum-based training strategies, progressively increasing agent counts in complex tasks. Additionally, we aim to investigate biological models of cooperation and specialization for further insights into HARL systems.
-
-    % \section{Conclusion}
-    % This study demonstrates the potential benefits of pretraining smaller MARL teams before scaling up. By introducing adjusted time steps and analyzing training efficiency, we contribute to understanding scalable MARL techniques. Future work will refine these methods and expand the applicability to more complex environments.
 
 
-    % Default observation space
-    % Reduced observation space
-    % Egocentric observation space
+% Default observation space
+% Reduced observation space
+% Egocentric observation space
+
+% Not ego-st (carried behavioral implication)
     
-    % Not ego-st (carried behavioral implication)
-    
-    \subsection{Environment}
-    
-    We use the Level-Based Foraging (LBF) environment \cite{papoudakis2021},
-    a grid-based reinforcement learning benchmark designed to evaluate 
-    coordination and cooperation in multi-agent settings,
-    that requires agents to jointly collect food items scattered across a map. 
-    
-    Each agent and food item is assigned a discrete level, with the level representing 
-    the agent's foraging capability and the food's consumption requirement, respectively.
-    A food item can only be foraged when the sum of the levels of the agents 
-    occupying adjacent cells meets or exceeds the food's level.
-    
-    The environment emphasizes multi-agent cooperation under spatial and temporal constraints. 
-    Agents must learn to navigate the grid, identify appropriate foraging opportunities, 
-    and coordinate with nearby teammates to successfully collect higher-level food items. 
-    Rewards are sparse and granted only upon successful foraging, 
-    making exploration and credit assignment particularly challenging. 
-    The environment can be configured for partial observability by limiting agent vision range, 
-    further increasing the need for implicit or explicit coordination.
+\subsection{Environment}
+
+We use the Level-Based Foraging (LBF) environment \cite{papoudakis2021},
+a grid-based reinforcement learning benchmark designed to evaluate 
+coordination and cooperation in multi-agent settings,
+that requires agents to jointly collect food items scattered across a map. 
+
+Each agent and food item is assigned a discrete level, with the level representing 
+the agent's foraging capability and the food's consumption requirement, respectively.
+A food item can only be foraged when the sum of the levels of the agents 
+occupying adjacent cells meets or exceeds the food's level.
+
+The environment emphasizes multi-agent cooperation under spatial and temporal constraints. 
+Agents must learn to navigate the grid, identify appropriate foraging opportunities, 
+and coordinate with nearby teammates to successfully collect higher-level food items. 
+Rewards are sparse and granted only upon successful foraging, 
+making exploration and credit assignment particularly challenging. 
+The environment can be configured for partial observability by limiting agent vision range, 
+further increasing the need for implicit or explicit coordination.
+
+
+% \section{Results and Observations}
+% Our findings indicate that convergence occurs earlier with fewer agents, particularly when agent counts differ significantly. Performance gains may be due to task tessellation, warranting further investigation. Key observations include:
+% \begin{itemize}
+%     \item Training time per step scales linearly with the number of agents.
+%     \item Pretraining smaller groups can lead to faster convergence in certain scenarios.
+%     \item Performance benefits diminish when tasks lack natural role division.
+% \end{itemize}
+
+% \section{Future Work}
+% Building on these findings, Contribution 2 will explore curriculum-based training strategies, progressively increasing agent counts in complex tasks. Additionally, we aim to investigate biological models of cooperation and specialization for further insights into HARL systems.
+
+% \section{Conclusion}
+% This study demonstrates the potential benefits of pretraining smaller MARL teams before scaling up. By introducing adjusted time steps and analyzing training efficiency, we contribute to understanding scalable MARL techniques. Future work will refine these methods and expand the applicability to more complex environments.
 
 
 % \nocite{*}
