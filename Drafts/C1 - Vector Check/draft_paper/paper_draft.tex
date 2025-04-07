@@ -3,11 +3,12 @@
 \usepackage{csquotes}
 
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{hyperref}
 
 \usepackage{graphicx}
-\graphicspath{{../images/}}
+\graphicspath{{../images/}{../data/}}
 
 \usepackage{tikz}
 \usetikzlibrary{positioning}
@@ -27,6 +28,8 @@
 \maketitle
 
 \begin{abstract}
+    % TODO: First sentence, should state problem
+    % The so-what
     This paper investigates the feasibility of training multi-agent reinforcement learning (MARL) 
     systems with a reduced number of agents before scaling up to full team sizes. 
     Inspired by prior work, particularly Smit et al. (2023), 
@@ -175,6 +178,7 @@ This enables more efficient policy reuse and deployment across tasks with differ
 a capability not well supported in most existing HARL approaches.
 
 \subsection{Observation Design in Multi-Agent Systems}
+\label{sec:related_work-observation_design}
 
 Observation space design plays a central role in the generalization, scalability, 
 and transferability of learned policies in reinforcement learning, 
@@ -222,9 +226,6 @@ Related efforts in high-dimensional robotics and policy compression similarly le
 latent representations to improve sample efficiency and structural adaptability 
 \cite{bitzer2010, tangkaratt2016}.
 
-
-% Anchor 4: Benchmark Design and Evaluation Frameworks
-
 \subsection{Benchmarks and Evaluation}
 
 Prior literature has explored alternative approaches to HARL evaluation. 
@@ -266,123 +267,203 @@ more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) sy
 
 \section{Methodology}\label{sec:methodology}
 
-\subsection{Training Framework for Heterogeneous MARL} 
+\subsection{Training Framework for Heterogeneous MARL}
+
 We formulate each task as a cooperative multi-agent partially observable Markov 
-decision process (MA-POMDP). At each timestep, each of the $N$ agents receives 
+decision process (MA-POMDP). At each timestep, each of the $n\in N$ agents receives 
 an observation of the environment $o_n$ and selects an action $a_n$ from its action space. 
 Although the agents receive individual rewards $r_n$, these reward functions are aligned 
 toward a shared team objective, reflecting the cooperative nature of the task.
 The objective function is such that policies \(\pi_n(a_n|o_n)\)
-that maximizes the expected cumulative team reward
-\[\sum_{k=t+1}^{T} \sum_{n\in N} r_{n,k}.\]
+that maximizes the expected cumulative team reward. Thus, within the PPO objective function:
+\[
+    \mathcal{L}(\theta) = \mathbb{E}_{t,n} \left[ 
+    \min \left( 
+    \frac{\pi_\theta(a_{n,t} \mid o_{n,t})}{\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})} \hat{A}_{n,t},\ 
+    \text{clip}\left( 
+    \frac{\pi_\theta(a_{n,t} \mid o_{n,t})}{\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})}, 
+    1 \pm \epsilon
+    \right) \hat{A}_{n,t}
+    \right) 
+    \right]
+\]
+individual rewards are aggregated within the advantage estimation as
+\[
+    \hat{A}_{n,t} = \left( \sum_{k=t}^{K} \sum_{n\in N} r_{n,k} \right) - V(o_{n,t})
+\]
+This is the clipped surrogate objective used in PPO, extended here to a multi-agent setting by 
+applying it independently to each agent's trajectory. While agents optimize their policies using
+local observations and advantages, their rewards are aligned toward a shared cooperative outcome.
 These cooperative settings benefit the multi-agent problem as a single-team optimization, 
 encouraging agents to work together. 
 
-Our training procedure follows the centralized training with 
-decentralized execution (CTDE) paradigm, which is a standard 
-framework for MARL in cooperative tasks 
-\cite{guo2024}
-We employ an actor-critic approach wherein a centralized critic (value function) 
-is trained to estimate joint state-value, while each agent has its own actor (policy) 
-operating solely on local observations during execution. 
-This leverages the strengths of actor-critic methods in MARL. 
+\begin{table}[h]
+    \centering
+    \caption{Notation used in PPO objective and advantage estimation}
+    \begin{tabular}{ll}
+    \toprule
+    \textbf{Symbol} & \textbf{Description} \\
+    \midrule
+    $\pi_\theta(a_{n,t} \mid o_{n,t})$ & Probability of action $a_{n,t}$ under current policy for agent $n$ \\
+    $\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})$ & Probability under the previous policy before update \\
+    $\hat{A}_{n,t}$ & Estimated advantage for agent $n$ at time $t$ \\
+    $\epsilon$ & PPO clipping parameter (e.g., 0.2) \\
+    $r_{n,k}$ & Reward received by agent $n$ at timestep $k$ \\
+    $V(o_{n,t})$ & Estimated value of observation $o_{n,t}$ \\
+    $K$ & Horizon length or final timestep in trajectory \\
+    $N$ & Set of all agents in the team \\
+    $t$ & Timestep index in a trajectory \\
+    $a_{n,t}$ & Action taken by agent $n$ at time $t$ \\
+    $o_{n,t}$ & Observation of agent $n$ at time $t$ \\
+    \bottomrule
+    \end{tabular}
+\end{table}
 
-
+We utilize the centralized training with decentralized execution (CTDE) paradigm, 
+a common framework in cooperative MARL settings \cite{guo2024}. 
+This approach allows agents to be trained using global information 
+(e.g., shared state or joint observations), while each agent independently 
+executes its policy based solely on local observations at runtime. 
+This balances scalability with coordination, and is particularly well-suited 
+to environments where centralized control during training is feasible, 
+but decentralized action is required at deployment.
 
 \paragraph{Shared and Specialized Policy Representations.} 
-We design a **multi-agent PPO (MAPPO)** training regimen that promotes 
-both knowledge sharing and agent specialization. 
-In scenarios where agents are homogeneous (i.e., identical observation and action spaces), 
-we \emph{share policy parameters} 
-across all agents 
-Parameter sharing is highly scalable and has proven effective in speeding up learning for teams of identical agents 
+We implemented a heterogeneous-agent PPO (HAPPO) training regimen that supports both 
+knowledge sharing and agent specialization. In scenarios where agents are 
+homogeneous—meaning they share identical observation and action spaces—we train agents 
+independently using distinct policies, without parameter sharing. 
+This choice aligns with our emphasis on observing the natural emergence of 
+behavioral heterogeneity through independently updated policies. 
+Although parameter sharing is often used to accelerate convergence, 
+we avoid it in this study to maintain the independence of learning trajectories across agents. 
+This allows agents to develop divergent behaviors even when they begin identically, 
+supporting emergent specialization under cooperative constraints.
 
-It allows experience to be pooled, so that behaviors learned by one agent can immediately benefit others. However, naively sharing one policy for all agents can limit the emergence of diverse behaviors and is problematic if agents have different roles or observations 
+To support heterogeneous agents—those differing in capabilities or observation/action 
+structures—we avoid relying on specialized embeddings or architectural modifications. 
+Instead, we train distinct policies where required and maintain consistent observation 
+structures where possible. In LBF, for example, an agent's skill level is included 
+directly in its observation. This enables the policy to adapt its behavior based on 
+agent identity or ability, without additional architectural complexity. 
+When agents differ only by role or position, as in Multiwalker, 
+we preserve architectural consistency by assigning fixed policies based on role, 
+allowing behavioral differences to emerge through independent updates.
 
-To handle **heterogeneous agents** (differences in capabilities or observation/action dimensions), we incorporate agent-specific information into the policy input and, where necessary, use separate policy networks for distinct agent types. In practice, this means each agent’s observation $o^i$ is augmented with features encoding its identity or capabilities (e.g., a skill level or role indicator). This technique enables a single neural policy to condition on the agent’s attributes, effectively allowing specialization within a shared policy architecture 
+Through this design, we balance policy independence with structural compatibility. 
+Rather than introducing complex role-based encodings or modifying network architecture, 
+we maintain fixed observation structures to support agent variation across configurations. 
+This allows us to evaluate the efficiency of scaling strategies—such as upsampling policies from 
+smaller teams—without confounding effects from parameter sharing or architectural entanglements. 
+Our policies are trained using PPO with a clipped surrogate objective and generalized 
+advantage estimation, employing minibatch updates after each training epoch.
 
-Through this design, we strike a balance between the efficiency of a shared representation and the flexibility for agents to exhibit different strategies. Past research has shown that such partially shared representations can handle heterogeneous inputs/outputs and still facilitate knowledge transfer among agents 
+One observation-related challenge for transferability arises when the dimensionality 
+of each agent's observation increases with team size, a situation that complicates 
+architectural reuse across different configurations. While this is not a universal issue 
+across all environments, it does affect Level-Based Foraging (LBF) in our setup. 
+To mitigate this, we explored two minimally invasive solutions. First, we constructed a wrapper 
+for the environment in which each agent's observation excludes ally-specific features entirely, 
+ensuring a consistent input dimensionality regardless of team size. Second, 
+we implemented a truncated observation version: a fixed number of teammate feature slots 
+are retained in the observation, and when the team exceeds that limit, a random subset of 
+teammates is selected to populate those slots. Both adaptations maintain architectural 
+compatibility while allowing for scalable evaluation across variable team configurations.
 
-All policy networks are trained with PPO's clipped surrogate objective and generalized advantage estimation, using minibatch updates after each training epoch.
+This setup enables a structured comparison of training efficiency by initializing larger teams 
+with independently updating policy duplicates from smaller configurations, allowing us to assess 
+the benefits of policy reuse without requiring multi-stage curricula.
 
-% Another implementation detail for transferability is maintaining a consistent observation structure across varying team sizes. As the number of agents $N$ changes, the raw observation for an agent (e.g., positions or states of other agents) could vary in dimension. We address this by using a fixed-size observation encoding for each agent. Specifically, we cap the number of other agents or entities considered in each agent’s observation and pad with dummy values or mask inputs beyond this cap [oai_citation_attribution:11‡arxiv.org](https://arxiv.org/html/2404.03869v2#:~:text=In%20order%20to%20directly%20zero,Hence%2C%20we%20can%20concentrate%20on). This way, the input dimension of the policy network remains constant even if the team size changes, eliminating the need to redesign network architecture for different $N$. This approach, inspired by prior works on zero-shot scalable MARL, ensures that a learned policy can be \emph{directly reused} in scenarios with a different number of agents [oai_citation_attribution:12‡arxiv.org](https://arxiv.org/html/2404.03869v2#:~:text=In%20order%20to%20directly%20zero,Hence%2C%20we%20can%20concentrate%20on). In summary, our training framework yields a policy (or set of policies for heterogeneous roles) that is compatible with varying team sizes and agent types, which is crucial for our transfer learning objectives.
+\subsection{Evaluation Environments} 
 
-% \subsection{Curriculum-Based Team Expansion and Transfer Learning} 
-% A core contribution of our methodology is a \textbf{curriculum learning strategy} for progressively increasing the team size during training. Rather than training from scratch on the largest, most complex team configuration, we start with a smaller number of agents and gradually scale up. This staged training follows the intuition of easing the learning problem by first mastering simpler scenarios [oai_citation_attribution:13‡rohanpaleja.com](https://www.rohanpaleja.com/assets/pdf/RSS22_SRL_Workshop_Paper_final_accepted.pdf#:~:text=proposed%20techniques%20have%20included%20Intra,based%20repre%02sentations%20are%20ideal%20for). Concretely, we begin with the minimum team size that meaningfully exercises cooperation in each environment (e.g., two agents in the Level-Based Foraging task), and train the agent policies until convergence. We then **transfer** the learned policy parameters to initialize training for a slightly larger team (e.g., three agents), and continue this process until reaching the maximum team size targeted in our experiments. At each stage of this curriculum, the policy is fine-tuned in the new team size environment. By reusing knowledge acquired in simpler tasks, the agents adapt more quickly to the increased complexity [oai_citation_attribution:14‡rohanpaleja.com](https://www.rohanpaleja.com/assets/pdf/RSS22_SRL_Workshop_Paper_final_accepted.pdf#:~:text=but%20related%20task%20,based%20repre%02sentations%20are%20ideal%20for) [oai_citation_attribution:15‡arxiv.org](https://arxiv.org/abs/2204.12937#:~:text=and%20transfer%20across%20team%20sizes,Management%20benchmark). This approach can be seen as a form of multi-task transfer learning, where the source tasks are the smaller-team games and the target task is the larger-team game [oai_citation_attribution:16‡rohanpaleja.com](https://www.rohanpaleja.com/assets/pdf/RSS22_SRL_Workshop_Paper_final_accepted.pdf#:~:text=easier%20task%20and%20then%20transferred,Han). We classify it as \emph{policy reuse} because the same underlying policy is iteratively adapted for new team sizes, rather than learning a separate policy from scratch for each team configuration [oai_citation_attribution:17‡rohanpaleja.com](https://www.rohanpaleja.com/assets/pdf/RSS22_SRL_Workshop_Paper_final_accepted.pdf#:~:text=easier%20task%20and%20then%20transferred,Han). 
+We evaluate our approach in three multi-agent environments selected for their contrasting 
+coordination demands and forms of agent heterogeneity: 
+Waterworld, Multiwalker, and Level-Based Foraging (LBF). These tasks span continuous 
+and discrete control domains and include symmetric as well as role-differentiated team dynamics.
 
-% The curriculum is designed to promote the emergence of coordinated strategies and \textbf{role specialization} in a manner that generalizes across scales. Early in training (with fewer agents), the agents discover basic cooperative tactics. As new agents are added, the previously learned behaviors serve as a foundation — for example, agents can recognize and assume complementary roles that were effective in smaller teams and extend them to larger teams. Recent studies have shown that transferring role structures from small teams to larger teams can significantly accelerate learning and improve performance in the larger teams [oai_citation_attribution:18‡arxiv.org](https://arxiv.org/abs/2204.12937#:~:text=and%20transfer%20across%20team%20sizes,Management%20benchmark). By incrementally increasing $N$, our method allows the policy to adjust to new **role assignments** required for bigger teams without losing the core coordination mechanisms learned earlier. This fosters a robust policy that implicitly covers a spectrum of team sizes. In effect, the policy learns to be \emph{adaptive} to team composition, which is essential for scalable MARL [oai_citation_attribution:19‡arxiv.org](https://arxiv.org/html/2404.03869v2#:~:text=required%20for%20heterogeneous%20strategies,a%20more%20practical%20MARL%20algorithm) [oai_citation_attribution:20‡arxiv.org](https://arxiv.org/html/2404.03869v2#:~:text=Some%20works%C2%A0,Motivated%20by%20these). Distinct from traditional MARL training confined to a fixed team, our approach directly addresses scalability by ensuring that both the learning process and the learned behaviors remain effective as the team grows [oai_citation_attribution:21‡arxiv.org](https://arxiv.org/html/2404.03869v2#:~:text=Despite%20its%20successes%2C%20traditional%20MARL,the%20role%20assignment%20and%20the).
+\textbf{Waterworld} features fully cooperative continuous control with homogeneous agents 
+navigating a 2D arena to collect food while avoiding poison. The environment supports emergent 
+behavioral heterogeneity through independent learning but imposes no intrinsic agent distinctions. 
+It tests whether smaller-team coordination can generalize to larger swarms with minimal 
+conflict or redundancy.
 
-% It is worth noting that our curriculum-based transfer does \textbf{not require additional training} when deploying the policy on intermediate team sizes that were not explicitly seen during training. Because of the parameter-sharing design and unified observation space, an agent policy trained with, say, $k$ agents can be applied \emph{zero-shot} to an environment with $k+1$ or $k-1$ agents. We evaluate such zero-shot transferability to confirm that our learned policies are indeed scalable without retraining [oai_citation_attribution:22‡arxiv.org](https://arxiv.org/html/2404.03869v2#:~:text=Specifically%2C%20in%20this%20paper%2C%20we,with%20varying%20numbers%20of%20vehicles). In cases where fine-tuning is desirable (for significantly larger teams), the curriculum provides an excellent initialization that significantly speeds up convergence on the new task [oai_citation_attribution:23‡arxiv.org](https://arxiv.org/abs/2204.12937#:~:text=teams%2C%20which%20continue%20to%20learn,proposal%20outperforms%20competing%20techniques%20in). Overall, this training paradigm is aligned with how humans might learn a multi-agent task: start in a small group and gradually adapt to larger groups, reusing prior knowledge at each step. By the end of training, we obtain a set of policies (often a single policy, in the parameter-sharing case) that has been exposed to a range of team sizes and is thus well-prepared to be deployed in a variety of scenarios. This methodological design directly supports our research goal of **transferable heterogeneous-agent teamwork** across different scales.
+\textbf{Multiwalker} requires tight temporal coordination among physically coupled bipedal agents 
+transporting a payload. Though all walkers share the same embodiment and action space, 
+their fixed spatial positions in the chain introduce static observation asymmetries. 
+This environment challenges policy reuse in settings where coordination relies on 
+role-consistent behavior.
 
-% \subsection{Evaluation Environments and Protocol} 
-% We validate our approach on three multi-agent environments chosen for their diversity and challenge to heterogeneous-agent learning: \textbf{(1) Waterworld}, \textbf{(2) Multiwalker}, and \textbf{(3) Level-Based Foraging (LBF)}. These domains, originally introduced by Gupta et al. (2017) and extended in the PettingZoo MARL benchmark [oai_citation_attribution:24‡openreview.net](https://openreview.net/pdf?id=WoLQsYU8aZ#:~:text=We%20finally%20included%20the%20three,%282002%29%20where%206), feature different observation structures and degrees of heterogeneity, providing a thorough testbed for our transfer learning framework.
+\textbf{Level-Based Foraging (LBF)} is a discrete grid-world where agents with variable skill 
+levels must cooperate to collect leveled food targets. Coordination depends on matching agent 
+abilities to task demands, with skill levels dynamically affecting each agent's effectiveness. 
+This environment introduces a dynamic intrinsic heterogeneity, as agent roles shift throughout 
+training.
 
-% \textbf{Waterworld:} Waterworld is a continuous control environment where $N$ \emph{pursuer} agents navigate a two-dimensional continuous arena to collect food targets while avoiding poisonous targets [oai_citation_attribution:25‡openreview.net](https://openreview.net/pdf?id=WoLQsYU8aZ#:~:text=randomly%20generated%20evaders%20by%20surrounding,while%20trying%20to%20avoid%20poison). The agents are homogeneous and have identical action spaces (e.g., thrust in different directions). Each agent’s observation consists of continuous readings (such as distances and angles) to nearby food pellets, poison pellets, and other agents, often making the environment fully observable in practice (each agent can sense all relevant objects within a certain range). The team receives a dense reward: every food target consumed yields a positive reward (often shared among agents or given to the specific collector, but ultimately contributing to the team’s total), and contact with poison yields a negative reward. Cooperation is required in the sense that agents must spread out to cover the area and herd targets effectively without collisions or wasted effort. Waterworld primarily evaluates scalability in a symmetric setting — since all agents are identical, an effective policy should handle an increase in the number of pursuers seamlessly. We use Waterworld to test whether our learned policy can coordinate larger swarms of agents hunting targets, without sacrificing performance on individual avoidance of poison.
+To support fair evaluation across team scales, we adapted LBF's observation structure using 
+lightweight modifications described in Section~\ref{sec:related_work-observation_design}, 
+allowing fixed 
+architectures to operate across varying team sizes. Each environment was evaluated for both 
+raw performance and training efficiency under our curriculum-based transfer framework.
 
-% \textbf{Multiwalker:} Multiwalker is a more complex continuous cooperative task based on the OpenAI Gym BipedalWalker. In this environment, multiple bipedal ``walker'' agents must jointly transport a payload (e.g., a ladder or package balanced on their heads) from one end of a field to the other without dropping it [oai_citation_attribution:26‡openreview.net](https://openreview.net/references/pdf?id=TpkQ7ItXO3#:~:text=Each%20robot%20is%20given%20a,large%20penalty%20for%20dropping). The walkers are physically coupled through the shared object: if any walker moves too fast or falls, the object may drop, penalizing the team. Each agent receives a reward signal that is mostly global – for instance, a small positive reward for each time step that the package moves forward without falling, and a large negative reward if the package is dropped (this penalty is applied to all walkers) [oai_citation_attribution:27‡openreview.net](https://openreview.net/references/pdf?id=TpkQ7ItXO3#:~:text=Each%20robot%20is%20given%20a,large%20penalty%20for%20dropping). The agents are again homogeneous in dynamics and control (each controls its two-legged walker), and each observes its own state (joint angles, velocities) as well as some information about the package (e.g., its relative position/tilt) and possibly the other walkers’ positions. We consider Multiwalker to have \emph{full observability} as implemented (the state can be reconstructed from the agents’ joint observations, and in some implementations each agent may even get the full state). The key challenge here is tight coordination: the policy must ensure synchronous movement among walkers to keep the payload balanced. This environment tests our method’s ability to scale a locomotion-based policy from a smaller team (e.g., 2 walkers) to a larger one (e.g., 3 or 4 walkers). A successful transferable policy would allow additional walkers to be integrated into the team without retraining, maintaining balance and forward progress. We evaluate how our curriculum training helps the walkers learn complementary gait patterns and whether those patterns remain effective as the team grows.
+\subsection{Evaluation Protocol and Training Procedure}
 
-% \textbf{Level-Based Foraging (LBF):} LBF is a discrete grid-world environment that explicitly requires heterogeneous-agent cooperation [oai_citation_attribution:28‡marllib.readthedocs.io](https://marllib.readthedocs.io/en/latest/handbook/env.html#:~:text=Level,with%20other%20agents%20if%20needed). Agents and food items are placed on a grid; each food item has a level (an integer requirement) and each agent has its own skill level. An agent can collect a food item only if one or more agents cooperatively occupy the same cell as that food and the sum of their skill levels meets or exceeds the food’s level requirement. All agents share a team reward for successful food collection, making it a fully cooperative game. However, the environment is partially observable: agents have a limited field of view (they only observe nearby cells, not the entire grid) [oai_citation_attribution:29‡marllib.readthedocs.io](https://marllib.readthedocs.io/en/latest/handbook/env.html#:~:text=). This means agents must explore and possibly coordinate via implicit communication (e.g., meeting at a target) under uncertainty. The heterogeneity arises naturally because agents may have different skill levels; for example, a level-3 agent can collect certain food alone that a level-1 agent cannot, whereas two level-1 agents together might achieve it. Optimal play often involves \emph{specialization}, where higher-level agents take on the role of tackling high-value food or assisting lower-level agents, and lower-level agents focus on targets that match their ability or support others. We treat LBF as a critical test for our approach’s ability to handle agents with \textbf{diverse capabilities and partial observability}. Our training framework includes the agents’ skill level as part of the observation input, so the shared policy can condition decisions on an agent’s own ability. During evaluation, we examine whether the learned policy indeed yields different behaviors for agents of different levels (indicating emergent specialization) and how well it generalizes to changes in team composition, such as adding an extra agent with a new skill level. LBF being a mixed cooperative-competitive domain in general [oai_citation_attribution:30‡marllib.readthedocs.io](https://marllib.readthedocs.io/en/latest/handbook/env.html#:~:text=Level,with%20other%20agents%20if%20needed), we focus on the fully cooperative version here (all agents on one team, no adversaries), aligning with our centralized team reward setting.
+We adopted Proximal Policy Optimization (PPO)\cite{schulman2017} using the RLlib 
+framework to structure and execute our experiments, with Hyperparameters described in
+Table~\ref{tab:ppo-hyperparams}. For Waterworld and LBF, 
+we used RLlib's default PPO configuration. For Multiwalker, we modified the default 
+network architecture to better accommodate the higher-dimensional continuous control space and 
+tighter coordination demands.
 
-% \paragraph{Evaluation protocol.} For each environment, we train our agents using the curriculum strategy up to a maximum team size $N_{\max}$ (which is 5 in Waterworld, 3 in Multiwalker, and 5 in LBF in our experiments, as dictated by environment difficulty). We then evaluate the following: (a) \textit{Within-distribution performance}: the policy’s performance on the team sizes it was trained on (to ensure our method does not sacrifice optimal performance in the training scenarios); and (b) \textit{Transfer performance across team sizes}: we deploy the final learned policy on **unseen team sizes** and measure its zero-shot effectiveness [oai_citation_attribution:31‡arxiv.org](https://arxiv.org/html/2404.03869v2#:~:text=Specifically%2C%20in%20this%20paper%2C%20we,with%20varying%20numbers%20of%20vehicles). For example, a policy trained via curriculum from 2 up to 5 agents is tested on 4 agents (if 4 was never explicitly trained) and on 6 agents (beyond the trained range) to assess generalization. We quantify performance using average episodic return and success metrics specific to each domain (such as number of food targets collected in Waterworld, distance carried in Multiwalker, and completion rate of all food in LBF). To provide context, we compare against a baseline where no curriculum is used (i.e. training directly on the largest team size with random initialization). This allows us to attribute any improvement in sample efficiency or final performance to the proposed curriculum transfer approach. Moreover, by analyzing behaviors (through visualizations or log traces), we verify if agents trained under our method indeed exhibit coordinated strategies and adaptive role assignment consistent with the research goals. All experiments are run for multiple random seeds, and we report mean and variance of the performance to ensure statistical significance. The overall experimental methodology is thus structured to demonstrate that our approach yields policies that are not only effective on the training team sizes but also \emph{transferable} to different team configurations and robust in the face of heterogeneity and scaling challenges. This directly supports our claims of improved transferability, agent specialization, and scalable learning in MARL.
+In each environment, we first identified a minimal viable agent count for pretraining: 
+2 agents for Waterworld and LBF, and 3 agents for Multiwalker. 
+These smaller teams were trained until convergence, with periodic policy checkpoints saved 
+throughout training. From each checkpoint, we upsampled to create larger teams—up to 8 agents in 
+Waterworld and LBF, and up to 7 agents in Multiwalker—by duplicating the available policies. 
+When the target agent count exceeded a multiple of the checkpointed policies, 
+one additional copy was selected at random. In Waterworld and LBF, agent IDs were treated as 
+interchangeable. In Multiwalker, the leading agent was kept fixed while the remaining agents 
+were selected from the checkpoint pool. Retraining was then conducted with each agent 
+initialized using one of the pretrained policies. Agents updated their policies independently 
+throughout retraining, allowing for behavioral differentiation to emerge or continue from the 
+initial state.
 
+The primary metric for comparison was agent-steps, defined as the product of the number of 
+agents and training iterations. This standardizes computational cost across team configurations 
+by accounting for the linear scaling observed in all environments.
 
+Each training configuration was repeated independently multiple times. We report mean and 
+variance across these repetitions to assess the consistency of training outcomes. 
+This evaluation framework allows us to compare the efficiency of the curriculum-based 
+upsampling strategy against full tabula rasa training for the same final team sizes, 
+providing insight into the cost-benefit tradeoffs under varying heterogeneity conditions.
 
+Additional analyses in the Results section explore how reward progression, convergence speed, 
+and environmental sensitivity vary across configurations and pretraining durations.
 
-
-
-    % \subsection{Experimental Setup}
-    % We conducted experiments in the Waterworld environment, a multi-agent domain within the SISL package. Agents navigate a continuous space, collecting resources and avoiding obstacles. Key attributes of the environment include:
-    % \begin{itemize}
-    %     \item Adjustable agent count with cooperative dynamics.
-    %     \item Potential for role differentiation through independent policy learning.
-    % \end{itemize}
-
-    % Our training protocol utilizes Proximal Policy Optimization (PPO) \cite{schulman2017}, implemented within the RLlib framework, providing flexibility for future algorithmic comparisons. Training is conducted over multiple iterations, with performance measured based on reward progression and convergence speed.
-
-    % \subsection{Adjusted Time Steps}
-    % To compare computational costs across agent counts, we introduce adjusted time steps, accounting for the linear scaling of per-step computation. The empirical relationship for training step duration is given by:
-    % \begin{equation}
-    %     \text{time(ms)} = 324.2441 + 7004.7673n
-    % \end{equation}
-    % where $n$ is the number of agents. Adjusted time steps enable fair cost comparisons across training configurations.
-
-    % \subsection{Training Process}
-    % Our approach involves:
-    % \begin{itemize}
-    %     \item Pretraining a smaller number of agents, saving policy checkpoints periodically.
-    %     \item Upsampling pretrained agents without replacement to instantiate larger environments.
-    %     \item Retraining the scaled-up agent team and comparing performance against a tabula rasa baseline.
-    % \end{itemize}
-
-This study evaluates the training efficiency of upsampling policies learned in smaller-team configurations, compared to baseline models trained tabula rasa with full team sizes. We conduct experiments in three multi-agent reinforcement learning (MARL) environments to assess the transferability and cost-effectiveness of this approach under varying heterogeneity conditions.
-
-\subsection{Environments}
-
-We selected three environments with distinct heterogeneity profiles:
-\begin{itemize}
-    \item \textbf{Waterworld} \cite{gupta2017} (from SISL in PettingZoo) exhibits \emph{emergent behavioral heterogeneity}, where agents begin identical but may develop distinct roles through independent policy updates.
-    \item \textbf{Multiwalker} \cite{gupta2017} includes \emph{static intrinsic heterogeneity}, as agents occupy fixed positions within a chain-like system that impacts their observations and coordination roles.
-    \item \textbf{Level-Based Foraging (LBF)} \cite{papoudakis2021} supports \emph{dynamic intrinsic heterogeneity}, as agents independently level up and adopt roles of varying effectiveness during training.
-\end{itemize}
-
-Among these, only LBF required modifications to its observation structure to decouple team size from input dimensionality. As detailed in Section~\ref{sec:observation}, we applied observation restrictions and fixed-length representations to enable policy reuse across team sizes.
-
-\subsection{Training and Evaluation Procedure}
-
-We adopted Proximal Policy Optimization (PPO) as implemented in RLlib, using default parameters for Waterworld and LBF, and a modified network architecture for Multiwalker. \textbf{[Placeholder: Insert Table with Environment-Specific Hyperparameters]}
-
-For each environment, we identified a minimal viable agent count for pretraining: 2 agents for Waterworld and LBF, and 3 agents for Multiwalker. These agents were trained until convergence, with periodic policy checkpoints saved throughout training.
-
-Upsampling was performed by duplicating pretrained policies to create larger teams of up to 8 agents for Waterworld and LBF, and up to 7 agents for Multiwalker. Duplication was performed without replacement, and when the target agent count exceeded a multiple of the pretrained pool, one additional copy was selected at random. For Waterworld and LBF, all agent IDs were treated as interchangeable. In Multiwalker, however, the leading agent was kept fixed, with the middle and rear agents selected from the checkpoint pool.
-
-Retraining was conducted using these upsampled teams, initializing each agent with one of the pretrained policies. During retraining, all agents updated their policies independently, allowing behavioral differentiation to emerge or continue from the initial state. Multiple checkpoints were tested to represent different pretraining durations.
-
-\subsection{Baseline and Metrics}
-
-To assess efficiency gains, we compared retrained configurations to baseline models trained tabula rasa with the same number of agents. Performance was evaluated using \textit{agent-steps}, defined as the product of the number of agents and training iterations. This metric accounts for the linear scaling of per-step computational cost with team size, as empirically observed in all environments. Agent-steps provides a standardized cost measure, enabling fair comparisons across curricula.
-
-Additional analyses in the Results section will investigate reward progression, convergence speed, and environmental sensitivity to policy transfer. This design allows us to isolate the effects of upsampling under different heterogeneity pressures, and to evaluate when this curriculum strategy may be most beneficial.
-
+\begin{table}[h]
+    \centering
+    \caption{PPO Hyperparameters used in experiments}
+    \begin{tabular}{ll}
+    \toprule
+    \textbf{Parameter} & \textbf{Value} \\
+    \midrule
+    Learning rate & $5 \times 10^{-5}$ \\
+    Training batch size & 4000 \\
+    Number of SGD epochs per update & 30 \\
+    Minibatch size & 128 \\
+    GAE parameter $\lambda$ & 1.0 \\
+    Clipping parameter $\epsilon$ & 0.3 \\
+    KL coefficient & 0.2 \\
+    Target KL divergence & 0.01 \\
+    Value function loss coefficient & 1.0 \\
+    Value function clipping range & $\pm 10.0$ \\
+    Entropy coefficient & 0.0 \\
+    Policy network (Waterworld, LBF) & 2 layers, 256 units, ReLU \\% + Softmax \\
+    Policy network (Multiwalker) & 6 layers, 256 units, ReLU \\% + Softmax \\
+    \bottomrule
+    \end{tabular}
+    \label{tab:ppo-hyperparams}
+\end{table}
 
 \vspace{3em}
 
@@ -425,51 +506,249 @@ Additional analyses in the Results section will investigate reward progression, 
 % \underbrace{[n \in N_{/i}]}_{\text{Agent Matrix}}
 % \]
 
+\section{Results and Observations}
+
+Before evaluating learning outcomes, we validated the consistency of training step costs.
+Since all experiments were conducted on a shared computing cluster with limited 
+control over resource allocation, we measured the time taken per training
+step throughout the course of the experiment. This validation served two purposes. First, 
+it allowed us to verify that resource provisioning remained stable throughout the experiment, 
+mitigating concerns about variability introduced by background cluster activity or virtualization.
+Second, and more critically, it confirmed that the cost of training scaled linearly 
+with the number of agents—an anticipated relationship, but simple enough to verify empirically.
+This linearity justifies our use of \emph{agent-steps} as the primary cost metric in our analysis.
+%These timing results are presented in the appendix for completeness.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{time_costs.png}
+    \caption{Mean training step duration across agent counts.}
+    \label{fig:agent-steps}
+\end{figure}
 
 
-% Default observation space
-% Reduced observation space
-% Egocentric observation space
+We next examine the learning process in the three experimental environments: 
+Waterworld, Multiwalker, and Level-Based Foraging (LBF). For each environment, 
+we visualized a series of training curves corresponding to a fixed target number of agents.
+Each plot compares the baseline—tabula rasa training of the full agent team—with 
+retraining runs initialized from pretrained policies.
+The baseline is visualized as a dotted mean line, with shaded bands 
+representing a 95\% prediction interval based on 30 independent training runs.
+Mean training trajectories of the retrained runs are grouped by the amount 
+of pretraining used to initialize them.
 
-% Not ego-st (carried behavioral implication)
-    
-\subsection{Environment}
+In most settings, retrained configurations ultimately converged to 
+performance levels comparable to those of tabula rasa training.
+This consistency across end performance suggests that retraining from a smaller 
+pretrained team does not appear to limit the achievable policy performance, 
+at least within the range of configurations evaluated.
 
-We use the Level-Based Foraging (LBF) environment \cite{papoudakis2021},
-a grid-based reinforcement learning benchmark designed to evaluate 
-coordination and cooperation in multi-agent settings,
-that requires agents to jointly collect food items scattered across a map. 
+In the Waterworld environment, the primary benefit of pretraining was accelerated learning. 
+Increasing the ratio between the pretraining and final team sizes led to greater improvements 
+in convergence speed compared to training the full team from scratch. For instance, 
+while retraining from 2-agent policies to 3 or 4 agents offered minimal benefit 
+(Figure \ref{fig:waterworld-4}), scaling to 8 agents from the same 2-agent base resulted in 
+substantial speedups (Figure~\ref{fig:waterworld-8}). These gains diminished rapidly, 
+with little additional benefit observed beyond 60 pretraining steps (120 agent-steps).
+This suggests that relatively short pretraining can provide sufficient foundational 
+coordination to improve sample efficiency at scale, though final tuning may 
+be necessary to achieve full performance with shorter pretraining periods.
 
-Each agent and food item is assigned a discrete level, with the level representing 
-the agent's foraging capability and the food's consumption requirement, respectively.
-A food item can only be foraged when the sum of the levels of the agents 
-occupying adjacent cells meets or exceeds the food's level.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Waterworld-4-agent.png}
+    \caption{}
+    \label{fig:waterworld-4}
+\end{figure}
 
-The environment emphasizes multi-agent cooperation under spatial and temporal constraints. 
-Agents must learn to navigate the grid, identify appropriate foraging opportunities, 
-and coordinate with nearby teammates to successfully collect higher-level food items. 
-Rewards are sparse and granted only upon successful foraging, 
-making exploration and credit assignment particularly challenging. 
-The environment can be configured for partial observability by limiting agent vision range, 
-further increasing the need for implicit or explicit coordination.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Waterworld-8-agent.png}
+    \caption{}
+    \label{fig:waterworld-8}
+\end{figure}
+
+In Figure~\ref{fig:waterworld-aucs} we summarize overall efficiency trends across configurations. 
+Each cell represents the percentage improvement in training efficiency 
+achieved through pretraining, relative to full tabula rasa training.
+This percentage was calculated by comparing the area under the reward curve 
+(AUC) of each retrained configuration to its corresponding baseline, as: $\text{Improvement (\%)} 
+= \frac{\text{AUC}{\text{retrain}} - \text{AUC}{\text{baseline}}}{\text{AUC}_{\text{retrain}}}$
+The resulting heatmap supports a general trend that larger target teams tend to 
+benefit more from pretraining when initialized from a smaller cohort.
+Although we observe peaks at 40 and 180 pretraining steps for the 7- and 8-agent configurations, 
+we attribute these to stochastic variation rather than indicative of structural trends.
+Overall, these results reinforce the observation that direct scaling is most effective 
+when the ratio between pretraining and target team sizes is high.
 
 
-% \section{Results and Observations}
-% Our findings indicate that convergence occurs earlier with fewer agents, particularly when agent counts differ significantly. Performance gains may be due to task tessellation, warranting further investigation. Key observations include:
-% \begin{itemize}
-%     \item Training time per step scales linearly with the number of agents.
-%     \item Pretraining smaller groups can lead to faster convergence in certain scenarios.
-%     \item Performance benefits diminish when tasks lack natural role division.
-% \end{itemize}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Waterworld-AUCs.png}
+    \caption{}
+    \label{fig:waterworld-aucs}
+\end{figure}
 
-% \section{Future Work}
-% Building on these findings, Contribution 2 will explore curriculum-based training strategies, progressively increasing agent counts in complex tasks. Additionally, we aim to investigate biological models of cooperation and specialization for further insights into HARL systems.
 
-% \section{Conclusion}
+In Multiwalker, we observed a notable shift in the utility of pretraining. 
+For smaller teams (4 or 5 agents), retrained and tabula rasa runs performed similarly, 
+with retraining providing only modest acceleration (Figure~\ref{fig:multiwalker-5}). 
+In contrast, for larger teams (6 and 7 agents), tabula rasa training frequently failed to 
+converge or terminated early, likely due to the environment's sparse rewards and heightened 
+sensitivity to miscoordination (Figure~\ref{fig:multiwalker-6}). 
+In these scenarios, pretraining acted as a stabilizing mechanism by equipping agents 
+with sufficient baseline competence to engage meaningfully in early training episodes. 
+Without this foundation, larger teams (more vulnerable to premature episode termination 
+due to the failure of any single agent) struggled to generate useful feedback. 
+Pretraining thus mitigated an early-stage bottleneck and enabled learning to proceed 
+in configurations where tabula rasa attempts often stalled.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Multiwalker-5-agent.png}
+    \caption{}
+    \label{fig:multiwalker-5}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Multiwalker-6-agent.png}
+    \caption{}
+    \label{fig:multiwalker-6}
+\end{figure}
+
+To further examine these trends, we generated an AUC-based heatmap for Multiwalker as shown 
+earlier for Waterworld. The resulting pattern is more polarized than that observed for Waterworld.
+For the larger teams the apparent efficiency gains, often exceeding 100\%
+reflect the stabilizing role of pretraining.
+In contrast, negative gains observed in some smaller-team configurations (e.g., 4 and 5 agents) 
+are better understood as a result of the scaling transition requiring additional training. 
+When this time exceeded the total convergence time of tabula rasa training, 
+the net cost is necessarily higher, despite final performance often eventually met the baseline.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Multiwalker-AUCs.png}
+    \caption{}
+    \label{fig:multiwalker-aucs}
+\end{figure}
+
+
+
+We next consider the Level-Based Foraging (LBF) environment. 
+In this setting, 
+we anticipated potential impact of the observation structures
+to 
+training performance.
+To characterize this impact, 
+we obtained baseline performance from tabula rasa
+for each of the observation schemas described in 
+\ref{sec:related_work-observation_design}
+
+Specifically, we trained full teams 
+(ranging from 2 to 8 agents) from scratch using three observation schemas that differ in 
+the degree of teammate information provided: (1) \emph{full observability}, which supplies agents with complete information about all allies; (2) \emph{truncated observability}, which offers a fixed number of randomly sampled ally features; and (3) \emph{ally-ignorant} observations, which exclude all teammate information. For each team size and observation schema, 30 independent runs were conducted, and the resulting performance distributions were compared.
+
+
+Table%~\ref{tab:observation_comparisons} 
+summarizes these comparisons. Across all agent counts, the full observability schema produced significantly different training outcomes than the two reduced forms. Statistical tests (two-sample t-tests with Bonferroni correction) confirmed that the full schema distributions were distinct from both the truncated and ally-ignorant variants, with $p < 0.001$ in all cases. However, the truncated and ally-ignorant observation settings were not statistically distinguishable from one another at any agent count, even under uncorrected significance thresholds. This suggests that limiting or excluding teammate features leads to comparable training outcomes in LBF, while full observability induces a distinct learning dynamic.
+
+Interestingly, the implied structure of the LBF heatmap is inverted compared to the earlier environments. Rather than showing greater benefit with larger target teams, we observe diminishing returns from pretraining as the number of agents increases. We attribute this shift to the complexity introduced by LBF’s dynamic intrinsic heterogeneity. As agents level up asynchronously, their roles and capabilities diverge over time, increasing the coordination burden. In this setting, pretraining with smaller teams provides limited benefit, as it fails to expose agents to the richer, role-specific interactions that emerge in larger, heterogeneous teams.
+
+% Heatmap Figure
+
+
+\section{Conclusion}
 % This study demonstrates the potential benefits of pretraining smaller MARL teams before scaling up. By introducing adjusted time steps and analyzing training efficiency, we contribute to understanding scalable MARL techniques. Future work will refine these methods and expand the applicability to more complex environments.
 
+
+\section{Future Work}
+% Building on these findings, Contribution 2 will explore curriculum-based training strategies, progressively increasing agent counts in complex tasks. Additionally, we aim to investigate biological models of cooperation and specialization for further insights into HARL systems.
+% Invariant obs space learning
 
 % \nocite{*}
 \printbibliography
 
 \end{document}
+
+
+%%%
+%   Appendix?
+%%%
+
+% We validate our approach on three multi-agent environments chosen for their 
+% diversity and challenge to heterogeneous-agent learning: 
+% \textbf{(1) Waterworld}, \textbf{(2) Multiwalker}, and \textbf{(3) Level-Based Foraging (LBF)}. 
+% These domains, originally introduced by Gupta et al. (2017) and extended in the 
+% PettingZoo MARL benchmark,
+% feature different observation structures and degrees of heterogeneity, 
+% providing a thorough testbed for our transfer learning framework.
+
+% \textbf{Waterworld:} Waterworld is a continuous control environment where $N$ \emph{pursuer} 
+% agents navigate a two-dimensional continuous arena to collect food targets while avoiding 
+% poisonous targets. The agents are homogeneous and have identical action spaces 
+% (e.g., thrust in different directions). Each agent's observation consists of continuous 
+% readings (such as distances and angles) to nearby food pellets, poison pellets, 
+% and other agents, often making the environment fully observable in practice 
+% (each agent can sense all relevant objects within a certain range). 
+% The team receives a dense reward: every food target consumed yields a positive reward 
+% (often shared among agents or given to the specific collector, 
+% but ultimately contributing to the team’s total), and contact with 
+% poison yields a negative reward. Cooperation is required in the sense that 
+% agents must spread out to cover the area and herd targets effectively without 
+% collisions or wasted effort. Waterworld primarily evaluates scalability in a 
+% symmetric setting — since all agents are identical, an effective policy should 
+% handle an increase in the number of pursuers seamlessly. We use Waterworld to 
+% test whether our learned policy can coordinate larger swarms of agents hunting targets, 
+% without sacrificing performance on individual avoidance of poison.
+
+% \textbf{Multiwalker:} Multiwalker is a more complex continuous cooperative task 
+% based on the OpenAI Gym BipedalWalker. In this environment, multiple bipedal 
+% ``walker'' agents must jointly transport a payload (e.g., a ladder or package balanced on 
+% their heads) from one end of a field to the other without dropping it. 
+% The walkers are physically coupled through the shared object: 
+% if any walker moves too fast or falls, the object may drop, penalizing the team. 
+% Each agent receives a reward signal that is mostly global – for instance, 
+% a small positive reward for each time step that the package moves forward without falling, 
+% and a large negative reward if the package is dropped (this penalty is applied to all walkers). 
+% The agents are again homogeneous in dynamics and control (each controls its two-legged walker), 
+% and each observes its own state (joint angles, velocities) as well as some information about 
+% the package (e.g., its relative position/tilt) and possibly the other walkers' positions. 
+% We consider Multiwalker to have \emph{full observability} as implemented 
+% (the state can be reconstructed from the agents' joint observations, and in some 
+% implementations each agent may even get the full state). The key challenge here is 
+% tight coordination: the policy must ensure synchronous movement among walkers to 
+% keep the payload balanced. This environment tests our method's ability to scale a 
+% locomotion-based policy from a smaller team (e.g., 2 walkers) 
+% to a larger one (e.g., 3 or 4 walkers). A successful transferable policy would allow 
+% additional walkers to be integrated into the team without retraining, maintaining 
+% balance and forward progress. We evaluate how our curriculum training helps the walkers 
+% learn complementary gait patterns and whether those patterns remain effective as the team grows.
+
+% \textbf{Level-Based Foraging (LBF):} LBF is a discrete grid-world environment 
+% that explicitly requires heterogeneous-agent cooperation. 
+% Agents and food items are placed on a grid; each food item has a level 
+% (an integer requirement) and each agent has its own skill level. 
+% An agent can collect a food item only if one or more agents cooperatively 
+% occupy the same cell as that food and the sum of their skill levels meets or 
+% exceeds the food's level requirement. All agents share a team reward for 
+% successful food collection, making it a fully cooperative game. 
+% However, the environment is partially observable: agents have a limited 
+% field of view (they only observe nearby cells, not the entire grid). 
+% This means agents must explore and possibly coordinate via implicit communication 
+% (e.g., meeting at a target) under uncertainty. The heterogeneity arises 
+% naturally because agents may have different skill levels; for example, a level-3 
+% agent can collect certain food alone that a level-1 agent cannot, whereas 
+% two level-1 agents together might achieve it. Optimal play often involves 
+% \emph{specialization}, where higher-level agents take on the role of tackling 
+% high-value food or assisting lower-level agents, and lower-level agents focus 
+% on targets that match their ability or support others. We treat LBF as a 
+% critical test for our approach’s ability to handle agents with 
+% \textbf{diverse capabilities and partial observability}. 
+% Our training framework includes the agents' skill level as part of the observation input, 
+% so the shared policy can condition decisions on an agent's own ability. 
+% During evaluation, we examine whether the learned policy indeed yields 
+% different behaviors for agents of different levels (indicating emergent specialization) 
+% and how well it generalizes to changes in team composition, such as adding an extra 
+% agent with a new skill level. LBF being a mixed cooperative-competitive domain in general, 
+% we focus on the fully cooperative version here (all agents on one team, no adversaries), 
+% aligning with our centralized team reward setting.
