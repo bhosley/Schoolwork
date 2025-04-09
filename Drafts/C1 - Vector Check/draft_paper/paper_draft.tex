@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\usepackage{multirow}
 
 \usepackage{graphicx}
 \graphicspath{{../images/}{../data/}}
@@ -19,6 +20,9 @@
 \usepackage[final]{microtype}
 \addbibresource{../../../2025Bibs/Prospectus.bib}
 
+\usepackage{pgffor} %enables for loop used in appendix
+\usepackage{placeins} %this package containts the FloatBarrier tag
+
 \title{Investigating Training Efficiency of Direct Scaling in Multi-Agent Reinforcement Learning}
 \author{Brandon Hosley}
 \date{\today}
@@ -28,10 +32,12 @@
 \maketitle
 
 \begin{abstract}
-    % TODO: First sentence, should state problem
-    % The so-what
-    This paper investigates the feasibility of training multi-agent reinforcement learning (MARL) 
-    systems with a reduced number of agents before scaling up to full team sizes. 
+    As multi-agent systems become increasingly central to domains like robotics, 
+    autonomous coordination, and distributed control, training strategies 
+    that reduce cost while maintaining effectiveness are essential. 
+    This paper explores whether training a smaller team of agents and 
+    then scaling up can offer a more efficient path to high-performing policies in 
+    multi-agent reinforcement learning (MARL).
     Inspired by prior work, particularly Smit et al. (2023), 
     we analyze whether pretraining smaller agent groups can improve training efficiency 
     without sacrificing final performance. 
@@ -111,9 +117,19 @@ randomly sampling allies when the team exceeds the pretraining configuration.
 These adaptations preserve architectural compatibility and facilitate systematic 
 evaluation of policy transferability across team sizes.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.3\linewidth]{waterworld.png}
+    \hfill
+    \includegraphics[width=0.3\linewidth]{multiwalker.png}
+    \hfill
+    \includegraphics[width=0.3\linewidth]{lbf.png}
+    \caption{Illustrative examples of the three environments used in this study: Waterworld (left), Multiwalker (center), and Level-Based Foraging (right).}
+    \label{fig:envs-overview}
+\end{figure}
+
 
 \section{Related Work}
-
 \subsection{Training Efficiency and Curriculum Learning in MARL}
 
 Improving training efficiency in multi-agent reinforcement learning (MARL) has become a research 
@@ -265,9 +281,12 @@ more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) sy
 % % b. het
 % % i. het
 
+
+
 \section{Methodology}\label{sec:methodology}
 
 \subsection{Training Framework for Heterogeneous MARL}
+\label{subsec:training_framework}
 
 We formulate each task as a cooperative multi-agent partially observable Markov 
 decision process (MA-POMDP). At each timestep, each of the $n\in N$ agents receives 
@@ -400,8 +419,7 @@ This environment introduces a dynamic intrinsic heterogeneity, as agent roles sh
 training.
 
 To support fair evaluation across team scales, we adapted LBF's observation structure using 
-lightweight modifications described in Section~\ref{sec:related_work-observation_design}, 
-allowing fixed 
+lightweight modifications described in the previous subsection, allowing fixed 
 architectures to operate across varying team sizes. Each environment was evaluated for both 
 raw performance and training efficiency under our curriculum-based transfer framework.
 
@@ -465,8 +483,6 @@ and environmental sensitivity vary across configurations and pretraining duratio
     \label{tab:ppo-hyperparams}
 \end{table}
 
-\vspace{3em}
-
 % \begin{figure}[h]
 %     \centering
 %     \begin{tikzpicture}
@@ -497,8 +513,6 @@ and environmental sensitivity vary across configurations and pretraining duratio
 %     \caption{Illustration of observation array handling when transitioning from a small-team configuration to a larger one. Dashed arrows indicate sampled ally data.}
 % \end{figure}
 
-\vspace{3em}
-
 % We retain the formal definition of the original observation structure here for reference:
 % \[
 % \underbrace{[\text{level}_{n_i},\ \text{row}_{n_i},\ \text{col}_{n_i}]}_{\text{Own Features}} ++
@@ -506,6 +520,7 @@ and environmental sensitivity vary across configurations and pretraining duratio
 % \underbrace{[n \in N_{/i}]}_{\text{Agent Matrix}}
 % \]
 
+\FloatBarrier
 \section{Results and Observations}
 
 Before evaluating learning outcomes, we validated the consistency of training step costs.
@@ -518,7 +533,7 @@ Second, and more critically, it confirmed that the cost of training scaled linea
 with the number of agents—an anticipated relationship, but simple enough to verify empirically.
 This linearity justifies our use of \emph{agent-steps} as the primary cost metric in our analysis.
 %These timing results are presented in the appendix for completeness.
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{time_costs.png}
     \caption{Mean training step duration across agent counts.}
@@ -553,14 +568,14 @@ This suggests that relatively short pretraining can provide sufficient foundatio
 coordination to improve sample efficiency at scale, though final tuning may 
 be necessary to achieve full performance with shorter pretraining periods.
 
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-4-agent.png}
     \caption{}
     \label{fig:waterworld-4}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-8-agent.png}
     \caption{}
@@ -580,14 +595,12 @@ we attribute these to stochastic variation rather than indicative of structural 
 Overall, these results reinforce the observation that direct scaling is most effective 
 when the ratio between pretraining and target team sizes is high.
 
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-AUCs.png}
     \caption{}
     \label{fig:waterworld-aucs}
 \end{figure}
-
 
 In Multiwalker, we observed a notable shift in the utility of pretraining. 
 For smaller teams (4 or 5 agents), retrained and tabula rasa runs performed similarly, 
@@ -602,14 +615,16 @@ due to the failure of any single agent) struggled to generate useful feedback.
 Pretraining thus mitigated an early-stage bottleneck and enabled learning to proceed 
 in configurations where tabula rasa attempts often stalled.
 
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-5-agent.png}
     \caption{}
     \label{fig:multiwalker-5}
 \end{figure}
 
-\begin{figure}[h]
+\vspace{2em}
+
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-6-agent.png}
     \caption{}
@@ -625,130 +640,190 @@ are better understood as a result of the scaling transition requiring additional
 When this time exceeded the total convergence time of tabula rasa training, 
 the net cost is necessarily higher, despite final performance often eventually met the baseline.
 
-\begin{figure}[h]
+\begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-AUCs.png}
     \caption{}
     \label{fig:multiwalker-aucs}
 \end{figure}
 
+We next consider the Level-Based Foraging (LBF) environment.
+Given the environment's structured observations, we anticipated that the
+choice of observation schema, described in subsection~\ref{subsec:training_framework},
+could significantly influence training outcomes.
+To evaluate this, we trained baseline policies from tabula rasa under each schema:
+\begin{enumerate}
+\item \emph{Full Observability}: agents with complete information about all allies.
+\item \emph{Truncated Observability}: agents receive randomly sampled ally features.
+\item \emph{Ally-ignorant Observability}: agents only receive information within their own sight range.
+\end{enumerate}
+For each team size and observation schema, we conducted 30 independent runs
+and compared the resulting performance distributions.
 
+\begin{table}[!ht]
+    \centering
+    \caption{Pairwise t-test comparisons between observation schemas across agent team sizes. P-values are Bonferroni-corrected.}
+    \label{tab:observation_comparisons}
+    \begin{tabular}{cccccc}
+    \toprule
+    \textbf{Agents} & \multicolumn{2}{c}{\textbf{Schema Pairs}} & \textbf{t-statistic} & \textbf{p-value} & \textbf{Bonf. p-value} \\
+    \midrule
+    3 & Ally-ignorant & Full            & 306.28  & 0.000 & 0.000 \\
+    3 & Ally-ignorant & Truncated       & 252.39  & 0.000 & 0.000 \\
+    3 & Full          & Truncated       & -0.97   & 0.336 & 1.008 \\
+    4 & Ally-ignorant & Full            & 53.09   & 0.000 & 0.000 \\
+    4 & Ally-ignorant & Truncated       & 88.01   & 0.000 & 0.000 \\
+    4 & Full          & Truncated       & 0.56    & 0.576 & 1.728 \\
+    5 & Ally-ignorant & Full            & 73.35   & 0.000 & 0.000 \\
+    5 & Ally-ignorant & Truncated       & 23.91   & 0.000 & 0.000 \\
+    5 & Full          & Truncated       & -1.49   & 0.141 & 0.423 \\
+    6 & Ally-ignorant & Full            & 16.52   & 0.000 & 0.000 \\
+    6 & Ally-ignorant & Truncated       & 28.51   & 0.000 & 0.000 \\
+    6 & Full          & Truncated       & 1.47    & 0.147 & 0.440 \\
+    7 & Ally-ignorant & Full            & 11.88   & 0.000 & 0.000 \\
+    7 & Ally-ignorant & Truncated       & 12.90   & 0.000 & 0.000 \\
+    7 & Full          & Truncated       & 0.45    & 0.652 & 1.955 \\
+    \bottomrule
+    \end{tabular}
+\end{table}
 
-We next consider the Level-Based Foraging (LBF) environment. 
-In this setting, 
-we anticipated potential impact of the observation structures
-to 
-training performance.
-To characterize this impact, 
-we obtained baseline performance from tabula rasa
-for each of the observation schemas described in 
-\ref{sec:related_work-observation_design}
+Table~\ref{tab:observation_comparisons} summarizes these comparisons. Across all agent counts, 
+the full observability schema produced significantly different training outcomes 
+than the two reduced forms. Statistical tests (two-sample t-tests with Bonferroni correction) 
+confirmed that the full schema distributions were distinct from both the 
+truncated and ally-ignorant variants, with $p < 0.001$ in all such cases. 
+However, the truncated and ally-ignorant observation settings were not 
+statistically distinguishable from one another at any agent count, 
+even under uncorrected significance thresholds. 
+These results suggest that not only do neither of the reduced schemas 
+achieves the same level of expected performance as the full observation space, 
+the truncated schema does not confer any measurable benefit over 
+the ally-ignorant schema, indicating that limited teammate information is not 
+significantly more useful than none at all under these conditions.
 
-Specifically, we trained full teams 
-(ranging from 2 to 8 agents) from scratch using three observation schemas that differ in 
-the degree of teammate information provided: (1) \emph{full observability}, which supplies agents with complete information about all allies; (2) \emph{truncated observability}, which offers a fixed number of randomly sampled ally features; and (3) \emph{ally-ignorant} observations, which exclude all teammate information. For each team size and observation schema, 30 independent runs were conducted, and the resulting performance distributions were compared.
+The learning curves for LBF do not exhibit a strong or consistent pattern across configurations. 
+While retrained trajectories generally outperform the arithmetic mean of the tabula rasa runs, 
+the significance of this improvement remains unclear. 
+Figure~\ref{fig:lbf-7} provides an illustrative example, highlighting how retraining compares 
+to training from scratch at a 7-agent configuration.
 
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{LBF-7-agent.png}
+    \caption{}
+    \label{fig:lbf-7}
+\end{figure}
 
-Table%~\ref{tab:observation_comparisons} 
-summarizes these comparisons. Across all agent counts, the full observability schema produced significantly different training outcomes than the two reduced forms. Statistical tests (two-sample t-tests with Bonferroni correction) confirmed that the full schema distributions were distinct from both the truncated and ally-ignorant variants, with $p < 0.001$ in all cases. However, the truncated and ally-ignorant observation settings were not statistically distinguishable from one another at any agent count, even under uncorrected significance thresholds. This suggests that limiting or excluding teammate features leads to comparable training outcomes in LBF, while full observability induces a distinct learning dynamic.
+We extend our analysis of LBF using an AUC-based heatmap to summarize the 
+relative efficiency of each scaling configuration. 
+This heatmap shows a clear gradient, that unlike in Waterworld and Multiwalker, 
+favor smaller target team sizes and longer pretraining durations. 
+Gains diminish sharply as the final agent count increases, 
+indicating that pretraining is most beneficial when transitioning to moderately sized teams. 
+This pattern contrasts with the earlier environments and reinforces the hypothesis that 
+dynamic role complexity in LBF creates a steeper coordination challenge at scale. 
+In these scenarios, small-team pretraining offers limited foresight into the diverse role 
+interactions encountered by larger groups.
 
-Interestingly, the implied structure of the LBF heatmap is inverted compared to the earlier environments. Rather than showing greater benefit with larger target teams, we observe diminishing returns from pretraining as the number of agents increases. We attribute this shift to the complexity introduced by LBF’s dynamic intrinsic heterogeneity. As agents level up asynchronously, their roles and capabilities diverge over time, increasing the coordination burden. In this setting, pretraining with smaller teams provides limited benefit, as it fails to expose agents to the richer, role-specific interactions that emerge in larger, heterogeneous teams.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.9\linewidth]{LBF-AUCs.png}
+    \caption{}
+    \label{fig:lbf-aucs}
+\end{figure}
 
-% Heatmap Figure
-
+\FloatBarrier
 
 \section{Conclusion}
-% This study demonstrates the potential benefits of pretraining smaller MARL teams before scaling up. By introducing adjusted time steps and analyzing training efficiency, we contribute to understanding scalable MARL techniques. Future work will refine these methods and expand the applicability to more complex environments.
+
+This study evaluated the effectiveness of direct scaling strategies in cooperative multi-agent 
+reinforcement learning (MARL). We explored whether policies pretrained in smaller teams could 
+be reused to improve training efficiency when expanding to full-team configurations. 
+Using PPO within the RLlib framework, we conducted experiments across three environments—
+Waterworld, Multiwalker, and Level-Based Foraging (LBF)—selected for their varying 
+levels and forms of agent heterogeneity.
+
+Our findings suggest that the effectiveness of direct scaling is strongly dependent on 
+the coordination structure of the target environment. In Waterworld, where agents can operate 
+nearly independently, upsampling from a smaller team consistently accelerated convergence. 
+In contrast, Multiwalker presented a coordination bottleneck for larger teams that retraining 
+helped mitigate, especially when tabula rasa training failed to produce viable policies. 
+In LBF, dynamic intrinsic heterogeneity and observation challenges complicated the 
+transfer process, though longer pretraining durations still yielded moderate 
+improvements in learning efficiency for smaller team sizes.
+When the structure of agents supports homogeneous scaling, reduced-size pretraining is almost 
+never detrimental—provided it does not exceed convergence—and often offers measurable benefit. 
+Our results indicate that these gains are primarily available when scaling occurs across 
+homogeneous agent configurations. In contrast, heterogeneous configurations (especially those 
+involving evolving roles or intrinsic specialization) show reduced or inconsistent benefits, 
+and appear to depend more heavily on the extent of additional retraining.
+
+Throughout this study, we maintained architectural consistency by implementing 
+lightweight observation adaptations. This enabled fair comparisons across configurations 
+while preserving the independence of agent policies. These results provide actionable 
+insights into the tradeoffs between upfront pretraining cost and downstream training efficiency, 
+and they offer practical guidance for deploying scalable HARL strategies in complex 
+cooperative domains.
 
 
 \section{Future Work}
-% Building on these findings, Contribution 2 will explore curriculum-based training strategies, progressively increasing agent counts in complex tasks. Additionally, we aim to investigate biological models of cooperation and specialization for further insights into HARL systems.
-% Invariant obs space learning
+Building on the findings of this study, several promising research directions emerge. 
+One especially compelling area centers on the design of \emph{invariant observation spaces};
+representations that remain structurally consistent across team sizes and configurations. 
+Our current strategies for handling observation dimensionality in LBF, 
+though effective for transferability, were deliberately simple. More advanced techniques may 
+unlock broader generalization without the tradeoffs seen in truncated or ally-ignorant designs.
+
+In particular, adopting observation encodings that are \emph{permutation-invariant} or derived 
+from structured representations (e.g., graphs or attention-based pooling) 
+could offer a more robust solution. These techniques might allow policies to flexibly 
+incorporate variable team sizes and agent contexts without the need for retraining or 
+hard-coded constraints.
+
+Another important avenue lies in investigating whether such invariant representations 
+improve robustness in the face of \emph{dynamic heterogenation}, that is, 
+when agents change roles, capabilities, or sensory access over time. 
+Current methods generally assume fixed or known agent types during training; 
+relaxing this assumption may yield policies that are more adaptable to real-world 
+systems with evolving requirements or agent failures.
+
+Ultimately, these directions aim to extend the benefits of scalable policy training 
+beyond static team setups, enabling more versatile and resilient multi-agent systems.
 
 % \nocite{*}
 \printbibliography
 
+\clearpage
+\appendix
+
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+
+\subsection*{Complete Training Curves}
+The following figures present exhaustive training curves for all 
+agent configurations across the three environments. Each chart compares tabula rasa 
+training to retraining from various pretraining durations.
+
+\foreach \i in {3,4,5,6,7,8} {
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{Waterworld-\i-agent.png}
+        \caption{Training curves for Waterworld, \i\ agents.}
+    \end{figure}
+}
+\foreach \i in {4,5,6,7} {
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{Multiwalker-\i-agent.png}
+        \caption{Training curves for Multiwalker, \i\ agents.}
+    \end{figure}
+}
+\foreach \i in {3,4,5,6,7} {
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{LBF-\i-agent.png}
+        \caption{Training curves for LBF, \i\ agents.}
+    \end{figure}
+}
+
 \end{document}
-
-
-%%%
-%   Appendix?
-%%%
-
-% We validate our approach on three multi-agent environments chosen for their 
-% diversity and challenge to heterogeneous-agent learning: 
-% \textbf{(1) Waterworld}, \textbf{(2) Multiwalker}, and \textbf{(3) Level-Based Foraging (LBF)}. 
-% These domains, originally introduced by Gupta et al. (2017) and extended in the 
-% PettingZoo MARL benchmark,
-% feature different observation structures and degrees of heterogeneity, 
-% providing a thorough testbed for our transfer learning framework.
-
-% \textbf{Waterworld:} Waterworld is a continuous control environment where $N$ \emph{pursuer} 
-% agents navigate a two-dimensional continuous arena to collect food targets while avoiding 
-% poisonous targets. The agents are homogeneous and have identical action spaces 
-% (e.g., thrust in different directions). Each agent's observation consists of continuous 
-% readings (such as distances and angles) to nearby food pellets, poison pellets, 
-% and other agents, often making the environment fully observable in practice 
-% (each agent can sense all relevant objects within a certain range). 
-% The team receives a dense reward: every food target consumed yields a positive reward 
-% (often shared among agents or given to the specific collector, 
-% but ultimately contributing to the team’s total), and contact with 
-% poison yields a negative reward. Cooperation is required in the sense that 
-% agents must spread out to cover the area and herd targets effectively without 
-% collisions or wasted effort. Waterworld primarily evaluates scalability in a 
-% symmetric setting — since all agents are identical, an effective policy should 
-% handle an increase in the number of pursuers seamlessly. We use Waterworld to 
-% test whether our learned policy can coordinate larger swarms of agents hunting targets, 
-% without sacrificing performance on individual avoidance of poison.
-
-% \textbf{Multiwalker:} Multiwalker is a more complex continuous cooperative task 
-% based on the OpenAI Gym BipedalWalker. In this environment, multiple bipedal 
-% ``walker'' agents must jointly transport a payload (e.g., a ladder or package balanced on 
-% their heads) from one end of a field to the other without dropping it. 
-% The walkers are physically coupled through the shared object: 
-% if any walker moves too fast or falls, the object may drop, penalizing the team. 
-% Each agent receives a reward signal that is mostly global – for instance, 
-% a small positive reward for each time step that the package moves forward without falling, 
-% and a large negative reward if the package is dropped (this penalty is applied to all walkers). 
-% The agents are again homogeneous in dynamics and control (each controls its two-legged walker), 
-% and each observes its own state (joint angles, velocities) as well as some information about 
-% the package (e.g., its relative position/tilt) and possibly the other walkers' positions. 
-% We consider Multiwalker to have \emph{full observability} as implemented 
-% (the state can be reconstructed from the agents' joint observations, and in some 
-% implementations each agent may even get the full state). The key challenge here is 
-% tight coordination: the policy must ensure synchronous movement among walkers to 
-% keep the payload balanced. This environment tests our method's ability to scale a 
-% locomotion-based policy from a smaller team (e.g., 2 walkers) 
-% to a larger one (e.g., 3 or 4 walkers). A successful transferable policy would allow 
-% additional walkers to be integrated into the team without retraining, maintaining 
-% balance and forward progress. We evaluate how our curriculum training helps the walkers 
-% learn complementary gait patterns and whether those patterns remain effective as the team grows.
-
-% \textbf{Level-Based Foraging (LBF):} LBF is a discrete grid-world environment 
-% that explicitly requires heterogeneous-agent cooperation. 
-% Agents and food items are placed on a grid; each food item has a level 
-% (an integer requirement) and each agent has its own skill level. 
-% An agent can collect a food item only if one or more agents cooperatively 
-% occupy the same cell as that food and the sum of their skill levels meets or 
-% exceeds the food's level requirement. All agents share a team reward for 
-% successful food collection, making it a fully cooperative game. 
-% However, the environment is partially observable: agents have a limited 
-% field of view (they only observe nearby cells, not the entire grid). 
-% This means agents must explore and possibly coordinate via implicit communication 
-% (e.g., meeting at a target) under uncertainty. The heterogeneity arises 
-% naturally because agents may have different skill levels; for example, a level-3 
-% agent can collect certain food alone that a level-1 agent cannot, whereas 
-% two level-1 agents together might achieve it. Optimal play often involves 
-% \emph{specialization}, where higher-level agents take on the role of tackling 
-% high-value food or assisting lower-level agents, and lower-level agents focus 
-% on targets that match their ability or support others. We treat LBF as a 
-% critical test for our approach’s ability to handle agents with 
-% \textbf{diverse capabilities and partial observability}. 
-% Our training framework includes the agents' skill level as part of the observation input, 
-% so the shared policy can condition decisions on an agent's own ability. 
-% During evaluation, we examine whether the learned policy indeed yields 
-% different behaviors for agents of different levels (indicating emergent specialization) 
-% and how well it generalizes to changes in team composition, such as adding an extra 
-% agent with a new skill level. LBF being a mixed cooperative-competitive domain in general, 
-% we focus on the fully cooperative version here (all agents on one team, no adversaries), 
-% aligning with our centralized team reward setting.
