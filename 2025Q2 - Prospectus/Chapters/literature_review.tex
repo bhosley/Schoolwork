@@ -1,0 +1,791 @@
+% Literature Review
+\glsresetall
+
+This chapter delves deeper into the current \gls{sota} and the 
+foundational work that has contributed to its development. 
+It is divided into two main parts, the first a primer on relevant
+background material and the second a review of related work.
+
+The background is further divided into sections covering the foundational 
+elements of reinforcement learning, the evolution to multi-agent systems
+as the logical extension of single-agent \gls{rl}, 
+the evolution to multi-agent systems from a game-theoretic perspective.
+%
+The related works is further divided into sections covering
+the algorithms of interest, simulation environments,
+and application papers.
+
+% Surveys
+% Algorithms
+% Environments
+% Applications
+
+% #TODO:
+% We need to do a related work section first.
+% Cover the works that Directly inform ours
+% Following the Related work, enter primer?
+
+%\section{Related Work}
+
+
+% ---------------------------------------------------------------------------- %
+\section{Reinforcement Learning Foundations}%
+
+    \subsection*{Markov Decision Processes}%
+
+\Glspl{mdp} form the foundation of reinforcement learning by providing 
+a formal framework for modeling decision-making in environments with 
+stochastic dynamics~\cite{puterman2005}. An MDP is defined by a tuple 
+(\gls{S}, \gls{A}, \gls{P}, \gls{R}, \gls{discount}), where:
+\begin{itemize}
+    \item \gls{S} is a finite set of states.
+    \item \gls{A} is a finite set of actions.
+    \item \(\gls{P}: S\times A\times S\rightarrow [0,1]\) is the state 
+        transition probability function, where \(P(s^\prime|s, a)\) 
+        represents the probability of transitioning to state \(s^\prime\in S\)
+        given the current state \(s\in S\) and action \(a\in A\).
+        This captures the stochastic nature of the environment.
+    \item \(\gls{R}: S \times A \rightarrow \gls{reals}\) is the reward 
+        function and written as \(R(s, a)\) defines the immediate reward 
+        received after taking action \(a\in A\) in state \(s\in S\). 
+        This reward guides the agent's learning process.
+    \item \(\gls{discount} \in [0, 1]\) is the discount factor, which 
+        determines the level of importance given to estimated future rewards. 
+        Specifically, \(\gls{discount}=1\) implies that a reward estimate is 
+        given equal value regardless of how many steps in the future it may 
+        be while \(\gls{discount}=0\) implies that only the value of a 
+        reward in the next step is considered.
+\end{itemize}
+
+\begin{figure}
+    \centering
+    \input{mdp_cycle}
+    \caption{Fully reduced \glsentryshort{mdp} 
+        representation of \glsentryshort{rl}.}
+    \label{fig:mdp_cycle}
+\end{figure}
+
+    \subsection*{Objectives in MDPs}%
+
+The objective in an \gls{mdp} is to find a policy 
+\(\gls{pi}: \gls{S} \rightarrow \gls{A}\) that maximizes a return value. 
+In the context of an episode it may be referred to as expected cumulative 
+reward or \gls{etdr}, and in the context of a single time-step, 
+the return \gls{G_t} at time \(t\) is defined as the sum of discounted rewards:
+\begin{equation}
+    \gls{G_t} = \sum_{k=0}^{\infty} \gls{discount}^k \gls{R}_{t+k+1}
+    \label{eq:sum_discounted_rewards}
+\end{equation}
+where \(\gls{R}_{t+k+1}\) is the reward received following time step \(t+k\).
+At the simplest level, reward is translated into a policy using either a 
+value function; which may be a state-value or an action-value function 
+(\cref{eq:state-value_function,eq:action-value_function} respectively).
+A state-value function \gls{v_pi(s)} represents the expected return starting 
+from state \(s\) and following policy \gls{pi}. It is generally defined as:
+\begin{equation}
+    \gls{v_pi(s)} 
+    = \mathbb{E}_\pi [\gls{G_t}| \gls{S}_t = s] = \mathbb{E}_\pi \left[
+        \sum_{k=0}^{\infty} \gls{discount}^k \gls{R}_{t+k+1} 
+        \middle| \gls{S}_t = s \right]
+    \label{eq:state-value_function}
+\end{equation}
+The action-value function \gls{q_pi(a|s)} represents the expected return 
+starting from state \(s\), taking action \(a\), 
+and thereafter following policy \gls{pi}:
+\begin{equation}
+    \gls{q_pi(a|s)} 
+    = \mathbb{E}_\pi [\gls{G_t}| \gls{S}_t = s, \gls{A}_t = a] 
+    = \mathbb{E}_\pi \left[ 
+        \sum_{k=0}^{\infty} \gls{discount}^k \gls{R}_{t+k+1}
+        \middle| \gls{S}_t=s, \gls{A}_t=a \right]
+    \label{eq:action-value_function}
+\end{equation}
+
+    \subsection*{Bellman Equations and Optimal Policies}%
+
+The Bellman equations provide recursive definitions for the value functions. 
+\Cref{eq:bellman_state-value,eq:bellman_action-value} are the Bellman equations
+of the state-value and action-value functions for a given policy \gls{pi} 
+respectively.
+\begin{equation}
+    \gls{v_pi(s)} 
+    = \sum_{a \in \gls{A}} \gls{pi}(a|s) 
+      \sum_{s^\prime \in \gls{S}} \gls{P}(s^\prime|s, a) \left[
+        \gls{R}(s, a) + \gls{discount} v_\pi(s^\prime)\right]
+    \label{eq:bellman_state-value}
+\end{equation} \begin{equation}
+    \gls{q_pi(a|s)} 
+    = \sum_{s^\prime \in \gls{S}} \gls{P}(s^\prime|s, a) \left[
+        \gls{R}(s, a) + \gls{discount} \sum_{a^\prime \in \gls{A}} 
+        \gls{pi}(a^\prime|s^\prime) q_\pi(s^\prime, a^\prime)\right]
+    \label{eq:bellman_action-value} 
+    \vspace*{1em}
+\end{equation}
+The goal is to find (or approximate) the optimal policy \gls{pi} that maximizes
+the value functions for all states. The optimal Bellman equations are those that
+satisfy \cref*{eq:bellman_optimal_state-value,eq:bellman_optimal_action-value}:
+\begin{equation}
+    \gls{v_*(s)} = \max_a \sum_{s^\prime \in \gls{S}} \gls{P}(s^\prime|s, a)
+    [\gls{R}(s, a) + \gls{discount} v_*(s^\prime)]
+    \label{eq:bellman_optimal_state-value}
+\end{equation} \begin{equation}
+    \gls{q_*(a|s)} = \sum_{s^\prime \in \gls{S}} \gls{P}(s^\prime|s, a) 
+    [\gls{R}(s, a) + \gls{discount} \max_{a^\prime} q_*(s^\prime, a^\prime)]
+    \label{eq:bellman_optimal_action-value}
+\end{equation}
+
+    \subsection*{Solution Methods}%
+
+There are numerous methods for solving \glspl{mdp}, including exact methods 
+like value iteration and policy iteration, as well as approximate methods 
+such as \gls{rl} techniques. Exact methods iteratively compute the value 
+functions and improve the policy until convergence to the optimal solution. 
+However, for large state and action spaces, 
+these methods become computationally infeasible.
+
+In contrast, \gls{rl} methods, which develop policies through interaction
+with the environment, offer a scalable approach for solving problems that
+can be modelled as \glspl{mdp}. 
+\Gls{rl} methods do not require a model of the environment's dynamics and can
+handle large, complex problems where exact methods are intractable.
+Before examining \gls{rl} approaches to multi-agent systems, we will cover 
+several important concepts from the perspective of a single agent system.
+
+% ---------------------------------------------------------------------------- %
+\section{Single-Agent Reinforcement Learning}%
+
+Single-agent \gls{rl} extends the foundational principles of \glspl{mdp} 
+by enabling an agent to learn optimal policies through direct interaction with 
+the environment. In single-agent \gls{rl}, the agent learns by trial and error, 
+using feedback in the form of rewards to adjust its actions and maximize 
+cumulative rewards over time.
+Single-agent \gls{rl} employs various algorithms to learn the optimal policy by 
+approximating the value functions. These algorithms can be broadly categorized 
+into dynamic programming, Monte Carlo methods, and \gls{td} learning~%
+\cite{sutton2018}.
+
+    \subsection*{Dynamic Programming}%
+
+Dynamic programming methods, such as value iteration and policy iteration, 
+require a complete model of the environment's dynamics~\cite{sutton2018}.
+They iteratively update value functions and policies until convergence. 
+\textbf{Value Iteration} updates the value function based on the Bellman 
+optimality equation until it converges to the optimal value function \(v_*\).
+\textbf{Policy Iteration} alternates between policy evaluation 
+(computing the value function for a fixed policy) and policy improvement 
+(improving the policy based on the current value function) until convergence.
+
+    \subsection*{Monte Carlo Methods}%
+
+Monte Carlo methods learn directly from an agent's experience in an episode, 
+estimating value functions by averaging the returns observed in actual episodes.
+These methods are model-free and do not require knowledge of the environment's 
+dynamics. They are generally divided into two categories; 
+\textbf{First-Visit Monte Carlo}, averaging the returns of the first visit to 
+each state, or \textbf{Every-Visit Monte Carlo}, averaging the returns of every
+visit to each state in a given episode.
+%
+\begin{wrapfigure}[7]{R}{0.4\textwidth}
+    \vspace*{-4em}
+    \centering
+    \resizebox{0.3\textwidth}{!}{%
+        \input{gpi}
+    }
+    \captionsetup{margin=1.2em}
+    \caption{Generalized Policy Iteration.}
+    \label{fig:gpi_cycle}
+\end{wrapfigure}
+%
+In either method, the policy and action values are updated iteratively.
+Sutton and Barto~\cite{sutton2018} provide a graphic intuition for this 
+iterative cycle, which we have replicated in~\cref{fig:gpi_cycle}.
+
+A key distinction between Monte Carlo in this context and methods described 
+later is that Monte Carlo methods execute an entire episode. In the following 
+section, this principle will be applied to smaller segments of experience. 
+Additionally, we will reference \gls{mcts}, 
+a heuristic that simulates the results of future actions. Despite its name, 
+\gls{mcts} is distinct from the Monte Carlo methods discussed here.
+
+    \subsection*{Temporal-Difference (TD) Learning}%
+
+\Gls{td} learning methods, such as Q-learning and SARSA 
+(State-Action-Reward-State-Action), combine ideas from 
+dynamic programming and Monte Carlo methods. They update value estimates 
+based on observed transitions without waiting for the end of an episode.
+Both methods use an \gls{step-size} parameter to determine the size of 
+the update based on \cref{eq:action-value_function}.
+%
+\textbf{SARSA} is an on-policy \gls{td} control algorithm that updates the 
+\gls{Q}-value using the \gls{Q}-value of the actual next state-action pair:
+%
+\begin{equation}
+    \gls{Q}(s, a) \leftarrow \gls{Q}(s, a) + \gls{step-size} \left[ 
+        \gls{R} + \gls{discount} \gls{Q}(s^\prime, a^\prime) - \gls{Q}(s, a) 
+    \right]
+    \label{eq:sarsa_action-value}
+\end{equation}
+%
+\textbf{Q-Learning}~\cite{watkins1992} is an off-policy \gls{td} control 
+algorithm that updates the \gls{Q}-value using the maximum \gls{Q}-value of 
+from all actions available to the next state:
+%
+\begin{equation}
+    \gls{Q}(s, a) \leftarrow \gls{Q}(s, a) + \gls{step-size} \left[ 
+        \gls{R} + \gls{discount} \max_{a^\prime} 
+        \gls{Q}(s^\prime, a^\prime) - \gls{Q}(s, a)
+    \right]
+    \label{eq:q-learning_action-value}
+\end{equation}
+%
+Consequently, Q-learning has a tendency to converge faster than SARSA,
+which may or may not be a desirable feature, depending on the needs
+of the use-case.
+
+    \subsection*{Exploration vs. Exploitation}
+
+A fundamental challenge in \gls{rl}, as it is in all of machine learning, 
+is balancing exploration (trying new actions to discover their effects) 
+and exploitation (choosing actions known to yield high rewards). 
+Common strategies for addressing this balance include \(\epsilon\)-greedy 
+policies and Boltzmann exploration.
+\(\epsilon\)-greedy increases the exploration of an algorithm by selecting
+a random action \(\epsilon\) percent of the time.
+%
+Boltzmann exploration, commonly using a softmax function~\cite{pan2021}, 
+normalizes estimated action-values to reduce bias during action selection. 
+A temperature parameter \(\tau\) may be included to control the exploration 
+rate over time, similar to a simulated annealing heuristic. 
+%\Cref{eq:softmax_action-value} shows an example of this.
+For example,
+%
+\begin{equation}
+    P(A=a|S=s) =
+    \frac{\exp\left\{\gls{Q}(a|s)/\tau\right\}}{
+        \sum_{a^\prime\in A}\exp\left\{\gls{Q}(a^\prime|s)/\tau\right\}}
+    \label{eq:softmax_action-value}
+\end{equation}
+However, Cesa-Bianchi et al.~\cite{cesa-bianchi2017} argue that this manner 
+of implementation fails to minimize regret compared to \(\epsilon\)-greedy 
+and attribute it to the difficulty in tuning a \(\tau\) decay schedule~
+\cite{kaelbling1996,vermorel2005}.
+
+% --- #TODO: Need a section on Neural Networks?
+
+% ---------------------------------------------------------------------------- %
+\section{Evolution to Multi-Agent Systems}%
+
+The evolution from single-agent \gls{rl} to multi-agent systems introduces new 
+complexities and opportunities, reflecting more realistic scenarios where 
+multiple agents interact within a shared environment. \Gls{marl} extends the 
+principles of single-agent RL to settings where agents must learn to 
+cooperate, compete, or coexist, each influencing the other's learning process.
+Key developments in centralized and decentralized training, communication and 
+coordination, scalability, and stability have significantly expanded the 
+applicability of \gls{marl} across various domains. 
+
+    \subsection*{Cooperative Multi-Agent Systems}%
+
+In cooperative multi-agent systems, agents work together to achieve a 
+common goal. This requires coordination and communication to ensure that 
+their actions complement each other. Cooperative MARL is often applied 
+in tasks where the joint effort of multiple agents can lead to better 
+performance than individual efforts~\cite{littman1994}.
+
+The primary challenge in cooperative \gls{marl} is to develop 
+strategies that maximize the collective reward~\cite{albrecht2024}. 
+This involves a spectrum of approaches to the level of interaction 
+between agents. Here we focus on interactions at the algorithmic level, 
+rather than within the environment. On one end, 
+a set of agents may be trained and deployed in a fully decentralized
+manner~\cite{li2023d} and on the other,
+we have integration such that the agents are simply copies of each other,
+updating a shared policy~\cite{zheng2017}.
+
+Rather than emphasizing either extreme, the majority of research in \gls{marl} 
+has focused on leveraging interactions to produce more effective results. 
+The most popular approaches fall under the label \gls{ctde}~%
+\cite{foerster2017,rashid2018,fotouhi2019,lowe2020,pan2021,%
+papoudakis2021,li2023d,zhou2023}, 
+%
+\begin{wrapfigure}[9]{R}{0.4\textwidth}
+    \vspace*{-2.5em}
+    \centering
+    \input{basic_ctde}
+    \caption{Basic \gls{ctde}.}
+    \label{fig:basic_ctde}
+\end{wrapfigure}
+%
+a broad term encompassing any algorithm with an arbitrary centralizing 
+mechanism. We assert that the term's breadth and ubiquity have made it 
+a defining trait of mainstream \gls{marl}.
+
+Within the \gls{ctde} paradigm, we wish to draw particular attention to 
+actor-critic training, derived from an almost identical single-agent 
+training method. It is an intuitive implementation of \gls{ctde}, 
+where the critic performs the role of mixing for the agents.
+
+The majority of the algorithms we will examine in our experiments 
+will either be actor-critic~\cite{foerster2017,lowe2020,li2023c} 
+or will aim to reduce the bias that occurs with a singular, 
+shared critic~\cite{rashid2018,ackermann2019,li2023d,zhou2023}.
+
+\begin{wrapfigure}[9]{R}{0.4\textwidth}
+    \vspace*{-1em}
+    \centering
+    \includegraphics[width=0.4\textwidth]{ctde_actor-critic.png}
+    % #TODO:
+    %\resizebox{0.3\textwidth}{!}{%
+    %    \input{ctde_actor-critic}
+    %}
+    %\captionsetup{margin=1.2em}
+    \caption{Actor-Critic \gls{ctde}.}
+    \label{fig:ctde_actor-critic}
+\end{wrapfigure}
+
+Rashid et al.~\cite*{rashid2018} and Li et al.~\cite*{li2023d}
+proposed algorithms that decrease the amount of centralization 
+of the critic functions, a change that will motivate later research
+into \gls{harl} algorithms.
+
+    %\subsection*{Competitive Multi-Agent Systems}
+    % To fix a subsection to wrap figure collision.
+    \paragraph*{\emph{Competitive Multi-Agent Systems}} \hfil 
+
+In competitive multi-agent systems, agents have conflicting goals. 
+The success of one agent typically comes at the expense of another,
+and thus are often modeled as zero-sum games, where the gain of 
+one agent is exactly balanced by the loss of another~\cite{leonardos2021}.
+
+Thus competitive \gls{marl} typically involves strategies where agents 
+must predict and counteract the actions of their opponents. 
+Techniques from game theory, such as Nash equilibrium, are often employed 
+to find stable strategies in these adversarial environments~\cite{busoniu2008}.
+
+    \subsection*{Communication and Coordination}
+
+Effective communication and coordination mechanisms are crucial 
+for cooperative \gls{marl}. Agents need to share information and 
+synchronize their actions to achieve common goals. 
+Research in this area focuses on developing protocols and algorithms that 
+enable efficient and robust communication among agents~%
+\cite{sukhbaatar2016,fotouhi2019,hoang2023}.
+
+    \subsection*{Scalability and Efficiency}
+
+Scalability is a significant challenge in MARL due to the exponential 
+growth of the state and action spaces with the number of agents~%
+\cite{cao2012,busoniu2008}. 
+Recent research efforts aim to develop algorithms that can efficiently 
+scale to large numbers of agents and complex environments without 
+compromising performance~\cite{smit2023,sun2023}.
+
+    \subsection*{Stability and Convergence}
+
+Ensuring the stability and convergence of learning algorithms in 
+multi-agent settings is critical~\cite{papoudakis2021}. 
+Unlike single-agent \gls{rl}, where convergence is well-understood, 
+the dynamics of multiple learning agents can lead to instability 
+and non-convergence. Research in this area seeks to establish 
+theoretical guarantees and practical methods for stable learning.
+
+
+% ---------------------------------------------------------------------------- %
+\section{Evolution of MARL through the Lens of Games}%
+
+Building upon these foundational advancements, the exploration of \gls{marl} 
+through gameplay has provided a rich and challenging testbed for further 
+innovation. Notably, the strategic complexity and real-time decision-making 
+required in games have driven remarkable progress in \gls{marl} algorithms, 
+as exemplified by pioneering projects such as 
+DeepMind's AlphaGo\cite{silver2016}, AlphaGo Zero\cite{silver2017},
+AlphaZero\cite{silver2017a} and AlphaStar\cite{vinyals2019}. 
+These projects not only showcase the potential of \gls{marl} to 
+achieve superhuman performance but also highlight the broader implications 
+and applications of these advancements beyond the realm of gaming.
+
+    \subsection*{AlphaGo: The First* Milestone}
+
+AlphaGo, developed by DeepMind and presented in~\cite{silver2016}, 
+marked perhaps the largest milestone in \gls{ai} since Deep Blue~%
+\cite{campbell2002} with its victory over a world champion Go player.
+Where Deep Blue was an expert system that leveraged an Alpha-Beta pruning 
+algorithm and \glspl{asic} designed to execute the algorithm in parallel,
+the state-space of Go was so much larger that this approach would not 
+likely ever be tractable. AlphaGo achieved this success using 
+\glspl{dnn} to approximating a value function and a policy.
+
+An initial approximate policy was trained on 29.4 million states 
+from 160,000 games using supervised gradient descent to predict 
+the next move of a game given the current state.
+An initial value function was approximated by sampling moves made 
+during a game and assigning value according to the outcome of the game.
+%
+With initial approximate functions as a starting point,
+a policy-gradient method in conjunction with \gls{mcts}
+would provide the the framework for further improvement through \gls{rl}.
+
+    \subsection*{AlphaGo Zero: A Leap Forward}
+
+AlphaGo's success demonstrated the power of combining deep learning with 
+traditional search techniques. However, the research team acknowledged potential
+problems associated with the original approach's reliance on prepared data. 
+In~\cite{silver2017}, Silver et al. express a concern regarding possible 
+expense, unreliability, or unavailability of relevant data for pre-training.
+They developed a new approach to address these concerns and titled it 
+AlphaGo Zero. Here we focus on two key factors that made this possible.
+
+First, the employment of the \gls{dnn} was simplified by combining the 
+value function and policy into a single network that would take a state 
+input and return a vector of move probabilities and a state value, 
+this substantially reduced the cost of updating the network(s) during training.
+%
+Second, an increased reliance on training using self-play
+eliminated the need for a collection of pre-played games.
+Further, this reduced the influence that pre-established strategies 
+used by human players would have on the training of the agent.
+
+    \subsection*{AlphaStar: Expanding to Real-Time Strategy Games}
+
+AlphaStar extended the principles of MARL to the domain of \gls{rts} 
+games by achieving grandmaster-level performance in StarCraft II, 
+a game known for its strategic depth, real-time decision-making, 
+and partial observability. Vinyals et al.~\cite{vinyals2019} accomplished 
+this using a large, modular neural network and a novel training curriculum.
+
+The neural network interfaced with the game environment, which provided an 
+observation space significantly larger than any previously examined games. 
+The curriculum (\cref{fig:alphastar_league}) addressed the complexity 
+and `game-theoretic' concerns of StarCraft II. Similar to AlphaGo, 
+but unlike its Zero counterpart, Vinyals et al. used a supervised baseline 
+with imitation learning trained on recorded games from human experts. 
+This was followed by \gls{rl} in a league-play format.
+
+\begin{figure}[t]
+    %\vspace*{-1em}
+    \centering
+    \includegraphics[width=0.75\textwidth]{alphastar_league.png}
+    \caption{League-play implemented by Vinyals et al.~\cite{vinyals2019}.}
+    \label{fig:alphastar_league}
+\end{figure}
+
+Rather than utilizing pure self-play, a collection of agents is used 
+to form the "league." This collection consists of older copies of the 
+different types of agents, encompassing an exhaustive combination of 
+each available faction and league role. There are three factions, 
+each with distinct capabilities and representing different action 
+spaces for this work.
+
+Within the league, there are three roles. Main agents are trained 
+against the pool of all past agents. Main exploiters are trained 
+specifically to beat the main agents; once they achieve this, 
+a copy is placed within the league. League exploiters are trained 
+against the entire league, similar to main agents, but do not have 
+any agents targeting them specifically. Once they achieve a certain 
+win rate against the league, a copy is also placed within the league.
+
+While it is not clear to what extent each component of the curriculum 
+was necessary or how much each contributed to the final agents, 
+it was demonstrably effective in training a grandmaster-level 
+agent for each of the factions.
+
+    \subsection*{OpenAI Five: Cooperative Agents in Competitive Settings}
+
+Similarly, an OpenAI research team achieved world-class performance 
+with a group of agents in the game Dota 2~\cite{berner2019}. 
+Dota 2 shares some similarities with \gls{rts} games; 
+however, instead of managing several units, players control a single, 
+more complex unit drawn from a ``massive and limitlessly diverse''
+pool~\cite{zotero-2643}.
+
+This complexity makes it difficult to compare the action space between 
+Dota 2 and StarCraft II. Additionally, Dota 2 is played between two 
+teams of five players. Therefore, training an agent for this game 
+involves either managing five complex units or training multiple agents 
+to specialize in specific units and cooperate with each other. 
+Berner et al.~\cite{berner2019} succeeded using the latter approach.
+
+Similar to the approach by Vinyals et al., the OpenAI team developed 
+a curriculum to effectively train their agents. Consistent with 
+standard software engineering practices (Gall's Law~\cite{gall1975}), 
+they developed the training curriculum iteratively.
+%
+They also had to contend with periodic software updates that affected gameplay.
+The general architecture they used for the agents appeared modular, 
+but none of the components were directly shared between agents.
+
+To improve training time and recover agent effectiveness after 
+significant updates, they employed a set of procedures called 
+``surgery,'' allowing offline updates to existing agents. 
+A notable surgery procedure highlighted in their paper~\cite{berner2019} 
+was the \emph{Net2Net}~\cite{chen2016} knowledge transfer, 
+enabling the training of an agent after a significant change 
+without discarding the previously used neural networks.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% --------------------------------- Edit Bar --------------------------------- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% -------------------------------- Surveys ----------------------------------- %
+%\section{Related Work: Surveys}
+
+% #TODO: Lit Review Table
+
+% ------------------------------- Algorithms --------------------------------- %
+\section{SOTA Algorithms} 
+
+In this section we review current \gls{sota} algorithms
+applicable to the multi-agent setting.
+These are the algorithms that this research is interested 
+in evaluating to determine if any have distinct advantages
+in extensibility, when applied to novel team configurations.
+
+% #TODO: Algo Table
+%\input{algo_papers}
+
+    \subsection*{Asynchronous Actor-Critic}
+
+When investigating a way to apply principles of deep learning to \gls{rl}
+problems, Mnih et al.~\cite{mnih2016} observed that the structure of
+Actor-Critic algorithms were extremely amenable to batch updates.
+Further, batch updating allows for asynchronous execution of 
+the episodes that would comprise the batch between updates.
+This did not reduce the compute time requirement for training, 
+but it allowed users to leverage multiple workers, 
+greatly reducing real-world training time.
+Further, they proposed a compromise between off-policy and on-policy
+methods using an advantage calculation;
+\begin{equation}
+    A(s,a) = \gls{Q}(s,a) - \gls{V}(s)
+\end{equation}
+They named their proposed algorithm \gls{a3c}.
+
+Lowe et al.~\cite{lowe2020} described a difficulty in applying traditional 
+algorithms like Q-learning and policy gradient to multi-agent settings.
+Their proposed approach, called \gls{maddpg} would combine \gls{a3c} 
+with a deep-deterministic policy gradient algorithm.
+Their algorithm is the example used in \cref{fig:ctde_actor-critic}.
+
+Fujimoto et al.~\cite{fujimoto2018} take a similar approach to address 
+a concern of function approximation errors in actor-critic methods, 
+which can lead to overestimated value estimates and suboptimal policies.
+Their approach is first to employ Double Q-learning, taking the 
+minimum value between a pair of critics to limit overestimation;
+second to delay policy updates. 
+Hence, they call their proposed algorithm \gls*{td3}.
+
+Ackermann et al.~\cite{ackermann2019} apply \gls{td3} to 
+a multi-agent system using the double-Q network as the central
+critic, they call their proposed algorithm \gls{matd3}.
+
+Zhong et al.~\cite{zhong2024} propose heterogeneous versions of each
+of the above algorithms.
+They extend \gls{a3c}, \gls{maddpg}, and \gls{matd3}
+to \gls{haa2c}, \gls{haddpg}, and \gls{hatd3}
+by updating the shared critic 
+sequentially via random permutations of contributions from agents
+rather than applying the update from all agents at once.
+
+    \subsection*{Trust Region Policy Optimization}
+
+Schulman et al.~\cite{schulman2017} introduce \gls{trpo}, an iterative 
+method designed to optimize policies with guaranteed monotonic improvement. 
+\Gls{trpo} combines theoretical rigor with practical approximations to 
+develop a robust algorithm suitable for large nonlinear policies, 
+such as neural networks. Additionally, they sought to develop 
+an algorithm that required minimal hyperparameter tuning.
+%
+The trust region refers to a subspace within the agent's action
+space that is created using a \gls{kl} lower bound~%
+\cite{kakade2002} for policy improvement.
+
+Li et al.~\cite{li2023c} extend \gls{trpo} to multi-agent systems
+utilizing a distributed consensus optimization mechanism to 
+evaluate trust region. They propose a decentralized MARL algorithm called 
+\gls{matrpo}, which allows agents to optimize 
+distributed policies based on local observations and private rewards 
+without needing to know the details of other agents. 
+\gls{matrpo} is fully decentralized and privacy-preserving, 
+sharing only a likelihood ratio with neighbors during training. 
+
+Zhong et al.~\cite{zhong2024} take \gls{matrpo} and weight the 
+trust region using a \gls{kl} bound calculated for each agent.
+They call this extension \gls{hatrpo}.
+
+    \subsection*{Proximal Policy Optimization}
+
+Schulman et al.~\cite{schulman2017a} also introduced \gls{ppo}.
+\Gls{ppo} is a policy gradient algorithm, but unlike previous 
+policy gradient methods, the \gls{ppo} objective function allows 
+multiple epochs of minibatch updates, improving sample efficiency. 
+\Gls{ppo} alternates between sampling data from the environment and 
+optimizing a surrogate objective function using stochastic gradient ascent. 
+The algorithm retains the benefits of \gls{trpo} but is simpler to 
+implement and more generalizable.
+
+% -- MAPPO
+Yu et al.~\cite*{yu2022} apply \gls{ppo} to multi-agent environments
+by implementing a number of agents with shared parameters.
+They observe that without any further changes this implementation,
+they call \gls{mappo}, performs \emph{surprisingly} well.
+They compare to a baseline of a team of completely independent 
+\gls{ppo} agents, labeled IPPO.
+
+% -- HAPPO
+Zhong et al.~\cite{zhong2024} extend \gls{mappo} 
+into \gls{happo} by taking the shared action-values of 
+\gls{mappo} and scaling by an individual action-value function.
+
+% -- IMPALA
+Espeholt et al.~\cite{espeholt2018} propose \gls{impala} which seeks 
+to further leverage the real-time savings from asynchronous execution, 
+and to be use distributed computation resources as effectively as possible.
+\Gls{impala} eliminates down-time on individual workers by keeping 
+them continuously working.
+
+This is accomplished by collecting the results as a worker finishes an
+episode, and providing the current learner (critic) function
+to immediately start a new episode. 
+Once a hyperparameterized number of results are collected, 
+the learner function is updated, and becomes the new current learner
+to be issued as future workers finish an episode.
+The base implementation is \gls{marl} capable by treating each agent
+as a worker for the purposes of updating the learner function.
+
+% ------------------------------ Environments -------------------------------- %
+\section{Testing Environments}
+
+The choice of environment is crucial for the development and evaluation 
+of \gls{rl} algorithms. The environments provide the context in 
+which agents interact, learn, and demonstrate their capabilities. 
+Different environments pose unique challenges and opportunities, 
+influencing the design and performance of RL algorithms. 
+This section reviews some of the prominent environments used in 
+RL research, highlighting their characteristics, advantages, and limitations.
+
+While there are many fantastic single-agent environments, for the purposes 
+of this research we will focus on those that support multiple agents.
+
+    \subsection*{Video Games}
+
+Famously, AlphaStar~\cite{vinyals2019} and OpenAI Five~\cite*{berner2019}
+demonstrated mastery in StarCraft II and Dota 2 respectively.
+However, due to the computational cost of running these environments
+they do not appear to be particularly common for testing.
+The features of the games are still desirable for researchers.
+%
+In the case of Starcraft II, the response was the development 
+of StarCraft Multi-Agent Challenge (SMAC)~\cite{samvelyan2019} 
+and SMACv2~\cite{ellis2023}, which reduced the 
+environment down just to a few units controlled by agents and 
+eliminated all of the other features of gameplay in the \gls{rts}.
+
+    \subsection*{Petting Zoo}
+
+Maintained by the Farama Foundation, \emph{Petting Zoo} is a 
+multi-agent equivalent to the same organization's \emph{Gymnasium}.
+Farama's environments are based on a standardized \gls{api}
+which simplifies interact with a large variety of scenarios.
+Further, their \gls{api} allows wrapping of other environments
+to more easily integrate them into testing environments.
+
+    \subsection*{Close Air Combat}
+
+The "CloseAirCombat" environment~\cite{liu2022light}, is a competitive 
+simulation framework designed to resemble air combat scenarios.
+The environment leverages JSBSIM for realistic flight dynamics and 
+incorporates various combat tasks.
+The base environment features both 1v1 and 2v2 scenarios.
+This is an environment that doesn't appear to have been used in much 
+research, but has potential in evaluating cooperative-competitive agents,
+and filling a niche that is more complex than the Petting Zoo
+environments but less computationally demanding than SMAC.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.6\textwidth]{CloseAirCombat.png}
+    \caption{Close Air Combat 2v2.}
+    \label{fig:CloseAirCombat}
+\end{figure}
+
+
+% ------------------------------ Related Work -------------------------------- %
+\section{Related Work}
+
+In this section we discuss select work that has directly inspired the 
+proposed course of research, showing results or asking questions that 
+we wish to expand upon.
+
+% ---
+
+Papoudakis et al.~\cite{papoudakis2021} observe a lack of standardized 
+evaluation tasks and criteria, and thus makes it challenging to compare 
+different \gls{marl} approaches effectively.
+They selected 9 algorithms, dividing them into three classes:
+independent learners, centralized training with decentralized execution, 
+and value decomposition methods.
+The algorithms are tested against 25 fully cooperative tasks across 
+six different environments to establish a benchmark.
+%
+The study's key findings indicate that the performance of 
+\gls*{marl} algorithms is highly environment-dependent, 
+with no single algorithm consistently outperforming others across all tasks. 
+The authors also introduce EPyMARL, an extension of the PyMARL codebase, 
+to facilitate future research and benchmarking efforts by providing 
+flexible algorithm configurations and additional algorithms.
+
+Hernandez et al.~\cite*{hernandez-leal2019} perform a survey of
+research questions in the realm of \gls{marl}.
+They conclude by observing three categories of open questions.
+% 
+The second of the three pertains to the research proposed in this document;
+\emph{On the role of self-play} observes that self-play alone
+typically under-performs, and that methods that ``add diversity''
+or are ``sampling-based'' tend to produce better results.
+In addition to corroborating their observation we seek to 
+identify if it holds for the increased diversity inherent to \gls{harl}.
+
+Zhou et al.~\cite{zhou2023} begin the development of their hierarchical
+framework based on a traditional \gls{ctde} but increasing the effects
+of centralization, with an evaluation of several extant \gls{ctde}
+algorithms. While none of the algorithms that they tested are of
+direct interest to the research proposed in this document,
+their process of establishing a baseline evaluation is.
+
+Smit et al.~\cite{smit2023} apply \gls{marl} to simulated football.
+Their objective was to identify methods that could be utilized to 
+make research in \gls{marl} more accessible to researchers without 
+high end resources, citing the resources used by OpenAI and DeepMind 
+researchers.
+%
+Firstly, instead of using the \gls{grf} environment, they developed a 
+lighter version that omitted the complex physics and graphics of \gls{grf}. 
+They employed training with sub-games similar to those in \gls{grf}, 
+designed to replicate real-world drills used by human players. 
+Additionally, they implemented a small league training format akin to 
+the one used by Vinyals et al.~\cite{vinyals2019}.
+
+\begin{figure}[h]
+    \begin{subfigure}{0.5\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{grf.png}
+        \caption{\gls{grf}.}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{smit_football.png}
+        \caption{Smit et al.}
+    \end{subfigure}
+    \caption{Comparison of football environments.}
+\end{figure}
+
+Finally, to reduce computational demands, they trained teams at a 
+reduced scale. They highlighted the challenge of training agents in 
+4v4 games to perform acceptably in the full 11v11 environment. 
+Their publication of negative results is commendable, especially 
+because it highlights the lack of research into scalability in MARL, 
+which corroborates our own findings of a notable research gap in this area.
+% ---

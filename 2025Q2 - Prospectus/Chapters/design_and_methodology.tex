@@ -1,0 +1,311 @@
+In this chapter we propose contributions divided into three sections.
+The sections are intended to represent coherent groups of publishable results.
+The target venue of publication is \emph{Autonomous Agents and Multi-Agent 
+Systems}~\cite{zotero-2605} or publication with similar objectives.
+
+\Cref{fig:timeline} details the proposed timeline for the contributions listed 
+in the following sections. The bars of the gantt chart represent the period 
+time during with the subject of the bar is expected to be a primary focus. 
+The end of the bar coincides with the point at which the associated paper 
+is finished and has been submitted to some publication.
+
+\begin{figure}[htbp]
+    \begin{center}
+    \begin{ganttchart}[y unit title=0.4cm, y unit chart=0.5cm,
+    vgrid,hgrid, title label anchor/.style={below=-1.6ex},
+    title left shift=.05, title right shift=-.05, title height=1,
+    progress label text={}, bar height=0.8, bar top shift=0.1,
+    group right shift=0, group top shift=.6,
+    inline, 
+    milestone inline label node/.append style={left=2mm},
+    %bar label/.style={anchor=west},    bar top shift
+    group height=.3]{1}{24}
+    
+        %labels
+        \gantttitle{2024}{24} \\
+        \gantttitle{}{10} 
+        \gantttitle{Jun}{2} 
+        \gantttitle{Jul}{2} 
+        \gantttitle{Aug}{2} 
+        \gantttitle{Sep}{2} 
+        \gantttitle{Oct}{2} 
+        \gantttitle{Nov}{2} 
+        \gantttitle{Dec}{2} \\
+
+        %tasks
+        \ganttbar[bar inline label node/.style={left=10mm},]{Prospectus}{12}{12} \\
+        \ganttbar[bar inline label node/.style={left=15mm},]{Specialty Exam}{14}{14} \\
+        \ganttmilestone{Specialty Defense NLTD}{23} \\
+        \ganttbar[bar/.style={fill=blue!15}]{Paper 1}{12}{18} \\
+        \ganttbar[bar/.style={fill=blue!25}]{Paper 2}{19}{24} 
+
+        %relations 
+        \ganttlink{elem0}{elem1} 
+    \end{ganttchart}
+    \begin{ganttchart}[y unit title=0.4cm, y unit chart=0.5cm,
+    vgrid,hgrid, title label anchor/.style={below=-1.6ex},
+    title left shift=.05, title right shift=-.05, title height=1,
+    progress label text={}, bar height=0.8, bar top shift=0.1,
+    group right shift=0, group top shift=.6,
+    inline,
+    group height=.3]{1}{24}
+    
+        %labels
+        \gantttitle{2025}{24} \\
+        \gantttitle{Jan}{2} 
+        \gantttitle{Feb}{2} 
+        \gantttitle{Mar}{2} 
+        \gantttitle{Apr}{2} 
+        \gantttitle{May}{2} 
+        \gantttitle{Jun}{2} 
+        \gantttitle{Jul}{2} 
+        \gantttitle{Aug}{2} 
+        \gantttitle{Sep}{2} 
+        \gantttitle{Oct}{2} 
+        \gantttitle{Nov}{2} 
+        \gantttitle{Dec}{2} \\
+
+        %tasks
+        \ganttbar[bar/.style={fill=blue!25}]{Paper 2}{1}{6} \\
+        \ganttbar[bar/.style={fill=blue!35}]{Paper 3}{7}{16} \\
+        \ganttbar{Dissertation/Def. Prep.}{17}{24} 
+        %\ganttbar{Defense Prep}{}{} 
+    \end{ganttchart}
+    \end{center}
+    \caption{Planned Timeline}
+    \label{fig:timeline}
+\end{figure}
+
+\section{Contribution 1}
+\label{sec:contribution1}
+
+\subsection{Motivation}
+Contribution 1 is motivated by the need to establish a broader baseline 
+evaluation of relevant \gls{marl} and \gls{harl} algorithms. Specifically, 
+we aim to determine if there are significant differences in the 
+generalizability of the resulting policies given a fixed model class.
+We will measure generalizability by assessing solution quality under 
+deviations from the training conditions, i.e., when agents trained under a 
+given policy are tasked with solving problems alongside teammates trained 
+under separate instances. This exploratory study aims to evaluate candidate 
+training algorithms for use in the latter stages of our research.
+
+\subsection{Methodology}
+We will train a set of \gls{marl} and \gls{harl} algorithms across candidate 
+scenarios multiple times, with the number of iterations determined by the 
+available time and computational resources on the university cluster. 
+This phase will provide data on training time, consistency of performance, 
+and variance in training curves.
+
+Next, we will evaluate the algorithms in purely cooperative tasks using 
+teams constructed from agents drawn from separate training instances. 
+We expect \gls{marl} training instances to produce agents with sufficiently 
+similar policies, resulting in teams that demonstrate similar, 
+albeit slightly reduced, levels of effectiveness. In contrast, 
+\gls{harl} allows agents to converge on distinct policies, 
+potentially leading to diverse team behaviors. The absence of existing 
+research on this scenario suggests a wide range of possible outcomes.
+
+For tasks where training instances converge on distinct agent roles, 
+we hypothesize that evaluation teams composed of similarly specialized 
+agents will significantly under-perform compared to teams 
+with appropriately diverse agents. Finally, we will assess the algorithms 
+in competitive settings, introducing non-stationarity from adversarial agents. 
+This allows for testing team mixing in a manner similar to the cooperative 
+tasks and evaluating performance against adversarial agents trained in 
+separate instances.
+
+\subsection{Resources}
+To perform this battery of tests, we intend to use a framework that 
+facilitates the application of each algorithm to various environments, 
+thereby improving interoperability. We believe that RLlib~\cite{liang2018}, 
+part of the larger Ray project~\cite{zotero-2599}, 
+is the ideal tool for this line of research. RLlib offers several important 
+features that streamline the construction of the appropriate pipeline, 
+integrating well with the \glspl{api} of other mature frameworks that 
+provide beneficial functionalities.
+
+\begin{description}
+    \item[Data Collection:] 
+    There are multiple options for data collection such as \emph{Tensorboard}~%
+    \cite{zotero-2601} and \emph{Weights and Balances}~\cite{zotero-2603}. 
+    The most common metrics observed in the papers reviewed for this \printdoctype 
+    were episode returns and win rates, typically recorded at intervals~
+    \cite{zhong2024,yu2022,papoudakis2021,lowe2020,zheng2020}.
+    \item[Algorithms:] 
+    RLlib already implements several popular algorithms, though not all 
+    algorithms of interest are included. Some algorithms may need to be 
+    developed within the existing framework standards.
+    \item[Environments:] 
+    RLlib supports a wide variety of environments. Most of the environments 
+    used in the referenced papers are already implemented within this framework.
+    \item[Policy Management:] 
+    RLlib includes functions for exporting policies in a pickled format. 
+    More importantly, it offers functions for loading policies and managing 
+    agents independently in \gls{marl} settings.
+\end{description}
+\begin{figure}[htbp]
+    \includegraphics[width=\linewidth]{rllib_marl_policies.png}
+    \caption{Multi-agent support in RLlib~\cite{zotero-2599}}
+    \label{fig:rllib_marl_policies}
+\end{figure}
+
+\subsection{Anticipated Obstacles}
+One anticipated obstacle is that some of the algorithms of interest 
+are not currently implemented within the RLlib framework. While this 
+does not prevent experimentation, it does limit the scope of our study. 
+To address this, we plan to either translate these algorithms into 
+the RLlib framework or build wrappers to ensure compatibility.
+
+\subsection{Expected Contributions}
+\begin{description}
+    \item[Baseline Evaluation:] 
+    Establishing a comprehensive baseline for \gls{marl} and \gls{harl} 
+    algorithms, particularly those presented in \cite{zhong2024}, 
+    by rigorously examining their performance across various scenarios.
+    \item[Training Consistency:] 
+    Providing insights into the relationship between training time, 
+    consistency of performance, and variance in training curves for 
+    \gls{marl} and \gls{harl} algorithms.
+    \item[Cooperative Task Performance:] 
+    Evaluating the performance of agents in cooperative tasks when teams are 
+    constructed from agents trained in separate instances, highlighting the 
+    differences between \gls{marl} and \gls{harl} in terms of policy 
+    convergence and team effectiveness.
+    \item[Competitive Task Evaluation:] 
+    Assessing the performance of algorithms in competitive settings, 
+    examining the impact of non-stationarity introduced by adversarial agents, 
+    and the effectiveness of team mixing.
+    \item[Novel Insights:] 
+    Generating new insights into the behavior of agents when deployed in novel 
+    configurations, contributing to the broader understanding of 
+    multi-agent reinforcement learning and its practical applications.
+    \item[Algorithm Implementations:] 
+    Contributing to a growing, open source project.
+\end{description}
+
+
+
+\section{Contribution 2}
+
+\subsection{Motivation}
+Contribution 2 is motivated by applying select principles from the league formulations outlined 
+in \cite{vinyals2019} and \cite{berner2019} to address the unresolved problem highlighted by 
+Smit et al.~\cite{smit2023}. Smit et al. utilized a football (soccer) simulation environment and 
+encountered significant difficulties in developing a scalable training methodology. Their 
+objective was to train agents in a 4v4 setting that could effectively operate in an 11v11 game.
+
+While they observed some emergent organization of the players during the training phase, 
+the additional agents clustered into groups that maintained the same formations and spacing 
+developed during training when scaled up. This issue highlights the challenge of scaling 
+training methodologies for more complex environments.
+
+In this \printdoctype we propose that the organization observed by Smit et al. represents an 
+emergent role-heterogeneity, which was distinct yet similar to the division of responsibilities 
+among players in different positions when the game is played by humans. 
+We intend to investigate the usability of this heterogeneity to inform curricula planning and
+to address and potentially resolve the issues experienced by Smit et al.
+We propose two extensions in the next subsection. These extensions aim to enhance the 
+scalability and effectiveness of the training methodology for complex, large-scale environments.
+
+\subsection{Methodology}
+For the first proposed extension, we will introduce a period of training that targets varying 
+the number of agents in assigned roles. In the second we propose a modified observation space.
+We will employ two approaches to secondary training. In both cases, 
+we will train a smaller team for 1,000,000 steps, consistent with the baseline training used in~
+\cite{zhong2024} and similar to the duration used by Smit et al. in their paper.
+
+The first approach for secondary training involves associating the agents' emergent roles with 
+corresponding human positions and utilizing sub-games, such as those found in the 'academy' 
+scenarios developed by Kurach et al. for Google Research Football~\cite{kurach2020}. 
+This method aims to refine the agents' roles through specialized training scenarios.
+
+The second approach for secondary training continues with the full game but varies the number of 
+instances of distinct agents per episode. For example, let \(\{A,B,C,D\}\) represent four 
+emergent roles. In each episode of secondary training, a random policy \(\pi\in\{A,B,C,D\}\) 
+will be selected, and one to three additional copies of agents with that policy will be added. 
+This variation aims to enhance the agents' adaptability to different team compositions.
+
+For the second extension, we will apply transformations to the environmental part of the agents' 
+observation space based on the number of agents on the team. 
+In its simplest form, this may involve tiling. 
+We also plan to experiment with a function that forms a convex hull around the agent, 
+bounded by the true edge of the environment and using its nearest teammates as vertices. 
+This approach aims to provide a more structured and relevant observation space, 
+potentially improving the agents' situational awareness and decision-making capabilities.
+
+\subsection{Resources}
+At minimum we can utilize the same football environment, however, using the results from 
+contribution 1 we hope to identify additional candidate environments that can provide 
+meaningful insight into this extensibility challenge.
+
+The framework used in \cref{sec:contribution1} is expected to 
+provide the necessary components to test the curricula and observation space 
+changes proposed in the preceding methodology section.
+
+\subsection{Anticipated Obstacles}
+
+A foreseeable weakness to the first part of this approach is that it still requires some human 
+intervention when developing the training period targeted at the roles of the agents.
+The second approach is a very simple approach to begin addressing this.
+We anticipate that this aspect will provide a potential avenue for future work.
+
+\subsection{Expected Contributions}
+\begin{description}
+    \item[Enhanced Role Adaptability:] 
+    By introducing training that varies the number of agents in assigned roles, 
+    we aim to enhance the adaptability of agents to different team compositions. 
+    This approach is expected to improve the flexibility and robustness of the resulting 
+    policies when scaled to larger teams.
+    \item[Improved Training Methodologies:] 
+    The use of sub-games and targeted training scenarios will refine agents' roles, 
+    potentially leading to more specialized and effective behaviors. 
+    This contribution will provide insights into how targeted training can enhance the 
+    overall performance of multi-agent systems.
+    \item[Scalability Solutions:] 
+    The proposed methodologies will address the challenges identified by Smit et al. 
+    in scaling from smaller to larger team configurations. Successful implementation of these 
+    techniques will offer scalable training solutions for complex, large-scale environments.
+    \item[Observation Space Transformations:] 
+    Through experimenting with transformations in the agents' observation space,
+    we aim to improve their situational awareness and decision-making capabilities. 
+    This contribution will offer new techniques for structuring observation spaces to 
+    better support complex team-based tasks.
+    \item[Real-World Applications:] 
+    The insights gained from this research will be applicable to various real-world scenarios 
+    where heterogeneous teams need to collaborate effectively. 
+    Examples include robotic swarms for search and rescue missions, 
+    autonomous vehicle coordination, and complex industrial automation tasks.
+    \item[Empirical Validation:] 
+    The study will provide empirical validation of the proposed training extensions, 
+    demonstrating their impact on the scalability and effectiveness of multi-agent systems. 
+    These findings will contribute to the broader understanding and advancement of 
+    heterogeneous-agent reinforcement learning.
+\end{description}
+
+
+\section{Contribution 3}
+
+\subsection{Motivation}
+The direction of Contribution 3 is highly dependent on the results obtained 
+from the previous contributions. The general motivation is to 
+continue exploring and developing more efficient methods for scalable \gls{marl}. 
+The outcomes of the earlier studies will influence our perspective on the potential of 
+\gls{harl} algorithms as a superior approach for achieving scalable, robust, and diverse solutions.
+
+Given Contributions 1 and 2, the next logical step appears to be exploring auto-curricular methods. 
+This research area is relatively new, with limited literature available before 2019. 
+Auto-curricular methods involve dynamic adjustment of training curricula based on the agents' 
+performance and learning progress, which could significantly enhance the adaptability and 
+efficiency of \gls{marl} systems.
+
+The exploration of auto-curricular methods aims to automate the process of curriculum design, 
+potentially leading to more effective training regimes that adapt to the evolving capabilities of 
+agents. This approach could address several challenges identified in earlier contributions, 
+such as role specialization, scalability, and performance consistency across different team 
+configurations.
+
+By investigating auto-curricular methods, we aim to push the boundaries of current \gls{marl} 
+research, providing a foundation for more advanced and autonomous training methodologies. 
+This direction aligns with the overarching goal of developing scalable, efficient, and 
+robust multi-agent systems capable of tackling complex real-world problems.

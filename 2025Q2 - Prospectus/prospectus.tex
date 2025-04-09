@@ -1,0 +1,186 @@
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\documentclass{afitthesis}
+
+% --------------------------------- Preamble -----------------------------------
+
+% --- Paths ---
+\makeatletter
+\def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
+\makeatother
+\graphicspath{{Figures}}
+
+% --- References ---
+\usepackage{cleveref}
+\usepackage[style=ieee]{biblatex}       % bibliographies
+% \addbibresource{other/Prospectus.bib}   % name of the bibliography file
+\addbibresource{../2025Bibs/Prospectus.bib} % name of the bibliography file
+\usepackage{xurl}                       % fix under-full warnings when compiling
+\usepackage[nomain,abbreviations,symbols,section]{glossaries-extra}
+\makeglossaries%
+\input{abbreviations}
+\input{symbols}
+
+% --- Figures ---
+\usepackage{pgfgantt}
+\usepackage{tikz}
+\usetikzlibrary{automata, positioning}
+\usepackage{wrapfig}
+\usepackage{subcaption}
+
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{pgfplotstable}
+\pgfplotsset{compat=1.7}
+
+% --- Formatting Tools ---
+\usepackage{tcolorbox}  % For call out boxes
+\usepackage{titlesec}
+%\titleformat{\subsection}[runin]
+%  {\normalfont\bfseries\itshape}{\thesubsection}{1em}{}
+
+
+% ------------------------------- Front Matter ---------------------------------
+
+% NOTE: The following macros are the meta data of your document, like the title,
+% author, and department. Some of these apply to the whole document. Some, like
+% in the section after this, apply to the SF 298 form only. Several are
+% commented out because they are probably not needed for your situation.
+
+% Main document information
+\title{ WORKING TITLE:\\
+    Efficiency, Efficacy, and Extensibility in\\
+    Heterogeneous Agent Reinforcement Learning }
+\author{Brandon Hosley}
+% \authorsecond{}
+% \authorthird{}
+% \authorfourth{}
+\rank{Captain, USAF}
+% \ranksecond{}
+% \rankthird{}
+% \rankfourth{}
+\previousdegrees{B.Sc., M.Sc.}
+\newdegree{Doctor of Philosophy in Data Science}
+\graduationdate{May 2026}
+\department{\ENS} % \ENY, \ENG, \ENP, \ENC, \ENS, or \ENV
+\doctype{prospectus}
+\docdesignator{AFIT-ENS-P-XX-X-XXX}
+% \address{}
+% \disclaimer{}
+% \copyrightstatement{}
+\committee{ % rank name, Ph.D. \\ role
+    {Bruce Cox, Ph.D.\\Chair},
+    {Matthew Robbins, Ph.D.\\Member},
+    {Maj Nicholas Yielding, Ph.D.\\Member}}
+\abstract{\input{Chapters/abstract.tex}}
+%\keywords{earth; water; air; fire}
+%\dedication{To the one who loves me most.}
+%\acknowledgments{I would like to thank the entire committee for your great
+%    support.}
+
+% Distribution and Control
+% \cui{
+%     Controlled By: AETC \\
+%     Controlled By: AFIT/ENG \\
+%     CUI Category(ies): PRVCY \\
+%     Distribution: \DistB{CATEGORY}{DATE}{OFFICE} \\
+%     POC: John Smith, 555-123-4567}
+% \classified{
+%     Classified By: \\
+%     Derived From: \\
+%     Declassify On: }
+% \banner{cui}
+
+% SF 298 (Report Documentation Page) information
+%\sfStartDate{Sep 2023}
+%\sfEndDate{Mar 2024}
+%\sfContractNumber{XXXXXX-XX-X-XXXX}
+%\sfGrantNumber{}
+%\sfProgramElementNumber{}
+%\sfProjectNumber{XXXXXXXX}
+%\sfTaskNumber{}
+%\sfWorkUnitNumber{}
+%\sfSponsorAgency{AFXX/XXXX\\
+%    Building XXX, WPAFB OH 45433-7765\\
+%    DSN XXX-XXXX, COMM 937-XXX-XXXX, Email: first.last@us.af.mil }
+%\sfSponsorAcronyms{}
+%\sfSponsorReportNumber{}
+%\sfDistribution{\DistA}
+%\sfSupplementaryNotes{}
+%\sfReportClassification{}
+%\sfAbstractClassification{}
+%\sfPageClassification{}
+%\sfAbstractLimitation{UU}
+%\sfResponsiblePerson{Dr. Your Advisor, AFIT/ENG}
+%\sfPhoneNumber{(937) XXX-XXXX}
+
+    % SF 298 Override default variables
+    % \sfReportDate{}
+    % \sfReportType{}
+    % \sfTitle{}
+    % \sfAuthors{}
+    % \sfDepartment{}
+    % \sfAddress{}
+    % \sfDocDesignator{}
+    % \sfAbstract{}
+    % \sfSubjectTerms{}
+    % \sfPageCount{}
+    % \sfClassification{}
+
+% ------------------------------ Body of Paper ---------------------------------
+
+\begin{document}
+\maketitle % This command will create all the prefatory pages.
+
+% Perhaps this should be added to the \chapter command (cls line 1205)
+
+% --------------------
+\chapter{Introduction}%
+\input{introduction.tex}
+
+% -------------------------
+\chapter{Literature Review}%
+\label{ch:literature_review}
+\input{literature_review.tex}
+
+% -------------------------
+\chapter{Proposed Research}%
+\label{ch:methodology}
+\input{design_and_methodology.tex}
+
+% ----------------------------
+%\chapter{Results and Analysis}%
+%\label{ch:results}% chktex 24
+%\input{results.tex}
+%\label{ch:discussion}
+
+% ------------------
+%\chapter{Conclusion}%
+%\label{ch:conclusion}% chktex 24
+%\input{conclusion.tex}
+
+% --------------------------------- Optional -----------------------------------
+\appendix   % This command is necessary before any appendix chapters.
+\chapter{Glossary}
+%\printunsrtglossary[type=symbols,title=Summary of Notation]
+\printglossaries%
+%\printabbreviations[title=]
+%\printunsrtglossary[type=symbols,style=long]
+
+% ------------------------------- Bibliography ---------------------------------
+\nocite{*} % Uncomment to print all .bib entries, regardless of citation.
+\clearpage\phantomsection% Creates new page and section for bibliography.
+\addcontentsline{toc}{appendix}{\bibname} % Adds bib to table of contents.
+\printbibliography% Prints the bibliography.
+
+% --------------------------------- Optional -----------------------------------
+%\begin{vita} % Add name within brackets for multiple vitas.
+%    If you are adding a description about yourself. Use the \verb|vita|
+%    environment. Keep the contents to one page. If for some reason there is
+%    more than one author contributing to this paper, each author should have a
+%    separate page.
+%\end{vita}
+
+% ---------------------------- Standard Form 298 -------------------------------
+%\sfTwoNineEight
+\end{document}
