@@ -2420,7 +2420,10 @@
     <bcf:citekey order="56">ellis2023</bcf:citekey>
     <bcf:citekey order="57">kurach2020</bcf:citekey>
     <bcf:citekey order="58">guo2024</bcf:citekey>
-    <bcf:citekey order="59">schulman2017</bcf:citekey>
+    <bcf:citekey order="59">gupta2017</bcf:citekey>
+    <bcf:citekey order="60">gupta2017</bcf:citekey>
+    <bcf:citekey order="61">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="62">schulman2017</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">
