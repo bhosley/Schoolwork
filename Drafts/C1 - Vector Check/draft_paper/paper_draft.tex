@@ -56,24 +56,20 @@
 
 \section{Introduction}
 
-% #TODO: Integrate DrBC edit:
-Autonomous drone swarms have been widely proposed for usage in disaster
-response [add citations], 
-search and rescue [add citations], 
-and tactical coordination [what does this even mean?]. 
-However, real-world deployments remain rare, 
-limited by the cost and complexity of training multi-agent autonomous systems
-%%
-Although autonomous drones have been widely proposed for use in disaster response and 
-tactical coordination, real-world deployments remain rare, often limited by the cost 
-and complexity of training multi-agent systems~\cite{jin2025}. 
-DARPA's OFFensive Swarm-Enabled Tactics (OFFSET) program~\cite{zotero-2835} 
-demonstrated the feasibility of coordinating autonomous aerial and ground agents 
-in a simulated urban environment, highlighting the potential of multi-agent reinforcement 
-learning (MARL) for real-world applications. Yet despite both demonstrated feasibility and 
-increasing interest, these systems have not yet been employed at scale in real-world settings. 
-We believe that improving the efficiency and scalability of multi-agent training 
-could help reduce the practical barriers to deployment. %, particularly for MARL and HARL swarms.
+Autonomous drone swarms have been widely proposed for applications ranging from 
+disaster response~\cite{mohddaud2022} and search and rescue~\cite{mohddaud2022} 
+to high-stakes tasks such as as intelligence, surveillance, and reconnaissance 
+(ISR) operations~\cite{hambling2021}, and autonomous threat 
+engagement~\cite{rogers2022, kallenborn2024}. 
+Programs like DARPA's OFFensive Swarm-Enabled Tactics (OFFSET)~\cite{zotero-2835} 
+have demonstrated the technical feasibility of autonomous multi-agent coordination 
+in complex environments, particularly within military contexts. However, 
+deployments beyond defense settings remain rare. Despite encouraging demonstrations, 
+real-world use of autonomous multi-agent systems is limited—partly due to the cost, 
+complexity, and inefficiency of training robust multi-agent policies at scale~\cite{jin2025}. 
+Improving the training efficiency and scalability of multi-agent reinforcement 
+learning (MARL) could reduce these barriers, enabling broader application in both 
+constrained and dynamic system deployments.
 
 Multi-agent reinforcement learning (MARL) has shown significant promise in solving complex 
 decision-making tasks across diverse domains, including 
@@ -113,17 +109,13 @@ leading to varying observation or action spaces. Additionally,
 HARL also encompasses situations we refer to as \emph{behavioral heterogeneity}, 
 where agents are structurally identical but their policies are updated independently 
 during training, allowing their roles and behaviors to diverge over time. 
-Framing HARL as these two possibilities
-% #TODO: CrBC edit:
-% I'm a little confused by this 2nd half.  Are these deployments meant to all be bHARL examples?  
-%
-% In the first half you introduce the notion of iHARL and bHARL.  In the 2nd half you should provide (and label) examples of both types.
-captures a range of realistic deployments—such as drone swarms, 
-robotic warehouses~\cite{rizk2019}, and cooperative games—where interchangeable 
-agents can evolve distinct roles through interaction and policy drift. 
-In these settings, the coordination burden increases even when agents are 
-nominally homogeneous~\cite{shoham2007,ackermann2019}.
-%%%%%
+Framing HARL as these two possibilities captures a range of realistic deployments, including 
+robotic warehouses~\cite{rizk2019}, cooperative drone swarms, and multi-agent games, where 
+agents may differ intrinsically (e.g., in hardware or sensing capabilities), 
+or become behaviorally distinct through independent learning. In such settings, 
+coordination burdens increase not only when agents are structurally different, 
+but also when nominally homogeneous agents develop specialized behaviors over 
+time~\cite{shoham2007,ackermann2019}.
 
 One proposed strategy to improve MARL training efficiency efficiency involves pretraining 
 a reduced subset of agents before scaling to the full target configuration. 
@@ -599,7 +591,6 @@ with the number of agents—an anticipated but important validation for our use 
 where all three environments show Pearson correlation coefficients exceeding 0.999,
 shown in \ref{tab:pearson-corr}.
 \begin{figure}[!h]
-    % #TODO: Increase legend/label font sizes
     \centering
     \includegraphics[width=0.9\linewidth]{iter_cost.png}
     \caption{\textbf{Training Iteration Timing Across Agent Counts.}
@@ -685,7 +676,6 @@ when the ratio between pretraining team size and target team sizes is high.
 
 \begin{figure}[h]
     \centering
-    % #TODO: Decrease decimal precision, increase font size
     \includegraphics[width=0.9\linewidth]{Waterworld-AUCs.png}
     \caption{\textbf{Waterworld Pretraining Impact.} 
     Relative increase in cumulative training returns (AUC) compared to tabula rasa baselines. 
