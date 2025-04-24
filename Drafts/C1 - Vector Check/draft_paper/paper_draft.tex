@@ -157,7 +157,8 @@ encode team size directly into observation formats, making policy reuse across s
     \includegraphics[width=0.3\linewidth]{multiwalker.png}
     \hfill
     \includegraphics[width=0.3\linewidth]{lbf.png}
-    \caption{Illustrative examples of the three environments used in this study: Waterworld (left), Multiwalker (center), and Level-Based Foraging (right).}
+    \caption{Illustrative examples of the three environments used in this study: 
+        Waterworld (left), Multiwalker (center), and Level-Based Foraging (right).}
     \label{fig:envs-overview}
 \end{figure}
 
@@ -227,11 +228,11 @@ transferability and efficiency.
 
 \subsection{Heterogeneous MARL and Policy Transferability}
 
-Heterogeneous MARL (HARL) introduces additional complexity by requiring agents with differing
-roles, capabilities, or observation modalities to coordinate effectively. This setting reflects
-many real-world domains, including swarm robotics \cite{hoang2023}, traffic control \cite{calvo2018},
-and decentralized logistics \cite{rizk2019}, where adaptability to team composition and role diversity
-is essential.
+Heterogeneous MARL (HARL) introduces additional complexity by requiring agents with 
+differing roles, capabilities, or observation modalities to coordinate effectively. 
+This setting reflects many real-world domains, including swarm robotics \cite{hoang2023}, 
+traffic control \cite{calvo2018}, and decentralized logistics \cite{rizk2019}, 
+where adaptability to team composition and role diversity is essential.
 
 Prior work on policy transferability has explored architectures that support specialization 
 and flexibility. For example, Gupta et al.~\cite{gupta2017a} and H{\"u}ttenrauch 
@@ -336,7 +337,8 @@ that maximizes the expected cumulative team reward. Thus, within the PPO objecti
 \[
     \mathcal{L}(\theta) = \mathbb{E}_{t,n} \left[ 
     \min \left( 
-    \frac{\pi_\theta(a_{n,t} \mid o_{n,t})}{\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})} \hat{A}_{n,t},\ 
+    \frac{\pi_\theta(a_{n,t} \mid o_{n,t})}{\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})} 
+        \hat{A}_{n,t},\ 
     \text{clip}\left( 
     \frac{\pi_\theta(a_{n,t} \mid o_{n,t})}{\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})}, 
     1 \pm \epsilon
@@ -361,8 +363,10 @@ encouraging agents to work together.
     \toprule
     \textbf{Symbol} & \textbf{Description} \\
     \midrule
-    $\pi_\theta(a_{n,t} \mid o_{n,t})$ & Probability of action $a_{n,t}$ under current policy for agent $n$ \\
-    $\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})$ & Probability under the previous policy before update \\
+    $\pi_\theta(a_{n,t} \mid o_{n,t})$ & 
+        Probability of action $a_{n,t}$ under current policy for agent $n$ \\
+    $\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})$ & 
+        Probability under the previous policy before update \\
     $\hat{A}_{n,t}$ & Estimated advantage for agent $n$ at time $t$ \\
     $\epsilon$ & PPO clipping parameter (e.g., 0.2) \\
     $r_{n,k}$ & Reward received by agent $n$ at timestep $k$ \\
@@ -567,19 +571,18 @@ and environmental sensitivity vary across configurations and pretraining duratio
 \FloatBarrier
 \section{Results and Observations}
 
-% #TODO: DrBC edits:
-% This comes out of nowhere! introduce the problem, then your solution.
-
-% Introduce the problem:
-% Training complexity (e.g., real world clock time) for HARL models depends on both the environment and the team size.  Since our goal is to explore the impacts of varying team sizes on....
-
-% then introduce your solution:
-% In order to rectify this issue we establish a novel complexity metric called agent steps.  Which consists of....
-
-% Then justify why your solution is valid:
+Training complexity in heterogeneous multi-agent reinforcement learning (HARL) 
+systems is influenced not only by the environment but also by the size of the agent 
+team being trained. As team size increases, so does the number of interactions, 
+the dimensionality of observations, and the coordination burden; factors that collectively 
+compound computational cost. To fairly compare training strategies across different 
+team configurations, we introduce a normalized training cost metric: \emph{agent-steps}, 
+defined as the product of the number of agents and the number of training steps. 
+This metric provides a consistent baseline for measuring training effort across 
+varying agent counts, especially in environments where agent scaling directly 
+impacts sample complexity.
 
 Before evaluating learning outcomes, we validated the consistency of training step costs.
-%%%%%%%
 Since all experiments were conducted on a shared computing cluster with limited 
 control over resource allocation, we measured the time taken per training
 step throughout the course of the experiment. This validation served two purposes. First, 
@@ -742,7 +745,8 @@ To evaluate this, we trained baseline policies from tabula rasa under each schem
 \begin{enumerate}
 \item \emph{Full Observability}: agents with complete information about all allies.
 \item \emph{Truncated Observability}: agents receive randomly sampled ally features.
-\item \emph{Ally-ignorant Observability}: agents only receive information within their own sight range.
+\item \emph{Ally-ignorant Observability}: agents only receive information within 
+    their own sight range.
 \end{enumerate}
 For each team size and observation schema, we conducted 30 independent runs
 and compared the resulting performance distributions.
@@ -830,44 +834,67 @@ interactions encountered by larger groups.
 \FloatBarrier
 
 \section{Conclusion}
-% #TODO: DrBC edits:
-% Expand this a bit.  Keep in mind that the first time someone reads your paper they will read introduction and conclusion and nothing in between.
-%
-% Thus you need to remind the audience what the overall problem is.  Why that matters, and What you did.   Be succinct .... but not this succinct.
-%
-This study evaluated the effectiveness of direct scaling strategies in cooperative multi-agent 
-reinforcement learning (MARL). We explored whether policies pretrained in smaller teams could 
-be reused to improve training efficiency when expanding to full-team configurations. 
-Using PPO within the RLlib framework, we conducted experiments across three environments—
-Waterworld, Multiwalker, and Level-Based Foraging (LBF)—selected for their varying 
-levels and forms of agent heterogeneity.
-%%%%%%%%%%%
 
-Our findings suggest that the effectiveness of training small teams of agents, bootstrap sampling 
-up to the desired team size, and then retraining the full size team is strongly dependent on 
-the coordination structure of the target environment. In Waterworld, where agents can operate 
-nearly independently, upsampling from a smaller team consistently accelerated convergence. 
-In contrast, Multiwalker presented a coordination bottleneck for larger teams that retraining 
-helped mitigate, especially when tabula rasa training failed to produce viable policies. 
-In LBF, dynamic intrinsic heterogeneity and observation challenges complicated the 
-transfer process, though longer pretraining durations still yielded moderate 
-improvements in learning efficiency for smaller team sizes.
-When the structure of agents supports homogeneous scaling, reduced-size pretraining is almost 
-never detrimental—provided it does not exceed convergence—and often offers measurable benefit. 
-Our results indicate that these gains are primarily available when scaling occurs across 
-homogeneous agent configurations. In contrast, heterogeneous configurations (especially those 
-involving evolving roles or intrinsic specialization) show reduced or inconsistent benefits, 
-and appear to depend more heavily on the extent of additional retraining.
+As cooperative MARL systems grow in scale and complexity, the challenge of efficiently 
+training large, heterogeneous teams becomes a critical barrier to real-world deployment. 
+This study set out to address whether this training bottleneck can be mitigated by 
+first pretraining smaller teams of agents, then scaling up to full-size configurations 
+through policy duplication and subsequent retraining—a direct scaling strategy that 
+promises to reduce computational cost while maintaining or improving performance.
 
-Throughout this study, we maintained architectural consistency by implementing 
-lightweight observation adaptations. This enabled fair comparisons across configurations 
-while preserving the independence of agent policies. These results provide actionable 
-insights into the tradeoffs between upfront pretraining cost and downstream training efficiency, 
-and they offer practical guidance for deploying scalable HARL strategies in complex 
-cooperative domains.
+We investigated this question using Proximal Policy Optimization within the 
+RLlib framework, evaluating the approach across three benchmark environments: 
+Waterworld, Multiwalker, and Level-Based Foraging. Each environment was 
+selected to probe different coordination requirements and forms of heterogeneity: 
+Waterworld featured structurally identical agents with independently updated policies; 
+Multiwalker introduced fixed spatial roles and static observation asymmetries; 
+and Level-Based Foraging (LBF) incorporated dynamic intrinsic heterogeneity through 
+skill level variation. Our methodology maintained consistent network architectures across 
+team sizes, using lightweight observation adjustments to ensure that policies remained 
+transferable without requiring architectural modification.
+
+The results reveal that the efficacy of small-team pretraining and scaling is highly dependent 
+on the nature of the environment and the degree of agent specialization required. 
+In Waterworld, 
+where agents are structurally identical and coordination demands are comparatively low, 
+scaling from a small pretrained team consistently accelerated convergence, 
+reflecting a clear efficiency gain. 
+Multiwalker introduced mild intrinsic heterogeneity through fixed spatial roles and 
+asymmetric observations, which exacerbated coordination demands as team size increased. 
+In larger teams, the likelihood of a single agent failing, thus terminating the episode 
+for all agents, became a critical bottleneck. In this setting, pretraining served as a 
+stabilizing influence by equipping agents with sufficient initial competence to avoid 
+early termination and enable meaningful learning progression where tabula rasa training 
+frequently failed to make progress.
+Level-Based Foraging (LBF) posed the most significant challenges, 
+combining dynamic intrinsic heterogeneity with shifting coordination 
+demands based on agent skill levels. 
+Here, the benefits of pretraining were modest and inconsistent, 
+particularly for larger teams, where coordination complexity intensified.
+
+These findings suggest that reduced-size pretraining can be effective in cooperative MARL 
+settings where agent roles are symmetric or only weakly specialized. In such cases, 
+the strategy offers not only measurable gains in sample efficiency but also greater 
+training stability in configurations prone to early failure. However, as environments 
+demand more intricate coordination or stronger role differentiation, the utility of 
+this approach diminishes. We further observed that the benefit of early pretraining 
+often plateaus quickly—short curricula may provide comparable advantages to longer 
+ones in many settings, offering a favorable cost-benefit tradeoff when compute is limited.
+
+By introducing and employing agent-steps as a normalized metric for training cost, and by 
+systematically evaluating policy reuse across a spectrum of team sizes and heterogeneity 
+profiles, this study contributes practical insight into the tradeoffs of using upsampling 
+as a curricular training strategy. Our results support the value of reduced-size pretraining 
+and policy duplication as a practical tool for improving training efficiency in MARL, 
+especially in domains where agent roles are largely interchangeable. However, we view 
+this approach not as a complete solution but as a useful technique that will complement 
+more comprehensive training frameworks. In settings where agent specialization or 
+coordination complexity increases, tailored strategies that incorporate upsampling as 
+one component may be necessary to achieve robust performance and scalability.
 
 
 \section{Future Work}
+
 Building on the findings of this study, several promising research directions emerge. 
 One especially compelling area centers on the design of \emph{invariant observation spaces};
 representations that remain structurally consistent across team sizes and configurations. 

@@ -88,12 +88,151 @@
 \section{Contribution 1}
 
 \subsection{Introduction}
+
 \begin{frame}
 \end{frame}
 
+\subsection{Research Questions}
+
+\begin{frame}{Research Questions}
+    \begin{enumerate}
+        \item[RQ 1] {
+            Can pretraining smaller teams of agents and then scaling to the target 
+            team size via policy duplication and retraining improve training efficiency 
+            without sacrificing final policy performance in MARL?}
+        % \item[RQ 2] \textcolor{lightgray}{
+        \item[RQ 2] {
+            How does the effectiveness of this direct scaling strategy vary across 
+            environments with different forms of agent heterogeneity 
+            (e.g., behavioral vs. intrinsic)?}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 1 - Research Tasks}
+    \begin{itemize}
+        \item[RT 1.1] Design a curriculum-based upsampling strategy using policy duplication and retraining.
+        \item[RT 1.2] Define an efficiency metric (agent-steps) that accounts for agent count and training time.
+        \item[RT 1.3] Run full tabula rasa baselines for each target environment and team size.
+        \item[RT 1.4] Evaluate training performance across various pretraining durations and target team sizes.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{RQ 2 - Research Tasks}
+    \begin{itemize}
+        \item[RT 2.1] {Select environments that represent distinct forms of agent heterogeneity.}
+        \item[RT 2.2] {Adapt observation structures to enable fixed policy architectures across team sizes.}
+        \item[RT 2.3] {Evaluate the effect of heterogeneity type on the scalability and retraining benefit.}
+    \end{itemize}
+\end{frame}
 
 \section{Contribution 2}
+
+
+\subsection{Research Questions}
+
+\begin{frame}{Contribution 2 - Research Questions}
+    \begin{enumerate}
+        \item[RQ 1] {
+            How does the use of input-invariant neural architectures (e.g., permutation or 
+            vector-length invariance) affect training efficiency and policy performance in 
+            MARL settings?}
+        \item[RQ 2] {
+            Can shared policy networks with invariant input structures improve learning and 
+            robustness in heterogeneous-agent teams with partially overlapping observation spaces?}
+        \item[RQ 3] {
+            Do input-invariant architectures improve agent resilience to team-size variation 
+            or partial sensor failure during execution?}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 1 - Research Tasks}
+    \begin{itemize}
+        \item[RT 1.1] {
+            Design an implement input-invariant policy architecture (e.g., 
+            pooling layers, attention, permutation-invariant encodings).}
+        \item[RT 1.2] {
+            Evaluate performance against baseline architectures on standardized 
+            MARL benchmarks (e.g., LBF, Waterworld).}
+        \item[RT 1.3] {
+            Compare training curves, sample efficiency, and final performance metrics 
+            across architecture types.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{RQ 2 - Research Tasks}
+    \begin{itemize}
+        \item[RT 2.1] {
+            Identify benchmark environment where agents have distinct but partially overlapping 
+            observation features (e.g., different sensor arrays).}
+        \item[RT 2.2] {
+            Train shared policy networks across these agents and measure update 
+            utilization and convergence speed.}
+        \item[RT 2.3] {
+            Compare against architectures with isolated policy networks to assess 
+            benefits of shared learning.}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{RQ 3 - Research Tasks}
+    \begin{itemize}
+        \item[RT 3.1] {
+            Simulate runtime degradation by selectively masking agent inputs 
+            (e.g., sensor failure).}
+        \item[RT 3.2] {
+            Simulate dynamic changes in team size by removing agents during evaluation.}
+        \item[RT 3.3] {
+            Measure policy stability, reward degradation, and recovery behavior under 
+            these perturbations.}
+    \end{itemize}
+\end{frame}
+
 \section{Contribution 3}
+
+
+\subsection{Research Questions}
+
+\begin{frame}{Contribution 3 - Research Questions}
+    \begin{enumerate}
+        \item[RQ 1] {
+            Is it feasible to use tensor-based projections to grow policy network capacity 
+            over time during training in multi-agent reinforcement learning?}
+        \item[RQ 2] {
+            Does progressively expanding the policy network architecture reduce total 
+            training cost or improve final performance compared to fixed-size networks?}
+    \end{enumerate}
+\end{frame}
+
+
+
+
+\begin{frame}{RQ 1 - Research Tasks}
+    \begin{itemize}
+        \item[RT 1.1] {
+            Choose a method to project policy networks into higher-dimensional tensor 
+            representations at scheduled points during training.}
+        \item[RT 1.2] {
+            Ensure that the projected networks retain comparable output behavior 
+            post-projection.} %(e.g., bounded error on inference)
+        \item[RT 1.3] {
+            Integrate projection-based expansion into a curriculum training pipeline 
+            and verify stability.}
+    \end{itemize}
+    \end{frame}
+
+
+    \begin{frame}{RQ 2 - Research Tasks}
+        \begin{itemize}
+            \item[RT 2.1] {
+                Compare projected curricula against fixed-size networks of both small and 
+                large sizes across multiple MARL environments.}
+            \item[RT 2.2] {
+                Measure training cost using agent-steps, wall-clock time, and parameter updates.}
+            \item[RT 2.3] {
+                Evaluate final performance, sample efficiency, and learning curves to determine 
+                net benefit of architectural growth.}
+        \end{itemize}
+        \end{frame}
+
 \section{Conclusion}
 
 % Begin Lit review
