@@ -1,0 +1,75 @@
+\section{Contribution 1}
+
+% For each Contribution:
+% Re-motiviate
+%     Introduction
+%         Lit review
+%         Contribution
+%     Methodology
+%     Experimental Procedure
+%     Results
+%     Discussion
+
+\subsection{Introduction}
+
+\begin{frame}
+\end{frame}
+
+\subsubsection{Literature Review}
+
+\subsubsection{Research Questions}
+
+\begin{frame}{Research Questions}
+    \begin{enumerate}
+        \item[RQ 1] {
+            Can pretraining smaller teams of agents and then scaling to the target 
+            team size via policy duplication and retraining improve training efficiency 
+            without sacrificing final policy performance in MARL?}
+        \item[RQ 2] {
+            How does the effectiveness of this direct scaling strategy vary across 
+            environments with different forms of agent heterogeneity 
+            (e.g., behavioral vs. intrinsic)?}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 1 - Research Tasks}
+    \begin{enumerate}
+        \item[RQ 1] \textcolor{gray}{
+            Can pretraining smaller teams of agents and then scaling to the target 
+            team size via policy duplication and retraining improve training efficiency 
+            without sacrificing final policy performance in HARL? } \vspace{1em}
+    \begin{itemize}
+        \item[RT 1.1] {
+            Design an upsampling-based curriculum using policy duplication and retraining.}
+        \item[RT 1.2] {
+            Define a metric (agent-steps) accounting for agent count and training time.}
+        \item[RT 1.3] {
+            Train tabula rasa agents each target environment and team size as baselines.}
+        \item[RT 1.4] {
+            Evaluate training performance across various pretraining length and target team sizes.}
+    \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 2 - Research Tasks}
+    \begin{enumerate}
+        \item[RQ 2] \textcolor{gray}{
+            How does the effectiveness of this direct scaling strategy vary across 
+            environments with different forms of agent heterogeneity 
+            (e.g., behavioral vs. intrinsic)? } \vspace{1em}
+    \begin{itemize}
+        \item[RT 2.1] {
+            Select environments that represent distinct forms of agent heterogeneity. \\
+            Behavioral, Intrinsic.}
+        \item[RT 2.2] {
+            Adapt observation structures to enable fixed policy architectures across team sizes.}
+        \item[RT 2.3] {
+            Evaluate the effect of heterogeneity type on the scalability and retraining benefit.}
+    \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% \subsection{Methodology}
+% \subsection{Experimental Procedure}
+% \subsection{Results}
+% \subsection{Discussion}

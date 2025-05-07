@@ -1,0 +1,96 @@
+\section{Contribution 2}
+
+% For each Contribution:
+%     Introduction
+%         Recall Motivation
+%         Lit review
+%         Contribution
+%     Methodology
+%     Experimental Procedure
+%     Results
+%     Discussion
+\subsection{Introduction}
+
+\begin{frame}{The Case for Input-Invariant Architectures}
+    \begin{itemize}
+        \item Heterogeneous agent teams frequently encounter differences in observation 
+            structure due to varying sensor suites and mission roles.
+        \item Traditional policy networks require fixed, consistent inputs—limiting their 
+            ability to scale or adapt.
+        \item Input-invariant architectures offer a promising alternative by allowing 
+            policies to generalize across agents and configurations without retraining.
+        \item This contribution explores how these architectures can improve learning 
+            efficiency and robustness in dynamic, real-world team settings.
+    \end{itemize}
+\end{frame}
+
+\subsubsection{Literature Review}
+
+\subsubsection{Research Questions}
+
+\begin{frame}{Contribution 2 - Research Questions}
+    \begin{enumerate}
+        \item[RQ 1] {
+            How does incorporating input-invariant structures \emph{(i.e., networks 
+            that are robust to feature permutation and input length differences)}
+            into policy networks affect learning efficiency and team robustness 
+            when heterogeneous agents have partially overlapping observations?
+            }
+        \item[RQ 2] {
+            Do input-invariant architectures lead to more stable policy performance under 
+            team-size changes and partial observation loss during execution?
+            }
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 1 - Research Tasks}
+    \begin{enumerate}
+        \item[RQ 1] \textcolor{gray}{
+            How does incorporating input-invariant structures \emph{(i.e., networks 
+            that are robust to feature permutation and input length differences)}
+            into policy networks affect learning efficiency and team robustness 
+            when heterogeneous agents have partially overlapping observations? } \vspace{1em}
+    \begin{itemize}
+        \item[RT 1.1] {
+            Design and implement a policy architecture that exhibits input-invariance through 
+            techniques such as pooling layers, attention mechanisms, or permutation-invariant 
+            encodings.}
+        \item[RT 1.2] {
+            Identify benchmark environments where agents possess distinct but partially 
+            overlapping observation features (e.g., different sensor arrays).}
+        \item[RT 1.3] {
+            Train these, input-invariant policy networks in the selected setting(s) and measure 
+            learning rate and convergence behavior.}
+        \item[RT 1.4] {
+            Compare input-invariant shared architectures against baseline (non-invariant) 
+            architecture to evaluate performance and learning benefits.}
+    \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 2 - Research Tasks}
+    \begin{enumerate}
+        \item[RQ 2] \textcolor{gray}{
+            Do input-invariant architectures lead to more stable policy performance under 
+            team-size changes and partial observation loss during execution? } \vspace{1em}
+    \begin{itemize}
+        \item[RT 2.1] {
+            Simulate runtime degradation by selectively masking subsets of agent observations 
+            (e.g., sensor failure) for both the input-invariant and baseline policy models.}
+        \item[RT 2.2] {
+            Simulate dynamic changes in team size by removing agents during evaluation 
+            in both the input-invariant and baseline policy models.}
+        \item[RT 2.3] {
+            Measure policy stability, reward degradation, and recovery behavior under these 
+            perturbations for both the input-invariant and baseline models.}
+        \item[RT 2.4] {
+            Statistically compare performance between input-invariant and baseline models 
+            across all perturbation conditions to assess resilience and stability.}
+    \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% \subsection{Methodology}
+% \subsection{Experimental Procedure}
+% \subsection{Results}
+% \subsection{Discussion}

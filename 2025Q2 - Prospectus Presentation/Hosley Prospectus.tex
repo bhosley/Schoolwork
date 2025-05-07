@@ -11,7 +11,10 @@
 % \usepackage[svgnames]{xcolor} % Must pass direct to beamer class
 
 \usepackage{graphicx}
-\graphicspath{{./images/}}
+\makeatletter
+\def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
+\makeatother
+\graphicspath{{Figures}}
 \usepackage[backend=biber,style=ieee,style=authortitle]{biblatex} %authortitle authoryear
 \addbibresource{../2025Bibs/Prospectus.bib}
 \usepackage{xpatch}
@@ -37,201 +40,201 @@
   \end{frame}
 }
 
-% \usetheme{Madrid}
-% \usecolortheme{beaver}
-
-% \usetheme{CambridgeUS}
-% \usecolortheme{seahorse}
-
 \usetheme{Montpellier}
 \usecolortheme{orchid}
 \mode<presentation>
 
 \begin{document}
 
-% Title slide
 \frame{\titlepage}
 \begin{frame}
-    \tableofcontents[subsectionstyle=hide]
+    \tableofcontents[subsectionstyle=hide, subsubsectionstyle=hide]
 \end{frame}
 
-% Slide 1: Introduction and Objectives
 \section{Introduction}
 
-\begin{frame}{First Slide}
-    %\textbf{Dissertation Theme:} 
+\begin{frame}{The Vision for Autonomy in Defense}
+\begin{columns}
+    \begin{column}{0.6\textwidth}
+        \begin{itemize}
+            \item \textbf{Department of Defense initiatives are actively advancing autonomous 
+                system deployment.}
+            \begin{itemize}
+                \item \textbf{Replicator Initiative:} {Calls for the rapid integration of 
+                    commercial-off-the-shelf (COTS) autonomous systems for scalable deployment.
+                    \footnotemark[1] } % \footnote[frame]{\cite{robertson2023}} }
+                \item \textbf{DARPA's OFFSET:} {Demonstrated feasibility of swarm-enabled ground 
+                    and aerial assets in contested environments. 
+                    \footnotemark[2] } % \footnote[frame]{\cite{zotero-2835}} }
+            \end{itemize}
+            \item \textbf{Limitation:} {Reliable autonomy in unpredictable environments 
+                remains an unsolved challenge.}
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+        \begin{figure}[!h]
+            \centering
+            \includegraphics[width=0.95\textwidth]{replicator_collage.png}
+            \caption{\textbf{Replicator Initiative} aimed at multiple platforms. 
+                \footnotemark[1] } % \footnote[frame]{\cite{robertson2023}}}
+            \label{fig:replicator_collage}
+        \end{figure}
+    \end{column}
+\end{columns}
+\footnotetext[1]{\cite{robertson2023}}
+\footnotetext[2]{\cite{zotero-2835}}
 \end{frame}
-% Overview:
-% Timeline?
-% RL -> MARL -> HARL
-% MARL/HARL Challenges
 
-% Military Motivation
-% Examples of Military Motivation
 
-% Round back to through line (Jenn's "How does FL work?)
-% Open Challenges
+\begin{frame}{Rules-Based Control}
+    \begin{itemize}
+        \item Traditional autonomous systems operate on hand-coded rules.
+        \item Effective in constrained environments with predictable dynamics.
+        \item Limitations:
+        \begin{itemize}
+            \item Brittle under changing conditions.
+            \item Poor generalization to novel scenarios.
+        \end{itemize}
+        \item Led to interest in adaptive learning systems.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Reinforcement Learning (RL)}
+    \begin{itemize}
+        \item RL enables agents to learn behaviors through trial and error in dynamic environments.
+        \item Successes in single-agent settings with clear reward signals and isolated tasks.
+        \item Limitations:
+        \begin{itemize}
+            \item Doesn't scale to multi-agent scenarios without coordination failures.
+            \item Learned policies often lack robustness to new agent compositions or input changes.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Multi-Agent RL (MARL)}
+    \begin{itemize}
+        \item MARL extends RL to scenarios involving multiple learning agents.
+        \item Used for both cooperative and competitive environments (e.g., games, simulations).
+        \item Limitations:
+        \begin{itemize}
+            \item Assumes agents are often homogeneous or interchangeable.
+            \item High coordination cost and non-stationarity challenges.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Heterogeneous-Agent RL (HARL)}
+    \begin{itemize}
+        \item HARL addresses coordination among agents with different capabilities, sensors, or roles.
+        \item Promising for real-world applications with diverse platforms (e.g., COTS drones, mixed teams).
+        \item Limitations:
+        \begin{itemize}
+            \item Limited scalability in training architectures.
+            \item Fragile under observation or team composition changes.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Open Challenges in Scalable Multi-Agent Autonomy}
+    \begin{itemize}
+        \item Integration across heterogeneous platforms is constrained by inflexible model assumptions.
+        \item Retraining cost grows rapidly with team size and complexity.
+        \item Teams struggle to adapt dynamically to changing sensors or agent availability.
+        \item Existing strategies for curriculum learning and network scaling are underdeveloped.
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Why Heterogeneous Autonomy Matters}
+\begin{columns}
+    \begin{column}{0.6\textwidth}
+    \begin{itemize}
+        \item \textbf{Operational autonomy must account for platform diversity.}
+        \begin{itemize}
+            \item Teams may integrate UAVs and UGVs with different sensors, dynamics, and connectivity constraints.
+            \item Heterogeneous-agent reinforcement learning (HARL) enables coordination across dissimilar platforms.
+        \end{itemize}
+        \item \textbf{Policy transfer and input-invariant networks} can support:
+        \begin{itemize}
+            \item Adaptability to new team compositions.
+            \item Resilience to partial observation loss or sensor degradation.
+        \end{itemize}
+    \end{itemize}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+        \begin{figure}[!h]
+            \centering
+            \includegraphics[width=0.95\textwidth]{offset_collage.jpg}
+            \caption{\textbf{OFFSET} test platforms.
+                \footnote[frame]{\cite{zotero-2835}}}
+            \label{fig:offset_collage}
+        \end{figure}
+    \end{column}
+\end{columns}
+\end{frame}
+
 
 % Research Contributions
-
-% Research Objectives
-
-% For each Contribution:
-%     Introduction
-%         Lit review
-%         Contribution
-%     Methdology
-%     Experimental Procedure
-%     Results
-%     Discussion
-
-\section{Contribution 1}
-
-\subsection{Introduction}
-
-\begin{frame}
-\end{frame}
-
-\subsection{Research Questions}
-
-\begin{frame}{Research Questions}
-    \begin{enumerate}
-        \item[RQ 1] {
-            Can pretraining smaller teams of agents and then scaling to the target 
-            team size via policy duplication and retraining improve training efficiency 
-            without sacrificing final policy performance in MARL?}
-        % \item[RQ 2] \textcolor{lightgray}{
-        \item[RQ 2] {
-            How does the effectiveness of this direct scaling strategy vary across 
-            environments with different forms of agent heterogeneity 
-            (e.g., behavioral vs. intrinsic)?}
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}{RQ 1 - Research Tasks}
+\begin{frame}{Research Contributions}
     \begin{itemize}
-        \item[RT 1.1] Design a curriculum-based upsampling strategy using policy duplication and retraining.
-        \item[RT 1.2] Define an efficiency metric (agent-steps) that accounts for agent count and training time.
-        \item[RT 1.3] Run full tabula rasa baselines for each target environment and team size.
-        \item[RT 1.4] Evaluate training performance across various pretraining durations and target team sizes.
+        \item {% Through-line:
+            Advance the study of heterogeneous-agent reinforcement learning by exploring 
+            scalable training architectures and policy designs that support adaptability 
+            to agent diversity and team variation.}
+        \item {% Contribution 1:
+            Evaluate a policy upsampling strategy for training larger multi-agent teams 
+            more efficiently using pretrained smaller-team policies.}
+        \item {% {Contribution 2:
+            Investigate input-invariant policy architectures for shared learning and 
+            robustness in teams of heterogeneous agents.}
+        \item {% Contribution 3: 
+            Design and evaluate a curriculum that progressively expands network capacity 
+            via tensor projection to improve training efficiency.}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{RQ 2 - Research Tasks}
+\begin{frame}{Research Objectives}
+    \textbf{Contribution 1}
+    % \textbf{Contribution 1 - Direct Scaling of Teams}
     \begin{itemize}
-        \item[RT 2.1] {Select environments that represent distinct forms of agent heterogeneity.}
-        \item[RT 2.2] {Adapt observation structures to enable fixed policy architectures across team sizes.}
-        \item[RT 2.3] {Evaluate the effect of heterogeneity type on the scalability and retraining benefit.}
+        \item {Improve training efficiency by scaling teams from smaller pretrained groups 
+            using policy duplication instead of retraining from scratch.}
+        \item {Demonstrate that policy reuse across increasing agent counts can reduce 
+            training cost while maintaining performance.}
+    \end{itemize}
+    \vspace{1em}
+    \textbf{Contribution 2}
+    % \textbf{Contribution 2 - Input-Invariant Policy Architectures}
+    \begin{itemize}
+        \item {Construct input-invariant policy architectures to enable shared training 
+            updates across agents with heterogeneous observation structures.}
+        \item {Evaluate the effectiveness of input-invariant models in improving learning 
+            efficiency in teams with overlapping observations.}
+        \item {Test whether these models maintain stable performance under dynamic 
+            observation space changes during execution.}
     \end{itemize}
 \end{frame}
 
-\section{Contribution 2}
-
-
-\subsection{Research Questions}
-
-\begin{frame}{Contribution 2 - Research Questions}
-    \begin{enumerate}
-        \item[RQ 1] {
-            How does the use of input-invariant neural architectures (e.g., permutation or 
-            vector-length invariance) affect training efficiency and policy performance in 
-            MARL settings?}
-        \item[RQ 2] {
-            Can shared policy networks with invariant input structures improve learning and 
-            robustness in heterogeneous-agent teams with partially overlapping observation spaces?}
-        \item[RQ 3] {
-            Do input-invariant architectures improve agent resilience to team-size variation 
-            or partial sensor failure during execution?}
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}{RQ 1 - Research Tasks}
+\begin{frame}{Research Objectives}
+    \textbf{Contribution 3}
+    % \textbf{Contribution 3 - Progressive Network Growth via Tensor Projections}
     \begin{itemize}
-        \item[RT 1.1] {
-            Design an implement input-invariant policy architecture (e.g., 
-            pooling layers, attention, permutation-invariant encodings).}
-        \item[RT 1.2] {
-            Evaluate performance against baseline architectures on standardized 
-            MARL benchmarks (e.g., LBF, Waterworld).}
-        \item[RT 1.3] {
-            Compare training curves, sample efficiency, and final performance metrics 
-            across architecture types.}
+        \item {Demonstrate the feasibility of expanding a policy network mid-training 
+            using tensor projection without discarding prior knowledge.}
+        \item {Identify when during training such growth provides learning advantages 
+            over fixed-size architectures.}
+        \item {Compare performance and efficiency of progressive-growth networks to 
+            fixed-size baselines in terms of convergence and cost.}
     \end{itemize}
 \end{frame}
 
-\begin{frame}{RQ 2 - Research Tasks}
-    \begin{itemize}
-        \item[RT 2.1] {
-            Identify benchmark environment where agents have distinct but partially overlapping 
-            observation features (e.g., different sensor arrays).}
-        \item[RT 2.2] {
-            Train shared policy networks across these agents and measure update 
-            utilization and convergence speed.}
-        \item[RT 2.3] {
-            Compare against architectures with isolated policy networks to assess 
-            benefits of shared learning.}
-    \end{itemize}
-\end{frame}
 
-\begin{frame}{RQ 3 - Research Tasks}
-    \begin{itemize}
-        \item[RT 3.1] {
-            Simulate runtime degradation by selectively masking agent inputs 
-            (e.g., sensor failure).}
-        \item[RT 3.2] {
-            Simulate dynamic changes in team size by removing agents during evaluation.}
-        \item[RT 3.3] {
-            Measure policy stability, reward degradation, and recovery behavior under 
-            these perturbations.}
-    \end{itemize}
-\end{frame}
+\input{Contribution_1.tex}
+\input{Contribution_2.tex}
+\input{Contribution_3.tex}
 
-\section{Contribution 3}
-
-
-\subsection{Research Questions}
-
-\begin{frame}{Contribution 3 - Research Questions}
-    \begin{enumerate}
-        \item[RQ 1] {
-            Is it feasible to use tensor-based projections to grow policy network capacity 
-            over time during training in multi-agent reinforcement learning?}
-        \item[RQ 2] {
-            Does progressively expanding the policy network architecture reduce total 
-            training cost or improve final performance compared to fixed-size networks?}
-    \end{enumerate}
-\end{frame}
-
-
-
-
-\begin{frame}{RQ 1 - Research Tasks}
-    \begin{itemize}
-        \item[RT 1.1] {
-            Choose a method to project policy networks into higher-dimensional tensor 
-            representations at scheduled points during training.}
-        \item[RT 1.2] {
-            Ensure that the projected networks retain comparable output behavior 
-            post-projection.} %(e.g., bounded error on inference)
-        \item[RT 1.3] {
-            Integrate projection-based expansion into a curriculum training pipeline 
-            and verify stability.}
-    \end{itemize}
-    \end{frame}
-
-
-    \begin{frame}{RQ 2 - Research Tasks}
-        \begin{itemize}
-            \item[RT 2.1] {
-                Compare projected curricula against fixed-size networks of both small and 
-                large sizes across multiple MARL environments.}
-            \item[RT 2.2] {
-                Measure training cost using agent-steps, wall-clock time, and parameter updates.}
-            \item[RT 2.3] {
-                Evaluate final performance, sample efficiency, and learning curves to determine 
-                net benefit of architectural growth.}
-        \end{itemize}
-        \end{frame}
+% Prospectus, schedule
 
 \section{Conclusion}
 
