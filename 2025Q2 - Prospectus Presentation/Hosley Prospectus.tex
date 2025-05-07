@@ -1,4 +1,5 @@
 \documentclass[xcolor={svgnames},aspectratio=169]{beamer}
+% \usepackage[svgnames]{xcolor} % Must pass direct to beamer class
 \usepackage[english]{babel}
 \usepackage{lmodern}
 \usepackage{libertinus}
@@ -8,17 +9,39 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{comment}
-% \usepackage[svgnames]{xcolor} % Must pass direct to beamer class
+\usepackage{tikz}
+    \usetikzlibrary{automata, positioning}
+    \usepackage{standalone} % Needed for Tikzscale
+    \usepackage{tikzscale}  % Allows you to import and scale tikz like graphic
 
 \usepackage{graphicx}
-\makeatletter
-\def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
-\makeatother
-\graphicspath{{Figures}}
+    \makeatletter
+    \def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
+    \makeatother
+    \graphicspath{{Figures/}{Figures/Intro}{Figures/C1}{Figures/C2}{Figures/C3}}
 \usepackage[backend=biber,style=ieee,style=authortitle]{biblatex} %authortitle authoryear
-\addbibresource{../2025Bibs/Prospectus.bib}
+    \addbibresource{../2025Bibs/Prospectus.bib}
 \usepackage{xpatch}
-\xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{year}}{}{}
+    \xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{year}}{}{}
+
+
+
+\makeatletter
+\renewrobustcmd{\blx@mkbibfootnote}[2]{%
+  \iftoggle{blx@footnote}
+    {\blx@warning{Nested notes}%
+     \addspace\mkbibparens{#2}}
+    {\unspace
+     \ifnum\blx@notetype=\tw@
+       \expandafter\@firstoftwo
+     \else
+       \expandafter\@secondoftwo
+     \fi
+       {\csuse{blx@theendnote#1}{\protecting{\blxmkbibnote{end}{#2}}}}
+       {\csuse{footnote}[frame]{\protecting{\blxmkbibnote{foot}{#2}}}}}}
+\makeatother
+
+
 
 
 \title{Working Title}
@@ -40,6 +63,16 @@
   \end{frame}
 }
 
+% \begin{columns}
+%     \begin{column}{0.6\textwidth}
+        
+%     \end{column}
+%     \begin{column}{0.4\textwidth}
+
+%     \end{column}
+% \end{columns}
+
+
 \usetheme{Montpellier}
 \usecolortheme{orchid}
 \mode<presentation>
@@ -54,61 +87,97 @@
 \section{Introduction}
 
 \begin{frame}{The Vision for Autonomy in Defense}
-\begin{columns}
-    \begin{column}{0.6\textwidth}
-        \begin{itemize}
-            \item \textbf{Department of Defense initiatives are actively advancing autonomous 
-                system deployment.}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
             \begin{itemize}
-                \item \textbf{Replicator Initiative:} {Calls for the rapid integration of 
-                    commercial-off-the-shelf (COTS) autonomous systems for scalable deployment.
-                    \footnotemark[1] } % \footnote[frame]{\cite{robertson2023}} }
-                \item \textbf{DARPA's OFFSET:} {Demonstrated feasibility of swarm-enabled ground 
-                    and aerial assets in contested environments. 
-                    \footnotemark[2] } % \footnote[frame]{\cite{zotero-2835}} }
+                \item \textbf{Department of Defense initiatives are actively advancing 
+                    autonomous system deployment.}
+                \begin{itemize}
+                    \item \textbf{Replicator Initiative:} {Calls for the rapid integration of 
+                        commercial-off-the-shelf (COTS) autonomous systems for scalable 
+                        deployment. \footcite{robertson2023} }
+                    \item \textbf{DARPA's OFFSET:} {Demonstrated feasibility of swarm-enabled 
+                        ground and aerial assets in contested environments. 
+                        \footcite{zotero-2835} }
+                \end{itemize}
+                \item \textbf{Limitation:} {Reliable autonomy in unpredictable environments 
+                    remains an unsolved challenge.}
             \end{itemize}
-            \item \textbf{Limitation:} {Reliable autonomy in unpredictable environments 
-                remains an unsolved challenge.}
-        \end{itemize}
-    \end{column}
-    \begin{column}{0.4\textwidth}
-        \begin{figure}[!h]
-            \centering
-            \includegraphics[width=0.95\textwidth]{replicator_collage.png}
-            \caption{\textbf{Replicator Initiative} aimed at multiple platforms. 
-                \footnotemark[1] } % \footnote[frame]{\cite{robertson2023}}}
-            \label{fig:replicator_collage}
-        \end{figure}
-    \end{column}
-\end{columns}
-\footnotetext[1]{\cite{robertson2023}}
-\footnotetext[2]{\cite{zotero-2835}}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{figure}[!h]
+                \centering
+                \includegraphics[width=0.95\textwidth]{replicator_collage.png}
+                \caption{\textbf{Replicator Initiative} aimed at multiple platforms. 
+                    \footcite{robertson2023} }
+                \label{fig:replicator_collage}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 
 \begin{frame}{Rules-Based Control}
-    \begin{itemize}
-        \item Traditional autonomous systems operate on hand-coded rules.
-        \item Effective in constrained environments with predictable dynamics.
-        \item Limitations:
-        \begin{itemize}
-            \item Brittle under changing conditions.
-            \item Poor generalization to novel scenarios.
-        \end{itemize}
-        \item Led to interest in adaptive learning systems.
-    \end{itemize}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \begin{itemize}
+                \item The earliest autonomous systems operate on hand-coded rules.
+                \item Effective in constrained environments with predictable dynamics.
+                \item Limitations:
+                \begin{itemize}
+                    \item Brittle under changing conditions.
+                    \item Poor generalization to novel scenarios.
+                \end{itemize}
+                % \item Led to interest in adaptive learning systems.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            % \item Example is also the majority of video game "AI"
+            \textbf{Example:}
+            MYCIN, an expert System for diagnosis of bacterial infections \footcite{buchanan1984}.
+            \begin{figure}[!h]
+                \centering
+                \includegraphics[width=0.65\textwidth]{mycin_logic.png}
+                \caption{\textbf{MYCIN}'s logical flow.}
+                \label{fig:mycin_logic}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}{Reinforcement Learning (RL)}
     \begin{itemize}
-        \item RL enables agents to learn behaviors through trial and error in dynamic environments.
-        \item Successes in single-agent settings with clear reward signals and isolated tasks.
-        \item Limitations:
-        \begin{itemize}
-            \item Doesn't scale to multi-agent scenarios without coordination failures.
-            \item Learned policies often lack robustness to new agent compositions or input changes.
-        \end{itemize}
+        \item RL enables agents to learn behaviors through trial and 
+            error in dynamic environments.
+        % \item Successes in single-agent settings with clear reward signals and isolated tasks.
     \end{itemize}
+    \begin{columns}
+        \begin{column}{0.65\textwidth}
+            \begin{itemize}
+                \item Generally follows the Agent-Environment Cycle (AEC) paradigm. 
+                    \footcite{sutton2018}
+                \begin{itemize}
+                    \item Modeled well by Markov Decision Processes (MDPs).
+                \end{itemize}
+                \item Limitations:
+                \begin{itemize}
+                    \item Multi-agent scenarios are modeled by 
+                        composed action and observation spaces.
+                    \item Composed spaces are larger and encode more rigid agent interactions.
+                \end{itemize}
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{figure}[!h]
+                \centering
+                % \input{mdp_cycle}
+                \includegraphics[width=0.95\textwidth]{ae_cycle.tex}
+                \caption{\textbf{AEC}: Agent-Environment Cycle}
+                \label{fig:ae_cycle}
+            \end{figure}
+        \end{column}
+    \end{columns}
+    % Extending Markov Chains (MDPs) to dynamic decision making
 \end{frame}
 
 \begin{frame}{Multi-Agent RL (MARL)}
@@ -117,20 +186,28 @@
         \item Used for both cooperative and competitive environments (e.g., games, simulations).
         \item Limitations:
         \begin{itemize}
-            \item Assumes agents are often homogeneous or interchangeable.
+            \item Often assumes agents are homogeneous or interchangeable.
             \item High coordination cost and non-stationarity challenges.
         \end{itemize}
     \end{itemize}
+    \begin{figure}[!h]
+        \centering
+        \includegraphics[width=0.45\textwidth]{marl_aec.png}
+        \caption{Multi-Agent AEC}
+        \label{fig:marl_aec}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Heterogeneous-Agent RL (HARL)}
     \begin{itemize}
-        \item HARL addresses coordination among agents with different capabilities, sensors, or roles.
-        \item Promising for real-world applications with diverse platforms (e.g., COTS drones, mixed teams).
+        \item HARL addresses coordination among agents with different 
+            capabilities, sensors, or roles.
+        \item Promising for real-world applications with diverse platforms 
+            (e.g., COTS drones, mixed teams\footcite{guo2024}).
         \item Limitations:
         \begin{itemize}
-            \item Limited scalability in training architectures.
-            \item Fragile under observation or team composition changes.
+            \item Limited literature.
+            \item Higher training cost than MARL.
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -143,8 +220,6 @@
         \item Existing strategies for curriculum learning and network scaling are underdeveloped.
     \end{itemize}
 \end{frame}
-
-
 
 \begin{frame}{Why Heterogeneous Autonomy Matters}
 \begin{columns}
@@ -173,7 +248,6 @@
     \end{column}
 \end{columns}
 \end{frame}
-
 
 % Research Contributions
 \begin{frame}{Research Contributions}
@@ -237,108 +311,6 @@
 % Prospectus, schedule
 
 \section{Conclusion}
-
-% Begin Lit review
-
-% Evolution of RL in Games
-
-% \begin{frame}{Evolution of Reinforcement Learning in Games}
-%     \textbf{Key References:}
-%     \begin{itemize}
-%         \item Go \footcite{silver2016}$^,$\footcite{silver2017}
-%         \item Chess\footcite{silver2017a}
-%         \item StarCraft II\footcite{vinyals2019}
-%         \item DOTA\footcite{berner2019}
-%         \item \textbf{Challenge:} High resource demands highlight the need for more efficient 
-%             training methods.
-%     \end{itemize}
-% \end{frame}
-
-% % Foundations of MARL
-% \begin{frame}{Foundations of MARL}
-%     \textbf{Key References:}
-%     \begin{itemize}
-%         \item Shoham et al.\footcite{shoham2007a}, Busonui et al.\footcite{busoniu2008}, 
-%             and Cao et al.\footcite{cao2012}.
-%         \item Early concepts in multi-agent learning, distributed coordination.
-%         \item \textbf{Challenges:} Non-stationarity, credit assignment, 
-%             \textcolor{DarkBlue}{scalability issues}.
-%     \end{itemize}
-% \end{frame}
-
-% % Scalability Challenges in MARL
-% \begin{frame}{Scalability Challenges in MARL}
-%     \textbf{Key Insights}
-%     \begin{itemize}
-%         \item \textbf{Agent Complexity:} Action-state space explosion.
-%             \footcite{lillicrap2019}$^,$~\footcite{baker2019}$^,$~\footcite{leibo2021}
-%         \item \textbf{Environment Complexity:} Increased observation-action space.
-%             $^{11,}$~\footcite{ye2020}$^,$~\footcite{shukla2022}$^,$~\footcite{liang2024}
-%         \item \textbf{Robustness:} Sensitivity to disturbances and adversarial influences.
-%             \footcite{gleave2021}$^,$~\footcite{li2019}$^,$~\footcite{spooner2020}$^,$~\footcite{guo2022}
-%     \end{itemize}
-%     \vspace{0.5em}
-% \end{frame}
-% %(Liu et al., 2024) liu2024
-
-% % MARL Scalability Strategies
-
-% \begin{frame}{MARL Scalability Strategies}
-%     \textbf{Notable Strategies:}
-%     \begin{itemize}
-%         \item Value decomposition to handle dynamic populations.
-%             \footcite{zhang2021}$^,$~\footcite{nguyen2020}
-%         \item Hierarchical learning and role assignment.
-%             \footcite{cui2022}
-%         \item \textcolor{DarkBlue}{Curriculum learning} and transfer learning for adaptability.
-%             \footcite{shukla2022}$^,$~\footcite{shi2023}
-%     \end{itemize}
-% \end{frame}
-
-% TODO: Add HARL Slide
-
-% \begin{frame}{Heterogeneous-Agent Reinforcement Learning (HARL)}
-%     \textbf{Harl Extends MARL Challenges:}
-%     \begin{itemize}
-%         \item \textbf{Coordination Complexity:} Heterogeneous roles further complicate 
-%             cooperation and strategic alignment.
-%             ~\footcite{wakilpoor2020}$^,$~\footcite{yang2020a}$^,$~\footcite{gronauer2022}
-%         \item \textbf{Scalability Issues:} Increased joint state-action space makes 
-%             learning computationally expensive.
-%             ~\footcite{leibo2021}$^,$~\footcite{rizk2019}
-%         \item \textbf{Adaptability and Robustness:} Policies must generalize across 
-%             changing agent compositions and dynamic environments.
-%             ~\footcite{yang2021a}$^,$~\footcite{koster2020}
-%     \end{itemize}
-% \end{frame}
-
-% % Distinction Between MARL and HARL Variants
-
-% \begin{frame}{Defining MARL and HARL Variants}
-%     \textbf{Proposed Distinctions:}
-%     \begin{itemize}
-%         \item \textbf{MARL (Multi-Agent Reinforcement Learning):}
-%         \begin{itemize}
-%             \item Agents may share identical structures or learn different behaviors.
-%             \item Focuses on collaborative or competitive dynamics among agents.
-%         \end{itemize}
-%         \item \textbf{Heterodox-Agent RL (Behavioral Heterogeneity):}
-%         \begin{itemize}
-%             \item \emph{Structural Homogeneity:} Agents have identical observation and action spaces.
-%             \item \emph{Behavioral Diversity:} Independent policies allow agents to learn unique behaviors.
-%             \item \textit{Example:} Identical drones taking on distinct roles in a cooperative task.
-%         \end{itemize}
-%         \item \textbf{Heterogeneous-Agent RL (Intrinsic Heterogeneity):}
-%         \begin{itemize}
-%             \item \emph{Structural Heterogeneity:} Agents differ in observation or action spaces.
-%             \item \emph{Behavioral Specialization:} Policies adapt to agents' intrinsic differences.
-%             \item \textit{Example:} Combined arms.
-%         \end{itemize}
-%     \end{itemize}
-% \end{frame}
-
-% % Contextual Background
-
 
 \begin{frame}
     \centering

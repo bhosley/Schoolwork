@@ -12,10 +12,133 @@
 
 \subsection{Introduction}
 
-\begin{frame}
+\begin{frame}{Context for Contribution 1}
+    \textbf{Motivation:}
+    \begin{itemize}
+        \item Inspired by Smit et al.'s~\footcite{smit2023} 
+        work using MARL to scale training in 2v2 to playing 11v11 in a football-like game.
+    \end{itemize}
+
+    \begin{multicols}{2}
+        \textbf{Method:}
+        \begin{enumerate}
+            \item Trained teams with 4 methods
+            \begin{itemize}
+                \item Naive Heuristic
+                \item ``Team Work'' Heuristic
+                \item 2v2 Trained Agents
+                \item 11v11 Trained Agents
+            \end{itemize}
+            \item Evaluated through full games (11v11) against each other.
+        \end{enumerate}
+
+        \vfil
+
+        \begin{center}
+            \includegraphics[width=0.55\linewidth]{smit2v2.png}
+            \includegraphics[width=0.55\linewidth]{smit11v11.png}
+        \end{center}
+    \end{multicols}
 \end{frame}
 
 \subsubsection{Literature Review}
+
+% Begin Lit review
+
+% Evolution of RL in Games
+
+\begin{frame}{Evolution of Reinforcement Learning in Games}
+    \textbf{Key References:}
+    \begin{itemize}
+        \item Go \footcite{silver2016}$^,$\footcite{silver2017}
+        \item Chess\footcite{silver2017a}
+        \item StarCraft II\footcite{vinyals2019}
+        \item DOTA\footcite{berner2019}
+        \item \textbf{Challenge:} High resource demands highlight the need for more efficient 
+            training methods.
+    \end{itemize}
+\end{frame}
+
+% Foundations of MARL
+\begin{frame}{Foundations of MARL}
+    \textbf{Key References:}
+    \begin{itemize}
+        \item Shoham et al.\footcite{shoham2007a}, Busonui et al.\footcite{busoniu2008}, 
+            and Cao et al.\footcite{cao2012}.
+        \item Early concepts in multi-agent learning, distributed coordination.
+        \item \textbf{Challenges:} Non-stationarity, credit assignment, 
+            \textcolor{DarkBlue}{scalability issues}.
+    \end{itemize}
+\end{frame}
+
+% Scalability Challenges in MARL
+\begin{frame}{Scalability Challenges in MARL}
+    \textbf{Key Insights}
+    \begin{itemize}
+        \item \textbf{Agent Complexity:} Action-state space explosion.
+            \footcite{lillicrap2019}$^,$~\footcite{baker2019}$^,$~\footcite{leibo2021}
+        \item \textbf{Environment Complexity:} Increased observation-action space.
+            $^{11,}$~\footcite{ye2020}$^,$~\footcite{shukla2022}$^,$~\footcite{liang2024}
+        \item \textbf{Robustness:} Sensitivity to disturbances and adversarial influences.
+            \footcite{gleave2021}$^,$~\footcite{li2019}$^,$~\footcite{spooner2020}$^,$~\footcite{guo2022}
+    \end{itemize}
+    \vspace{0.5em}
+\end{frame}
+%(Liu et al., 2024) liu2024
+
+% MARL Scalability Strategies
+
+\begin{frame}{MARL Scalability Strategies}
+    \textbf{Notable Strategies:}
+    \begin{itemize}
+        \item Value decomposition to handle dynamic populations.
+            \footcite{zhang2021}$^,$~\footcite{nguyen2020}
+        \item Hierarchical learning and role assignment.
+            \footcite{cui2022}
+        \item \textcolor{DarkBlue}{Curriculum learning} and transfer learning for adaptability.
+            \footcite{shukla2022}$^,$~\footcite{shi2023}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Heterogeneous-Agent Reinforcement Learning (HARL)}
+    \textbf{Harl Extends MARL Challenges:}
+    \begin{itemize}
+        \item \textbf{Coordination Complexity:} Heterogeneous roles further complicate 
+            cooperation and strategic alignment.
+            ~\footcite{wakilpoor2020}$^,$~\footcite{yang2020a}$^,$~\footcite{gronauer2022}
+        \item \textbf{Scalability Issues:} Increased joint state-action space makes 
+            learning computationally expensive.
+            ~\footcite{leibo2021}$^,$~\footcite{rizk2019}
+        \item \textbf{Adaptability and Robustness:} Policies must generalize across 
+            changing agent compositions and dynamic environments.
+            ~\footcite{yang2021a}$^,$~\footcite{koster2020}
+    \end{itemize}
+\end{frame}
+
+% Distinction Between MARL and HARL Variants
+
+\begin{frame}{Defining MARL and HARL Variants}
+    \textbf{Proposed Distinctions:}
+    \begin{itemize}
+        \item \textbf{MARL (Multi-Agent Reinforcement Learning):}
+        \begin{itemize}
+            \item Agents may share identical structures or learn different behaviors.
+            \item Focuses on collaborative or competitive dynamics among agents.
+        \end{itemize}
+        \item \textbf{Heterodox-Agent RL (Behavioral Heterogeneity):}
+        \begin{itemize}
+            \item \emph{Structural Homogeneity:} Agents have identical observation and action spaces.
+            \item \emph{Behavioral Diversity:} Independent policies allow agents to learn unique behaviors.
+            \item \textit{Example:} Identical drones taking on distinct roles in a cooperative task.
+        \end{itemize}
+        \item \textbf{Heterogeneous-Agent RL (Intrinsic Heterogeneity):}
+        \begin{itemize}
+            \item \emph{Structural Heterogeneity:} Agents differ in observation or action spaces.
+            \item \emph{Behavioral Specialization:} Policies adapt to agents' intrinsic differences.
+            \item \textit{Example:} Combined arms.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
 \subsubsection{Research Questions}
 
@@ -69,7 +192,154 @@
     \end{enumerate}
 \end{frame}
 
-% \subsection{Methodology}
+
+
+
+
+\begin{frame}{Context for Contribution 1}
+    \begin{table}
+        \centering
+        \includegraphics[width=0.75\linewidth]{smit_results.png}
+        \captionsetup{width=.75\linewidth}
+        \caption{\footnotesize Win rate of row teams vs column teams;
+            500 games of 11v11.~\footcite{smit2023}}
+        \label{table:smit_winrates}
+    \end{table}
+
+    \textbf{Key Insights from Prior Work}
+    \begin{itemize}
+        \item Challenges: computational limit and generalization issues.
+        \item Their findings suggest that agents trained in full-team settings demonstrated 
+            \emph{better differentiation of individual responsibilities}.
+    \end{itemize}
+\end{frame}
+
+\subsection{Methodology}
+
+% Experimental Setup
+
+\begin{frame}{Experimental Setup}
+    \textbf{Environment(s):}
+    \begin{itemize}
+        \item Key attributes include:
+        \begin{itemize}
+            \item Agent count variability.
+            \item Task complexity.
+            \item Cooperation requirements.
+            \item Potential for role differentiation.
+        \end{itemize}
+        \item The chosen environments are:
+        \begin{itemize}
+            \item From the SISL package\footcite{gupta2017} in Farama's PettingZoo.
+            \item Continuous.
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% Environment Description
+\begin{frame}{Experimental Setup}
+\begin{columns}
+    \begin{column}{0.6\textwidth}
+        \textbf{Environments:}
+        \begin{itemize}
+            \item Waterworld
+            \begin{itemize}
+                \item Collect food while avoiding negative reward obstacles (poison).
+                \item Locating food provides a small reward, 
+                    while collecting food provides a large reward but requires multiple agents.
+            \end{itemize}
+            \item Multiwalker
+            \begin{itemize}
+                \item A team of robots carry a box.
+                \item A small reward is given for forward distance of the box.
+                \item Dropping the box is a large negative reward.
+            \end{itemize}
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+        \begin{figure}
+            \includegraphics[width=0.55\textwidth]{waterworld.png}
+            \caption{Waterworld environment}
+        \end{figure}
+        \vspace{-1em}
+        \begin{figure}
+            \includegraphics[width=0.55\textwidth]{multiwalker.png}
+            \caption{Multiwalker environment}
+        \end{figure}
+    \end{column}
+\end{columns}
+\end{frame}
+
+% Training
+
+\begin{frame}{Training}
+    \textbf{Algorithm:}
+    \begin{itemize}
+        \item PPO
+        \item Independent policies
+    \end{itemize}
+
+    \textbf{Curriculum:}
+    \begin{enumerate}
+        \item Pre-training
+        \begin{itemize}
+            \item $n$ iterations
+            \item With set of agents (fewer than target)
+            \item Exporting checkpoints periodically
+        \end{itemize}
+        \item Final Training
+        \begin{itemize}
+            \item With target number of agents
+            \item Instantiated from pre-trained checkpoints
+            \item Upsampling performed without replacement; 
+                randomly when target number is not a multiple of pretrained agents.
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% Evaluation Metrics
+
+\begin{frame}{Evaluation Metrics}
+    \textbf{Performance Metrics:}
+    \begin{itemize}
+        \item Reward progression (training curve) as the primary metric to measure performance and convergence.
+        \item Comparisons based on per-agent average rewards to account for differing agent counts.
+    \end{itemize}
+
+    \textbf{Computational Efficiency:}
+    \begin{itemize}
+        \item Comparisons are a ratio of time per training step
+        \item Must address concerns about possible variance in cluster resource provisioning.
+        \item CPU utilization metrics recorded but we considered of limited scientific value.
+    \end{itemize}
+\end{frame}
+
 % \subsection{Experimental Procedure}
-% \subsection{Results}
-% \subsection{Discussion}
+
+\subsection{Results}
+
+\begin{frame}{Relative Time Cost}
+    \begin{center}
+        \includegraphics[width=0.7\linewidth]{iter_cost.png}
+    \end{center}
+    \textbf{Observation:} Linearity of increasing agent cost.
+    %\textbf{Follow-up Question:} Can this be shown (proven) generally?
+\end{frame}
+
+
+
+% Waterworld
+%     AUC
+%     Heat map
+% Multiwalker
+%     AUC
+%     Heat map
+% LBF
+%     AUC
+%     Heat map
+
+% Statistical Comparison
+
+
+\subsection{Discussion}
+
