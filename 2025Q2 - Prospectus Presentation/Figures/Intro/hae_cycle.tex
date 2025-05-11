@@ -1,0 +1,37 @@
+\begin{tikzpicture}[>=stealth, node distance=3em, on grid, auto,
+    entry/.style = {draw, rectangle, inner sep=8pt, rounded corners=3pt,
+                    minimum width=3em},
+    arrow/.style = {thick,-stealth}, ]
+
+    % Agents
+    \node (P1) {\includegraphics[width=2em]{drone-sml.pdf}}; 
+        \node (P1a) [right= 1.5 of P1] {\(a_{1,t}\in A_1\)};
+        \node (P1o) [left= 1.5 of P1, align=center] {\(o_{1,t}\in O_1\) \\ \(r_{1,t}\in R_1\)};
+    \node (P2) [below= of P1] {\includegraphics[width=2.5em]{drone-mid.pdf}};
+        \node (P2a) [right= 1.5 of P2] {\(a_{2,t}\in A_2\)};
+        \node (P2o) [left= 1.5 of P2, align=center] {\(o_{2,t}\in O_2\) \\ \(r_{2,t}\in R_2\)};
+    \node (Pn) [below= 1.5 of P2] {\includegraphics[width=3.5em]{drone-lrg.pdf}};
+        \node (Pna) [right= 1.5 of Pn] {\(a_{n,t}\in A_n\)};
+        \node (Pno) [left= 1.5 of Pn, align=center] {\(o_{n,t}\in O_n\) \\ \(r_{n,t}\in R_n\)};
+    \node [below= 0.65 of P2] {\vdots};
+    
+    % Environment
+    \path let \p1=(P1.north), \p2=(Pn.south) in
+        node [entry, fill=Green!15, minimum height={\y1-\y2+1em},
+            right= 4 of P2.east] (env) {Environment};
+
+    % Transitions
+    \draw [arrow] (P1a.east) -- +(2,0);
+    \draw [arrow] (P2a.east) -- +(2,0);
+    \draw [arrow] (Pna.east) -- +(2,0);
+    \draw [arrow] (env.north) -- +(0,0.5) --
+        ([shift=({-0.9,1.5})]P1o.west) --
+        ([shift=({-0.9,0})]P1o.west) coordinate(A) --
+        ([shift=({-0.9,0})]P2o.west) coordinate(B) --
+        ([shift=({-0.9,-0.2})]Pno.west) coordinate(C) -- ([shift=({0,-0.2})]Pno.west);
+    \draw [arrow] ([shift=({0, 0.2})]A) -- ([shift=({0, 0.2})]P1o.west);
+    \draw [arrow] ([shift=({0,-0.2})]A) -- ([shift=({0,-0.2})]P1o.west);
+    \draw [arrow] ([shift=({0, 0.2})]B) -- ([shift=({0, 0.2})]P2o.west);
+    \draw [arrow] ([shift=({0,-0.2})]B) -- ([shift=({0,-0.2})]P2o.west);
+    \draw [arrow] ([shift=({0, 0.4})]C) -- ([shift=({0, 0.2})]Pno.west);
+\end{tikzpicture}

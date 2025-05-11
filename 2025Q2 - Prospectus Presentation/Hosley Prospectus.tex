@@ -10,9 +10,10 @@
 \usepackage{algpseudocode}
 \usepackage{comment}
 \usepackage{tikz}
-    \usetikzlibrary{automata, positioning}
+    \usetikzlibrary{automata, positioning, calc}
     \usepackage{standalone} % Needed for Tikzscale
     \usepackage{tikzscale}  % Allows you to import and scale tikz like graphic
+
 
 \usepackage{graphicx}
     \makeatletter
@@ -192,7 +193,7 @@
     \end{itemize}
     \begin{figure}[!h]
         \centering
-        \includegraphics[width=0.45\textwidth]{marl_aec.png}
+        \includegraphics[width=0.45\textwidth]{mae_cycle.tex}
         \caption{Multi-Agent AEC}
         \label{fig:marl_aec}
     \end{figure}
@@ -202,14 +203,29 @@
     \begin{itemize}
         \item HARL addresses coordination among agents with different 
             capabilities, sensors, or roles.
-        \item Promising for real-world applications with diverse platforms 
-            (e.g., COTS drones, mixed teams\footcite{guo2024}).
-        \item Limitations:
-        \begin{itemize}
-            \item Limited literature.
-            \item Higher training cost than MARL.
-        \end{itemize}
     \end{itemize}
+    \begin{columns}
+        \begin{column}{.35\textwidth}
+            \begin{itemize}
+                \item Promising for real-world applications with diverse platforms 
+                    (e.g., COTS drones, mixed teams\footcite{guo2024}).
+                \item Limitations:
+                \begin{itemize}
+                    \item Limited literature.
+                    \item Higher training cost than MARL.
+                \end{itemize}
+            \end{itemize}
+            \hfil
+        \end{column}
+        \begin{column}{.6\textwidth}
+            \begin{figure}[!h]
+                \centering
+                \includegraphics[width=0.75\textwidth]{hae_cycle.tex}
+                \caption{Heterogeneous-Agent AEC}
+                \label{fig:harl_aec}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \begin{frame}{Open Challenges in Scalable Multi-Agent Autonomy}

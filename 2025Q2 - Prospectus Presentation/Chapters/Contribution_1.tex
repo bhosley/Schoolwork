@@ -18,27 +18,46 @@
         \item Inspired by Smit et al.'s~\footcite{smit2023} 
         work using MARL to scale training in 2v2 to playing 11v11 in a football-like game.
     \end{itemize}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Method:}
+            \begin{enumerate}
+                \item Trained teams with 4 methods
+                \begin{itemize}
+                    \item Naive Heuristic
+                    \item ``Team Work'' Heuristic
+                    \item 2v2 Trained Agents
+                    \item 11v11 Trained Agents
+                \end{itemize}
+                \item Evaluated through full games (11v11) against each other.
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{center}
+                % #TODO: Need caption here
+                \includegraphics[width=0.45\linewidth]{smit2v2.png}
+                \includegraphics[width=0.45\linewidth]{smit11v11.png}
+            \end{center}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-    \begin{multicols}{2}
-        \textbf{Method:}
-        \begin{enumerate}
-            \item Trained teams with 4 methods
-            \begin{itemize}
-                \item Naive Heuristic
-                \item ``Team Work'' Heuristic
-                \item 2v2 Trained Agents
-                \item 11v11 Trained Agents
-            \end{itemize}
-            \item Evaluated through full games (11v11) against each other.
-        \end{enumerate}
+\begin{frame}{Context for Contribution 1}
+    \begin{table}
+        \centering
+        \includegraphics[width=0.75\linewidth]{smit_results.png}
+        \captionsetup{width=.75\linewidth}
+        \caption{\footnotesize Win rate of row teams vs column teams;
+            500 games of 11v11.~\footcite{smit2023}}
+        \label{table:smit_winrates}
+    \end{table}
 
-        \vfil
-
-        \begin{center}
-            \includegraphics[width=0.55\linewidth]{smit2v2.png}
-            \includegraphics[width=0.55\linewidth]{smit11v11.png}
-        \end{center}
-    \end{multicols}
+    \textbf{Key Insights from Prior Work}
+    \begin{itemize}
+        \item Challenges: computational limit and generalization issues.
+        \item Their findings suggest that agents trained in full-team settings demonstrated 
+            \emph{better differentiation of individual responsibilities}.
+    \end{itemize}
 \end{frame}
 
 \subsubsection{Literature Review}
@@ -63,7 +82,7 @@
 \begin{frame}{Foundations of MARL}
     \textbf{Key References:}
     \begin{itemize}
-        \item Shoham et al.\footcite{shoham2007a}, Busonui et al.\footcite{busoniu2008}, 
+        \item Shoham et al.\footcite{shoham2007}, Busonui et al.\footcite{busoniu2008}, 
             and Cao et al.\footcite{cao2012}.
         \item Early concepts in multi-agent learning, distributed coordination.
         \item \textbf{Challenges:} Non-stationarity, credit assignment, 
@@ -193,27 +212,6 @@
 \end{frame}
 
 
-
-
-
-\begin{frame}{Context for Contribution 1}
-    \begin{table}
-        \centering
-        \includegraphics[width=0.75\linewidth]{smit_results.png}
-        \captionsetup{width=.75\linewidth}
-        \caption{\footnotesize Win rate of row teams vs column teams;
-            500 games of 11v11.~\footcite{smit2023}}
-        \label{table:smit_winrates}
-    \end{table}
-
-    \textbf{Key Insights from Prior Work}
-    \begin{itemize}
-        \item Challenges: computational limit and generalization issues.
-        \item Their findings suggest that agents trained in full-team settings demonstrated 
-            \emph{better differentiation of individual responsibilities}.
-    \end{itemize}
-\end{frame}
-
 \subsection{Methodology}
 
 % Experimental Setup
@@ -239,7 +237,7 @@
 % Environment Description
 \begin{frame}{Experimental Setup}
 \begin{columns}
-    \begin{column}{0.6\textwidth}
+    \begin{column}{0.5\textwidth}
         \textbf{Environments:}
         \begin{itemize}
             \item Waterworld
@@ -255,15 +253,16 @@
                 \item Dropping the box is a large negative reward.
             \end{itemize}
         \end{itemize}
+        \vfil
     \end{column}
-    \begin{column}{0.4\textwidth}
+    \begin{column}{0.5\textwidth}
         \begin{figure}
-            \includegraphics[width=0.55\textwidth]{waterworld.png}
+            \includegraphics[width=0.35\textwidth]{waterworld.png}
             \caption{Waterworld environment}
         \end{figure}
         \vspace{-1em}
         \begin{figure}
-            \includegraphics[width=0.55\textwidth]{multiwalker.png}
+            \includegraphics[width=0.35\textwidth]{multiwalker.png}
             \caption{Multiwalker environment}
         \end{figure}
     \end{column}
