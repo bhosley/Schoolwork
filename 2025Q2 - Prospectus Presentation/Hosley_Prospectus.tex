@@ -16,16 +16,16 @@
 
 
 \usepackage{graphicx}
-    \makeatletter
-    \def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
-    \makeatother
-    \graphicspath{{Figures/}{Figures/Intro}{Figures/C1}{Figures/C2}{Figures/C3}}
-\usepackage[backend=biber,style=ieee,style=authortitle]{biblatex} %authortitle authoryear
-    \addbibresource{../2025Bibs/Prospectus.bib}
+\makeatletter
+\def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
+\makeatother
+\graphicspath{{Figures/}{Figures/Intro}{Figures/C1}{Figures/C2}{Figures/C3}}
+\usepackage[backend=biber,style=authortitle,defernumbers=true]{biblatex} %authortitle authoryear ieee
+% \usepackage[backend=biber,style=authoryear, citestyle=authoryear]{biblatex}
+\addbibresource{../2025Bibs/Prospectus.bib}
+
 \usepackage{xpatch}
-    \xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{year}}{}{}
-
-
+\xapptobibmacro{cite}{\setunit{\nametitledelim}\printfield{year}}{}{}
 
 \makeatletter
 \renewrobustcmd{\blx@mkbibfootnote}[2]{%
@@ -63,16 +63,12 @@
     \tableofcontents[currentsection, hideothersubsections]
   \end{frame}
 }
-
-% \begin{columns}
-%     \begin{column}{0.6\textwidth}
-        
-%     \end{column}
-%     \begin{column}{0.4\textwidth}
-
-%     \end{column}
-% \end{columns}
-
+\AtBeginSubsection[]{
+  \begin{frame}
+    \tableofcontents[currentsection, currentsubsection,
+        subsectionstyle=show/shaded/hide, subsubsectionstyle=hide]
+  \end{frame}
+}
 
 \usetheme{Montpellier}
 \usecolortheme{orchid}
@@ -188,7 +184,7 @@
         \item Limitations:
         \begin{itemize}
             \item Often assumes agents are homogeneous or interchangeable.
-            \item High coordination cost and non-stationarity challenges.
+            \item High coordination cost and non-stationarity challenges. \footcite{albrecht2024}
         \end{itemize}
     \end{itemize}
     \begin{figure}[!h]
@@ -201,8 +197,8 @@
 
 \begin{frame}{Heterogeneous-Agent RL (HARL)}
     \begin{itemize}
-        \item HARL addresses coordination among agents with different 
-            capabilities, sensors, or roles.
+        \item HARL addresses coordination among agents that may differ structurally in
+            observation and/or action spaces.
     \end{itemize}
     \begin{columns}
         \begin{column}{.35\textwidth}
@@ -272,15 +268,17 @@
             Advance the study of heterogeneous-agent reinforcement learning by exploring 
             scalable training architectures and policy designs that support adaptability 
             to agent diversity and team variation.}
-        \item {% Contribution 1:
-            Evaluate a policy upsampling strategy for training larger multi-agent teams 
-            more efficiently using pretrained smaller-team policies.}
-        \item {% {Contribution 2:
-            Investigate input-invariant policy architectures for shared learning and 
-            robustness in teams of heterogeneous agents.}
-        \item {% Contribution 3: 
-            Design and evaluate a curriculum that progressively expands network capacity 
-            via tensor projection to improve training efficiency.}
+            \begin{enumerate}
+                \item {% Contribution 1:
+                    Evaluate a policy upsampling strategy for training larger multi-agent teams 
+                    more efficiently using pretrained smaller-team policies.}
+                \item {% {Contribution 2:
+                    Investigate input-invariant policy architectures for shared learning and 
+                    robustness in teams of heterogeneous agents.}
+                \item {% Contribution 3: 
+                    Design and evaluate a curriculum that progressively expands network capacity 
+                    via tensor projection to improve training efficiency.}
+            \end{enumerate}
     \end{itemize}
 \end{frame}
 
@@ -336,6 +334,7 @@
 
 \section{References}
 
+% \nocite{*}
 \renewcommand*{\bibfont}{\tiny}
 \frame[allowframebreaks]{\printbibliography}
 
