@@ -1,19 +1,9 @@
-\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {1}{\ignorespaces Fully reduced MDP representation of RL.\relax }}{8}{figure.caption.3}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {2}{\ignorespaces Generalized Policy Iteration.\relax }}{10}{figure.caption.4}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {3}{\ignorespaces Basic \gls {ctde}.\relax }}{12}{figure.caption.5}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {4}{\ignorespaces Actor-Critic \gls {ctde}.\relax }}{12}{figure.caption.6}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {5}{\ignorespaces League-play implemented by Vinyals et al.\nobreakspace {}\cite {vinyals2019}.\relax }}{15}{figure.caption.7}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {6}{\ignorespaces Close Air Combat 2v2.\relax }}{20}{figure.caption.8}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {7}{\ignorespaces Comparison of football environments.\relax }}{21}{figure.caption.9}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {8}{\ignorespaces Planned Timeline\relax }}{22}{figure.caption.10}%
-\defcounter {refsection}{0}\relax 
-\contentsline {figure}{\numberline {9}{\ignorespaces Multi-agent support in RLlib\nobreakspace {}\cite {zotero-2599}\relax }}{24}{figure.caption.11}%
+\contentsline {figure}{\numberline {1}{\ignorespaces Fully reduced MDP representation of RL.}}{9}{figure.caption.3}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Generalized Policy Iteration.}}{11}{figure.caption.4}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Basic \gls {ctde}.}}{13}{figure.caption.5}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Actor-Critic \gls {ctde}.}}{13}{figure.caption.6}%
+\contentsline {figure}{\numberline {5}{\ignorespaces League-play implemented by Vinyals et al.~\blx@tocontentsinit {0}\cite {vinyals2019}.}}{16}{figure.caption.7}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Close Air Combat 2v2.}}{21}{figure.caption.8}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Comparison of football environments.}}{22}{figure.caption.9}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Planned Timeline}}{26}{figure.caption.10}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Multi-agent support in RLlib~\blx@tocontentsinit {0}\cite {zotero-2599}}}{28}{figure.caption.11}%

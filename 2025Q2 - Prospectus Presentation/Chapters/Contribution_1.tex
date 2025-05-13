@@ -33,11 +33,13 @@
             \end{enumerate}
         \end{column}
         \begin{column}{0.5\textwidth}
-            \begin{center}
-                % #TODO: Need caption here
+            \begin{figure}
+                \centering
                 \includegraphics[width=0.45\linewidth]{smit2v2.png}
                 \includegraphics[width=0.45\linewidth]{smit11v11.png}
-            \end{center}
+                \caption{Smit's Game, 2v2 and 11v11 versions.}
+                \label{table:smit_envs}
+            \end{figure}
         \end{column}
     \end{columns}
 \end{frame}
@@ -216,6 +218,7 @@
 
 % Experimental Setup
 
+
 \begin{frame}{Experimental Setup}
     \textbf{Environment(s):}
     \begin{itemize}
@@ -234,7 +237,7 @@
     \end{itemize}
 \end{frame}
 
-% Environment Description
+% Environment Descriptions
 \begin{frame}{Experimental Setup}
 \begin{columns}
     \begin{column}{0.5\textwidth}
@@ -269,31 +272,85 @@
 \end{columns}
 \end{frame}
 
+\begin{frame}{Experimental Setup}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Environments:}
+            \begin{itemize}
+                \item Level-Based Foraging (LBF)
+                \begin{itemize}
+                    \item Grid-world environment with agents of varying skill levels.
+                    \item Agents must cooperatively collect food, some of which require multiple agents.
+                    \item Skill level determines which food an agent can collect.
+                    \item Coordination is based on aligning agent skill with task requirements.
+                \end{itemize}
+            \end{itemize}
+            \vfil
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \includegraphics[width=0.5\linewidth]{lbf.png}
+                \caption{Level-Based Foraging environment.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
 % Training
 
 \begin{frame}{Training}
-    \textbf{Algorithm:}
-    \begin{itemize}
-        \item PPO
-        \item Independent policies
-    \end{itemize}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            
+            \textbf{Algorithm:}
+            \begin{itemize}
+                \item PPO
+                \item Independent policies
+            \end{itemize}
+        
+            \textbf{Curriculum:}
+            \begin{enumerate}
+                \item Pre-training
+                \begin{itemize}
+                    \item $n$ iterations
+                    \item With set of agents (fewer than target)
+                    \item Exporting checkpoints periodically
+                \end{itemize}
+                \item Final Training
+                \begin{itemize}
+                    \item With target number of agents
+                    \item Instantiated from pre-trained checkpoints
+                    \item Upsampling performed without replacement; 
+                        randomly when target number is not a multiple of pretrained agents.
+                \end{itemize}
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.95\linewidth]{training_phases_ww.png}
+                \caption{Example progression of training phases.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-    \textbf{Curriculum:}
+\begin{frame}{Observation Schema Adjustments}
+    \textbf{Challenge:} Observation vector size varies with number of agents in LBF.\\[1em]
+    \textbf{Solutions Implemented:}
     \begin{enumerate}
-        \item Pre-training
-        \begin{itemize}
-            \item $n$ iterations
-            \item With set of agents (fewer than target)
-            \item Exporting checkpoints periodically
-        \end{itemize}
-        \item Final Training
-        \begin{itemize}
-            \item With target number of agents
-            \item Instantiated from pre-trained checkpoints
-            \item Upsampling performed without replacement; 
-                randomly when target number is not a multiple of pretrained agents.
-        \end{itemize}
+        \item \textbf{Ally-Ignorant Observations:}
+            \begin{itemize}
+                \item Agent does not receive any ally-specific features.
+                \item Observation vector remains fixed regardless of team size.
+            \end{itemize}
+        \item \textbf{Truncated Observations:}
+            \begin{itemize}
+                \item Observation includes a fixed number of teammate feature slots.
+                \item For larger teams, a random subset of teammates is used.
+            \end{itemize}
     \end{enumerate}
+    \textbf{Goal:} Maintain consistent policy architecture across configurations.
 \end{frame}
 
 % Evaluation Metrics
@@ -303,42 +360,306 @@
     \begin{itemize}
         \item Reward progression (training curve) as the primary metric to measure performance and convergence.
         \item Comparisons based on per-agent average rewards to account for differing agent counts.
+        \item We define training effort using \textbf{agent-steps}, the product of agent count and training iterations.
+        \item Validated agent-steps as a proxy for training cost via timing analysis.
     \end{itemize}
 
     \textbf{Computational Efficiency:}
     \begin{itemize}
-        \item Comparisons are a ratio of time per training step
+        \item Efficiency comparisons are normalized using agent-steps.
         \item Must address concerns about possible variance in cluster resource provisioning.
         \item CPU utilization metrics recorded but we considered of limited scientific value.
     \end{itemize}
 \end{frame}
 
-% \subsection{Experimental Procedure}
-
 \subsection{Results}
 
-\begin{frame}{Relative Time Cost}
+
+\begin{frame}{Agent-Steps Validation}
+    \textbf{Why Agent-Steps?}
+    \begin{itemize}
+        \item Training cost increases linearly with agent count.
+        \item Empirical validation across environments shows Pearson $\rho > 0.999$.
+        \item Enables direct comparison of training effort across team sizes.
+    \end{itemize}
     \begin{center}
-        \includegraphics[width=0.7\linewidth]{iter_cost.png}
+        \begin{figure}
+            \includegraphics[width=0.5\linewidth]{iter_cost.png}
+            \caption{Mean training iteration time vs. agent count.}
+            \label{fig:agent_steps_costs}
+        \end{figure}
     \end{center}
-    \textbf{Observation:} Linearity of increasing agent cost.
-    %\textbf{Follow-up Question:} Can this be shown (proven) generally?
+\end{frame}
+
+% ---- Waterworld Results Slides ----
+\begin{frame}{Waterworld Results (4 Agents)}
+    \begin{columns}
+        \begin{column}{0.35\linewidth}
+            \textbf{Setup:}
+            \begin{itemize}
+                \item Target team size: 4 agents.
+                \item Pretraining from 2-agent configuration.
+            \end{itemize}
+            \textbf{Findings:}
+            \begin{itemize}
+                \item Modest benefit from pretraining.
+                \item Retrained agents achieved similar convergence, slightly faster.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.65\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{Waterworld-4-agent.png}
+                \caption{4-agent Waterworld: retrained vs. tabula rasa.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Waterworld Results (8 Agents)}
+    \begin{columns}
+        \begin{column}{0.35\linewidth}
+            \textbf{Setup:}
+            \begin{itemize}
+                \item Target team size: 8 agents.
+                \item Pretraining from 2-agent configuration.
+            \end{itemize}
+            \textbf{Findings:}
+            \begin{itemize}
+                \item Significant speedup from pretraining.
+                \item Diminishing returns after 60 pretraining steps.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.65\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{Waterworld-8-agent.png}
+                \caption{8-agent Waterworld: retrained vs. tabula rasa.}
+            \end{figure}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 
+\begin{frame}{Waterworld: Efficiency Summary}
+    \begin{columns}
+        \begin{column}{0.45\linewidth}
+            \textbf{Metric:} Area Under Curve (AUC) compared to baseline. \\
+            \textbf{Observation:}
+            \begin{itemize}
+                \item Greater benefits for larger target teams.
+                \item Pretraining length shows diminishing returns.
+                \item Optimal when pretraining team is much smaller than target team.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.55\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{Waterworld-AUCs.png}
+                \caption{Relative AUC improvement over tabula rasa by team size and pretraining length.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-% Waterworld
-%     AUC
-%     Heat map
-% Multiwalker
-%     AUC
-%     Heat map
-% LBF
-%     AUC
-%     Heat map
+% --- Multiwalker Results Slides ---
+\begin{frame}{Multiwalker Results (5 Agents)}
+    \begin{columns}
+        \begin{column}{0.35\linewidth}
+            \textbf{Setup:}
+            \begin{itemize}
+                \item Target team size: 5 agents.
+                \item Pretraining from 3-agent configuration.
+            \end{itemize}
+            \textbf{Findings:}
+            \begin{itemize}
+                \item Modest benefit from pretraining.
+                \item Retrained agents slightly accelerated learning.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.65\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{Multiwalker-5-agent.png}
+                \caption{5-agent Multiwalker: retrained vs. tabula rasa.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
 
-% Statistical Comparison
+\begin{frame}{Multiwalker Results (6 Agents)}
+    \begin{columns}
+        \begin{column}{0.35\linewidth}
+            \textbf{Setup:}
+            \begin{itemize}
+                \item Target team size: 6 agents.
+                \item Pretraining from 3-agent configuration.
+            \end{itemize}
+            \textbf{Findings:}
+            \begin{itemize}
+                \item Tabula rasa often failed to converge.
+                \item Pretraining stabilized learning and enabled progress.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.65\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{Multiwalker-6-agent.png}
+                \caption{6-agent Multiwalker: retrained vs. tabula rasa.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
 
 
+\begin{frame}{Multiwalker: Efficiency Summary}
+    \begin{columns}
+        \begin{column}{0.45\linewidth}
+            \textbf{Metric:} Area Under Curve (AUC) compared to baseline. \\
+            \textbf{Observation:}
+            \begin{itemize}
+                \item Clear benefit from pretraining at larger team sizes.
+                \item Small-team scaling sometimes incurs cost without benefit.
+                \item Stabilization effect notable in high-coordination regimes.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.55\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{Multiwalker-AUCs.png}
+                \caption{Relative AUC improvement over tabula rasa by team size and pretraining length.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% --- LBF Results Slides ---
+\begin{frame}{LBF: Observation Schema Impact}
+            \textbf{Schemas Compared:}
+            \begin{enumerate}
+                \item Full: All teammate features included.
+                \item Truncated: Fixed-size subset of teammate features.
+                \item Ally-Ignorant: No teammate features included.
+            \end{enumerate}
+
+            \vspace{1em}
+            \textbf{Methodology:}
+            \begin{itemize}
+                \item Pairwise $t$-tests conducted between schema variants at each agent count.
+                \item Bonferroni correction applied across comparisons per team size to control for Type I error.
+            \end{itemize}
+\end{frame}
+
+\begin{frame}{LBF: Schema Comparison Statistics}
+    \begin{center}
+        \scriptsize
+        \begin{tabular}{cccccc}
+            \toprule
+            \textbf{Agents} & \textbf{Obs. 1} & \textbf{Obs. 2} & \textbf{t-stat} & \textbf{Bonf. p-value} \\
+            \midrule
+            3 & Ally-ignorant & Full      & 306.28 & \textbf{0.000} \\
+            3 & Ally-ignorant & Truncated & 252.39 & \textbf{0.000} \\
+            3 & Full          & Truncated &  -0.97 & 1.008 \\
+            4 & Ally-ignorant & Full      &  53.09 & \textbf{0.000} \\
+            4 & Ally-ignorant & Truncated &  88.01 & \textbf{0.000} \\
+            4 & Full          & Truncated &   0.56 & 1.728 \\
+            5 & Ally-ignorant & Full      &  73.35 & \textbf{0.000} \\
+            5 & Ally-ignorant & Truncated &  23.91 & \textbf{0.000} \\
+            5 & Full          & Truncated &  -1.49 & 0.423 \\
+            6 & Ally-ignorant & Full      &  16.52 & \textbf{0.000} \\
+            6 & Ally-ignorant & Truncated &  28.51 & \textbf{0.000} \\
+            6 & Full          & Truncated &   1.47 & 0.440 \\
+            7 & Ally-ignorant & Full      &  11.88 & \textbf{0.000} \\
+            7 & Ally-ignorant & Truncated &  12.90 & \textbf{0.000} \\
+            7 & Full          & Truncated &   0.45 & 1.955 \\
+            \bottomrule
+        \end{tabular}
+    \end{center}
+    \vspace{0.5em}
+    \centering
+    \footnotesize
+    Pairwise $t$-tests comparing schema performance for each agent count. 
+    Bonferroni correction applied within each group of comparisons by team size.
+\end{frame}
+
+\begin{frame}{LBF Results (7 Agents)}
+    \begin{columns}
+        \begin{column}{0.45\linewidth}
+            \textbf{Setup:}
+            \begin{itemize}
+                \item Target team size: 7 agents.
+                \item Pretraining from 2-agent configuration.
+                \item Using ally-ignorant schema.
+            \end{itemize}
+            \textbf{Findings:}
+            \begin{itemize}
+                \item Retrained runs performed slightly better than baseline.
+                \item High variance and limited consistency across durations.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.55\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{LBF-7-agent.png}
+                \caption{7-agent LBF: retrained vs. tabula rasa.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{LBF: Efficiency Summary}
+    \begin{columns}
+        \begin{column}{0.45\linewidth}
+            \textbf{Metric:} Area Under Curve (AUC) compared to baseline. \\
+            \textbf{Observation:}
+            \begin{itemize}
+                \item Benefit limited to smaller team sizes.
+                \item Gains decrease sharply beyond 5 agents.
+                \item Larger teams showed no consistent pretraining advantage.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.55\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{LBF-AUCs.png}
+                \caption{Relative AUC improvement for LBF by team size and pretraining.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+
+% ------------------------------------------------------
+% Discussion Section
+% ------------------------------------------------------
 \subsection{Discussion}
 
+\begin{frame}{Discussion: Summary of Findings}
+    \begin{itemize}
+        \item Pretraining and direct scaling can improve training efficiency in MARL.
+        \item Largest gains observed in symmetric environments with low coordination sensitivity.
+        \item Effectiveness diminishes in environments requiring complex role specialization.
+        \item Pretraining helps stabilize early learning in fragile configurations.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Discussion: Impact of Heterogeneity}
+    \textbf{Behavioral vs. Intrinsic Heterogeneity}
+    \begin{itemize}
+        \item \textbf{Waterworld} (Behavioral): Strong performance gains from pretraining.
+        \item \textbf{Multiwalker} (Static Intrinsic): Pretraining stabilizes convergence in larger teams.
+        \item \textbf{LBF} (Dynamic Intrinsic): Minimal gains; coordination complexity overwhelms small-team priors.
+    \end{itemize}
+    \vspace{1em}
+    \textbf{Insight:} Pretraining success is inversely related to heterogeneity complexity.
+\end{frame}
+
+\begin{frame}{Discussion: Observation Schema Design}
+    \begin{itemize}
+        \item LBF results showed schema choice significantly affects training outcomes.
+        \item Full observability enables coordination in complex tasks.
+        \item Truncated and ally-ignorant schemas showed no statistical difference.
+        \item Suggests limited teammate data may be insufficient in high-heterogeneity settings.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Discussion: Implications and Limitations}
+    \begin{itemize}
+        \item Pretraining-based upsampling is a lightweight, effective method for symmetric or lightly heterogeneous tasks.
+        \item Gains plateau quickly—short pretraining often sufficient.
+        \item Not a substitute for full curriculum learning or adaptive specialization methods.
+        \item Future strategies may combine this with role-aware curricula or invariant input architectures.
+    \end{itemize}
+\end{frame}

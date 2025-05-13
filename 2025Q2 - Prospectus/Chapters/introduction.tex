@@ -69,11 +69,14 @@ concurrently execute multiple tasks—ranging from harvesting to soil analysis a
 pest control—thereby substantially enhancing efficiency and increasing crop 
 yields~\cite{carbone2018,amarasinghe2019}.
 
-While some scenarios necessitate a \gls{harl} approach, it remains to 
-be seen if the inherent flexibility of such systems can be effectively 
-leveraged to address the variable team size problem described earlier, 
-or if it can improve the efficiency of training in situations where 
-\gls{marl} is otherwise effective and sufficient.
+While some scenarios necessitate a \gls{harl} approach, the central aim of 
+this dissertation is to investigate strategies that improve the training 
+efficiency of multi-agent systems, including, heterogeneous settings. 
+Across three planned contributions, we explore methods that reduce the 
+computational cost of learning while maintaining or improving final policy 
+performance. These methods span policy upsampling, invariant observation processing, 
+and progressive network expansion. The remainder of this document 
+presents a unified background and research plan supporting these contributions.
 
 %To fully realize the potential benefits of \gls{harl}, it is crucial to 
 %understand the trade-offs involved. This \printdoctype will survey current 
@@ -143,7 +146,7 @@ significant strides were made in single-agent methods.
 Traditional Bellman-Equation-style solutions, while effective in single-agent 
 settings and certain types of multi-agent games like zero-sum and 
 common-payoff games, faced greater difficulty in stochastic or 
-degenerate games~\cite{shoham2007a}.
+degenerate games~\cite{shoham2007}.
 These challenges highlighted the limitations of extending single-agent 
 frameworks directly to multi-agent environments without modifications.
 
@@ -252,34 +255,36 @@ and achieve scalable, robust, and adaptable autonomous systems.
 \label{sec:research_question}%
 \label{sec:relevance_and_importance}
 
-%\begin{tcolorbox}[colback=red!5,colframe=red!50!black,title=Note to Self]
-%    Re-write after doing some more work on \cref{ch:methodology}
-%    %For example,~\cite{smit2023} was unable to train agents in 4v4 that 
-%    %generalized well to 11v11 (for Football/American Soccer).
-%\end{tcolorbox}
-
+% --- REVISED RESEARCH QUESTIONS AND CONTRIBUTIONS ---
 \begin{description}
-    % Q1 Which of the current SOTA algos are best suited?
-    \item[Question 1.1:] 
-    How do \gls{marl} and \gls{harl} algorithms compare in terms of 
-    generalizability when agents trained under a given policy are required to 
-    cooperate with teammates trained under separate instances?
-    \item[Question 1.2:] 
-    What impact does non-stationarity introduced by adversarial agents have 
-    on the performance of \gls{marl} and \gls{harl} algorithms in competitive 
-    settings?
-    %
-    \item[Question 2:] 
-    Given a small set of trained agents, can they be further trained 
-    to effectively operate as a larger team? Conversely, can a 
-    multi-agent system be effectively trained using only a subset of agents?
-    %
-    \item[Question 3:] 
-    What methods and features can be leveraged to enhance the 
-    scalability and adaptability of training methodologies in complex, 
-    variable-scale \gls{marl} environments?
-    %
+    \item[] \textbf{\hyperref[ch:contribution_1]{Contribution 1}:}
+    \begin{itemize}
+        \item[RQ 1.1:] Can pretraining smaller teams of agents and then scaling to the target 
+        team size via policy duplication and retraining improve training efficiency 
+        without sacrificing final policy performance in MARL?
+        \item[RQ 1.2:] How does the effectiveness of this direct scaling strategy vary across 
+        environments with different forms of agent heterogeneity 
+        (e.g., behavioral vs. intrinsic)?
+    \end{itemize}
+    \item[] \textbf{\hyperref[ch:contribution_2]{Contribution 2}:}
+    \begin{itemize}
+        \item[RQ 2.1:] How does incorporating input-invariant structures—such as policies 
+        robust to observation permutations and variable team sizes—impact learning efficiency 
+        and team robustness in settings with heterogeneous observations?
+        \item[RQ 2.2:] Do input-invariant architectures support more stable policy behavior 
+        under changes to team size and partial observation loss during execution?
+    \end{itemize}
+    \item[] \textbf{\hyperref[ch:contribution_3]{Contribution 3}:}
+    \begin{itemize}
+        \item[RQ 3.1:] Can tensor-based projections be used to grow a policy networks 
+        capacity during training while preserving its prior functional behavior?
+        \item[RQ 3.2:] Can we identify appropriate transition points during training when projecting 
+        to a larger policy network yields the greatest benefit?
+        \item[RQ 3.3:] Does this progressive architectural growth strategy reduce total training cost 
+        or improve final policy performance compared to fixed-size architectures?
+    \end{itemize}
 \end{description}
+
 
 \section{Outline}%
 
@@ -302,14 +307,22 @@ of the topic, aiming to contribute valuable insights to the field of \gls{harl}.
 \end{comment}
 
 %%%% Prospectus Version %%%%
-The remainder of this document is organized into two main sections. 
-In \cref{ch:literature_review}, we conduct a comprehensive literature review, 
-maintaining a scholarly tone that aligns with the style of the eventual 
-dissertation. This section will examine existing research, identify gaps, 
-and establish the foundational knowledge necessary for our study. 
-In \cref{ch:methodology}, we outline a proposed research plan, 
-shifting to a more proposal-oriented tone appropriate for a prospectus. 
-This section will detail the research methods, experimental design, 
-and analytical approaches we intend to employ to investigate the 
-identified challenges and hypotheses. By clearly delineating these sections, 
-we aim to provide a structured and coherent roadmap for our research journey.
+The remainder of this document is organized as a dissertation prospectus 
+supporting a k-paper dissertation format. It begins with a literature review in 
+\cref{ch:literature_review}, establishing foundational context across reinforcement 
+learning, multi-agent systems, and heterogeneous coordination. 
+Following this, \cref{ch:contribution_1,ch:contribution_2,ch:contribution_3} 
+contain each of the three planned contributions:
+\begin{itemize}
+    \item \textbf{\hyperref[ch:contribution_1]{Contribution 1}:} Investigates whether direct 
+        upsampling of policies from smaller teams can reduce training cost while preserving 
+        final performance.
+    \item \textbf{\hyperref[ch:contribution_2]{Contribution 2}:} Evaluates input-invariant 
+        policy architectures as a method to support shared learning across heterogeneous 
+        observation structures.
+    \item \textbf{\hyperref[ch:contribution_3]{Contribution 3}:} Explores progressive network 
+        growth using tensor projection to improve training efficiency in high-capacity networks.
+\end{itemize}
+Each contribution is framed as a standalone study but collectively supports 
+the overarching goal of building scalable, flexible HARL systems. 
+The document concludes with a timeline and project plan for completing the proposed research.
