@@ -1,0 +1,224 @@
+\glsresetall
+In this chapter we propose contributions divided into three sections.
+The sections are intended to represent coherent groups of publishable results.
+The target venue of publication is \emph{Autonomous Agents and Multi-Agent 
+Systems}~\cite{zotero-2605} or publication with similar objectives.
+
+\Cref{fig:timeline} details the proposed timeline for the contributions listed 
+in the following sections. The bars of the gantt chart represent the period 
+time during with the subject of the bar is expected to be a primary focus. 
+The end of the bar coincides with the point at which the associated paper 
+is finished and has been submitted to some publication.
+
+\begin{figure}[htbp]
+    \begin{center}
+    \begin{ganttchart}[y unit title=0.4cm, y unit chart=0.5cm,
+    vgrid,hgrid, title label anchor/.style={below=-1.6ex},
+    title left shift=.05, title right shift=-.05, title height=1,
+    progress label text={}, bar height=0.8, bar top shift=0.1,
+    group right shift=0, group top shift=.6,
+    inline,
+    group height=.3]{1}{18}
+    
+        %labels
+        \gantttitle{2025}{18} \\
+        \gantttitle{Apr}{2} 
+        \gantttitle{May}{2} 
+        \gantttitle{Jun}{2} 
+        \gantttitle{Jul}{2} 
+        \gantttitle{Aug}{2} 
+        \gantttitle{Sep}{2} 
+        \gantttitle{Oct}{2} 
+        \gantttitle{Nov}{2} 
+        \gantttitle{Dec}{2} \\
+
+        %tasks -6
+        \ganttbar[bar/.style={fill=blue!25}]{C1: Writing}{1}{2} \\
+        \ganttbar[bar/.style={fill=blue!35}]{C1: Editing}{3}{7} \\
+        
+        \ganttbar[bar/.style={fill=green!15}]{C2: Lit Review}{3}{5} \\
+        \ganttbar[bar/.style={fill=green!20}]{C2: Coding}{4}{6} \\
+        \ganttbar[bar/.style={fill=green!25}]{C2: Writing}{7}{10} \\
+        \ganttbar[bar/.style={fill=green!20}]{C2: Exp. Running}{7}{10} \\
+        \ganttbar[bar/.style={fill=green!35}]{C2: Editing}{11}{16} \\
+        
+        \ganttbar[bar/.style={fill=teal!15}]{C3: Lit Review}{10}{12} \\
+        \ganttbar[bar/.style={fill=teal!20}]{C3: Coding}{11}{13} \\
+        \ganttbar[bar/.style={fill=teal!25}]{C3: Writing}{12}{16} \\
+        \ganttbar[bar/.style={fill=teal!20}]{C3: Exp. Running}{14}{16} \\
+        \ganttbar[bar/.style={fill=teal!35}]{C3: Editing}{17}{18} \\
+        
+        \ganttbar[bar/.style={fill=red!25}]{Def. Prep.}{16}{18} 
+        %\ganttbar{Defense Prep}{}{}
+        % \ganttbar[bar inline label node/.style={left=10mm},]{Prospectus}{12}{12} \\
+        % \ganttbar[bar inline label node/.style={left=15mm},]{Specialty Exam}{14}{14} \\
+        % \ganttmilestone{Specialty Defense NLTD}{23} \\
+    \end{ganttchart}
+    \end{center}
+    \caption{Planned Timeline}
+    \label{fig:timeline}
+\end{figure}
+
+
+\section{Contribution 1}
+\label{sec:contribution1}
+
+\emph{Proposed research for this section is covered in \cref{ch:contribution_1}}
+
+% \subsection{Motivation}
+% The first contribution investigates whether policies trained in smaller multi-agent teams can be directly scaled to larger teams through policy upsampling and retraining. This approach hypothesizes that reusing pretrained policies provides a computational shortcut to full-team convergence. Rather than requiring agents to be trained from scratch in their final configuration, this method leverages early training with fewer agents to bootstrap learning. This work seeks to establish when and how this method improves training efficiency without degrading performance.
+
+% \subsection{Methodology}
+% Agents are first trained in small teams using tabula rasa reinforcement learning. The resulting policies are then scaled to a larger team by randomly duplicating pretrained policies, followed by continued training in the new configuration. To compare effectiveness, these scaled policies are evaluated against baselines trained entirely from scratch in the final team configuration. Performance is measured across multiple environments with different coordination and heterogeneity demands, including:
+% \begin{itemize}
+%     \item Waterworld (behavioral heterogeneity, symmetric roles),
+%     \item Multiwalker (static intrinsic heterogeneity), and
+%     \item Level-Based Foraging (dynamic intrinsic heterogeneity).
+% \end{itemize}
+% Metrics include mean episode reward over time and total agent-steps required to converge. Agent-steps are computed as the product of the number of agents and the number of training steps.
+
+% \subsection{Resources}
+% This experiment is implemented using RLlib~\cite{liang2018} from the Ray ecosystem, providing scalable support for multi-agent training. Environments are sourced from the PettingZoo library~\cite{terry2020}. Results are logged and visualized using Weights and Biases~\cite{wandb2020}.
+
+% \subsection{Anticipated Obstacles}
+% One challenge lies in reconfiguring value function estimation when changing the number of agents during training. In many MARL architectures, the critic is tightly coupled to the agent set size. Efforts to make the critic agent-count invariant may introduce noise into the credit assignment process. Additional tuning may be required to ensure that value-based updates remain stable across configurations.
+
+% \subsection{Expected Contributions}
+% \begin{description}
+%     \item[Training Efficiency:] Quantify the training savings made possible through upsampling compared to full tabula rasa training.
+%     \item[Scalability Characterization:] Identify the environments and team configurations where direct scaling is beneficial.
+%     \item[Heterogeneity Sensitivity:] Assess the impact of behavioral and intrinsic heterogeneity on the effectiveness of upsampling strategies.
+%     \item[Transfer Insights:] Demonstrate that pretrained policies can generalize effectively when scaled under the right conditions.
+% \end{description}
+
+
+
+\section{Contribution 2}
+
+\subsection{Motivation}
+
+The second contribution investigates how input-invariant policy architectures 
+can improve the efficiency and robustness of learning in \gls{harl}.
+This builds on prior observations that many real-world teams,
+such as those involving drones, ground vehicles, or modular swarms,
+possess overlapping but non-identical sensors and capabilities. In such settings, 
+policies must generalize across variations in input structure and scale. 
+Observation space changes due to sensor dropout or team composition changes,
+present a non-trivial challenge when training using current popular paradigms. 
+This contribution explores whether networks designed to be invariant to 
+input order and vector length can mitigate this brittleness.
+
+\subsection{Methodology}
+
+This work will evaluate policy architectures that enforce permutation-invariance
+and length-invariance over input vectors. Specifically, the following architectural 
+families will be implemented and tested:
+\begin{itemize}
+    \item Policies using pooling operations (e.g., max, mean, or attention-based).
+    \item Architectures that embed inputs as sets rather than fixed-position vectors.
+    \item Length-invariant encodings based on dynamic padding, masking, or spatial dropout.
+\end{itemize}
+Each architecture will be evaluated on its ability to:
+\begin{enumerate}
+    \item Learn efficiently in teams with overlapping but non-identical observations.
+    \item Share updates across agents with partially aligned sensors.
+    \item Maintain stability when observation dimensions change during training or execution.
+\end{enumerate}
+% #TODO: Need New environments
+I am still searching for an appropriate environment that bears the necessary features;
+%
+an observation space capable of simulate sensor 
+occlusion, dropout, and team-scale variance.
+\Gls{lbf} is sufficient for team-scale variance alone without further modification.
+
+\subsection{Resources}
+
+The same Petting Zoo-compatible scripts used in \cref{sec:contribution1} will be leveraged, 
+with additional wrappers to dynamically alter the observation space. 
+The evaluation will be run on the Ray RLlib framework using PPO as 
+the baseline algorithm, with variant architectures implemented using 
+PyTorch and integrated into RLlib's model catalog.
+
+\subsection{Anticipated Obstacles}
+
+Numerous trials will be required to evaluate generalization across configurations, 
+making runtime a critical factor for meeting timeline goals.
+While input invariance is not a novel concept in deep learning, 
+we have not found prior applications of these methods in this context, 
+specifically for enabling shared policy updates in \gls{marl} and/or \gls{harl}.
+As such, we anticipate some implementation overhead to adapt these techniques 
+and ensure architectural stability under dynamic input conditions.
+
+\subsection{Expected Contributions}
+\begin{description}
+    \item[Architecture Design:] Develop and evaluate policy architectures that 
+        generalize across varying input spaces without retraining.
+    \item[Efficiency Gains:] Demonstrate reduced training time when sharing 
+        updates across partially aligned agents.
+    \item[Robustness Evaluation:] Show that invariant networks better handle 
+        sensor degradation and team-size shifts.
+    \item[Generalization Across Heterogeneity:] Provide empirical evidence 
+        for architectures that transfer across agent roles with minimal adaptation.
+\end{description}
+
+
+\section{Contribution 3}
+
+\subsection{Motivation}
+The third contribution investigates a progressive learning strategy in which policy 
+networks grow in capacity during training. Rather than training a large network 
+from the outset, which increases sample inefficiency and risk of overfitting, 
+this approach proposes beginning with a smaller network and increasing its size over 
+time through structured transformations. Inspired by ideas such as Net2Net~\cite{chen2016}, 
+this work evaluates the use of tensor projection techniques to enable seamless 
+expansion while preserving prior network behavior.
+
+This contribution builds on lessons from the previous two. Contribution 1 
+showed that smaller-team training can accelerate convergence, while Contribution 2 
+intends to demonstrate the importance of input design for scalable policy reuse. 
+Contribution 3 investigates whether network capacity itself can be staged similarly,
+starting small to learn core dynamics, then growing to support more nuanced policies,
+without discarding prior learning.
+
+\subsection{Methodology}
+The experiment will begin with small-capacity networks trained using standard 
+PPO in PettingZoo-compatible environments. At predefined training milestones, 
+the network will be expanded by projecting its weights into a higher-dimensional tensor space. 
+Multiple projection strategies will be compared, including:
+\begin{itemize}
+    \item Identity-based expansion (e.g., block-diagonal initialization).
+    \item Learned projection layers.
+    \item Randomized low-rank initialization with partial freezing.
+\end{itemize}
+Training will then resume from the expanded model, and performance will 
+be compared against fixed-size networks trained for the same duration.
+
+\subsection{Resources}
+The project will reuse the infrastructure from Contributions 1 and 2, 
+including RLlib for training and Weights and Biases for tracking. 
+Tensor projection layers will be implemented directly in PyTorch and 
+integrated into the RLlib model registry.
+
+We have not yet identified any specific features that we need in an environment
+and thus anticipate being able to reuse the environments used in the 
+earlier contributions.
+
+\subsection{Anticipated Obstacles}
+The primary challenge lies in selecting projection methods that preserve 
+learned function approximations across architectural transitions. 
+Naive expansion may disrupt policy performance or destabilize learning. 
+Additional tuning may be needed to maintain gradient flow and convergence 
+after projection. Furthermore, identifying optimal growth schedules will 
+likely require additional experiments.
+
+\subsection{Expected Contributions}
+\begin{description}
+    \item[Progressive Network Design:] Demonstrate the feasibility of growing 
+        policy networks during training using tensor projections.
+    \item[Transition Timing:] Identify when architectural expansion yields the 
+        greatest benefit for training efficiency or final performance.
+    \item[Sample Efficiency:] Compare progressive-growth models against fixed-size 
+        baselines to assess gains in learning cost or generalization.
+    \item[Broader Scalability Strategy:] Position architectural growth as a 
+        complementary tool alongside policy reuse and input-invariant designs.
+\end{description}

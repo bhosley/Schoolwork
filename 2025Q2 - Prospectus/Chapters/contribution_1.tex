@@ -1,9 +1,10 @@
+\glsresetall
+
 % #TODO: Replace glossary terms
 % #TODO: Reduce repetition
 % #TODO: Fix figure titles for List of Figures
 % #TODO: Update Chapters' labels
 % #TODO: Tikz the retraining figure
-
 
 Autonomous drone swarms have been widely proposed for applications ranging from 
 disaster response~\cite{mohddaud2022} and search and rescue~\cite{mohddaud2022} 
@@ -98,8 +99,7 @@ Environments like LBF and Multiwalker from PettingZoo \cite{terry2021}, as well 
 SMAC \cite{samvelyan2019} and Google Research Football (GRF) \cite{kurach2020}, 
 encode team size directly into observation formats, making policy reuse across scales nontrivial.
 
-
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.3\linewidth]{waterworld.png}
     \hfill
@@ -305,7 +305,7 @@ local observations and advantages, their rewards are aligned toward a shared coo
 These cooperative settings benefit the multi-agent problem as a single-team optimization, 
 encouraging agents to work together. 
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \caption{Notation used in PPO objective and advantage estimation}
     \begin{tabular}{ll}
@@ -451,16 +451,16 @@ Our training protocol consists of three main phases shared across all environmen
 
 \subsubsection{Environment-Specific Modifications}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.75\linewidth]{training_1.png}
-    \caption{\textbf{Example of Training Progression for Waterworld and LBF} }
+    \caption{Example of Training Progression for Waterworld and LBF }
     \label{fig:training_1}
 \end{figure}
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.75\linewidth]{training_2.png}
-    \caption{\textbf{Example of Training Progression for Multiwalker} }
+    \caption{Example of Training Progression for Multiwalker}
     \label{fig:training_2}
 \end{figure}
 
@@ -492,7 +492,7 @@ providing insight into the cost-benefit tradeoffs under varying heterogeneity co
 Additional analyses in the Results section explore how reward progression, convergence speed, 
 and environmental sensitivity vary across configurations and pretraining durations.
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \caption{PPO Hyperparameters used in experiments}
     \begin{tabular}{ll}
@@ -542,16 +542,16 @@ with the number of agents—an anticipated but important validation for our use 
 \emph{agent-steps} metric. This relationship is visualized in Figure~\ref{fig:agent-steps}, 
 where all three environments show Pearson correlation coefficients exceeding 0.999,
 shown in \ref{tab:pearson-corr}.
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{iter_cost.png}
-    \caption{\textbf{Training Iteration Timing Across Agent Counts.}
+    \caption{\textbf{Training Iteration Timing Across Agent Counts.} %
         Mean wall-clock time per training iteration (in milliseconds) plotted against the number 
         of agents, for each environment. Error bars represent the standard deviation.}
     \label{fig:agent-steps}
 \end{figure}
 %
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{lc}
         \toprule
@@ -593,7 +593,7 @@ This suggests that relatively short pretraining can provide sufficient foundatio
 coordination to improve sample efficiency at scale, though final tuning may 
 be necessary to achieve full performance with shorter pretraining periods.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-4-agent.png}
     \caption{\textbf{Waterworld (4 agents, 2-agent pretraining).} Comparison of 
@@ -602,12 +602,13 @@ be necessary to achieve full performance with shorter pretraining periods.
     \label{fig:waterworld-4}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-8-agent.png}
     \caption{\textbf{Waterworld (8 agents, 2-agent pretraining).} Comparison of 
     8 agent tabula rasa training, and retraining trajectories using average 
     episodic return over normalized agent-steps steps.}
+    \label{fig:waterworld-8}
 \end{figure}
 
 In Figure~\ref{fig:waterworld-aucs} we summarize overall efficiency trends across configurations. 
@@ -626,7 +627,7 @@ we attribute these to stochastic variation rather than indicative of structural 
 Overall, these results reinforce the observation that direct scaling is most effective 
 when the ratio between pretraining team size and target team sizes is high.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-AUCs.png}
     \caption{\textbf{Waterworld Pretraining Impact.} 
@@ -648,7 +649,7 @@ due to the failure of any single agent) struggled to generate useful feedback.
 Pretraining thus mitigated an early-stage bottleneck and enabled learning to proceed 
 in configurations where tabula rasa attempts often stalled.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-5-agent.png}
     \caption{\textbf{Multiwalker (5 agents, 3-agent pretraining).} Comparison of 
@@ -659,7 +660,7 @@ in configurations where tabula rasa attempts often stalled.
 
 \vspace{2em}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-6-agent.png}
     \caption{\textbf{Multiwalker (6 agents, 3-agent pretraining).} Comparison of 
@@ -677,7 +678,7 @@ are better understood as a result of the scaling transition requiring additional
 When this time exceeded the total convergence time of tabula rasa training, the net cost 
 is necessarily higher, despite final performance often eventually meeting the baseline.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-AUCs.png}
     \caption{\textbf{Multiwalker Pretraining Impact.} 
@@ -751,7 +752,7 @@ the significance of this improvement remains unclear.
 Figure~\ref{fig:lbf-7} provides an illustrative example, highlighting how retraining compares 
 to training from scratch at a 7-agent configuration.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{LBF-7-agent.png}
     \caption{\textbf{Level-Based Foraging (7 agents, 2-agent pretraining).} Comparison of 
@@ -771,7 +772,7 @@ dynamic role complexity in LBF creates a steeper coordination challenge at scale
 In these scenarios, small-team pretraining offers limited foresight into the diverse role 
 interactions encountered by larger groups.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\linewidth]{LBF-AUCs.png}
     \caption{\textbf{Level-Based Foraging Pretraining Impact.} 

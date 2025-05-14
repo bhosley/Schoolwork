@@ -39,6 +39,8 @@
 %\titleformat{\subsection}[runin]
 %  {\normalfont\bfseries\itshape}{\thesubsection}{1em}{}
 \usepackage{placeins} %this package contains the FloatBarrier tag
+\usepackage{silence}
+\WarningFilter*{latex}{Text page \thepage\space contains only floats}
 
 % ------------------------------- Front Matter ---------------------------------
 
@@ -162,7 +164,7 @@
 % -------------------------
 \chapter{Proposed Research}%
 \label{ch:methodology}
-\input{design_and_methodology.tex}
+\input{research_plan.tex}
 
 % ----------------------------
 %\chapter{Results and Analysis}%
