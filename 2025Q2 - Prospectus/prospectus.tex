@@ -7,7 +7,7 @@
 \makeatletter
 \def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
 \makeatother
-\graphicspath{{Figures}}
+\graphicspath{{Figures}{Figures/C1/}{Figures/C2/}{Figures/C3/}}
 
 % --- References ---
 \usepackage{cleveref}
@@ -23,7 +23,7 @@
 % --- Figures ---
 \usepackage{pgfgantt}
 \usepackage{tikz}
-\usetikzlibrary{automata, positioning}
+\usetikzlibrary{automata, positioning, arrows}
 \usepackage{wrapfig}
 \usepackage{subcaption}
 
@@ -38,7 +38,7 @@
 \usepackage{titlesec}
 %\titleformat{\subsection}[runin]
 %  {\normalfont\bfseries\itshape}{\thesubsection}{1em}{}
-
+\usepackage{placeins} %this package contains the FloatBarrier tag
 
 % ------------------------------- Front Matter ---------------------------------
 
@@ -144,17 +144,18 @@
 \input{literature_review.tex}
 
 % -------------------------
-\chapter{Contribution 1}%
+% \chapter{Contribution 1}%
+\chapter{Contribution 1: Direct Scaling from Pretrained Teams}
 \label{ch:contribution_1}
 \input{contribution_1.tex}
 
 % % -------------------------
-\chapter{Contribution 2}%
+% \chapter{Contribution 2}%
 \label{ch:contribution_2}
 % \input{contribution_2.tex}
 
 % % -------------------------
-\chapter{Contribution 3}%
+% \chapter{Contribution 3}%
 \label{ch:contribution_3}
 % \input{contribution_3.tex}
 

@@ -1,0 +1,36 @@
+\clearpage
+\appendix
+
+\section*{Appendix}
+\addcontentsline{toc}{section}{Appendix}
+
+% Contribution 1 Supporting curves
+% \usepackage{pgffor} %enables for loop used in appendix
+
+\subsection*{Complete Training Curves}
+The following figures present exhaustive training curves for all 
+agent configurations across the three environments. Each chart compares tabula rasa 
+training to retraining from various pretraining durations.
+
+\foreach \i in {3,4,5,6,7,8} {
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{Waterworld-\i-agent.png}
+        \caption{Training curves for Waterworld, \i\ agents.}
+    \end{figure}
+}
+\foreach \i in {4,5,6,7} {
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{Multiwalker-\i-agent.png}
+        \caption{Training curves for Multiwalker, \i\ agents.}
+    \end{figure}
+}
+\foreach \i in {3,4,5,6,7} {
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{LBF-\i-agent.png}
+        \caption{Training curves for LBF, \i\ agents.}
+    \end{figure}
+}
+

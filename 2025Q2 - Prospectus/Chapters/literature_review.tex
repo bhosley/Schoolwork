@@ -342,7 +342,7 @@ shared critic~\cite{rashid2018,ackermann2019,li2023d,zhou2023}.
     \vspace*{-1em}
     \centering
     \includegraphics[width=0.4\textwidth]{ctde_actor-critic.png}
-    % #TODO:
+    % #TODO: Tikz this diagram
     %\resizebox{0.3\textwidth}{!}{%
     %    \input{ctde_actor-critic}
     %}
@@ -399,6 +399,55 @@ theoretical guarantees and practical methods for stable learning.
 
 
 % ---------------------------------------------------------------------------- %
+\section{Characterizing Heterogeneity in MARL}
+
+The study of \gls{harl} systems introduces unique challenges and opportunities 
+compared to \gls{marl}. 
+In \gls{harl} systems, agents may differ in their sensors, actuators, 
+observation spaces, internal state representations, or decision policies. 
+We categorize this diversity into two primary forms: 
+\emph{behavioral heterogeneity} and \emph{intrinsic heterogeneity}.
+
+\paragraph{Behavioral Heterogeneity.}
+Behavioral heterogeneity arises when agents differ not by their 
+structure but by the roles they are trained or assigned to perform. 
+These roles may emerge from interaction with asymmetric tasks, uneven 
+initialization, or through reward shaping that encourages specialization. 
+Importantly, agents may share the same observation and action spaces yet 
+develop distinct strategies due to their training context. 
+Many multi-agent games naturally induce this behavior even 
+when agents are structurally identical.
+
+\paragraph{Intrinsic Heterogeneity.}
+Intrinsic heterogeneity occurs when agents possess fundamentally 
+different capabilities, such as different sensor modalities, 
+observation dimensions, action primitives, or dynamical constraints. 
+These differences are often fixed by design and cannot be eliminated 
+by policy sharing. For example, a drone with a camera and a ground 
+robot with a LiDAR sensor must learn to operate cooperatively despite 
+non-interchangeable inputs and movement capabilities.
+
+\paragraph{Implications for Learning.}
+These forms of heterogeneity create distinct obstacles for learning algorithms. 
+Behavioral heterogeneity complicates coordination and may lead to brittle convergence, 
+while intrinsic heterogeneity demands architectures that can accommodate 
+varying input and output formats. As a result, strategies such as parameter sharing, 
+centralized critics, or weight tying must be adapted or replaced in \gls{harl} contexts. 
+The proposed heterogeneous adaptations of popular \gls{marl} algorithms, 
+such by Zhong et.al~\cite{zhong2024} as \gls{happo}, \gls{haddpg}, and \gls{hatrpo}, 
+modified the critic to support variable contributions from agents or 
+decoupling policy updates entirely.
+
+\paragraph{Relevance to This Work.}
+This dissertation investigates both forms of heterogeneity, 
+with each contribution exploring different facets. 
+\Cref{ch:contribution_1} examines how scaling from smaller to 
+larger teams performs under varying heterogeneity conditions. 
+\Cref{ch:contribution_2} proposes input-invariant architectures 
+to support overlapping and diverse observation structures. 
+\Cref{ch:contribution_3} introduces methods for growing network capacity 
+mid-training, potentially accommodating heterogeneous learning burdens across agents.
+
 \section{Evolution of MARL through the Lens of Games}%
 
 Building upon these foundational advancements, the exploration of \gls{marl} 
@@ -530,6 +579,25 @@ was the \emph{Net2Net}~\cite{chen2016} knowledge transfer,
 enabling the training of an agent after a significant change 
 without discarding the previously used neural networks.
 
+    \subsection*{Lessons from Curriculum Learning in Competitive Games}
+
+The strategies used in AlphaStar and OpenAI Five reflect a broader class of curriculum 
+learning practices designed to address the demands of large-scale multi-agent systems. 
+These projects integrated concepts introduced earlier, such as imitation learning, self-play, 
+and architectural adaptation, into multi-stage pipelines that emphasize robustness and 
+strategic diversity. 
+AlphaStar's league format exemplifies this by mixing main agents, exploiters, and faction-based 
+diversity to ensure agents are exposed to a broad strategic space~\cite{vinyals2019}. 
+Similarly, OpenAI Five's use of “surgery” and Net2Net projections~\cite{berner2019,chen2016} 
+enabled agents to retain functionality across significant architectural and environment changes. 
+Though resource-intensive, these designs emphasize several key principles: 
+adapting training complexity over time, reusing prior knowledge through transfer, 
+and aligning training stages with agent roles. 
+These principles provide conceptual grounding for more scalable approaches, 
+including those explored in \cref{ch:contribution_1} and later in \cref{ch:contribution_3}, 
+where simpler forms of pretraining, policy growth, or input-invariance may recover 
+part of these benefits without the full computational cost.
+
 
 % -------------------------------- Surveys ----------------------------------- %
 %\section{Related Work: Surveys}
@@ -545,9 +613,8 @@ These are the algorithms that this research is interested
 in evaluating to determine if any have distinct advantages
 in extensibility, when applied to novel team configurations.
 
-% #TODO: Algo Table
-%\input{algo_papers}
-% #TODO: Different Algorithms are not necessarily a major component anymore
+% Different Algorithms are not necessarily a major component anymore
+% #TODO: Change this section to lead into reason for choosing PPO
 
     \subsection*{Asynchronous Actor-Critic}
 
@@ -695,33 +762,79 @@ which simplifies interact with a large variety of scenarios.
 Further, their \gls{api} allows wrapping of other environments
 to more easily integrate them into testing environments.
 
-    \subsection*{Close Air Combat}
-    % #TODO: Replace CAC with SISL and LBF
+   \subsection*{SISL Environments: Waterworld and Multiwalker}
 
-The "CloseAirCombat" environment~\cite{liu2022light}, is a competitive 
-simulation framework designed to resemble air combat scenarios.
-The environment leverages JSBSIM for realistic flight dynamics and 
-incorporates various combat tasks.
-The base environment features both 1v1 and 2v2 scenarios.
-This is an environment that doesn't appear to have been used in much 
-research, but has potential in evaluating cooperative-competitive agents,
-and filling a niche that is more complex than the Petting Zoo
-environments but less computationally demanding than SMAC.
+The \gls{sisl} suite of environments~\cite{gupta2017}, includes several 
+multi-agent benchmarks that are well-suited to evaluating coordination, 
+heterogeneity, and transfer. This work makes use of two \gls{sisl} environments: 
+Waterworld and Multiwalker.
+
+\textbf{Waterworld} is a continuous-space environment in which agents 
+must cooperate to capture moving targets while avoiding hazards. 
+Agents observe their surroundings through a set of egocentric, 
+range-limited sensors. Because agents are structurally homogeneously, 
+any heterogeneity is emergent, depending on how roles and responsibilities 
+are learned. This environment serves as a useful baseline for evaluating 
+scalability in coordination, since agents can often be interchanged.
+
+\textbf{Multiwalker} is a mixed-coordination environment in which 
+multiple agents must carry a package across rough terrain. 
+The agents are must coordinate to avoid 
+falling or dropping the package. Each agent has a different observation 
+space depending on its position (e.g., lead, middle, rear), 
+representing a form of static, intrinsic heterogeneity. 
+Multiwalker is well-suited to evaluating the stability of learned 
+behaviors when scaling up heterogeneous roles.
+
+\textbf{Level-Based Foraging (LBF)} is a discrete-grid environment where 
+agents must cooperatively collect food items distributed across the map. 
+Each agent and food item is assigned a level, and food can only be 
+collected by a team of agents whose combined levels meet or exceed 
+the food's requirement. The environment introduces dynamic, intrinsic 
+heterogeneity through level assignments, which can change the utility 
+and role of each agent depending on team composition. 
+This makes \gls{lbf} a strong candidate for evaluating both 
+scalability and observation schema design in \gls{harl}~\cite{papoudakis2021}.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.6\textwidth]{CloseAirCombat.png}
-    \caption{Close Air Combat 2v2.}
-    \label{fig:CloseAirCombat}
+    \caption{Environments used in this work.}
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{waterworld.png}
+        \caption{Waterworld.}
+        \label{fig:waterworld}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{multiwalker.png}
+        \caption{Multiwalker.}
+        \label{fig:multiwalker}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{lbf.png}
+        \caption{Level-based foraging.}
+        \label{fig:lbf}
+    \end{subfigure}
 \end{figure}
 
 
 % ------------------------------ Related Work -------------------------------- %
 \section{Related Work}
 
-In this section we discuss select work that has directly inspired the 
-proposed course of research, showing results or asking questions that 
-we wish to expand upon.
+Several recent studies directly motivate the research directions proposed in this dissertation. 
+Smit et al.~\cite{smit2023} explored whether policies trained in reduced-scale football 
+subgames could generalize to full-scale games, highlighting the difficulty of training 
+efficient scalable agents and underscoring the lack of research into transfer from 
+smaller to larger teams. Their publication of negative results is particularly valuable, 
+illustrating the need for alternative strategies;
+a need directly addressed in \cref{ch:contribution_1}.
+Similarly, Papoudakis et al.~\cite{papoudakis2021} found that the effectiveness of MARL 
+algorithms is highly environment-dependent, reinforcing the importance of testing across 
+diverse domains, as we do in all three contributions. 
+These studies, along with the lessons from AlphaStar's league-play~\cite{vinyals2019} 
+and OpenAI Five's curriculum learning~\cite{berner2019}, help frame the broader 
+landscape of scalable MARL and HARL strategies.
 
 % ---
 
@@ -794,3 +907,10 @@ Their publication of negative results is commendable, especially
 because it highlights the lack of research into scalability in MARL, 
 which corroborates our own findings of a notable research gap in this area.
 % ---
+
+
+% #TODO: ? Add Summary of key challenges
+% #TODO: Unify terminology in this section (ex:)
+% Lit review sometimes says “scalability,” sometimes “extensibility,” “reuse,” or “efficiency.” 
+% Choose a primary term (likely “training efficiency”) and make that consistent throughout.
+% #TODO: Unify Terminology across sections?
