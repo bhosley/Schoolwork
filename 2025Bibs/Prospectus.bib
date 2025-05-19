@@ -562,6 +562,32 @@
   file = {/Users/brandonhosley/Zotero/storage/N3AQWPT3/what-are-drone-swarms-and-why-does-everyone-suddenly-want-one.html}
 }
 
+@inproceedings{hao2022,
+  title = {Boosting {{Multiagent Reinforcement Learning}} via {{Permutation Invariant}} and {{Permutation Equivariant Networks}}},
+  author = {Hao, Jianye and Hao, Xiaotian and Mao, Hangyu and Wang, Weixun and Yang, Yaodong and Li, Dong and Zheng, Yan and Wang, Zhen},
+  date = {2022-09-29},
+  url = {https://openreview.net/forum?id=OxNQXyZK-K8},
+  urldate = {2025-05-14},
+  abstract = {The state space in Multiagent Reinforcement Learning (MARL) grows exponentially with the agent number. Such a curse of dimensionality results in poor scalability and low sample efficiency, inhibiting MARL for decades. To break this curse, we propose a unified agent permutation framework that exploits the permutation invariance (PI) and permutation equivariance (PE) inductive biases to reduce the multiagent state space. Our insight is that permuting the order of entities in the factored multiagent state space does not change the information. Specifically, we propose two novel implementations: a Dynamic Permutation Network (DPN) and a Hyper Policy Network (HPN). The core idea is to build separate entity-wise PI input and PE output network modules to connect the entity-factored state space and action space in an end-to-end way. DPN achieves such connections by two separate module selection networks, which consistently assign the same input module to the same input entity (guarantee PI) and assign the same output module to the same entity-related output (guarantee PE). To enhance the representation capability, HPN replaces the module selection networks of DPN with hypernetworks to directly generate the corresponding module weights. Extensive experiments in SMAC, Google Research Football and MPE validate that the proposed methods significantly boost the performance and the learning efficiency of existing MARL algorithms. Remarkably, in SMAC, we achieve 100\% win rates in almost all hard and super-hard scenarios (never achieved before).},
+  eventtitle = {The {{Eleventh International Conference}} on {{Learning Representations}}},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/Z8RJJHRJ/Hao et al_2022_Boosting Multiagent Reinforcement Learning via Permutation Invariant and.pdf}
+}
+
+@inproceedings{hazra2024,
+  title = {Addressing {{Permutation Challenges}} in {{Multi-Agent Reinforcement Learning}}},
+  booktitle = {Proceedings of the 23rd {{International Conference}} on {{Autonomous Agents}} and {{Multiagent Systems}}},
+  author = {Hazra, Somnath and Dasgupta, Pallab and Dey, Soumyajit},
+  date = {2024-05-06},
+  series = {{{AAMAS}} '24},
+  pages = {2303--2305},
+  publisher = {{International Foundation for Autonomous Agents and Multiagent Systems}},
+  location = {Richland, SC},
+  abstract = {In Reinforcement Learning, deep neural networks play a crucial role, especially in Multi-Agent Systems. Owing to information from multiple sources, the challenge lies in handling input permutations efficiently, causing sample inefficiency and delayed convergence. Traditional approaches treat each permutation source as individual nodes for inference. Our novel approach integrates an attention mechanism, allowing us to capture temporal dependencies and contextually align inputs. The attention mechanism enhances the alignment process, allowing for improved information processing. Empirical evaluations on SMAC environments demonstrate superior performance compared to baselines, achieving a higher win rate on 68\% of test evaluations.},
+  isbn = {9798400704864},
+  file = {/Users/brandonhosley/Zotero/storage/ET6ZSJ76/Hazra et al_2024_Addressing Permutation Challenges in Multi-Agent Reinforcement Learning.pdf}
+}
+
 @article{hernandez-leal2019,
   title = {A {{Survey}} and {{Critique}} of {{Multiagent Deep Reinforcement Learning}}},
   author = {Hernandez-Leal, Pablo and Kartal, Bilal and Taylor, Matthew E.},
@@ -625,6 +651,22 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Computer Science - Systems and Control,Statistics - Machine Learning},
   file = {/Users/brandonhosley/Zotero/storage/NNR2UM6G/Hüttenrauch et al. - 2019 - Deep Reinforcement Learning for Swarm Systems.pdf;/Users/brandonhosley/Zotero/storage/5WTS988E/1807.html}
+}
+
+@inproceedings{iqbal2019,
+  title = {Actor-{{Attention-Critic}} for {{Multi-Agent Reinforcement Learning}}},
+  booktitle = {Proceedings of the 36th {{International Conference}} on {{Machine Learning}}},
+  author = {Iqbal, Shariq and Sha, Fei},
+  date = {2019-05-24},
+  pages = {2961--2970},
+  publisher = {PMLR},
+  issn = {2640-3498},
+  url = {https://proceedings.mlr.press/v97/iqbal19a.html},
+  urldate = {2025-05-14},
+  abstract = {Reinforcement learning in multi-agent scenarios is important for real-world applications but presents challenges beyond those seen in single-agent settings. We present an actor-critic algorithm that trains decentralized policies in multi-agent settings, using centrally computed critics that share an attention mechanism which selects relevant information for each agent at every timestep. This attention mechanism enables more effective and scalable learning in complex multi-agent environments, when compared to recent approaches. Our approach is applicable not only to cooperative settings with shared rewards, but also individualized reward settings, including adversarial settings, as well as settings that do not provide global states, and it makes no assumptions about the action spaces of the agents. As such, it is flexible enough to be applied to most multi-agent learning problems.},
+  eventtitle = {International {{Conference}} on {{Machine Learning}}},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/F347RG3Q/Iqbal_Sha_2019_Actor-Attention-Critic for Multi-Agent Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/FYTX3WJ8/Iqbal and Sha - 2019 - Actor-Attention-Critic for Multi-Agent Reinforceme.pdf}
 }
 
 @online{iqbal2021,
@@ -795,6 +837,23 @@
   file = {/Users/brandonhosley/Zotero/storage/DNBMDCA2/Kurach et al_2020_Google Research Football.pdf;/Users/brandonhosley/Zotero/storage/3X73G4DX/1907.html}
 }
 
+@inproceedings{lee2019,
+  title = {Set {{Transformer}}: {{A Framework}} for {{Attention-based Permutation-Invariant Neural Networks}}},
+  shorttitle = {Set {{Transformer}}},
+  booktitle = {Proceedings of the 36th {{International Conference}} on {{Machine Learning}}},
+  author = {Lee, Juho and Lee, Yoonho and Kim, Jungtaek and Kosiorek, Adam and Choi, Seungjin and Teh, Yee Whye},
+  date = {2019-05-24},
+  pages = {3744--3753},
+  publisher = {PMLR},
+  issn = {2640-3498},
+  url = {https://proceedings.mlr.press/v97/lee19d.html},
+  urldate = {2025-05-14},
+  abstract = {Many machine learning tasks such as multiple instance learning, 3D shape recognition, and few-shot image classification are defined on sets of instances. Since solutions to such problems do not depend on the order of elements of the set, models used to address them should be permutation invariant. We present an attention-based neural network module, the Set Transformer, specifically designed to model interactions among elements in the input set. The model consists of an encoder and a decoder, both of which rely on attention mechanisms. In an effort to reduce computational complexity, we introduce an attention scheme inspired by inducing point methods from sparse Gaussian process literature. It reduces the computation time of self-attention from quadratic to linear in the number of elements in the set. We show that our model is theoretically attractive and we evaluate it on a range of tasks, demonstrating the state-of-the-art performance compared to recent methods for set-structured data.},
+  eventtitle = {International {{Conference}} on {{Machine Learning}}},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/FGT9HZIT/Lee et al. - 2019 - Set Transformer A Framework for Attention-based P.pdf;/Users/brandonhosley/Zotero/storage/PVWBQTUV/Lee et al_2019_Set Transformer.pdf}
+}
+
 @inproceedings{leibo2021,
   title = {Scalable {{Evaluation}} of {{Multi-Agent Reinforcement Learning}} with {{Melting Pot}}},
   booktitle = {Proceedings of the 38th {{International Conference}} on {{Machine Learning}}},
@@ -842,6 +901,23 @@
   abstract = {Despite the recent advances of deep reinforcement learning (DRL), agents trained by DRL tend to be brittle and sensitive to the training environment, especially in the multi-agent scenarios. In the multi-agent setting, a DRL agent's policy can easily get stuck in a poor local optima w.r.t. its training partners - the learned policy may be only locally optimal to other agents' current policies. In this paper, we focus on the problem of training robust DRL agents with continuous actions in the multi-agent learning setting so that the trained agents can still generalize when its opponents' policies alter. To tackle this problem, we proposed a new algorithm, MiniMax Multi-agent Deep Deterministic Policy Gradient (M3DDPG) with the following contributions: (1) we introduce a minimax extension of the popular multi-agent deep deterministic policy gradient algorithm (MADDPG), for robust policy learning; (2) since the continuous action space leads to computational intractability in our minimax learning objective, we propose Multi-Agent Adversarial Learning (MAAL) to efficiently solve our proposed formulation. We empirically evaluate our M3DDPG algorithm in four mixed cooperative and competitive multi-agent environments and the agents trained by our method significantly outperforms existing baselines.},
   isbn = {978-1-57735-809-1},
   file = {/Users/brandonhosley/Zotero/storage/B2DADNNL/Li et al_2019_Robust multi-agent reinforcement learning via minimax deep deterministic policy.pdf}
+}
+
+@online{li2021b,
+  title = {Permutation {{Invariant Policy Optimization}} for {{Mean-Field Multi-Agent Reinforcement Learning}}: {{A Principled Approach}}},
+  shorttitle = {Permutation {{Invariant Policy Optimization}} for {{Mean-Field Multi-Agent Reinforcement Learning}}},
+  author = {Li, Yan and Wang, Lingxiao and Yang, Jiachen and Wang, Ethan and Wang, Zhaoran and Zhao, Tuo and Zha, Hongyuan},
+  date = {2021-05-18},
+  eprint = {2105.08268},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.2105.08268},
+  url = {http://arxiv.org/abs/2105.08268},
+  urldate = {2025-05-14},
+  abstract = {Multi-agent reinforcement learning (MARL) becomes more challenging in the presence of more agents, as the capacity of the joint state and action spaces grows exponentially in the number of agents. To address such a challenge of scale, we identify a class of cooperative MARL problems with permutation invariance, and formulate it as a mean-field Markov decision processes (MDP). To exploit the permutation invariance therein, we propose the mean-field proximal policy optimization (MF-PPO) algorithm, at the core of which is a permutation-invariant actor-critic neural architecture. We prove that MF-PPO attains the globally optimal policy at a sublinear rate of convergence. Moreover, its sample complexity is independent of the number of agents. We validate the theoretical advantages of MF-PPO with numerical experiments in the multi-agent particle environment (MPE). In particular, we show that the inductive bias introduced by the permutation-invariant neural architecture enables MF-PPO to outperform existing competitors with a smaller number of model parameters, which is the key to its generalization performance.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Machine Learning,Computer Science - Multiagent Systems},
+  file = {/Users/brandonhosley/Zotero/storage/SG2RIJN5/Li et al_2021_Permutation Invariant Policy Optimization for Mean-Field Multi-Agent.pdf;/Users/brandonhosley/Zotero/storage/C3SCQED4/2105.html}
 }
 
 @online{li2023c,
@@ -947,6 +1023,23 @@
   abstract = {Semantic Scholar extracted view of "Markov Games as a Framework for Multi-Agent Reinforcement Learning" by M. Littman},
   isbn = {978-1-55860-335-6},
   langid = {english}
+}
+
+@online{liu2019b,
+  title = {{{PIC}}: {{Permutation Invariant Critic}} for {{Multi-Agent Deep Reinforcement Learning}}},
+  shorttitle = {{{PIC}}},
+  author = {Liu, Iou-Jen and Yeh, Raymond A. and Schwing, Alexander G.},
+  date = {2019-10-31},
+  eprint = {1911.00025},
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1911.00025},
+  url = {http://arxiv.org/abs/1911.00025},
+  urldate = {2025-05-14},
+  abstract = {Sample efficiency and scalability to a large number of agents are two important goals for multi-agent reinforcement learning systems. Recent works got us closer to those goals, addressing non-stationarity of the environment from a single agent's perspective by utilizing a deep net critic which depends on all observations and actions. The critic input concatenates agent observations and actions in a user-specified order. However, since deep nets aren't permutation invariant, a permuted input changes the critic output despite the environment remaining identical. To avoid this inefficiency, we propose a 'permutation invariant critic' (PIC), which yields identical output irrespective of the agent permutation. This consistent representation enables our model to scale to 30 times more agents and to achieve improvements of test episode reward between 15\% to 50\% on the challenging multi-agent particle environment (MPE).},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/MJ4D8FTC/Liu et al_2019_PIC.pdf;/Users/brandonhosley/Zotero/storage/X6M69VAA/1911.html}
 }
 
 @inproceedings{liu2020b,
@@ -1486,6 +1579,21 @@
   file = {/Users/brandonhosley/Zotero/storage/WBG2QEG6/Sutton and Barto - 2018 - Reinforcement learning an introduction.pdf}
 }
 
+@inproceedings{tang2021,
+  title = {The Sensory Neuron as a Transformer: Permutation-Invariant Neural Networks for Reinforcement Learning},
+  shorttitle = {The Sensory Neuron as a Transformer},
+  booktitle = {Proceedings of the 35th {{International Conference}} on {{Neural Information Processing Systems}}},
+  author = {Tang, Yujin and Ha, David},
+  date = {2021-12-06},
+  series = {{{NIPS}} '21},
+  pages = {22574--22587},
+  publisher = {Curran Associates Inc.},
+  location = {Red Hook, NY, USA},
+  abstract = {In complex systems, we often observe complex global behavior emerge from a collection of agents interacting with each other in their environment, with each individual agent acting only on locally available information, without knowing the full picture. Such systems have inspired development of artificial intelligence algorithms in areas such as swarm optimization and cellular automata. Motivated by the emergence of collective behavior from complex cellular systems, we build systems that feed each sensory input from the environment into distinct, but identical neural networks, each with no fixed relationship with one another. We show that these sensory networks can be trained to integrate information received locally, and through communication via an attention mechanism, can collectively produce a globally coherent policy. Moreover, the system can still perform its task even if the ordering of its inputs is randomly permuted several times during an episode. These permutation invariant systems also display useful robustness and generalization properties that are broadly applicable.},
+  isbn = {978-1-71384-539-3},
+  file = {/Users/brandonhosley/Zotero/storage/W3H4ZE5Y/Tang_Ha_2021_The sensory neuron as a transformer.pdf}
+}
+
 @article{tangkaratt2016,
   title = {Model-Based Reinforcement Learning with Dimension Reduction},
   author = {Tangkaratt, Voot and Morimoto, Jun and Sugiyama, Masashi},
@@ -1651,6 +1759,22 @@
   file = {/Users/brandonhosley/Zotero/storage/LB88BQXX/real-world-multi-agent-reinforcement-learning-latest-developments-and-applications.html}
 }
 
+@inproceedings{yang2018,
+  title = {Mean {{Field Multi-Agent Reinforcement Learning}}},
+  booktitle = {Proceedings of the 35th {{International Conference}} on {{Machine Learning}}},
+  author = {Yang, Yaodong and Luo, Rui and Li, Minne and Zhou, Ming and Zhang, Weinan and Wang, Jun},
+  date = {2018-07-03},
+  pages = {5571--5580},
+  publisher = {PMLR},
+  issn = {2640-3498},
+  url = {https://proceedings.mlr.press/v80/yang18d.html},
+  urldate = {2025-05-14},
+  abstract = {Existing multi-agent reinforcement learning methods are limited typically to a small number of agents. When the agent number increases largely, the learning becomes intractable due to the curse of the dimensionality and the exponential growth of agent interactions. In this paper, we present Mean Field Reinforcement Learning where the interactions within the population of agents are approximated by those between a single agent and the average effect from the overall population or neighboring agents; the interplay between the two entities is mutually reinforced: the learning of the individual agent’s optimal policy depends on the dynamics of the population, while the dynamics of the population change according to the collective patterns of the individual policies. We develop practical mean field Q-learning and mean field Actor-Critic algorithms and analyze the convergence of the solution to Nash equilibrium. Experiments on Gaussian squeeze, Ising model, and battle games justify the learning effectiveness of our mean field approaches. In addition, we report the first result to solve the Ising model via model-free reinforcement learning methods.},
+  eventtitle = {International {{Conference}} on {{Machine Learning}}},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/UJ9GS4QT/Yang et al. - 2018 - Mean Field Multi-Agent Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/ZNHMG8P8/Yang et al_2018_Mean Field Multi-Agent Reinforcement Learning.pdf}
+}
+
 @online{yang2020a,
   title = {Q-Value {{Path Decomposition}} for {{Deep Multiagent Reinforcement Learning}}},
   author = {Yang, Yaodong and Hao, Jianye and Chen, Guangyong and Tang, Hongyao and Chen, Yingfeng and Hu, Yujing and Fan, Changjie and Wei, Zhongyu},
@@ -1725,6 +1849,31 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
   file = {/Users/brandonhosley/Zotero/storage/SDH5KMVS/Yu et al_2022_The Surprising Effectiveness of PPO in Cooperative, Multi-Agent Games.pdf;/Users/brandonhosley/Zotero/storage/3KM2DXK5/2103.html}
+}
+
+@inproceedings{zaheer2017,
+  title = {Deep {{Sets}}},
+  booktitle = {Advances in {{Neural Information Processing Systems}}},
+  author = {Zaheer, Manzil and Kottur, Satwik and Ravanbakhsh, Siamak and Poczos, Barnabas and Salakhutdinov, Russ R and Smola, Alexander J},
+  date = {2017},
+  volume = {30},
+  publisher = {Curran Associates, Inc.},
+  url = {https://papers.neurips.cc/paper_files/paper/2017/hash/f22e4747da1aa27e363d86d40ff442fe-Abstract.html},
+  urldate = {2025-05-14},
+  abstract = {We study the problem of designing models for machine learning tasks defined on sets. In contrast to the traditional approach of operating on fixed dimensional vectors, we consider objective functions defined on sets and are invariant to permutations. Such problems are widespread, ranging from the estimation of population statistics, to anomaly detection in piezometer data of embankment dams, to cosmology. Our main theorem characterizes the permutation invariant objective functions and provides a family of functions to which any permutation invariant objective function must belong. This family of functions has a special structure which enables us to design a deep network architecture that can operate on sets and which can be deployed on a variety of scenarios including both unsupervised and supervised learning tasks. We demonstrate the applicability of our method on population statistic estimation, point cloud classification, set expansion, and outlier detection.},
+  file = {/Users/brandonhosley/Zotero/storage/N4X2YWWI/Zaheer et al_2017_Deep Sets.pdf}
+}
+
+@inproceedings{zambaldi2018,
+  title = {Deep Reinforcement Learning with Relational Inductive Biases},
+  author = {Zambaldi, Vinicius and Raposo, David and Santoro, Adam and Bapst, Victor and Li, Yujia and Babuschkin, Igor and Tuyls, Karl and Reichert, David and Lillicrap, Timothy and Lockhart, Edward and Shanahan, Murray and Langston, Victoria and Pascanu, Razvan and Botvinick, Matthew and Vinyals, Oriol and Battaglia, Peter},
+  date = {2018-09-27},
+  url = {https://openreview.net/forum?id=HkxaFoC9KQ},
+  urldate = {2025-05-14},
+  abstract = {We introduce an approach for augmenting model-free deep reinforcement learning agents with a mechanism for relational reasoning over structured representations, which improves performance, learning efficiency, generalization, and interpretability. Our architecture encodes an image as a set of vectors, and applies an iterative message-passing procedure to discover and reason about relevant entities and relations in a scene. In six of seven StarCraft II Learning Environment mini-games, our agent achieved state-of-the-art performance, and surpassed human grandmaster-level on four. In a novel navigation and planning task, our agent's performance and learning efficiency far exceeded non-relational baselines, it was able to generalize to more complex scenes than it had experienced during training. Moreover, when we examined its learned internal representations, they reflected important structure about the problem and the agent's intentions. The main contribution of this work is to introduce techniques for representing and reasoning about states in model-free deep reinforcement learning agents via relational inductive biases. Our experiments show this approach can offer advantages in efficiency, generalization, and interpretability, and can scale up to meet some of the most challenging test environments in modern artificial intelligence.},
+  eventtitle = {International {{Conference}} on {{Learning Representations}}},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/9UUADGCF/Zambaldi et al_2018_Deep reinforcement learning with relational inductive biases.pdf}
 }
 
 @online{zhang2021,

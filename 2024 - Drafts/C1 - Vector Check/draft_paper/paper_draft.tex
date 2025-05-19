@@ -6,6 +6,7 @@
 \usepackage{amssymb}
 \usepackage{booktabs}
 \usepackage{hyperref}
+\usepackage{cleveref}
 \usepackage{multirow}
 
 \usepackage{graphicx}
@@ -322,7 +323,8 @@ This approach contributes toward scalable benchmarking practices and supports
 more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) systems.
 
 
-\section{Methodology}\label{sec:methodology}
+\section{Methodology}
+\label{sec:methodology}
 
 \subsection{Training Framework for Heterogeneous MARL}
 \label{subsec:training_framework}
@@ -477,7 +479,7 @@ systematic evaluation of transferability.
 
 We adopted Proximal Policy Optimization (PPO)\cite{schulman2017} using the RLlib 
 framework to structure and execute our experiments, with Hyperparameters described in
-Table~\ref{tab:ppo-hyperparams}. For Waterworld and LBF, 
+Table~\cref{tab:ppo-hyperparams}. For Waterworld and LBF, 
 we used RLlib's default PPO configuration. For Multiwalker, we modified the default 
 network architecture to better accommodate the higher-dimensional continuous control space and 
 tighter coordination demands.
@@ -520,12 +522,12 @@ Our training protocol consists of three main phases shared across all environmen
     In both Waterworld and Level-Based Foraging, agents were treated as interchangeable. 
     Teams were formed by randomly duplicating the checkpointed policies without regard 
     for agent identity. Final configurations included up to 8 agents, and retraining was 
-    performed with all agents updating their policies independently (\ref{fig:training_1}).
+    performed with all agents updating their policies independently (\cref{fig:training_1}).
     \item \textbf{Multiwalker:}
     Multiwalker agents occupy fixed spatial positions in a physically connected chain, 
     introducing asymmetries in their observations. To maintain role consistency, 
     we fixed the lead agent from the pretrained team and sampled the middle and rear 
-    agents from the checkpoint pool during upsampling (\ref{fig:training_2}). 
+    agents from the checkpoint pool during upsampling (\cref{fig:training_2}). 
     This approach preserved the 
     structural expectations of the environment while allowing the remaining agents to vary. 
 \end{enumerate}
@@ -590,9 +592,9 @@ it allowed us to verify that resource provisioning remained stable throughout th
 mitigating concerns about variability introduced by background cluster activity or virtualization.
 Second, and more critically, this profiling confirmed that training costs scaled linearly 
 with the number of agents—an anticipated but important validation for our use of the 
-\emph{agent-steps} metric. This relationship is visualized in Figure~\ref{fig:agent-steps}, 
+\emph{agent-steps} metric. This relationship is visualized in \cref{fig:agent-steps}, 
 where all three environments show Pearson correlation coefficients exceeding 0.999,
-shown in \ref{tab:pearson-corr}.
+shown in \cref{tab:pearson-corr}.
 \begin{figure}[!h]
     \centering
     \includegraphics[width=0.9\linewidth]{iter_cost.png}
@@ -637,8 +639,8 @@ In the Waterworld environment, the primary benefit of pretraining was accelerate
 Increasing the ratio between the pretraining and final team sizes led to greater improvements 
 in convergence speed compared to training the full team from scratch. For instance, 
 while retraining from 2-agent policies to 3 or 4 agents offered minimal benefit 
-(Figure \ref{fig:waterworld-4}), scaling to 8 agents from the same 2-agent base resulted in 
-substantial speedups (Figure~\ref{fig:waterworld-8}). These gains diminished rapidly, 
+(\Cref{fig:waterworld-4}), scaling to 8 agents from the same 2-agent base resulted in 
+substantial speedups (\Cref{fig:waterworld-8}). These gains diminished rapidly, 
 with little additional benefit observed beyond 60 pretraining steps (120 agent-steps).
 This suggests that relatively short pretraining can provide sufficient foundational 
 coordination to improve sample efficiency at scale, though final tuning may 
@@ -662,7 +664,7 @@ be necessary to achieve full performance with shorter pretraining periods.
     \label{fig:waterworld-8}
 \end{figure}
 
-In Figure~\ref{fig:waterworld-aucs} we summarize overall efficiency trends across configurations. 
+In \cref{fig:waterworld-aucs} we summarize overall efficiency trends across configurations. 
 Each cell represents the percentage improvement in training efficiency 
 achieved through pretraining, relative to full tabula rasa training.
 This percentage was calculated by comparing the area under the reward curve 
@@ -689,10 +691,10 @@ when the ratio between pretraining team size and target team sizes is high.
 
 In Multiwalker, we observed a notable shift in the utility of pretraining. 
 For smaller teams (4 or 5 agents), retrained and tabula rasa runs performed similarly, 
-with retraining providing only modest acceleration (Figure~\ref{fig:multiwalker-5}). 
+with retraining providing only modest acceleration (\Cref{fig:multiwalker-5}). 
 In contrast, for larger teams (6 and 7 agents), tabula rasa training frequently failed to 
 converge or terminated early, likely due to the environment's sparse rewards and heightened 
-sensitivity to miscoordination (Figure~\ref{fig:multiwalker-6}). 
+sensitivity to miscoordination (\Cref{fig:multiwalker-6}). 
 In these scenarios, pretraining acted as a stabilizing mechanism by equipping agents 
 with sufficient baseline competence to engage meaningfully in early training episodes. 
 Without this foundation, larger teams (more vulnerable to premature episode termination 
@@ -740,7 +742,7 @@ is necessarily higher, despite final performance often eventually meeting the ba
 
 We next consider the Level-Based Foraging (LBF) environment.
 Given the environment's structured observations, we anticipated that the
-choice of observation schema, described in subsection~\ref{subsec:training_framework},
+choice of observation schema, described in \cref{subsec:training_framework},
 could significantly influence training outcomes.
 To evaluate this, we trained baseline policies from tabula rasa under each schema:
 \begin{enumerate}
@@ -783,25 +785,29 @@ and compared the resulting performance distributions.
     \end{tabular}
 \end{table}
 
-Table~\ref{tab:observation_comparisons} summarizes these comparisons. Across all agent counts, 
-the full observability schema produced significantly different training outcomes 
-than the two reduced forms. Statistical tests (two-sample t-tests with Bonferroni correction) 
+\Cref{tab:observation_comparisons} summarizes these comparisons. 
+Across all agent counts, the full observability schema produced 
+significantly different training outcomes than the two reduced forms. 
+Statistical tests (two-sample t-tests with Bonferroni correction) 
 confirmed that the full schema distributions were distinct from both the 
 truncated and ally-ignorant variants, with $p < 0.001$ in all such cases. 
 However, the truncated and ally-ignorant observation settings were not 
 statistically distinguishable from one another at any agent count, 
 even under uncorrected significance thresholds. 
-These results suggest that not only do neither of the reduced schemas 
-achieves the same level of expected performance as the full observation space, 
-the truncated schema does not confer any measurable benefit over 
-the ally-ignorant schema, indicating that limited teammate information is not 
-significantly more useful than none at all under these conditions.
+These results suggest that not only do neither of 
+the reduced schemas achieves the same level of 
+expected performance as the full observation space, 
+the truncated schema does not confer any measurable 
+benefit over the ally-ignorant schema, indicating 
+that limited teammate information is not significantly 
+more useful than none at all under these conditions.
 
-The learning curves for LBF do not exhibit a strong or consistent pattern across configurations. 
-While retrained trajectories generally outperform the arithmetic mean of the tabula rasa runs, 
+The learning curves for LBF do not exhibit a strong or consistent 
+pattern across configurations. While retrained trajectories 
+generally outperform the arithmetic mean of the tabula rasa runs, 
 the significance of this improvement remains unclear. 
-Figure~\ref{fig:lbf-7} provides an illustrative example, highlighting how retraining compares 
-to training from scratch at a 7-agent configuration.
+\Cref{fig:lbf-7} provides an illustrative example, highlighting how 
+retraining compares to training from scratch at a 7-agent configuration.
 
 \begin{figure}[!h]
     \centering

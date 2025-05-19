@@ -14,7 +14,7 @@
 		\setentrycounter[]{page}\glsnumberformat{8\delimR 10}}}%
 \glossentry{pi}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{8\delimR 11}\delimN 
-		\setentrycounter[]{page}\glsnumberformat{54}}}\glsgroupskip
+		\setentrycounter[]{page}\glsnumberformat{51}}}\glsgroupskip
 \glsgroupheading{Q}\relax \glsresetentrylist %
 \glossentry{Q}{\glossaryentrynumbers{\relax 
 		\setentrycounter[]{page}\glsnumberformat{11\delimN 12}\delimN 
