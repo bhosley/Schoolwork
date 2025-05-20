@@ -73,6 +73,13 @@ stochastic dynamics~\cite{puterman2005}. An MDP is defined by a tuple
     \label{fig:mdp_cycle}
 \end{figure}
 
+A common depiction of reinforcement learning illustrates it as a simple 
+feedback loop between an agent and its environment. In its most basic form, 
+this process can be modeled as a fully reduced \gls{mdp}, where the agent observes
+the state, selects an action, and receives a reward from the environment in response. 
+\Cref{fig:mdp_cycle} highlights this alternating cycle, often referred to as the 
+\emph{training loop}.
+
     \subsection*{Objectives in MDPs}%
 
 The objective in an \gls{mdp} is to find a policy 
@@ -283,6 +290,7 @@ and attribute it to the difficulty in tuning a \(\tau\) decay schedule~
 % ---------------------------------------------------------------------------- %
 \section{Evolution to Multi-Agent Systems}%
 
+
 The evolution from single-agent \gls{rl} to multi-agent systems introduces new 
 complexities and opportunities, reflecting more realistic scenarios where 
 multiple agents interact within a shared environment. \Gls{marl} extends the 
@@ -315,6 +323,9 @@ has focused on leveraging interactions to produce more effective results.
 The most popular approaches fall under the label \gls{ctde}~%
 \cite{foerster2017,rashid2018,fotouhi2019,lowe2020,pan2021,%
 papoudakis2021,li2023d,zhou2023}, 
+a broad term encompassing any algorithm with an arbitrary centralizing 
+mechanism. We assert that the term's breadth and ubiquity have made it 
+a defining trait of mainstream \gls{marl}.
 %
 \begin{wrapfigure}[9]{R}{0.4\textwidth}
     \vspace*{-2.5em}
@@ -322,11 +333,12 @@ papoudakis2021,li2023d,zhou2023},
     \input{basic_ctde}
     \caption{Basic \gls{ctde}.}
     \label{fig:basic_ctde}
+    % #TODO: orphaned figure
 \end{wrapfigure}
 %
-a broad term encompassing any algorithm with an arbitrary centralizing 
-mechanism. We assert that the term's breadth and ubiquity have made it 
-a defining trait of mainstream \gls{marl}.
+\Cref{fig:basic_ctde} shows an example of this in which centralization is
+performed by a \emph{mixing} function that combines a global state with 
+the actions of each agent to provide a single state or action-state value.
 
 Within the \gls{ctde} paradigm, we wish to draw particular attention to 
 actor-critic training, derived from an almost identical single-agent 
@@ -337,19 +349,6 @@ The majority of the algorithms we will examine in our experiments
 will either be actor-critic~\cite{foerster2017,lowe2020,li2023c} 
 or will aim to reduce the bias that occurs with a singular, 
 shared critic~\cite{rashid2018,ackermann2019,li2023d,zhou2023}.
-
-\begin{wrapfigure}[9]{R}{0.4\textwidth}
-    \vspace*{-1em}
-    \centering
-    \includegraphics[width=0.4\textwidth]{ctde_actor-critic.png}
-    % #TODO: Tikz this diagram
-    %\resizebox{0.3\textwidth}{!}{%
-    %    \input{ctde_actor-critic}
-    %}
-    %\captionsetup{margin=1.2em}
-    \caption{Actor-Critic \gls{ctde}.}
-    \label{fig:ctde_actor-critic}
-\end{wrapfigure}
 
 Rashid et al.~\cite*{rashid2018} and Li et al.~\cite*{li2023d}
 proposed algorithms that decrease the amount of centralization 
@@ -409,12 +408,12 @@ We categorize this diversity into two primary forms:
 \emph{behavioral heterogeneity} and \emph{intrinsic heterogeneity}.
 
 \paragraph{Behavioral Heterogeneity.}
-Behavioral heterogeneity arises when agents differ not by their 
-structure but by the roles they are trained or assigned to perform. 
+Behavioral heterogeneity arises when agents are structurally homogeneous, 
+but differ by the roles they are trained or assigned to perform. 
 These roles may emerge from interaction with asymmetric tasks, uneven 
 initialization, or through reward shaping that encourages specialization. 
-Importantly, agents may share the same observation and action spaces yet 
-develop distinct strategies due to their training context. 
+Importantly, while these agents may share the same observation and action 
+spaces yet they can develop distinct strategies due to their training context. 
 Many multi-agent games naturally induce this behavior even 
 when agents are structurally identical.
 
@@ -461,7 +460,7 @@ These projects not only showcase the potential of \gls{marl} to
 achieve superhuman performance but also highlight the broader implications 
 and applications of these advancements beyond the realm of gaming.
 
-    \subsection*{AlphaGo: The First* Milestone}
+    \subsection*{AlphaGo: A First Milestone}
 
 AlphaGo, developed by DeepMind and presented in~\cite{silver2016}, 
 marked perhaps the largest milestone in \gls{ai} since Deep Blue~%
@@ -633,11 +632,24 @@ methods using an advantage calculation;
 \end{equation}
 They named their proposed algorithm \gls{a3c}.
 
+\begin{wrapfigure}[9]{R}{0.4\textwidth}
+    \vspace*{-1em}
+    \centering
+    \includegraphics[width=0.4\textwidth]{ctde_actor-critic.png}
+    % #TODO: Tikz this diagram
+    %\resizebox{0.3\textwidth}{!}{%
+    %    \input{ctde_actor-critic}
+    %}
+    %\captionsetup{margin=1.2em}
+    \caption{Actor-Critic \gls{ctde}.}
+    \label{fig:ctde_actor-critic}
+\end{wrapfigure}
+
 Lowe et al.~\cite{lowe2020} described a difficulty in applying traditional 
 algorithms like Q-learning and policy gradient to multi-agent settings.
 Their proposed approach, called \gls{maddpg} would combine \gls{a3c} 
 with a deep-deterministic policy gradient algorithm.
-Their algorithm is the example used in \cref{fig:ctde_actor-critic}.
+The algorithm is illustrated in \cref{fig:ctde_actor-critic}.
 
 Fujimoto et al.~\cite{fujimoto2018} take a similar approach to address 
 a concern of function approximation errors in actor-critic methods, 
@@ -769,33 +781,6 @@ multi-agent benchmarks that are well-suited to evaluating coordination,
 heterogeneity, and transfer. This work makes use of two \gls{sisl} environments: 
 Waterworld and Multiwalker.
 
-\textbf{Waterworld} is a continuous-space environment in which agents 
-must cooperate to capture moving targets while avoiding hazards. 
-Agents observe their surroundings through a set of egocentric, 
-range-limited sensors. Because agents are structurally homogeneously, 
-any heterogeneity is emergent, depending on how roles and responsibilities 
-are learned. This environment serves as a useful baseline for evaluating 
-scalability in coordination, since agents can often be interchanged.
-
-\textbf{Multiwalker} is a mixed-coordination environment in which 
-multiple agents must carry a package across rough terrain. 
-The agents are must coordinate to avoid 
-falling or dropping the package. Each agent has a different observation 
-space depending on its position (e.g., lead, middle, rear), 
-representing a form of static, intrinsic heterogeneity. 
-Multiwalker is well-suited to evaluating the stability of learned 
-behaviors when scaling up heterogeneous roles.
-
-\textbf{Level-Based Foraging (LBF)} is a discrete-grid environment where 
-agents must cooperatively collect food items distributed across the map. 
-Each agent and food item is assigned a level, and food can only be 
-collected by a team of agents whose combined levels meet or exceed 
-the food's requirement. The environment introduces dynamic, intrinsic 
-heterogeneity through level assignments, which can change the utility 
-and role of each agent depending on team composition. 
-This makes \gls{lbf} a strong candidate for evaluating both 
-scalability and observation schema design in \gls{harl}~\cite{papoudakis2021}.
-
 \begin{figure}[ht]
     \centering
     \caption{Environments used in this work.}
@@ -817,6 +802,42 @@ scalability and observation schema design in \gls{harl}~\cite{papoudakis2021}.
         \label{fig:lbf}
     \end{subfigure}
 \end{figure}
+
+\textbf{Waterworld} is a continuous-space environment in which agents 
+must cooperate to capture moving targets while avoiding hazards. 
+Agents observe their surroundings through a set of egocentric, 
+range-limited sensors. Because agents are structurally homogeneously, 
+any heterogeneity is emergent, depending on how roles and responsibilities 
+are learned. This environment serves as a useful baseline for evaluating 
+scalability in coordination, since agents can often be interchanged.
+\Cref{fig:waterworld} shows the agents in blue, with sensor ranges radiating outward,
+green and red circles representing food and poison respectively, and a
+teal central obstacle.
+
+\textbf{Multiwalker} is a mixed-coordination environment in which 
+multiple agents must carry a package across rough terrain. 
+The agents are must coordinate to avoid falling or dropping the package. 
+Each agent has a different observation space depending on its position 
+(e.g., lead, middle, rear), representing a form of static, intrinsic heterogeneity. 
+Multiwalker is well-suited to evaluating the stability of learned 
+behaviors when scaling up heterogeneous roles.
+\Cref{fig:multiwalker} shows three robot agents with a red line 
+representing their observation range, mimicking a \gls{lidar} sensor.
+The payload of the agents is represented by the long purple rectangle 
+perched atop the agents, and the flag on the left indicates the starting 
+position for the rear-most coordinate of the payload.
+
+\textbf{Level-Based Foraging (LBF)} is a discrete-grid environment where 
+agents must cooperatively collect food items distributed across the map. 
+Each agent and food item is assigned a level, and food can only be 
+collected by a team of agents whose combined levels meet or exceed 
+the food's requirement. The environment introduces dynamic, intrinsic 
+heterogeneity through level assignments, which can change the utility 
+and role of each agent depending on team composition. 
+This makes \gls{lbf} a strong candidate for evaluating both 
+scalability and observation schema design in \gls{harl}~\cite{papoudakis2021}.
+\Cref{fig:lbf} shows an instance of \gls{lbf} with two agents,
+a level-one and level-two agent, and two level-one food items.
 
 
 % ------------------------------ Related Work -------------------------------- %
@@ -878,8 +899,9 @@ make research in \gls{marl} more accessible to researchers without
 high end resources, citing the resources used by OpenAI and DeepMind 
 researchers.
 %
-Firstly, instead of using the \gls{grf} environment, they developed a 
-lighter version that omitted the complex physics and graphics of \gls{grf}. 
+First, instead of using the \gls{grf} environment, they developed a 
+lighter version that omitted the complex physics and graphics of \gls{grf},
+a comparison of two can be seen in \cref{fig:football_comparison}. 
 They employed training with sub-games similar to those in \gls{grf}, 
 designed to replicate real-world drills used by human players. 
 Additionally, they implemented a small league training format akin to 
@@ -898,6 +920,7 @@ the one used by Vinyals et al.~\cite{vinyals2019}.
         \caption{Smit et al.}
     \end{subfigure}
     \caption{Comparison of football environments.}
+    \label{fig:football_comparison}
 \end{figure}
 
 Finally, to reduce computational demands, they trained teams at a 

@@ -9,9 +9,9 @@ This initiative aims to field all-domain attritable autonomous (ADA2) systems,
 leveraging autonomous technology to address production disadvantages the 
 United States may face in great-power competition~\cite{zotero-2656}. 
 Unlike previous efforts that sought bespoke military drones~\cite{bajak2023}, 
-\emph{Replicator} aims to utilize more readily available technologies, 
-possibly inspired by the effectiveness of commercial off-the-shelf \glspl{uas} 
-observed in the Russian invasion of Ukraine~\cite{bajak2023a}.
+\emph{Replicator} aims to leverage more readily available technologies, 
+potentially inspired by the demonstrated effectiveness of \gls{cots} \glspl{uas} 
+employed by both belligerents during the Russian invasion of Ukraine~\cite{bajak2023a}.
 
 Despite the strategic push of the \emph{Replicator Initiative}, 
 a Rand Corporation study from February 2024~\cite{gerstein2024} predicted 
@@ -257,7 +257,7 @@ and achieve scalable, robust, and adaptable autonomous systems.
 
 % --- REVISED RESEARCH QUESTIONS AND CONTRIBUTIONS ---
 \begin{description}
-    \item[] \textbf{\hyperref[ch:contribution_1]{Contribution 1}:}
+    \item[] \textbf{\hyperref[ch:contribution_1]{Contribution 1}:} Policy Upsampling
     \begin{itemize}
         \item[RQ 1.1:] Can pretraining smaller teams of agents and then scaling to the target 
         team size via policy duplication and retraining improve training efficiency 
@@ -266,7 +266,7 @@ and achieve scalable, robust, and adaptable autonomous systems.
         environments with different forms of agent heterogeneity 
         (e.g., behavioral vs. intrinsic)?
     \end{itemize}
-    \item[] \textbf{\hyperref[ch:contribution_2]{Contribution 2}:}
+    \item[]\textbf{\hyperref[ch:contribution_2]{Contribution 2}:} Invariant Observation Processing
     \begin{itemize}
         \item[RQ 2.1:] How does incorporating input-invariant structures—such as policies 
         robust to observation permutations and variable team sizes—impact learning efficiency 
@@ -274,14 +274,14 @@ and achieve scalable, robust, and adaptable autonomous systems.
         \item[RQ 2.2:] Do input-invariant architectures support more stable policy behavior 
         under changes to team size and partial observation loss during execution?
     \end{itemize}
-    \item[] \textbf{\hyperref[ch:contribution_3]{Contribution 3}:}
+    \item[] \textbf{\hyperref[ch:contribution_3]{Contribution 3}:} Progressive Network Expansion
     \begin{itemize}
         \item[RQ 3.1:] Can tensor-based projections be used to grow a policy networks 
         capacity during training while preserving its prior functional behavior?
-        \item[RQ 3.2:] Can we identify appropriate transition points during training when projecting 
-        to a larger policy network yields the greatest benefit?
-        \item[RQ 3.3:] Does this progressive architectural growth strategy reduce total training cost 
-        or improve final policy performance compared to fixed-size architectures?
+        \item[RQ 3.2:] Can we identify appropriate transition points during training 
+        when projecting to a larger policy network yields the greatest benefit?
+        \item[RQ 3.3:] Does this progressive architectural growth strategy reduce total training 
+        cost or improve final policy performance compared to fixed-size architectures?
     \end{itemize}
 \end{description}
 

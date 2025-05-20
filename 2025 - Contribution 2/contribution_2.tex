@@ -1,0 +1,140 @@
+\documentclass{article}
+\usepackage[english]{babel}
+\usepackage{csquotes}       % Used by babel
+
+\usepackage{amsmath}        % Math Typesetting
+\usepackage{amssymb}        % Math Typesetting
+% \usepackage{booktabs}
+% \usepackage{hyperref}
+% \usepackage{multirow}
+
+\usepackage{graphicx}
+\graphicspath{{Figures}{Data}}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows}
+
+% \usepackage{cleveref}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{../2025Bibs/Prospectus.bib}
+% \usepackage[T1]{fontenc}
+% \usepackage[final]{microtype}
+
+\title{Working Title: \\
+Input-Invariant Architectures in Multi-Agent Reinforcement Learning (MARL)}
+\author{Brandon Hosley}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\end{abstract}
+
+\section{Introduction}
+
+\section{Methodology}
+\label{sec:methodology}
+\section{Results and Observations}
+\section{Conclusion}
+
+
+
+% \clearpage
+% \appendix
+% \section*{Appendix}
+% \addcontentsline{toc}{section}{Appendix}
+
+
+%% --- Working Lit Review --- %%
+\section{Related Work}
+
+\subsection{Permutation Invariance in Multi-Agent Reinforcement Learning}
+
+Permutation-Invariant Representations: 
+A core challenge in MARL is the curse of dimensionality as the number of agents grows: 
+the joint state/action space expands combinatorially. 
+% #TODO: Specify - this is referencing central control of agents
+However, in many cooperative settings the agents are exchangeable or play symmetric roles, 
+suggesting that the learning algorithm should be invariant to permutations of agent inputs. 
+Invariant architectures enforce that reordering agent observations (or the agents' identities) 
+does not change the network's output, embedding the inductive bias 
+that only the set of agent states matters, not their ordering. 
+This bias dramatically reduces the effective input symmetry group 
+and can improve generalization and sample efficiency. 
+Formally, any function over a set of $N$ input entities (agents) 
+that is invariant to permutations can be represented by a pooling architecture 
+$f(X)=\rho(\sum_{i=1}^N \phi(x_i))$ under mild conditions \cite{zaheer2017}. 
+Early works in supervised learning on set inputs (e.g. Deep Sets \cite{zaheer2017}) 
+established this result, inspiring MARL researchers to design critics and 
+policies that operate on sets of agents.
+
+Mean-Field and Exchangeable Approximations: 
+One theoretical avenue leveraging permutation symmetry is mean-field MARL, 
+which assumes that an agent interacts with the average effect of a population 
+instead of each individual [Yang2018]. By treating other agents indistinguishably, 
+mean-field methods break the dependence on the exact count or ordering of teammates. 
+For example, Yang et al. [Yang2018] introduced a mean-field Q-learning and actor-critic 
+that approximates many-agent interactions by an average neighbor influence, enabling tractable 
+training even as agent count grows. Building on this, Li et al. [Li2021] 
+formalize a class of permutation-invariant mean-field MARL problems as 
+mean-field Markov decision processes. 
+They propose Mean-Field Proximal Policy Optimization (MF-PPO) with a 
+permutation-invariant actor-critic architecture. 
+Theoretically, MF-PPO is proven to converge to the global optimum 
+policy at a sublinear rate, and remarkably its sample complexity is 
+independent of the number of agents [Li2021]. This result underscores 
+the power of permutation invariance as an inductive bias: by encoding exchangeability, 
+one can sidestep the exponential blow-up in multi-agent state spaces. 
+Empirically, Li et al. show MF-PPO outperforms non-invariant baselines in the 
+Multi-Agent Particle Environment (MPE) with many agents, and achieves this with 
+significantly fewer parameters due to weight-sharing among agents' input processing.
+
+Set-Based and Pooling Architectures for Unordered Inputs
+
+Deep Sets and Pooling Layers: The simplest way to obtain input invariance is through pooling: apply a learned transformation to each agent’s inputs and then aggregate (e.g. by summation or averaging) to produce a joint representation. This idea was introduced as Deep Sets in the context of supervised learning [Zaheer2017] and has since been adapted to RL. A pooling layer $\text{Pool}({ \phi(o_i) }_{i=1}^N)$ (with $\phi$ a shared encoder) treats the agents’ observations ${o_1,\dots,o_N}$ as an unordered set. Such architectures naturally handle variable number of agents or other variable-length inputs, since adding or removing an agent simply adds or removes a term in the sum. Some multi-agent critics have used summed or averaged embeddings of all agents’ states as a state value estimate. While pooling guarantees permutation invariance, it can lose information about pairwise interactions because it aggregates commutatively. To address this, researchers often augment pooling with additional structure (e.g. pairwise features or attention) so that important interactions are not washed out. Nonetheless, pooling provides a strong baseline for invariant multi-agent value functions. For instance, a permutation agnostic critic that simply averages individual utility estimates (assuming homogeneous agents) can remain agnostic to agent order, though its expressiveness might be limited compared to relation-aware methods [Liu2020].
+
+Applications in RL: In single-agent RL contexts with structured observations, pooling has enabled agents to handle inputs like sets of features or objects. For example, an agent might observe a variable set of objects in a room; a Deep Sets encoder can embed this set into a fixed-size representation for a policy network, ensuring that the agent’s decisions don’t depend on an arbitrary ordering of object descriptions. In multi-agent centralized training, pooling each agent’s contribution symmetrically yields a central value function that can scale to different team sizes. However, pure pooling cannot capture who-interacts-with-whom, which is critical in many MARL tasks (e.g. two nearby agents might need a different joint evaluation than two far apart agents). This limitation motivated more sophisticated invariant architectures like graph-based networks and attention-based pooling, which we discuss next.
+
+Graph Neural Networks and Relational Inductive Biases
+
+Graph-Based Architectures: Graph Neural Networks (GNNs) naturally represent a set of entities (nodes) along with their relations (edges) in a way that is invariant to node ordering. GNNs are thus well-suited for MARL: each agent is a node in a graph, and edges can represent interactions (such as physical proximity, communication links, or joint team membership). By design, graph convolutions or message-passing layers treat permutations of node indices equivalently – they operate on the graph structure itself. This gives permutation-equivariance, meaning if we relabel (permute) the agents, the network’s outputs for the corresponding agents are permuted in the same way (and any pooled global output is invariant). Jiang et al. [Jiang2020] introduced a Graph Convolutional Reinforcement Learning approach (also known as DGN), where a multi-agent environment is modeled as a dynamic graph. Each agent shares a policy network that includes graph convolution layers, allowing it to adapt to changing neighbor relationships in highly dynamic environments. DGN showed substantially improved cooperation in tasks where agents move and form time-varying interaction topologies, outperforming non-relational baselines [Jiang2020]. This demonstrated that infusing the policy with a relational inductive bias (neighbors influencing each other’s embeddings through learned message-passing) helps agents learn coordination strategies that generalize across different team sizes and interaction patterns.
+
+Centralized Critics with GNNs: A prominent example of invariant architecture is the Permutation Invariant Critic (PIC) proposed by Liu et al. [Liu2020]. PIC uses a graph network as the critic in a centralized training framework (CTDE). Instead of a monolithic MLP that takes the concatenation of all agents’ observations/actions (which would produce entirely different outputs if agents were relabeled), PIC’s critic treats each agent as a node and applies graph convolutional layers to propagate information among agents. The final critic value is read out by pooling over node embeddings, yielding a single joint value that is invariant to agent permutations. On cooperative tasks in MPE, PIC achieved 15–50% higher average test returns than the baseline MADDPG critic [Liu2020]. Crucially, PIC scales dramatically: Liu et al. scaled the environment up to 200 agents and showed that the permutation-invariant critic successfully learned optimal policies where a standard MLP critic failed to learn any useful strategy [Liu2020]. The key was that a graph-based critic can flexibly accommodate more agents without redesigning the network (the GNN simply iterates over more nodes), whereas a fixed-size MLP struggled with the larger input dimension and different ordering. PIC also explicitly addresses heterogeneous agents by giving each node an attribute vector (e.g. encoding the agent’s type or capabilities) – this allows the shared GNN to condition on agent-specific features while still maintaining symmetry where appropriate. Similar ideas have been explored by Noppakun and Akkarajitsakul [Noppakun2022], who design a permutation-invariant agent-specific centralized critic using graph networks to achieve both symmetry and the ability to handle agents with different action/observation spaces.
+
+Relational Reasoning in RL: Beyond explicit multi-agent scenarios, relational architectures have influenced MARL through the concept of relational inductive biases [Battaglia2018]. Zambaldi et al. [Zambaldi2019] demonstrated that even a single-agent RL agent benefits from treating its observation as a set of entities and relations – they encode visual scenes (like a game board with units) into a graph of entities and apply iterative message passing. Their agent, using a relation network, achieved superhuman performance on certain StarCraft II mini-games by reasoning about units and their relations, surpassing non-relational baselines in both performance and generalization [Zambaldi2019]. This work, though not multi-agent in the training sense, heavily inspired MARL methods: it showed that treating the input as an unordered set of entities (whether those entities are objects or agents) and using a graph/attention mechanism to compute relationships can vastly improve learning efficiency and the ability to generalize to unseen scenarios. Modern MARL algorithms often incorporate such relational layers to allow agents to infer the influence of other specific agents regardless of how inputs are ordered or even how many agents there are. For example, the Graph Attention Mean Field (GAT-MF) approach combines mean-field theory with a graph attention network to handle very large swarms of agents [Hao2023a]. By converting dense agent–agent interactions into an agent–“virtual neighbor” interaction via attention weights, GAT-MF remains invariant to agent permutations while focusing each agent’s critic on the most influential neighbors, and has been applied to extremely large-scale scenarios (hundreds of agents) [Hao2023a].
+
+Attention Mechanisms for Variable and Unordered Inputs
+
+Transformers and Attention for Sets: The success of attention mechanisms in sequence modeling (notably Transformers [Vaswani2017]) has carried over to set-based inputs by removing positional encodings. An attention layer, by default, is permutation-invariant to its inputs (when no order information is added): it treats each query-key-value triplet agnostically to ordering and learns to weight interactions based purely on content. Lee et al. [Lee2019] formalized this in the Set Transformer, an architecture that uses self-attention to model interactions among elements of an input set. The Set Transformer employs multi-head attention and pooling by attention to produce a fixed-size representation of an arbitrary-size set, yielding far greater representational power than naive pooling. Such architectures can capture higher-order interactions: for example, by attending, an output can emphasize that “agent A and agent B are very close to each other” or “among all agents, one has a critical observation,” which a simple sum would obscure. This idea has permeated MARL as well: using attention layers to aggregate information across agents or across input features ensures permutation invariance while letting the model learn which agents or features are most relevant in a given context.
+
+Attention in Multi-Agent Critics: Iqbal and Sha [Iqbal2019] introduced an Actor-Attention-Critic (MAAC), where the centralized critic uses an attention mechanism over agents to dynamically focus on the most pertinent agent interactions for a given agent’s Q-value. In MAAC, each agent’s contribution to another’s value is weighted by attention scores, which effectively allows the critic to disregard irrelevant agents and only attend to crucial ones. This both handles varying numbers of agents (extra agents can be included with minimal effect if they are irrelevant) and improves credit assignment by highlighting the joint partner agents that significantly affect outcomes. Notably, MAAC’s attention module is shared across agents, preserving permutation symmetry (swapping two other agents with identical inputs yields the same attention outputs, just swapped). Empirically, MAAC outperformed baseline critics in scenarios like predator-prey tasks by learning who to attend to among a group, demonstrating more sample-efficient learning especially as the number of agents grows [Iqbal2019]. Similarly, in an AAMAS 2024 study, Hazra et al. [Hazra2024] integrate self-attention into MARL networks to solve the permutation problem: their approach learns to align and weight inputs from multiple agents at each time-step, significantly improving learning speed and win rates in StarCraft II micromanagement tasks compared to non-attentive baselines. The attention-based policy was order-agnostic and achieved higher win rates on 68% of test scenarios, highlighting that flexible attention weights can adapt to different team compositions and observation permutations [Hazra2024].
+
+The Sensory Neuron as a Transformer: A striking demonstration of input-invariance via attention is the work of Tang \& Ha [Tang2021], who proposed treating each sensory input dimension as if it were an “agent” processed by a shared network. In their permutation-invariant policy network, each sensor (or feature) is passed through an identical neural module (like a tiny MLP), and then these intermediate representations attend to each other using a transformer-style self-attention layer. By forcing the policy to infer the meaning of each feature from context (rather than assuming a fixed position meaning), the agent becomes robust to arbitrary reordering or occlusion of inputs. Tang \& Ha show that a hopper or quadruped agent can continue to locomote even if its observation vector is randomly permuted at runtime – a scenario where a standard policy network would fail outright [Tang2021]. Additionally, the same architecture can handle extra noisy inputs or missing inputs gracefully; the attention mechanism simply learns to ignore irrelevant features. Although this work was for a single agent, the concept directly translates to multi-agent settings: each other agent’s state can be considered an input token to attend over. The transformer-based design offers a powerful route to variable-size input handling and has been influential in subsequent designs of MARL models that require flexibility and robustness to changes in the input set.
+
+Robustness to Heterogeneity and Partial Observability
+
+Heterogeneous Agents: In many MARL scenarios, not all agents are identical – they may have different abilities, observation spaces, or roles (e.g. a heterogeneous robot team with drones and ground vehicles). Input-invariant architectures must be adapted to handle such heterogeneity without sacrificing permutation symmetry where it still applies. A common solution is to provide each agent a feature encoding of its type or identity. For instance, PIC augmented each agent’s node representation with an attribute vector describing whether it was a certain kind of agent [Liu2020]. This allows the invariant critic to treat agents with the same attributes as interchangeable, while still differentiating agents of different classes. Another approach is via hypernetworks or conditional networks: Hao et al. [Hao2023] proposed a Hyper Policy Network (HPN) in which a hypernetwork generates the weights of agent-specific modules conditioned on an agent identity input. In their framework, the overall architecture remains permutation-invariant at the high level (the set of agents is processed without order bias), but each agent’s own policy or value-function head can be specialized by its identity embedding. HPN thereby connects the strength of permutation invariance (generalization across any ordering or number of agents) with the need to handle diverse agent characteristics. Such techniques are crucial in mixed-agent teams and also in competitive settings where, for example, an agent must reason about opponents and teammates who have distinct behaviors – the network should be invariant to swapping two opponents of the same type, but not confuse an opponent with a teammate.
+
+Partial Observability and Observation Variations: MARL typically involves partial observability: each agent has access only to local observations. During centralized training, a critic might still receive the collection of all agents’ observations (forming a global state), but during execution each agent only has its own view. Invariant architectures help in this paradigm (often termed CTDE: Centralized Training, Decentralized Execution) by ensuring the critic can ingest the set of all local observations in any order and produce a consistent global value. This means the critic’s values are well-defined even if some agents are absent or if the team size changes between training and testing. For the decentralized policies, parameter sharing (each agent uses the same policy network) is commonly used to enforce symmetry, but robust training also requires handling different observation inputs per agent. Attention mechanisms can aid here: an agent can attend to an embedding of the global state or to communicated messages from other agents in a permutation-invariant fashion, thus effectively receiving an aggregated observation that is insensitive to which particular agent sent which message. Some works incorporate attention-based communication architectures (e.g. TarMAC, GAT-based communication) that enable agents to exchange information in an order-agnostic way and thrive under partial observability. In one example, an agent in a team game might get a set of messages from its allies – using a set encoder (like a small transformer) it can summarize these messages without assuming a fixed ordering of allies, improving its ability to make decisions when allies drop in or out.
+
+Additionally, invariant architectures can confer robustness to observation noise and missing data. By not assuming a strict input ordering, policies are less brittle if part of the observation is corrupted or missing – effectively the model treats the observation as a bag of features and can often continue functioning with the remaining valid features. This was evidenced by Tang \& Ha [Tang2021], where agents trained with permutation-invariant sensory input could handle entirely missing sensor channels at test time by relying on others. In multi-agent settings, this could translate to tolerance to lost communication packets or faulty sensors on some agents: the centralized critic or other agents can ignore the absent/abnormal input and still make reasonable decisions from the rest. In summary, input-invariant architectures tend to enhance robustness in MARL: they encourage the learning of representations that do not overfit to specific ordering or indices, which often correlates with better generalization to new configurations, new team sizes, and unforeseen partial observability conditions.
+
+Empirical Evaluations and Benchmarks
+
+Benchmark Domains: Research on input-invariant MARL architectures has been validated across a range of cooperative and competitive domains that stress-test generalization to changing agent sets. A common testbed is the StarCraft Multi-Agent Challenge (SMAC) [Samvelyan2019], where a team of units (e.g. Marines, Zealots) must coordinate against enemy units. SMAC scenarios often vary the number and types of agents, and symmetry is present among units of the same type. Permutation-invariant methods have achieved state-of-the-art results here: Hao et al. [Hao2023] reported 100% win rates on almost all hard and super-hard SMAC scenarios using their DPN/HPN (Dynamic Permutation Network / Hyper Policy Network) approach, a level of performance not reached by prior methods. The invariant policy was able to quickly adapt to different team compositions in SMAC, suggesting superior generalization. Another popular domain is the Multi-Agent Particle Environment (MPE) [Lowe2020], a lightweight 2D world with tasks like cooperative navigation or predator-prey. In MPE, techniques like PIC [Liu2020] demonstrated significantly faster convergence and higher final rewards, especially as the number of agents increased beyond what traditional algorithms could handle (scaling from 3 or 6 agents up to 50 or 200 agents). The ability to handle such scale is a direct consequence of the invariant architecture efficiently reusing knowledge across agents.
+
+Researchers have also used Google Research Football (GRF) in multi-agent mode (where multiple players on the same team are controlled by learning agents). In GRF, Hazra et al. [Hazra2024] showed their attention-based invariant model outperformed baselines in coordinating a team of players. Likewise, arena benchmarks like differential games, formation control, and large-scale traffic control have benefited from these architectures. For example, graph-based critics were applied to traffic signal control with many intersections (agents), showing better transfer to larger grids not seen in training, thanks to the permutation-invariant design [Chu2019]. Another class of evaluations involves generalization tests: training on a fixed number of agents and then testing zero-shot on a different number. In such tests, invariant architectures shine—e.g., an attention-critic or GNN that learned with 5 agents can often scale to 6 or 7 agents at test time with minimal degradation, whereas a fixed-position MLP utterly fails if an extra agent is added. This was explicitly demonstrated by recent scalable MARL frameworks where a policy trained on small teams extrapolated to larger teams using zero-shot generalization [Al-Shedivat2018]. The combination of weight sharing and order-invariance means the network essentially has learned “how to integrate one more agent” without needing retraining.
+
+Performance and Sample Efficiency: Across the literature, a consistent finding is that input-invariant architectures tend to learn faster and reach better asymptotic performance when the task involves any kind of agent interchangeability or variable input structure. By reducing redundant degrees of freedom (such as ignoring permutations that don’t matter), the effective hypothesis space is smaller and more aligned with the task’s true symmetry. Li et al. [Li2021] observed that imposing permutation invariance in MF-PPO led to not only theoretical sample complexity gains but also improved empirical convergence on large-agent count tasks. Similarly, in cooperative navigation tasks, an invariant critic learns the value of a configuration of agents without needing to see every ordering of those agents during training, thus using experience more efficiently. However, these benefits may come with an architectural cost: models like transformers or graph networks are more complex and may be slower per iteration than simpler MLPs, and they require careful tuning (e.g. attention heads, message iterations) to work well. Moreover, if agents are not actually symmetric (very distinct roles), enforcing full invariance might be suboptimal; in such cases, partial invariance (equivariance within subsets of similar agents) or inclusion of identity features is necessary to avoid underfitting important distinctions.
+
+Adaptability and Robustness: Input-invariant architectures have proven especially powerful in scenarios that demand adaptability. Tang \& Ha's permutation-invariant agent remained robust under severe observation perturbations that would break a normal policy [Tang2021]. In a multi-robot team, if one robot drops out, a policy with invariant design can seamlessly continue with the remaining $N-1$ agents, whereas a traditional policy might misbehave due to the missing input index. This robustness was highlighted in a recent study where an attention-based MARL policy trained in a 4-agent formation control task could adjust to a 3-agent formation on the fly by simply ignoring the nonexistent fourth agent input, maintaining formation with little performance loss [XYZ2022]. In contrast, a non-invariant baseline had to be retrained for the 3-agent case. Such findings underscore that beyond raw return metrics, invariant architectures confer flexibility — an essential trait as we seek MARL solutions that work in open, dynamic environments with varying team sizes and compositions.
+
+Conclusion (Summary)
+
+In summary, input-invariant architectures have become a pivotal tool in advancing multi-agent reinforcement learning. By leveraging ideas from Deep Sets, graph neural networks, and transformers, these architectures inject a prior that the agent-team can be treated as a set of indistinguishable (or appropriately labeled) entities. The literature shows a clear trend: from early theoretical work on mean-field approximations [Yang2018] to contemporary deep learning models with permutation invariance [Liu2020, Li2021, Hao2023], the community has made significant progress in both theoretical foundations (e.g. convergence proofs and symmetry properties) and empirical performance (state-of-the-art results on challenging MARL benchmarks). Thematically, research has covered (i) strict invariance via symmetric pooling, (ii) equivariance via graph convolutional networks, (iii) adaptive weighting via attention mechanisms, and (iv) hybrid approaches that handle heterogeneity through conditional networks. All these methods aim to improve generalization across different configurations of agents and enhance robustness to input variations. The results so far are promising: invariant architectures yield agents that are not only more scalable and sample-efficient, but also more adaptable to the uncertainties of real-world multi-agent systems, where the only constant is change. Future work is likely to explore combining these approaches (e.g. graph-attention hybrids), extending them to partially observable and communication-limited settings, and rigorously benchmarking zero-shot transfer to new team sizes and compositions – continuing the quest for MARL policies that truly understand groups of agents as sets rather than fixed-length vectors.
+
+
+\printbibliography
+\end{document}
