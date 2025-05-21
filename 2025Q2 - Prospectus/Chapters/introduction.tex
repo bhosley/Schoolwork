@@ -78,14 +78,6 @@ performance. These methods span policy upsampling, invariant observation process
 and progressive network expansion. The remainder of this document 
 presents a unified background and research plan supporting these contributions.
 
-%To fully realize the potential benefits of \gls{harl}, it is crucial to 
-%understand the trade-offs involved. This \printdoctype will survey current 
-%approaches for training multiple agents, 
-%identifying the strengths and limitations of each. 
-%In \cref{sec:problem_statement,sec:research_question} we will 
-%highlight several under-explored areas that warrant further investigation. 
-%By addressing these gaps, we aim to advance the field and enhance the 
-%effectiveness of multi-agent systems in real-world applications.
 
 \section{Background}%
 \label{sec:background}
@@ -203,8 +195,6 @@ schema that continuously pitted different agent policies against each other.
 OpenAI Five, on the other hand, used a simpler approach by maintaining a pool
 of previous milestone agents for ongoing comparison and refinement.
 
-
-    % --- Bringing it together.
     \subsection*{Towards Flexible Training Methodologies}
 
 The advancements made by AlphaStar~\cite{vinyals2019} and 
@@ -234,28 +224,11 @@ This leads us to our core research questions, which aim to evaluate
 the potential of \gls{marl} or \gls{harl} to overcome these limitations 
 and achieve scalable, robust, and adaptable autonomous systems.
 
-%\section{Problem statement}%
-%\label{sec:problem_statement}%
-%
-%This \printdoctype aims to examine several key aspects that 
-%contributed to the success of those projects, 
-%with the overarching goal of identifying how these methods can be 
-%applied not only to address the game-theoretic challenges impacting 
-%\gls{marl} but also to improve scalability and flexibility in other contexts. 
-%Understanding how different components of these training frameworks 
-%contribute to the effectiveness of the resulting agents and their relative 
-%costs is crucial for enabling further research and broader applications of 
-%\gls{marl} technologies. 
-%Additionally, we hypothesize that \gls{harl} techniques will offer observable 
-%benefits during the training process, not only in addressing game-theoretic 
-%problems but also in enhancing the resulting agents' flexibility when 
-%deployed in novel configurations.
 
 \section{Research Questions}%
 \label{sec:research_question}%
 \label{sec:relevance_and_importance}
 
-% --- REVISED RESEARCH QUESTIONS AND CONTRIBUTIONS ---
 \begin{description}
     \item[] \textbf{\hyperref[ch:contribution_1]{Contribution 1}:} Policy Upsampling
     \begin{itemize}
@@ -287,24 +260,6 @@ and achieve scalable, robust, and adaptable autonomous systems.
 
 
 \section{Outline}%
-
-\begin{comment} %%%% Dissertation Version %%%%
-The remainder of this document is designed to systematically explore 
-the complex field of multi-agent reinforcement learning, 
-particularly focusing on heterogeneous-agent systems.
-Following this introductory chapter, 
-\ref{ch:literature_review}: Literature Review provides a comprehensive analysis 
-of the seminal and recent literature pertinent to our research focus. 
-\Cref{ch:methodology} details the experimental and analytical techniques 
-employed. \Cref{ch:results} presents the data and findings from our research, 
-followed by \cref{ch:discussion}, where these results are interpreted 
-in the context of existing knowledge and their implications for future 
-research are explored.
-The \emph{dissertation} will conclude with~\cref{ch:conclusion}, 
-which summarizes the research and suggests avenues for further investigation. 
-Each chapter builds upon the previous to provide a comprehensive understanding 
-of the topic, aiming to contribute valuable insights to the field of \gls{harl}.
-\end{comment}
 
 %%%% Prospectus Version %%%%
 The remainder of this document is organized as a dissertation prospectus 

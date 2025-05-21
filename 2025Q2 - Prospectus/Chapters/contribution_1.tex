@@ -284,7 +284,7 @@ toward a shared team objective, reflecting the cooperative nature of the task.
 The objective function is such that policies \(\pi_n(a_n|o_n)\)
 that maximizes the expected cumulative team reward. Thus, within the PPO objective function:
 \[
-    \mathcal{L}(\theta) = \mathbb{E}_{t,n} \left[ 
+    \mathcal{L}(\theta) = \gls{expRet}_{t,n} \left[ 
     \min \left( 
     \frac{\pi_\theta(a_{n,t} \mid o_{n,t})}{\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})} 
         \hat{A}_{n,t},\ 

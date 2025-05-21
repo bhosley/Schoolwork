@@ -1,0 +1,117 @@
+% \documentclass{article}
+% \usepackage{amsmath}
+% \usepackage{tikz}
+%     \usetikzlibrary{automata, positioning, calc, shapes.geometric, shapes.misc, fit}
+
+% \begin{document}
+% \providecommand{\gls}[1]{\ensuremath{#1}}
+% \providecommand{\Gls}[1]{\ensuremath{\uppercase{#1}}}
+
+\colorlet{SteelBlue}{blue!40!black!90}        % \definecolor{SteelBlue}{RGB}{70,130,180}
+\colorlet{FireBrick}{red!60!black}            % \definecolor{FireBrick}{RGB}{178,34,34}
+\colorlet{IndianRed}{red!40!brown}            % \definecolor{IndianRed}{RGB}{205,92,92}
+\colorlet{OliveDrab}{green!80!brown!40!black} % \definecolor{OliveDrab}{RGB}{107,142,35}
+
+\pgfdeclarelayer{agents}
+\pgfdeclarelayer{execution}
+\pgfdeclarelayer{training}
+\pgfsetlayers{training, execution, agents, main}
+
+\begin{tikzpicture}[>=stealth, node distance=3em, on grid, auto,
+    arrow/.style = {very thick,-stealth}, ]
+
+    % Placement references
+    \node (C2) {\textcolor{SteelBlue}{\(\boldsymbol{\cdots}\)}};
+    \node (C1) [above =1.3 of C2] {\textcolor{FireBrick}{\(\boldsymbol{\cdots}\)}};
+    \node (C3) [below =1.5 of C2] {\textcolor{OliveDrab}{\(\boldsymbol{\cdots}\)}};
+
+    %%% Agents %%%
+    % A1
+    \node[state, draw=SteelBlue!70,very thick,fill=SteelBlue!20] (A1) 
+        [left =1.25 of C2] {\textcolor{SteelBlue}{\(\gls{a}_1\)}};
+    % O1
+    \node[state, draw=SteelBlue!70,very thick,fill=SteelBlue!20] (O1) 
+        [left =of A1] {\textcolor{SteelBlue}{\(\gls{o}_1\)}};
+    % Capsule 1
+    \begin{pgfonlayer}{agents}
+        \node[rounded rectangle, fill=IndianRed!40, fit=(A1)(O1), inner xsep=-2pt, 
+            inner ysep=4pt] (Cap1) {};
+    \end{pgfonlayer}
+    % P1
+    \path let \p1=(O1), \p2=(A1) in
+        node[rectangle, draw=IndianRed!90,very thick,fill=IndianRed!40, inner sep=8pt, 
+            minimum width={\x2-\x1+1.5em}] (P1) [above =1.3 of Cap1] 
+            {\textcolor{FireBrick}{\(\gls{pi}_1\)}};
+    % Q1
+    \node[rectangle, draw=OliveDrab!90,very thick,fill=OliveDrab!40, inner sep=6pt] 
+        (Q1) [below =1.5 of Cap1] {\textcolor{OliveDrab}{\(\Gls{q}_1\)}};
+
+    % On
+    \node[state, draw=SteelBlue!70,very thick,fill=SteelBlue!20] (On) 
+        [right =1.25 of C2] {\textcolor{SteelBlue}{\(\gls{o}_n\)}};
+    % An
+    \node[state, draw=SteelBlue!70,very thick,fill=SteelBlue!20] (An) 
+        [right =of On] {\textcolor{SteelBlue}{\(\gls{a}_n\)}};
+    % Capsule n
+    \begin{pgfonlayer}{agents}
+        \node[rounded rectangle, fill=IndianRed!40, fit=(An)(On), inner xsep=-2pt, 
+            inner ysep=4pt] (Capn) {};
+    \end{pgfonlayer}
+    % Pn
+    \path let \p1=(On), \p2=(An) in
+        node[rectangle, draw=IndianRed!90,very thick,fill=IndianRed!40, inner sep=8pt, 
+            minimum width={\x2-\x1+1.5em}] (Pn) [above =1.3 of Capn] 
+            {\textcolor{FireBrick}{\(\gls{pi}_n\)}};
+    % Qn
+    \node[rectangle, draw=OliveDrab!90,very thick,fill=OliveDrab!40, inner sep=6pt] 
+        (Qn) [below =1.5 of Capn] {\textcolor{OliveDrab}{\(\Gls{q}_n\)}};
+    
+
+    %%% Interactions %%%
+    % Q1 to P1
+    \draw [arrow, draw=OliveDrab!60, rounded corners=0.75em] 
+        (Q1.west) -- +(-1.1,0) coordinate(Q1P1) |- (P1.west);
+    % Q1 to P1
+    \draw [arrow, draw=OliveDrab!60, rounded corners=0.75em] 
+        (Qn.east) -- +(1.1,0) coordinate(QnPn) |- (Pn.east);
+    % Capsule 1 to Q1
+    \draw [arrow, draw=OliveDrab!60] (Cap1.south) -- (Q1.north);
+    % Capsule n to Qn
+    \draw [arrow, draw=OliveDrab!60] (Capn.south) -- (Qn.north);
+    % Capsule 1 to Qn
+    \draw [arrow, draw=OliveDrab!60] 
+        ([shift=({0.4,0.1})]Cap1.south east) -- ([shift=({-0.05,0.03})]Qn.north);
+    % Capsule n to Q1
+    \draw [arrow, draw=OliveDrab!60] 
+        ([shift=({-0.4,0.1})]Capn.south west) -- ([shift=({0.05,0.03})]Q1.north);
+    % O1 to P1
+    \draw [arrow, draw=IndianRed!80] (O1.north) -- ($(O1.north |- P1.south)$);
+    % P1 to A1
+    \draw [arrow, draw=IndianRed!80] ($(A1.north |- P1.south)$) -- (A1.north);
+    % On to Pn
+    \draw [arrow, draw=IndianRed!80] (On.north) -- ($(On.north |- Pn.south)$);
+    % Pn to An
+    \draw [arrow, draw=IndianRed!80] ($(An.north |- Pn.south)$) -- (An.north);
+
+    %%% Lower Layers %%%
+    % Execution Layer
+    \begin{pgfonlayer}{execution}
+        \node[rectangle, rounded corners=1em, draw=FireBrick!75, dashed, very thick, 
+            fill=IndianRed!20, fit=(P1)(Cap1)(Capn), inner sep=4pt, 
+            inner ysep=4pt] (exec_box) {};
+        \node[anchor=south] at (exec_box.north) (exec_label) 
+            {\textcolor{FireBrick}{\textbf{Execution}}};
+    \end{pgfonlayer}
+    % Training Layer
+    \begin{pgfonlayer}{training}
+        \node[rectangle, rounded corners=1em, draw=OliveDrab!55, dashed, very thick, 
+            fill=OliveDrab!5, fit=(exec_label)(Q1P1)(QnPn)(Qn), inner xsep=6pt, 
+            inner ysep=4pt] (train_box) {};
+        \node[anchor=south] at (train_box.north) (train_label) 
+            {\textcolor{OliveDrab!75!green}{\textbf{Training}}};
+    \end{pgfonlayer}
+
+\end{tikzpicture}
+
+
+% \end{document}

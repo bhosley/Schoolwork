@@ -15,7 +15,8 @@
 % \addbibresource{other/Prospectus.bib}   % name of the bibliography file
 \addbibresource{../2025Bibs/Prospectus.bib} % name of the bibliography file
 \usepackage{xurl}                       % fix under-full warnings when compiling
-\usepackage[nomain,abbreviations,symbols,section]{glossaries-extra}
+\usepackage[nomain,abbreviations,symbols,section,stylemods=longbooktabs,]{glossaries-extra}
+% \setglossarystyle{long-booktabs}% Possible change to style (Currently has double-spaced newline problem)
 \makeglossaries%
 \input{abbreviations}
 \input{symbols}
@@ -23,7 +24,7 @@
 % --- Figures ---
 \usepackage{pgfgantt}
 \usepackage{tikz}
-\usetikzlibrary{automata, positioning, arrows}
+\usetikzlibrary{automata, positioning, arrows, fit, calc, shapes.geometric, shapes.misc}
 \usepackage{wrapfig}
 \usepackage{subcaption}
 

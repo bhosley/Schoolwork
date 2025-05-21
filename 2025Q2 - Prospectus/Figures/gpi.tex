@@ -4,12 +4,12 @@
     % States
     \node [] (center) {};
     \node [] (policy) [left=of center ] {\Large \(\gls{pi}\)};
-    \node [] (values) [right=of center] {\Large \(\gls{Q}\)};
+    \node [] (values) [right=of center] {\Large \(\Gls{q}\)};
 
     % Transitions
     \draw [arrow] (policy) edge[bend left=70] node(E) {evaluation} (values);
     \draw [arrow] (values) edge[bend left=70] node(I) {improvement} (policy);
-    \node [] () [below=15pt of E] {\scriptsize\(\gls{Q}\rightsquigarrow q_\pi\)};
+    \node [] () [below=15pt of E] {\scriptsize\(\Gls{q}\rightsquigarrow q_\pi\)};
     \node [] () [above=20pt of I] {\scriptsize\(\gls{pi}\rightsquigarrow\) 
-        greedy(\gls{Q})};
+        greedy(\Gls{q})};
 \end{tikzpicture}

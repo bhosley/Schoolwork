@@ -1,36 +1,48 @@
-%   \glsxtrnewsymbol[description={}]{}{\ensuremath{}}
-%   Description, label, math symbol
-\glsxtrnewsymbol[description={set of real numbers.}]
-    {reals}{\ensuremath{\mathbb{R}}}
-\glsxtrnewsymbol[description={discount-rate.}]{discount}{\ensuremath{\gamma}}
+% Specialized command for this section:
+\NewDocumentCommand{\glsNewSymbol}{m m m O{} O{#1}}{%
+    \newglossaryentry{#1}{%
+        text=\ensuremath{#2}, 
+        name=\ensuremath{#3}, 
+        description={#4},
+        sort={#5}, 
+        type=symbols, 
+        % group={#6}
+    }%
+    % This function allows me to use the commands: 
+    % \gls{x} -> \(x\) and \Gls{x} -> \(X\)
+}
 
-% MDPs and Basic RL
-\glsxtrnewsymbol[description={set of states.}]{S}{\ensuremath{S}}
+% Reals
+\glsNewSymbol{reals}{\mathbb{R}}{\mathbb{R}}[Set of all real numbers.]
+% Discount factor
+\glsNewSymbol{discount}{\gamma}{\gamma}[Discount-rate.]
+% States
+\glsNewSymbol{s}{s}{S}[Set of states.]
+% Actions
+\glsNewSymbol{a}{a}{A}[Set of actions.]
+% Reward function
+\glsNewSymbol{r}{r}{R}[Reward function.]
+% Reward value
+\glsNewSymbol{g}{g}{G_t}[Return at time \gls{t}.]
+% Time steps
+\glsNewSymbol{t}{t}{T}[Set of time steps.]
+% Policy
+\glsNewSymbol{pi}{\pi}{\pi}[Policy (decision-making rule).]
+% Transition Probability Matrix
+\glsNewSymbol{P}{\textbf{P}}{\textbf{P}}[Probability transition matrix.]
+% Action Value
+\glsNewSymbol{q}{q}{Q}[Set of state-values or state-value functions.]
+\glsNewSymbol{q_pi}{q_\pi}{q_\pi(a|s)}[Value of action \gls{a} given state \gls{s} by policy \gls{pi}.]
+\glsNewSymbol{q_*}{q_*}{q_*(a|s)}[True value of state action\gls{a} given \gls{s}.]
+% State Value
+\glsNewSymbol{v}{v}{V}[Set of action-values or action-value functions.]
+\glsNewSymbol{v_pi}{v_\pi}{v_\pi(s)}[value of state \gls{s} given by policy \gls{pi}.]
+\glsNewSymbol{v_*}{v_*}{v_*(s)}[True value of state \gls{s}.]
+% Step size parameter
+\glsNewSymbol{step-size}{\alpha}{\alpha}[Step-size parameter.]
 
-\glsxtrnewsymbol[description={set of actions.}]{A}{\ensuremath{A}}
-\glsxtrnewsymbol[description={probability transition matrix.}]
-    {P}{\ensuremath{P}}
-\glsxtrnewsymbol[description={reward function.}]{R}{\ensuremath{R}}
-\glsxtrnewsymbol[description={return at time \(t\).}]{G_t}{\ensuremath{G_t}}
-\glsxtrnewsymbol[description={policy (decision-making rule).}]
-    {pi}{\ensuremath{\pi}}
-\glsxtrnewsymbol[description={value of state \(s\) given under policy \gls{pi}.}]
-    {v_pi(s)}{\ensuremath{v_\pi(s)}}
-\glsxtrnewsymbol[description={value of action\(a\) given state \(s\) under policy \gls{pi}.}]
-    {q_pi(a|s)}{\ensuremath{q_\pi(a|s)}}
-\glsxtrnewsymbol[description={true value of state \(s\).}]
-    {v_*(s)}{\ensuremath{v_*(s)}}
-\glsxtrnewsymbol[description={true value of action\(a\) given state \(s\).}]
-    {q_*(a|s)}{\ensuremath{q_*(a|s)}}
-\glsxtrnewsymbol[description={Set of state-values or state-value functions.}]
-    {Q}{\ensuremath{Q}}
-\glsxtrnewsymbol[description={Set of action-values or action-value functions.}]
-    {V}{\ensuremath{V}}
+% Observation Space
+\glsNewSymbol{o}{o}{o\in\mathcal{O}}[Element \(o\) of Observation space \(\mathcal{O}\).]
 
-
-\glsxtrnewsymbol[description={step-size parameter.}]
-    {step-size}{\ensuremath{\alpha}}
-
-%\glsxtrnewsymbol[description={}]{}{\ensuremath{}}
-%\glsxtrnewsymbol[description={}]{}{\ensuremath{}}
-%\glsxtrnewsymbol[description={}]{}{\ensuremath{}}
+% Expected Value
+\glsNewSymbol{expRet}{\mathbb{E}}{\mathbb{E}_{\pi}[\cdot]}[Expected return from policy \gls{pi}.]
