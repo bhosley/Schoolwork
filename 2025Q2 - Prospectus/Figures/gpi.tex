@@ -9,7 +9,7 @@
     % Transitions
     \draw [arrow] (policy) edge[bend left=70] node(E) {evaluation} (values);
     \draw [arrow] (values) edge[bend left=70] node(I) {improvement} (policy);
-    \node [] () [below=15pt of E] {\scriptsize\(\Gls{q}\rightsquigarrow q_\pi\)};
+    \node [] () [below=15pt of E] {\scriptsize\(\Gls{q}\rightsquigarrow \gls{q}_\pi\)};
     \node [] () [above=20pt of I] {\scriptsize\(\gls{pi}\rightsquigarrow\) 
         greedy(\Gls{q})};
 \end{tikzpicture}

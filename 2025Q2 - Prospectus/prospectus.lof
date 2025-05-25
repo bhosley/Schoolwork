@@ -6,15 +6,15 @@
 \contentsline {figure}{\numberline {6}{\ignorespaces Environments used in this work.}}{22}{figure.caption.9}%
 \contentsline {figure}{\numberline {7}{\ignorespaces Comparison of football environments.}}{25}{figure.caption.10}%
 \contentsline {figure}{\numberline {8}{\ignorespaces Environments used in \cref {ch:contribution_1}.}}{28}{figure.caption.11}%
-\contentsline {figure}{\numberline {9}{\ignorespaces Example of Training Progression for Waterworld and LBF.}}{36}{figure.caption.13}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Example of Training Progression for Waterworld and LBF.}}{37}{figure.caption.13}%
 \contentsline {figure}{\numberline {10}{\ignorespaces Example of Training Progression for Multiwalker.}}{37}{figure.caption.14}%
 \contentsline {figure}{\numberline {11}{\ignorespaces Training Iteration Timing Across Agent Counts.}}{39}{figure.caption.16}%
-\contentsline {figure}{\numberline {12}{\ignorespaces Waterworld (4 agents, 2-agent pretraining).}}{40}{figure.caption.18}%
-\contentsline {figure}{\numberline {13}{\ignorespaces Waterworld (8 agents, 2-agent pretraining).}}{41}{figure.caption.19}%
-\contentsline {figure}{\numberline {14}{\ignorespaces Waterworld Pretraining Impact.}}{42}{figure.caption.20}%
-\contentsline {figure}{\numberline {15}{\ignorespaces Multiwalker (5 agents, 3-agent pretraining).}}{43}{figure.caption.21}%
-\contentsline {figure}{\numberline {16}{\ignorespaces Multiwalker (6 agents, 3-agent pretraining).}}{44}{figure.caption.22}%
-\contentsline {figure}{\numberline {17}{\ignorespaces Multiwalker Pretraining Impact.}}{44}{figure.caption.23}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Waterworld (4 agents, 2-agent pretraining).}}{41}{figure.caption.18}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Waterworld (8 agents, 2-agent pretraining).}}{42}{figure.caption.19}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Waterworld Pretraining Impact.}}{43}{figure.caption.20}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Multiwalker (5 agents, 3-agent pretraining).}}{44}{figure.caption.21}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Multiwalker (6 agents, 3-agent pretraining).}}{45}{figure.caption.22}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Multiwalker Pretraining Impact.}}{45}{figure.caption.23}%
 \contentsline {figure}{\numberline {18}{\ignorespaces Level-Based Foraging (7 agents, 2-agent pretraining).}}{46}{figure.caption.25}%
 \contentsline {figure}{\numberline {19}{\ignorespaces Level-Based Foraging Pretraining Impact.}}{47}{figure.caption.26}%
 \contentsline {figure}{\numberline {20}{\ignorespaces Planned Timeline}}{48}{figure.caption.27}%

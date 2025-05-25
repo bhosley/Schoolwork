@@ -2,7 +2,6 @@
 
 % #TODO: Replace glossary terms
 % #TODO: Reduce repetition
-% #TODO: Update Chapters' labels
 % #TODO: Tikz the retraining figure
 
 Autonomous drone swarms have been widely proposed for applications ranging from 
@@ -100,15 +99,27 @@ encode team size directly into observation formats, making policy reuse across s
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.3\linewidth]{waterworld.png}
-    \hfill
-    \includegraphics[width=0.3\linewidth]{multiwalker.png}
-    \hfill
-    \includegraphics[width=0.3\linewidth]{lbf.png}
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{waterworld.png}
+        \caption{Waterworld.}
+        \label{con1:fig:waterworld}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{multiwalker.png}
+        \caption{Multiwalker.}
+        \label{con1:fig:multiwalker}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{lbf.png}
+        \caption{Level-based foraging.}
+        \label{con1:fig:lbf}
+    \end{subfigure}
     \caption[Environments used in \cref{ch:contribution_1}.]%
         {Illustrative examples of the three environments used in this study: 
         Waterworld (left), Multiwalker (center), and Level-Based Foraging (right).}
-    \label{fig:envs-overview}
+    \label{con1:fig:envs-overview}
 \end{figure}
 
 This work explores whether policies trained in smaller teams can be scaled to larger teams 
@@ -195,7 +206,7 @@ or homogeneous agent groups, limiting their applicability in dynamic heterogeneo
 
 
 \subsection{Observation Design in Multi-Agent Systems}
-\label{sec:related_work-observation_design}
+\label{con1:sec:related_work-observation_design}
 
 Observation spaces define the structure of information available to agents, 
 and by extension, constrain the expected input shape for a policy function.
@@ -271,10 +282,11 @@ This approach contributes toward scalable benchmarking practices and supports
 more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) systems.
 
 
-\section{Methodology}\label{sec:methodology}
+\section{Methodology}
+\label{con1:sec:methodology}
 
 \subsection{Training Framework for Heterogeneous MARL}
-\label{subsec:training_framework}
+\label{con1:subsec:training_framework}
 
 We formulate each task as a cooperative multi-agent partially observable Markov 
 decision process (MA-POMDP). At each timestep, each of the $n\in N$ agents receives 
@@ -426,7 +438,7 @@ systematic evaluation of transferability.
 
 We adopted Proximal Policy Optimization (PPO)\cite{schulman2017} using the RLlib 
 framework to structure and execute our experiments, with Hyperparameters described in
-\cref{tab:ppo-hyperparams}. For Waterworld and LBF, 
+\cref{con1:tab:ppo-hyperparams}. For Waterworld and LBF, 
 we used RLlib's default PPO configuration. For Multiwalker, we modified the default 
 network architecture to better accommodate the higher-dimensional continuous control space and 
 tighter coordination demands.
@@ -455,13 +467,13 @@ Our training protocol consists of three main phases shared across all environmen
     \centering
     \includegraphics[width=0.75\linewidth]{training_1.png}
     \caption{Example of Training Progression for Waterworld and LBF.}
-    \label{fig:training_1}
+    \label{con1:fig:training_1}
 \end{figure}
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.75\linewidth]{training_2.png}
     \caption{Example of Training Progression for Multiwalker.}
-    \label{fig:training_2}
+    \label{con1:fig:training_2}
 \end{figure}
 
 \begin{enumerate}
@@ -469,12 +481,12 @@ Our training protocol consists of three main phases shared across all environmen
     In both Waterworld and Level-Based Foraging, agents were treated as interchangeable. 
     Teams were formed by randomly duplicating the checkpointed policies without regard 
     for agent identity. Final configurations included up to 8 agents, and retraining was 
-    performed with all agents updating their policies independently (\cref{fig:training_1}).
+    performed with all agents updating their policies independently (\cref{con1:fig:training_1}).
     \item \textbf{Multiwalker:}
     Multiwalker agents occupy fixed spatial positions in a physically connected chain, 
     introducing asymmetries in their observations. To maintain role consistency, 
     we fixed the lead agent from the pretrained team and sampled the middle and rear 
-    agents from the checkpoint pool during upsampling (\cref{fig:training_2}). 
+    agents from the checkpoint pool during upsampling (\cref{con1:fig:training_2}). 
     This approach preserved the 
     structural expectations of the environment while allowing the remaining agents to vary. 
 \end{enumerate}
@@ -514,7 +526,7 @@ and environmental sensitivity vary across configurations and pretraining duratio
     Policy network (Multiwalker) & 6 layers, 256 units, ReLU \\% + Softmax \\
     \bottomrule
     \end{tabular}
-    \label{tab:ppo-hyperparams}
+    \label{con1:tab:ppo-hyperparams}
 \end{table}
 
 \FloatBarrier
@@ -539,9 +551,9 @@ it allowed us to verify that resource provisioning remained stable throughout th
 mitigating concerns about variability introduced by background cluster activity or virtualization.
 Second, and more critically, this profiling confirmed that training costs scaled linearly 
 with the number of agents—an anticipated but important validation for our use of the 
-\emph{agent-steps} metric. This relationship is visualized in \cref{fig:agent-steps}, 
+\emph{agent-steps} metric. This relationship is visualized in \cref{con1:fig:agent-steps}, 
 where all three environments show Pearson correlation coefficients exceeding 0.999,
-shown in \cref{tab:pearson-corr}.
+shown in \cref{con1:tab:pearson-corr}.
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{iter_cost.png}
@@ -549,7 +561,7 @@ shown in \cref{tab:pearson-corr}.
         {\textbf{Training Iteration Timing Across Agent Counts.} %
         Mean wall-clock time per training iteration (in milliseconds) plotted against the number 
         of agents, for each environment. Error bars represent the standard deviation.}
-    \label{fig:agent-steps}
+    \label{con1:fig:agent-steps}
 \end{figure}
 %
 \begin{table}[ht]
@@ -564,7 +576,7 @@ shown in \cref{tab:pearson-corr}.
         \bottomrule
     \end{tabular}
     \caption{Pearson Correlation Coefficients Between Agent Count and Iteration Time}
-    \label{tab:pearson-corr}
+    \label{con1:tab:pearson-corr}
 \end{table}
 
 We next examine the learning process in the three experimental environments: 
@@ -587,8 +599,8 @@ In the Waterworld environment, the primary benefit of pretraining was accelerate
 Increasing the ratio between the pretraining and final team sizes led to greater improvements 
 in convergence speed compared to training the full team from scratch. For instance, 
 while retraining from 2-agent policies to 3 or 4 agents offered minimal benefit 
-(\Cref{fig:waterworld-4}), scaling to 8 agents from the same 2-agent base resulted in 
-substantial speedups (\Cref{fig:waterworld-8}). These gains diminished rapidly, 
+(\Cref{con1:fig:waterworld-4}), scaling to 8 agents from the same 2-agent base resulted in 
+substantial speedups (\Cref{con1:fig:waterworld-8}). These gains diminished rapidly, 
 with little additional benefit observed beyond 60 pretraining steps (120 agent-steps).
 This suggests that relatively short pretraining can provide sufficient foundational 
 coordination to improve sample efficiency at scale, though final tuning may 
@@ -601,7 +613,7 @@ be necessary to achieve full performance with shorter pretraining periods.
         {\textbf{Waterworld (4 agents, 2-agent pretraining).} Comparison of 
         4 agent tabula rasa training, and retraining trajectories using average 
         episodic return over normalized agent-steps steps.}
-    \label{fig:waterworld-4}
+    \label{con1:fig:waterworld-4}
 \end{figure}
 
 \begin{figure}[!ht]
@@ -611,10 +623,10 @@ be necessary to achieve full performance with shorter pretraining periods.
         {\textbf{Waterworld (8 agents, 2-agent pretraining).} Comparison of 
         8 agent tabula rasa training, and retraining trajectories using average 
         episodic return over normalized agent-steps steps.}
-    \label{fig:waterworld-8}
+    \label{con1:fig:waterworld-8}
 \end{figure}
 
-In \cref{fig:waterworld-aucs} we summarize overall efficiency trends across configurations. 
+In \cref{con1:fig:waterworld-aucs} we summarize overall efficiency trends across configurations. 
 Each cell represents the percentage improvement in training efficiency 
 achieved through pretraining, relative to full tabula rasa training.
 This percentage was calculated by comparing the area under the reward curve 
@@ -637,15 +649,15 @@ when the ratio between pretraining team size and target team sizes is high.
         {\textbf{Waterworld Pretraining Impact.} Relative increase in cumulative training 
         returns (AUC) compared to tabula rasa baselines. Rows represent final team sizes, 
         and columns indicate the number of pretraining steps.}
-    \label{fig:waterworld-aucs}
+    \label{con1:fig:waterworld-aucs}
 \end{figure}
 
 In Multiwalker, we observed a notable shift in the utility of pretraining. 
 For smaller teams (4 or 5 agents), retrained and tabula rasa runs performed similarly, 
-with retraining providing only modest acceleration (\Cref{fig:multiwalker-5}). 
+with retraining providing only modest acceleration (\Cref{con1:fig:multiwalker-5}). 
 In contrast, for larger teams (6 and 7 agents), tabula rasa training frequently failed to 
 converge or terminated early, likely due to the environment's sparse rewards and heightened 
-sensitivity to miscoordination (\Cref{fig:multiwalker-6}). 
+sensitivity to miscoordination (\Cref{con1:fig:multiwalker-6}). 
 In these scenarios, pretraining acted as a stabilizing mechanism by equipping agents 
 with sufficient baseline competence to engage meaningfully in early training episodes. 
 Without this foundation, larger teams (more vulnerable to premature episode termination 
@@ -660,7 +672,7 @@ in configurations where tabula rasa attempts often stalled.
         {\textbf{Multiwalker (5 agents, 3-agent pretraining).} Comparison of 
         5 agent tabula rasa training, and retraining trajectories using average 
         episodic return over normalized agent-steps steps.}
-    \label{fig:multiwalker-5}
+    \label{con1:fig:multiwalker-5}
 \end{figure}
 
 \vspace{2em}
@@ -672,7 +684,7 @@ in configurations where tabula rasa attempts often stalled.
         {\textbf{Multiwalker (6 agents, 3-agent pretraining).} Comparison of 
         6 agent tabula rasa training, and retraining trajectories using average 
         episodic return over normalized agent-steps steps.}
-    \label{fig:multiwalker-6}
+    \label{con1:fig:multiwalker-6}
 \end{figure}
 
 To further examine these trends, we generated an AUC-based heatmap for Multiwalker as shown 
@@ -691,12 +703,12 @@ is necessarily higher, despite final performance often eventually meeting the ba
         {\textbf{Multiwalker Pretraining Impact.} Relative increase in cumulative 
         training returns (AUC) compared to tabula rasa baselines. Rows represent 
         final team sizes, and columns indicate the number of pretraining steps.}
-    \label{fig:multiwalker-aucs}
+    \label{con1:fig:multiwalker-aucs}
 \end{figure}
 
 We next consider the Level-Based Foraging (LBF) environment.
 Given the environment's structured observations, we anticipated that the
-choice of observation schema, described in \cref{subsec:training_framework},
+choice of observation schema, described in \cref{con1:subsec:training_framework},
 could significantly influence training outcomes.
 To evaluate this, we trained baseline policies from tabula rasa under each schema:
 \begin{enumerate}
@@ -714,7 +726,7 @@ and compared the resulting performance distributions.
         {Pairwise $t$-test comparisons between observation schemas across agent team sizes. 
         $p$-values are Bonferroni-corrected. Bolded $p$-values indicate statistically 
         significant findings at the $\alpha = .05$ significance level.}
-    \label{tab:observation_comparisons}
+    \label{con1:tab:observation_comparisons}
     \begin{tabular}{cccccc}
     \toprule
     \textbf{Agents} & \multicolumn{1}{c}{\textbf{Obs. Space 1}} & 
@@ -739,7 +751,7 @@ and compared the resulting performance distributions.
     \end{tabular}
 \end{table}
 
-\Cref{tab:observation_comparisons} summarizes these comparisons. Across all agent counts, 
+\Cref{con1:tab:observation_comparisons} summarizes these comparisons. Across all agent counts, 
 the full observability schema produced significantly different training outcomes 
 than the two reduced forms. Statistical tests (two-sample t-tests with Bonferroni correction) 
 confirmed that the full schema distributions were distinct from both the 
@@ -756,7 +768,7 @@ significantly more useful than none at all under these conditions.
 The learning curves for LBF do not exhibit a strong or consistent pattern across configurations. 
 While retrained trajectories generally outperform the arithmetic mean of the tabula rasa runs, 
 the significance of this improvement remains unclear. 
-\Cref{fig:lbf-7} provides an illustrative example, 
+\Cref{con1:fig:lbf-7} provides an illustrative example, 
 highlighting how retraining compares 
 to training from scratch at a 7-agent configuration.
 
@@ -767,7 +779,7 @@ to training from scratch at a 7-agent configuration.
         {\textbf{Level-Based Foraging (7 agents, 2-agent pretraining).} Comparison of 
         7 agent tabula rasa training, and retraining trajectories using average 
         episodic return over normalized agent-steps steps.}
-    \label{fig:lbf-7}
+    \label{con1:fig:lbf-7}
 \end{figure}
 
 We extend our analysis of LBF using an AUC-based heatmap to summarize the 
@@ -788,7 +800,7 @@ interactions encountered by larger groups.
         {\textbf{Level-Based Foraging Pretraining Impact.} Relative increase in cumulative 
         training returns (AUC) compared to tabula rasa baselines. Rows represent final 
         team sizes, and columns indicate the number of pretraining steps.}
-    \label{fig:lbf-aucs}
+    \label{con1:fig:lbf-aucs}
 \end{figure}
 
 \FloatBarrier

@@ -2583,7 +2583,6 @@
     <bcf:citekey order="172" intorder="1">schulman2017</bcf:citekey>
     <bcf:citekey order="173" intorder="1">zotero-2605</bcf:citekey>
     <bcf:citekey order="174" intorder="1">chen2016</bcf:citekey>
-    <bcf:citekey order="175" intorder="1" nocite="1">*</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

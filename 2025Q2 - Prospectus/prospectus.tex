@@ -11,10 +11,9 @@
 
 % --- References ---
 \usepackage{cleveref}
-\usepackage[style=ieee]{biblatex}       % bibliographies
-% \addbibresource{other/Prospectus.bib}   % name of the bibliography file
+\usepackage[style=ieee]{biblatex}           % bibliographies
 \addbibresource{../2025Bibs/Prospectus.bib} % name of the bibliography file
-\usepackage{xurl}                       % fix under-full warnings when compiling
+\usepackage{xurl}                           % fix under-full warnings when compiling
 \usepackage[nomain,abbreviations,symbols,section,stylemods=longbooktabs,]{glossaries-extra}
 % \setglossarystyle{long-booktabs}% Possible change to style (Currently has double-spaced newline problem)
 \makeglossaries%
@@ -39,7 +38,7 @@
 \usepackage{titlesec}
 %\titleformat{\subsection}[runin]
 %  {\normalfont\bfseries\itshape}{\thesubsection}{1em}{}
-\usepackage{placeins} %this package contains the FloatBarrier tag
+\usepackage{placeins}   %this package contains the FloatBarrier tag
 \usepackage{silence}
 \WarningFilter*{latex}{Text page \thepage\space contains only floats}
 
@@ -51,9 +50,9 @@
 % commented out because they are probably not needed for your situation.
 
 % Main document information
-\title{ WORKING TITLE:\\
-    Efficiency, Efficacy, and Extensibility in\\
-    Heterogeneous Agent Reinforcement Learning }
+\title{% WORKING TITLE:\\
+    Increasing Efficiency, Efficacy, and Extensibility\\
+    in Heterogeneous Agent Reinforcement Learning }
 \author{Brandon Hosley}
 % \authorsecond{}
 % \authorthird{}
@@ -135,8 +134,6 @@
 \begin{document}
 \maketitle % This command will create all the prefatory pages.
 
-% Perhaps this should be added to the \chapter command (cls line 1205)
-
 % --------------------
 \chapter{Introduction}%
 \input{introduction.tex}
@@ -147,7 +144,6 @@
 \input{literature_review.tex}
 
 % -------------------------
-% \chapter{Contribution 1}%
 \chapter{Contribution 1: Direct Scaling from Pretrained Teams}
 \label{ch:contribution_1}
 \input{contribution_1.tex}
@@ -179,18 +175,18 @@
 %\input{conclusion.tex}
 
 % --------------------------------- Optional -----------------------------------
-\appendix   % This command is necessary before any appendix chapters.
+\appendix               % This command is necessary before any appendix chapters.
 \chapter{Glossary}
 %\printunsrtglossary[type=symbols,title=Summary of Notation]
-\printglossaries%
+\printglossaries
 %\printabbreviations[title=]
 %\printunsrtglossary[type=symbols,style=long]
 
 % ------------------------------- Bibliography ---------------------------------
-\nocite{*} % Uncomment to print all .bib entries, regardless of citation.
-\clearpage\phantomsection% Creates new page and section for bibliography.
-\addcontentsline{toc}{appendix}{\bibname} % Adds bib to table of contents.
-\printbibliography% Prints the bibliography.
+% \nocite{*} % Uncomment to print all .bib entries, regardless of citation.
+\clearpage\phantomsection       % Creates new page and section for bibliography.
+\addcontentsline{toc}{appendix}{\bibname}   % Adds bib to table of contents.
+\printbibliography                          % Prints the bibliography.
 
 % --------------------------------- Optional -----------------------------------
 %\begin{vita} % Add name within brackets for multiple vitas.
