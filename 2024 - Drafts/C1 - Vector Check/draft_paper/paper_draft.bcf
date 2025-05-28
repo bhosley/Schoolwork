@@ -2427,4 +2427,52 @@
     <bcf:citekey order="38" intorder="1">smit2023</bcf:citekey>
     <bcf:citekey order="39" intorder="1">hoang2023</bcf:citekey>
     <bcf:citekey order="40" intorder="1">calvo2018</bcf:citekey>
-    <bcf:citekey order="
+    <bcf:citekey order="41" intorder="1">rizk2019</bcf:citekey>
+    <bcf:citekey order="42" intorder="1">gupta2017a</bcf:citekey>
+    <bcf:citekey order="43" intorder="1">huttenrauch2019</bcf:citekey>
+    <bcf:citekey order="44" intorder="1">iqbal2021</bcf:citekey>
+    <bcf:citekey order="45" intorder="1">samvelyan2019</bcf:citekey>
+    <bcf:citekey order="46" intorder="1">kurach2020</bcf:citekey>
+    <bcf:citekey order="47" intorder="1">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="48" intorder="1">iqbal2021</bcf:citekey>
+    <bcf:citekey order="49" intorder="1">huttenrauch2019</bcf:citekey>
+    <bcf:citekey order="50" intorder="1">yang2021a</bcf:citekey>
+    <bcf:citekey order="51" intorder="1">kouzeghar2023</bcf:citekey>
+    <bcf:citekey order="52" intorder="1">gupta2017a</bcf:citekey>
+    <bcf:citekey order="53" intorder="1">foerster2017</bcf:citekey>
+    <bcf:citekey order="54" intorder="1">bitzer2010</bcf:citekey>
+    <bcf:citekey order="54" intorder="2">tangkaratt2016</bcf:citekey>
+    <bcf:citekey order="55" intorder="1">wakilpoor2020</bcf:citekey>
+    <bcf:citekey order="56" intorder="1">koster2020</bcf:citekey>
+    <bcf:citekey order="57" intorder="1">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="58" intorder="1">leibo2021</bcf:citekey>
+    <bcf:citekey order="59" intorder="1">zheng2017</bcf:citekey>
+    <bcf:citekey order="60" intorder="1">ellis2023</bcf:citekey>
+    <bcf:citekey order="61" intorder="1">kurach2020</bcf:citekey>
+    <bcf:citekey order="62" intorder="1">guo2024</bcf:citekey>
+    <bcf:citekey order="63" intorder="1">gupta2017</bcf:citekey>
+    <bcf:citekey order="64" intorder="1">gupta2017</bcf:citekey>
+    <bcf:citekey order="65" intorder="1">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="66" intorder="1">schulman2017</bcf:citekey>
+  </bcf:section>
+  <!-- SORTING TEMPLATES -->
+  <bcf:sortingtemplate name="none">
+    <bcf:sort order="1">
+      <bcf:sortitem order="1">citeorder</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="2">
+      <bcf:sortitem order="1">intciteorder</bcf:sortitem>
+    </bcf:sort>
+  </bcf:sortingtemplate>
+  <!-- DATALISTS -->
+  <bcf:datalist section="0"
+                name="none/global//global/global/global"
+                type="entry"
+                sortingtemplatename="none"
+                sortingnamekeytemplatename="global"
+                labelprefix=""
+                uniquenametemplatename="global"
+                labelalphanametemplatename="global"
+                namehashtemplatename="global">
+  </bcf:datalist>
+</bcf:controlfile>

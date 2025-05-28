@@ -11,6 +11,7 @@
 
 \usepackage{graphicx}
 \graphicspath{{../images/}{../data/}}
+\usepackage{subcaption}
 
 \usepackage{tikz}
 \usetikzlibrary{positioning,arrows}
@@ -27,6 +28,8 @@
 \title{Investigating Training Efficiency of Direct Scaling in Multi-Agent Reinforcement Learning}
 \author{Brandon Hosley}
 \date{\today}
+
+% #TODO: Dissertation version of labels includes \label{con1:...}
 
 \begin{document}
 
@@ -151,16 +154,29 @@ SMAC \cite{samvelyan2019} and Google Research Football (GRF) \cite{kurach2020},
 encode team size directly into observation formats, making policy reuse across scales nontrivial.
 
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
-    \includegraphics[width=0.3\linewidth]{waterworld.png}
-    \hfill
-    \includegraphics[width=0.3\linewidth]{multiwalker.png}
-    \hfill
-    \includegraphics[width=0.3\linewidth]{lbf.png}
-    \caption{Illustrative examples of the three environments used in this study: 
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{waterworld.png}
+        \caption{Waterworld.}
+        \label{con1:fig:waterworld}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{multiwalker.png}
+        \caption{Multiwalker.}
+        \label{con1:fig:multiwalker}
+    \end{subfigure}
+    \hfil
+    \begin{subfigure}{0.3\textwidth}
+        \includegraphics[width=\textwidth]{lbf.png}
+        \caption{Level-based foraging.}
+        \label{con1:fig:lbf}
+    \end{subfigure}
+    \caption[Environments used in \cref{ch:contribution_1}.]%
+        {Illustrative examples of the three environments used in this study: 
         Waterworld (left), Multiwalker (center), and Level-Based Foraging (right).}
-    \label{fig:envs-overview}
+    \label{con1:fig:envs-overview}
 \end{figure}
 
 This work explores whether policies trained in smaller teams can be scaled to larger teams 
