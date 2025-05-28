@@ -381,20 +381,21 @@
   file = {/Users/brandonhosley/Zotero/storage/HLB5SX6X/Espeholt et al_2018_IMPALA.pdf;/Users/brandonhosley/Zotero/storage/L8QQH9KD/1802.html}
 }
 
-@online{foerster2017,
+@article{foerster2018,
   title = {Counterfactual {{Multi-Agent Policy Gradients}}},
   author = {Foerster, Jakob and Farquhar, Gregory and Afouras, Triantafyllos and Nardelli, Nantas and Whiteson, Shimon},
-  date = {2017-12-14},
-  eprint = {1705.08926},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1705.08926},
-  url = {http://arxiv.org/abs/1705.08926},
-  urldate = {2024-04-04},
-  abstract = {Cooperative multi-agent systems can be naturally used to model many real world problems, such as network packet routing and the coordination of autonomous vehicles. There is a great need for new reinforcement learning methods that can efficiently learn decentralised policies for such systems. To this end, we propose a new multi-agent actor-critic method called counterfactual multi-agent (COMA) policy gradients. COMA uses a centralised critic to estimate the Q-function and decentralised actors to optimise the agents' policies. In addition, to address the challenges of multi-agent credit assignment, it uses a counterfactual baseline that marginalises out a single agent's action, while keeping the other agents' actions fixed. COMA also uses a critic representation that allows the counterfactual baseline to be computed efficiently in a single forward pass. We evaluate COMA in the testbed of StarCraft unit micromanagement, using a decentralised variant with significant partial observability. COMA significantly improves average performance over other multi-agent actor-critic methods in this setting, and the best performing agents are competitive with state-of-the-art centralised controllers that get access to the full state.},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Artificial Intelligence,Computer Science - Multiagent Systems},
-  file = {/Users/brandonhosley/Zotero/storage/2XKJVLZB/Foerster et al_2017_Counterfactual Multi-Agent Policy Gradients.pdf;/Users/brandonhosley/Zotero/storage/CUA5ZIGJ/1705.html}
+  date = {2018-04-29},
+  journaltitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
+  shortjournal = {AAAI},
+  volume = {32},
+  number = {1},
+  issn = {2374-3468, 2159-5399},
+  doi = {10.1609/aaai.v32i1.11794},
+  url = {https://arxiv.org/abs/1705.08926},
+  urldate = {2024-05-30},
+  abstract = {Many real-world problems, such as network packet routing and the coordination of autonomous vehicles, are naturally modelled as cooperative multi-agent systems. There is a great need for new reinforcement learning methods that can efficiently learn decentralised policies for such systems. To this end, we propose a new multi-agent actor-critic method called counterfactual multi-agent (COMA) policy gradients. COMA uses a centralised critic to estimate the Q-function and decentralised actors to optimise the agents’ policies. In addition, to address the challenges of multi-agent credit assignment, it uses a counterfactual baseline that marginalises out a single agent’s action, while keeping the other agents’ actions fixed. COMA also uses a critic representation that allows the counterfactual baseline to be computed efficiently in a single forward pass. We evaluate COMA in the testbed of StarCraft unit micromanagement, using a decentralised variant with significant partial observability. COMA significantly improves average performance over other multi-agent actorcritic methods in this setting, and the best performing agents are competitive with state-of-the-art centralised controllers that get access to the full state.},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/8B7JFA9Y/Foerster et al. - 2018 - Counterfactual Multi-Agent Policy Gradients.pdf}
 }
 
 @inproceedings{fotouhi2019,
@@ -572,6 +573,24 @@
   eventtitle = {The {{Eleventh International Conference}} on {{Learning Representations}}},
   langid = {english},
   file = {/Users/brandonhosley/Zotero/storage/Z8RJJHRJ/Hao et al_2022_Boosting Multiagent Reinforcement Learning via Permutation Invariant and.pdf}
+}
+
+@inproceedings{hao2023,
+  title = {{{GAT-MF}}: {{Graph Attention Mean Field}} for {{Very Large Scale Multi-Agent Reinforcement Learning}}},
+  shorttitle = {{{GAT-MF}}},
+  booktitle = {Proceedings of the 29th {{ACM SIGKDD Conference}} on {{Knowledge Discovery}} and {{Data Mining}}},
+  author = {Hao, Qianyue and Huang, Wenzhen and Feng, Tao and Yuan, Jian and Li, Yong},
+  date = {2023-08-04},
+  series = {{{KDD}} '23},
+  pages = {685--697},
+  publisher = {Association for Computing Machinery},
+  location = {New York, NY, USA},
+  doi = {10.1145/3580305.3599359},
+  url = {https://dl.acm.org/doi/10.1145/3580305.3599359},
+  urldate = {2025-05-27},
+  abstract = {Recent advancements in reinforcement learning have witnessed remarkable achievements by intelligent agents ranging from game-playing to industrial applications. Of particular interest is the area of multi-agent reinforcement learning (MARL), which holds significant potential for real-world scenarios. However, typical MARL methods are limited in their ability to handle tens of agents, leaving scenarios with up to hundreds or even thousands of agents almost unexplored. The scaling up of the number of agents presents two primary challenges: (1) agent-agent interactions are crucial in multi-agent systems while the number of interactions grows quadratically with the number of agents, resulting in substantial computational complexity and difficulty in strategies-learning; (2) the strengths of interactions among agents exhibit variations both across agents and over time, making it difficult to precisely model such interactions. In this paper, we propose a novel approach named Graph Attention Mean Field (GAT-MF). By converting agent-agent interactions into interactions between each agent and a weighted mean field, we achieve a substantial reduction in computational complexity. The proposed method offers a precise modeling of interaction dynamics with mathematical proofs of its correctness. Additionally, we design a graph attention mechanism to automatically capture the diverse and time-varying strengths of interactions, ensuring an accurate representation of agent interactions. Through extensive experimentation conducted in both manual and real-world scenarios involving over 3000 agents, we validate the efficacy of our method. The results demonstrate that our method outperforms the best baseline method with a remarkable improvement of 42.7\%. Furthermore, our method saves 86.4\% training time and 19.2\% GPU memory compared to the best baseline method. For reproducibility, our source codes and data are available at https://github.com/tsinghua-fib-lab/Large-Scale-MARL-GATMF.},
+  isbn = {9798400701030},
+  file = {/Users/brandonhosley/Zotero/storage/IFNZEP3S/Hao et al_2023_GAT-MF.pdf}
 }
 
 @inproceedings{hazra2024,
@@ -1025,23 +1044,6 @@
   langid = {english}
 }
 
-@online{liu2019b,
-  title = {{{PIC}}: {{Permutation Invariant Critic}} for {{Multi-Agent Deep Reinforcement Learning}}},
-  shorttitle = {{{PIC}}},
-  author = {Liu, Iou-Jen and Yeh, Raymond A. and Schwing, Alexander G.},
-  date = {2019-10-31},
-  eprint = {1911.00025},
-  eprinttype = {arXiv},
-  eprintclass = {cs},
-  doi = {10.48550/arXiv.1911.00025},
-  url = {http://arxiv.org/abs/1911.00025},
-  urldate = {2025-05-14},
-  abstract = {Sample efficiency and scalability to a large number of agents are two important goals for multi-agent reinforcement learning systems. Recent works got us closer to those goals, addressing non-stationarity of the environment from a single agent's perspective by utilizing a deep net critic which depends on all observations and actions. The critic input concatenates agent observations and actions in a user-specified order. However, since deep nets aren't permutation invariant, a permuted input changes the critic output despite the environment remaining identical. To avoid this inefficiency, we propose a 'permutation invariant critic' (PIC), which yields identical output irrespective of the agent permutation. This consistent representation enables our model to scale to 30 times more agents and to achieve improvements of test episode reward between 15\% to 50\% on the challenging multi-agent particle environment (MPE).},
-  pubstate = {prepublished},
-  keywords = {Computer Science - Computer Vision and Pattern Recognition,Computer Science - Machine Learning,Statistics - Machine Learning},
-  file = {/Users/brandonhosley/Zotero/storage/MJ4D8FTC/Liu et al_2019_PIC.pdf;/Users/brandonhosley/Zotero/storage/X6M69VAA/1911.html}
-}
-
 @inproceedings{liu2020b,
   title = {{{PIC}}: {{Permutation Invariant Critic}} for {{Multi-Agent Deep Reinforcement Learning}}},
   shorttitle = {{{PIC}}},
@@ -1196,6 +1198,21 @@
   abstract = {Reinforcement learning (RL) algorithms have been around for decades and employed to solve various sequential decision-making problems. These algorithms however have faced great challenges when dealing with high-dimensional environments. The recent development of deep learning has enabled RL methods to drive optimal policies for sophisticated and capable agents, which can perform efficiently in these challenging environments. This paper addresses an important aspect of deep RL related to situations that require multiple agents to communicate and cooperate to solve complex tasks. A survey of different approaches to problems related to multi-agent deep RL (MADRL) is presented, including non-stationarity, partial observability, continuous state and action spaces, multi-agent training schemes, multi-agent transfer learning. The merits and demerits of the reviewed methods will be analyzed and discussed, with their corresponding applications explored. It is envisaged that this review provides insights about various MADRL methods and can lead to future development of more robust and highly useful multi-agent learning methods for solving real-world problems.},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
   file = {/Users/brandonhosley/Zotero/storage/HS5GV8Y9/Nguyen et al_2020_Deep Reinforcement Learning for Multi-Agent Systems.pdf;/Users/brandonhosley/Zotero/storage/76BTD9SE/1812.html}
+}
+
+@inproceedings{noppakun2022,
+  title = {Permutation {{Invariant Agent-Specific Centralized Critic}} in {{Multi-Agent Reinforcement Learning}}},
+  booktitle = {2022 6th {{International Conference}} on {{Information Technology}} ({{InCIT}})},
+  author = {Noppakun, Patsornchai and Akkarajitsakul, Khajonpong},
+  date = {2022-11},
+  pages = {15--18},
+  doi = {10.1109/InCIT56086.2022.10067429},
+  url = {https://ieeexplore.ieee.org/document/10067429},
+  urldate = {2025-05-21},
+  abstract = {We proposed a permutation invariant agent-specific centralized critic using graph convolutional networks in multiagent reinforcement learning. We consider an environment with partial observability where a joint observation of homogeneous agents is used as a state information in centralized training. A joint observation of homogeneous agents is permutation invariant, meaning that different permutations must be treated as the same. However, a traditional deep network like multilayer perceptron (MLP) outputs different values to different permutations, despite being the same data. A centralized critic using MLPs to represent joint observation of homogeneous agents suffers from data inefficiency because it only learns a single permutation instead of all permutations. Previous work has addressed this problem using graph convolutional networks (GCN) for “agent-agnostic’' centralized critics. Our work extends the use of GCNs to an “agent-specific’' centralized critic such as the critic used in Counterfactual Multi-Agent Policy Gradients (COMA) algorithm. We introduce three GCN variants of agentspecific critic architectures. Our experimental results on the multi-agent particle environment with COMA algorithm show that all GCN critics outperform the MLP baseline critics. Finally, we concluded that as the number of agents increases, the critic that takes advantage of agent homogeneity by separating global and local feature representation is the most scalable in terms of time complexity.},
+  eventtitle = {2022 6th {{International Conference}} on {{Information Technology}} ({{InCIT}})},
+  keywords = {Convolutional neural networks,graph convolutional network,homogeneous agents,Information representation,Measurement,multi-agent system,Multilayer perceptrons,permutation invariance,reinforcement learning,Reinforcement learning,Time complexity,Training},
+  file = {/Users/brandonhosley/Zotero/storage/XRZ8G6IG/Noppakun_Akkarajitsakul_2022_Permutation Invariant Agent-Specific Centralized Critic in Multi-Agent.pdf;/Users/brandonhosley/Zotero/storage/R8QHNLCW/10067429.html}
 }
 
 @inproceedings{pan2021,
@@ -1626,6 +1643,20 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning},
   file = {/Users/brandonhosley/Zotero/storage/BUBMKBB8/Terry et al. - 2021 - PettingZoo Gym for Multi-Agent Reinforcement Lear.pdf;/Users/brandonhosley/Zotero/storage/YVZNGRAH/2009.html}
+}
+
+@inproceedings{vaswani2017,
+  title = {Attention Is All You Need},
+  booktitle = {Proceedings of the 31st {{International Conference}} on {{Neural Information Processing Systems}}},
+  author = {Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and Uszkoreit, Jakob and Jones, Llion and Gomez, Aidan N. and Kaiser, Łukasz and Polosukhin, Illia},
+  date = {2017-12-04},
+  series = {{{NIPS}}'17},
+  pages = {6000--6010},
+  publisher = {Curran Associates Inc.},
+  location = {Red Hook, NY, USA},
+  abstract = {The dominant sequence transduction models are based on complex recurrent or convolutional neural networks that include an encoder and a decoder. The best performing models also connect the encoder and decoder through an attention mechanism. We propose a new simple network architecture, the Transformer, based solely on attention mechanisms, dispensing with recurrence and convolutions entirely. Experiments on two machine translation tasks show these models to be superior in quality while being more parallelizable and requiring significantly less time to train. Our model achieves 28.4 BLEU on the WMT 2014 English-to-German translation task, improving over the existing best results, including ensembles, by over 2 BLEU. On the WMT 2014 English-to-French translation task, our model establishes a new single-model state-of-the-art BLEU score of 41.0 after training for 3.5 days on eight GPUs, a small fraction of the training costs of the best models from the literature.},
+  isbn = {978-1-5108-6096-4},
+  file = {/Users/brandonhosley/Zotero/storage/AG8NWD65/Vaswani et al_2017_Attention is all you need.pdf}
 }
 
 @inproceedings{vermorel2005,
