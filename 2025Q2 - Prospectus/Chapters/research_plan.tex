@@ -61,94 +61,14 @@ is finished and has been submitted to some publication.
 
 
 \section{Contribution 1}
-\label{sec:contribution1}
 
 \emph{Proposed research for this section is covered in \cref{ch:contribution_1}}
 
-% \subsection{Motivation}
-% The first contribution investigates whether policies trained in smaller multi-agent teams can be directly scaled to larger teams through policy upsampling and retraining. This approach hypothesizes that reusing pretrained policies provides a computational shortcut to full-team convergence. Rather than requiring agents to be trained from scratch in their final configuration, this method leverages early training with fewer agents to bootstrap learning. This work seeks to establish when and how this method improves training efficiency without degrading performance.
-
-% \subsection{Methodology}
-% Agents are first trained in small teams using tabula rasa reinforcement learning. The resulting policies are then scaled to a larger team by randomly duplicating pretrained policies, followed by continued training in the new configuration. To compare effectiveness, these scaled policies are evaluated against baselines trained entirely from scratch in the final team configuration. Performance is measured across multiple environments with different coordination and heterogeneity demands, including:
-% \begin{itemize}
-%     \item Waterworld (behavioral heterogeneity, symmetric roles),
-%     \item Multiwalker (static intrinsic heterogeneity), and
-%     \item Level-Based Foraging (dynamic intrinsic heterogeneity).
-% \end{itemize}
-% Metrics include mean episode reward over time and total agent-steps required to converge. Agent-steps are computed as the product of the number of agents and the number of training steps.
-
-% \subsection{Resources}
-% This experiment is implemented using RLlib~\cite{liang2018} from the Ray ecosystem, providing scalable support for multi-agent training. Environments are sourced from the PettingZoo library~\cite{terry2020}. Results are logged and visualized using Weights and Biases~\cite{wandb2020}.
-
-% \subsection{Anticipated Obstacles}
-% One challenge lies in reconfiguring value function estimation when changing the number of agents during training. In many MARL architectures, the critic is tightly coupled to the agent set size. Efforts to make the critic agent-count invariant may introduce noise into the credit assignment process. Additional tuning may be required to ensure that value-based updates remain stable across configurations.
-
-% \subsection{Expected Contributions}
-% \begin{description}
-%     \item[Training Efficiency:] Quantify the training savings made possible through upsampling compared to full tabula rasa training.
-%     \item[Scalability Characterization:] Identify the environments and team configurations where direct scaling is beneficial.
-%     \item[Heterogeneity Sensitivity:] Assess the impact of behavioral and intrinsic heterogeneity on the effectiveness of upsampling strategies.
-%     \item[Transfer Insights:] Demonstrate that pretrained policies can generalize effectively when scaled under the right conditions.
-% \end{description}
-
-
-
 \section{Contribution 2}
 
-\subsection{Motivation}
+\emph{Proposed research for this section is covered in \cref{ch:contribution_2}}
 
-The second contribution investigates how input-invariant policy architectures 
-can improve the efficiency and robustness of learning in \gls{harl}.
-This builds on prior observations that many real-world teams,
-such as those involving drones, ground vehicles, or modular swarms,
-possess overlapping but non-identical sensors and capabilities. In such settings, 
-policies must generalize across variations in input structure and scale. 
-Observation space changes due to sensor dropout or team composition changes,
-present a non-trivial challenge when training using current popular paradigms. 
-This contribution explores whether networks designed to be invariant to 
-input order and vector length can mitigate this brittleness.
-
-\subsection{Methodology}
-
-This work will evaluate policy architectures that enforce permutation-invariance
-and length-invariance over input vectors. Specifically, the following architectural 
-families will be implemented and tested:
-\begin{itemize}
-    \item Policies using pooling operations (e.g., max, mean, or attention-based).
-    \item Architectures that embed inputs as sets rather than fixed-position vectors.
-    \item Length-invariant encodings based on dynamic padding, masking, or spatial dropout.
-\end{itemize}
-Each architecture will be evaluated on its ability to:
-\begin{enumerate}
-    \item Learn efficiently in teams with overlapping but non-identical observations.
-    \item Share updates across agents with partially aligned sensors.
-    \item Maintain stability when observation dimensions change during training or execution.
-\end{enumerate}
-% #TODO: Need New environments
-I am still searching for an appropriate environment that bears the necessary features;
-%
-an observation space capable of simulate sensor 
-occlusion, dropout, and team-scale variance.
-\Gls{lbf} is sufficient for team-scale variance alone without further modification.
-
-\subsection{Resources}
-
-The same Petting Zoo-compatible scripts used in \cref{sec:contribution1} will be leveraged, 
-with additional wrappers to dynamically alter the observation space. 
-The evaluation will be run on the Ray RLlib framework using PPO as 
-the baseline algorithm, with variant architectures implemented using 
-PyTorch and integrated into RLlib's model catalog.
-
-\subsection{Anticipated Obstacles}
-
-Numerous trials will be required to evaluate generalization across configurations, 
-making runtime a critical factor for meeting timeline goals.
-While input invariance is not a novel concept in deep learning, 
-we have not found prior applications of these methods in this context, 
-specifically for enabling shared policy updates in \gls{marl} and/or \gls{harl}.
-As such, we anticipate some implementation overhead to adapt these techniques 
-and ensure architectural stability under dynamic input conditions.
-
+% #TODO: Keep the following as a "Guiding Intent?"
 \subsection{Expected Contributions}
 \begin{description}
     \item[Architecture Design:] Develop and evaluate policy architectures that 
@@ -163,6 +83,8 @@ and ensure architectural stability under dynamic input conditions.
 
 
 \section{Contribution 3}
+
+% \emph{Proposed research for this section is covered in \cref{ch:contribution_3}}
 
 \subsection{Motivation}
 The third contribution investigates a progressive learning strategy in which policy 

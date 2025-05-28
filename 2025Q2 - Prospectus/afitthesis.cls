@@ -400,8 +400,13 @@
 % Hyperlink styling (hyperref package)
 \hypersetup{
     hypertexnames=true,
-    colorlinks=true,
-    allcolors=black}
+    % #PULL: Original got rid of link boxes, but that colors text,
+    %       allcolors fixed this by reverting them to black. 
+    %       But then intentionally colored text was forced black.
+    %       This change fixes the border but allows text to be colored.
+    %- colorlinks=true,
+    %- allcolors=black}
+    pdfborder={0 0 0}} %+
 
 % Remove pdf image warnings.
 \pdfsuppresswarningpagegroup=1
@@ -697,7 +702,7 @@
 % Document type
 \def\@doctype{thesis}
 \newcommand\doctype[1]{\def\@doctype{#1}}
-\newcommand\printdoctype{\@doctype\ }  % EDIT From Me
+\newcommand\printdoctype{\@doctype\ }  % #PULL: Allows user to call this command too
 
 % Document designator
 \def\@docdesignator{Set document designator with $\backslash$docdesignator}
