@@ -7,6 +7,7 @@
 % \usepackage{booktabs}
 % \usepackage{hyperref}
 % \usepackage{multirow}
+\newtheorem{theorem}{Theorem}
 
 \usepackage{graphicx}
 \graphicspath{{Figures}{Data}}
@@ -19,6 +20,7 @@
 \addbibresource{../2025Bibs/Prospectus.bib}
 % \usepackage[T1]{fontenc}
 % \usepackage[final]{microtype}
+\emergencystretch=1em % Allow more whitespace to avoid overfull h-boxes
 
 \usepackage[nomain,symbols,abbreviations]{glossaries-extra}
 % \makeglossaries
@@ -65,16 +67,13 @@ This shift introduces challenges for policy architecture design,
 particularly when aiming for efficient training and robust 
 execution under dynamic team configurations.
 
-A core insight from recent literature is that when agents 
-are symmetric or play exchangeable roles, enforcing invariance 
-to permutations in agent inputs and identities can significantly 
-improve learning efficiency and generalization. 
-Input-invariant architectures, such as those based on pooling, 
-graph networks, or attention mechanisms—
-can leverage these symmetries
-directly in the policy or critic network. 
-These methods reduce the complexity of the input space 
-and support scalable learning across team sizes. 
+A core insight from recent literature is that when agents are symmetric or 
+play exchangeable roles, enforcing invariance to permutations in agent inputs 
+and identities can significantly improve learning efficiency and generalization. 
+Input-invariant architectures, such as those based on pooling, graph networks, 
+or attention mechanisms, can leverage these symmetries directly in the 
+policy or critic network. These methods reduce the complexity of the 
+input space and support scalable learning across team sizes. 
 However, extending these benefits to \gls{harl} remains an open challenge.
 
 In this work, we propose and evaluate methods for incorporating 
@@ -101,16 +100,42 @@ input invariance can be adapted for heterogeneous agents,
 and what trade-offs arise in terms of performance, 
 generalization, and computational cost.
 
+
 \section{Related Work}
 
-The de Finetti theorem (\cref{eq:deFinnetti}) provides a foundational 
-result for modeling exchangeable random variables: it states that 
-such variables are conditionally independent given a latent variable. 
-This principle supports the use of input-invariant architectures in 
-\gls{marl}, where agents often play interchangeable roles and their 
-identities carry little intrinsic information.
+This section surveys prior work relevant to input-invariant architectures for \gls{harl}. 
+The topics below are parallel threads that converge to inform our architectural design.
+We begin with theoretical underpinnings of exchangeability and symmetry, 
+followed by architectural strategies for permutation invariance and equivariance
+via pooling, mean-field methods, graph networks, and attention. 
+These are then examined through applications in \gls{marl} 
+before concluding with \gls{harl} considerations.
 
-For instance, in environments like \gls{lbf}~\cite{papoudakis2021}, 
+We begin by grounding our discussion of input-invariant architectures 
+in a key probabilistic result: de Finetti's theorem (\cref{eq:deFinnetti}). 
+This theorem formalizes the idea that, under suitable conditions, 
+the elements of an exchangeable sequence can be treated as if 
+they were drawn independently from a shared latent distribution.
+
+\begin{theorem}[de Finetti's Theorem]
+    Let \(X = \{x_1, \ldots, x_M\}\) be a sequence of exchangeable random variables.
+    Then there exists a latent variable \(\theta\) such that:
+    \begin{equation}
+        p(X \mid \alpha, M_0) = \int p(\theta \mid \alpha, M_0) 
+        \prod_{m=1}^{M} p(x_m \mid \theta)\, d\theta
+        \label{eq:deFinnetti}
+    \end{equation}
+    That is, the joint distribution over \(X\) can be represented as a mixture of 
+    i.i.d. variables conditional on \(\theta\).
+\end{theorem}
+
+This result justifies the treatment of inputs that are unordered but statistically similar,
+such as agent observations in a cooperative \gls{marl} task, 
+as conditionally i.i.d. elements drawn from a shared distribution. 
+In practice, this means that the ordering of inputs does not convey meaningful information, 
+and architectures may (and perhaps should) be designed to respect this symmetry.
+
+As an example, in environments like \gls{lbf}~\cite{papoudakis2021}, 
 each agent's observation is constructed by concatenating their own state, 
 the state of objectives, and the states of other agents in a fixed but arbitrary order. 
 While the ordering is deterministic, it typically does not encode meaningful 
@@ -118,10 +143,10 @@ semantic distinctions. In such settings, treating the input as an exchangeable s
 rather than a structured sequence, aligns with the assumptions of de Finetti's theorem 
 and motivates the permutation-invariant design choices in the rest of this section.
 
-\begin{equation}
-    p(X|\alpha,M_0) =\int d\theta \left[ \prod_{m=1}^{M} p(x_m|\theta)\right]p(\theta|\alpha,M_0)
-    \label{eq:deFinnetti}
-\end{equation}
+Permutation-invariant functions and networks (e.g., pooling operations or 
+attention mechanisms without positional encoding) align with this insight, %%
+embedding the inductive bias that order should not affect the outcome. 
+This forms the basis for the architectural designs reviewed in the following sections.
 
 
 \subsection{Permutation Invariance and Equivariance}
@@ -203,9 +228,11 @@ higher average returns, and significantly reduced parameter counts.
 This is largely attributed to weight sharing across agents and the 
 use of input-aggregation strategies that preserve permutation symmetry. 
 
-One potential downside to approaches that aggregate commutatively
-is that while guaranteeing permutation invariance, 
-they can lose information about subset interactions. 
+One significant downside to the examined mean-field approaches is that 
+information about subset interactions is lost in the process of 
+applying their respective commutative functions.
+% #TODO: Appendix proof
+% We argue that this is not a necessary limitation of mean-field methods,
 This limitation motivated more sophisticated invariant architectures like 
 graph-based networks and attention-based pooling, which we discuss next.
 
@@ -219,11 +246,11 @@ with edges representing interactions (such as physical proximity,
 communication links, or joint team membership)~\cite{liu2020b}. 
 By design, graph convolutions or message-passing layers treat permutations of 
 node indices equivalently as they operate on the graph structure itself. 
-Yang et al.~\cite{yang2021a} introduced a Graph Convolutional Reinforcement Learning 
-approach (as DGN), where a multi-agent environment is modeled as a dynamic graph. 
+Yang et al.~\cite{yang2021a} introduced Inductive Heterogeneous Graph Multi-agent 
+Actor-critic (IHG-MA), where a multi-agent environment is modeled as a dynamic graph. 
 Each agent shares a policy network that includes graph convolution layers, 
 allowing it to adapt to changing neighbor relationships in highly dynamic environments. 
-DGN showed substantially improved cooperation in tasks where agents move and form time-varying 
+IHG-MA shows substantially improved cooperation in tasks where agents move and form time-varying 
 interaction topologies, outperforming non-relational baselines~\cite{yang2021a}. 
 
 \subsubsection{Centralized Critics with GNNs}
@@ -237,7 +264,7 @@ and applies graph convolutional layers to propagate information among agents.
 The final critic value is read out by pooling over node embeddings, 
 yielding a single joint value that is invariant to agent permutations. 
 
-Liu et al.~\cite{liu2020b} demonstrated that PIC scaled effectively 
+Liu et al.~\cite{liu2020b} demonstrated that PIC scales effectively 
 to environments with up to 200 agents, learning optimal policies where 
 a standard \gls{mlp} critic failed. The graph-based critic flexibly adapts to 
 different team sizes without redesign, as the \gls{gnn} simply expands to more nodes. 
@@ -265,11 +292,11 @@ and has been applied to extremely large-scale scenarios (hundreds of agents)~\ci
 \subsection{Transformers and Attention for Sets}
 
 The remarkable success of attention mechanisms in sequence modeling 
-(notably Transformers~\cite{vaswani2017}) has carried over to set-based 
-inputs by removing positional encodings. An attention layer, by default, 
-is permutation-invariant to its inputs (when no order information is added); 
-treating each query-key-value triplet agnostically to ordering and learning to 
-weigh interactions based purely on content. 
+(notably Transformers~\cite{vaswani2017} applied to large language models) 
+has carried over to set-based inputs by removing positional encodings. 
+An attention layer, by default, is permutation-invariant to its inputs 
+(when no order information is added); treating each query-key-value triplet 
+agnostically to ordering and learning to weigh interactions based purely on content. 
 
 Lee et al.~\cite{lee2019} 
 formalized this in the Set Transformer, an architecture that uses 
@@ -316,7 +343,7 @@ on contextual relationships rather than fixed positions.
 This design conferred resilience to occluded or missing inputs, 
 allowing the agent to function even when sections of the sensory 
 data were absent at test time. Their results suggest that invariance 
-to input structure can provide strong robustness
+to input structure can provide strong robustness to
 severe perceptual perturbations.
 
 % # TODO: May consider ending on Tang and Ha for similarity purposes.
@@ -330,11 +357,15 @@ severe perceptual perturbations.
     observational domain. (They take a 2d image, chunk it and shuffle.)
 \end{comment}
 
-\subsubsection{Heterogeneous Agents}
-In many \gls{marl} scenarios, agents are not identical—a setting formally studied 
+\subsection{Heterogeneous Agents}
+In many \gls{marl} scenarios, agents are not identical, a setting formally studied 
 as \gls{harl}. Agents may differ in abilities, observation spaces, or roles. 
-For example, Input-invariant architectures must be adapted to support such heterogeneity 
-while preserving permutation symmetry among agents that remain functionally exchangeable.
+Many input-invariant architectures assume that all inputs are drawn from the 
+same distribution and processed by a shared encoder, an assumption that breaks 
+down when agents have structurally different observations. In such cases, 
+invariant frameworks must be adapted to handle this heterogeneity, 
+either by mapping observations into a shared embedding space or by 
+augmenting the input with agent-specific identifiers.
 
 One practical strategy for supporting heterogeneity in input-invariant architectures 
 is to include an agent-specific feature encoding that captures type or 
@@ -354,19 +385,28 @@ about teammates and opponents. The architecture should remain invariant
 when swapping two equivalent opponents but avoid conflating agents 
 with distinct roles.
 
-% potentially better in the intro section
-Despite the demonstrated advantages of invariant and equivariant architectures 
-in handling agent symmetry, scalability, and heterogeneity, 
-the cost of these improvements remains underexplored. 
-Architectures like transformers, graph networks, and hypernetworks 
-introduce substantial complexity, often requiring more computation 
-per iteration and careful tuning of architectural parameters. 
-Yet, few studies offer a direct comparison of their training or 
-inference costs relative to simpler baselines such as \glspl{mlp}. 
-This omission makes it difficult to assess the practical tradeoffs 
-involved in deploying these methods at scale. As a result, 
-there remains a conspicuous gap in the literature: 
-the benefits are well documented, but the costs are largely assumed.
+Despite the demonstrated advantages of invariant and equivariant architectures in handling 
+agent symmetry, scalability, and heterogeneity, their practical cost remains underexplored. 
+The reviewed methods, ranging from mean-field approximations and deep sets, 
+to graph-based and attention-driven critics share a common goal: to encode 
+structural priors that simplify learning in multi-agent settings. However, 
+these methods often increase architectural complexity, requiring additional computation, 
+memory, and tuning. Importantly, few studies offer direct comparisons of their 
+training or inference costs relative to simpler baselines such as \glspl{mlp}. 
+This gap complicates our understanding of the tradeoffs involved in deploying 
+more expressive models in real-world systems.
+
+In this work, we contribute to closing that gap by empirically evaluating the efficiency 
+and robustness of input-invariant policy architectures in heterogeneous-agent settings, 
+quantifying both their benefits and computational costs. In parallel, we 
+propose a novel exchangeable approximation framework that extends the principles 
+of input invariance to settings with observation and action heterogeneity. 
+By constructing a shared observation-action spanning space and integrating dynamic 
+masking within an equivariant network, we offer a lightweight and scalable 
+approach to handling agent diversity. Together, these contributions aim to 
+clarify not only when these architectures are helpful, 
+but how they might be practically and broadly applied.
+
 
 \section{Methodology}
 \label{con2:sec:methodology}
