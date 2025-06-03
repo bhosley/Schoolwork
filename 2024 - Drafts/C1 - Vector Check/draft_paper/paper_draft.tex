@@ -14,13 +14,24 @@
 \usepackage{subcaption}
 
 \usepackage{tikz}
-\usetikzlibrary{positioning,arrows}
+\usetikzlibrary{automata, positioning, calc, shapes.geometric, shapes.misc, fit}
+\usepackage[dvipsnames]{xcolor}
 
 % \usepackage{cleveref}
 \usepackage[backend=biber, style=ieee]{biblatex}
 \usepackage[T1]{fontenc}
 \usepackage[final]{microtype}
 \addbibresource{../../../2025Bibs/Prospectus.bib}
+
+% Placeholder for glossary references.
+\usepackage{etoolbox}
+\providecommand{\Gls}[1]{\ensuremath{\uppercase{#1}}}
+\providecommand{\gls}[1]{%
+  \ifstrequal{#1}{pi}{\ensuremath{\pi}}{%
+%   \ifstrequal{#1}{alpha}{\ensuremath{\alpha}}{%
+%   \ifstrequal{#1}{beta}{\ensuremath{\beta}}{%
+  \ensuremath{#1}}%}}%
+}
 
 \usepackage{pgffor} %enables for loop used in appendix
 \usepackage{placeins} %this package contains the FloatBarrier tag
@@ -521,15 +532,15 @@ Our training protocol consists of three main phases shared across all environmen
 \subsubsection{Environment-Specific Modifications}
 
 \begin{figure}[!h]
-    \centering
-    \includegraphics[width=0.75\linewidth]{training_1.png}
-    \caption{\textbf{Example of Training Progression for Waterworld and LBF} }
+    \centering 
+    \input{../images/training_1} % \resizebox{0.85\textwidth}{!}{% % }
+    \caption{Example of Training Progression for Waterworld and LBF}
     \label{fig:training_1}
 \end{figure}
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.75\linewidth]{training_2.png}
-    \caption{\textbf{Example of Training Progression for Multiwalker} }
+    \input{../images/training_2} % \resizebox{0.85\textwidth}{!}{ }
+    \caption{Example of Training Progression for Multiwalker}
     \label{fig:training_2}
 \end{figure}
 

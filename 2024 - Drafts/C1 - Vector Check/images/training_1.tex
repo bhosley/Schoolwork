@@ -1,0 +1,49 @@
+\begin{tikzpicture}[>=stealth, node distance=3em, on grid, auto,
+    arrow/.style = {very thick,-stealth},
+    pol1/.style = {state, very thick, font=\boldmath, draw=MidnightBlue},
+    pol2/.style = {state, very thick, font=\boldmath, draw=Maroon},]
+
+    \node (C1) [text width=7em, align=flush right] 
+        {Resample to\\Desired Size\\(Ex. 5 Agents)};
+    \node () [text width=7em, align=flush right, above =of C1.north] 
+        {Phase 1:\\Pretraining};
+    \node () [text width=7em, align=flush right, below =of C1.south] 
+        {Phase 2:\\Retraining};
+
+    % Resample Row
+    \node[pol1] (S11) [right =of C1.east] {\(\gls{pi}_1\)};
+    \node[pol2] (S12) [right =of S11] {\(\gls{pi}_2\)};
+    \node[rounded corners=1em, fit=(S11)(S12), draw, dashed, very thick] (S1) {};
+
+    \node[pol1] (S21) [right =of S1.east] {\(\gls{pi}_1\)};
+    \node[pol2] (S22) [right =of S21] {\(\gls{pi}_2\)};
+    \node[rounded corners=1em, fit=(S21)(S22), draw, dashed, very thick] (S2) {};
+
+    \node[pol1, draw=none] (S31) [right =of S2.east] {};
+    \node[pol2] (S32) [right =of S31] {\(\gls{pi}_2\)};
+    \node[rounded corners=1em, fit=(S31)(S32), draw, dashed, very thick] (S3) {};
+
+    \node[font=\boldmath] () at ($(S1)!0.5!(S2)$) {$+$};
+    \node[font=\boldmath] () at ($(S3)!0.5!(S2)$) {$+$};
+
+    % Phase 1 Row
+    \node[pol1] (P01) [above =1.5 of S21.north] {\(\gls{pi}_1\)};
+    \node[pol2] (P02) [right =of P01] {\(\gls{pi}_2\)};
+    \node[rounded corners=1em, fit=(P01)(P02), draw, dashed, very thick] (P1) {};
+
+    % Phase 2 Row
+    \node[pol1] (R11) [below =1.5 of S21.south] {\(\gls{pi}_1\)};
+    \node[pol2] (R12) [right =of R11] {\(\gls{pi}_2\)};
+    \node[pol1] (R21) [below =of R11] {\(\gls{pi}_1\)};
+    \node[pol2] (R22) [below =of R12] {\(\gls{pi}_2\)};
+    \node[pol2] (R32) [below =of R21] {\(\gls{pi}_2\)};
+    \node[rounded corners=1em, fit=(R11)(R12)(R21)(R22)(R32), draw, dashed, very thick] (R1) {};
+
+    % Transition Arrows
+    \draw [arrow] (P1.south)+(0,-0.3) -- ([shift=({0,0.35})]S2.north);
+    \draw [arrow, rounded corners=0.75em] (S1.south)+(0,-0.15) -- +(0,-0.5) -| 
+        ([shift=({0,0.1})]R1.north);
+    \draw [arrow, rounded corners=0.75em] (S3.south)+(0,-0.15) -- +(0,-0.5) -| 
+        ([shift=({0,0.1})]R1.north);
+
+\end{tikzpicture}
