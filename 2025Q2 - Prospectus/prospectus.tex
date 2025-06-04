@@ -5,7 +5,7 @@
 
 % --- Paths ---
 \makeatletter
-\def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
+\def\input@path{{Chapters/}{other/}{Tables/}{Figures/}{Figures/C1}{Figures/C2}{Figures/C3}}
 \makeatother
 \graphicspath{{Figures}{Figures/C1/}{Figures/C2/}{Figures/C3/}}
 
@@ -27,11 +27,14 @@
 \usepackage{wrapfig}
 \usepackage{subcaption}
 
+%--- Tables ---
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{multirow}
 \usepackage{pgfplotstable}
 \pgfplotsset{compat=1.7}
+
+\newtheorem{theorem}{Theorem}
 
 % --- Formatting Tools ---
 \usepackage{tcolorbox}  % For call out boxes
@@ -137,42 +140,50 @@
 % --------------------
 \chapter{Introduction}%
 \input{introduction.tex}
+\glsresetall
 
 % -------------------------
 \chapter{Literature Review}%
 \label{ch:literature_review}
 \input{literature_review.tex}
+\glsresetall
 
 % -------------------------
 \chapter{Contribution 1: Direct Scaling from Pretrained Teams}
 \label{ch:contribution_1}
 \input{contribution_1.tex}
+\glsresetall
 
 % % -------------------------
 \chapter{Contribution 2}
 \label{ch:contribution_2}
 \input{contribution_2.tex}
+\glsresetall
 
 % % -------------------------
 % \chapter{Contribution 3}%
 \label{ch:contribution_3}
 % \input{contribution_3.tex}
+\glsresetall
 
 % -------------------------
 \chapter{Proposed Research}%
 \label{ch:methodology}
 \input{research_plan.tex}
+\glsresetall
 
 % ----------------------------
 %\chapter{Results and Analysis}%
 %\label{ch:results}% chktex 24
 %\input{results.tex}
 %\label{ch:discussion}
+% \glsresetall
 
 % ------------------
 %\chapter{Conclusion}%
 %\label{ch:conclusion}% chktex 24
 %\input{conclusion.tex}
+% \glsresetall
 
 % --------------------------------- Optional -----------------------------------
 \appendix               % This command is necessary before any appendix chapters.
