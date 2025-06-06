@@ -12,7 +12,7 @@ is finished and has been submitted to some publication.
 
 \begin{figure}[htbp]
     \begin{center}
-    \begin{ganttchart}[y unit title=0.4cm, y unit chart=0.5cm,
+    \begin{ganttchart}[x unit=0.8cm, y unit title=0.4cm, y unit chart=0.5cm,
     vgrid,hgrid, title label anchor/.style={below=-1.6ex},
     title left shift=.05, title right shift=-.05, title height=1,
     progress label text={}, bar height=0.8, bar top shift=0.1,
@@ -60,65 +60,20 @@ is finished and has been submitted to some publication.
 \end{figure}
 
 
-\section{Contribution 1}
+% \section{Contribution 1}
 
-\emph{Proposed research for this section is covered in \cref{ch:contribution_1}}
+% \emph{Proposed research for this section is covered in \cref{ch:contribution_1}}
 
-\section{Contribution 2}
+% \section{Contribution 2}
 
-\emph{Proposed research for this section is covered in \cref{ch:contribution_2}}
+% \emph{Proposed research for this section is covered in \cref{ch:contribution_2}}
 
 
-\section{Contribution 3}
+% \section{Contribution 3}
 
 % \emph{Proposed research for this section is covered in \cref{ch:contribution_3}}
 
-\subsection{Motivation}
-The third contribution investigates a progressive learning strategy in which policy 
-networks grow in capacity during training. Rather than training a large network 
-from the outset, which increases sample inefficiency and risk of overfitting, 
-this approach proposes beginning with a smaller network and increasing its size over 
-time through structured transformations. Inspired by ideas such as Net2Net~\cite{chen2016}, 
-this work evaluates the use of tensor projection techniques to enable seamless 
-expansion while preserving prior network behavior.
 
-This contribution builds on lessons from the previous two. Contribution 1 
-showed that smaller-team training can accelerate convergence, while Contribution 2 
-intends to demonstrate the importance of input design for scalable policy reuse. 
-Contribution 3 investigates whether network capacity itself can be staged similarly,
-starting small to learn core dynamics, then growing to support more nuanced policies,
-without discarding prior learning.
-
-\subsection{Methodology}
-The experiment will begin with small-capacity networks trained using standard 
-PPO in PettingZoo-compatible environments. At predefined training milestones, 
-the network will be expanded by projecting its weights into a higher-dimensional tensor space. 
-Multiple projection strategies will be compared, including:
-\begin{itemize}
-    \item Identity-based expansion (e.g., block-diagonal initialization).
-    \item Learned projection layers.
-    \item Randomized low-rank initialization with partial freezing.
-\end{itemize}
-Training will then resume from the expanded model, and performance will 
-be compared against fixed-size networks trained for the same duration.
-
-\subsection{Resources}
-The project will reuse the infrastructure from Contributions 1 and 2, 
-including RLlib for training and Weights and Biases for tracking. 
-Tensor projection layers will be implemented directly in PyTorch and 
-integrated into the RLlib model registry.
-
-We have not yet identified any specific features that we need in an environment
-and thus anticipate being able to reuse the environments used in the 
-earlier contributions.
-
-\subsection{Anticipated Obstacles}
-The primary challenge lies in selecting projection methods that preserve 
-learned function approximations across architectural transitions. 
-Naive expansion may disrupt policy performance or destabilize learning. 
-Additional tuning may be needed to maintain gradient flow and convergence 
-after projection. Furthermore, identifying optimal growth schedules will 
-likely require additional experiments.
 
 \subsection{Expected Contributions}
 \begin{description}
@@ -132,5 +87,45 @@ likely require additional experiments.
         complementary tool alongside policy reuse and input-invariant designs.
 \end{description}
 
+% --- Rewritten Expected Challenges section ---
 \section{Expected Challenges}
 
+This section outlines anticipated challenges for each of the three planned contributions.
+
+\subsection*{Contribution 1 - Finalizing and Publishing Results}
+\begin{itemize}
+    \item Manuscript draft is under review; committee feedback may require 
+        reworking structure or emphasizing different findings.
+    \item Journal selection is still open; I have three targets in mind, 
+        but the final choice will depend on feedback and timing.
+    \item The submission and revision process could delay follow-on work, 
+        depending on how smoothly editorial cycles go.
+\end{itemize}
+
+\subsection*{Contribution 2 - Modeling, Implementation, and Evaluation}
+\begin{itemize}
+    \item The architecture is mostly outlined, but some pieces, like how masking 
+        interacts with the invariant layer, may need adjustment during implementation.
+    \item I'll need a custom environment to support heterogeneous observation subspaces. 
+        Modifying an existing PettingZoo task looks feasible, but it will take time.
+    \item I'd prefer to move away from RLlib due to instability during C1 
+        (notably the RLModule API). This may mean adopting and integrating a new training stack,
+        or increased training time.
+    \item The planned experiments involve a wide range of team sizes, 
+        sensor configurations, and evaluation conditions. 
+        It will be compute-heavy and time-intensive to run them all.
+\end{itemize}
+
+\subsection*{Contribution 3 - Progressive Network Expansion}
+\begin{itemize}
+    \item The biggest unknown is how to grow network capacity without hurting performance. 
+        I want to be well informed and intentional in choosing the right projection method.
+    \item Even if the method underperforms, I want the paper to be publishable. 
+        That may mean shifting focus toward some other data gathered during the experiment,
+        I am not yet satisfied with a plan, so I considered this an unresolved potential obstacle.
+    \item I still need to finalize the relevant literature and pick a projection 
+        method that balances feasibility and novelty.
+    \item Based on C1, I lack confidence that RLlib's framework will be amendable to this type of
+        manipulation. I'll likely need to build the training setup directly in 
+        PyTorch or a lightweight framework.
+\end{itemize}

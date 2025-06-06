@@ -2,7 +2,6 @@
 
 % #TODO: Replace glossary terms
 % #TODO: Reduce repetition
-% #TODO: Tikz the retraining figure
 
 Autonomous drone swarms have been widely proposed for applications ranging from 
 disaster response~\cite{mohddaud2022} and search and rescue~\cite{mohddaud2022} 
@@ -46,7 +45,7 @@ Shared-policy assumptions often inhibit specialization~\cite{smit2023},
 and while fixed observation and action structures enable training stability, 
 they can hinder the flexibility needed to scale policies across different 
 task configurations or team sizes~\cite{papoudakis2021}. Despite progress 
-in modular architectures and attention-based pooling~\cite{iqbal2021, foerster2017}, 
+in modular architectures and attention-based pooling~\cite{iqbal2021, foerster2018}, 
 few methods effectively balance policy independence with structural flexibility. 
 This creates a performance bottleneck in dynamic environments, where agent diversity and 
 configuration variability are fundamental challenges.
@@ -150,7 +149,7 @@ priority~\cite{canese2021,krouka2022}, especially given the computational costs 
 complexity that scale with team size and task difficulty~\cite{shoham2007,busoniu2008}. 
 Prior research has explored MARL scalability and efficiency in large-scale environments, 
 investigating methods to reduce overestimation bias~\cite{ackermann2019}, support policy 
-decentralization~\cite{foerster2017,lowe2020}, and optimize communication 
+decentralization~\cite{foerster2018,lowe2020}, and optimize communication 
 overheads~\cite{sukhbaatar2016,wei2022}. Curriculum learning has emerged as a promising approach, 
 where tasks are presented in a structured sequence to facilitate progressive skill acquisition. 
 This strategy can take many forms, including environment simplification~\cite{shukla2022}, 
@@ -241,7 +240,7 @@ involves single-agent learning. These studies reflect broader architectural stra
 address variability in agent capabilities or embodiment, even if not in a MARL context.
 
 Despite their promise, these strategies often come with architectural overhead or assume 
-centralized training with shared state information~\cite{foerster2017}. Moreover, they typically 
+centralized training with shared state information~\cite{foerster2018}. Moreover, they typically 
 require retraining or re-encoding when the agent pool or spatial layout changes significantly. 
 Our work takes a complementary approach: we treat the dimensionality of the observation vector 
 itself as a constraint and propose lightweight observation-level reductions that preserve 

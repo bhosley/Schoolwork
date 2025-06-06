@@ -11,6 +11,8 @@
 % Cover the works that Directly inform ours
 % Following the Related work, enter primer?
 
+% #TODO Replace \Gls{r} with \gls{rew} where applicable
+
 This chapter delves deeper into the current \gls{sota} and the 
 foundational work that has contributed to its development. 
 It is divided into two main parts, the first a primer on relevant
@@ -32,7 +34,7 @@ and application papers.
 \Glspl{mdp} form the foundation of reinforcement learning by providing 
 a formal framework for modeling decision-making in environments with 
 stochastic dynamics~\cite{puterman2005}. An \gls{mdp} is defined by a tuple 
-(\Gls{s}, \Gls{a}, \gls{P}, \Gls{r}, \gls{discount}), where:
+(\Gls{s}, \Gls{a}, \gls{P}, \gls{rew}, \gls{discount}), where:
 \begin{itemize}
     \item \Gls{s} is a finite set of states.
     \item \Gls{a} is a finite set of actions.
@@ -41,7 +43,7 @@ stochastic dynamics~\cite{puterman2005}. An \gls{mdp} is defined by a tuple
         represents the probability of transitioning to state \(\gls{s}^\prime\in \Gls{s}\)
         given the current state \(\gls{s}\in \Gls{s}\) and action \(\gls{a}\in \Gls{a}\).
         This captures the stochastic nature of the environment.
-    \item \(\Gls{r}: \Gls{s} \times \Gls{a} \rightarrow \gls{reals}\) is the reward 
+    \item \(\gls{rew}: \Gls{s} \times \Gls{a} \rightarrow \gls{reals}\) is the reward 
         function and written as \(R(\gls{s}, \gls{a})\) defines the immediate reward 
         received after taking action \(\gls{a}\in \Gls{a}\) in state \(\gls{s}\in \Gls{s}\). 
         This reward guides the agent's learning process.
@@ -309,7 +311,7 @@ updating a shared policy~\cite{zheng2017}.
 Rather than emphasizing either extreme, the majority of research in \gls{marl} 
 has focused on leveraging interactions to produce more effective results. 
 The most popular approaches fall under the label \gls{ctde}~%
-\cite{foerster2017,rashid2018,fotouhi2019,lowe2020,pan2021,%
+\cite{foerster2018,rashid2018,fotouhi2019,lowe2020,pan2021,%
 papoudakis2021,li2023d,zhou2023}, 
 a broad term encompassing any algorithm with an arbitrary centralizing 
 mechanism. We assert that the term's breadth and ubiquity have made it 
@@ -333,7 +335,7 @@ training method. It is an intuitive implementation of \gls{ctde},
 where the critic performs the role of mixing for the agents.
 
 The majority of the algorithms we will examine in our experiments 
-will either be actor-critic~\cite{foerster2017,lowe2020,li2023c} 
+will either be actor-critic~\cite{foerster2018,lowe2020,li2023c} 
 or will aim to reduce the bias that occurs with a singular, 
 shared critic~\cite{rashid2018,ackermann2019,li2023d,zhou2023}.
 
