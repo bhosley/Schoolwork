@@ -41,7 +41,7 @@
   isbn = {978-0-262-38051-5},
   langid = {english},
   keywords = {Intelligent agents (Computer software),Reinforcement learning},
-  file = {/Users/brandonhosley/Zotero/storage/BNWH6I6A/Albrecht et al. - 2024 - Multi-agent reinforcement learning foundations an.pdf;/Users/brandonhosley/Zotero/storage/BX5QDNY2/marl-book.pdf}
+  file = {/Users/brandonhosley/Zotero/storage/BX5QDNY2/marl-book.pdf}
 }
 
 @online{alvarez-melis2015,
@@ -352,6 +352,15 @@
   file = {/Users/brandonhosley/Zotero/storage/JRZPUISW/Chen et al_2016_Net2Net.pdf;/Users/brandonhosley/Zotero/storage/2RZBC4W3/1511.html}
 }
 
+@article{chevalier-boisvert2023,
+  title = {Minigrid \& Miniworld: {{Modular}} \& Customizable Reinforcement Learning Environments for Goal-Oriented Tasks},
+  author = {Chevalier-Boisvert, Maxime and Dai, Bolun and Towers, Mark and de Lazcano, Rodrigo and Willems, Lucas and Lahlou, Salem and Pal, Suman and Castro, Pablo Samuel and Terry, Jordan},
+  options = {useprefix=true},
+  date = {2023},
+  journaltitle = {CoRR},
+  volume = {abs/2306.13831}
+}
+
 @online{cui2022,
   title = {A {{Survey}} on {{Large-Population Systems}} and {{Scalable Multi-Agent Reinforcement Learning}}},
   author = {Cui, Kai and Tahir, Anam and Ekinci, Gizem and Elshamanhory, Ahmed and Eich, Yannick and Li, Mengguang and Koeppl, Heinz},
@@ -366,6 +375,24 @@
   pubstate = {prepublished},
   keywords = {Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems},
   file = {/Users/brandonhosley/Zotero/storage/AM9XH9WA/Cui et al_2022_A Survey on Large-Population Systems and Scalable Multi-Agent Reinforcement.pdf;/Users/brandonhosley/Zotero/storage/UQDSHI2V/2209.html}
+}
+
+@article{diaconis1980,
+  title = {Finite {{Exchangeable Sequences}}},
+  author = {Diaconis, P. and Freedman, D.},
+  date = {1980-08},
+  journaltitle = {The Annals of Probability},
+  volume = {8},
+  number = {4},
+  pages = {745--764},
+  publisher = {Institute of Mathematical Statistics},
+  issn = {0091-1798, 2168-894X},
+  doi = {10.1214/aop/1176994663},
+  url = {https://projecteuclid.org/journals/annals-of-probability/volume-8/issue-4/Finite-Exchangeable-Sequences/10.1214/aop/1176994663.full},
+  urldate = {2025-06-14},
+  abstract = {Let \$X\_1, X\_2,\textbackslash cdots, X\_k, X\_\{k+1\},\textbackslash cdots, X\_n\$ be exchangeable random variables taking values in the set \$S\$. The variation distance between the distribution of \$X\_1, X\_2,\textbackslash cdots, X\_k\$ and the closest mixture of independent, identically distributed random variables is shown to be at most \$2 ck/n\$, where \$c\$ is the cardinality of \$S\$. If \$c\$ is infinite, the bound \$k(k - 1)/n\$ is obtained. These results imply the most general known forms of de Finetti's theorem. Examples are given to show that the rates \$k/n\$ and \$k(k - 1)/n\$ cannot be improved. The main tool is a bound on the variation distance between sampling with and without replacement. For instance, suppose an urn contains \$n\$ balls, each marked with some element of the set \$S\$, whose cardinality \$c\$ is finite. Now \$k\$ draws are made at random from this urn, either with or without replacement. This generates two probability distributions on the set of \$k\$-tuples, and the variation distance between them is at most \$2 ck/n\$.},
+  keywords = {60G10,60J05,De Finetti's theorem,Exchangeable,extreme points,presentable,representable,sampling with and without replacement,Symmetric,variation distance},
+  file = {/Users/brandonhosley/Zotero/storage/QFNJFLB6/Diaconis and Freedman - 1980 - Finite Exchangeable Sequences.pdf}
 }
 
 @inproceedings{ellis2023,
@@ -568,6 +595,13 @@
   file = {/Users/brandonhosley/Zotero/storage/SC4QV825/Gupta et al_2017_Learning Invariant Feature Spaces to Transfer Skills with Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/FPAI6T9H/1703.html}
 }
 
+@article{hachmo,
+  title = {Understanding and {{Predicting Neural Network Intrinsic Dimensionality}}},
+  author = {Hachmo, Ori and Champagne, Lance E},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/DW7EFDNS/Hachmo and Champagne - Understanding and Predicting Neural Network Intrin.pdf}
+}
+
 @online{hambling2021,
   title = {What {{Are Drone Swarms And Why Does Every Military Suddenly Want One}}?},
   author = {Hambling, David},
@@ -608,6 +642,18 @@
   abstract = {Recent advancements in reinforcement learning have witnessed remarkable achievements by intelligent agents ranging from game-playing to industrial applications. Of particular interest is the area of multi-agent reinforcement learning (MARL), which holds significant potential for real-world scenarios. However, typical MARL methods are limited in their ability to handle tens of agents, leaving scenarios with up to hundreds or even thousands of agents almost unexplored. The scaling up of the number of agents presents two primary challenges: (1) agent-agent interactions are crucial in multi-agent systems while the number of interactions grows quadratically with the number of agents, resulting in substantial computational complexity and difficulty in strategies-learning; (2) the strengths of interactions among agents exhibit variations both across agents and over time, making it difficult to precisely model such interactions. In this paper, we propose a novel approach named Graph Attention Mean Field (GAT-MF). By converting agent-agent interactions into interactions between each agent and a weighted mean field, we achieve a substantial reduction in computational complexity. The proposed method offers a precise modeling of interaction dynamics with mathematical proofs of its correctness. Additionally, we design a graph attention mechanism to automatically capture the diverse and time-varying strengths of interactions, ensuring an accurate representation of agent interactions. Through extensive experimentation conducted in both manual and real-world scenarios involving over 3000 agents, we validate the efficacy of our method. The results demonstrate that our method outperforms the best baseline method with a remarkable improvement of 42.7\%. Furthermore, our method saves 86.4\% training time and 19.2\% GPU memory compared to the best baseline method. For reproducibility, our source codes and data are available at https://github.com/tsinghua-fib-lab/Large-Scale-MARL-GATMF.},
   isbn = {9798400701030},
   file = {/Users/brandonhosley/Zotero/storage/IFNZEP3S/Hao et al_2023_GAT-MF.pdf}
+}
+
+@inproceedings{hartford2018,
+  title = {Deep {{Models}} of {{Interactions Across Sets}}},
+  booktitle = {{{arXiv}}.Org},
+  author = {Hartford, Jason and Graham, Devon R. and Leyton-Brown, Kevin and Ravanbakhsh, Siamak},
+  date = {2018-03-07},
+  url = {https://arxiv.org/abs/1803.02879v2},
+  urldate = {2025-06-14},
+  abstract = {We use deep learning to model interactions across two or more sets of objects, such as user-movie ratings, protein-drug bindings, or ternary user-item-tag interactions. The canonical representation of such interactions is a matrix (or a higher-dimensional tensor) with an exchangeability property: the encoding's meaning is not changed by permuting rows or columns. We argue that models should hence be Permutation Equivariant (PE): constrained to make the same predictions across such permutations. We present a parameter-sharing scheme and prove that it could not be made any more expressive without violating PE. This scheme yields three benefits. First, we demonstrate state-of-the-art performance on multiple matrix completion benchmarks. Second, our models require a number of parameters independent of the numbers of objects, and thus scale well to large datasets. Third, models can be queried about new objects that were not available at training time, but for which interactions have since been observed. In experiments, our models achieved surprisingly good generalization performance on this matrix extrapolation task, both within domains (e.g., new users and new movies drawn from the same distribution used for training) and even across domains (e.g., predicting music ratings after training on movies).},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/NE8689ZV/Hartford et al. - 2018 - Deep Models of Interactions Across Sets.pdf}
 }
 
 @inproceedings{hazra2024,
@@ -1278,6 +1324,18 @@
   file = {/Users/brandonhosley/Zotero/storage/X55NBJGK/Papoudakis et al_2021_Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms in Cooperative.pdf;/Users/brandonhosley/Zotero/storage/9S95S7UZ/2006.html}
 }
 
+@book{powell2022,
+  title = {Reinforcement {{Learning}} and {{Stochastic Optimization}}: {{A Unified Framework}} for {{Sequential Decisions}}: By {{Warren B}}. {{Powell}} (Ed.), {{Wiley}} (2022)},
+  shorttitle = {Reinforcement {{Learning}} and {{Stochastic Optimization}}},
+  author = {Powell, Warren B.},
+  date = {2022-04-02},
+  url = {https://www.tandfonline.com/doi/full/10.1080/14697688.2022.2135456},
+  urldate = {2025-06-06},
+  isbn = {978-1-119-81505-1},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/GVL9R52E/Halperin - 2022 - Reinforcement Learning and Stochastic Optimization.pdf}
+}
+
 @book{puterman2005,
   title = {Markov Decision Processes: Discrete Stochastic Dynamic Programming},
   shorttitle = {Markov Decision Processes},
@@ -1871,7 +1929,7 @@
   urldate = {2025-02-14},
   abstract = {Multi-agent deep reinforcement learning (MDRL) has been widely applied in multi-intersection traffic signal control. The MDRL algorithms produce the decentralized cooperative traffic-signal policies via specialized multi-agent settings in certain traffic networks. However, the state-of-the-art MDRL algorithms seem to have some drawbacks. (1) It is desirable that the traffic-signal policies can be smoothly transferred to diverse traffic networks, however, the adopted specialized multi-agent settings hinder the traffic-signal policies to transfer and generalize to new traffic networks. (2) Existing MDRL algorithms which are based on deep neural networks cannot flexibly tackle a time-varying number of vehicles traversing the traffic networks. (3) Existing MDRL algorithms which are based on homogeneous graph neural networks fail to capture the heterogeneous features of objects in traffic networks. Motivated by the above observations, in this paper, we propose an algorithm, referred to as Inductive Heterogeneous Graph Multi-agent Actor–critic (IHG-MA) algorithm, for multi-intersection traffic signal control. The proposed IHG-MA algorithm has two features: (1) It conducts representation learning using a proposed inductive heterogeneous graph neural network (IHG), which is an inductive algorithm. The proposed IHG algorithm can generate embeddings for previously unseen nodes (e.g., new entry vehicles) and new graphs (e.g., new traffic networks). But unlike the algorithms based on the homogeneous graph neural network, IHG algorithm not only encodes heterogeneous features of each node, but also encodes heterogeneous structural (graph) information. (2) It also conducts policy learning using a proposed multi-agent actor–critic(MA), which is a decentralized cooperative framework. The proposed MA framework employs the final embeddings to compute the Q-value and policy, and then optimizes the whole algorithm via the Q-value and policy loss. Experimental results on different traffic datasets illustrate that IHG-MA algorithm outperforms the state-of-the-art algorithms in terms of multiple traffic metrics, which seems to be a new promising algorithm for multi-intersection traffic signal control.},
   keywords = {Cooperative traffic signal control,Heterogeneous graph neural network,Inductive heterogeneous graph representation learning,Multi-agent reinforcement learning,Transfer learning},
-  file = {/Users/brandonhosley/Zotero/storage/B4TQEJ22/Yang et al_2021_IHG-MA.pdf;/Users/brandonhosley/Zotero/storage/BDL2X5JB/S0893608021000952.html}
+  file = {/Users/brandonhosley/Zotero/storage/B4TQEJ22/Yang et al_2021_IHG-MA.pdf}
 }
 
 @online{ye2020,
@@ -1926,7 +1984,7 @@
   url = {https://papers.neurips.cc/paper_files/paper/2017/hash/f22e4747da1aa27e363d86d40ff442fe-Abstract.html},
   urldate = {2025-05-14},
   abstract = {We study the problem of designing models for machine learning tasks defined on sets. In contrast to the traditional approach of operating on fixed dimensional vectors, we consider objective functions defined on sets and are invariant to permutations. Such problems are widespread, ranging from the estimation of population statistics, to anomaly detection in piezometer data of embankment dams, to cosmology. Our main theorem characterizes the permutation invariant objective functions and provides a family of functions to which any permutation invariant objective function must belong. This family of functions has a special structure which enables us to design a deep network architecture that can operate on sets and which can be deployed on a variety of scenarios including both unsupervised and supervised learning tasks. We demonstrate the applicability of our method on population statistic estimation, point cloud classification, set expansion, and outlier detection.},
-  file = {/Users/brandonhosley/Zotero/storage/N4X2YWWI/Zaheer et al_2017_Deep Sets.pdf}
+  file = {/Users/brandonhosley/Zotero/storage/N4X2YWWI/Zaheer et al_2017_Deep Sets.pdf;/Users/brandonhosley/Zotero/storage/U3K2RC4G/deepsets-appendix.pdf}
 }
 
 @inproceedings{zambaldi2018,
