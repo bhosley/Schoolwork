@@ -25,11 +25,135 @@
     \end{itemize}
 \end{frame}
 
+
 \subsubsection{Literature Review}
 
 
-% #TODO: Pull from Paper Draft
+\begin{frame}{Theoretical Foundations}
+    \textbf{Exchangeability and Symmetry}
+    \begin{itemize}
+        \item \textbf{de Finetti's Theorem:} Exchangeable sequences behave like i.i.d. 
+            draws from a latent distribution~\footcite{alvarez-melis2015}.
+        \item In MARL, agent observations are often unordered—motivating 
+            \textbf{permutation-invariant} architectures.
+        \item \textbf{Key Insight:} Architectures that respect symmetry in input 
+            ordering can improve generalization and efficiency~\footcite{hartford2018}
+            for exchangeable agents.
+    \end{itemize}
+\end{frame}
 
+\begin{frame}{Permutation Invariance and Equivariance}
+    \textbf{Deep Sets} \footcite{zaheer2017}
+    \begin{itemize}
+        \item Any permutation-invariant function can be expressed in terms of 
+            a transformation \(\phi\) over elements and a transformation \(\rho\) of the sum: 
+            \[\rho\left(\sum_i \phi(x_i)\right)\]
+        \item Zaheer et al. use shared parameters through constrained weight matrices.
+        \begin{itemize}
+            \item With all off-diagonal elements \(\gamma\)
+            \item Diagonal elements \(\lambda+\gamma\)
+        \end{itemize}
+        \item \textbf{Implication:} Enables parameter sharing across agents with unordered observations.
+        \item Improves sample efficiency and scalability in symmetric MARL settings.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Mean-Field Methods and Exchangeability}
+    \textbf{From Aggregation to Generalization}
+    \begin{itemize}
+        \item Replace summation with \textbf{averaging} to make outputs insensitive to agent count.
+        \item \textbf{Mean-Field MARL}~\footcite{yang2018}: 
+            Use average of neighbors in actor and critic networks.
+        \item MF-PPO achieves~\footcite{li2021b}:
+        \begin{itemize}
+            \item Convergence rates independent of team size
+            \item Superior performance and reduced model complexity
+        \end{itemize}
+        \item \textbf{Limitation:} Subset-specific interaction information may be lost.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Graph-Based Architectures}
+    \textbf{Relational Inductive Bias}
+    \begin{itemize}
+        \item Graph Neural Networks (GNNs) treat agents as nodes; edges represent interactions.
+        \item \textbf{IHG-MA} \footcite{yang2021a}: Dynamic agent graphs with shared policies.
+        \item \textbf{PIC} \footcite{liu2020b}: Graph critic pooled over agents, scalable to 200 agents.
+        \item Attribute embeddings encode agent roles or types, enabling heterogeneous agent support.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Attention for Set-Based Inputs}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \textbf{Transformers and Self-Attention}
+            \begin{itemize}
+                \item Attention layers (without positional encodings) are naturally permutation-invariant.
+                \item \textbf{Set Transformer} \footcite{lee2019}: 
+                    Captures high-order relationships among unordered elements.
+                \item \textbf{MAAC} \footcite{iqbal2019}: 
+                    Attention-weighted centralized critic for better credit assignment.
+                \item Applied to large-scale MARL tasks (e.g., SMAC) with strong results.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{figure}
+                \includegraphics[width=0.85\linewidth]{C2/lee2019_set_transformer.png}
+                \caption{Set Transformer model by Lee et al~\footcite{lee2019}.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Single-Agent Generalization}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \textbf{Lessons Beyond MARL}
+            \begin{itemize}
+                \item \textbf{Zambaldi et al.} \footcite{zambaldi2018}: 
+                    Graph-based reasoning improves single-agent performance in StarCraft II.
+                \item \textbf{Tang and Ha} \footcite{tang2021}: 
+                    Sensory-channel invariance enables robustness to occlusion and dropout.
+                \item Treating input channels as exchangeable improves perceptual robustness.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{figure}
+                \includegraphics[width=0.95\linewidth]{C2/tang2021_view.png}
+                \caption{Original and permuted image inputs used by Tang and Ha~\footcite{tang2021}.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Toward Heterogeneous MARL}
+    \begin{columns}
+        \begin{column}{0.6\textwidth}
+            \textbf{Challenges in Heterogeneous-Agent Learning}
+            \begin{itemize}
+                \item Input-invariant methods often assume identical agent observation distributions.
+                \item \textbf{Strategy:} Augment observations with role/type embeddings.
+                \item \textbf{HPN} \footcite{hao2023}: Hypernetworks generate role-conditioned modules.
+                \item \textbf{Open Question:} What are the tradeoffs in cost and complexity vs. performance?
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.4\textwidth}
+            \begin{figure}
+                \includegraphics[width=\linewidth]{C2/hao2022_network_overview.png}
+                \caption{Hao et al's PI and PE policy network overview~\footcite{hao2023}.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Summary of Key Ideas}
+\begin{itemize}
+    \item Input-invariance enables better generalization and efficiency in symmetric multi-agent settings.
+    \item Mean-field, GNNs, and attention each offer scalable strategies with tradeoffs in specificity and complexity.
+    % \item Extensions to HARL require mechanisms to encode agent roles/types while preserving symmetry when possible.
+    \item Empirical comparisons of cost vs. benefit are still lacking in literature.%—this work aims to address that.
+\end{itemize}
+\end{frame}
 
 \subsubsection{Research Questions}
 
@@ -39,7 +163,7 @@
             How does incorporating input-invariant structures \emph{(i.e., networks 
             that are robust to feature permutation and input length differences)}
             into policy networks affect learning efficiency and team robustness 
-            when heterogeneous agents have partially overlapping observations?
+            when heterogeneous agents have partially overlapping observation spaces?
             }
         \item[RQ 2] {
             Do input-invariant architectures lead to more stable policy performance under 
@@ -53,7 +177,7 @@
         \item[RQ 1] \textcolor{gray}{
             How does incorporating input-invariant structures \emph{(i.e., networks 
             that are robust to feature permutation and input length differences)}
-            into policy networks affect learning efficiency and team robustness 
+            into policy networks effect learning efficiency and team robustness 
             when heterogeneous agents have partially overlapping observations? } \vspace{1em}
     \begin{itemize}
         \item[RT 1.1] {
@@ -95,15 +219,323 @@
     \end{enumerate}
 \end{frame}
 
+\subsection{Methodology}
 
-% \subsection{Methodology}
+\subsubsection{Environment Model}
+
+\begin{frame}{Environment Model (RT 1.2)}
+    Using Powell's~\cite{powell2022}
+    framework for modeling:
+    \begin{columns}
+        \begin{column}{0.3\linewidth}
+            \begin{enumerate}
+                \item State
+                \item Decision/Action
+                \item Exogeneous Information
+                \item Transition Function
+                \item Objective Function
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.7\linewidth}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{State}
+    For arbitrary \(N\in\mathbb{N}\) dimensional space, with Domain \(D_n\in\mathbb{N}\) 
+    for each \(n\in N\) dimension, then the state and state spaces may be:
+    \begin{itemize}
+        \item For \textbf{Agent} \(i\in I\)
+            \[s_i \in S_i := \{d\in D_n\ \forall\ n\in N\}\cup\{\theta_{n,n+1}\ \forall\ n\in N-1\}\]
+        \item For \textbf{Non-Agents} (Objectives, Obstacles, Hazards) \(j,k,l\)
+            \[s_e \in S_{e} := \{d\in D_n\ \forall\ n\in N\} \quad\forall e \in \{J,K,L\}\]
+        \item Joint State (as a set)
+            \[s \in S = \bigcup_{}^{} S_{\{i,j,k,l\}}\]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Decision/Action}
+    Joint action:
+    \[a \in A\]
+    Marginal actions:
+    \[a_i \in A_i \ \forall\ i\in I.\]
+    Where
+    \[a_i = (\Delta\boldsymbol{\theta},\ a_{\text{move}},\ a_{\text{interact}})\]
+    and
+    \[\Delta\boldsymbol{\theta} \in \{-\delta, 0, +\delta\}^{N-1}\]
+    \[a_{\text{move}} \in \{0,\ 1\}\]
+    \[a_{\text{interact}} \in \{\text{none},\ \text{interact}\}\]
+\end{frame}
+
+\begin{frame}{Exogeneous Information}
+    Currently this representation is
+    \begin{itemize}
+        \item Complete Information: known reward
+        \item Imperfect Information: partially observable environment
+    \end{itemize} 
+    \textbf{Future-work fodder}: An implementation in which channels convey probabilistic 
+    information would change this to a incomplete information (and Bayesian) game.
+\end{frame}
+
+\begin{frame}{Transition Function}
+    This model is deterministic, and progresses with agent decisions executed in parallel. 
+    Thus,
+        \[s_{t}(a) \rightarrow s_{t+1}\]
+    or
+        \[\mathcal{T}(a|s_{t}) = s_{t+1}\]
+\end{frame}
+
+\begin{frame}{Objective Function}
+    Let \(\mathcal{R}\) be a reward function such that for objective \(j\)
+    and hazard \(l\),
+    \[
+        \mathcal{R}(j) = r_{j} \in \mathbb{R}_{>0}
+        \quad \text{and} \quad
+        \mathcal{R}(l) = r_{l} \in \mathbb{R}_{<0}.
+    \]
+    Then, the objective is to maximize agent's arriving at objectives, 
+    while minimizing interaction with hazards:
+    \[
+        \max \sum_{t\in T,i\in I, j\in J} r_{j}[s_{j,t} = s_{i,t} 
+            + \theta_{i,t} | a_{i,t}(\text{interact}) ]
+        - \sum_{t\in T,i\in I, l\in L} r_{l}[\|s_{i,t},s_{l,t}\|_\infty \leq 1]
+    \]
+\end{frame}
+
+\subsubsection{Observation Model}
+
+\begin{frame}{Observation Model}
+    In this subsection:
+    \begin{itemize}
+        \item Imperfect Information Game
+        \item Channels Representing States
+        \item Modeling Heterogeneous Observation Space
+        \item Intuition for a Heterogeneous Observation Space
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Imperfect Information}
+    \begin{columns}
+        \begin{column}{0.4\linewidth}
+            This an imperfect information game resulting from partial observability.
+            \\[1em]
+            Thus, for agent \(i\), an observation \(o_i\) is a function of the state:
+            \[o_i = \mathcal{O}_i(s) .\]
+        \end{column}
+        \begin{column}{0.5\linewidth}
+            \begin{figure}
+                \begin{subfigure}[t]{0.45\textwidth}
+                    \includegraphics[width=\textwidth]{screen_minigrid}
+                    \caption{View-range of agent in Minigrid~\footcite{chevalier-boisvert2023}.}
+                \end{subfigure}
+                \hfill
+                \begin{subfigure}[t]{0.45\textwidth}
+                    \includegraphics[width=\textwidth]{screen_lbf}
+                    \caption{View-range of agent pair in Level-based Foraging~\footcite{papoudakis2021}.}
+                \end{subfigure}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Channels for Binary Mapping}
+    \begin{columns}
+        \begin{column}{0.6\linewidth}
+            Specific entities are represented by channels:
+                \begin{itemize}
+                    \item An observation is a set of one-hot matrices
+                    \item One matrix per type of entity
+                \end{itemize}
+            Pursuit example channels:
+                \begin{itemize}
+                    \item For \(e\in E :=\) \{Friend, Foe, Barrier\}
+                    \item Then state \(s\)
+                \end{itemize}
+                \[s = \{0,1\}^{E\times D_1\times D_2}\]
+        \end{column}
+        \begin{column}{0.4\linewidth}
+            \begin{figure}
+                \includegraphics[width=0.65\linewidth]{screen_pursuit_channels.png}
+                \caption{Observation Channels in Pursuit~\footcite{gupta2017}.}
+            \end{figure}
+            \centering
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Heterogeneous Observation Channels}
+    For heterogeneous observation channels \(C\),
+    visibility of entities \(E\) is,
+    \[
+        c(e) = 
+        \begin{cases}
+            1& \text{if \(e\) is visible in \(c\)} \\ 
+            0& \text{if \(e\) is not visible in \(c\)}
+        \end{cases} 
+        \quad\forall c\in C, e\in E.
+    \]
+\end{frame}
+
+\begin{frame}{Heterogeneous Observation Channels}
+    Like Pursuit, our model can be represented as a binary mapping
+    and extended with Heterogeneous channels \(c\in C\) as:
+    \[
+        S = \{0,1\}\exp\left(C\times E_\text{types}
+        \times \prod_{n}^{N} D_n \times \prod_{n}^{N-1} \theta_n\right),
+    \]
+    or as a set,
+    \[
+        S := \bigcup_{e \in E} \{d\in D_n\ \forall\ n\in N\}\
+        \bigcup_{i \in I} \{\theta_{n} \forall\ n\in N-1\}\
+        \bigcup_{c\in C} \{c(e) \forall\ e\in E\}\
+    \]
+\end{frame}
+
+\begin{frame}{Intuition for Heterogeneous Observation}
+    Let \(C = \{\text{Red, Blue, Green}\}\).
+    Then, the RGB color model 
+    provides a convenient shorthand for multiple truths. \\
+   \begin{figure}
+        \centering
+        \input{C2/rgb.tex}
+    \end{figure}
+    Then, in the next slide we present a Minigrid-like state made heterogeneous.
+\end{frame}
+
+\begin{frame}{An Example State}
+    \begin{columns}
+        \begin{column}{0.4\linewidth}
+            Legend:
+            \begin{figure}
+                \resizebox{!}{0.5\linewidth}{%
+                    \input{C2/rgb_example_legend.tex}
+                }
+            \end{figure}
+        \end{column}
+        \begin{column}{0.6\linewidth}
+            \begin{figure}
+                \resizebox{\linewidth}{!}{%
+                    \input{C2/rgb_example_grid.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{An Example State - By Channels}
+    \begin{columns}
+        \begin{column}{0.4\linewidth}
+            Legend:
+            \begin{figure}
+                \resizebox{!}{0.5\linewidth}{%
+                \input{C2/rgb_example_legend.tex}
+                }
+            \end{figure}
+        \end{column}
+        \begin{column}{0.6\linewidth}
+            \centering
+            \begin{figure}
+                \resizebox{!}{0.75\linewidth}{%
+                    \input{C2/rgb_example_open_grid.tex}
+                }
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% RT 1.1
+    % Architectures: HAPPO, COMA w/ Transformer, Simple-equivariant spanning policy
+% RT 1.3
+% RT 1.4
+    % Baseline, and training types
+
+\subsubsection{Training Architectures}
+
+\begin{frame}{Architectures Compared (RT 1.1,1.4)}
+    \textbf{Three Models Evaluated}
+    \begin{enumerate}
+        \item \textbf{HAPPO (Baseline)}\footcite{zhong2024}
+            \begin{itemize}
+                \item Separate PPO-trained policy per agent.
+                \item No shared parameters or symmetry constraints.
+            \end{itemize}
+        \item \textbf{COMA + GNN + Transformer}\footcite{liu2020b}
+            \begin{itemize}
+                \item Graph neural network for relational encoding.
+                \item Transformer-based critic for contextual estimation.
+            \end{itemize}
+        \item \textbf{Equivariant Spanning Policy (Proposed)}
+            \begin{itemize}
+                \item Global observation/action spaces with dynamic masking.
+                \item Equivariant layers: \(\lambda I + \gamma \mathbf{11}^\top\).
+                \item Shared policy supports heterogeneous agents natively.
+            \end{itemize}
+    \end{enumerate}
+\end{frame}
 
 
 
-\subsection{Environment Model}
+\subsection{Experimental Procedure}
+% RT 2.1
+% RT 2.2
+% RT 2.3
+% RT 2.4
+
+\begin{frame}{Training Efficiency}
+\begin{columns}
+    \begin{column}{0.5\linewidth}
+        \textbf{Training Configurations}
+            \begin{itemize}
+                \item 3 Algorithms from previous slide.
+                \item Observability coverage:
+                    \begin{enumerate}
+                        \item All agents \(I\) have all \(C\)
+                        \item \(\{c(i)\}\) spans \(C\) with overlap
+                        \item \(\{c(i)\}\) spans \(C\) without overlap
+                        \item \(\{c(i)\} \subset C\) 
+                    \end{enumerate}
+                \item Independent runs ensure robustness to stochasticity.
+            \end{itemize}
+    \end{column}
+    \begin{column}{0.5\linewidth}
+        \textbf{Evaluation metrics:}
+            \begin{itemize}
+                \item \textbf{Convergence rate} (agent-steps normalized).
+                \item \textbf{Computational cost} (training effort).
+            \end{itemize}
+    \end{column}
+\end{columns}
+\end{frame}
 
 
-% \subsection{Experimental Procedure}
+
+
+
+\begin{frame}{Perturbation Tests}
+\textbf{Runtime Robustness Evaluation}
+\begin{itemize}
+    \item \textbf{Sensor Degradation}
+    \begin{itemize}
+        \item Random dropout of observation channels.
+        \item Masking updated during inference to simulate occlusion.
+    \end{itemize}
+    \item \textbf{Team-Size Changes}
+    \begin{itemize}
+        \item Agents added/removed post-training.
+        \item Evaluate for reward degradation and adaptation.
+    \end{itemize}
+    \item \textbf{Novel Team Composition}
+    \begin{itemize}
+        \item For our spanning policy
+        \item Trained \(\{c(i)\}\neq\) tested \(\{c(i)\}\)
+    \end{itemize}
+    % \item Metrics:
+    % \begin{itemize}
+    %     \item Reward stability under perturbation.
+    %     \item Policy robustness without retraining.
+    % \end{itemize}
+\end{itemize}
+\end{frame}
+
 % \subsection{Results}
 % \subsection{Discussion}
-

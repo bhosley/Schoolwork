@@ -1,0 +1,1106 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{alvarez-melis2015}{online}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=a3427bc5741ffeca269dd9c3288d7ee2}{%
+           family={Alvarez-Melis},
+           familyi={A\bibinithyphendelim M\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4158a9146a2bcd94b39b138a41514f81}{%
+           family={Broderick},
+           familyi={B\bibinitperiod},
+           given={Tamara},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{7e5eeb5f078e9d39988669db3892ca22}
+      \strng{fullhash}{7e5eeb5f078e9d39988669db3892ca22}
+      \strng{fullhashraw}{7e5eeb5f078e9d39988669db3892ca22}
+      \strng{bibnamehash}{7e5eeb5f078e9d39988669db3892ca22}
+      \strng{authorbibnamehash}{7e5eeb5f078e9d39988669db3892ca22}
+      \strng{authornamehash}{7e5eeb5f078e9d39988669db3892ca22}
+      \strng{authorfullhash}{7e5eeb5f078e9d39988669db3892ca22}
+      \strng{authorfullhashraw}{7e5eeb5f078e9d39988669db3892ca22}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{This article is a translation of Bruno de Finetti's paper "Funzione Caratteristica di un fenomeno aleatorio" which appeared in Atti del Congresso Internazionale dei Matematici, Bologna 3-10 Settembre 1928, Tomo VI, pp. 179-190, originally published by Nicola Zanichelli Editore S.p.A. The translation was made as close as possible to the original in form and style, except for apparent mistakes found in the original document, which were corrected and are mentioned as footnotes. Most of these were resolved by comparing against a longer version of this work by de Finetti, published shortly after this one under the same titlea. The interested reader is highly encouraged to consult this other version for a more detailed treatment of the topics covered here. Footnotes regarding the translation are labeled with letters to distinguish them from de Finetti's original footnotes.}
+      \field{day}{3}
+      \field{eprintclass}{math}
+      \field{eprinttype}{arXiv}
+      \field{month}{12}
+      \field{pubstate}{prepublished}
+      \field{title}{A Translation of "{{The}} Characteristic Function of a Random Phenomenon" by {{Bruno}} de {{Finetti}}}
+      \field{urlday}{2}
+      \field{urlmonth}{6}
+      \field{urlyear}{2025}
+      \field{year}{2015}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1512.01229
+      \endverb
+      \verb{eprint}
+      \verb 1512.01229
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/QDPUAM2D/Alvarez-Melis_Broderick_2015_A translation of The characteristic function of a random phenomenon by Bruno.pdf;/Users/brandonhosley/Zotero/storage/GCXX5ACX/1512.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/1512.01229
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/1512.01229
+      \endverb
+      \keyw{Mathematics - Statistics Theory,Statistics - Statistics Theory}
+    \endentry
+    \entry{chevalier-boisvert2023}{article}{useprefix=true}{}
+      \name{author}{9}{}{%
+        {{un=0,uniquepart=base,hash=06cf5a5e1af621cbb42321aa7cd197ab}{%
+           family={Chevalier-Boisvert},
+           familyi={C\bibinithyphendelim B\bibinitperiod},
+           given={Maxime},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=347d2bbe1b9415395660aa5f13fb2465}{%
+           family={Dai},
+           familyi={D\bibinitperiod},
+           given={Bolun},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=56b97afcbff5cf17ceacacabc82810be}{%
+           family={Towers},
+           familyi={T\bibinitperiod},
+           given={Mark},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=106298f7e5d0b4b08f9765cf6945358e}{%
+           family={Lazcano},
+           familyi={L\bibinitperiod},
+           given={Rodrigo},
+           giveni={R\bibinitperiod},
+           givenun=0,
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+        {{un=0,uniquepart=base,hash=d7b14aec5416a7e1c5ed65ec5b71fbcf}{%
+           family={Willems},
+           familyi={W\bibinitperiod},
+           given={Lucas},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b8fd22cd253cc620d7973894bb38d016}{%
+           family={Lahlou},
+           familyi={L\bibinitperiod},
+           given={Salem},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=07596833bd88f42405d8148bcd8d7509}{%
+           family={Pal},
+           familyi={P\bibinitperiod},
+           given={Suman},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cd36c2abe3c5c9ea4b21e5258e5f3a37}{%
+           family={Castro},
+           familyi={C\bibinitperiod},
+           given={Pablo\bibnamedelima Samuel},
+           giveni={P\bibinitperiod\bibinitdelim S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=37dd89fdfe9c385b46db432c71ed88b1}{%
+           family={Terry},
+           familyi={T\bibinitperiod},
+           given={Jordan},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{253e0b68e87944ea6492701c99db6d47}
+      \strng{fullhash}{614fccfaad234047866cf587e2434d37}
+      \strng{fullhashraw}{614fccfaad234047866cf587e2434d37}
+      \strng{bibnamehash}{253e0b68e87944ea6492701c99db6d47}
+      \strng{authorbibnamehash}{253e0b68e87944ea6492701c99db6d47}
+      \strng{authornamehash}{253e0b68e87944ea6492701c99db6d47}
+      \strng{authorfullhash}{614fccfaad234047866cf587e2434d37}
+      \strng{authorfullhashraw}{614fccfaad234047866cf587e2434d37}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{CoRR}
+      \field{title}{Minigrid \& Miniworld: {{Modular}} \& Customizable Reinforcement Learning Environments for Goal-Oriented Tasks}
+      \field{volume}{abs/2306.13831}
+      \field{year}{2023}
+      \field{dateera}{ce}
+    \endentry
+    \entry{hao2023}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{un=0,uniquepart=base,hash=5bda0b56be5fc79f216468571d649425}{%
+           family={Hao},
+           familyi={H\bibinitperiod},
+           given={Qianyue},
+           giveni={Q\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c58a08392c6d82588ca6794539786b8d}{%
+           family={Huang},
+           familyi={H\bibinitperiod},
+           given={Wenzhen},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2d9333d40be6a603e0f2030116275b87}{%
+           family={Feng},
+           familyi={F\bibinitperiod},
+           given={Tao},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1ff607c08ca9d89f3d86125848f85791}{%
+           family={Yuan},
+           familyi={Y\bibinitperiod},
+           given={Jian},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=78be8ea0cb80e4e1b59bf06100942e90}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yong},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{01601ee28d79d434c3ecdafc2633ce2a}
+      \strng{fullhash}{c4a8141535b5a3b7d95e59426cd52a94}
+      \strng{fullhashraw}{c4a8141535b5a3b7d95e59426cd52a94}
+      \strng{bibnamehash}{01601ee28d79d434c3ecdafc2633ce2a}
+      \strng{authorbibnamehash}{01601ee28d79d434c3ecdafc2633ce2a}
+      \strng{authornamehash}{01601ee28d79d434c3ecdafc2633ce2a}
+      \strng{authorfullhash}{c4a8141535b5a3b7d95e59426cd52a94}
+      \strng{authorfullhashraw}{c4a8141535b5a3b7d95e59426cd52a94}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Recent advancements in reinforcement learning have witnessed remarkable achievements by intelligent agents ranging from game-playing to industrial applications. Of particular interest is the area of multi-agent reinforcement learning (MARL), which holds significant potential for real-world scenarios. However, typical MARL methods are limited in their ability to handle tens of agents, leaving scenarios with up to hundreds or even thousands of agents almost unexplored. The scaling up of the number of agents presents two primary challenges: (1) agent-agent interactions are crucial in multi-agent systems while the number of interactions grows quadratically with the number of agents, resulting in substantial computational complexity and difficulty in strategies-learning; (2) the strengths of interactions among agents exhibit variations both across agents and over time, making it difficult to precisely model such interactions. In this paper, we propose a novel approach named Graph Attention Mean Field (GAT-MF). By converting agent-agent interactions into interactions between each agent and a weighted mean field, we achieve a substantial reduction in computational complexity. The proposed method offers a precise modeling of interaction dynamics with mathematical proofs of its correctness. Additionally, we design a graph attention mechanism to automatically capture the diverse and time-varying strengths of interactions, ensuring an accurate representation of agent interactions. Through extensive experimentation conducted in both manual and real-world scenarios involving over 3000 agents, we validate the efficacy of our method. The results demonstrate that our method outperforms the best baseline method with a remarkable improvement of 42.7\%. Furthermore, our method saves 86.4\% training time and 19.2\% GPU memory compared to the best baseline method. For reproducibility, our source codes and data are available at https://github.com/tsinghua-fib-lab/Large-Scale-MARL-GATMF.}
+      \field{booktitle}{Proceedings of the 29th {{ACM SIGKDD Conference}} on {{Knowledge Discovery}} and {{Data Mining}}}
+      \field{day}{4}
+      \field{isbn}{9798400701030}
+      \field{month}{8}
+      \field{series}{{{KDD}} '23}
+      \field{shorttitle}{{{GAT-MF}}}
+      \field{title}{{{GAT-MF}}: {{Graph Attention Mean Field}} for {{Very Large Scale Multi-Agent Reinforcement Learning}}}
+      \field{urlday}{27}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{685\bibrangedash 697}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1145/3580305.3599359
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/IFNZEP3S/Hao et al_2023_GAT-MF.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/10.1145/3580305.3599359
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/10.1145/3580305.3599359
+      \endverb
+    \endentry
+    \entry{hartford2018}{inproceedings}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=143a99e1bf9a8f87cdd73994c9a88f4b}{%
+           family={Hartford},
+           familyi={H\bibinitperiod},
+           given={Jason},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8e5121646f0a391d306343d6a61f182f}{%
+           family={Graham},
+           familyi={G\bibinitperiod},
+           given={Devon\bibnamedelima R.},
+           giveni={D\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=91d47c0d6ebf96d50082140932162381}{%
+           family={Leyton-Brown},
+           familyi={L\bibinithyphendelim B\bibinitperiod},
+           given={Kevin},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3b8f5a9a085bb7b59f95968faa4493b7}{%
+           family={Ravanbakhsh},
+           familyi={R\bibinitperiod},
+           given={Siamak},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{e68d488e65f79803be728406819939a3}
+      \strng{fullhash}{870e20195a0257d302747c8062f199b9}
+      \strng{fullhashraw}{870e20195a0257d302747c8062f199b9}
+      \strng{bibnamehash}{e68d488e65f79803be728406819939a3}
+      \strng{authorbibnamehash}{e68d488e65f79803be728406819939a3}
+      \strng{authornamehash}{e68d488e65f79803be728406819939a3}
+      \strng{authorfullhash}{870e20195a0257d302747c8062f199b9}
+      \strng{authorfullhashraw}{870e20195a0257d302747c8062f199b9}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We use deep learning to model interactions across two or more sets of objects, such as user-movie ratings, protein-drug bindings, or ternary user-item-tag interactions. The canonical representation of such interactions is a matrix (or a higher-dimensional tensor) with an exchangeability property: the encoding's meaning is not changed by permuting rows or columns. We argue that models should hence be Permutation Equivariant (PE): constrained to make the same predictions across such permutations. We present a parameter-sharing scheme and prove that it could not be made any more expressive without violating PE. This scheme yields three benefits. First, we demonstrate state-of-the-art performance on multiple matrix completion benchmarks. Second, our models require a number of parameters independent of the numbers of objects, and thus scale well to large datasets. Third, models can be queried about new objects that were not available at training time, but for which interactions have since been observed. In experiments, our models achieved surprisingly good generalization performance on this matrix extrapolation task, both within domains (e.g., new users and new movies drawn from the same distribution used for training) and even across domains (e.g., predicting music ratings after training on movies).}
+      \field{booktitle}{{{arXiv}}.Org}
+      \field{day}{7}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{title}{Deep {{Models}} of {{Interactions Across Sets}}}
+      \field{urlday}{14}
+      \field{urlmonth}{6}
+      \field{urlyear}{2025}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/NE8689ZV/Hartford et al. - 2018 - Deep Models of Interactions Across Sets.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1803.02879v2
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1803.02879v2
+      \endverb
+    \endentry
+    \entry{iqbal2019}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=7fb7c7ca1c2dd528601fdff6327cb704}{%
+           family={Iqbal},
+           familyi={I\bibinitperiod},
+           given={Shariq},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=86e3e396d826309a838ac02c93e21550}{%
+           family={Sha},
+           familyi={S\bibinitperiod},
+           given={Fei},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{4a9b2351aaffefc484c7173ffcae4505}
+      \strng{fullhash}{4a9b2351aaffefc484c7173ffcae4505}
+      \strng{fullhashraw}{4a9b2351aaffefc484c7173ffcae4505}
+      \strng{bibnamehash}{4a9b2351aaffefc484c7173ffcae4505}
+      \strng{authorbibnamehash}{4a9b2351aaffefc484c7173ffcae4505}
+      \strng{authornamehash}{4a9b2351aaffefc484c7173ffcae4505}
+      \strng{authorfullhash}{4a9b2351aaffefc484c7173ffcae4505}
+      \strng{authorfullhashraw}{4a9b2351aaffefc484c7173ffcae4505}
+      \field{sortinit}{I}
+      \field{sortinithash}{8d291c51ee89b6cd86bf5379f0b151d8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Reinforcement learning in multi-agent scenarios is important for real-world applications but presents challenges beyond those seen in single-agent settings. We present an actor-critic algorithm that trains decentralized policies in multi-agent settings, using centrally computed critics that share an attention mechanism which selects relevant information for each agent at every timestep. This attention mechanism enables more effective and scalable learning in complex multi-agent environments, when compared to recent approaches. Our approach is applicable not only to cooperative settings with shared rewards, but also individualized reward settings, including adversarial settings, as well as settings that do not provide global states, and it makes no assumptions about the action spaces of the agents. As such, it is flexible enough to be applied to most multi-agent learning problems.}
+      \field{booktitle}{Proceedings of the 36th {{International Conference}} on {{Machine Learning}}}
+      \field{day}{24}
+      \field{eventtitle}{International {{Conference}} on {{Machine Learning}}}
+      \field{issn}{2640-3498}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{title}{Actor-{{Attention-Critic}} for {{Multi-Agent Reinforcement Learning}}}
+      \field{urlday}{14}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{2961\bibrangedash 2970}
+      \range{pages}{10}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/F347RG3Q/Iqbal_Sha_2019_Actor-Attention-Critic for Multi-Agent Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/FYTX3WJ8/Iqbal and Sha - 2019 - Actor-Attention-Critic for Multi-Agent Reinforceme.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v97/iqbal19a.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v97/iqbal19a.html
+      \endverb
+    \endentry
+    \entry{lee2019}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=40d23cafcc5280932c05fcca24885574}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Juho},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=b8513bf69f4e67a914a8fa28e3888b47}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Yoonho},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f3a5b588b00bf3d8184c654d5ba97d6b}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Jungtaek},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=72724b5e2a0b5a804db4065728b25a7c}{%
+           family={Kosiorek},
+           familyi={K\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=45c988f59df2de470839e889bf0af951}{%
+           family={Choi},
+           familyi={C\bibinitperiod},
+           given={Seungjin},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=a71fae003da84f44e31d26e868859945}{%
+           family={Teh},
+           familyi={T\bibinitperiod},
+           given={Yee\bibnamedelima Whye},
+           giveni={Y\bibinitperiod\bibinitdelim W\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{21816a60d79583f7d8e7a4a853043e50}
+      \strng{fullhash}{52f79fe5978c936f6d96c5122475ad98}
+      \strng{fullhashraw}{52f79fe5978c936f6d96c5122475ad98}
+      \strng{bibnamehash}{21816a60d79583f7d8e7a4a853043e50}
+      \strng{authorbibnamehash}{21816a60d79583f7d8e7a4a853043e50}
+      \strng{authornamehash}{21816a60d79583f7d8e7a4a853043e50}
+      \strng{authorfullhash}{52f79fe5978c936f6d96c5122475ad98}
+      \strng{authorfullhashraw}{52f79fe5978c936f6d96c5122475ad98}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Many machine learning tasks such as multiple instance learning, 3D shape recognition, and few-shot image classification are defined on sets of instances. Since solutions to such problems do not depend on the order of elements of the set, models used to address them should be permutation invariant. We present an attention-based neural network module, the Set Transformer, specifically designed to model interactions among elements in the input set. The model consists of an encoder and a decoder, both of which rely on attention mechanisms. In an effort to reduce computational complexity, we introduce an attention scheme inspired by inducing point methods from sparse Gaussian process literature. It reduces the computation time of self-attention from quadratic to linear in the number of elements in the set. We show that our model is theoretically attractive and we evaluate it on a range of tasks, demonstrating the state-of-the-art performance compared to recent methods for set-structured data.}
+      \field{booktitle}{Proceedings of the 36th {{International Conference}} on {{Machine Learning}}}
+      \field{day}{24}
+      \field{eventtitle}{International {{Conference}} on {{Machine Learning}}}
+      \field{issn}{2640-3498}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{shorttitle}{Set {{Transformer}}}
+      \field{title}{Set {{Transformer}}: {{A Framework}} for {{Attention-based Permutation-Invariant Neural Networks}}}
+      \field{urlday}{14}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{3744\bibrangedash 3753}
+      \range{pages}{10}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/FGT9HZIT/Lee et al. - 2019 - Set Transformer A Framework for Attention-based P.pdf;/Users/brandonhosley/Zotero/storage/PVWBQTUV/Lee et al_2019_Set Transformer.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v97/lee19d.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v97/lee19d.html
+      \endverb
+    \endentry
+    \entry{li2021b}{online}{}{}
+      \name{author}{7}{}{%
+        {{un=0,uniquepart=base,hash=92e14a8c19eb5a0c7c199c85db74f106}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yan},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d4f96a51137bfc328512a67d7a9065e5}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Lingxiao},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1f21ad90edcfdb3420a806dea0de128b}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Jiachen},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=af27ba6c036313d1e3b27de6ff616fa8}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Ethan},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=d63cdb851aafe1a8147d77747d26e1d3}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Zhaoran},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5aabe643c77f92846adf1b83e9c78387}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Tuo},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=55bb21a31fded4aad976b7902dc8206a}{%
+           family={Zha},
+           familyi={Z\bibinitperiod},
+           given={Hongyuan},
+           giveni={H\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{a71fd46be5707627f7ffea030721fc93}
+      \strng{fullhash}{db059bb88cbbcf9c255e8dac93712b28}
+      \strng{fullhashraw}{db059bb88cbbcf9c255e8dac93712b28}
+      \strng{bibnamehash}{a71fd46be5707627f7ffea030721fc93}
+      \strng{authorbibnamehash}{a71fd46be5707627f7ffea030721fc93}
+      \strng{authornamehash}{a71fd46be5707627f7ffea030721fc93}
+      \strng{authorfullhash}{db059bb88cbbcf9c255e8dac93712b28}
+      \strng{authorfullhashraw}{db059bb88cbbcf9c255e8dac93712b28}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Multi-agent reinforcement learning (MARL) becomes more challenging in the presence of more agents, as the capacity of the joint state and action spaces grows exponentially in the number of agents. To address such a challenge of scale, we identify a class of cooperative MARL problems with permutation invariance, and formulate it as a mean-field Markov decision processes (MDP). To exploit the permutation invariance therein, we propose the mean-field proximal policy optimization (MF-PPO) algorithm, at the core of which is a permutation-invariant actor-critic neural architecture. We prove that MF-PPO attains the globally optimal policy at a sublinear rate of convergence. Moreover, its sample complexity is independent of the number of agents. We validate the theoretical advantages of MF-PPO with numerical experiments in the multi-agent particle environment (MPE). In particular, we show that the inductive bias introduced by the permutation-invariant neural architecture enables MF-PPO to outperform existing competitors with a smaller number of model parameters, which is the key to its generalization performance.}
+      \field{day}{18}
+      \field{eprintclass}{cs}
+      \field{eprinttype}{arXiv}
+      \field{month}{5}
+      \field{pubstate}{prepublished}
+      \field{shorttitle}{Permutation {{Invariant Policy Optimization}} for {{Mean-Field Multi-Agent Reinforcement Learning}}}
+      \field{title}{Permutation {{Invariant Policy Optimization}} for {{Mean-Field Multi-Agent Reinforcement Learning}}: {{A Principled Approach}}}
+      \field{urlday}{14}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2105.08268
+      \endverb
+      \verb{eprint}
+      \verb 2105.08268
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/SG2RIJN5/Li et al_2021_Permutation Invariant Policy Optimization for Mean-Field Multi-Agent.pdf;/Users/brandonhosley/Zotero/storage/C3SCQED4/2105.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2105.08268
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2105.08268
+      \endverb
+      \keyw{Computer Science - Machine Learning,Computer Science - Multiagent Systems}
+    \endentry
+    \entry{liu2020b}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{un=0,uniquepart=base,hash=1658eb9cc7f03d088ee134bd5c51d441}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Iou-Jen},
+           giveni={I\bibinithyphendelim J\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=53b85b47b32486923f598b78fc90443f}{%
+           family={Yeh},
+           familyi={Y\bibinitperiod},
+           given={Raymond\bibnamedelima A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0c14478283bed70b2c487f3fba643a7b}{%
+           family={Schwing},
+           familyi={S\bibinitperiod},
+           given={Alexander\bibnamedelima G.},
+           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{fullhash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{fullhashraw}{bc7473e651fd56a500db06682bc9392a}
+      \strng{bibnamehash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{authorbibnamehash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{authornamehash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{authorfullhash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{authorfullhashraw}{bc7473e651fd56a500db06682bc9392a}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Sample efficiency and scalability to a large number of agents are two important goals for multi-agent reinforcement learning systems. Recent works got us closer to those goals, addressing non-stationarity of the environment from a single agent’s perspective by utilizing a deep net critic which depends on all observations and actions. The critic input concatenates agent observations and actions in a user-specified order. However, since deep nets aren’t permutation invariant, a permuted input changes the critic output despite the environment remaining identical. To avoid this inefficiency, we propose a ‘permutation invariant critic’ (PIC), which yields identical output irrespective of the agent permutation. This consistent representation enables our model to scale to 30 times more agents and to achieve improvements of test episode reward between 15\% to 50\% on the challenging multi-agent particle environment (MPE).}
+      \field{booktitle}{Proceedings of the {{Conference}} on {{Robot Learning}}}
+      \field{day}{12}
+      \field{eventtitle}{Conference on {{Robot Learning}}}
+      \field{issn}{2640-3498}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{shorttitle}{{{PIC}}}
+      \field{title}{{{PIC}}: {{Permutation Invariant Critic}} for {{Multi-Agent Deep Reinforcement Learning}}}
+      \field{urlday}{25}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{590\bibrangedash 602}
+      \range{pages}{13}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/C5YEN3SD/Liu et al_2020_PIC.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v100/liu20a.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v100/liu20a.html
+      \endverb
+    \endentry
+    \entry{papoudakis2021}{online}{}{}
+      \name{author}{4}{}{%
+        {{un=0,uniquepart=base,hash=d0631db9b5ca2e6150a04082663ca08d}{%
+           family={Papoudakis},
+           familyi={P\bibinitperiod},
+           given={Georgios},
+           giveni={G\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f355421623a9ce0d54965817f05f6ad0}{%
+           family={Christianos},
+           familyi={C\bibinitperiod},
+           given={Filippos},
+           giveni={F\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c32fcecebc45af27f83fbcfea1c93b31}{%
+           family={Schäfer},
+           familyi={S\bibinitperiod},
+           given={Lukas},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9da4f3f413d514d731efe34067976909}{%
+           family={Albrecht},
+           familyi={A\bibinitperiod},
+           given={Stefano\bibnamedelima V.},
+           giveni={S\bibinitperiod\bibinitdelim V\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{f2473647f2bd5df0777ba1def078b0af}
+      \strng{fullhash}{fb48708063b34a78b84029004ce47bdb}
+      \strng{fullhashraw}{fb48708063b34a78b84029004ce47bdb}
+      \strng{bibnamehash}{f2473647f2bd5df0777ba1def078b0af}
+      \strng{authorbibnamehash}{f2473647f2bd5df0777ba1def078b0af}
+      \strng{authornamehash}{f2473647f2bd5df0777ba1def078b0af}
+      \strng{authorfullhash}{fb48708063b34a78b84029004ce47bdb}
+      \strng{authorfullhashraw}{fb48708063b34a78b84029004ce47bdb}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Multi-agent deep reinforcement learning (MARL) suffers from a lack of commonly-used evaluation tasks and criteria, making comparisons between approaches difficult. In this work, we provide a systematic evaluation and comparison of three different classes of MARL algorithms (independent learning, centralised multi-agent policy gradient, value decomposition) in a diverse range of cooperative multi-agent learning tasks. Our experiments serve as a reference for the expected performance of algorithms across different learning tasks, and we provide insights regarding the effectiveness of different learning approaches. We open-source EPyMARL, which extends the PyMARL codebase to include additional algorithms and allow for flexible configuration of algorithm implementation details such as parameter sharing. Finally, we open-source two environments for multi-agent research which focus on coordination under sparse rewards.}
+      \field{day}{9}
+      \field{eprintclass}{cs, stat}
+      \field{eprinttype}{arXiv}
+      \field{month}{11}
+      \field{pubstate}{prepublished}
+      \field{title}{Benchmarking {{Multi-Agent Deep Reinforcement Learning Algorithms}} in {{Cooperative Tasks}}}
+      \field{urlday}{28}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2006.07869
+      \endverb
+      \verb{eprint}
+      \verb 2006.07869
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/X55NBJGK/Papoudakis et al_2021_Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms in Cooperative.pdf;/Users/brandonhosley/Zotero/storage/9S95S7UZ/2006.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2006.07869
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2006.07869
+      \endverb
+      \keyw{Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning}
+    \endentry
+    \entry{powell2022}{book}{}{}
+      \name{author}{1}{}{%
+        {{un=0,uniquepart=base,hash=15bdfabc6236aba06c04c7f4b64e2a41}{%
+           family={Powell},
+           familyi={P\bibinitperiod},
+           given={Warren\bibnamedelima B.},
+           giveni={W\bibinitperiod\bibinitdelim B\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{15bdfabc6236aba06c04c7f4b64e2a41}
+      \strng{fullhash}{15bdfabc6236aba06c04c7f4b64e2a41}
+      \strng{fullhashraw}{15bdfabc6236aba06c04c7f4b64e2a41}
+      \strng{bibnamehash}{15bdfabc6236aba06c04c7f4b64e2a41}
+      \strng{authorbibnamehash}{15bdfabc6236aba06c04c7f4b64e2a41}
+      \strng{authornamehash}{15bdfabc6236aba06c04c7f4b64e2a41}
+      \strng{authorfullhash}{15bdfabc6236aba06c04c7f4b64e2a41}
+      \strng{authorfullhashraw}{15bdfabc6236aba06c04c7f4b64e2a41}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{day}{2}
+      \field{isbn}{978-1-119-81505-1}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{shorttitle}{Reinforcement {{Learning}} and {{Stochastic Optimization}}}
+      \field{title}{Reinforcement {{Learning}} and {{Stochastic Optimization}}: {{A Unified Framework}} for {{Sequential Decisions}}: By {{Warren B}}. {{Powell}} (Ed.), {{Wiley}} (2022)}
+      \field{urlday}{6}
+      \field{urlmonth}{6}
+      \field{urlyear}{2025}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/GVL9R52E/Halperin - 2022 - Reinforcement Learning and Stochastic Optimization.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.tandfonline.com/doi/full/10.1080/14697688.2022.2135456
+      \endverb
+      \verb{url}
+      \verb https://www.tandfonline.com/doi/full/10.1080/14697688.2022.2135456
+      \endverb
+    \endentry
+    \entry{tang2021}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{un=0,uniquepart=base,hash=3b9f8cc01fc60b1f84fe81c4bf7e8f68}{%
+           family={Tang},
+           familyi={T\bibinitperiod},
+           given={Yujin},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=4467056eb9d0a44c1ec21bbb4d6152c5}{%
+           family={Ha},
+           familyi={H\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{location}{1}{%
+        {Red Hook, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Curran Associates Inc.}%
+      }
+      \strng{namehash}{04fceb828eb574062e2339f21e07b495}
+      \strng{fullhash}{04fceb828eb574062e2339f21e07b495}
+      \strng{fullhashraw}{04fceb828eb574062e2339f21e07b495}
+      \strng{bibnamehash}{04fceb828eb574062e2339f21e07b495}
+      \strng{authorbibnamehash}{04fceb828eb574062e2339f21e07b495}
+      \strng{authornamehash}{04fceb828eb574062e2339f21e07b495}
+      \strng{authorfullhash}{04fceb828eb574062e2339f21e07b495}
+      \strng{authorfullhashraw}{04fceb828eb574062e2339f21e07b495}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{In complex systems, we often observe complex global behavior emerge from a collection of agents interacting with each other in their environment, with each individual agent acting only on locally available information, without knowing the full picture. Such systems have inspired development of artificial intelligence algorithms in areas such as swarm optimization and cellular automata. Motivated by the emergence of collective behavior from complex cellular systems, we build systems that feed each sensory input from the environment into distinct, but identical neural networks, each with no fixed relationship with one another. We show that these sensory networks can be trained to integrate information received locally, and through communication via an attention mechanism, can collectively produce a globally coherent policy. Moreover, the system can still perform its task even if the ordering of its inputs is randomly permuted several times during an episode. These permutation invariant systems also display useful robustness and generalization properties that are broadly applicable.}
+      \field{booktitle}{Proceedings of the 35th {{International Conference}} on {{Neural Information Processing Systems}}}
+      \field{day}{6}
+      \field{isbn}{978-1-71384-539-3}
+      \field{month}{12}
+      \field{series}{{{NIPS}} '21}
+      \field{shorttitle}{The Sensory Neuron as a Transformer}
+      \field{title}{The Sensory Neuron as a Transformer: Permutation-Invariant Neural Networks for Reinforcement Learning}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{pages}{22574\bibrangedash 22587}
+      \range{pages}{14}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/W3H4ZE5Y/Tang_Ha_2021_The sensory neuron as a transformer.pdf
+      \endverb
+    \endentry
+    \entry{yang2021a}{article}{}{}
+      \name{author}{4}{}{%
+        {{un=1,uniquepart=given,hash=7efa6952cff713d0987625215131d93a}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Shantian},
+           giveni={S\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=d6f2b26e2b50e389f737db615a2d7427}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Bo},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=be20b75fce95276667b40fe95adc4dd6}{%
+           family={Kang},
+           familyi={K\bibinitperiod},
+           given={Zhongfeng},
+           giveni={Z\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=c9d4f94a15d098764eed5fe05f8dd346}{%
+           family={Deng},
+           familyi={D\bibinitperiod},
+           given={Lihui},
+           giveni={L\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{aae906ef6d96c7f8b76f5f2b09d48742}
+      \strng{fullhash}{a290b86273d352110a228c6f5f663f87}
+      \strng{fullhashraw}{a290b86273d352110a228c6f5f663f87}
+      \strng{bibnamehash}{aae906ef6d96c7f8b76f5f2b09d48742}
+      \strng{authorbibnamehash}{aae906ef6d96c7f8b76f5f2b09d48742}
+      \strng{authornamehash}{aae906ef6d96c7f8b76f5f2b09d48742}
+      \strng{authorfullhash}{a290b86273d352110a228c6f5f663f87}
+      \strng{authorfullhashraw}{a290b86273d352110a228c6f5f663f87}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Multi-agent deep reinforcement learning (MDRL) has been widely applied in multi-intersection traffic signal control. The MDRL algorithms produce the decentralized cooperative traffic-signal policies via specialized multi-agent settings in certain traffic networks. However, the state-of-the-art MDRL algorithms seem to have some drawbacks. (1) It is desirable that the traffic-signal policies can be smoothly transferred to diverse traffic networks, however, the adopted specialized multi-agent settings hinder the traffic-signal policies to transfer and generalize to new traffic networks. (2) Existing MDRL algorithms which are based on deep neural networks cannot flexibly tackle a time-varying number of vehicles traversing the traffic networks. (3) Existing MDRL algorithms which are based on homogeneous graph neural networks fail to capture the heterogeneous features of objects in traffic networks. Motivated by the above observations, in this paper, we propose an algorithm, referred to as Inductive Heterogeneous Graph Multi-agent Actor–critic (IHG-MA) algorithm, for multi-intersection traffic signal control. The proposed IHG-MA algorithm has two features: (1) It conducts representation learning using a proposed inductive heterogeneous graph neural network (IHG), which is an inductive algorithm. The proposed IHG algorithm can generate embeddings for previously unseen nodes (e.g., new entry vehicles) and new graphs (e.g., new traffic networks). But unlike the algorithms based on the homogeneous graph neural network, IHG algorithm not only encodes heterogeneous features of each node, but also encodes heterogeneous structural (graph) information. (2) It also conducts policy learning using a proposed multi-agent actor–critic(MA), which is a decentralized cooperative framework. The proposed MA framework employs the final embeddings to compute the Q-value and policy, and then optimizes the whole algorithm via the Q-value and policy loss. Experimental results on different traffic datasets illustrate that IHG-MA algorithm outperforms the state-of-the-art algorithms in terms of multiple traffic metrics, which seems to be a new promising algorithm for multi-intersection traffic signal control.}
+      \field{day}{1}
+      \field{issn}{0893-6080}
+      \field{journaltitle}{Neural Networks}
+      \field{month}{7}
+      \field{shortjournal}{Neural Networks}
+      \field{shorttitle}{{{IHG-MA}}}
+      \field{title}{{{IHG-MA}}: {{Inductive}} Heterogeneous Graph Multi-Agent Reinforcement Learning for Multi-Intersection Traffic Signal Control}
+      \field{urlday}{14}
+      \field{urlmonth}{2}
+      \field{urlyear}{2025}
+      \field{volume}{139}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{265\bibrangedash 277}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1016/j.neunet.2021.03.015
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/B4TQEJ22/Yang et al_2021_IHG-MA.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sciencedirect.com/science/article/pii/S0893608021000952
+      \endverb
+      \verb{url}
+      \verb https://www.sciencedirect.com/science/article/pii/S0893608021000952
+      \endverb
+      \keyw{Cooperative traffic signal control,Heterogeneous graph neural network,Inductive heterogeneous graph representation learning,Multi-agent reinforcement learning,Transfer learning}
+    \endentry
+    \entry{yang2018}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{un=1,uniquepart=given,hash=616d3b0b19e3536f5c65dfab2a48a659}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Yaodong},
+           giveni={Y\bibinitperiod},
+           givenun=1}}%
+        {{un=0,uniquepart=base,hash=1292f67a9d739077371447300d6c740e}{%
+           family={Luo},
+           familyi={L\bibinitperiod},
+           given={Rui},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9dd3667af79a8395c0d82904c6d0d2fe}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Minne},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2a72f304d2bc33c9c92301f2dc3063b2}{%
+           family={Zhou},
+           familyi={Z\bibinitperiod},
+           given={Ming},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=fbc51a6317f158547173b93086d9b1a2}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Weinan},
+           giveni={W\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=2f3ea981fa5a715a69118b48e576a9f5}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Jun},
+           giveni={J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{ff896b51edd840151184b0b4e3d67635}
+      \strng{fullhash}{56bb03e096a8b0897ad24f05d22ba643}
+      \strng{fullhashraw}{56bb03e096a8b0897ad24f05d22ba643}
+      \strng{bibnamehash}{ff896b51edd840151184b0b4e3d67635}
+      \strng{authorbibnamehash}{ff896b51edd840151184b0b4e3d67635}
+      \strng{authornamehash}{ff896b51edd840151184b0b4e3d67635}
+      \strng{authorfullhash}{56bb03e096a8b0897ad24f05d22ba643}
+      \strng{authorfullhashraw}{56bb03e096a8b0897ad24f05d22ba643}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Existing multi-agent reinforcement learning methods are limited typically to a small number of agents. When the agent number increases largely, the learning becomes intractable due to the curse of the dimensionality and the exponential growth of agent interactions. In this paper, we present Mean Field Reinforcement Learning where the interactions within the population of agents are approximated by those between a single agent and the average effect from the overall population or neighboring agents; the interplay between the two entities is mutually reinforced: the learning of the individual agent’s optimal policy depends on the dynamics of the population, while the dynamics of the population change according to the collective patterns of the individual policies. We develop practical mean field Q-learning and mean field Actor-Critic algorithms and analyze the convergence of the solution to Nash equilibrium. Experiments on Gaussian squeeze, Ising model, and battle games justify the learning effectiveness of our mean field approaches. In addition, we report the first result to solve the Ising model via model-free reinforcement learning methods.}
+      \field{booktitle}{Proceedings of the 35th {{International Conference}} on {{Machine Learning}}}
+      \field{day}{3}
+      \field{eventtitle}{International {{Conference}} on {{Machine Learning}}}
+      \field{issn}{2640-3498}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{title}{Mean {{Field Multi-Agent Reinforcement Learning}}}
+      \field{urlday}{14}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{5571\bibrangedash 5580}
+      \range{pages}{10}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/UJ9GS4QT/Yang et al. - 2018 - Mean Field Multi-Agent Reinforcement Learning.pdf;/Users/brandonhosley/Zotero/storage/ZNHMG8P8/Yang et al_2018_Mean Field Multi-Agent Reinforcement Learning.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v80/yang18d.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v80/yang18d.html
+      \endverb
+    \endentry
+    \entry{zaheer2017}{inproceedings}{}{}
+      \name{author}{6}{}{%
+        {{un=0,uniquepart=base,hash=c4c46d2d2e84c4fd611f22d52ad6b782}{%
+           family={Zaheer},
+           familyi={Z\bibinitperiod},
+           given={Manzil},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=cff8967849ae28fa040a2c31360f5f70}{%
+           family={Kottur},
+           familyi={K\bibinitperiod},
+           given={Satwik},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3b8f5a9a085bb7b59f95968faa4493b7}{%
+           family={Ravanbakhsh},
+           familyi={R\bibinitperiod},
+           given={Siamak},
+           giveni={S\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=1874a80c740f3a90f1959c842e8d1d10}{%
+           family={Poczos},
+           familyi={P\bibinitperiod},
+           given={Barnabas},
+           giveni={B\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=f0b8bc62189ed0fc13d8da5338458baa}{%
+           family={Salakhutdinov},
+           familyi={S\bibinitperiod},
+           given={Russ\bibnamedelima R},
+           giveni={R\bibinitperiod\bibinitdelim R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=82d61e31b4f7f82ad59ff887349bdfe3}{%
+           family={Smola},
+           familyi={S\bibinitperiod},
+           given={Alexander\bibnamedelima J},
+           giveni={A\bibinitperiod\bibinitdelim J\bibinitperiod},
+           givenun=0}}%
+      }
+      \list{publisher}{1}{%
+        {Curran Associates, Inc.}%
+      }
+      \strng{namehash}{7f3a8d6a5ab04df1d1a78a8f34f95ea4}
+      \strng{fullhash}{44d13f88ae68ecdc99e23bbefb2bf0e5}
+      \strng{fullhashraw}{44d13f88ae68ecdc99e23bbefb2bf0e5}
+      \strng{bibnamehash}{7f3a8d6a5ab04df1d1a78a8f34f95ea4}
+      \strng{authorbibnamehash}{7f3a8d6a5ab04df1d1a78a8f34f95ea4}
+      \strng{authornamehash}{7f3a8d6a5ab04df1d1a78a8f34f95ea4}
+      \strng{authorfullhash}{44d13f88ae68ecdc99e23bbefb2bf0e5}
+      \strng{authorfullhashraw}{44d13f88ae68ecdc99e23bbefb2bf0e5}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We study the problem of designing models for machine learning tasks defined on sets. In contrast to the traditional approach of operating on fixed dimensional vectors, we consider objective functions defined on sets and are invariant to permutations. Such problems are widespread, ranging from the estimation of population statistics, to anomaly detection in piezometer data of embankment dams, to cosmology. Our main theorem characterizes the permutation invariant objective functions and provides a family of functions to which any permutation invariant objective function must belong. This family of functions has a special structure which enables us to design a deep network architecture that can operate on sets and which can be deployed on a variety of scenarios including both unsupervised and supervised learning tasks. We demonstrate the applicability of our method on population statistic estimation, point cloud classification, set expansion, and outlier detection.}
+      \field{booktitle}{Advances in {{Neural Information Processing Systems}}}
+      \field{title}{Deep {{Sets}}}
+      \field{urlday}{14}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{volume}{30}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/N4X2YWWI/Zaheer et al_2017_Deep Sets.pdf;/Users/brandonhosley/Zotero/storage/U3K2RC4G/deepsets-appendix.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://papers.neurips.cc/paper_files/paper/2017/hash/f22e4747da1aa27e363d86d40ff442fe-Abstract.html
+      \endverb
+      \verb{url}
+      \verb https://papers.neurips.cc/paper_files/paper/2017/hash/f22e4747da1aa27e363d86d40ff442fe-Abstract.html
+      \endverb
+    \endentry
+    \entry{zambaldi2018}{inproceedings}{}{}
+      \name{author}{16}{}{%
+        {{un=0,uniquepart=base,hash=997657b08786dc45aaef854249d8af31}{%
+           family={Zambaldi},
+           familyi={Z\bibinitperiod},
+           given={Vinicius},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=6087d2ea339b8f52276e883d86bd18f3}{%
+           family={Raposo},
+           familyi={R\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=0b3e9682fc5db39420c22d4267683326}{%
+           family={Santoro},
+           familyi={S\bibinitperiod},
+           given={Adam},
+           giveni={A\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=8158ca9415b0eb10ee17c8a8ae663bb3}{%
+           family={Bapst},
+           familyi={B\bibinitperiod},
+           given={Victor},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ccd1e47b05491aa37da5d040a0b406f6}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yujia},
+           giveni={Y\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=92efe2a8e13a9b7a3fb647951ee2391c}{%
+           family={Babuschkin},
+           familyi={B\bibinitperiod},
+           given={Igor},
+           giveni={I\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=abe873d21d37af0af9b6711c1efd9caa}{%
+           family={Tuyls},
+           familyi={T\bibinitperiod},
+           given={Karl},
+           giveni={K\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=ff36bcecacbac6382f6f3048b316d708}{%
+           family={Reichert},
+           familyi={R\bibinitperiod},
+           given={David},
+           giveni={D\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=3a6fdf4df9a25f1d2d506ad9e86e1f6c}{%
+           family={Lillicrap},
+           familyi={L\bibinitperiod},
+           given={Timothy},
+           giveni={T\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=67c36471603b6de0347c489b0f8b05b0}{%
+           family={Lockhart},
+           familyi={L\bibinitperiod},
+           given={Edward},
+           giveni={E\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9c9a18dc9378af37452e312a622cd2ed}{%
+           family={Shanahan},
+           familyi={S\bibinitperiod},
+           given={Murray},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=430fe30c5432d64aba2ec4198286db53}{%
+           family={Langston},
+           familyi={L\bibinitperiod},
+           given={Victoria},
+           giveni={V\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=7045b009b04d57bd2e19b5dfa0864d4f}{%
+           family={Pascanu},
+           familyi={P\bibinitperiod},
+           given={Razvan},
+           giveni={R\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=9ac5fb35edeb23736953b00e66bef926}{%
+           family={Botvinick},
+           familyi={B\bibinitperiod},
+           given={Matthew},
+           giveni={M\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=494b568c5dc85ba8f3f409635f9c5f25}{%
+           family={Vinyals},
+           familyi={V\bibinitperiod},
+           given={Oriol},
+           giveni={O\bibinitperiod},
+           givenun=0}}%
+        {{un=0,uniquepart=base,hash=5a63429a6e1733e8f3f4dc71cbb6eec9}{%
+           family={Battaglia},
+           familyi={B\bibinitperiod},
+           given={Peter},
+           giveni={P\bibinitperiod},
+           givenun=0}}%
+      }
+      \strng{namehash}{d83394116ab65180ade0d4d8a4e37ec3}
+      \strng{fullhash}{3a10c200b2565beb12849f7fe41af222}
+      \strng{fullhashraw}{3a10c200b2565beb12849f7fe41af222}
+      \strng{bibnamehash}{d83394116ab65180ade0d4d8a4e37ec3}
+      \strng{authorbibnamehash}{d83394116ab65180ade0d4d8a4e37ec3}
+      \strng{authornamehash}{d83394116ab65180ade0d4d8a4e37ec3}
+      \strng{authorfullhash}{3a10c200b2565beb12849f7fe41af222}
+      \strng{authorfullhashraw}{3a10c200b2565beb12849f7fe41af222}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We introduce an approach for augmenting model-free deep reinforcement learning agents with a mechanism for relational reasoning over structured representations, which improves performance, learning efficiency, generalization, and interpretability. Our architecture encodes an image as a set of vectors, and applies an iterative message-passing procedure to discover and reason about relevant entities and relations in a scene. In six of seven StarCraft II Learning Environment mini-games, our agent achieved state-of-the-art performance, and surpassed human grandmaster-level on four. In a novel navigation and planning task, our agent's performance and learning efficiency far exceeded non-relational baselines, it was able to generalize to more complex scenes than it had experienced during training. Moreover, when we examined its learned internal representations, they reflected important structure about the problem and the agent's intentions. The main contribution of this work is to introduce techniques for representing and reasoning about states in model-free deep reinforcement learning agents via relational inductive biases. Our experiments show this approach can offer advantages in efficiency, generalization, and interpretability, and can scale up to meet some of the most challenging test environments in modern artificial intelligence.}
+      \field{day}{27}
+      \field{eventtitle}{International {{Conference}} on {{Learning Representations}}}
+      \field{langid}{english}
+      \field{month}{9}
+      \field{title}{Deep Reinforcement Learning with Relational Inductive Biases}
+      \field{urlday}{14}
+      \field{urlmonth}{5}
+      \field{urlyear}{2025}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/9UUADGCF/Zambaldi et al_2018_Deep reinforcement learning with relational inductive biases.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://openreview.net/forum?id=HkxaFoC9KQ
+      \endverb
+      \verb{url}
+      \verb https://openreview.net/forum?id=HkxaFoC9KQ
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

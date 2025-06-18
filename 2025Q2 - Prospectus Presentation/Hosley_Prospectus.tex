@@ -10,13 +10,15 @@
 \usepackage{algpseudocode}
 \usepackage{comment}
 \usepackage{tikz}
-    \usetikzlibrary{automata, positioning, calc}
+    \usetikzlibrary{automata, positioning, calc, shapes.geometric, shapes.misc, fit,
+    perspective}
     \usepackage{standalone} % Needed for Tikzscale
     \usepackage{tikzscale}  % Allows you to import and scale tikz like graphic
 \usepackage{pgfgantt}
 \usepackage{booktabs}
 
 \usepackage{graphicx}
+\usepackage{subcaption}
 \makeatletter
 \def\input@path{{Chapters/}{other/}{Figures/}{Tables/}}
 \makeatother
@@ -46,8 +48,10 @@
 
 
 
-\title{Working Title}
-% \subtitle{A Prospectus Defense}
+\title{% WORKING TITLE:\\
+    Increasing Efficiency, Efficacy, and Extensibility\\
+    in Heterogeneous Agent Reinforcement Learning }
+\subtitle{A Prospectus Defense}
 \author{Capt. Brandon Hosley\inst{1}}
 \institute[ENS]{
     \inst{1}
@@ -88,59 +92,11 @@
 \input{Contribution_3.tex}
 
 % Prospectus, schedule
+\input{Plans.tex}
 
-\begin{frame}{Research Schedule}
-    \begin{figure}[htbp]
-        \begin{center}
-        \begin{ganttchart}[y unit title=0.4cm, y unit chart=0.5cm,
-        vgrid,hgrid, title label anchor/.style={below=-1.6ex},
-        title left shift=.05, title right shift=-.05, title height=1,
-        progress label text={}, bar height=0.8, bar top shift=0.1,
-        group right shift=0, group top shift=.6,
-        inline,
-        group height=.3]{1}{18}
-        
-            %labels
-            \gantttitle{2025}{18} \\
-            \gantttitle{Apr}{2} 
-            \gantttitle{May}{2} 
-            \gantttitle{Jun}{2} 
-            \gantttitle{Jul}{2} 
-            \gantttitle{Aug}{2} 
-            \gantttitle{Sep}{2} 
-            \gantttitle{Oct}{2} 
-            \gantttitle{Nov}{2} 
-            \gantttitle{Dec}{2} \\
-    
-            %tasks -6
-            \ganttbar[bar/.style={fill=blue!25}]{C1: Writing}{1}{2} \\
-            \ganttbar[bar/.style={fill=blue!35}]{C1: Editing}{3}{7} \\
-            
-            \ganttbar[bar/.style={fill=green!15}]{C2: Lit Review}{3}{5} \\
-            \ganttbar[bar/.style={fill=green!20}]{C2: Coding}{4}{6} \\
-            \ganttbar[bar/.style={fill=green!25}]{C2: Writing}{7}{10} \\
-            \ganttbar[bar/.style={fill=green!20}]{C2: Exp. Running}{7}{10} \\
-            \ganttbar[bar/.style={fill=green!35}]{C2: Editing}{11}{16} \\
-            
-            \ganttbar[bar/.style={fill=teal!15}]{C3: Lit Review}{10}{12} \\
-            \ganttbar[bar/.style={fill=teal!20}]{C3: Coding}{11}{13} \\
-            \ganttbar[bar/.style={fill=teal!25}]{C3: Writing}{12}{16} \\
-            \ganttbar[bar/.style={fill=teal!20}]{C3: Exp. Running}{14}{16} \\
-            \ganttbar[bar/.style={fill=teal!35}]{C3: Editing}{17}{18} \\
-            
-            \ganttbar[bar/.style={fill=red!25}]{Def. Prep.}{16}{18} 
-            %\ganttbar{Defense Prep}{}{}
-            % \ganttbar[bar inline label node/.style={left=10mm},]{Prospectus}{12}{12} \\
-            % \ganttbar[bar inline label node/.style={left=15mm},]{Specialty Exam}{14}{14} \\
-            % \ganttmilestone{Specialty Defense NLTD}{23} \\
-        \end{ganttchart}
-        \end{center}
-        \caption{Planned Timeline}
-        \label{fig:timeline}
-    \end{figure}
-\end{frame}
 
-\section{Conclusion}
+
+% \section{Conclusion}
 
 \begin{frame}
     \centering
