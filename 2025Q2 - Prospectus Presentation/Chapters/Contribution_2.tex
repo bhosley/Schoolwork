@@ -224,7 +224,7 @@
 \subsubsection{Environment Model}
 
 \begin{frame}{Environment Model (RT 1.2)}
-    Using Powell's~\cite{powell2022}
+    Using Powell's~\footcite{powell2022}
     framework for modeling:
     \begin{columns}
         \begin{column}{0.3\linewidth}
@@ -241,31 +241,102 @@
     \end{columns}
 \end{frame}
 
-\begin{frame}{State}
-    For arbitrary \(N\in\mathbb{N}\) dimensional space, with Domain \(D_n\in\mathbb{N}\) 
-    for each \(n\in N\) dimension, then the state and state spaces may be:
+
+\begin{frame}{State: Time and Joint Representation}
     \begin{itemize}
-        \item For \textbf{Agent} \(i\in I\)
-            \[s_i \in S_i := \{d\in D_n\ \forall\ n\in N\}\cup\{\theta_{n,n+1}\ \forall\ n\in N-1\}\]
-        \item For \textbf{Non-Agents} (Objectives, Obstacles, Hazards) \(j,k,l\)
-            \[s_e \in S_{e} := \{d\in D_n\ \forall\ n\in N\} \quad\forall e \in \{J,K,L\}\]
-        \item Joint State (as a set)
-            \[s \in S = \bigcup_{}^{} S_{\{i,j,k,l\}}\]
+        \item Let \(T\subset\mathbb{N}\) be the set of decision epochs.
+        \item Let entities \(E := (I, J, K, L)\), where:
+        \begin{itemize}
+            \item \(i\in I\): agents
+            \item \(j\in J\): objectives
+            \item \(k\in K\): hazards
+            \item \(l\in L\): obstacles
+        \end{itemize}
+        \item For time period \(t\in T\) and entities \(e\in E\), the joint state is:
+        \[
+            s_t := \{s_{te}\ \forall\ e\in E\}, \quad s_t \in S
+        \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{State: Marginal Representations}
+    Let \(N\in \mathbb{N}\) be the number of spatial dimensions,
+    and for each \(n \in \{1, \dots, N\}\),
+    let \(D^{(n)} \in \mathbb{F}\) denote the domain of the \(n\)th dimension.
+    % Let,
+    % \begin{itemize}
+    %     \item \(N\in \mathbb{N}\) be the number of spatial dimensions.
+    %     \item  and for each \(n \in \{1, \dots, N\}\), 
+    %         let \(D^{(n)} \in \mathbb{F}\) denote the domain of the \(n\)th dimension.
+    % \end{itemize}
+    Then for,
+    \begin{itemize}
+        \item non-agents \(e\in (J, K, L)\) marginal states are: \vspace{-0.8em}
+        \[
+            s_{te} := (d_{te})
+        \]
+        \item agents \(i\in I\) marginal states are: \vspace{-0.8em}
+        \[
+            s_{ti} := (d_{ti}, \theta_{ti})
+        \]
+    \end{itemize}
+    Where.
+    \begin{itemize}
+        \item the location vector is: \vspace{-0.8em}
+        \[
+            d_{te} := \left(d_{te}^{(1)},\ldots, d_{te}^{(N)}\right) \in \prod_{n=1}^{N} D_{e}^{(n)}
+        \]
+        \item and the orientation vector is: \vspace{-0.8em}
+        \[
+            \theta_{ti} := \left(\theta_{ti}^{(1,2)},\ldots, \theta_{ti}^{(N-1,N)}\right) \in \prod_{n=1}^{N-1} \Theta_{i}^{(n,n+1)}
+        \]
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Decision/Action}
-    Joint action:
-    \[a \in A\]
-    Marginal actions:
-    \[a_i \in A_i \ \forall\ i\in I.\]
-    Where
-    \[a_i = (\Delta\boldsymbol{\theta},\ a_{\text{move}},\ a_{\text{interact}})\]
-    and
-    \[\Delta\boldsymbol{\theta} \in \{-\delta, 0, +\delta\}^{N-1}\]
-    \[a_{\text{move}} \in \{0,\ 1\}\]
-    \[a_{\text{interact}} \in \{\text{none},\ \text{interact}\}\]
+    Joint action \(a \in A\) is the combination of agent's actions \(a_i\).
+    \[
+        a := \left(a_{1}, \ldots, a_{|I|}\right) \ \in A := \prod_{i\in I}^{} A_i
+    \]
+    Then the marginal action space for agent \(i\in I\) is,
+    \[
+        a_{ti}^{} := (a_{ti}^\text{interact},a_{ti}^\text{move},\Delta\theta_{ti})
+    \]
+    where,
+    \begin{itemize}
+        \item \(a_{ti}^\text{interact} \in \{0,1\}\) indicates whether the agent will attempt 
+            to interact with the environment (1 = interact, 0 = no interaction),
+        \item \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\) 
+            denotes the forward movement magnitude of agent \(i\),
+        \item \(\Delta\theta_{ti} := \left(\Delta\theta_{ti}^{(1,2)},\ldots, 
+            \theta_{ti}^{(N-1,N)}\right) \in \prod_{n=1}^{N-1} \Delta\Theta_{i}^{(n,n+1)}\) 
+            specifies the adjustments to the agent's orientation along each rotational axis.
+    \end{itemize}
 \end{frame}
+
+\begin{frame}{Heterogeneous Action Spaces}
+    Heterogeneous action spaces can be naturally modeled through constraints on action spaces:
+    \begin{itemize}
+        \item \textbf{Movement:} for \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\)
+        \item \textbf{Orientation Adjustment:} in radians
+        \item \textbf{Gridworld Example:} (allowing diagonal orientation and moving,)
+        \begin{itemize}
+            \item A \textbf{rotary-wing aircraft} 
+            \begin{itemize}
+                \item \(M_i := \{0,1\}\)
+                \item \(\Delta\Theta := \{-\pi, -\frac{3}{4}\pi,  -\frac{1}{2}\pi, -\frac{1}{4}\pi, 0, \frac{1}{4}\pi,  \frac{1}{2}\pi, \frac{3}{4}\pi, \pi\}\)
+            \end{itemize}
+            \item A \textbf{fixed-wing aircraft}
+            \begin{itemize}
+                \item \(M_i := \{1,2\}\)
+                \item \(\Delta\Theta := \{-\frac{1}{4}\pi, 0, \frac{1}{4}\pi\}\)
+            \end{itemize}
+        \end{itemize}
+    \end{itemize}
+    These constraints define agent-specific action subspaces \( A_i \subset A \), 
+    contributing to fundamental heterogeneity in the decision model.
+\end{frame}
+
 
 \begin{frame}{Exogeneous Information}
     Currently this representation is
