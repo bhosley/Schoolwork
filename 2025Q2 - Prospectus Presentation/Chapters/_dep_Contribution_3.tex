@@ -1,0 +1,108 @@
+\section{Contribution 3}
+
+% For each Contribution:
+%     Introduction
+%         Recall Motivation
+%         Lit review
+%         Contribution
+%     Methdology
+%     Experimental Procedure
+%     Results
+%     Discussion
+\subsection{Introduction}
+
+\begin{frame}{The Case for Progressive Network Growth}
+    \begin{itemize}
+        \item In reinforcement learning, larger networks often yield better performance—but 
+            training large models from scratch can be inefficient and unstable.
+        \item Many real-world systems require policies to grow over time in response to 
+            increasing task complexity or mission demands.
+        \item Projection-based methods offer a way to expand policy networks mid-training 
+            without discarding previously learned behavior.
+        \item This contribution investigates the feasibility and benefits of progressive 
+            architectural growth as an efficient training strategy.
+    \end{itemize}
+\end{frame}
+
+\subsubsection{Literature Review}
+
+\subsubsection{Research Questions}
+
+\begin{frame}{Contribution 3 - Research Questions}
+    \begin{enumerate}
+        \item[RQ 1] {
+            Can tensor-based projections be used to grow a policy network's capacity during 
+            training while preserving the functional behavior of the original network?}
+        \item[RQ 2] {
+            Can we identify appropriate transition points during training when projecting 
+            to a larger policy network yields the greatest benefit?}
+        \item[RQ 3] {
+            Does this progressive architectural growth strategy reduce total training cost 
+            or improve final policy performance compared to fixed-size architectures?}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 1 - Research Tasks}
+    \begin{enumerate}
+        \item[RQ 1] \textcolor{gray}{
+            Can tensor-based projections be used to grow a policy network's capacity during 
+            training while preserving the functional behavior of the original network? }
+            \vspace{1em}
+    \begin{itemize}
+        \item[RT 1.1] {
+            Select a method to project policy networks into higher-dimensional tensor 
+            representations at scheduled points during training.}
+        \item[RT 1.2] {
+            Validate that projected networks approximate the original network's behavior 
+            by measuring divergence in policy outputs } 
+            %(e.g., bounded error on inference)(e.g., action distributions or logits).}
+        \item[RT 1.3] {
+            Integrate projection-based expansion into a curriculum training pipeline 
+            and assess training stability.}
+    \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 2 - Research Tasks}
+    \begin{enumerate}
+        \item[RQ 2] \textcolor{gray}{
+            Can we identify appropriate transition points during training when projecting 
+            to a larger policy network yields the greatest benefit? } \vspace{1em}
+    \begin{itemize}
+        \item[RT 2.1] {
+            Define a set of projection schedules using fixed step counts or adaptive triggers 
+            (e.g., plateau detection) to determine when network expansion occurs during training.}
+        \item[RT 2.2] {
+            Treat projection timing as a tunable training parameter and evaluate its impact on 
+            learning dynamics across the defined schedule conditions.}
+        \item[RT 2.3] {
+            Compare total training cost, convergence rate, and final policy quality across 
+            projection schedules and fixed-size network baselines.}
+        \item[RT 2.4] {
+            Analyze projection timing effects by measuring short-term learning disruption 
+            and long-term policy improvement.}
+    \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 3 - Research Tasks}
+    \begin{enumerate}
+        \item[RQ 3] \textcolor{gray}{
+            Does this progressive architectural growth strategy reduce total training cost 
+            or improve final policy performance compared to fixed-size architectures? }
+            \vspace{1em}
+    \begin{itemize}
+        \item[RT 3.1] {
+            Construct fixed-size policy network baselines that match the initial, 
+            intermediate, and final sizes used in the progressive curriculum.}
+        \item[RT 3.2] {
+            Evaluate relative training efficiency by comparing convergence speed, 
+            sample efficiency, and performance trajectories across all conditions.}
+    \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% \subsection{Methodology}
+% \subsection{Experimental Procedure}
+% \subsection{Results}
+% \subsection{Discussion}

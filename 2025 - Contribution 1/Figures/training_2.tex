@@ -1,0 +1,68 @@
+% \documentclass{article}
+% \usepackage{amsmath}
+% \usepackage{tikz}
+%     \usetikzlibrary{
+%         automata, positioning, calc, fit
+%         }
+% \usepackage[dvipsnames]{xcolor}
+
+% \usepackage{etoolbox}
+% \providecommand{\Gls}[1]{\ensuremath{\uppercase{#1}}}
+% \providecommand{\gls}[1]{%
+%   \ifstrequal{#1}{pi}{\ensuremath{\pi}}{%
+% %   \ifstrequal{#1}{alpha}{\ensuremath{\alpha}}{%
+% %   \ifstrequal{#1}{beta}{\ensuremath{\beta}}{%
+%   \ensuremath{#1}}%}}%
+% }
+
+% \begin{document}
+
+\begin{tikzpicture}[>=stealth, node distance=3em, on grid, auto,
+    arrow/.style = {very thick,-stealth},
+    pol1/.style = {state, very thick, font=\boldmath, draw=MidnightBlue},
+    pol2/.style = {state, very thick, font=\boldmath, draw=Maroon},
+    pol3/.style = {state, very thick, font=\boldmath, draw=ForestGreen},]
+
+    \node (C1) [text width=7em, align=flush right] 
+        {Resample to\\Desired Size\\(Ex. 5 Agents)};
+    \node () [text width=7em, align=flush right, above =of C1.north] 
+        {Phase 1:\\Pretraining};
+    \node () [text width=7em, align=flush right, below =of C1.south] 
+        {Phase 2:\\Retraining};
+
+    % Resample Row
+    \node[pol1] (S11) [right =of C1.east] {\(\gls{pi}_1\)};
+    \node[pol2] (S12) [right =of S11] {\(\gls{pi}_2\)};
+    \node[pol3] (S13) [right =of S12] {\(\gls{pi}_3\)};
+    \node[rounded corners=1em, fit=(S11)(S12)(S13), draw, dashed, very thick] (S1) {};
+
+    \node[pol3] (S21) [right =of S1.east] {\(\gls{pi}_3\)};
+    \node[pol2] (S22) [right =of S21] {\(\gls{pi}_2\)};
+    \node[rounded corners=1em, fit=(S21)(S22), draw, dashed, very thick] (S2) {};
+
+    \node[font=\boldmath] () at ($(S1.east)!0.5!(S2.west)$) {$+$};
+
+    % Phase 1 Row
+    \node[pol2] (P12) [above =1.7 of $(S1.west)!0.5!(S2.east)$] {\(\gls{pi}_2\)};
+    \node[pol1] (P11) [left =of P12] {\(\gls{pi}_1\)};
+    \node[pol3] (P13) [right =of P12] {\(\gls{pi}_3\)};
+    \node[rounded corners=1em, fit=(P11)(P12)(P13), draw, dashed, very thick] (P1) {};
+
+    % Phase 2 Row
+    \node[pol2] (R13) [below =1.8 of $(S1.west)!0.5!(S2.east)$] {\(\gls{pi}_2\)};
+    \node[pol3] (R12) [left =of R13] {\(\gls{pi}_3\)};
+    \node[pol1] (R11) [left =of R12] {\(\gls{pi}_1\)};
+    \node[pol3] (R14) [right =of R13] {\(\gls{pi}_3\)};
+    \node[pol2] (R15) [right =of R14] {\(\gls{pi}_2\)};
+    \node[rounded corners=1em, fit=(R11)(R12)(R13)(R14)(R15), draw, dashed, very thick] (R1) {};
+
+    % Transition Arrows
+    \draw [arrow] (P1.south)+(0,-0.2) -- ([shift=({0,0.75})]$(S1.west)!0.5!(S2.east)$);
+    \draw [arrow, rounded corners=0.75em] (S1.south west)+(0.2,-0.15) -- +(0.2,-0.5) -| 
+        ([shift=({0,0.1})]R1.north);
+    \draw [arrow, rounded corners=0.75em] (S2.south east)+(-0.2,-0.15) -- +(-0.2,-0.5) -| 
+        ([shift=({0,0.1})]R1.north);
+
+\end{tikzpicture}
+
+% \end{document}

@@ -1,46 +1,46 @@
 \documentclass{article}
 \usepackage[english]{babel}
-\usepackage{csquotes}
+\usepackage{csquotes}       % Used by babel
 
-\usepackage{amsmath}
-\usepackage{amssymb}
+\usepackage{amsmath}        % Math Typesetting
+\usepackage{amssymb}        % Math Typesetting
 \usepackage{booktabs}
-\usepackage{hyperref}
-\usepackage{cleveref}
 \usepackage{multirow}
+% \newtheorem{theorem}{Theorem}
 
 \usepackage{graphicx}
-\graphicspath{{../images/}{../data/}}
+\graphicspath{{Figures}{Data}}
+\makeatletter
+\def\input@path{{Data/}{Figures/}}
+\makeatother
 \usepackage{subcaption}
 
 \usepackage{tikz}
-\usetikzlibrary{automata, positioning, calc, shapes.geometric, shapes.misc, fit}
+\usetikzlibrary{  automata, positioning, calc, fit  }
 \usepackage[dvipsnames]{xcolor}
 
-% \usepackage{cleveref}
+\usepackage{cleveref}
 \usepackage[backend=biber, style=ieee]{biblatex}
-\usepackage[T1]{fontenc}
-\usepackage[final]{microtype}
-\addbibresource{../../../2025Bibs/Prospectus.bib}
+\addbibresource{../2025Bibs/Prospectus.bib}
+% \usepackage[T1]{fontenc}
+% \usepackage[final]{microtype}
+\emergencystretch=1em
 
-% Placeholder for glossary references.
-\usepackage{etoolbox}
-\providecommand{\Gls}[1]{\ensuremath{\uppercase{#1}}}
-\providecommand{\gls}[1]{%
-  \ifstrequal{#1}{pi}{\ensuremath{\pi}}{%
-%   \ifstrequal{#1}{alpha}{\ensuremath{\alpha}}{%
-%   \ifstrequal{#1}{beta}{\ensuremath{\beta}}{%
-  \ensuremath{#1}}%}}%
-}
+\usepackage[nomain,symbols,abbreviations]{glossaries-extra}
+\newabbreviation{harl}{HARL}{heterogeneous-agent reinforcement learning}
+\newabbreviation{marl}{MARL}{multi-agent reinforcement learning}
+\newabbreviation{lbf}{LBF}{Level-based Foraging}
+\newglossaryentry{pi}{name=\ensuremath{\pi},description={Pi}}
 
-\usepackage{pgffor} %enables for loop used in appendix
-\usepackage{placeins} %this package contains the FloatBarrier tag
+\usepackage{pgffor}         %enables for loop used in appendix
+\usepackage{placeins}       %this package contains the FloatBarrier tag
 
 \title{Investigating Training Efficiency of Direct Scaling in Multi-Agent Reinforcement Learning}
 \author{Brandon Hosley}
 \date{\today}
 
 % #TODO: Dissertation version of labels includes \label{con1:...}
+% #TODO: Add Dissertation delimiter tags
 
 \begin{document}
 
@@ -50,9 +50,8 @@
     As multi-agent systems become increasingly central to domains like robotics, 
     autonomous coordination, and distributed control, training strategies 
     that reduce cost while maintaining effectiveness are essential. 
-    This paper explores whether training a smaller team of agents and 
-    then scaling up can offer a more efficient path to high-performing policies in 
-    multi-agent reinforcement learning (MARL).
+    This paper explores whether training a smaller team of agents and then scaling 
+    up can offer a more efficient path to high-performing policies in \gls{marl}.
     Inspired by prior work, particularly Smit et al. (2023), 
     we analyze whether pretraining smaller agent groups can improve training efficiency 
     without sacrificing final performance. 
@@ -65,8 +64,8 @@
     pretraining on smaller groups accelerates learning; 
     however, in environments where agents must specialize into distinct roles, 
     the benefits of early training are diminished. 
-    These findings inform future work in curriculum learning and scalable 
-    heterogeneous-agent reinforcement learning (HARL).
+    These findings inform future work in curriculum learning and scalable \gls{harl}.
+    \glsresetall
 \end{abstract}
 
 \section{Introduction}
@@ -82,26 +81,26 @@ in complex environments, particularly within military contexts. However,
 deployments beyond defense settings remain rare. Despite encouraging demonstrations, 
 real-world use of autonomous multi-agent systems is limited—partly due to the cost, 
 complexity, and inefficiency of training robust multi-agent policies at scale~\cite{jin2025}. 
-Improving the training efficiency and scalability of multi-agent reinforcement 
-learning (MARL) could reduce these barriers, enabling broader application in both 
+Improving the training efficiency and scalability of \gls{marl} 
+could reduce these barriers, enabling broader application in both 
 constrained and dynamic system deployments.
 
-Multi-agent reinforcement learning (MARL) has shown significant promise in solving complex 
+\Gls{marl} has shown significant promise in solving complex 
 decision-making tasks across diverse domains, including 
 strategic gameplay~\cite{silver2016, vinyals2019, berner2019}, 
 robotics~\cite{rizk2019, liang2024}, 
 and autonomous systems~\cite{abeywickrama2022}. 
-However, training MARL models at scale remains a computationally expensive process, 
+However, training \gls{marl} models at scale remains a computationally expensive process, 
 often requiring extensive simulation time and large numbers of training episodes. 
-The challenge is further compounded in heterogeneous-agent reinforcement learning (HARL), 
-a subset of MARL where the agents 
+The challenge is further compounded in \gls{harl}, 
+a subset of \gls{marl} where the agents 
 differ from one another in some fashion, perhaps by possessing 
 differing roles, observation spaces, 
 or action capabilities, leading to an increase in learning complexity~\cite{rizk2019, yang2021a}.
 Efficient training methodologies that reduce computational costs while maintaining 
-performance are crucial for enabling broader adoption of MARL and HARL systems.
+performance are crucial for enabling broader adoption of \gls{marl} and \gls{harl} systems.
 
-Many high-performing multi-agent reinforcement learning (MARL) systems rely on 
+Many high-performing \gls{marl} systems rely on 
 centralized training and shared-policy architectures to promote coordination and scalability 
 in environments with homogeneous agents~\cite{ackermann2019,zhou2023}.
 These approaches have enabled impressive successes in controlled domains, 
@@ -113,7 +112,7 @@ Shared-policy assumptions often inhibit specialization~\cite{smit2023},
 and while fixed observation and action structures enable training stability, 
 they can hinder the flexibility needed to scale policies across different 
 task configurations or team sizes~\cite{papoudakis2021}. Despite progress 
-in modular architectures and attention-based pooling~\cite{iqbal2021, foerster2017}, 
+in modular architectures and attention-based pooling~\cite{iqbal2021, foerster2018}, 
 few methods effectively balance policy independence with structural flexibility. 
 This creates a performance bottleneck in dynamic environments, where agent diversity and 
 configuration variability are fundamental challenges.
@@ -121,10 +120,10 @@ configuration variability are fundamental challenges.
 Heterogeneous multi-agent systems may feature \emph{intrinsic heterogeneity}, 
 where agents differ in their sensors, effectors, or internal structure, 
 leading to varying observation or action spaces. Additionally, 
-HARL also encompasses situations we refer to as \emph{behavioral heterogeneity}, 
+\gls{harl} also encompasses situations we refer to as \emph{behavioral heterogeneity}, 
 where agents are structurally identical but their policies are updated independently 
 during training, allowing their roles and behaviors to diverge over time. 
-Framing HARL as these two possibilities captures a range of realistic deployments, including 
+Framing \gls{harl} as these two possibilities captures a range of realistic deployments, including 
 robotic warehouses~\cite{rizk2019}, cooperative drone swarms, and multi-agent games, where 
 agents may differ intrinsically (e.g., in hardware or sensing capabilities), 
 or become behaviorally distinct through independent learning. In such settings, 
@@ -132,7 +131,7 @@ coordination burdens increase not only when agents are structurally different,
 but also when nominally homogeneous agents develop specialized behaviors over 
 time~\cite{shoham2007,ackermann2019}.
 
-One proposed strategy to improve MARL training efficiency involves pretraining 
+One proposed strategy to improve \gls{marl} training efficiency involves pretraining 
 a reduced subset of agents before scaling to the full target configuration. 
 The intuition is that policies learned in smaller-team scenarios may converge 
 more quickly and subsequently transfer to larger-scale tasks with lower overall cost. 
@@ -157,7 +156,7 @@ This approach enables evaluation of transferability across configurations with
 varying degrees of agent specialization.
 
 While environments such as MAgent2 \cite{zheng2017} support large agent populations through 
-shared policies, most HARL benchmarks fix the number of agents in their observation structures. 
+shared policies, most \gls{harl} benchmarks fix the number of agents in their observation structures. 
 This entanglement of team size with input dimensionality restricts policy transfer across 
 configurations and complicates the use of curriculum learning or zero-shot generalization. 
 Environments like LBF and Multiwalker from PettingZoo \cite{terry2021}, as well as 
@@ -211,16 +210,17 @@ Collectively, these findings suggest that task structure and agent heterogeneity
 critically influence the success of curriculum-inspired upsampling strategies.
 
 \section{Related Work}
-\subsection{Training Efficiency and Curriculum Learning in MARL}
+\subsection{Training Efficiency and Curriculum Learning}
 
-Improving training efficiency in multi-agent reinforcement learning (MARL) has become a research 
+Improving training efficiency in \gls{marl} has become a research 
 priority~\cite{canese2021,krouka2022}, especially given the computational costs and sample 
 complexity that scale with team size and task difficulty~\cite{shoham2007,busoniu2008}. 
-Prior research has explored MARL scalability and efficiency in large-scale environments, 
-investigating methods to reduce overestimation bias~\cite{ackermann2019}, support policy 
-decentralization~\cite{foerster2017,lowe2020}, and optimize communication 
-overheads~\cite{sukhbaatar2016,wei2022}. Curriculum learning has emerged as a promising approach, 
-where tasks are presented in a structured sequence to facilitate progressive skill acquisition. 
+Prior research has explored \gls{marl} scalability and efficiency in large-scale environments, 
+investigating methods to reduce overestimation bias~\cite{ackermann2019}, 
+support policy decentralization~\cite{foerster2018,lowe2020}, 
+and optimize communication overheads~\cite{sukhbaatar2016,wei2022}. 
+Curriculum learning has emerged as a promising approach, where tasks are 
+presented in a structured sequence to facilitate progressive skill acquisition. 
 This strategy can take many forms, including environment simplification~\cite{shukla2022}, 
 task decomposition~\cite{shi2023}, or gradually increasing the number of agents 
 during training~\cite{smit2023, albrecht2024}.
@@ -256,7 +256,7 @@ transferability and efficiency.
 
 \subsection{Heterogeneous MARL and Policy Transferability}
 
-Heterogeneous MARL (HARL) introduces additional complexity by requiring agents with 
+Heterogeneous \gls{marl} (HARL) introduces additional complexity by requiring agents with 
 differing roles, capabilities, or observation modalities to coordinate effectively. 
 This setting reflects many real-world domains, including swarm robotics \cite{hoang2023}, 
 traffic control \cite{calvo2018}, and decentralized logistics \cite{rizk2019}, 
@@ -267,14 +267,14 @@ and flexibility. For example, Gupta et al.~\cite{gupta2017a} and H{\"u}ttenrauch
 et al.~\cite{huttenrauch2019} both demonstrate techniques for encoding structured input 
 using single-agent policies that can generalize across role configurations, but do not 
 address multi-agent coordination directly. Iqbal et al.~\cite{iqbal2021} introduce 
-entity-centric methods in a homogeneous MARL setting, which allow pooling across similar 
+entity-centric methods in a homogeneous \gls{marl} setting, which allow pooling across similar 
 agents but still assume identical agent capabilities. While these methods improve 
 generalization within their respective assumptions, they often maintain a fixed number of roles 
 or homogeneous agent groups, limiting their applicability in dynamic heterogeneous settings.
 
 
 \subsection{Observation Design in Multi-Agent Systems}
-\label{sec:related_work-observation_design}
+\label{con1:sec:related_work-observation_design}
 
 Observation spaces define the structure of information available to agents, 
 and by extension, constrain the expected input shape for a policy function.
@@ -306,10 +306,10 @@ without employing role embeddings or shared parameterization.
 Gupta et al.~\cite{gupta2017a}, in contrast, employ an embedding-based representation to 
 enable knowledge transfer across morphologically distinct robots, though their setting 
 involves single-agent learning. These studies reflect broader architectural strategies that 
-address variability in agent capabilities or embodiment, even if not in a MARL context.
+address variability in agent capabilities or embodiment, even if not in a \gls{marl} context.
 
 Despite their promise, these strategies often come with architectural overhead or assume 
-centralized training with shared state information~\cite{foerster2017}. Moreover, they typically 
+centralized training with shared state information~\cite{foerster2018}. Moreover, they typically 
 require retraining or re-encoding when the agent pool or spatial layout changes significantly. 
 Our work takes a complementary approach: we treat the dimensionality of the observation vector 
 itself as a constraint and propose lightweight observation-level reductions that preserve 
@@ -319,7 +319,7 @@ to improve sample efficiency and structural adaptability~\cite{bitzer2010, tangk
 
 \subsection{Benchmarks and Evaluation}
 
-Prior literature has explored alternative approaches to HARL evaluation. 
+Prior literature has explored alternative approaches to \gls{harl} evaluation. 
 Wakilpoor et al.~\cite{wakilpoor2020} introduce an attention-guided multi-agent actor-critic 
 that enables efficient coordination between agents with complementary abilities. 
 Koster et al.~\cite{koster2020} similarly propose an attention-based method for centralized 
@@ -328,13 +328,13 @@ These works demonstrate scalable performance in specialized evaluation domains,
 yet the broader field still lacks general-purpose benchmarks that support systematic 
 study of heterogeneity across configurations.
 
-Benchmarking HARL systems under varying team configurations presents persistent
+Benchmarking \gls{harl} systems under varying team configurations presents persistent
 challenges for experimental design and policy generalization. While many benchmarks 
 such as LBF~\cite{papoudakis2021}, Melting Pot~\cite{leibo2021}, and MAgent2~\cite{zheng2017} 
-support multi-agent setups, they are primarily designed for homogeneous MARL 
+support multi-agent setups, they are primarily designed for homogeneous \gls{marl} 
 and often rely on shared policies or fixed observation formats. This limits 
 their utility in studying systems with intrinsic heterogeneity—where agents possess 
-distinct capabilities or behaviors by design. As a result, dedicated HARL benchmarks 
+distinct capabilities or behaviors by design. As a result, dedicated \gls{harl} benchmarks 
 remain sparse, and evaluating emergent or role-specific behaviors is often constrained 
 by the assumptions and architectures of existing platforms.
 
@@ -347,14 +347,14 @@ observation restructuring can enable policy evaluation across varying team sizes
 preserving a fixed observation format through lightweight modifications, we support compatibility 
 across configurations without requiring architectural changes or complex preprocessing.
 This approach contributes toward scalable benchmarking practices and supports 
-more flexible evaluation of heterogeneous-agent reinforcement learning (HARL) systems.
+more flexible evaluation of \gls{harl} systems.
 
 
 \section{Methodology}
-\label{sec:methodology}
+\label{con1:sec:methodology}
 
 \subsection{Training Framework for Heterogeneous MARL}
-\label{subsec:training_framework}
+\label{con1:subsec:training_framework}
 
 We formulate each task as a cooperative multi-agent partially observable Markov 
 decision process (MA-POMDP). At each timestep, each of the $n\in N$ agents receives 
@@ -364,20 +364,20 @@ toward a shared team objective, reflecting the cooperative nature of the task.
 The objective function is such that policies \(\pi_n(a_n|o_n)\)
 that maximizes the expected cumulative team reward. Thus, within the PPO objective function:
 \[
-    \mathcal{L}(\theta) = \mathbb{E}_{t,n} \left[ 
+    \mathcal{L}(\theta) = \mathbb{E}_{tn} \left[ 
     \min \left( 
-    \frac{\pi_\theta(a_{n,t} \mid o_{n,t})}{\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})} 
-        \hat{A}_{n,t},\ 
+    \frac{\pi_\theta(a_{tn} \mid o_{tn})}{\pi_{\theta_{\text{old}}}(a_{tn} \mid o_{tn})} 
+        \hat{A}_{tn},\ 
     \text{clip}\left( 
-    \frac{\pi_\theta(a_{n,t} \mid o_{n,t})}{\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})}, 
+    \frac{\pi_\theta(a_{tn} \mid o_{tn})}{\pi_{\theta_{\text{old}}}(a_{tn} \mid o_{tn})}, 
     1 \pm \epsilon
-    \right) \hat{A}_{n,t}
+    \right) \hat{A}_{tn}
     \right) 
     \right]
 \]
 individual rewards are aggregated within the advantage estimation as
 \[
-    \hat{A}_{n,t} = \left( \sum_{k=t}^{K} \sum_{n\in N} r_{n,k} \right) - V(o_{n,t})
+    \hat{A}_{tn} = \left( \sum_{k=t}^{K} \sum_{n\in N} r_{kn} \right) - V(o_{tn})
 \]
 This is the clipped surrogate objective used in PPO, extended here to a multi-agent setting by 
 applying it independently to each agent's trajectory. While agents optimize their policies using
@@ -385,32 +385,32 @@ local observations and advantages, their rewards are aligned toward a shared coo
 These cooperative settings benefit the multi-agent problem as a single-team optimization, 
 encouraging agents to work together. 
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \caption{Notation used in PPO objective and advantage estimation}
     \begin{tabular}{ll}
     \toprule
     \textbf{Symbol} & \textbf{Description} \\
     \midrule
-    $\pi_\theta(a_{n,t} \mid o_{n,t})$ & 
-        Probability of action $a_{n,t}$ under current policy for agent $n$ \\
-    $\pi_{\theta_{\text{old}}}(a_{n,t} \mid o_{n,t})$ & 
+    $\pi_\theta(a_{tn} \mid o_{tn})$ & 
+        Probability of action $a_{tn}$ under current policy for agent $n$ \\
+    $\pi_{\theta_{\text{old}}}(a_{tn} \mid o_{tn})$ & 
         Probability under the previous policy before update \\
-    $\hat{A}_{n,t}$ & Estimated advantage for agent $n$ at time $t$ \\
+    $\hat{A}_{tn}$ & Estimated advantage for agent $n$ at time $t$ \\
     $\epsilon$ & PPO clipping parameter (e.g., 0.2) \\
-    $r_{n,k}$ & Reward received by agent $n$ at timestep $k$ \\
-    $V(o_{n,t})$ & Estimated value of observation $o_{n,t}$ \\
+    $r_{kn}$ & Reward received by agent $n$ at timestep $k$ \\
+    $V(o_{tn})$ & Estimated value of observation $o_{tn}$ \\
     $K$ & Horizon length or final timestep in trajectory \\
     $N$ & Set of all agents in the team \\
     $t$ & Timestep index in a trajectory \\
-    $a_{n,t}$ & Action taken by agent $n$ at time $t$ \\
-    $o_{n,t}$ & Observation of agent $n$ at time $t$ \\
+    $a_{tn}$ & Action taken by agent $n$ at time $t$ \\
+    $o_{tn}$ & Observation of agent $n$ at time $t$ \\
     \bottomrule
     \end{tabular}
 \end{table}
 
 We utilize the centralized training with decentralized execution (CTDE) paradigm, 
-a common framework in cooperative MARL settings~\cite{guo2024}. 
+a common framework in cooperative \gls{marl} settings~\cite{guo2024}. 
 This approach allows agents to be trained using global information 
 (e.g., shared state or joint observations), while each agent independently 
 executes its policy based solely on local observations at runtime. 
@@ -518,7 +518,7 @@ Our training protocol consists of three main phases shared across all environmen
     \item \textbf{Pretrain Smaller Teams:} We begin by training a minimal viable team of 
         agents until convergence. For Waterworld and LBF, this consisted of 2 agents; 
         for Multiwalker, 3 agents were required due to its structural dependencies.
-    \item \textbf{Boostrap to Construct Target Size Teams:} At various experimentally 
+    \item \textbf{Bootstrap to Construct Target Size Teams:} At various experimentally 
         designed checkpoints during pretraining, we duplicate agent policies to construct 
         larger teams, progressively scaling toward the target configuration. 
         When the target team size exceeded a multiple of the available pretrained policies, 
@@ -531,15 +531,15 @@ Our training protocol consists of three main phases shared across all environmen
 
 \subsubsection{Environment-Specific Modifications}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering 
-    \input{../images/training_1} % \resizebox{0.85\textwidth}{!}{% % }
+    \input{training_1} % \resizebox{0.85\textwidth}{!}{% % }
     \caption{Example of Training Progression for Waterworld and LBF}
     \label{fig:training_1}
 \end{figure}
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
-    \input{../images/training_2} % \resizebox{0.85\textwidth}{!}{ }
+    \input{training_2} % \resizebox{0.85\textwidth}{!}{ }
     \caption{Example of Training Progression for Multiwalker}
     \label{fig:training_2}
 \end{figure}
@@ -569,12 +569,11 @@ This evaluation framework allows us to compare the efficiency of the curriculum-
 upsampling strategy against full tabula rasa training for the same final team sizes, 
 providing insight into the cost-benefit tradeoffs under varying heterogeneity conditions.
 
-% #TODO: fix cref
-Additional analyses reported in the \cref{sec:results} explore how reward progression, 
+Additional analyses reported in the \cref{con1:sec:results} explore how reward progression, 
 convergence speed, and environmental sensitivity vary across configurations and 
 pretraining durations.
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \caption{PPO Hyperparameters used in experiments}
     \begin{tabular}{ll}
@@ -601,8 +600,9 @@ pretraining durations.
 
 \FloatBarrier
 \section{Results and Observations}
+\label{con1:sec:results}
 
-Training complexity in heterogeneous multi-agent reinforcement learning (HARL) 
+Training complexity in \gls{harl}
 systems is influenced not only by the environment but also by the size of the agent 
 team being trained. As team size increases, so does the number of interactions, 
 the dimensionality of observations, and the coordination burden; factors that collectively 
@@ -624,7 +624,7 @@ with the number of agents—an anticipated but important validation for our use 
 \emph{agent-steps} metric. This relationship is visualized in \cref{fig:agent-steps}, 
 where all three environments show Pearson correlation coefficients exceeding 0.999,
 shown in \cref{tab:pearson-corr}.
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{iter_cost.png}
     \caption{\textbf{Training Iteration Timing Across Agent Counts.}
@@ -633,7 +633,7 @@ shown in \cref{tab:pearson-corr}.
     \label{fig:agent-steps}
 \end{figure}
 %
-\begin{table}[h]
+\begin{table}[ht]
     \centering
     \begin{tabular}{lc}
         \toprule
@@ -675,7 +675,7 @@ This suggests that relatively short pretraining can provide sufficient foundatio
 coordination to improve sample efficiency at scale, though final tuning may 
 be necessary to achieve full performance with shorter pretraining periods.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-4-agent.png}
     \caption{\textbf{Waterworld (4 agents, 2-agent pretraining).} Comparison of 
@@ -684,7 +684,7 @@ be necessary to achieve full performance with shorter pretraining periods.
     \label{fig:waterworld-4}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-8-agent.png}
     \caption{\textbf{Waterworld (8 agents, 2-agent pretraining).} Comparison of 
@@ -709,7 +709,7 @@ we attribute these to stochastic variation rather than indicative of structural 
 Overall, these results reinforce the observation that direct scaling is most effective 
 when the ratio between pretraining team size and target team sizes is high.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-AUCs.png}
     \caption{\textbf{Waterworld Pretraining Impact.} 
@@ -731,7 +731,7 @@ due to the failure of any single agent) struggled to generate useful feedback.
 Pretraining thus mitigated an early-stage bottleneck and enabled learning to proceed 
 in configurations where tabula rasa attempts often stalled.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-5-agent.png}
     \caption{\textbf{Multiwalker (5 agents, 3-agent pretraining).} Comparison of 
@@ -742,7 +742,7 @@ in configurations where tabula rasa attempts often stalled.
 
 \vspace{2em}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-6-agent.png}
     \caption{\textbf{Multiwalker (6 agents, 3-agent pretraining).} Comparison of 
@@ -760,7 +760,7 @@ are better understood as a result of the scaling transition requiring additional
 When this time exceeded the total convergence time of tabula rasa training, the net cost 
 is necessarily higher, despite final performance often eventually meeting the baseline.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-AUCs.png}
     \caption{\textbf{Multiwalker Pretraining Impact.} 
@@ -771,7 +771,7 @@ is necessarily higher, despite final performance often eventually meeting the ba
 
 We next consider the Level-Based Foraging (LBF) environment.
 Given the environment's structured observations, we anticipated that the
-choice of observation schema, described in \cref{subsec:training_framework},
+choice of observation schema, described in \cref{con1:subsec:training_framework},
 could significantly influence training outcomes.
 To evaluate this, we trained baseline policies from tabula rasa under each schema:
 \begin{enumerate}
@@ -838,7 +838,7 @@ the significance of this improvement remains unclear.
 \Cref{fig:lbf-7} provides an illustrative example, highlighting how 
 retraining compares to training from scratch at a 7-agent configuration.
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{LBF-7-agent.png}
     \caption{\textbf{Level-Based Foraging (7 agents, 2-agent pretraining).} Comparison of 
@@ -858,7 +858,7 @@ dynamic role complexity in LBF creates a steeper coordination challenge at scale
 In these scenarios, small-team pretraining offers limited foresight into the diverse role 
 interactions encountered by larger groups.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\linewidth]{LBF-AUCs.png}
     \caption{\textbf{Level-Based Foraging Pretraining Impact.} 
@@ -871,7 +871,7 @@ interactions encountered by larger groups.
 
 \section{Conclusion}
 
-As cooperative MARL systems grow in scale and complexity, the challenge of efficiently 
+As cooperative \gls{marl} systems grow in scale and complexity, the challenge of efficiently 
 training large, heterogeneous teams becomes a critical barrier to real-world deployment. 
 This study set out to address whether this training bottleneck can be mitigated by 
 first pretraining smaller teams of agents, then scaling up to full-size configurations 
@@ -908,7 +908,7 @@ demands based on agent skill levels.
 Here, the benefits of pretraining were modest and inconsistent, 
 particularly for larger teams, where coordination complexity intensified.
 
-These findings suggest that reduced-size pretraining can be effective in cooperative MARL 
+These findings suggest that reduced-size pretraining can be effective in cooperative \gls{marl} 
 settings where agent roles are symmetric or only weakly specialized. In such cases, 
 the strategy offers not only measurable gains in sample efficiency but also greater 
 training stability in configurations prone to early failure. However, as environments 
@@ -921,7 +921,7 @@ By introducing and employing agent-steps as a normalized metric for training cos
 systematically evaluating policy reuse across a spectrum of team sizes and heterogeneity 
 profiles, this study contributes practical insight into the tradeoffs of using upsampling 
 as a curricular training strategy. Our results support the value of reduced-size pretraining 
-and policy duplication as a practical tool for improving training efficiency in MARL, 
+and policy duplication as a practical tool for improving training efficiency in \gls{marl}, 
 especially in domains where agent roles are largely interchangeable. However, we view 
 this approach not as a complete solution but as a useful technique that will complement 
 more comprehensive training frameworks. In settings where agent specialization or 
@@ -969,21 +969,21 @@ agent configurations across the three environments. Each chart compares tabula r
 training to retraining from various pretraining durations.
 
 \foreach \i in {3,4,5,6,7,8} {
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
         \includegraphics[width=0.9\linewidth]{Waterworld-\i-agent.png}
         \caption{Training curves for Waterworld, \i\ agents.}
     \end{figure}
 }
 \foreach \i in {4,5,6,7} {
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
         \includegraphics[width=0.9\linewidth]{Multiwalker-\i-agent.png}
         \caption{Training curves for Multiwalker, \i\ agents.}
     \end{figure}
 }
 \foreach \i in {3,4,5,6,7} {
-    \begin{figure}[h]
+    \begin{figure}[ht]
         \centering
         \includegraphics[width=0.9\linewidth]{LBF-\i-agent.png}
         \caption{Training curves for LBF, \i\ agents.}

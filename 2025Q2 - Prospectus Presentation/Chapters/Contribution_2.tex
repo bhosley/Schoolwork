@@ -73,15 +73,15 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Graph-Based Architectures}
-    \textbf{Relational Inductive Bias}
-    \begin{itemize}
-        \item Graph Neural Networks (GNNs) treat agents as nodes; edges represent interactions.
-        \item \textbf{IHG-MA} \footcite{yang2021a}: Dynamic agent graphs with shared policies.
-        \item \textbf{PIC} \footcite{liu2020b}: Graph critic pooled over agents, scalable to 200 agents.
-        \item Attribute embeddings encode agent roles or types, enabling heterogeneous agent support.
-    \end{itemize}
-\end{frame}
+% \begin{frame}{Graph-Based Architectures}
+%     \textbf{Relational Inductive Bias}
+%     \begin{itemize}
+%         \item Graph Neural Networks (GNNs) treat agents as nodes; edges represent interactions.
+%         \item \textbf{IHG-MA} \footcite{yang2021a}: Dynamic agent graphs with shared policies.
+%         \item \textbf{PIC} \footcite{liu2020b}: Graph critic pooled over agents, scalable to 200 agents.
+%         \item Attribute embeddings encode agent roles or types, enabling heterogeneous agent support.
+%     \end{itemize}
+% \end{frame}
 
 \begin{frame}{Attention for Set-Based Inputs}
     \begin{columns}
@@ -169,6 +169,10 @@
             Do input-invariant architectures lead to more stable policy performance under 
             team-size changes and partial observation loss during execution?
             }
+        \item[RQ 3] {
+            What are the computational and implementation costs of mean-field
+            architectures relative to their performance benefits?
+            }
     \end{enumerate}
 \end{frame}
 
@@ -216,6 +220,23 @@
             Statistically compare performance between input-invariant and baseline models 
             across all perturbation conditions to assess resilience and stability.}
     \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{RQ 3 - Research Tasks}
+    \begin{enumerate}
+        \item[RQ 3] \textcolor{gray}{ 
+            What are the computational and implementation costs of mean-field
+            architectures relative to their performance benefits? }
+        \vspace{1em}
+        \begin{itemize}
+            \item[RT 3.1] {
+                Benchmark computational cost during training and 
+                inference (e.g., agent-steps, step-costs).}
+            \item[RT 3.2] {
+                Perform Statistical comparison of relative training cost, rate of convergence, 
+                in training and rate of performance degradation in completed models.}
+        \end{itemize}
     \end{enumerate}
 \end{frame}
 
@@ -316,27 +337,38 @@
 
 \begin{frame}{Heterogeneous Action Spaces}
     Heterogeneous action spaces can be naturally modeled through constraints on action spaces:
-    \begin{itemize}
-        \item \textbf{Movement:} for \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\)
-        \item \textbf{Orientation Adjustment:} in radians
-        \item \textbf{Gridworld Example:} (allowing diagonal orientation and moving,)
-        \begin{itemize}
-            \item A \textbf{rotary-wing aircraft} 
+    \begin{columns}[T]
+        \begin{column}{0.5\textwidth}
             \begin{itemize}
-                \item \(M_i := \{0,1\}\)
-                \item \(\Delta\Theta := \{-\pi, -\frac{3}{4}\pi,  -\frac{1}{2}\pi, -\frac{1}{4}\pi, 0, \frac{1}{4}\pi,  \frac{1}{2}\pi, \frac{3}{4}\pi, \pi\}\)
+                \item \textbf{Movement:} for \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\)
+                \item \textbf{Orientation Adjustment:} in general,
+                    \[
+                        \Delta\Theta_i := \left\{ k \cdot \delta_{\theta_i} 
+                        \mid k \in \mathbb{F},\ |\delta_{\theta_i} k| \leq \pi \right\}
+                    \]
+                where \(k \in [-1,1] \subset \mathbb{F}\) is the range of allowable adjustment
+                and \(\delta\) is the resolution of the adjustment 
             \end{itemize}
-            \item A \textbf{fixed-wing aircraft}
-            \begin{itemize}
-                \item \(M_i := \{1,2\}\)
-                \item \(\Delta\Theta := \{-\frac{1}{4}\pi, 0, \frac{1}{4}\pi\}\)
-            \end{itemize}
-        \end{itemize}
-    \end{itemize}
-    These constraints define agent-specific action subspaces \( A_i \subset A \), 
-    contributing to fundamental heterogeneity in the decision model.
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{A Gridworld Example:}
+                \begin{itemize}
+                    \item \(\delta := \frac{\pi}{2}\) for ortholinear constraint
+                    \item \(\delta := \frac{\pi}{4}\) allows diagonal movement
+                    \item A \textbf{rotary-wing aircraft} 
+                    \begin{itemize}
+                        \item \(M_i := \{0,1\}\)
+                        \item \(k_i \in \mathbb{Z} \equiv \{-4, \ldots, 4\} \)
+                    \end{itemize}
+                    \item A \textbf{fixed-wing aircraft}
+                    \begin{itemize}
+                        \item \(M_i := \{1,2\}\)
+                        \item \(k_i \in \{-1,0,1\}\)
+                    \end{itemize}
+                \end{itemize}
+        \end{column}
+    \end{columns}
 \end{frame}
-
 
 \begin{frame}{Exogeneous Information}
     Currently this representation is
@@ -349,28 +381,68 @@
 \end{frame}
 
 \begin{frame}{Transition Function}
-    This model is deterministic, and progresses with agent decisions executed in parallel. 
-    Thus,
-        \[s_{t}(a) \rightarrow s_{t+1}\]
-    or
-        \[\mathcal{T}(a|s_{t}) = s_{t+1}\]
+    This model is deterministic and progresses with agent decisions executed in parallel.\\[1em]
+    Thus, the environment transition from state \(s_t\) under joint action \(a_t\) is:
+    \[
+        s_{t+1} = \mathcal{T}(s_t, a_t)
+    \]
+    or equivalently, in conditional form:
+    \[
+        \mathcal{T}(a_t \mid s_t) = s_{t+1}
+    \]
 \end{frame}
 
 \begin{frame}{Objective Function}
-    Let \(\mathcal{R}\) be a reward function such that for objective \(j\)
-    and hazard \(l\),
-    \[
-        \mathcal{R}(j) = r_{j} \in \mathbb{R}_{>0}
-        \quad \text{and} \quad
-        \mathcal{R}(l) = r_{l} \in \mathbb{R}_{<0}.
+    The objective is to optimize behavior by:
+    \begin{itemize}
+        \item Max \(\mathcal{R}(j) = r_{j} \in \mathbb{R}_{>0}\) the reward for collecting objective \(j\),
+        \item Min \(\mathcal{R}(i) = r_{i} \in \mathbb{R}_{<0}\) the penalty for interaction use by agent \(i\),
+        \item Min \(\mathcal{R}(k) = r_{k} \in \mathbb{R}_{<0}\) the penalty for proximity to hazard \(k\).
+    \end{itemize}
+    Then, the cumulative objective is:
+    % {\footnotesize
+    % \begin{align*}
+    %     \max \sum_{t\in T} &\left[
+    %         \sum_{i\in I, j\in J} r_{j} \cdot \mathbb{I}\left[
+    %             \|d_{ti}-d_{tj}\| \leq i^\text{range} 
+    %             \land \left| \tan\theta_{ti}^{(n,n+1)} - \frac{d_{tj}^{(n+1)}-d_{ti}^{(n+1)}}{
+    %                 d_{tj}^{(n)}-d_{ti}^{(n)}} \right| \leq \epsilon 
+    %             \land a_{ti}^\text{interact} = 1 
+    %         \right] 
+    %     \right. \\
+    %     &\left.
+    %         \quad - \sum_{i\in I} r_{i} \cdot \mathbb{I}\left[a_{ti}^\text{interact} = 1\right]
+    %         - \sum_{i\in I, k\in K} r_{k} \cdot \mathbb{I}\left[\|s_{ti} - s_{tk}\|_\infty 
+    %         \leq k^\text{range}\right]
+    %     \right]
+    % \end{align*}}
+    \[ 
+        \max \sum_{t\in T} \left[
+            \sum_{i\in I, j\in J} r_{j} \cdot \mathbb{I}\left[ \Xi \right]
+            - \sum_{i\in I} r_{i} \cdot \mathbb{I}\left[a_{ti}^\text{interact} = 1\right]
+            - \sum_{i\in I, k\in K} r_{k} \cdot \mathbb{I}\left[\|s_{ti} - s_{tk}\|_\infty
+            \leq k^\text{range}\right]
+        \right]
     \]
-    Then, the objective is to maximize agent's arriving at objectives, 
-    while minimizing interaction with hazards:
-    \[
-        \max \sum_{t\in T,i\in I, j\in J} r_{j}[s_{j,t} = s_{i,t} 
-            + \theta_{i,t} | a_{i,t}(\text{interact}) ]
-        - \sum_{t\in T,i\in I, l\in L} r_{l}[\|s_{i,t},s_{l,t}\|_\infty \leq 1]
-    \]
+    Where $\Xi$ represents the conditions of objectives.
+\end{frame}
+
+\begin{frame}{Objective Conditions}
+    \(\mathbb{I}[\Xi]\) is a function representing the conditions of objectives.
+    A basic example:
+    \begin{align*}
+        \Xi := &\,\ a_{ti}^\text{interact} = 1 && \text{Did agent \(i\) try to interact?} \\ 
+        & \land \|d_{ti}-d_{tj}\| \leq i^\text{range} &&\text{Is \(j\) in range of agent \(i\)?}\\
+        & \land \left| \tan\theta_{ti}^{(n,n+1)} 
+            - \frac{d_{tj}^{(n+1)}-d_{ti}^{(n+1)}}{d_{tj}^{(n)}-d_{ti}^{(n)}} \right| 
+            \leq \epsilon && \text{Is \(i\) facing \(j\)?}
+    \end{align*}
+    Additional conditions likely to consider:
+    \begin{itemize}
+        \item Min number of agents needed to cooperate
+        \item Sum of agent levels exceeds an objective difficulty
+        \item Some abstract type matching
+    \end{itemize}
 \end{frame}
 
 \subsubsection{Observation Model}
@@ -391,7 +463,7 @@
             This an imperfect information game resulting from partial observability.
             \\[1em]
             Thus, for agent \(i\), an observation \(o_i\) is a function of the state:
-            \[o_i = \mathcal{O}_i(s) .\]
+            \[o_{ti} = \mathcal{O}_{i}(s_{t}) .\]
         \end{column}
         \begin{column}{0.5\linewidth}
             \begin{figure}
@@ -419,7 +491,7 @@
                 \end{itemize}
             Pursuit example channels:
                 \begin{itemize}
-                    \item For \(e\in E :=\) \{Friend, Foe, Barrier\}
+                    \item For \(e\in E := \{\text{Friend, Foe, Barrier}\}\)
                     \item Then state \(s\)
                 \end{itemize}
                 \[s = \{0,1\}^{E\times D_1\times D_2}\]
@@ -436,29 +508,36 @@
 
 \begin{frame}{Heterogeneous Observation Channels}
     For heterogeneous observation channels \(C\),
-    visibility of entities \(E\) is,
+    visibility of entities \(E\) is, may be considered a
+    trait of \(e\):
     \[
-        c(e) = 
+        e^{(c)} \in \{\text{True, False}\}.
+    \]
+    But more flexibly, this may be modeled 
+    as a sort of categorical dimension of the state:
+    \[
+        s_{tec} = 
         \begin{cases}
             1& \text{if \(e\) is visible in \(c\)} \\ 
             0& \text{if \(e\) is not visible in \(c\)}
         \end{cases} 
-        \quad\forall c\in C, e\in E.
+        \quad\forall t\in T, e\in E, c\in C.
     \]
+    regardless of if \(e\)'s visibility in \(c\) is expected to change.
 \end{frame}
 
 \begin{frame}{Heterogeneous Observation Channels}
-    Like Pursuit, our model can be represented as a binary mapping
+    The addition of the observation channels modifies
+    entity state in general to:
+    \[s_{te} :(c_{te},d_{te}).\]
+    and agent state in particular to:
+    \[s_{ti} :(c_{ti},d_{ti},\theta_{ti}).\]
+
+    Similar to Pursuit, our model can be represented as a binary mapping
     and extended with Heterogeneous channels \(c\in C\) as:
     \[
-        S = \{0,1\}\exp\left(C\times E_\text{types}
+        S = \{0,1\}\exp\left(|C|\times E_\text{types}
         \times \prod_{n}^{N} D_n \times \prod_{n}^{N-1} \theta_n\right),
-    \]
-    or as a set,
-    \[
-        S := \bigcup_{e \in E} \{d\in D_n\ \forall\ n\in N\}\
-        \bigcup_{i \in I} \{\theta_{n} \forall\ n\in N-1\}\
-        \bigcup_{c\in C} \{c(e) \forall\ e\in E\}\
     \]
 \end{frame}
 
@@ -523,26 +602,36 @@
 \subsubsection{Training Architectures}
 
 \begin{frame}{Architectures Compared (RT 1.1,1.4)}
-    \textbf{Three Models Evaluated}
+    \textbf{Models Evaluated}
     \begin{enumerate}
         \item \textbf{HAPPO (Baseline)}\footcite{zhong2024}
+          \begin{itemize}
+            \item Separate PPO-trained policy per agent.
+            \item No shared parameters or symmetry constraints.
+            \item Chosen for its role as a lightweight and well-established heterogeneous MARL benchmark:
             \begin{itemize}
-                \item Separate PPO-trained policy per agent.
-                \item No shared parameters or symmetry constraints.
+                \item Based on PPO, a stable and widely adopted algorithm.
+                \item Among the most computationally efficient heterogeneous-capable methods available.
+                \item Minimal coordination overhead and straightforward implementation.
+                \item Serves as a reference point for evaluating cost-effectiveness and generality of more complex policies.
             \end{itemize}
-        \item \textbf{COMA + GNN + Transformer}\footcite{liu2020b}
-            \begin{itemize}
-                \item Graph neural network for relational encoding.
-                \item Transformer-based critic for contextual estimation.
-            \end{itemize}
+          \end{itemize}
+        % \item \textbf{PIC}\footcite{liu2020b}
+        %   \begin{itemize}
+        %     % \item \emph{COMA + GNN + Transformer}
+        %     \item \emph{GNN + MADDPG}
+        %     \item Graph neural network for relational encoding.
+        %     \item Transformer-based critic for contextual estimation.
+        %   \end{itemize}
         \item \textbf{Equivariant Spanning Policy (Proposed)}
-            \begin{itemize}
-                \item Global observation/action spaces with dynamic masking.
-                \item Equivariant layers: \(\lambda I + \gamma \mathbf{11}^\top\).
-                \item Shared policy supports heterogeneous agents natively.
-            \end{itemize}
+          \begin{itemize}
+            \item Global observation/action spaces with dynamic masking.
+            \item Equivariant layers: \(\lambda I + \gamma \mathbf{11}^\top\).
+            \item Shared policy supports heterogeneous agents natively.
+          \end{itemize}
     \end{enumerate}
 \end{frame}
+
 
 
 
