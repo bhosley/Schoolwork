@@ -145,13 +145,20 @@ We investigate the feasibility of scaling from smaller-team pretraining to full-
 training in environments with varying demands for coordination and role specialization.
 Our experiments employ an \emph{agent-steps} metric that standardizes training cost by 
 accounting for both agent count and time, enabling direct comparisons across curricula. 
+Following Narvekar et al.~\cite{narvekar2020}, our evaluation emphasizes the 
+\textit{total reward ratio} i.e., the area under the reward curve, as a primary 
+measure of efficacy. This metric captures how much reward is accumulated 
+over the training trajectory, rather than focusing solely on final performance. 
+Unlike methods that aim for improved asymptotic performance, 
+our objective is to reach the same final policy quality using fewer agent-steps, 
+effectively reducing the time threshold required for convergence.
 To evaluate the generalizability of this approach, we test it on three benchmark 
 environments—Waterworld~\cite{gupta2017}, Multiwalker~\cite{gupta2017}, 
 and \gls{lbf}~\cite{papoudakis2021}—selected for their 
 differing degrees of behavioral symmetry and cooperative complexity. 
 Building on prior work~\cite{smit2023}, we compare 
 direct training of policies at the full complement of target agents, with a strategy 
-where policies are trained with fewer then the target number of agents and agent 
+where policies are trained with fewer than the target number of agents and agent 
 policies are then selected via bootstrapping for retraining in the target configuration.
 This approach enables evaluation of transferability across configurations with 
 varying degrees of agent specialization.
@@ -216,7 +223,7 @@ critically influence the success of curriculum-inspired upsampling strategies.
 Improving training efficiency in \gls{marl} has become a research 
 priority~\cite{canese2021,krouka2022}, especially given the computational costs and sample 
 complexity that scale with team size and task difficulty~\cite{shoham2007,busoniu2008}. 
-Prior research has explored \gls{marl} scalability and efficiency in large-scale environments, 
+Prior research explores \gls{marl} scalability and efficiency in large-scale environments, 
 investigating methods to reduce overestimation bias~\cite{ackermann2019}, 
 support policy decentralization~\cite{foerster2018,lowe2020}, 
 and optimize communication overheads~\cite{sukhbaatar2016,wei2022}. 
@@ -226,7 +233,7 @@ This strategy can take many forms, including environment simplification~\cite{sh
 task decomposition~\cite{shi2023}, or gradually increasing the number of agents 
 during training~\cite{smit2023, albrecht2024}.
 
-Transfer learning approaches have also been used to mitigate the cost of retraining agents 
+Transfer learning approaches also used to mitigate the cost of retraining agents 
 tabula rasa (i.e., without prior initialization) in each new configuration. 
 In typical applications, knowledge learned in a source task—often with reduced 
 complexity or smaller scale—is used to initialize agents, 
@@ -249,8 +256,8 @@ Our work extends the research from Smit et al.~\cite{smit2023}
 by evaluating how smaller-team pretraining followed 
 by retraining in the full agent configuration can accelerate learning. 
 Distinct from earlier efforts, we utilize an additional period of training at 
-the desired number of agents and determine how much of that additional training would 
-be required to meet or exceed performance of agents trained from tabula rasa.
+the desired number of agents and determine how much of that additional training 
+is required to meet or exceed performance of agents trained from tabula rasa.
 We examine the effects of this strategy in environments with varying degrees of 
 behavioral heterogeneity, offering insight into how task structure influences 
 transferability and efficiency.
@@ -362,6 +369,7 @@ more flexible evaluation of \gls{harl} systems.
 \newglossaryentry{t}{name=\ensuremath{t},description={Time-step}}
 \newglossaryentry{a}{name=\ensuremath{a},description={Action}}
 \newglossaryentry{o}{name=\ensuremath{o},description={Observation}}
+\newglossaryentry{s}{name=\ensuremath{s},description={State}}
 \newglossaryentry{r}{name=\ensuremath{r},description={Reward}}
 \newglossaryentry{v}{name=\ensuremath{v},description={Action-Value}}
 \newglossaryentry{pi}{name=\ensuremath{\pi},description={Pi}}
@@ -384,7 +392,6 @@ This balances scalability with coordination, and is particularly well-suited
 to environments where centralized control during training is feasible, 
 but decentralized action is required at deployment.
 
-%% #TODO: Move this section per Dr Robbins
 The objective seeks policies 
 \(\gls{pi}_{\gls{i}}(\gls{a}_{\gls{i}}|\gls{o}_{\gls{i}})\)
 that maximize the expected cumulative team reward. 
@@ -433,7 +440,6 @@ applying it independently to each agent's trajectory. While agents optimize thei
 local observations and advantages, their rewards are aligned toward a shared cooperative outcome.
 These cooperative settings benefit the multi-agent problem as a single-team optimization, 
 encouraging agents to work together. 
-%%% End Moving section
 
 \begin{table}[ht]
     \centering
@@ -543,13 +549,15 @@ resulting in a constant observation size, and
 populated by a random subset when the team exceeds the pretraining configuration. 
 These adaptations enable consistent policy architectures across scales and support 
 systematic evaluation of transferability.
+Observation schemas are described in detail
+(see \Cref{con1:app:obs_spaces} for detailed examples).
 
 \subsection{Evaluation Protocol and Training Procedure}
 
 We implement \gls{ppo}~\cite{schulman2017} using the RLlib 
 framework to structure and execute our experiments with hyperparameters described in
 Table~\cref{con1:tab:ppo-hyperparams}. For Waterworld and \gls{lbf}, 
-we used RLlib's default PPO configuration. For Multiwalker, we modified the default 
+we use RLlib's default PPO configuration. For Multiwalker, we modified the default 
 network architecture to better accommodate the higher-dimensional continuous control space and 
 tighter coordination demands.
 
@@ -558,16 +566,16 @@ tighter coordination demands.
 Our training protocol consists of three main phases shared across all environments:
 \begin{enumerate}
     \item \textbf{Pretrain Smaller Teams:} We begin by training a minimal viable team of 
-        agents until convergence. For Waterworld and \gls{lbf}, this consisted of 2 agents; 
-        for Multiwalker, 3 agents were required due to its structural dependencies.
+        agents until convergence. For Waterworld and \gls{lbf}, this consists of 2 agents; 
+        for Multiwalker, 3 agents are required due to its structural dependencies.
     \item \textbf{Bootstrap to Construct Target Size Teams:} At various experimentally 
         designed checkpoints during pretraining, we duplicate agent policies to construct 
         larger teams, progressively scaling toward the target configuration. 
-        When the target team size exceeded a multiple of the available pretrained policies, 
-        one additional copy was selected at random.
-    \item \textbf{Retrain to Convergence:} These scaled-up teams were then retrained until 
+        When the target team size exceeds a multiple of the available pretrained policies, 
+        one additional copy is selected at random.
+    \item \textbf{Retrain to Convergence:} These scaled-up teams are then retrained until 
         convergence, with each agent initialized using one of the pretrained policies. 
-        All policies continued to update independently, allowing behavioral differentiation to 
+        All policies continue to update independently, allowing behavioral differentiation to 
         emerge or persist.
 \end{enumerate}
 
@@ -588,20 +596,20 @@ Our training protocol consists of three main phases shared across all environmen
 
 \begin{enumerate}
     \item \textbf{Waterworld and \gls{lbf}:}
-    In both Waterworld and Level-Based Foraging, agents were treated as interchangeable. 
-    Teams were formed by randomly duplicating the checkpointed policies without regard 
-    for agent identity. Final configurations included up to 8 agents, and retraining was 
+    In both Waterworld and Level-Based Foraging, agents are treated as interchangeable. 
+    Teams are formed by randomly duplicating the checkpointed policies without regard 
+    for agent identity. Final configurations include up to 8 agents, and retraining is 
     performed with all agents updating their policies independently (\cref{con1:fig:training_1}).
     \item \textbf{Multiwalker:}
     Multiwalker agents occupy fixed spatial positions in a physically connected chain, 
     introducing asymmetries in their observations. To maintain role consistency, 
-    we fixed the lead agent from the pretrained team and sampled the middle and rear 
+    we fix the lead agent from the pretrained team and sample the middle and rear 
     agents from the checkpoint pool during upsampling (\cref{con1:fig:training_2}). 
-    This approach preserved the 
-    structural expectations of the environment while allowing the remaining agents to vary. 
+    This approach preserves the structural expectations of the environment while 
+    allowing the remaining agents to vary. 
 \end{enumerate}
 
-The primary metric for comparison was agent-steps, defined as the product of the number of 
+The primary metric for comparison is agent-steps, defined as the product of the number of 
 agents and training iterations. This standardizes computational cost across team configurations 
 by accounting for the linear scaling observed in all environments.
 
@@ -645,23 +653,23 @@ pretraining durations.
 \label{con1:sec:results}
 
 Training complexity in \gls{harl}
-systems is influenced not only by the environment but also by the size of the agent 
-team being trained. As team size increases, so does the number of interactions, 
-the dimensionality of observations, and the coordination burden; factors that collectively 
+systems is influenced by both the environment and the size of the agent team. 
+As team size increases, the number of interactions, the dimensionality of observations, 
+and the coordination burden also increase; these factors collectively 
 compound computational cost. To fairly compare training strategies across different 
-team configurations, we introduce a normalized training cost metric: \emph{agent-steps}, 
+team configurations, we use a normalized training cost metric: \emph{agent-steps}, 
 defined as the product of the number of agents and the number of training steps. 
 This metric provides a consistent baseline for measuring training effort across 
 varying agent counts, especially in environments where agent scaling directly 
 impacts sample complexity.
 
 Before evaluating learning outcomes, we validated the consistency of training step costs.
-Since all experiments were conducted on a shared computing cluster with limited 
-control over resource allocation, we measured the time taken per training
-step throughout the course of the experiment. This validation served two purposes. First, 
-it allowed us to verify that resource provisioning remained stable throughout the experiment, 
+Because all experiments were conducted on a shared computing cluster with limited 
+control over resource allocation, we measure the time taken per training
+step throughout the course of the experiment. This validation serves two purposes. First, 
+it verifies that resource provisioning remains stable throughout the experiment, 
 mitigating concerns about variability introduced by background cluster activity or virtualization.
-Second, and more critically, this profiling confirmed that training costs scaled linearly 
+Second, and more critically, this profiling confirms that training costs scale linearly 
 with the number of agents—an anticipated but important validation for our use of the 
 \emph{agent-steps} metric. This relationship is visualized in \cref{con1:fig:agent-steps}, 
 where all three environments show Pearson correlation coefficients exceeding 0.999.
@@ -692,7 +700,7 @@ where all three environments show Pearson correlation coefficients exceeding 0.9
 
 We next examine the learning process in the three experimental environments: 
 Waterworld, Multiwalker, and \gls{lbf}. For each environment, 
-we visualized a series of training curves corresponding to a fixed target number of agents.
+we visualize a series of training curves corresponding to a fixed target number of agents.
 Each plot compares the baseline—tabula rasa training of the full agent team—with 
 retraining runs initialized from pretrained policies.
 The baseline is visualized as a dotted mean line, with shaded bands 
@@ -700,29 +708,30 @@ representing a 95\% prediction interval based on 30 independent training runs.
 Mean training trajectories of the retrained runs are grouped by the amount 
 of pretraining used to initialize them.
 
-In most settings, retrained configurations ultimately converged to 
+In most settings, retrained configurations ultimately converge to 
 performance levels comparable to those of tabula rasa training.
 This consistency across end performance suggests that retraining from a smaller 
-pretrained team does not appear to limit the achievable policy performance, 
+pretrained team does not limit the achievable policy performance, 
 at least within the range of configurations evaluated.
 
-In the Waterworld environment, the primary benefit of pretraining was accelerated learning. 
-Increasing the ratio between the pretraining and final team sizes led to greater improvements 
+In the Waterworld environment, the primary benefit of pretraining is accelerated learning. 
+Increasing the ratio between the pretraining and final team sizes leads to greater improvements 
 in convergence speed compared to training the full team from scratch. For instance, 
-while retraining from 2-agent policies to 3 or 4 agents offered minimal benefit 
-(\cref{con1:fig:waterworld-4}), scaling to 8 agents from the same 2-agent base resulted in 
-substantial speedups (\cref{con1:fig:waterworld-8}). These gains diminished rapidly, 
+while retraining from 2-agent policies to 3 or 4 agents offers minimal benefit 
+(\cref{con1:fig:waterworld-4}), scaling to 8 agents from the same 2-agent base results in 
+substantial speedups (\cref{con1:fig:waterworld-8}). These gains diminish rapidly, 
 with little additional benefit observed beyond 60 pretraining steps (120 agent-steps).
 This suggests that relatively short pretraining can provide sufficient foundational 
 coordination to improve sample efficiency at scale, although final tuning may 
 be necessary to achieve full performance with shorter pretraining periods.
 
+% Waterworld figures and AUC analysis
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-4-agent.png}
     \caption{\textbf{Waterworld (4 agents, 2-agent pretraining).} Comparison of 
-    4 agent tabula rasa training, and retraining trajectories using average 
-    episodic return over normalized agent-steps steps.}
+    4-agent tabula rasa training and retraining trajectories using average 
+    episodic return over normalized agent-steps.}
     \label{con1:fig:waterworld-4}
 \end{figure}
 
@@ -730,26 +739,26 @@ be necessary to achieve full performance with shorter pretraining periods.
     \centering
     \includegraphics[width=0.9\linewidth]{Waterworld-8-agent.png}
     \caption{\textbf{Waterworld (8 agents, 2-agent pretraining).} Comparison of 
-    8 agent tabula rasa training, and retraining trajectories using average 
-    episodic return over normalized agent-steps steps.}
+    8-agent tabula rasa training and retraining trajectories using average 
+    episodic return over normalized agent-steps.}
     \label{con1:fig:waterworld-8}
 \end{figure}
 
 In \cref{con1:fig:waterworld-aucs} we summarize overall efficiency trends across configurations. 
 Each cell represents the percentage improvement in training efficiency 
 achieved through pretraining, relative to full tabula rasa training.
-This percentage was calculated by comparing the area under the reward curve 
+This percentage is calculated by comparing the area under the reward curve 
 (AUC) of each retrained configuration to its corresponding baseline, as:
 \[
     \text{Improvement (\%)} 
-    = \frac{\text{AUC}{\text{retrain}} - \text{AUC}{\text{baseline}}}{\text{AUC}_{\text{retrain}}}
+    = \frac{\text{AUC}_{\text{retrain}} - \text{AUC}_{\text{baseline}}}{\text{AUC}_{\text{retrain}}}
 \]
-The resulting heatmap supports a general trend that larger target teams tend to 
+The resulting heatmap supports a general trend: larger target teams tend to 
 benefit more from pretraining when initialized from a smaller cohort.
-Although we observe peaks at 40 and 180 pretraining steps for the 7- and 8-agent configurations, 
-we attribute these to stochastic variation rather than indicative of structural trends.
+Although peaks are observed at 40 and 180 pretraining steps for the 7- and 8-agent configurations, 
+these are likely attributable to stochastic variation rather than structural trends.
 Overall, these results reinforce the observation that direct scaling is most effective 
-when the ratio between pretraining team size and target team sizes is high.
+when the ratio between pretraining team size and target team size is high.
 
 \begin{figure}[ht]
     \centering
@@ -760,25 +769,25 @@ when the ratio between pretraining team size and target team sizes is high.
     \label{con1:fig:waterworld-aucs}
 \end{figure}
 
-In Multiwalker, we observed a notable shift in the utility of pretraining. 
-For smaller teams (4 or 5 agents), retrained and tabula rasa runs performed similarly, 
+In Multiwalker, the utility of pretraining shifts notably. 
+For smaller teams (4 or 5 agents), retrained and tabula rasa runs perform similarly, 
 with retraining providing only modest acceleration (\cref{con1:fig:multiwalker-5}). 
-In contrast, for larger teams (6 and 7 agents), tabula rasa training frequently failed to 
-converge or terminated early, likely due to the environment's sparse rewards and heightened 
+In contrast, for larger teams (6 and 7 agents), tabula rasa training frequently fails to 
+converge or terminates early, likely due to the environment's sparse rewards and heightened 
 sensitivity to miscoordination (\cref{con1:fig:multiwalker-6}). 
-In these scenarios, pretraining acted as a stabilizing mechanism by equipping agents 
+In these scenarios, pretraining acts as a stabilizing mechanism by equipping agents 
 with sufficient baseline competence to engage meaningfully in early training episodes. 
-Without this foundation, larger teams (more vulnerable to premature episode termination 
-due to the failure of any single agent) struggled to generate useful feedback. 
-Pretraining thus mitigated an early-stage bottleneck and enabled learning to proceed 
-in configurations where tabula rasa attempts often stalled.
+Without this foundation, larger teams (which are more vulnerable to premature episode termination 
+due to the failure of any single agent) struggle to generate useful feedback. 
+Pretraining thus mitigates an early-stage bottleneck and enables learning to proceed 
+in configurations where tabula rasa attempts often stall.
 
 \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-5-agent.png}
     \caption{\textbf{Multiwalker (5 agents, 3-agent pretraining).} Comparison of 
-    5 agent tabula rasa training, and retraining trajectories using average 
-    episodic return over normalized agent-steps steps.}
+    5-agent tabula rasa training and retraining trajectories using average 
+    episodic return over normalized agent-steps.}
     \label{con1:fig:multiwalker-5}
 \end{figure}
 
@@ -788,19 +797,20 @@ in configurations where tabula rasa attempts often stalled.
     \centering
     \includegraphics[width=0.9\linewidth]{Multiwalker-6-agent.png}
     \caption{\textbf{Multiwalker (6 agents, 3-agent pretraining).} Comparison of 
-    6 agent tabula rasa training, and retraining trajectories using average 
-    episodic return over normalized agent-steps steps.}
+    6-agent tabula rasa training and retraining trajectories using average 
+    episodic return over normalized agent-steps.}
     \label{con1:fig:multiwalker-6}
 \end{figure}
 
-To further examine these trends, we generated an AUC-based heatmap for Multiwalker as shown 
-earlier for Waterworld. The resulting pattern is more polarized than that observed for Waterworld.
-For the larger teams the apparent efficiency gains, often exceeding 100\%
-reflect the stabilizing role of pretraining.
-In contrast, negative gains observed in some smaller-team configurations (e.g., 4 and 5 agents) 
+To further examine these trends, we generate an AUC-based 
+heatmap for Multiwalker as shown earlier for Waterworld. 
+The resulting pattern is more polarized than that observed for Waterworld.
+For the larger teams, the apparent efficiency gains—often exceeding 100\% 
+reflect the stabilizing role of pretraining. In contrast, 
+negative gains observed in some smaller-team configurations (e.g., 4 and 5 agents) 
 are better understood as a result of the scaling transition requiring additional training. 
-When this time exceeded the total convergence time of tabula rasa training, the net cost 
-is necessarily higher, despite final performance often eventually meeting the baseline.
+When this time exceeds the total convergence time of tabula rasa training, the net cost 
+is necessarily higher, even though final performance eventually meets the baseline.
 
 \begin{figure}[!ht]
     \centering
@@ -812,10 +822,11 @@ is necessarily higher, despite final performance often eventually meeting the ba
 \end{figure}
 
 We next consider the \gls{lbf} environment.
-Given the environment's structured observations, we anticipated that the
-choice of observation schema, described in \cref{con1:subsec:training_framework},
-could significantly influence training outcomes.
-To evaluate this, we trained baseline policies from tabula rasa under each schema:
+Given the environment's structured observations, 
+we anticipated that the choice of observation schema, 
+described in \cref{con1:subsec:training_framework},
+can significantly influence training outcomes.
+To evaluate this, we train baseline policies from tabula rasa under each schema:
 \begin{enumerate}
 \item \emph{Full Observability}: agents with complete information about all allies.
 \item \emph{Truncated Observability}: agents receive randomly sampled ally features.
@@ -823,7 +834,7 @@ To evaluate this, we trained baseline policies from tabula rasa under each schem
     their own sight range.
 \end{enumerate}
 For each team size and observation schema, we conducted 30 independent runs
-and compared the resulting performance distributions.
+and compare the resulting performance distributions.
 
 \begin{table}[!ht]
     \centering
@@ -856,22 +867,33 @@ and compared the resulting performance distributions.
     \end{tabular}
 \end{table}
 
+We use two-sample \(t\)-tests to assess whether the choice of observation 
+schema leads to statistically significant differences in performance.
+The null hypothesis for each test is that the two observation schemas 
+being compared result in equal mean training performance, 
+with no statistically significant difference between them.
+A Bonferroni correction is applied to control for family-wise error 
+across the multiple team-size comparisons.
+
 \Cref{con1:tab:observation_comparisons} summarizes these comparisons. 
-Across all agent counts, the full observability schema produced 
+Across all agent counts, the full observability schema produces 
 significantly different training outcomes than the two reduced forms. 
 Statistical tests (two-sample t-tests with Bonferroni correction) 
-confirmed that the full schema distributions were distinct from both the 
+confirm that the full schema distributions are distinct from both the 
 truncated and ally-ignorant variants, with $p < 0.001$ in all such cases. 
-However, the truncated and ally-ignorant observation settings were not 
+However, the truncated and ally-ignorant observation settings are not 
 statistically distinguishable from one another at any agent count, 
 even under uncorrected significance thresholds. 
-These results suggest that not only do neither of 
+These results suggest that neither of 
 the reduced schemas achieves the same level of 
 expected performance as the full observation space, 
-the truncated schema does not confer any measurable 
+and the truncated schema does not confer any measurable 
 benefit over the ally-ignorant schema, indicating 
 that limited teammate information is not significantly 
 more useful than none at all under these conditions.
+
+These findings highlight the critical impact of observation schema on training outcomes
+(examples are provided in \Cref{con1:app:obs_spaces}).
 
 The learning curves for \gls{lbf} do not exhibit a strong or consistent 
 pattern across configurations. While retrained trajectories 
@@ -884,15 +906,15 @@ retraining compares to training from scratch at a 7-agent configuration.
     \centering
     \includegraphics[width=0.9\linewidth]{LBF-7-agent.png}
     \caption{\textbf{Level-Based Foraging (7 agents, 2-agent pretraining).} Comparison of 
-    7 agent tabula rasa training, and retraining trajectories using average 
-    episodic return over normalized agent-steps steps.}
+    7-agent tabula rasa training and retraining trajectories using average 
+    episodic return over normalized agent-steps.}
     \label{con1:fig:lbf-7}
 \end{figure}
 
 We extend our analysis of \gls{lbf} using an AUC-based heatmap to summarize the 
 relative efficiency of each scaling configuration. 
-This heatmap shows a clear gradient, that unlike in Waterworld and Multiwalker, 
-favor smaller target team sizes and longer pretraining durations. 
+This heatmap shows a clear gradient that, unlike in Waterworld and Multiwalker, 
+favors smaller target team sizes and longer pretraining durations. 
 Gains diminish sharply as the final agent count increases, 
 indicating that pretraining is most beneficial when transitioning to moderately sized teams. 
 This pattern contrasts with the earlier environments and reinforces the hypothesis that 
@@ -919,57 +941,57 @@ interactions encountered by larger groups.
 
 As cooperative \gls{marl} systems grow in scale and complexity, the challenge of efficiently 
 training large, heterogeneous teams becomes a critical barrier to real-world deployment. 
-This study set out to address whether this training bottleneck can be mitigated by 
-first pretraining smaller teams of agents, then scaling up to full-size configurations 
+This study addresses whether this training bottleneck can be mitigated by 
+first pretraining smaller teams of agents and then scaling up to full-size configurations 
 through policy duplication and subsequent retraining—a direct scaling strategy that 
 promises to reduce computational cost while maintaining or improving performance.
 
-We investigated this question using Proximal Policy Optimization within the 
+We investigate this question using Proximal Policy Optimization within the 
 RLlib framework, evaluating the approach across three benchmark environments: 
 Waterworld, Multiwalker, and Level-Based Foraging. Each environment was 
 selected to probe different coordination requirements and forms of heterogeneity: 
-Waterworld featured structurally identical agents with independently updated policies; 
-Multiwalker introduced fixed spatial roles and static observation asymmetries; 
-and \gls{lbf} incorporated dynamic intrinsic heterogeneity through 
-skill level variation. Our methodology maintained consistent network architectures across 
-team sizes, using lightweight observation adjustments to ensure that policies remained 
+Waterworld features structurally identical agents with independently updated policies; 
+Multiwalker introduces fixed spatial roles and static observation asymmetries; 
+and \gls{lbf} incorporates dynamic intrinsic heterogeneity through 
+skill level variation. Our methodology maintains consistent network architectures across 
+team sizes, using lightweight observation adjustments to ensure that policies remain 
 transferable without requiring architectural modification.
 
 The results reveal that the efficacy of small-team pretraining and scaling is highly dependent 
 on the nature of the environment and the degree of agent specialization required. 
 In Waterworld, 
 where agents are structurally identical and coordination demands are comparatively low, 
-scaling from a small pretrained team consistently accelerated convergence, 
+scaling from a small pretrained team consistently accelerates convergence, 
 reflecting a clear efficiency gain. 
-Multiwalker introduced mild intrinsic heterogeneity through fixed spatial roles and 
-asymmetric observations, which exacerbated coordination demands as team size increased. 
+Multiwalker introduces mild intrinsic heterogeneity through fixed spatial roles and 
+asymmetric observations, which exacerbate coordination demands as team size increases. 
 In larger teams, the likelihood of a single agent failing, thus terminating the episode 
-for all agents, became a critical bottleneck. In this setting, pretraining served as a 
+for all agents, becomes a critical bottleneck. In this setting, pretraining serves as a 
 stabilizing influence by equipping agents with sufficient initial competence to avoid 
 early termination and enable meaningful learning progression where tabula rasa training 
-frequently failed to make progress.
+frequently fails to make progress.
 \gls{lbf} posed the most significant challenges, 
 combining dynamic intrinsic heterogeneity with shifting coordination 
 demands based on agent skill levels. 
-Here, the benefits of pretraining were modest and inconsistent, 
-particularly for larger teams, where coordination complexity intensified.
+Here, the benefits of pretraining are modest and inconsistent, 
+particularly for larger teams, where coordination complexity intensifies.
 
-These findings suggest that reduced-size pretraining can be effective in cooperative \gls{marl} 
+These findings indicate that reduced-size pretraining can be effective in cooperative \gls{marl} 
 settings where agent roles are symmetric or only weakly specialized. In such cases, 
 the strategy offers not only measurable gains in sample efficiency but also greater 
 training stability in configurations prone to early failure. However, as environments 
 demand more intricate coordination or stronger role differentiation, the utility of 
-this approach diminishes. We further observed that the benefit of early pretraining 
+this approach diminishes. We further observe that the benefit of early pretraining 
 often plateaus quickly—short curricula may provide comparable advantages to longer 
 ones in many settings, offering a favorable cost-benefit tradeoff when compute is limited.
 
 By introducing and employing agent-steps as a normalized metric for training cost, and by 
 systematically evaluating policy reuse across a spectrum of team sizes and heterogeneity 
-profiles, this study contributes practical insight into the tradeoffs of using upsampling 
-as a curricular training strategy. Our results support the value of reduced-size pretraining 
+profiles, this study provides practical insight into the tradeoffs of using upsampling 
+as a curricular training strategy. The results support the value of reduced-size pretraining 
 and policy duplication as a practical tool for improving training efficiency in \gls{marl}, 
-especially in domains where agent roles are largely interchangeable. However, we view 
-this approach not as a complete solution but as a useful technique that will complement 
+especially in domains where agent roles are largely interchangeable. However, this approach 
+is not a complete solution but rather a useful technique that complements 
 more comprehensive training frameworks. In settings where agent specialization or 
 coordination complexity increases, tailored strategies that incorporate upsampling as 
 one component may be necessary to achieve robust performance and scalability.
@@ -981,16 +1003,16 @@ Building on the findings of this study, several promising research directions em
 One especially compelling area centers on the design of \emph{invariant observation spaces};
 representations that remain structurally consistent across team sizes and configurations. 
 Our current strategies for handling observation dimensionality in \gls{lbf}, 
-though effective for transferability, were deliberately simple. More advanced techniques may 
+though effective for transferability, are deliberately simple. More advanced techniques may 
 unlock broader generalization without the tradeoffs seen in truncated or ally-ignorant designs.
 
 In particular, adopting observation encodings that are \emph{permutation-invariant} or derived 
 from structured representations (e.g., graphs or attention-based pooling) 
-could offer a more robust solution. These techniques might allow policies to flexibly 
+could offer a more robust solution. These techniques may allow policies to flexibly 
 incorporate variable team sizes and agent contexts without the need for retraining or 
 hard-coded constraints.
 
-Another important avenue lies in investigating whether such invariant representations 
+Another important avenue is to investigating whether such invariant representations 
 improve robustness in the face of \emph{dynamic heterogenation}, that is, 
 when agents change roles, capabilities, or sensory access over time. 
 Current methods generally assume fixed or known agent types during training; 
@@ -1008,6 +1030,91 @@ beyond static team setups, enabling more versatile and resilient multi-agent sys
 
 \section*{Appendix}
 \addcontentsline{toc}{section}{Appendix}
+\glsresetall
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ----- Add to: Dissertation Appendix ----- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection*{Observation Schema Examples}
+\label{con1:app:obs_spaces}
+
+To support varying assumptions about observability and coordination, 
+we implement three variants of the agent observation space. 
+Each schema is derived from the default \gls{lbf} observation format.
+
+\paragraph{Default Format.}
+The baseline observation space in \gls{lbf} is a fixed-length vector composed of tuples. 
+Each tuple is of the form \((x, y, \ell)\), where \(x, y\) denote coordinates on the map 
+and \(\ell\) is the agent or food level. The overall vector is a concatenation of:
+\[
+\text{obs}_i = \left( \gls{s}_i,\, f_1, f_2, 
+    \dots, f_{N_f},\, \gls{s}_1, \gls{s}_2, 
+    \dots, \gls{s}_{N_i-1} \right)
+\]
+Here:
+\begin{itemize}
+    \item \(\gls{s}_i\): the observing agent's own state \((x, y, \ell)\),
+    \item \(f_j\): state of food item \(j\), zero-padded if fewer than max,
+    \item \(\gls{s}_k\): state of ally \(k\), for all other agents, zero-padded as needed.
+\end{itemize}
+The vector is padded to accommodate the maximum number of agents and food items expected 
+in the environment.
+
+\paragraph{Schema 1: Full Observability.}
+This schema preserves the full \gls{lbf} observation space. 
+The agent sees all food items and all teammates. 
+It is structurally identical to the default observation structure and is only 
+applicable when the maximum team size is known and fixed during training and evaluation.
+
+\paragraph{Schema 2: Truncated Observability.}
+In this variant, the number of ally observation slots is fixed to a smaller value \(k\), 
+and allies are randomly sampled from the set of available teammates. 
+The order of ally observations is randomized each time to prevent learned 
+slot-specific associations. If fewer than \(k\) allies are visible, 
+the remaining slots are zero-padded. The food tuple list remains unchanged.
+
+\paragraph{Schema 3: Ally-Ignorant Observability.}
+This schema omits ally information entirely. 
+The observation consists only of the agent's own state and the food tuples. 
+This reflects a strict form of partial observability in which agents cannot 
+coordinate via observation.
+
+\paragraph{Example.}
+Consider a simplified environment:
+\begin{itemize}
+    \item Agent 0 at position (2, 3), level 2
+    \item Food: one item at (5, 5), level 1
+    \item Allies: Agent 1 at (4, 4), level 2; Agent 2 at (1, 6), level 3
+    \item Max team size = 4 (so 3 allies max), max food = 2
+    \item Truncated schema uses \(k = 1\)
+\end{itemize}
+
+\textbf{Full Observability:}
+\[
+[2, 3, 2,\ 5, 5, 1,\ 0, 0, 0,\ 4, 4, 2,\ 1, 6, 3,\ 0, 0, 0]
+\]
+
+\textbf{Truncated Observability (sampled Agent 1):}
+\[
+[2, 3, 2,\ 5, 5, 1,\ 0, 0, 0,\ 4, 4, 2]
+\]
+
+\textbf{Truncated Observability (sampled Agent 2):}
+\[
+[2, 3, 2,\ 5, 5, 1,\ 0, 0, 0,\ 1, 6, 3]
+\]
+
+\textbf{Ally-Ignorant Observability:}
+\[
+[2, 3, 2,\ 5, 5, 1,\ 0, 0, 0]
+\]
+
+\noindent In each case, unused slots (extra food or allies) are filled with \((0, 0, 0)\). 
+The truncated schema introduces variation across episodes and removes positional 
+indexing over teammates, while the ally-ignorant schema fully removes inter-agent awareness.
+
+\clearpage
 
 \subsection*{Complete Training Curves}
 The following figures present exhaustive training curves for all 
