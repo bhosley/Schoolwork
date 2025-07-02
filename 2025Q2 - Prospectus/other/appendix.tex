@@ -3,6 +3,90 @@
 
 \section*{Appendix}
 \addcontentsline{toc}{section}{Appendix}
+\glsresetall
+
+
+% ------------------------------ Contribution 1 Appendix ---------------------------------
+
+\subsection*{Observation Schema Examples}
+\label{con1:app:obs_spaces}
+
+To support varying assumptions about observability and coordination, 
+we implement three variants of the agent observation space. 
+Each schema is derived from the default \gls{lbf} observation format.
+
+\paragraph{Default Format.}
+The baseline observation space in \gls{lbf} is a fixed-length vector composed of tuples. 
+Each tuple is of the form \((x, y, \ell)\), where \(x, y\) denote coordinates on the map 
+and \(\ell\) is the agent or food level. The overall vector is a concatenation of:
+\[
+\text{obs}_i = \left( \gls{s}_i,\, f_1, f_2, 
+    \dots, f_{N_f},\, \gls{s}_1, \gls{s}_2, 
+    \dots, \gls{s}_{N_i-1} \right)
+\]
+Here:
+\begin{itemize}
+    \item \(\gls{s}_i\): the observing agent's own state \((x, y, \ell)\),
+    \item \(f_j\): state of food item \(j\), zero-padded if fewer than max,
+    \item \(\gls{s}_k\): state of ally \(k\), for all other agents, zero-padded as needed.
+\end{itemize}
+The vector is padded to accommodate the maximum number of agents and food items expected 
+in the environment.
+
+\paragraph{Schema 1: Full Observability.}
+This schema preserves the full \gls{lbf} observation space. 
+The agent sees all food items and all teammates. 
+It is structurally identical to the default observation structure and is only 
+applicable when the maximum team size is known and fixed during training and evaluation.
+
+\paragraph{Schema 2: Truncated Observability.}
+In this variant, the number of ally observation slots is fixed to a smaller value \(k\), 
+and allies are randomly sampled from the set of available teammates. 
+The order of ally observations is randomized each time to prevent learned 
+slot-specific associations. If fewer than \(k\) allies are visible, 
+the remaining slots are zero-padded. The food tuple list remains unchanged.
+
+\paragraph{Schema 3: Ally-Ignorant Observability.}
+This schema omits ally information entirely. 
+The observation consists only of the agent's own state and the food tuples. 
+This reflects a strict form of partial observability in which agents cannot 
+coordinate via observation.
+
+\paragraph{Example.}
+Consider a simplified environment:
+\begin{itemize}
+    \item Agent 0 at position (2, 3), level 2
+    \item Food: one item at (5, 5), level 1
+    \item Allies: Agent 1 at (4, 4), level 2; Agent 2 at (1, 6), level 3
+    \item Max team size = 4 (so 3 allies max), max food = 2
+    \item Truncated schema uses \(k = 1\)
+\end{itemize}
+
+\textbf{Full Observability:}
+\[
+[2, 3, 2,\ 5, 5, 1,\ 0, 0, 0,\ 4, 4, 2,\ 1, 6, 3,\ 0, 0, 0]
+\]
+
+\textbf{Truncated Observability (sampled Agent 1):}
+\[
+[2, 3, 2,\ 5, 5, 1,\ 0, 0, 0,\ 4, 4, 2]
+\]
+
+\textbf{Truncated Observability (sampled Agent 2):}
+\[
+[2, 3, 2,\ 5, 5, 1,\ 0, 0, 0,\ 1, 6, 3]
+\]
+
+\textbf{Ally-Ignorant Observability:}
+\[
+[2, 3, 2,\ 5, 5, 1,\ 0, 0, 0]
+\]
+
+\noindent In each case, unused slots (extra food or allies) are filled with \((0, 0, 0)\). 
+The truncated schema introduces variation across episodes and removes positional 
+indexing over teammates, while the ally-ignorant schema fully removes inter-agent awareness.
+
+\clearpage
 
 % Contribution 1 Supporting curves
 % \usepackage{pgffor} %enables for loop used in appendix
@@ -34,3 +118,6 @@ training to retraining from various pretraining durations.
     \end{figure}
 }
 
+% ------------------------------ Contribution 2 Appendix ---------------------------------
+
+% ------------------------------ Contribution 3 Appendix ---------------------------------

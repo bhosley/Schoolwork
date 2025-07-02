@@ -32,6 +32,17 @@
 \newabbreviation{happo}{HAPPO}{heterogeneous-agent \gls{ppo}}
 \newabbreviation{isr}{ISR}{intelligence, surveillance, and reconnaissance}
 \newabbreviation{offset}{OFFSET}{OFFensive Swarm-Enabled Tactics}
+% Glossary type links
+\newglossaryentry{i}{name=\ensuremath{i},description={Agent}}
+\newglossaryentry{t}{name=\ensuremath{t},description={Time-step}}
+\newglossaryentry{a}{name=\ensuremath{a},description={Action}}
+\newglossaryentry{o}{name=\ensuremath{o},description={Observation}}
+\newglossaryentry{s}{name=\ensuremath{s},description={State}}
+\newglossaryentry{r}{name=\ensuremath{r},description={Reward}}
+\newglossaryentry{v}{name=\ensuremath{v},description={Action-Value}}
+\newglossaryentry{pi}{name=\ensuremath{\pi},description={Pi}}
+\newglossaryentry{expRet}{name=\ensuremath{\mathbb{E}},description={Expected Return}}
+%
 
 \usepackage{pgffor}         %enables for loop used in appendix
 \usepackage{placeins}       %this package contains the FloatBarrier tag
@@ -364,17 +375,6 @@ more flexible evaluation of \gls{harl} systems.
 \subsection{Training Framework for Heterogeneous MARL}
 \label{con1:subsec:training_framework}
 
-% Glossary type links
-\newglossaryentry{i}{name=\ensuremath{i},description={Agent}}
-\newglossaryentry{t}{name=\ensuremath{t},description={Time-step}}
-\newglossaryentry{a}{name=\ensuremath{a},description={Action}}
-\newglossaryentry{o}{name=\ensuremath{o},description={Observation}}
-\newglossaryentry{s}{name=\ensuremath{s},description={State}}
-\newglossaryentry{r}{name=\ensuremath{r},description={Reward}}
-\newglossaryentry{v}{name=\ensuremath{v},description={Action-Value}}
-\newglossaryentry{pi}{name=\ensuremath{\pi},description={Pi}}
-\newglossaryentry{expRet}{name=\ensuremath{\mathbb{E}},description={Expected Return}}
-%
 We formulate each task as a cooperative multi-agent partially observable Markov 
 decision process (MA-POMDP). At each timestep, each of the \(\gls{i}\in\Gls{i}\) 
 agents receives an observation of the environment \(\gls{o}_{\gls{i}}\) and selects 

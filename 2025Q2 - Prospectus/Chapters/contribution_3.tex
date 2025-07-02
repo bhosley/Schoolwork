@@ -1,47 +1,62 @@
-
 \subsection{Motivation}
-The third contribution investigates a progressive learning strategy in which policy 
-networks grow in capacity during training. Rather than training a large network 
-from the outset, which increases sample inefficiency and risk of overfitting, 
-this approach proposes beginning with a smaller network and increasing its size over 
-time through structured transformations. Inspired by ideas such as Net2Net~\cite{chen2016}, 
-this work evaluates the use of tensor projection techniques to enable seamless 
-expansion while preserving prior network behavior.
 
-This contribution builds on lessons from the previous two. Contribution 1 
-showed that smaller-team training can accelerate convergence, while Contribution 2 
-intends to demonstrate the importance of input design for scalable policy reuse. 
-Contribution 3 investigates whether network capacity itself can be staged similarly,
-starting small to learn core dynamics, then growing to support more nuanced policies,
-without discarding prior learning.
+Contribution 3 investigates whether graph-based policy architectures improve 
+the efficiency, robustness, and cost-effectiveness of learning in \gls{marl}. 
+Whereas Contribution 2 evaluated input-invariant architectures for their 
+scalability and generality, this contribution explores a complementary hypothesis: 
+that relational inductive bias introduced through \glspl{gnn}can enhance 
+policy learning by explicitly modeling inter-agent dependencies.
+
+This work is motivated by the observation that \gls{marl} environments 
+often involve structured, dynamic interactions among agents. 
+Encoding these interactions directly via message passing and attention 
+mechanisms may yield more expressive and generalizable policies than flat, 
+unordered input designs.
+
 
 \subsection{Methodology}
-The experiment will begin with small-capacity networks trained using standard 
-PPO in PettingZoo-compatible environments. At predefined training milestones, 
-the network will be expanded by projecting its weights into a higher-dimensional tensor space. 
-Multiple projection strategies will be compared, including:
-\begin{itemize}
-    \item Identity-based expansion (e.g., block-diagonal initialization).
-    \item Learned projection layers.
-    \item Randomized low-rank initialization with partial freezing.
-\end{itemize}
-Training will then resume from the expanded model, and performance will 
-be compared against fixed-size networks trained for the same duration.
+
+We implement and evaluate a graph-based policy architecture adapted from 
+\gls{pic}~\cite{liu2020b}, which combines a \gls{gnn}-based encoder for 
+agent observations with a transformer-based centralized critic. 
+
+We adopt PIC as our benchmark GNN-based architecture due to its 
+balance of simplicity and representational power. 
+Initial exploratory efforts to implement a minimal 
+graph neural network for this setting yielded architectures 
+that were functionally and structurally similar to PIC. 
+As a result, we concluded that further reduction would risk 
+eliminating key relational mechanisms that motivate the study. 
+PIC is a mature, well-documented method that supports centralized 
+critics and inter-agent message passing without excessive overhead, 
+making it a natural choice for evaluating graph-based inductive biases in heterogeneous MARL.
+
+This model is trained using the \gls{ctde} paradigm and benchmarked against 
+both input-invariant architectures from Contribution 2 and non-shared 
+baselines (e.g., \gls{happo}~\cite{zhong2024}).
+
+We conduct controlled experiments in the same custom heterogeneous 
+environment developed for earlier contributions. 
+Metrics include convergence rate (agent-steps to reach baseline reward), 
+final performance under full and partial observability, 
+and sensitivity to agent dropout or observation channel degradation.
+
 
 \subsection{Resources}
-The project will reuse the infrastructure from Contributions 1 and 2, 
-including RLlib for training and Weights and Biases for tracking. 
-Tensor projection layers will be implemented directly in PyTorch and 
-integrated into the RLlib model registry.
 
-We have not yet identified any specific features that we need in an environment
-and thus anticipate being able to reuse the environments used in the 
-earlier contributions.
+The architecture is implemented in PyTorch and integrated into the RLlib 
+framework using custom model registration. 
+Existing logging and evaluation infrastructure from Contributions 1 and 2 is reused. 
+No additional environment modifications are required beyond those already completed.
+
 
 \subsection{Anticipated Obstacles}
-The primary challenge lies in selecting projection methods that preserve 
-learned function approximations across architectural transitions. 
-Naive expansion may disrupt policy performance or destabilize learning. 
-Additional tuning may be needed to maintain gradient flow and convergence 
-after projection. Furthermore, identifying optimal growth schedules will 
-likely require additional experiments.
+
+Graph-based policies introduce additional architectural complexity, 
+requiring careful tuning of message-passing depth, 
+graph connectivity assumptions, and attention mechanisms. 
+Furthermore, scalability with respect to team size and training 
+cost may present practical challenges, especially in the 
+presence of high-dimensional relational embeddings. 
+Finally, interpreting learned message-passing behavior may be 
+difficult without additional instrumentation.

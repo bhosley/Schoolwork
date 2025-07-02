@@ -1,4 +1,3 @@
 \contentsline {table}{\numberline {1}{\ignorespaces Notation used in PPO objective and advantage estimation}}{33}{table.caption.12}%
-\contentsline {table}{\numberline {2}{\ignorespaces PPO Hyperparameters used in experiments}}{38}{table.caption.15}%
-\contentsline {table}{\numberline {3}{\ignorespaces Pearson Correlation Coefficients Between Agent Count and Iteration Time}}{39}{table.caption.17}%
-\contentsline {table}{\numberline {4}{\ignorespaces Pairwise $t$-test for LBF Observations.}}{44}{table.caption.24}%
+\contentsline {table}{\numberline {2}{\ignorespaces PPO hyperparameters used in experiments}}{38}{table.caption.15}%
+\contentsline {table}{\numberline {3}{\ignorespaces Pairwise $t$-test comparisons between observation schemas across agent team sizes. $p$-values are Bonferroni-corrected. Bolded $p$-values indicate statistically significant findings at the $\alpha = .05$ significance level. }}{45}{table.caption.23}%

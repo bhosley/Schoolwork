@@ -434,20 +434,20 @@ Three network architectures are evaluated:
 \paragraph{0. HAPPO Baseline}
 To provide a baseline comparison, we include a standard implementation 
 of Heterogeneous-Agent Proximal Policy Optimization (HAPPO)~\cite{zhong2024}. 
-Each agent is trained with its own policy using PPO updates in a centralized 
+With HAPPO each agent is trained with its own policy using PPO updates in a centralized 
 training setting, but without shared parameters or input-invariant structure. 
 HAPPO represents a strong non-invariant architecture designed specifically 
-for heterogeneous teams, serving as a reference point for evaluating the 
+for heterogeneous teams, serving as a strong reference point for evaluating the 
 efficiency and robustness benefits of the more structured approaches.
 
-\paragraph{1. COMA with GNN and Transformer}
-This model extends the counterfactual multi-agent policy gradient (COMA) 
-algorithm by incorporating a graph neural network (GNN) to encode agent relations, 
-and a transformer-based critic for contextual value estimation. 
-This structure follows prior work (e.g., PIC and MAAC) and 
-serves as a high-capacity input-invariant baseline. 
-The actor and critic operate under a centralized training with 
-decentralized execution (CTDE) paradigm, with the GNN providing relational inductive bias.
+% \paragraph{1. COMA with GNN and Transformer}
+% This model extends the counterfactual multi-agent policy gradient (COMA) 
+% algorithm by incorporating a graph neural network (GNN) to encode agent relations, 
+% and a transformer-based critic for contextual value estimation. 
+% This structure follows prior work (e.g., PIC and MAAC) and 
+% serves as a high-capacity input-invariant baseline. 
+% The actor and critic operate under a centralized training with 
+% decentralized execution (CTDE) paradigm, with the GNN providing relational inductive bias.
 
 \paragraph{2. Equivariant Spanning Policy}
 This architecture introduces a novel mechanism for enabling 
