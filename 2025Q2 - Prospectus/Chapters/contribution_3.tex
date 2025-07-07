@@ -2,7 +2,7 @@
 
 Contribution 3 investigates whether graph-based policy architectures improve 
 the efficiency, robustness, and cost-effectiveness of learning in \gls{marl}. 
-Whereas Contribution 2 evaluated input-invariant architectures for their 
+Whereas Contribution 2 evaluated a mean-field input-invariant approach for its 
 scalability and generality, this contribution explores a complementary hypothesis: 
 that relational inductive bias introduced through \glspl{gnn}can enhance 
 policy learning by explicitly modeling inter-agent dependencies.
@@ -12,6 +12,35 @@ often involve structured, dynamic interactions among agents.
 Encoding these interactions directly via message passing and attention 
 mechanisms may yield more expressive and generalizable policies than flat, 
 unordered input designs.
+
+A significant shortcoming of mean-field solutions is that they often neglect
+information pertaining to agent-group interactions~\cite{yang2021a}.
+Graph-based solutions are often chosen for the ability to maintain such information
+and their order invariance~\cite{liu2020b, yang2021a}.
+
+
+\subsubsection{Novelty}
+
+While the primary novelty of this contribution is still under active exploration, 
+we anticipate several avenues through which meaningful contributions may emerge.
+
+First, we apply graph-based policy architectures to a custom heterogeneous environment 
+that introduces substantially more agent diversity than the original PIC implementation. 
+This alone provides an opportunity to evaluate the limits of relational policy learning 
+under asymmetric observation, action, and role-based heterogeneity.
+
+Second, we will characterize the performance and robustness of PIC-style architectures 
+under conditions that deviate significantly from the assumptions of earlier benchmarks. 
+This includes testing sensitivity to observation degradation, varying team compositions, 
+and dynamic environments.
+
+Finally, depending on experimental outcomes, we may explore architectural or 
+environmental modifications that address observed failure cases or extend the 
+capabilities of existing \gls{gnn}-based models in \gls{marl}.
+
+This contribution is thus framed as both a performance evaluation and a 
+potential launching point for novel design improvements in the use of relational 
+architectures for heterogeneous multi-agent learning.
 
 
 \subsection{Methodology}

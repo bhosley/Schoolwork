@@ -63,10 +63,6 @@
             Introduce random observation channel masking and measure recovery/stability.}
         \item[RT 2.3] {
             Compare perturbation response curves with Contribution 2 architectures.}
-        % Possibly??
-        % \item[RT 2.4] {
-        %     Identify architectural features (e.g., attention layers, graph pooling) 
-        %     most associated with resilience.}
     \end{itemize}
     \end{enumerate}
 \end{frame}
@@ -97,20 +93,10 @@
 \subsubsection{Training Architectures}
 
 \begin{frame}{Architectures Compared (RT 1.1,1.4)}
-    \textbf{Three Models Evaluated}
+    \textbf{Models Evaluated}
     \begin{enumerate}
-        \item \textbf{HAPPO (Baseline)}\footcite{zhong2024}
-          \begin{itemize}
-            \item Separate PPO-trained policy per agent.
-            \item No shared parameters or symmetry constraints.
-            \item Chosen for its role as a lightweight and well-established heterogeneous MARL benchmark:
-            \begin{itemize}
-                \item Based on PPO, a stable and widely adopted algorithm.
-                \item Among the most computationally efficient heterogeneous-capable methods available.
-                \item Minimal coordination overhead and straightforward implementation.
-                \item Serves as a reference point for evaluating cost-effectiveness and generality of more complex policies.
-            \end{itemize}
-          \end{itemize}
+        \item \textbf{HAPPO (Baseline)}\footcite{zhong2024} As used in Contribution 2
+        \item \textbf{Mean-Field } From Contribution 2
         \item \textbf{PIC}\footcite{liu2020b}
           \begin{itemize}
             % \item \emph{COMA + GNN + Transformer}

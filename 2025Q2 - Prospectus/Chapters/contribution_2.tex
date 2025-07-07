@@ -357,6 +357,140 @@ but how they might be practically and broadly applied.
 \section{Methodology}
 \label{con2:sec:methodology}
 
+
+
+\subsection{Environment Model}
+
+We model the environment following the structure outlined by Powell~\cite{powell2022}, 
+consisting of the state, decision/action, exogenous information, transition function, and 
+objective function.
+
+\paragraph{State.} 
+Let \(T \subset \mathbb{N}\) be the set of decision epochs, 
+and define entities \(E := (I, J, K, L)\), where 
+\(i \in I\) are agents, 
+\(j \in J\) are objectives, 
+\(k \in K\) are hazards, and 
+\(l \in L\) are obstacles. 
+At each time \(t \in T\), the joint state \(s\in S\) is:
+\[
+    s_t := \{s_{te} \mid e \in E\}, \quad s_t \in S
+\]
+Where the marginal state for agents \(i \in I\), 
+includes both location and orientation:
+\[
+    s_{ti} := (d_{ti}, \theta_{ti})
+\]
+and the non-agent entities \(e \in (J, K, L)\) are represented by location alone:
+\[
+    s_{te} := (d_{te})
+\]
+For spatial dimensions \(N \in \mathbb{N}\), 
+let \(D^{(n)} \in \mathbb{F}\) be the domain of dimension \(n\).
+Then, we define each entity \(e\)'s location as a tuple:
+\[
+    d_{te} := \left(d_{te}^{(1)},\ldots,d_{te}^{(N)}\right) \in \prod_{n=1}^N D_e^{(n)},
+\]
+and orientation is represented by the tuple:
+\[
+    \theta_{ti} := \left(\theta_{ti}^{(1,2)},\ldots,\theta_{ti}^{(N-1,N)}\right)
+    \in \prod_{n=1}^{N-1} \Theta_i^{(n,n+1)}
+\]
+
+\paragraph{Observation Model.}
+Let \({C} := \{c_1, \ldots, c_m\}\) denote a set of abstract sensor channels.
+Each sensor channel \(c \in {C}\) corresponds to a linearly 
+independent observation subspace.
+
+For each entity visibility in each channel must be defined,
+as a trait this may be referred to as \(e^{(c)} \in \{\text{True, False}\}\).
+It may be encoded in the state as:
+\[
+s_{tec} = 
+\begin{cases}
+    1& \text{if \(e\) is visible in \(c\)} \\ 
+    0& \text{if \(e\) is not visible in \(c\)}
+\end{cases} 
+\quad\forall t\in T, e\in E, c\in C.
+\]
+Thus the marginal states becomes
+\[s_{ti} :(c_{ti},d_{ti},\theta_{ti})\]
+for agents, and
+\[s_{te} :(c_{te},d_{te})\]
+for all other entities.
+
+Each agent \(i \in I\) is assigned a subset of sensor channels 
+\({C}_i \subseteq {C}\), 
+with their observation defined as the concatenation of the outputs 
+from the corresponding subspaces:
+Note that an agent's ability to perceive an entity within a given 
+subspace may be limited by spatial range, meaning each agent may 
+only observe a portion of the environment within each active channel.
+\[
+    o_{ti} := \bigoplus_{c \in {C}_i} o_{tic}
+\]
+where \(o_{tic}\) is agent \(i\)'s observation of channel \(c\) at time \(t\), 
+and \(\oplus\) denotes concatenation over the ordered tuple of subspaces.
+
+The global observation space \(O\) is the Cartesian product of all channel subspaces:
+\[
+    O := \prod_{c \in {C}} O_c
+\]
+and each agent's observation is a masked subset of this space.
+During policy training and inference, a binary mask vector \(m_i \in \{0,1\}^{|\mathcal{C}|}\) 
+is applied to indicate which subspaces are active for agent \(i\), 
+allowing a shared network to condition on heterogeneous observations without assuming symmetry.
+
+
+\paragraph{Action Space.} 
+The joint action \(a \in A\) consists of marginal agent actions:
+\[
+    a := (a_1, \ldots, a_{|I|}) \in A := \prod_{i \in I} A_i
+\]
+Each agent's action at time \(t\) is a tuple:
+\[
+    a_{ti} := (a_{ti}^\text{interact}, a_{ti}^\text{move}, \Delta\theta_{ti})
+\]
+where:
+\begin{itemize}
+    \item \(a_{ti}^\text{interact} \in \{0,1\}\) toggles interaction,
+    \item \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\) denotes movement magnitude,
+    \item \(\Delta\theta_{ti} \in \prod_{n=1}^{N-1} \Delta\Theta_i^{(n,n+1)}\) encodes orientation adjustments.
+\end{itemize}
+
+% \paragraph{Exogenous Information.} 
+% Agents observe a partially observable state with complete reward knowledge. 
+% Probabilistic channel observability is future work.
+
+\paragraph{Transition Function.} 
+Deterministic and synchronous:
+\[
+    s_{t+1} = \mathcal{T}(s_t, a_t) \quad \text{or} \quad \mathcal{T}(a_t \mid s_t) = s_{t+1}.
+\]
+Provided that the actions chosen by the agents are valid, they are executed.
+
+\paragraph{Objective Function.} 
+The cumulative reward is defined as:
+\[
+    \max \sum_{t \in T} \left[
+        \sum_{i \in I, j \in J} r_j \cdot \mathbb{I}[\Xi]
+        - \sum_{i \in I} r_i \cdot \mathbb{I}[a_{ti}^\text{interact} = 1]
+        - \sum_{i \in I, k \in K} r_k \cdot \mathbb{I}[\|s_{ti} - s_{tk}\|_\infty \leq k^\text{range}]
+    \right]
+\]
+where:
+\begin{itemize}
+    \item \(r_j \in \mathbb{R}_{>0}\) is the reward for collecting objective \(j \in J\),
+    \item \(\mathbb{I}[\Xi]\) encodes conditions under which \(j\) is valid for collection,
+    \item \(r_i \in \mathbb{R}_{<0}\) is the cost for agent \(i \in I\) to interact,
+    \item \(r_k \in \mathbb{R}_{<0}\) is a penalty for agent \(i\) being near hazard \(k \in K\).
+\end{itemize}
+
+
+
+
+
+
 \subsection{Environment and Agent Design}
 
 To evaluate agents with overlapping but non-identical observation capabilities, 
@@ -378,22 +512,22 @@ Three network architectures are evaluated:
 \paragraph{0. HAPPO Baseline}
 To provide a baseline comparison, we include a standard implementation 
 of Heterogeneous-Agent Proximal Policy Optimization (HAPPO)~\cite{zhong2024}. 
-Each agent is trained with its own policy using PPO updates in a centralized 
+With HAPPO each agent is trained with its own policy using PPO updates in a centralized 
 training setting, but without shared parameters or input-invariant structure. 
 HAPPO represents a strong non-invariant architecture designed specifically 
-for heterogeneous teams, serving as a reference point for evaluating the 
+for heterogeneous teams, serving as a strong reference point for evaluating the 
 efficiency and robustness benefits of the more structured approaches.
 
-\paragraph{1. COMA with GNN and Transformer}
-This model extends the counterfactual multi-agent policy gradient (COMA) 
-algorithm by incorporating a graph neural network (GNN) to encode agent relations, 
-and a transformer-based critic for contextual value estimation. 
-This structure follows prior work (e.g., PIC and MAAC) and 
-serves as a high-capacity input-invariant baseline. 
-The actor and critic operate under a centralized training with 
-decentralized execution (CTDE) paradigm, with the GNN providing relational inductive bias.
+% \paragraph{1. COMA with GNN and Transformer}
+% This model extends the counterfactual multi-agent policy gradient (COMA) 
+% algorithm by incorporating a graph neural network (GNN) to encode agent relations, 
+% and a transformer-based critic for contextual value estimation. 
+% This structure follows prior work (e.g., PIC and MAAC) and 
+% serves as a high-capacity input-invariant baseline. 
+% The actor and critic operate under a centralized training with 
+% decentralized execution (CTDE) paradigm, with the GNN providing relational inductive bias.
 
-\paragraph{2. Equivariant Spanning Policy}
+\paragraph{1. Equivariant Spanning Policy}
 This architecture introduces a novel mechanism for enabling 
 exchangeability in heterogeneous settings. A shared network 
 is trained using inputs projected into the global observation 
@@ -447,3 +581,10 @@ Each condition is evaluated across multiple trials.
 Policy stability is measured by the variance and degradation in episode rewards, 
 and recovery is assessed where applicable. 
 Final comparisons are made between the two architectures across all perturbation conditions.
+
+
+% --- End Dissertation Inclusion ---
+% \clearpage
+% \appendix
+% \section*{Appendix}
+% \addcontentsline{toc}{section}{Appendix}
