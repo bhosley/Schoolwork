@@ -1,6 +1,10 @@
 \documentclass[]{jair}
 % \documentclass[manuscript, screen, review]{jair}
 
+%% For JAIR Checklist:
+\usepackage{soul}                   % Strikeout with \st{}
+\renewcommand{\bf}[1]{\textbf{#1}}  % Bold with \bf{}
+
 \setcopyright{cc}
 \copyrightyear{2025}
 \acmDOI{10.1613/jair.1.xxxxx}
@@ -97,7 +101,6 @@
 % \received[accepted]{DD Month YYYY}
 \maketitle
 
-
 \section{Introduction}
 
 \Gls{marl} provides a framework for coordinating multiple decision makers in partially
@@ -158,281 +161,10 @@ Together, these contributions position implicit encoding as a general and lightw
 approach to parameter sharing for heterogeneous-agent reinforcement learning.
 
 
-% \section{Related Work}
-% \label{con2:sec:related_work}
 
 
-\section{Problem Formulation}
-\label{con2:sec:problem_formulation}
-% #TODO: Formulation is a bit redundant with the section afterward
-
-% #TODO: Add explicit def of components
-We formalize the setting as a \gls{posg}. 
-Let \(\Gls{i}\) denote the set of agents. 
-Each agent \(\gls{i} \in \Gls{i}\) is defined by %% #TODO: Not defined
-an observation space \(O_i\) 
-and an action space \(A_i\), which may differ across agents.
-
-\subsection{Decomposition of Observations}
-
-Each observation space \({O}_i\) is assumed to decompose into 
-subspaces associated with sensor channels: %% #TODO: Sensor is an intuitive nickname
-\[{O}_i = \bigcup_{c \in {C}_i} {O}_c,\]
-where \({C}_i \subseteq {C}\) 
-indexes the subset of channels available to agent \({i}\), 
-and each \({O}_c\) is linearly independent. 
-For instance, one agent might have access to RGB vision and GPS, 
-while another relies solely on lidar. 
-The global set of all possible channels is \({C}\). %% #TODO: All possible or all acknowledged
-
-The homogenized observation space is then defined as:
-\[O^\prime := \bigcup_{c \in {C}_i, i \in {I}} O_c,\]
-which spans the union of all agent subspaces. 
-Each agent's actual observation is embedded into \(O\) with a binary 
-validity mask \(m_i \in \{0,1\}^{|{C}|}\), 
-where \(m_{ic} = 1\) if channel \(c\) is active for agent \(i\). The pair \((o, m_i)\) 
-thus conveys both the observation and the structure of agent \(i\)'s capabilities, 
-without the need for explicit identifiers.
-
-\subsection{Homogenized Actions}
-
-Analogously, the homogenized action space is defined as the union of all agent action spaces:
-\[A^\prime := \bigcup_{i \in I} A_i.\]
-This superset allows a shared representation of action outputs. 
-Each agent's feasible set is again specified by a mask, 
-ensuring that invalid actions are never selected.
-
-\subsection{Objective}
-
-% #TODO: Add appendix reference to full environment description
-% \cref{con2:app:env_model}
-% #TODO: This appears to be experiment objective, not env objective
-The objective is to train a shared policy
-\[\pi_\theta : O \times \{0,1\}^{|\mathcal{C}|} \to \Delta(A^\mathrm{span}),\]
-that maximizes expected return under the \gls{posg} dynamics. 
-By construction, \(\pi_\theta\) is input-invariant: 
-it operates over the same universal domain for all agents, 
-with heterogeneity resolved via masks. Robustness is assessed along three axes:
-%     1. Channel robustness - resilience to missing or degraded observation channels.
-%     2. Team robustness - stability under changes in the number of agents.
-%     3. Composition robustness - adaptability to shifts in the distribution of agent types.
-
-This problem formulation provides the foundation for the homogenization 
-method and subsequent theoretical analysis.
-
-
-
-
-
-
-
-
-\section{Homogenization and Implicit Indication Method}
-\label{con2:sec:method_homogenization}
-% #TODO: Perhaps change "channel" to "Observation Element"
-
-The homogenization approach unifies heterogeneous agent interfaces 
-by constructing a shared spanning space for observations and actions. %% #TODO: Ambiguous on shared
-This construction enables parameter sharing without requiring explicit agent identifiers, 
-while still preserving the structural distinctions that arise from heterogeneity. 
-In what follows, we define the homogenized spaces, describe the role of validity masks, 
-and outline the resulting invariant policy class.
-
-\subsection{Homogenized Observation Space}
-
-As defined in Section~\ref{con2:sec:problem_formulation}, 
-each agent \(i \in I\) observes a subset of channels \({C}_i \subseteq {C}\).
-The homogenized observation space is the Cartesian product
-\[
-    O := \bigcup_{c \in {C}} O_c,
-\]
-where each \(O_c\) is the subspace associated with channel \(c\).
-For each agent, a binary validity mask \(m_i \in \{0,1\}^{|{C}|}\)
-specifies which channels are active. 
-The embedded observation for agent \(i\) is therefore represented as
-\[\tilde{o}_i = (o, m_i), \quad o \in O.\]
-This encoding ensures that every agent's observation is drawn from the same universal space, 
-with the mask preserving the structural differences among agents. 
-Crucially, the mask conveys all information needed to distinguish agents' capabilities, 
-eliminating the need for an explicit identity vector.
-
-\subsection{Homogenized Action Space}
-
-The homogenized action interface is constructed in parallel.
-Let each agent have an action space \(A_i\). The homogenized action space is the spanning set
-\[
-    A^\prime := \bigcup_{i \in I}A_i^{unit},
-\]
-where each \(A_i\) corresponds to a 
-primitive action 
-dimension included in at least one agent's space. 
-Agents interact with only a masked subset of this span.
-For a discrete action dimension, infeasible logits are suppressed by the mask;
-for continuous dimensions, invalid components are clamped or ignored.
-This ensures that an agent never selects an action outside its feasible repertoire,
-while still enabling parameter sharing across the full space.
-
-\subsection{Input-Invariant Policy Class}
-
-The homogenized policy is defined as
-\[
-    \pi_\theta: O \times \{0,1\}^{|\mathcal{C}|} \to \Delta(A^\mathrm{span}),
-\]
-mapping embedded observations into distributions over the spanning action set.
-In practice, the network comprises three parts:
-% #TODO: Revise the network description
-% 	1.	Channel encoders: Each O_c is passed through a channel-specific encoder shared across all agents.
-% 	2.	Aggregation: Encoded channels are pooled by a commutative operation (e.g., sum, mean, attention), ensuring invariance to the ordering of active channels.
-% 	3.	Action head with masking: The pooled embedding is mapped to action logits over A^\mathrm{span}, with validity masks applied to exclude infeasible actions.
-
-This design enforces permutation invariance over channels and provides a 
-consistent mapping from heterogeneous inputs to a shared action domain. 
-The use of masks ensures that structural heterogeneity is preserved without 
-requiring per-agent specialization.
-
-\subsection{Training Protocol}
-
-The training follows the \gls{ctde} paradigm. 
-All agents share a common policy network parameterized by \(\theta\).
-% #TODO: Include parameter table
-A centralized critic, such as that used in \gls{mappo}, is employed for variance reduction, 
-though the method is agnostic to the choice of critic. %% # What?
-Training loss functions incorporate the validity masks to ensure that gradients 
-are computed only with respect to feasible observations and actions.
-% #TODO: Revise the loss function
-\[
-    \mathcal{L}(\theta) = \mathbb{E}{(o,m,a)} \big[ - \log \pi\theta(a \mid o, m) \, \hat{A}(o, a) \big],
-\]
-where infeasible action logits are excluded from the softmax and 
-masked observations are zeroed before encoding. 
-This ensures that the optimization is unaffected by invalid 
-components of the homogenized space.
-
-\subsection{Practical Considerations}
-
-% #TODO: Revise these considerations. They are close, but warrant more precise descriptions
-The homogenization framework introduces several implementation details:
-\begin{itemize}
-    \item Initialization: Care must be taken to prevent masked channels from destabilizing training. 
-    Channel encoders should be initialized consistently across agents.
-    \item Partial observability: Sensor degradation or dropout can be 
-    modeled directly by modifying the mask \(m_i\) at inference time, without retraining.
-    \item Mixed action types: Hybrid discrete/continuous spaces can be accommodated by 
-    treating each type as a separate unit dimension in \(A^\mathrm{span}\).
-    \item Scalability: The dimensionality of \(O\) and \(A^\mathrm{span}\) grows with 
-    the number of distinct channels and action primitives. In practice, 
-    this growth is modest in structured domains, but it highlights the importance 
-    of evaluating the coherence of the spanning construction.
-\end{itemize}
-
-
-
-
-
-
-
-\section{Theoretical Results}
-\label{con2:sec:theory}
-
-This section establishes conditions under which the homogenization 
-approach preserves representability, ensures invariance properties, 
-and clarifies the role of the coherence assumption. 
-Proof sketches are provided for intuition; full derivations are deferred to the appendix.
-% #TODO: Provide full derivation?
-
-
-
-\subsection{Representability under Disjoint Union}
-
-A key concern is whether a single policy over the homogenized space can 
-represent the optimal per-agent policies of the heterogeneous system. 
-We first consider the case where observation spaces are disjoint.
-
-% #TODO: Revisit lemma 1
-% Lemma 1 (Disjoint Union Policy).
-If \(\{{O}_i\}_{i \in I}\) are disjoint, then there exists a policy \(\pi^*\)
-over the disjoint union \(\biguplus{i \in I} \Omega_i\) such that for each agent \(i\),
-the restriction of \(\pi\) to \(\Omega_i\) is equivalent to the agent's optimal policy 
-\(\pi_i\).
-
-% Proof sketch. Construct a union space \Omega^\uplus with an indicator for the originating subspace. Define \pi^(o) = \pi_i^(o) whenever o \in \Omega_i. Since the subspaces are disjoint, \pi^* reproduces the per-agent policies exactly. \square
-
-% This lemma underpins the homogenization strategy: if embeddings are injective, the same representability result applies in the homogenized space.
-
-% ⸻
-
-% 5.2 Representability with Masked Homogenization
-
-% We extend the argument to the case where agent observations are embedded into a shared spanning space O with masks.
-
-% Theorem 1 (Masked Representability).
-% Let each embedding E_i: \Omega_i \to O map agent i’s observation into the homogenized space, paired with a mask m_i \in \{0,1\}^{|\mathcal{C}|}. If each (o, m_i) uniquely identifies o \in \Omega_i, then there exists a policy \pi^ over O \times \{0,1\}^{|\mathcal{C}|} whose restriction to (o, m_i) is equivalent to the agent’s optimal policy \pi_i^.
-
-% Proof sketch. The embedding induces a bijection between \Omega_i and the masked subset of O. Construct \pi^(o, m_i) = \pi_i^(E_i^{-1}(o)). Since masks uniquely identify feasible subspaces, the homogenized policy recovers each optimal per-agent policy. \square
-
-% This result shows that homogenization does not sacrifice representability, provided embeddings are coherent.
-
-% ⸻
-
-\subsection{Permutation Invariance}
-
-% Because homogenization introduces channel-wise encoders and aggregation, we can establish invariance guarantees.
-
-% Proposition 1 (Permutation Invariance).
-% If encoded channel representations are aggregated by a commutative operation (e.g., sum, mean, or attention with symmetric keys), then \pi_\theta is invariant to permutations of active channels within an agent’s mask.
-
-% Proof sketch. Let \{z_c\} be encoded features. A commutative aggregation f(\{z_c\}) satisfies f(\{z_{c_1}, z_{c_2}, \ldots\}) = f(\{z_{c_{\pi(1)}}, z_{c_{\pi(2)}}, \ldots\}) for any permutation \pi. Since the downstream policy depends only on f(\{z_c\}), outputs are permutation-invariant. \square
-
-% This property ensures that policies are robust to channel ordering and supports scalability across varying team compositions.
-
-% ⸻
-
-% 5.4 Robustness to Dropout
-
-% The homogenized representation also supports resilience to missing inputs.
-
-% Corollary 1 (Dropout Robustness).
-% Suppose aggregation is mean pooling. If a channel c is removed (i.e., m_{ic} is set to 0), the resulting embedding differs from the full-channel embedding by at most \frac{1}{|\mathcal{C}_i|}\|z_c\|.
-
-% Thus, performance degrades smoothly with the loss of channels, rather than catastrophically.
-
-% ⸻
-
-% 5.5 The Coherence Assumption
-
-% The preceding results rely on an implicit assumption: that embeddings into the homogenized space preserve the semantics of the task.
-
-% Definition 1 (Coherence).
-% A homogenized embedding is coherent if, for each agent i, the mapping E_i:\Omega_i \to O together with mask m_i is a sufficient statistic for decision making in the POSG.
-
-% Intuitively, coherence requires that the spanning space separates distinct information without aliasing. Failure of coherence arises when two channels overlap in semantics (e.g., redundant encodings) or when masks do not adequately distinguish agent types. In such cases, the homogenized policy may not faithfully reproduce optimal behavior.
-
-% ⸻
-
-% 5.6 Summary
-
-% These results establish that homogenization preserves representability (Theorem 1), provides invariance guarantees (Proposition 1), and introduces robustness to missing inputs (Corollary 1). The primary limitation is the coherence assumption, which determines whether homogenization is valid in a given domain. This assumption must therefore be evaluated by practitioners when applying the method.
-
-
-
-
-
-\section{Methodology}
-\label{con2:sec:methodology}
-
-% All configurations are evaluated across multiple independent 
-% training runs to account for stochastic variability.
-% Learning efficiency is defined in terms of convergence rate 
-% relative to total agent-training steps and computational cost.
-
-
-% -------------------- %
-%   Working Outline:   %
-% -------------------- %
-
-
-% \section{Related Work}
-% \label{con2:sec:related_work}
+\section{Related Work}
+\label{con2:sec:related_work}
 2. Background and Related Work
 
 2.1 MARL preliminaries (POSGs, CTDE; brief)
@@ -444,67 +176,7 @@ the restriction of \(\pi\) to \(\Omega_i\) is equivalent to the agent's optimal 
 	•	Where your approach fits: alternative representation-level unification rather than per-agent specialization.
 (Use your bib keys; keep Terry et al. in this section.)
 
-
 ---
-
-6. Experimental Setup
-
-6.1 Environments
-	•	n-D gridworld family with configurable sensor channels (heterogeneous \(\mathcal{C}_i\)) and action heterogeneity; brief task description; pointers to appendix for details.
-6.2 Baselines
-	•	MAPPO (shared critic), IPPO (optional), ablation: parameter sharing + explicit ID (Terry-style) on matched encoders.
-6.3 Architectures
-	•	Shared encoder with channel-wise modules + pooling; masked action heads; critic variants.
-6.4 Protocols
-	•	Training budgets; seeds; eval regimes: (i) in-distribution, (ii) sensor dropout, (iii) team-size perturbation (± agents), (iv) composition shift (new \(\mathcal{C}_i\) mixes).
-6.5 Metrics
-	•	Reward vs agent-steps (your preferred cost metric), convergence sample-efficiency, robustness deltas, RAM/throughput snapshots.
-6.6 Implementation details
-	•	Framework (RLlib or equivalent), hyperparam ranges, masking specifics; reproducibility hooks (seeds, versions).
-
----
-
-7. Results
-
-7.1 Learning efficiency
-	•	Convergence curves (mean ± CI) vs agent-steps; comparisons to MAPPO/IPPO; any RAM/runtime notes.
-7.2 Robustness
-	•	Sensor-dropout performance; ablations on which channels are removed; stability variance.
-7.3 Team-size/Composition transfer
-	•	Add/remove agents at test time; policy degradation and recovery behaviors.
-7.4 Ablations
-	•	Remove masks → performance drop; replace mask with explicit ID only → effect; different pooling ops; equivariant vs plain MLP.
-7.5 Summary of trade-offs
-	•	When homogenization wins/loses; interaction with coherence.
-
----
-
-8. Discussion
-	•	Practical guidance: when the coherence assumption is plausible; how to design channels; pitfalls (aliasing, mis-specified spans).
-	•	Relation to parameter sharing: complementary tools; when to prefer which.
-	•	Limitations: emergent behavioral heterogeneity not directly modeled; partial support for heterogeneous action types; potential masking overhead.
-
----
-
-9. Conclusion
-	•	One-paragraph recap; actionable takeaways; future work (learned channel dictionaries, adaptive spans, continuous action masking, coupling with hypernetworks).
-
----
-
-A. Formal Proofs
-	•	Full proofs for Section 5 results; counterexample sketches for coherence failure.
-
-B. Environment \& Hyperparameters
-	•	Full specs, seeds, ranges; tables for reproducibility.
-
-C. Additional Results
-	•	Extended curves, per-seed tables, sensitivity sweeps.
-
-
-
-
-
-\section{Related Work}
 
 - Input invariance
     - Motivation
@@ -778,7 +450,330 @@ C. Additional Results
 % but how they might be practically and broadly applied.
 
 
+
+
+
+
+
+
+\section{Problem Formulation}
+\label{con2:sec:problem_formulation}
+% #TODO: Formulation is a bit redundant with the section afterward
+
+% #TODO: Add explicit def of components
+We formalize the setting as a \gls{posg}. 
+Let \(\Gls{i}\) denote the set of agents. 
+Each agent \(\gls{i} \in \Gls{i}\) is defined by %% #TODO: Not defined
+an observation space \(O_i\) 
+and an action space \(A_i\), which may differ across agents.
+
+\subsection{Decomposition of Observations}
+
+Each observation space \({O}_i\) is assumed to decompose into 
+subspaces associated with sensor channels: %% #TODO: Sensor is an intuitive nickname
+\[{O}_i = \bigcup_{c \in {C}_i} {O}_c,\]
+where \({C}_i \subseteq {C}\) 
+indexes the subset of channels available to agent \({i}\), 
+and each \({O}_c\) is linearly independent. 
+For instance, one agent might have access to RGB vision and GPS, 
+while another relies solely on lidar. 
+The global set of all possible channels is \({C}\). %% #TODO: All possible or all acknowledged
+
+The homogenized observation space is then defined as:
+\[O^\prime := \bigcup_{c \in {C}_i, i \in {I}} O_c,\]
+which spans the union of all agent subspaces. 
+Each agent's actual observation is embedded into \(O\) with a binary 
+validity mask \(m_i \in \{0,1\}^{|{C}|}\), 
+where \(m_{ic} = 1\) if channel \(c\) is active for agent \(i\). The pair \((o, m_i)\) 
+thus conveys both the observation and the structure of agent \(i\)'s capabilities, 
+without the need for explicit identifiers.
+
+\subsection{Homogenized Actions}
+
+Analogously, the homogenized action space is defined as the union of all agent action spaces:
+\[A^\prime := \bigcup_{i \in I} A_i.\]
+This superset allows a shared representation of action outputs. 
+Each agent's feasible set is again specified by a mask, 
+ensuring that invalid actions are never selected.
+
+\subsection{Objective}
+
+% #TODO: Add appendix reference to full environment description
+% \cref{con2:app:env_model}
+% #TODO: This appears to be experiment objective, not env objective
+The objective is to train a shared policy
+\[\pi_\theta : O \times \{0,1\}^{|\mathcal{C}|} \to \Delta(A^\mathrm{span}),\]
+that maximizes expected return under the \gls{posg} dynamics. 
+By construction, \(\pi_\theta\) is input-invariant: 
+it operates over the same universal domain for all agents, 
+with heterogeneity resolved via masks. Robustness is assessed along three axes:
+%     1. Channel robustness - resilience to missing or degraded observation channels.
+%     2. Team robustness - stability under changes in the number of agents.
+%     3. Composition robustness - adaptability to shifts in the distribution of agent types.
+
+This problem formulation provides the foundation for the homogenization 
+method and subsequent theoretical analysis.
+
+
+
+
+
+
+
+
+\section{Homogenization and Implicit Indication Method}
+\label{con2:sec:method_homogenization}
+% #TODO: Perhaps change "channel" to "Observation Element"
+
+The homogenization approach unifies heterogeneous agent interfaces 
+by constructing a shared spanning space for observations and actions. %% #TODO: Ambiguous on shared
+This construction enables parameter sharing without requiring explicit agent identifiers, 
+while still preserving the structural distinctions that arise from heterogeneity. 
+In what follows, we define the homogenized spaces, describe the role of validity masks, 
+and outline the resulting invariant policy class.
+
+\subsection{Homogenized Observation Space}
+
+As defined in Section~\ref{con2:sec:problem_formulation}, 
+each agent \(i \in I\) observes a subset of channels \({C}_i \subseteq {C}\).
+The homogenized observation space is the Cartesian product
+\[
+    O := \bigcup_{c \in {C}} O_c,
+\]
+where each \(O_c\) is the subspace associated with channel \(c\).
+For each agent, a binary validity mask \(m_i \in \{0,1\}^{|{C}|}\)
+specifies which channels are active. 
+The embedded observation for agent \(i\) is therefore represented as
+\[\tilde{o}_i = (o, m_i), \quad o \in O.\]
+This encoding ensures that every agent's observation is drawn from the same universal space, 
+with the mask preserving the structural differences among agents. 
+Crucially, the mask conveys all information needed to distinguish agents' capabilities, 
+eliminating the need for an explicit identity vector.
+
+\subsection{Homogenized Action Space}
+
+The homogenized action interface is constructed in parallel.
+Let each agent have an action space \(A_i\). The homogenized action space is the spanning set
+\[
+    A^\prime := \bigcup_{i \in I}A_i^{unit},
+\]
+where each \(A_i\) corresponds to a 
+primitive action 
+dimension included in at least one agent's space. 
+Agents interact with only a masked subset of this span.
+For a discrete action dimension, infeasible logits are suppressed by the mask;
+for continuous dimensions, invalid components are clamped or ignored.
+This ensures that an agent never selects an action outside its feasible repertoire,
+while still enabling parameter sharing across the full space.
+
+\subsection{Input-Invariant Policy Class}
+
+The homogenized policy is defined as
+\[
+    \pi_\theta: O \times \{0,1\}^{|\mathcal{C}|} \to \Delta(A^\mathrm{span}),
+\]
+mapping embedded observations into distributions over the spanning action set.
+In practice, the network comprises three parts:
+% #TODO: Revise the network description
+% 	1.	Channel encoders: Each O_c is passed through a channel-specific encoder shared across all agents.
+% 	2.	Aggregation: Encoded channels are pooled by a commutative operation (e.g., sum, mean, attention), ensuring invariance to the ordering of active channels.
+% 	3.	Action head with masking: The pooled embedding is mapped to action logits over A^\mathrm{span}, with validity masks applied to exclude infeasible actions.
+
+This design enforces permutation invariance over channels and provides a 
+consistent mapping from heterogeneous inputs to a shared action domain. 
+The use of masks ensures that structural heterogeneity is preserved without 
+requiring per-agent specialization.
+
+\subsection{Training Protocol}
+
+The training follows the \gls{ctde} paradigm. 
+All agents share a common policy network parameterized by \(\theta\).
+% #TODO: Include parameter table
+A centralized critic, such as that used in \gls{mappo}, is employed for variance reduction, 
+though the method is agnostic to the choice of critic. %% # What?
+Training loss functions incorporate the validity masks to ensure that gradients 
+are computed only with respect to feasible observations and actions.
+% #TODO: Revise the loss function
+\[
+    \mathcal{L}(\theta) = \mathbb{E}{(o,m,a)} \big[ - \log \pi\theta(a \mid o, m) \, \hat{A}(o, a) \big],
+\]
+where infeasible action logits are excluded from the softmax and 
+masked observations are zeroed before encoding. 
+This ensures that the optimization is unaffected by invalid 
+components of the homogenized space.
+
+\subsection{Practical Considerations}
+
+% #TODO: Revise these considerations. They are close, but warrant more precise descriptions
+The homogenization framework introduces several implementation details:
+\begin{itemize}
+    \item Initialization: Care must be taken to prevent masked channels from destabilizing training. 
+    Channel encoders should be initialized consistently across agents.
+    \item Partial observability: Sensor degradation or dropout can be 
+    modeled directly by modifying the mask \(m_i\) at inference time, without retraining.
+    \item Mixed action types: Hybrid discrete/continuous spaces can be accommodated by 
+    treating each type as a separate unit dimension in \(A^\mathrm{span}\).
+    \item Scalability: The dimensionality of \(O\) and \(A^\mathrm{span}\) grows with 
+    the number of distinct channels and action primitives. In practice, 
+    this growth is modest in structured domains, but it highlights the importance 
+    of evaluating the coherence of the spanning construction.
+\end{itemize}
+
+
+
+
+
+
+
+\section{Theoretical Results}
+\label{con2:sec:theory}
+
+This section establishes conditions under which the homogenization 
+approach preserves representability, ensures invariance properties, 
+and clarifies the role of the coherence assumption. 
+Proof sketches are provided for intuition; full derivations are deferred to the appendix.
+% #TODO: Provide full derivation?
+
+
+
+\subsection{Representability under Disjoint Union}
+
+A key concern is whether a single policy over the homogenized space can 
+represent the optimal per-agent policies of the heterogeneous system. 
+We first consider the case where observation spaces are disjoint.
+
+% #TODO: Revisit lemma 1
+
+% Borrowing lemma 1 from \cite{terry2020}
+
+% Lemma 1 (Disjoint Union Policy).
+If \(\{{O}_i\}_{i \in I}\) are disjoint, then there exists a policy \(\pi^*\)
+over the disjoint union \(\biguplus{i \in I} \Omega_i\) such that for each agent \(i\),
+the restriction of \(\pi\) to \(\Omega_i\) is equivalent to the agent's optimal policy 
+\(\pi_i\).
+
+% Proof sketch. Construct a union space \Omega^\uplus with an indicator for the originating subspace. Define \pi^(o) = \pi_i^(o) whenever o \in \Omega_i. Since the subspaces are disjoint, \pi^* reproduces the per-agent policies exactly. \square
+
+% This lemma underpins the homogenization strategy: if embeddings are injective, the same representability result applies in the homogenized space.
+
+% #TODO: Implicit indication forgoes the possibility of divergent behavior for like agents
+% ⸻
+
+% 5.2 Representability with Masked Homogenization
+
+% We extend the argument to the case where agent observations are embedded into a shared spanning space O with masks.
+
+% Theorem 1 (Masked Representability).
+% Let each embedding E_i: \Omega_i \to O map agent i’s observation into the homogenized space, paired with a mask m_i \in \{0,1\}^{|\mathcal{C}|}. If each (o, m_i) uniquely identifies o \in \Omega_i, then there exists a policy \pi^ over O \times \{0,1\}^{|\mathcal{C}|} whose restriction to (o, m_i) is equivalent to the agent’s optimal policy \pi_i^.
+
+% Proof sketch. The embedding induces a bijection between \Omega_i and the masked subset of O. Construct \pi^(o, m_i) = \pi_i^(E_i^{-1}(o)). Since masks uniquely identify feasible subspaces, the homogenized policy recovers each optimal per-agent policy. \square
+
+% This result shows that homogenization does not sacrifice representability, provided embeddings are coherent.
+
+% ⸻
+
+\subsection{Permutation Invariance}
+
+% Because homogenization introduces channel-wise encoders and aggregation, we can establish invariance guarantees.
+
+% Proposition 1 (Permutation Invariance).
+% If encoded channel representations are aggregated by a commutative operation (e.g., sum, mean, or attention with symmetric keys), then \pi_\theta is invariant to permutations of active channels within an agent’s mask.
+
+% Proof sketch. Let \{z_c\} be encoded features. A commutative aggregation f(\{z_c\}) satisfies f(\{z_{c_1}, z_{c_2}, \ldots\}) = f(\{z_{c_{\pi(1)}}, z_{c_{\pi(2)}}, \ldots\}) for any permutation \pi. Since the downstream policy depends only on f(\{z_c\}), outputs are permutation-invariant. \square
+
+% This property ensures that policies are robust to channel ordering and supports scalability across varying team compositions.
+
+% ⸻
+
+% 5.4 Robustness to Dropout
+
+% The homogenized representation also supports resilience to missing inputs.
+
+% Corollary 1 (Dropout Robustness).
+% Suppose aggregation is mean pooling. If a channel c is removed (i.e., m_{ic} is set to 0), the resulting embedding differs from the full-channel embedding by at most \frac{1}{|\mathcal{C}_i|}\|z_c\|.
+
+% Thus, performance degrades smoothly with the loss of channels, rather than catastrophically.
+
+% ⸻
+
+% 5.5 The Coherence Assumption
+
+% The preceding results rely on an implicit assumption: that embeddings into the homogenized space preserve the semantics of the task.
+
+% Definition 1 (Coherence).
+% A homogenized embedding is coherent if, for each agent i, the mapping E_i:\Omega_i \to O together with mask m_i is a sufficient statistic for decision making in the POSG.
+
+% Intuitively, coherence requires that the spanning space separates distinct information without aliasing. Failure of coherence arises when two channels overlap in semantics (e.g., redundant encodings) or when masks do not adequately distinguish agent types. In such cases, the homogenized policy may not faithfully reproduce optimal behavior.
+
+% ⸻
+
+% 5.6 Summary
+
+% These results establish that homogenization preserves representability (Theorem 1), provides invariance guarantees (Proposition 1), and introduces robustness to missing inputs (Corollary 1). The primary limitation is the coherence assumption, which determines whether homogenization is valid in a given domain. This assumption must therefore be evaluated by practitioners when applying the method.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Methodology}
+\label{con2:sec:methodology}
+
+---
+
+6. Experimental Setup
+
+6.1 Environments
+	•	n-D gridworld family with configurable sensor channels (heterogeneous \(\mathcal{C}_i\)) and action heterogeneity; brief task description; pointers to appendix for details.
+6.2 Baselines
+	•	MAPPO (shared critic), IPPO (optional), ablation: parameter sharing + explicit ID (Terry-style) on matched encoders.
+6.3 Architectures
+	•	Shared encoder with channel-wise modules + pooling; masked action heads; critic variants.
+6.4 Protocols
+	•	Training budgets; seeds; eval regimes: (i) in-distribution, (ii) sensor dropout, (iii) team-size perturbation (± agents), (iv) composition shift (new \(\mathcal{C}_i\) mixes).
+6.5 Metrics
+	•	Reward vs agent-steps (your preferred cost metric), convergence sample-efficiency, robustness deltas, RAM/throughput snapshots.
+6.6 Implementation details
+	•	Framework (RLlib or equivalent), hyperparam ranges, masking specifics; reproducibility hooks (seeds, versions).
+
+---
+
+7. Results
+
+7.1 Learning efficiency
+	•	Convergence curves (mean ± CI) vs agent-steps; comparisons to MAPPO/IPPO; any RAM/runtime notes.
+7.2 Robustness
+	•	Sensor-dropout performance; ablations on which channels are removed; stability variance.
+7.3 Team-size/Composition transfer
+	•	Add/remove agents at test time; policy degradation and recovery behaviors.
+7.4 Ablations
+	•	Remove masks → performance drop; replace mask with explicit ID only → effect; different pooling ops; equivariant vs plain MLP.
+7.5 Summary of trade-offs
+	•	When homogenization wins/loses; interaction with coherence.
+
+
+
+% All configurations are evaluated across multiple independent 
+% training runs to account for stochastic variability.
+% Learning efficiency is defined in terms of convergence rate 
+% relative to total agent-training steps and computational cost.
+
 
 - Approach
     - Implicit agent indication
@@ -853,7 +848,23 @@ C. Additional Results
 % Final comparisons are made between the two architectures across all perturbation conditions.
 
 
-
+Training \& Evaluation. 
+We compare a heterogeneous baseline (\gls{happo}), 
+a parameter-sharing baseline with explicit agent indication (MAPPO-share), 
+and our homogenization method (shared actor over a masked spanning space with a centralized critic). 
+Experiments vary team size \(N=4\) 
+and four heterogeneity regimes
+complete observation space,
+overlap, intersecting, and disjoint-heavy—across 10 random seeds per condition. 
+Training proceeds for a fixed budget of agent-steps (up to 500M, 5e8), 
+and evaluation occurs every 100k agent-steps on held-out scenarios: 
+in-distribution, sensor-dropout (removing 20-40\% of active channels), 
+team-size shifts \((N\rightarrow N\pm)\), and composition shifts 
+(resampled channel sets) including addition of cold-start agent types 
+formed from unions of seen channels. We report learning efficiency 
+via area-under-curve of return vs agent-steps, final return at budget, 
+and robustness deltas relative to in-distribution performance. 
+Statistical comparisons use Welch's t-tests with FDR control and Hedges' g effect sizes.
 
 
 
@@ -873,6 +884,21 @@ C. Additional Results
     - Disjoint:
         - 
 
+
+---
+
+8. Discussion
+•	Practical guidance: when the coherence assumption is plausible; how to design channels; pitfalls (aliasing, mis-specified spans).
+•	Relation to parameter sharing: complementary tools; when to prefer which.
+•	Limitations: emergent behavioral heterogeneity not directly modeled; partial support for heterogeneous action types; potential masking overhead.
+
+---
+
+9. Conclusion
+•	One-paragraph recap; actionable takeaways; future work (learned channel dictionaries, adaptive spans, continuous action masking, coupling with hypernetworks).
+
+---
+
 \section{Conclusion}
 \label{con2:sec:conclusion}
 
@@ -885,7 +911,7 @@ C. Additional Results
 - Future work
     - (While the current focus is on observation-space heterogeneity,  additional forms such as action-space heterogeneity may be considered in future extensions, pending environment support.)
 
-
+    
 % \section{}
 % \label{con2:sec:}
 
@@ -902,12 +928,14 @@ C. Additional Results
 % % --- End Dissertation Inclusion ---
 \clearpage
 \appendix
-\section*{Appendix}
 % % \addcontentsline{toc}{section}{Appendix}
 
+\section{Hyperparameterization}
+% Table of used parameters
+% Search Range
 
-% % ENVIRONMENT Information:
-\subsection{Environment Model}
+
+\section{Environment Model}
 \label{con2:app:env_model}
 
 % We model the environment following the structure outlined by Powell~\cite{powell2022}, 
@@ -1037,112 +1065,184 @@ C. Additional Results
 
 
 % #TODO: Reproducibility Checklist
+\clearpage
+% [\st{yes} / \st{no}]
+% [\st{yes} / \st{partially} / \st{no} / \st{NA}]
 \section{Reproducibility Checklist for JAIR}
 
-% Select the answers that apply to your research -- one per item. 
+Select the answers that apply to your research -- one per item. 
 
-% \subsection*{All articles:}
+\subsection*{All articles:}
 
-% %\hh{revised for stylistic consistency:}
-% \begin{enumerate}
-%     \item All claims investigated in this work are clearly stated. 
-%     [yes/partially/no]
-%     \item Clear explanations are given how the work reported substantiates the claims. 
-%     [yes/partially/no]
-%     \item Limitations or technical assumptions are stated clearly and explicitly. 
-%     [yes/partially/no]
-%     \item Conceptual outlines and/or pseudo-code descriptions of the AI methods introduced in this work are provided, and important implementation details are discussed. 
-%     [yes/partially/no/NA]
-%     \item 
-%     Motivation is provided for all design choices, including algorithms, implementation choices, parameters, data sets and experimental protocols beyond metrics.
-%     [yes/partially/no]
-% \end{enumerate}
+%\hh{revised for stylistic consistency:}
+\begin{enumerate}
+    \item All claims investigated in this work are clearly stated. \newline
+    % #TODO: Explicit summary of claims
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item Clear explanations are given how the work reported substantiates the claims. \newline
+    % #TODO: Connect work to claims - intro or methods
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item Limitations or technical assumptions are stated clearly and explicitly. \newline
+    % #TODO: Recheck limits and assumptions
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item Conceptual outlines and/or pseudo-code descriptions of the AI methods introduced 
+    in this work are provided, and important implementation details are discussed. \newline
+    % #TODO: Figure out what this is to meant to be
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item 
+    Motivation is provided for all design choices, including algorithms, implementation choices, 
+    parameters, data sets and experimental protocols beyond metrics. \newline
+    % #TODO: This is an entire-paper concern. Ongoing need.
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+\end{enumerate}
 
-% \subsection*{Articles containing theoretical contributions:}
-% Does this paper make theoretical contributions? 
+\subsection*{Articles containing theoretical contributions:}
+Does this paper make theoretical contributions?
 % [yes/no] 
+[\bf{yes} / \st{no}]
 
-% If yes, please complete the list below.
+If yes, please complete the list below.
 
-% \begin{enumerate}
-%     \item All assumptions and restrictions are stated clearly and formally. 
-%     [yes/partially/no]
-%     \item All novel claims are stated formally (e.g., in theorem statements). 
-%     [yes/partially/no]
-%     \item Proofs of all non-trivial claims are provided in sufficient detail to permit verification by readers with a reasonable degree of expertise (e.g., that expected from a PhD candidate in the same area of AI). [yes/partially/no]
-%     \item
-%     Complex formalism, such as definitions or proofs, is motivated and explained clearly.
-% %hh: was:
-% %Proof sketches or intuitions are given for complex and/or novel results.
-%     [yes/partially/no]
-%     \item 
-%     The use of mathematical notation and formalism serves the purpose of enhancing clarity and precision; gratuitous use of mathematical formalism (i.e., use that does not enhance clarity or precision) is avoided.
-%     [yes/partially/no]
-%     \item 
-%     Appropriate citations are given for all non-trivial theoretical tools and techniques. 
-%     [yes/partially/no]
-% \end{enumerate}
+\begin{enumerate}
+    \item All assumptions and restrictions are stated clearly and formally. \newline
+    % #TODO: Recheck theoretical results section
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item All novel claims are stated formally (e.g., in theorem statements). \newline
+    % #TODO: Add theorems
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item Proofs of all non-trivial claims are provided in sufficient detail
+    to permit verification by readers with a reasonable degree of expertise
+    (e.g., that expected from a PhD candidate in the same area of AI). \newline
+    % #TODO: Recheck theoretical results section
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item Complex formalism, such as definitions or proofs,
+    is motivated and explained clearly. \newline
+    %hh: was:
+    %Proof sketches or intuitions are given for complex and/or novel results.
+    % #TODO: Recheck theoretical results section
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item The use of mathematical notation and formalism serves the purpose of 
+    enhancing clarity and precision; gratuitous use of mathematical formalism 
+    (i.e., use that does not enhance clarity or precision) is avoided. \newline
+    % #TODO: Recheck theoretical results section
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item Appropriate citations are given for all non-trivial
+    theoretical tools and techniques. \newline
+    % #TODO: Recheck theoretical results section - Cite lemma 1
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+\end{enumerate}
 
-% \subsection*{Articles reporting on computational experiments:}
-% Does this paper include computational experiments? [yes/no]
+\subsection*{Articles reporting on computational experiments:}
+Does this paper include computational experiments? %[yes/no]
+[\bf{yes} / \st{no}]
 
-% If yes, please complete the list below.
-% \begin{enumerate}
-%     \item 
-%     All source code required for conducting experiments is included in an online appendix 
-%     or will be made publicly available upon publication of the paper.
-%     The online appendix follows best practices for source code readability and documentation as well as for long-term accessibility.
-%     [yes/partially/no]
-%     \item The source code comes with a license that
-%     allows free usage for reproducibility purposes.
-%     [yes/partially/no]
-%     \item The source code comes with a license that
-%     allows free usage for research purposes in general.
-%     [yes/partially/no]
-%     \item 
-%     Raw, unaggregated data from all experiments is included in an online appendix 
-%     or will be made publicly available upon publication of the paper.
-%     The online appendix follows best practices for long-term accessibility.
-%     [yes/partially/no]
-%     \item The unaggregated data comes with a license that
-%     allows free usage for reproducibility purposes.
-%     [yes/partially/no]
-%     \item The unaggregated data comes with a license that
-%     allows free usage for research purposes in general.
-%     [yes/partially/no]
-%     \item If an algorithm depends on randomness, then the method used for generating random numbers and for setting seeds is described in a way sufficient to allow replication of results. 
-%     [yes/partially/no/NA]
-%     \item The execution environment for experiments, the computing infrastructure (hardware and software) used for running them, is described, including GPU/CPU makes and models; amount of memory (cache and RAM); make and version of operating system; names and versions of relevant software libraries and frameworks. 
-%     [yes/partially/no]
-%     \item 
-%     The evaluation metrics used in experiments are clearly explained and their choice is explicitly motivated. 
-%     [yes/partially/no]
-%     \item 
-%     The number of algorithm runs used to compute each result is reported. 
-%     [yes/no]
-%     \item 
-%     Reported results have not been ``cherry-picked'' by silently ignoring unsuccessful or unsatisfactory experiments. 
-%     [yes/partially/no]
-%     \item 
-%     Analysis of results goes beyond single-dimensional summaries of performance (e.g., average, median) to include measures of variation, confidence, or other distributional information. 
-%     [yes/no]
-%     \item 
-%     All (hyper-) parameter settings for 
-%     the algorithms/methods used in experiments have been reported, along with the rationale or method for determining them. 
-%     [yes/partially/no/NA]
-%     \item 
-%     The number and range of (hyper-) parameter settings explored prior to conducting final experiments have been indicated, along with the effort spent on (hyper-) parameter optimization. 
-%     [yes/partially/no/NA]
-%     \item 
-%     Appropriately chosen statistical hypothesis tests are used to establish statistical significance
-%     in the presence of noise effects.
-%     [yes/partially/no/NA]
-% \end{enumerate}
+If yes, please complete the list below.
+\begin{enumerate}
+    \item 
+    All source code required for conducting experiments is included in an online appendix 
+    or will be made publicly available upon publication of the paper.
+    The online appendix follows best practices for source code readability 
+    and documentation as well as for long-term accessibility. \newline
+    % #TODO: Add link to Hypergrid git https://github.com/bhosley/Hypergrid
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item The source code comes with a license that 
+    allows free usage for reproducibility purposes. \newline
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
+    \item The source code comes with a license that
+    allows free usage for research purposes in general. \newline
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
+    \item 
+    Raw, unaggregated data from all experiments is included in an online appendix 
+    or will be made publicly available upon publication of the paper.
+    The online appendix follows best practices for long-term accessibility. \newline
+    % #TODO: Add CSV to the git repo?
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item The unaggregated data comes with a license that
+    allows free usage for reproducibility purposes. \newline
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
+    \item The unaggregated data comes with a license that
+    allows free usage for research purposes in general. \newline
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
+    \item If an algorithm depends on randomness, 
+    then the method used for generating random numbers and for setting seeds is 
+    described in a way sufficient to allow replication of results. \newline
+    % [yes/partially/no/NA]
+    [\st{yes} / \st{partially} / \st{no} / \bf{NA}]
+    \item The execution environment for experiments, the computing infrastructure 
+    (hardware and software) used for running them, is described, 
+    including GPU/CPU makes and models; amount of memory (cache and RAM); 
+    make and version of operating system; names and versions of relevant software 
+    libraries and frameworks. 
+    % #TODO: Add Hardware data
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item 
+    The evaluation metrics used in experiments are clearly explained and 
+    their choice is explicitly motivated. \newline
+    % #TODO: Explain evaluation metrics
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item 
+    The number of algorithm runs used to compute each result is reported. \newline
+    % #TODO: Report run numbers
+    [yes/no]
+    % [\bf{yes} / \st{no}]
+    \item 
+    Reported results have not been ``cherry-picked'' by silently ignoring unsuccessful 
+    or unsatisfactory experiments. \newline
+    % #TODO: Explain superlatives chosen for analysis
+    [yes/partially/no]
+    % [\bf{yes} / \st{partially} / \st{no}]
+    \item 
+    Analysis of results goes beyond single-dimensional summaries of performance 
+    (e.g., average, median) to include measures of variation, confidence, or 
+    other distributional information. \newline
+    % [yes/no]
+    [\bf{yes} / \st{no}]
+    \item 
+    All (hyper-) parameter settings for the algorithms/methods used in experiments 
+    have been reported, along with the rationale or method for determining them. \newline
+    % #TODO: Hyperparameter appendix
+    [yes/partially/no/NA]
+    % [\bf{yes} / \st{partially} / \st{no} / \st{NA}]
+    \item 
+    The number and range of (hyper-) parameter settings explored prior to 
+    conducting final experiments have been indicated, along with the effort spent on 
+    (hyper-) parameter optimization. \newline
+    % #TODO: Hyperparameter appendix
+    [yes/partially/no/NA]
+    % [\bf{yes} / \st{partially} / \st{no} / \st{NA}]
+    \item 
+    Appropriately chosen statistical hypothesis tests are used to establish 
+    statistical significance in the presence of noise effects. \newline
+    % #TODO: Results section stats
+    [yes/partially/no/NA]
+    % [\bf{yes} / \st{partially} / \st{no} / \st{NA}]
+\end{enumerate}
 
 
-% \subsection*{Articles using data sets:}
-% Does this work rely on one or more data sets (possibly obtained from a benchmark generator or similar software artifact)? 
+\subsection*{Articles using data sets:}
+Does this work rely on one or more data sets 
+(possibly obtained from a benchmark generator or similar software artifact)? 
 % [yes/no]
+[\st{yes} / \bf{no}]
 
 % If yes, please complete the list below.
 % \begin{enumerate}
@@ -1171,7 +1271,7 @@ C. Additional Results
 %     are described in detail. [yes/partially/no/NA]
 % \end{enumerate}
 
-% \subsection*{Explanations on any of the answers above (optional):}
+\subsection*{Explanations on any of the answers above (optional):}
 
 % [Text here; please keep this brief.]
 
