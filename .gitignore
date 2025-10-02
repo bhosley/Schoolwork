@@ -81,6 +81,7 @@
 2023Q1 - Discrete Event Simulation/Project/Simulations.ipynb
 
 *.key
+*.env
 *.approj
 *wandb*
 *__pycache__*
