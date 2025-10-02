@@ -56,3 +56,92 @@ There remain open questions and practical considerations. One challenge is decid
 In summary, projection-based network expansion provides a compelling framework for continual and curriculum learning in RL. It bridges insights from transfer learning, continual learning, and network design to enable agents that can grow their neural representations as they learn, without forgetting the past. The theoretical foundations ensure that expansions are safe (function-preserving), and empirical evidence across supervised and reinforcement learning domains shows improved learning dynamics and outcomes. As these techniques are further refined and adopted, we expect them to play a crucial role in building lifelong learning RL agents that can handle increasingly complex tasks by progressively expanding their knowledge and capacity.
 
 References: (Placeholder for full reference list corresponding to citations [chen2015], [wei2016], [rusu2016], [fernando2017], [yoon2018], [ashok2018], [cai2018], [gesmundo2023], [agarwal2022], [stanley2002], [schwarz2018], etc.)
+
+
+% Moved from old C2:
+
+\subsection{Graph-Based Architectures}
+
+\Glspl{gnn} naturally represent a set of entities (nodes) along with 
+their relations (edges) in a way that is invariant to node ordering. 
+\Glspl{gnn} are thus well-suited for \gls{marl}: each agent may be a node in a graph, 
+with edges representing interactions (such as physical proximity, 
+communication links, or joint team membership)~\cite{liu2020b}. 
+By design, graph convolutions or message-passing layers treat permutations of 
+node indices equivalently as they operate on the graph structure itself. 
+Yang et al.~\cite{yang2021a} introduced Inductive Heterogeneous Graph Multi-agent 
+Actor-critic (IHG-MA), where a multi-agent environment is modeled as a dynamic graph. 
+Each agent shares a policy network that includes graph convolution layers, 
+allowing it to adapt to changing neighbor relationships in highly dynamic environments. 
+IHG-MA shows substantially improved cooperation in tasks where agents move and form time-varying 
+interaction topologies, outperforming non-relational baselines~\cite{yang2021a}. 
+
+\subsubsection{Centralized Critics with GNNs}
+A prominent example of a graph-based architecture is the Permutation 
+Invariant Critic (PIC) proposed by Liu et al.~\cite{liu2020b}. 
+PIC uses a graph network as the critic in a \gls{ctde} framework. 
+Instead of a monolithic \gls{mlp} that takes the concatenation of 
+all agents' observations/actions, which would produce entirely different 
+outputs if agents were relabeled, PIC's critic treats each agent as a node 
+and applies graph convolutional layers to propagate information among agents. 
+The final critic value is read out by pooling over node embeddings, 
+yielding a single joint value that is invariant to agent permutations. 
+
+Liu et al.~\cite{liu2020b} demonstrated that PIC scales effectively 
+to environments with up to 200 agents, learning optimal policies where 
+a standard \gls{mlp} critic failed. The graph-based critic flexibly adapts to 
+different team sizes without redesign, as the \gls{gnn} simply expands to more nodes. 
+In contrast, an \gls{mlp} critic struggles with larger input dimensions 
+and inconsistent agent orderings. PIC also handles heterogeneity by 
+assigning each node an attribute vector encoding its type or capabilities, 
+allowing the shared \gls{gnn} to condition on agent-specific features while p
+reserving symmetry among identical agents.
+
+Noppakun and Akkarajitsakul~\cite{noppakun2022} explored a similar
+approach by implementing a \gls{coma}~\cite{foerster2018}
+replacing the standard \gls{mlp} critic with a \gls{gnn} one.
+In this work they demonstrated the feasibility of adapting
+existing actor-critic architectures to use \glspl{gnn}
+for problems that might benefit from invariance.
+
+Graph Attention Mean Field (GAT-MF)~\cite{hao2023} approach combines mean-field 
+theory with a graph attention network to handle very large swarms of agents. 
+By converting dense agent-agent interactions into an agent-“virtual neighbor” 
+interaction via attention weights, GAT-MF remains invariant to agent permutations 
+while focusing each agent's critic on the most influential neighbors, 
+and has been applied to extremely large-scale scenarios (hundreds of agents)~\cite{hao2022}.
+
+% #TODO Potentially redundant
+\subsection{Transformers and Attention for Sets}
+
+The remarkable success of attention mechanisms in sequence modeling 
+(notably Transformers~\cite{vaswani2017} applied to large language models) 
+has carried over to set-based inputs by removing positional encodings. 
+An attention layer, by default, is permutation-invariant to its inputs 
+(when no order information is added); treating each query-key-value triplet 
+agnostically to ordering and learning to weigh interactions based purely on content. 
+
+Lee et al.~\cite{lee2019} 
+formalized this in the Set Transformer, an architecture that uses 
+self-attention to model interactions among elements of an input set. 
+The Set Transformer can capture higher-order interactions
+yielding far greater representational power than naive pooling. 
+
+\subsubsection{Attention in Multi-Agent Critics}
+Iqbal and Sha~\cite{iqbal2019} introduced a [Multi] Actor-Attention-Critic (MAAC), 
+where the central critic uses an attention mechanism to dynamically 
+favor agent interactions most impactful for a given agent's \Gls{q}-value. 
+In MAAC, each agent's contribution to another's value is weighted by attention scores, 
+which in effect, allows the critic to disregard some agents and emphasize others. 
+This both handles varying numbers of agents and improves credit assignment by 
+favoring joint partner agents that significantly affect outcomes. 
+
+Hazra et al.~\cite{hazra2024} further demonstrated the effectiveness 
+of attention mechanisms by applying a self-attention-based architecture 
+to the StarCraft Multi-Agent Challenge (SMAC)~\cite{samvelyan2019}, 
+achieving strong performance and scalability,
+in a challenge more complex than those approached by the previous 
+literature discussed in this section.
+
+
+
