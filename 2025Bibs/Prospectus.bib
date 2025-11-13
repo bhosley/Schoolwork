@@ -40,6 +40,23 @@
   file = {/Users/brandonhosley/Zotero/storage/3DUYWQRZ/Ackermann et al_2019_Reducing Overestimation Bias in Multi-Agent Domains Using Double Centralized.pdf}
 }
 
+@inproceedings{akiba2019,
+  title = {Optuna: {{A Next-generation Hyperparameter Optimization Framework}}},
+  shorttitle = {Optuna},
+  booktitle = {Proceedings of the 25th {{ACM SIGKDD International Conference}} on {{Knowledge Discovery}} \& {{Data Mining}}},
+  author = {Akiba, Takuya and Sano, Shotaro and Yanase, Toshihiko and Ohta, Takeru and Koyama, Masanori},
+  date = {2019-07-25},
+  series = {{{KDD}} '19},
+  pages = {2623--2631},
+  publisher = {Association for Computing Machinery},
+  location = {New York, NY, USA},
+  doi = {10.1145/3292500.3330701},
+  url = {https://doi.org/10.1145/3292500.3330701},
+  urldate = {2025-10-02},
+  abstract = {The purpose of this study is to introduce new design-criteria for next-generation hyperparameter optimization software. The criteria we propose include (1) define-by-run API that allows users to construct the parameter search space dynamically, (2) efficient implementation of both searching and pruning strategies, and (3) easy-to-setup, versatile architecture that can be deployed for various purposes, ranging from scalable distributed computing to light-weight experiment conducted via interactive interface. In order to prove our point, we will introduce Optuna, an optimization software which is a culmination of our effort in the development of a next generation optimization software. As an optimization software designed with define-by-run principle, Optuna is particularly the first of its kind. We will present the design-techniques that became necessary in the development of the software that meets the above criteria, and demonstrate the power of our new design through experimental results and real world applications. Our software is available under the MIT license (https://github.com/pfnet/optuna/).},
+  isbn = {978-1-4503-6201-6}
+}
+
 @book{albrecht2024,
   title = {Multi-Agent {{Reinforcement Learning}}: {{Foundations}} and {{Modern Approaches}}},
   shorttitle = {Multi-Agent {{Reinforcement Learning}}},
@@ -994,6 +1011,17 @@
   file = {/Users/brandonhosley/Zotero/storage/NHZ3NPT4/Leonardos et al_2021_Exploration-Exploitation in Multi-Agent Competition.pdf}
 }
 
+@article{li2018b,
+  title = {Massively {{Parallel Hyperparameter Tuning}}},
+  author = {Li, Lisha and Jamieson, Kevin and Rostamizadeh, Afshin and Gonina, Katya and Hardt, Moritz and Recht, Benjamin and Talwalkar, Ameet},
+  date = {2018-02-15},
+  url = {https://openreview.net/forum?id=S1Y7OOlRZ},
+  urldate = {2025-10-02},
+  abstract = {Modern machine learning models are characterized by large hyperparameter search spaces and prohibitively expensive training costs. For such models, we cannot afford to train candidate models sequentially and wait months before finding a suitable hyperparameter configuration. Hence, we introduce the large-scale regime for parallel hyperparameter tuning, where we need to evaluate orders of magnitude more configurations than available parallel workers in a small multiple of the wall-clock time needed to train a single model. We propose a novel hyperparameter tuning algorithm for this setting that exploits both parallelism and aggressive early-stopping techniques, building on the insights of the Hyperband algorithm. Finally, we conduct a thorough empirical study of our algorithm on several benchmarks, including large-scale experiments with up to 500 workers. Our results show that our proposed algorithm finds good hyperparameter settings nearly an order of magnitude faster than random search.},
+  langid = {english},
+  file = {/Users/brandonhosley/Zotero/storage/PNAQAL78/Li et al. - 2018 - Massively Parallel Hyperparameter Tuning.pdf}
+}
+
 @inproceedings{li2019,
   title = {Robust Multi-Agent Reinforcement Learning via Minimax Deep Deterministic Policy Gradient},
   booktitle = {Proceedings of the {{Thirty-Third AAAI Conference}} on {{Artificial Intelligence}} and {{Thirty-First Innovative Applications}} of {{Artificial Intelligence Conference}} and {{Ninth AAAI Symposium}} on {{Educational Advances}} in {{Artificial Intelligence}}},
@@ -1095,12 +1123,21 @@
   file = {/Users/brandonhosley/Zotero/storage/VTJ38CWP/10763906.html}
 }
 
-@unpublished{liaw2018tune,
-  title = {Tune: A Research Platform for Distributed Model Selection and Training},
-  author = {Liaw, Richard and Liang, Eric and Nishihara, Robert and Moritz, Philipp and Gonzalez, Joseph E and Stoica, Ion},
-  date = {2018},
+@online{liaw2018,
+  title = {Tune: {{A Research Platform}} for {{Distributed Model Selection}} and {{Training}}},
+  shorttitle = {Tune},
+  author = {Liaw, Richard and Liang, Eric and Nishihara, Robert and Moritz, Philipp and Gonzalez, Joseph E. and Stoica, Ion},
+  date = {2018-07-13},
   eprint = {1807.05118},
-  eprinttype = {arXiv}
+  eprinttype = {arXiv},
+  eprintclass = {cs},
+  doi = {10.48550/arXiv.1807.05118},
+  url = {http://arxiv.org/abs/1807.05118},
+  urldate = {2025-10-02},
+  abstract = {Modern machine learning algorithms are increasingly computationally demanding, requiring specialized hardware and distributed computation to achieve high performance in a reasonable time frame. Many hyperparameter search algorithms have been proposed for improving the efficiency of model selection, however their adaptation to the distributed compute environment is often ad-hoc. We propose Tune, a unified framework for model selection and training that provides a narrow-waist interface between training scripts and search algorithms. We show that this interface meets the requirements for a broad range of hyperparameter search algorithms, allows straightforward scaling of search to large clusters, and simplifies algorithm implementation. We demonstrate the implementation of several state-of-the-art hyperparameter search algorithms in Tune. Tune is available at http://ray.readthedocs.io/en/latest/tune.html.},
+  pubstate = {prepublished},
+  keywords = {Computer Science - Distributed Parallel and Cluster Computing,Computer Science - Machine Learning,Statistics - Machine Learning},
+  file = {/Users/brandonhosley/Zotero/storage/24PCYSAZ/Liaw et al. - 2018 - Tune A Research Platform for Distributed Model Selection and Training.pdf;/Users/brandonhosley/Zotero/storage/4JYWEAWS/1807.html}
 }
 
 @online{lillicrap2019,

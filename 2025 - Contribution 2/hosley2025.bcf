@@ -2617,8 +2617,41 @@
     <bcf:datasource type="file" datatype="bibtex" glob="false">../2025Bibs/Prospectus.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1">terry2020</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">albrecht2024</bcf:citekey>
     <bcf:citekey order="1" intorder="2">christianos2021</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">albrecht2024</bcf:citekey>
+    <bcf:citekey order="2" intorder="2">christianos2021</bcf:citekey>
+    <bcf:citekey order="2" intorder="3">terry2020</bcf:citekey>
+    <bcf:citekey order="2" intorder="4">canese2021</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">calvo2018</bcf:citekey>
+    <bcf:citekey order="3" intorder="2">cao2012</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">canese2021</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">christianos2021</bcf:citekey>
+    <bcf:citekey order="5" intorder="2">albrecht2024</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">terry2020</bcf:citekey>
+    <bcf:citekey order="6" intorder="2">christianos2021</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">zhong2024</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">foerster2016</bcf:citekey>
+    <bcf:citekey order="8" intorder="2">gupta2017</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">christianos2021</bcf:citekey>
+    <bcf:citekey order="9" intorder="2">albrecht2024</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">terry2020</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">zaheer2017</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">yang2018</bcf:citekey>
+    <bcf:citekey order="12" intorder="2">tang2021</bcf:citekey>
+    <bcf:citekey order="12" intorder="3">li2021b</bcf:citekey>
+    <bcf:citekey order="12" intorder="4">zambaldi2018</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">diaconis1980</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">alvarez-melis2015</bcf:citekey>
+    <bcf:citekey order="14" intorder="2">zaheer2017</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">yu2022</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">zhong2024</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">hao2023</bcf:citekey>
+    <bcf:citekey order="17" intorder="2">witt2020</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">terry2020</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">liaw2018</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">li2018b</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">akiba2019</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">
