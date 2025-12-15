@@ -144,4 +144,64 @@ in a challenge more complex than those approached by the previous
 literature discussed in this section.
 
 
+% #TODO: Evaluate text brought from C2
+
+% We begin by grounding our discussion of input-invariant architectures 
+% in a key probabilistic result: de Finetti's theorem (\cref{eq:deFinnetti}). 
+% This theorem formalizes the idea that, under suitable conditions, 
+% the elements of an exchangeable sequence can be treated as if 
+% they were drawn independently from a shared latent distribution.
+
+% \begin{theorem}[de Finetti's Theorem]
+%     Let \(X = \{x_1, \ldots, x_M\}\) be a sequence of exchangeable random variables.
+%     Then there exists a latent variable \(\theta\) such that:
+%     \begin{equation}
+%         p(X \mid \alpha, M_0) = \int p(\theta \mid \alpha, M_0) 
+%         \prod_{m=1}^{M} p(x_m \mid \theta)\, d\theta
+%         \label{eq:deFinnetti}
+%     \end{equation}
+%     That is, the joint distribution over \(X\) can be represented as a mixture of 
+%     i.i.d. variables conditional on \(\theta\).
+% \end{theorem}
+
+
+
+% In their paper introducing Deep Sets, Zaheer et al.~\cite{zaheer2017} 
+% present a parameter-sharing scheme inspired by \cref{eq:deFinnetti}, 
+% which allows networks to handle unordered inputs by design.
+
+% They propose two architectures to achieve this.
+% For the invariant approach, they demonstrate that any 
+% permutation-invariant function over a set can 
+% be decomposed into a transformation (\(\rho\)) of a sum over 
+% transformed (\(\phi\)) elements,
+% \begin{equation*}
+%     \rho\left(\sum_i \phi(x_i)\right)
+% \end{equation*}
+% providing a universal approximator for such functions. 
+
+% Zaheer et al.~\cite{zaheer2017} also proposed an equivariant approach,
+% providing a neural network layer of the form:
+% \begin{equation*}
+%     \mathbf{f}(\mathbf{x}) \doteq \mathbf\sigma (\lambda\mathbf{Ix} 
+%     + \gamma \text{maxpool}(\mathbf{x})\mathbf{1}) 
+% \end{equation*}
+% where the weight matrix is constrained to the form 
+% \(\lambda\mathbf{I} + \gamma\mathbf{11}^\top\), ensuring all 
+% diagonal elements are equal and all off-diagonal elements are equal. 
+% This construction guarantees permutation equivariance.
+% The \(\sigma\) operation represents a non-linearity function (such as a sigmoid).
+% The authors argue that this equivariant form is functionally equivalent to the 
+% invariant form during inference; their distinction primarily emerges during backpropagation, 
+% where the structure of gradient updates differs between the two.
+
+% These structures dramatically reduce the effective symmetry 
+% group of the input space, enabling better generalization and 
+% sample efficiency in problems with intrinsic symmetries. 
+% In \gls{marl}, these ideas naturally extend to agent sets: 
+% policies or critics can process agents' states as elements 
+% of an unordered set, enforcing invariance to permutations in agent ordering. 
+% This supports scalable learning across varying team compositions 
+% and aligns with the theoretical underpinnings of exchangeability laid out earlier.
+
 

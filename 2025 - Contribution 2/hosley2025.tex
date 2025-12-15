@@ -5,7 +5,6 @@
 \AddToHook{cmd/appendix/before}{\crefalias{section}{appendix}}
 \usepackage{enumitem} 
 
-
 %% For JAIR Checklist:
 \usepackage{soul}                   % Strikeout with \st{}
 \renewcommand{\bf}[1]{\textbf{#1}}  % Bold with \bf{}
@@ -94,6 +93,12 @@
 % \newabbreviation{maddpg}{MADDPG}{multi-agent deep-deterministic policy gradient}
 % \newabbreviation{sisl}{SISL}{Stanford Intelligent Systems Laboratory}
 % \newabbreviation{coma}{COMA}{counterfactual multi-agent policy gradients}
+% #TODO: Add the following glossary terms to Diss.
+\newabbreviation{ippo}{IPPO}{independent \gls{ppo}}
+\newabbreviation{hpn}{HPN}{hyper policy network}
+\newabbreviation{mlp}{MLP}{multi-layer perceptron}
+\newabbreviation{pic}{PIC}{permutation-invariant critic}
+
 % \newglossaryentry{q}{text=q,name=Q,sort=q,type=symbols,category=symbol,
 %     description={Set of state-values or state-value functions.}}
 % #TODO: Change math to glossary symbols
@@ -116,7 +121,7 @@
 
 
 % \title[]{Homogenization for Input-Invariant Solutions for Heterogeneous Agent Reinforcement Learning}
-\title{Homogenization for Input-Invariant Solutions for Heterogeneous Agent Reinforcement Learning}
+\title{Homogenization and Implicit Indication: an Input-Invariant Solution for Heterogeneous Agent Reinforcement Learning}
 % TODO: For implicit agent embedding
 
 \begin{document}
@@ -134,6 +139,7 @@
 \received{DD Month YYYY}
 % \received[accepted]{DD Month YYYY}
 \maketitle
+
 
 \section{Introduction}
 
@@ -217,7 +223,6 @@ We next situate this formulation relative to prior work on parameter sharing,
 agent indication, and invariant architectures.
 
 
-
 \section{Related Work}
 \label{con2:sec:related_work}
 
@@ -230,13 +235,11 @@ Homogenization offers a complementary framework that integrates these
 paradigms by providing a shared representational domain in which 
 heterogeneous agents can be trained under a unified policy structure.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \subsection{Parameter Sharing and Agent Indication}
 
 Parameter sharing has been highly effective in homogeneous \gls{marl},
 where agents have identical observation and action spaces and are intended
-to learn interchangeable behaviors~\cite{foerster2016, gupta2017}.
+to learn interchangeable behaviors~\cite{gupta2017, foerster2018}.
 In these settings, a single shared policy improves sample efficiency and
 can promote coordinated behavior without additional architectural machinery.
 However, this benefit relies critically on structural symmetry:
@@ -255,268 +258,136 @@ These approaches allow divergent behavior under shared parameters,
 but they still require manually injecting identity information and 
 do not resolve underlying structural mismatches among agents.
 
-% #TODO: Citation needed
-% A core insight from recent literature is that when agents are symmetric or 
-% play exchangeable roles, 
-% enforcing invariance to permutations in agent inputs 
-% and identities can significantly improve learning efficiency and generalization. 
-% Input-invariant architectures, such as those based on pooling, graph networks, 
-% or attention mechanisms, can leverage these symmetries directly in the 
-% policy or critic network. 
-
-% This result justifies the treatment of inputs that are unordered but statistically similar,
-% such as agent observations in a cooperative \gls{marl} task, 
-% as conditionally i.i.d. elements drawn from a shared distribution. 
-% In practice, this means that the ordering of inputs does not convey meaningful information, 
-% and architectures may (and perhaps should) be designed to respect this symmetry.
-
-% As an example, in environments like \gls{lbf}~\cite{papoudakis2021}, 
-% each agent's observation is constructed by concatenating their own state, 
-% the state of objectives, and the states of other agents in a fixed but arbitrary order. 
-% While the ordering is deterministic, it typically does not encode meaningful 
-% semantic distinctions. In such settings, treating the input as an exchangeable set,
-% rather than a structured sequence, aligns with the assumptions of de Finetti's theorem 
-% and motivates the permutation-invariant design choices in the rest of this section.
-
-% Permutation-invariant functions and networks (e.g., pooling operations or 
-% attention mechanisms without positional encoding) align with this insight, %%
-% embedding the inductive bias that order should not affect the outcome. 
-% This forms the basis for the architectural designs reviewed in the following sections.
-
-While explicit indication provides a mechanism for breaking the symmetry among agents, 
-a complementary line of research seeks to exploit symmetry by designing policies that are invariant or equivariant to permutations in their inputs.
-These approaches are motivated by exchangeability results in probability theory, which formalize conditions under which the ordering of agents or observed entities carries no semantic meaning.
-When such symmetries are present, architectures that enforce permutation invariance can improve generalization, stabilize learning, and reduce the reliance on explicit identifiers.
-We next review these invariant and equivariant architectures and contrast their inductive biases with those of explicit indication.
-
+While these approaches remove symmetry from homogeneous agents,
+a complementary line of research exploits that symmetry directly by designing 
+policies that are invariant or equivariant to permutations in their inputs. 
+When agent order carries no semantic meaning, such architectures enforce this 
+symmetry through shared encoders and permutation-invariant aggregations. 
+These methods improve generalization and stability in settings where agents or 
+observed entities are structurally uniform.
 
 \subsection{Invariant and Equivariant Architectures}
 
+Invariant and equivariant models operationalize symmetry by applying a shared 
+encoder to each entity and aggregating the resulting features using symmetric 
+operations such as summation, mean fields~\cite{yang2018, li2021b}, 
+or attention~\cite{tang2021, zambaldi2018} without positional encodings. 
+These designs rely on the assumption that the ordering of agents 
+or entities is not semantically meaningful. 
+Although not required for our formulation, 
+exchangeability results 
+such as de Finetti's theorem~\cite{diaconis1980} help clarify when this assumption 
+is appropriate by formalizing conditions under which agents can be treated as 
+statistically interchangeable~\cite{alvarez-melis2015, zaheer2017}. 
+Deep Sets~\cite{zaheer2017} 
+and graph-based \gls{marl} architectures~\cite{yang2021a} instantiate this principle, 
+ensuring that reordering agents or entities leaves the policy unchanged. 
+These methods assume a uniform input structure across agents; 
+homogenization differs by aligning structurally heterogeneous observation 
+spaces within a shared spanning domain, allowing invariant processing even 
+when agents do not share identical feature sets.
 
-A complementary direction arises from efforts to design policies that respect symmetries in their inputs or environments.  Works on permutation-invariant and equivariant representations, such as Deep Sets~\cite{zaheer2017} and graph neural network–based MARL architectures~\cite{yang2018, tang2021, li2021b, zambaldi2018}, seek to make learned policies invariant to reordering of agents or entities.
-These architectures trace their theoretical motivation to exchangeability results in probability theory (e.g., de Finetti and mean-field approximations), which formalize conditions for consistent behavior under permutation.
-Such approaches achieve invariance within symmetric teams but still rely on uniform input structure—each agent processes an equivalent set of features.
-Homogenization, by contrast, achieves a form of subset-based input invariance that spans structurally diverse observation spaces, aligning the representational domain rather than the ordering of its elements.
+A related class of invariant approximations arises in mean-field 
+\gls{marl} solutions, where interactions among many agents are 
+aggregated through an averaging operator~\cite{yang2018, li2021b}, 
+yielding permutation invariance and insensitivity to team size. 
+These methods demonstrate that invariant aggregation can 
+significantly reduce sample complexity in large populations, 
+but the commutative pooling they employ inevitably discards 
+relational structure among interacting agents.
 
+To recover relational information while retaining permutation invariance, 
+the \gls{pic}~\cite{liu2020b} introduces a graph-based critic that aggregates 
+per-agent information through message passing. \Gls{pic} improves information 
+utilization in centralized training and remains insensitive to agent ordering; 
+moreover, by including type or role labels as node attributes, \gls{pic} can 
+accommodate heterogeneous agents without departing from its invariant design. 
+These developments motivate more expressive invariant architectures; notably, 
+attention-based pooling~\cite{zambaldi2018} and graph-based attention~\cite{hao2023};
+which preserve relational structure while maintaining order invariance, 
+though at the cost of losing population-size invariance due to pairwise 
+message passing or full attention matrices. Such findings parallel observations 
+in single-agent settings, where relational encoders have shown robustness 
+to missing or occluded inputs~\cite{tang2021}, reinforcing the 
+importance of architectural invariance in domains where observation 
+availability varies across agents.
 
-Although not required for our formulation, exchangeability results such as 
-de Finetti's theorem~\cite{diaconis1980} 
-help clarify why permutation-invariant architectures benefit symmetric teams: 
-they formalize conditions under which agents can be treated as statistically 
-interchangeable~\cite{alvarez-melis2015, zaheer2017}.
-
-
-% In their paper introducing Deep Sets, Zaheer et al.~\cite{zaheer2017} 
-% present a parameter-sharing scheme inspired by \cref{eq:deFinnetti}, 
-% which allows networks to handle unordered inputs by design.
-
-% They propose two architectures to achieve this.
-% For the invariant approach, they demonstrate that any 
-% permutation-invariant function over a set can 
-% be decomposed into a transformation (\(\rho\)) of a sum over 
-% transformed (\(\phi\)) elements,
-% \begin{equation*}
-%     \rho\left(\sum_i \phi(x_i)\right)
-% \end{equation*}
-% providing a universal approximator for such functions. 
-
-% Zaheer et al.~\cite{zaheer2017} also proposed an equivariant approach,
-% providing a neural network layer of the form:
-% \begin{equation*}
-%     \mathbf{f}(\mathbf{x}) \doteq \mathbf\sigma (\lambda\mathbf{Ix} 
-%     + \gamma \text{maxpool}(\mathbf{x})\mathbf{1}) 
-% \end{equation*}
-% where the weight matrix is constrained to the form 
-% \(\lambda\mathbf{I} + \gamma\mathbf{11}^\top\), ensuring all 
-% diagonal elements are equal and all off-diagonal elements are equal. 
-% This construction guarantees permutation equivariance.
-% The \(\sigma\) operation represents a non-linearity function (such as a sigmoid).
-% The authors argue that this equivariant form is functionally equivalent to the 
-% invariant form during inference; their distinction primarily emerges during backpropagation, 
-% where the structure of gradient updates differs between the two.
-
-% These structures dramatically reduce the effective symmetry 
-% group of the input space, enabling better generalization and 
-% sample efficiency in problems with intrinsic symmetries. 
-% In \gls{marl}, these ideas naturally extend to agent sets: 
-% policies or critics can process agents' states as elements 
-% of an unordered set, enforcing invariance to permutations in agent ordering. 
-% This supports scalable learning across varying team compositions 
-% and aligns with the theoretical underpinnings of exchangeability laid out earlier.
-
-
-% \subsection{Mean-Field and Exchangeable Approximations}
-
-% In scenarios where agents are approximately indistinguishable, 
-% a natural extension of Zaheer et al.'s~\cite{zaheer2017} 
-% permutation-invariant formulation is to normalize the summation of elements. 
-% Rather than summing over agent embeddings, one may average them,
-% yielding permutation invariance \emph{and} insensitivity to the number of agents. 
-% This refinement aligns closely with mean-field theory, which replaces complex 
-% many-body interactions with an average effect.
-
-% Yang et al.~\cite{yang2018} apply this idea in the context of \glsadd{marl}, 
-% introducing mean-field Q-learning and actor-critic algorithms. 
-% Their approach approximates the influence of neighboring agents with 
-% an average embedding, enabling each agent to learn a local policy that 
-% scales gracefully with team size. This is particularly 
-% useful in settings where each agent interacts with many others, 
-% but where the precise identity of those agents is irrelevant.
-
-% Building on this, Li et al.~\cite{li2021b} approach mean-field \gls{marl} 
-% problems formally as permutation-invariant Markov decision processes. 
-% They propose Mean-Field Proximal Policy Optimization (MF-PPO), 
-% a variant of PPO that incorporates mean-field assumptions into 
-% both actor and critic networks. The resulting architecture maintains a 
-% shared policy across agents, with inputs aggregated through mean pooling.
-
-% Theoretically, MF-PPO achieves convergence to a global optimum at 
-% a sublinear rate, and notably, its sample complexity is proven to be 
-% independent of the number of agents. This highlights the power of 
-% encoding exchangeability as an inductive bias: by exploiting the 
-% ergodic structure of agent interactions, MF-PPO updates a shared policy 
-% more efficiently than na\"ive multi-agent baselines.
-
-% Empirically, MF-PPO outperforms non-invariant baselines in the 
-% \gls{mpe}~\cite{li2021b}, demonstrating faster convergence, 
-% higher average returns, and significantly reduced parameter counts. 
-% This is largely attributed to weight sharing across agents and the 
-% use of input-aggregation strategies that preserve permutation symmetry. 
-
-% One significant downside to the examined mean-field approaches is that 
-% information about subset interactions is lost in the process of 
-% applying their respective commutative functions.
-% % #TODO: Appendix proof
-% % We argue that this is not a necessary limitation of mean-field methods,
-% This limitation motivated more sophisticated invariant architectures like 
-% graph-based networks and attention-based pooling, which we discuss next.
-
-% % #TODO : Redundant from C3
-
-
-% % Change this section as reflecting back to single agent applications
-% \subsubsection{Relational Reasoning in Single-Agent RL}
-% While much of the prior work focuses on multi-agent settings, 
-% the benefits of invariant relations extend to single-agent tasks as well. 
-% These architectures demonstrate that modeling inputs as a set of 
-% interacting entities can improve both performance and generalization.
-
-% Zambaldi et al.~\cite{zambaldi2018} showed that a single-agent \gls{rl} agent could 
-% benefit from interpreting its observations as a graph of entities and relations. 
-% Using a relation network with iterative message passing, their agent achieved 
-% superhuman performance on several StarCraft II~\cite{vinyals2019} mini-games, 
-% outperforming non-relational baselines by reasoning over unit interactions 
-% rather than raw input features.
-
-% In their single-agent formulation, Tang and Ha~\cite{tang2021} demonstrated 
-% that treating sensory channels as interchangeable input elements enabled 
-% the agent to maintain performance despite significant input corruption. 
-% By passing each sensory input through a shared encoder and aggregating 
-% with self-attention, the network learned to interpret observations based 
-% on contextual relationships rather than fixed positions. 
-% This design conferred resilience to occluded or missing inputs, 
-% allowing the agent to function even when sections of the sensory 
-% data were absent at test time. Their results suggest that invariance 
-% to input structure can provide strong robustness to
-% severe perceptual perturbations.
-
-% % # TODO: May consider ending on Tang and Ha for similarity purposes.
-% \begin{comment}
-%     They propose a very similar question:
-%         "Sensory substitution refers to the brain’s ability to use one sensory modality 
-%         (e.g., touch) to supply environmental information normally gathered by 
-%         another sense (e.g., vision)."
-%     - Extremely similar to my interest in sensory degradation.
-%     - However, in their experiments they instead demonstrate an invariance in a singular
-%     observational domain. (They take a 2d image, chunk it and shuffle.)
-% \end{comment}
+While invariant and relational architectures can support heterogeneous agents
+through node- or type-specific features in graph and attention-based models,
+they still assume a fixed architectural template and incur costs that 
+grow with the number of entities. In many practical multi-agent systems, 
+agents differ more fundamentally in their observation and action 
+structures~\cite{calvo2018}, and handling these differences purely 
+architecturally can become cumbersome~\cite{cao2012, canese2021, hao2023}. 
+This motivates other lines of work that address heterogeneity at 
+the level of policy parameterization and training algorithms, 
+for example by decoupling per-type policy heads or generating 
+agent-specific parameters via hypernetworks.
 
 \subsection{Handling Heterogeneity in MARL}
 
-Several recent frameworks have explicitly targeted the challenges of heterogeneity in cooperative MARL.
-Independent PPO (IPPO) and Multi-Agent PPO (MAPPO)\cite{yu2022} provide stable baselines for homogeneous teams but require architectural duplication to handle differing agent spaces.
-Heterogeneous-Agent PPO (HAPPO)\cite{zhong2024} extends these ideas by enabling joint training across agent types while maintaining distinct policy heads, improving sample efficiency and role specialization.
-Other works introduce selective sharing mechanisms or hypernetworks to generate per-agent parameters~\cite{hao2023, witt2020}.
-These approaches primarily address heterogeneity through network architecture or parameterization, whereas the method introduced here addresses it through representation: homogenization creates a shared input–output space in which a single policy can operate across agents with structurally distinct capabilities.
+Several recent frameworks have explicitly targeted the challenges of heterogeneity 
+in cooperative MARL. Independent PPO (IPPO) and Multi-Agent PPO (MAPPO)\cite{yu2022} 
+provide stable baselines for homogeneous teams but require architectural duplication 
+to handle differing agent spaces. Heterogeneous-Agent PPO (HAPPO)\cite{zhong2024} 
+extends these ideas by enabling joint training across agent types while maintaining 
+distinct policy heads, improving sample efficiency and role specialization.
+Other works introduce selective sharing mechanisms or hypernetworks to generate 
+per-agent parameters~\cite{hao2023, witt2020}.These approaches primarily 
+address heterogeneity through network architecture or parameterization, 
+whereas the method introduced here addresses it through representation: 
+homogenization creates a shared input-output space in which a single 
+policy can operate across agents with structurally distinct capabilities.
 
-% #TODO: IPPO
-% #TODO: MAPPO
+Several frameworks directly target the challenge of handling heterogeneity in \gls{marl}.
+\Gls{ippo} and \gls{mappo}~\cite{witt2020, yu2022} provide stable baselines for 
+homogeneous teams, but accommodating agents with different observation or action 
+spaces typically requires duplicating architectures or maintaining separate policies. 
+\Gls{happo}~\cite{zhong2024} provides a strong solution for behaviorally 
+heterogeneous teams by enabling agents to learn distinct, emergent behaviors 
+under a shared optimization framework while maintaining separate policy networks 
+for agents with structurally different observation or action spaces. 
+This improves sample efficiency and role specialization, but because differently 
+structured agents cannot share parameters directly, \gls{happo} does not by itself 
+support unified policies across structurally heterogeneous agents without additional 
+architectural mechanisms.
 
-% \cite{witt2020}
-% % propose IPPO, as an extension to PPO
+Other methods address heterogeneity through conditional parameter sharing, 
+combining a shared backbone with modules whose parameters are generated 
+by an auxiliary network. Hypernetwork-based approaches, such as 
+\gls{hpn}~\cite{hao2023}, use a separate \gls{mlp} to produce the 
+parameters of an input module that processes aggregated per-agent inputs 
+before they are passed through a single shared backbone that outputs actions 
+for all agents, effectively treating the team as a single structured entity. 
+Selective-sharing mechanisms~\cite{christianos2021} allow agents to 
+access shared components when beneficial and retain specialized modules where needed. 
 
-% \cite{yu2022}
-% % Compares IPPO and MAPPO
-% % resolves the previous weakness with central/shared value function
+These strategies offer flexible ways to capture cross-agent commonalities without 
+enforcing strict parameter tying. The approach introduced in this work is complementary: 
+rather than conditioning parameterization on agent identity or type, 
+homogenization aligns heterogeneous observation and action spaces within a 
+shared representational domain, enabling a single policy to operate across 
+structurally distinct agents without explicit identifiers or per-type modules.
 
+Together, these methods illustrate the range of existing strategies for 
+handling heterogeneity; through explicit indication, invariant architectures, 
+selective parameter sharing, or type-specific policy modules. 
+Yet all of these approaches treat heterogeneity as an architectural or 
+algorithmic constraint on how policies are parameterized. 
+In contrast, the approach introduced in this work treats heterogeneity as a 
+representational problem: rather than specializing networks per agent type, 
+it constructs shared input and action domains, homogenized across agents,
+that allow a single policy to operate over structurally distinct observation 
+and action spaces without requiring architectural specialization.
+The next section develops this representational perspective in detail and 
+formalizes the homogenization framework used in this work.
 
-% \cite{terry2020}
-% % Directly address hetero
-% % Provide 4 proposed solutions which all draw from transformed obs
-% % either a geometric mask, binary indicator, inversion, or inversion with replacement
-
-% \subsection{Heterogeneous Agents}
-% In many \gls{marl} scenarios, agents are not identical, a setting formally studied 
-% as \gls{harl}. Agents may differ in abilities, observation spaces, or roles. 
-% Many input-invariant architectures assume that all inputs are drawn from the 
-% same distribution and processed by a shared encoder, an assumption that breaks 
-% down when agents have structurally different observations. In such cases, 
-% invariant frameworks must be adapted to handle this heterogeneity, 
-% either by mapping observations into a shared embedding space or by 
-% augmenting the input with agent-specific identifiers.
-
-% One practical strategy for supporting heterogeneity in input-invariant architectures 
-% is to include an agent-specific feature encoding that captures type or 
-% role~\cite{liu2020b,hao2022,hao2023}. As noted earlier, PIC~\cite{liu2020b}
-% incorporates this by embedding attribute vectors into each node's representation, 
-% preserving symmetry among similar agents while allowing differentiation where needed.
-
-% Similarly, HPN~\cite{hao2023} uses a hypernetwork conditioned on 
-% identity to generate specialized agent modules, enabling tailored policies 
-% while maintaining permutation invariance at the architectural level. 
-% This structure supports diversity among agents while preserving the 
-% benefits of shared computation and symmetry where applicable.
-
-% Such flexibility is especially valuable in mixed-agent teams and 
-% competitive settings, where an agent may need to reason differently 
-% about teammates and opponents. The architecture should remain invariant 
-% when swapping two equivalent opponents but avoid conflating agents 
-% with distinct roles.
-
-% Despite the demonstrated advantages of invariant and equivariant architectures in handling 
-% agent symmetry, scalability, and heterogeneity, their practical cost remains underexplored. 
-% The reviewed methods, ranging from mean-field approximations and deep sets, 
-% to graph-based and attention-driven critics share a common goal: to encode 
-% structural priors that simplify learning in multi-agent settings. However, 
-% these methods often increase architectural complexity, requiring additional computation, 
-% memory, and tuning. Importantly, few studies offer direct comparisons of their 
-% training or inference costs relative to simpler baselines such as \glspl{mlp}. 
-% This gap complicates our understanding of the tradeoffs involved in deploying 
-% more expressive models in real-world systems.
-
-\subsection{Positioning of This Work}
-
-This work bridges these strands by integrating invariant-design principles with heterogeneous-agent learning.
-It formalizes implicit indication as a representation-level generalization of parameter sharing, grounded in the assumption of semantic decomposability: that observation and action spaces can be partitioned into elements that correspond meaningfully across agents.
-In doing so, it extends the reach of invariant architectures beyond symmetric teams, enabling a single shared policy to generalize across heterogeneous agents without explicit identity encoding.
-
-% In this work, we contribute to closing that gap by empirically evaluating the efficiency 
-% and robustness of input-invariant policy architectures in heterogeneous-agent settings, 
-% quantifying both their benefits and computational costs. In parallel, we 
-% propose a novel exchangeable approximation framework that extends the principles 
-% of input invariance to settings with observation and action heterogeneity. 
-% By constructing a shared observation-action spanning space and integrating dynamic 
-% masking within an equivariant network, we offer a lightweight and scalable 
-% approach to handling agent diversity. Together, these contributions aim to 
-% clarify not only when these architectures are helpful, 
-% but how they might be practically and broadly applied.
-
-% #TODO: Make sure paper about indicator variables is mentioned.
 
 \section{Homogenization and Implicit Indication Method}
 \label{con2:sec:method_homogenization}
 
 \subsection{Preliminaries}
+
 The homogenization approach constructs a unified space defined by the union set 
 of the elements that comprise the heterogeneous spaces of the constituent agents.
 This can be done for action spaces, observation spaces, or both independently.
@@ -543,34 +414,56 @@ defined by the tuple \((I,S,O,A,P,R,\gamma)\) where:
 When combined with a joint policy \(\gls{pi} = \{\pi_i\}_{i\in I}\) we have a \gls{posg}.
 
 \subsection{Decomposition of Observations}
+
 For some agent \(i\), consider its observation space \({O}_i\).
 The proposed homogenization method assumes that these spaces are 
 decomposable into salient subspaces, referred to as \emph{observation elements}.
-Intuitively, each distinct sensor corresponds to an observation element, 
-and the combination of such elements forms the agent's complete observation.
+Intuitively, an observation element may represent a distinct sensor on an agent,
+thus the combination of all such elements form the agent's observation.
 
-Formally, we define this relationship as
-\[{O}_i = \bigcup_{c \in C_i} {O}_c,\]
-where \(C_i\) denotes the set of observation elements available to agent \(i\).
-That is,
-\(c\in[0,1] \forall c\in C_i\)
-and
-\(C := \bigcup_{i\in I} C_i\).
+Let \(c\) be an observation element index and \(C\) be the global index set.
+Then, \(C_i \subseteq C\) represents the set of indices corresponding to 
+agent \(i\)'s available observation elements.
+In the absence of a predefined global index set, one may define
+\(C := \bigcup_{i \in I} C_i\).  If a global index set already exists,
+it must at minimum form a superset of this union to serve as a valid spanning set.
+% 
+Thus, the observation space of agent \(i\) is the collection of its active
+observation elements:
+\[
+    O_i = \{\, O_c \mid c \in C_i \,\}.
+\]
+and the homogenized observation space,
+\[
+    O^\prime := \{\, O_c \mid c \in C \,\},
+\]
+which collects every observation element available to any agent.
 
-Although the observation elements \(\{O_c\}_{c \in C}\) are linearly independent
-in representation, they are not necessarily independent in their values.
-For example, a thermal camera and a visual-spectrum camera each define distinct representational
-subspaces, yet their outputs are correlated when observing the same physical region.
-Conversely, elements such as GPS and a vision-based sensors are not only independent
-in representation but also largely uncorrelated in the values they produce.
-The set \({C}\) therefore enumerates all observation elements that the implementation
-explicitly acknowledges, encompassing both correlated and uncorrelated channels.
+To map observations into the homogenized space, let \(C' \subseteq C\) 
+denote a set of observation element indices with corresponding 
+observation space \(O_{C'} := \{\, O_c \mid c \in C' \,\}\).
+Define \(E_{C'} : O_{C'} \to O^\prime\) by populating the coordinates
+\(c \in C'\) with their element values and assigning a distinguished null 
+value (e.g., \(0\) or \(\emptyset\)) to all coordinates in \(C \setminus C'\). 
 
-Thus the homogenized observation space is defined as:
-\[O^\prime := \bigcup_{c \in {C}} O_c,\]
-which spans the union of all agent observation subspaces.
+Then, the mapping
+\[
+    \iota : O^\prime \to \mathcal{P}(C), \qquad
+    \iota(o) := \{\, c \in C \mid o_c \notin \{0,\emptyset\} \,\},
+\]
+recovers the set of active observation elements from an observation in \(O^\prime\).
+
+Although the observation elements \(\{O_c\}_{c \in C}\) are 
+defined as linearly independent subspaces of the representation, 
+they are not necessarily statistically independent. 
+Two elements may encode distinct representational dimensions while 
+exhibiting correlated outputs when they observe the same underlying 
+physical process, e.g., thermal and visible-spectrum cameras. 
+Conversely, elements such as GPS and vision may be both 
+representationally independent and largely uncorrelated in practice. 
 
 \subsection{Homogenized Actions}
+
 The action spaces of agents can be unified using the same 
 construction and assumptions described for observations. 
 
@@ -582,446 +475,319 @@ of all individual agent action spaces:
 This spanning set provides a shared representational basis for 
 policy outputs across heterogeneous agents.
 
-For single-dimensional action domains such as 
-continuous, discrete, binary, or multi-binary spaces;
-the shared output can be specialized for each agent through bounding or masking operations. 
-In the case of composite or multi-discrete action spaces, 
-similar constraints may be applied independently to each action element. 
-However, when dependencies exist among these elements, 
-such non-independent constraints may further increase the suboptimality of the resulting policy.
-
+A policy over the spanning action space \(A^\prime\) 
+must be mapped to an agent-feasible action in \(A_i\).
+For single-dimensional action domains, clipping continuous actions
+or masking invalid logits allow for selecting feasible actions.
+% 
+For composite or multi-discrete actions, a simple element-wise 
+mask is often insufficient: dependencies between action components 
+mean that modifying one dimension (e.g., clipping a steering command) 
+can change which joint action is optimal. 
+In such cases, mapping the homogenized action to an agent-feasible 
+action amounts to projecting onto a constrained joint action set, 
+which may only approximate the action that would have been 
+chosen had the policy been trained directly in \(A_i\).
 
 \subsection{Implicit Indication}
-The implicit-indication mechanism serves as the bridge between
+
+Implicit indication provides the link between 
 heterogeneous agents and a shared policy function.
-Rather than embedding a learned identity vector or categorical index within the policy input,
-each agent is characterized implicitly by its observable structure.
-In this framework, the policy network remains agnostic to agent identity and
-instead infers relevant distinctions through the pattern of active channels in the input.
+Instead of embedding learned identity vectors or categorical indices, 
+each agent is characterized implicitly through its observable structure.
+The policy network therefore remains agnostic to agent identity and infers 
+relevant distinctions directly from the pattern of active channels in the input.
+% 
+This construction yields a simple invariance property: agents that share the 
+same pattern of active channels are functionally equivalent under the policy, 
+while agents with different masks are distinguished automatically through 
+their observable structure. The policy therefore conditions only on which 
+subspaces are populated, not on any arbitrary agent identifiers.
 
-Formally, the homogeneity is implicitly represented by a \((C_i,\mathcal{A}_i)\)
-where \(\mathcal{A}_i\) represent's agent \(i\)'s observation and action elements,
-without explicit or arbitrary identifiers.
+Because agent identity is implicit by the set of populated observation elements, 
+the framework naturally supports unseen agent compositions: 
+an agent defined by a previously unobserved subset of elements 
+\(\iota(O_j) = C_j \subseteq C,\) \(j \notin I\)
+can be introduced without changing the policy architecture, 
+provided its observations embed into the same spanning space. 
+This same mechanism yields inherent robustness to sensor dropout, 
+since the temporary loss of a sensor simply produces a different subset \(C_j\), 
+allowing the shared policy to operate without retraining.
+The same principle also yields team-size robustness: 
+adding or removing agents simply changes the set of evaluated inputs 
+without altering the policy architecture, since the policy depends 
+only on the populated observation elements of each individual agent.
 
-This construction ensures that differences among agents arise naturally 
-from their accessible subspaces. Two agents with identical active 
-channels are functionally equivalent under the policy, while agents that differ 
-in their available channels are automatically distinguished by their mask pattern. 
-The policy therefore learns mappings conditioned on observable structure, 
-rather than on arbitrary agent labels.
+A natural limitation of this approach is that it does not introduce behavioral 
+diversity among agents that share the same set of observation elements: 
+for agents \(i,j \in I\), \(i\neq j\), if \(C_i = C_j\), then \(\pi_i = \pi_j\).
+Implicit indication therefore does not model emergent specialization 
+within homogeneous subgroups; rather, it provides a unified representational 
+basis that enables parameter sharing across structurally distinct agents.
 
-
-By decoupling the agent's structural identity from the policy representation, 
-implicit indication preserves input invariance and supports generalization 
-to unseen compositions. New agents can be introduced by specifying 
-novel mask configurations within the same spanning space, 
-enabling flexible team reconfiguration and reuse of shared parameters without retraining.
-
-In this sense, homogenization induces an invariant input domain across agents: each policy operates on the same spanning space, with heterogeneity expressed only through validity masks that delimit each agent’s accessible subset.
-
-A natural limitation of this approach is that it does not by itself facilitate
-emergent or behavioral heterogeneity; rather, it provides a
-unifying representational basis for maximizing shared information across agents.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% #TODO: Provide full derivation?
-% Proof sketches are provided for intuition; full derivations are deferred to the appendix.
 
 \section{Theoretical Results}
 \label{con2:sec:theory}
 
-
-This section establishes conditions under which the homogenization 
-approach preserves representability, ensures invariance properties, 
-and clarifies the role of the coherence assumption. 
-
-
-\subsection{Representability under Disjoint Union}
-
-A key concern is whether a single policy over the homogenized space can
-represent the optimal per-agent policies of the heterogeneous system.
-
-
-
-
-
-
-
-
-By Lemma 1 \cite{terry2020},
-we have that 
-optimal policies
-for heterogeneous agents remain learnable
-even with shared parameters
-when provided with 
-disjoint observation spaces.
-
-Terry et al. accomplish the disjoint
-observation space through the inclusion
-of an \emph{agent indicator} variable.
-
-
-
-
-% Corollary
-
-\(c \in [0,1] \forall c \in C\)
-
-
-
-
-
-
-% #TODO: Revisit lemma 1
-
-% Lemma 1 (Disjoint Union Policy).
-If \(\{{O}_i\}_{i \in I}\) are disjoint, then there exists a policy \(\pi^*\)
-over the disjoint union \(\biguplus{i \in I} \Omega_i\) such that for each agent \(i\),
-the restriction of \(\pi\) to \(\Omega_i\) is equivalent to the agent's optimal policy 
-\(\pi_i\).
-
-% Proof sketch. Construct a union space \Omega^\uplus with an 
-% indicator for the originating subspace. Define \pi^(o) = \pi_i^(o) whenever o \in \Omega_i.
-% Since the subspaces are disjoint, \pi^* reproduces the per-agent policies exactly. \square
-
-% This lemma underpins the homogenization strategy: 
-% if embeddings are injective, the same representability result applies in the homogenized space.
-
-% #TODO: Implicit indication forgoes the possibility of divergent behavior for like agents
-% ⸻
-
-% 5.2 Representability with Masked Homogenization
-
-% We extend the argument to the case where agent observations are embedded into a shared spanning space O with masks.
-
-% Theorem 1 (Masked Representability).
-% Let each embedding E_i: \Omega_i \to O map agent i’s observation into the homogenized space, paired with a mask m_i \in \{0,1\}^{|\mathcal{C}|}. If each (o, m_i) uniquely identifies o \in \Omega_i, then there exists a policy \pi^ over O \times \{0,1\}^{|\mathcal{C}|} whose restriction to (o, m_i) is equivalent to the agent’s optimal policy \pi_i^.
-
-% Proof sketch. The embedding induces a bijection between \Omega_i and the masked subset of O. 
-% Construct \pi^(o, m_i) = \pi_i^(E_i^{-1}(o)). 
-% Since masks uniquely identify feasible subspaces, the homogenized policy recovers each optimal per-agent policy. \square
-
-% This result shows that homogenization does not sacrifice representability, provided embeddings are coherent.
-
-% ⸻
-
-\subsection{Permutation Invariance}
-
-% Because homogenization introduces channel-wise encoders and aggregation, 
-% we can establish invariance guarantees.
-
-% Proposition 1 (Permutation Invariance).
-% If encoded channel representations are aggregated by a commutative operation 
-% (e.g., sum, mean, or attention with symmetric keys), then \pi_\theta is invariant to permutations of active channels within an agent’s mask.
-
-% Proof sketch. Let \{z_c\} be encoded features. A commutative aggregation f(\{z_c\}) satisfies f(\{z_{c_1}, z_{c_2}, \ldots\}) = f(\{z_{c_{\pi(1)}}, z_{c_{\pi(2)}}, \ldots\}) for any permutation \pi. Since the downstream policy depends only on f(\{z_c\}), outputs are permutation-invariant. \square
-
-% This property ensures that policies are robust to channel ordering and supports scalability across varying team compositions.
-
-% ⸻
-
-% 5.4 Robustness to Dropout
-
-% The homogenized representation also supports resilience to missing inputs.
-
-% Corollary 1 (Dropout Robustness).
-% Suppose aggregation is mean pooling. If a channel c is removed (i.e., m_{ic} is set to 0), the resulting embedding differs from the full-channel embedding by at most \frac{1}{|\mathcal{C}_i|}\|z_c\|.
-
-% Thus, performance degrades smoothly with the loss of channels, rather than catastrophically.
-
-% ⸻
-
-% 5.5 The Coherence Assumption
-
-% The preceding results rely on an implicit assumption: that embeddings into the homogenized space preserve the semantics of the task.
-
-% Definition 1 (Coherence).
-% A homogenized embedding is coherent if, for each agent i, the mapping E_i:\Omega_i \to O together with mask m_i is a sufficient statistic for decision making in the POSG.
-
-% Intuitively, coherence requires that the spanning space separates distinct information without aliasing. Failure of coherence arises when two channels overlap in semantics (e.g., redundant encodings) or when masks do not adequately distinguish agent types. In such cases, the homogenized policy may not faithfully reproduce optimal behavior.
-
-% ⸻
-
-% 5.6 Summary
-
-% These results establish that homogenization preserves representability (Theorem 1), provides invariance guarantees (Proposition 1), and introduces robustness to missing inputs (Corollary 1). The primary limitation is the coherence assumption, which determines whether homogenization is valid in a given domain. This assumption must therefore be evaluated by practitioners when applying the method.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\section{Methodology}
-\label{con2:sec:methodology}
-
-
-
-\subsection{Objective}
-
-% #TODO: Add appendix reference to full environment description
-% \cref{con2:app:env_model}
-% #TODO: This appears to be experiment objective, not env objective
-The objective is to train a shared policy
-\[\pi_\theta : O \times \{0,1\}^{|\mathcal{C}|} \to \Delta(A^\mathrm{span}),\]
-that maximizes expected return under the \gls{posg} dynamics. 
-By construction, \(\pi_\theta\) is input-invariant: 
-it operates over the same universal domain for all agents, 
-with heterogeneity resolved via masks. Robustness is assessed along three axes:
-%     1. Channel robustness - resilience to missing or degraded observation channels.
-%     2. Team robustness - stability under changes in the number of agents.
-%     3. Composition robustness - adaptability to shifts in the distribution of agent types.
-
-This problem formulation provides the foundation for the homogenization 
-method and subsequent theoretical analysis.
-
-\subsection{Input-Invariant Policy Class}
-
-The homogenized policy is defined as
+This section formalizes the conditions under which homogenization 
+supports valid shared policies across heterogeneous agents.
+% We show that representability is preserved when agent observations are embedded into a common 
+% spanning space with consistent element correspondence, derive the invariance properties that arise 
+% from channel-wise encoding and commutative aggregation, and examine the assumptions required for 
+% the homogenized embedding to remain decision-sufficient for control. These results clarify when an 
+% input-invariant policy can faithfully reproduce or approximate the optimal behaviors of structurally 
+% distinct agents.
+
+
+\subsection{Representability}
+
+A unified policy over the homogenized domain is most useful if it remains expressive 
+enough to reproduce the optimal policies associated with each heterogeneous agent. 
+Under implicit indication, each agent type is characterized by its subset of 
+observation elements \(C_i \subseteq C\), and its observations occupy the 
+embedded region \(E_{C_i}(O_{C_i}) \subseteq O^\prime\). 
+Because the active-element pattern is always recoverable via \(\iota(E_{C_i}(o)) = C_i\), 
+the homogenized space preserves the structural distinctions among agents: 
+each embedded observation carries both its value and the information 
+needed to determine which observation elements generated it. 
+These properties ensure that agents with different \(C_i\) remain 
+distinguishable in the shared domain, enabling a unified policy to 
+condition correctly on heterogeneous observation structures.
+
+With this structure in place, we can now show that this method of 
+homogenization preserves representability at the level of agent types: 
+for any collection of optimal per-agent-type policies, there exists 
+a single policy over \(O^\prime\) whose restriction to each region 
+\(E_{C^\prime}(O_{C^\prime})\) matches the corresponding optimal 
+policy over \(O_{C^\prime}\).
+
+\begin{lemma}[Representability under injective, disjoint embeddings]
+Let \(O'\) be a domain, and let \(\{O_j\}_{j \in J}\) be a family of sets with
+embeddings \(E_j : O_j \to O'\) such that
+\begin{enumerate}[label=(\roman*), nosep]
+    \item each \(E_j\) is injective; and
+    \item the images are pairwise disjoint:
+    \[
+        E_j(O_j) \cap E_k(O_k) = \emptyset
+        \quad\text{whenever } j \neq k.
+    \]
+\end{enumerate}
+Then for any collection of policies
+\(\{\pi^*_j : O_j \to \Delta(A_j)\}_{j\in J}\),
+there exists a single policy
+\(\pi^* : O' \to \Delta(A')\)
+whose restriction to each image \(E_j(O_j)\) matches \(\pi^\star_j\):
 \[
-    \pi_\theta: O \times \{0,1\}^{|\mathcal{C}|} \to \Delta(A^\mathrm{span}),
+    \pi^*(E_j(o)) = \pi^*_j(o)
+    \quad\text{for all } j\in J,\; o \in O_j.
 \]
-mapping embedded observations into distributions over the spanning action set.
-In practice, the network comprises three parts:
-% #TODO: Revise the network description
-% 	1.	Channel encoders: Each O_c is passed through a channel-specific encoder shared across all agents.
-% 	2.	Aggregation: Encoded channels are pooled by a commutative operation (e.g., sum, mean, attention), ensuring invariance to the ordering of active channels.
-% 	3.	Action head with masking: The pooled embedding is mapped to action logits over A^\mathrm{span}, with validity masks applied to exclude infeasible actions.
+\end{lemma}
 
-This design enforces permutation invariance over channels and provides a 
-consistent mapping from heterogeneous inputs to a shared action domain. 
-The use of masks ensures that structural heterogeneity is preserved without 
-requiring per-agent specialization.
+In our homogenization setting, this lemma applies directly. 
+Each agent type corresponds to a subset of observation elements \(C_i\), 
+and the embedding \(E_{C_i}\) places its observations into the homogenized space 
+\(O'\) by activating only the coordinates associated with those elements. 
+Because no two distinct subsets \(C_i\) produce overlapping embeddings, 
+the images \(E_{C_i}(O_{C_i})\) form a disjoint family within \(O'\). 
+Injectivity follows from the fact that each observation element is 
+mapped to a unique coordinate block. 
+Consequently, any collection of per-type optimal policies can be 
+represented by a single unified policy defined over the homogenized space, 
+whose behavior restricted to each embedded region matches the corresponding 
+per-type policy. This establishes that implicit indication preserves representability 
+across heterogeneous agents and provides the foundation for using a 
+single policy network without explicit agent identifiers.
 
-\subsection{Training}
-
-The training follows the \gls{ctde} paradigm. 
-All agents share a common policy network parameterized by \(\theta\).
-The specific parameter values are provided in~\cref{app:hyperparameters}.
-
-A centralized critic, such as that used in \gls{mappo}, is employed for variance reduction, 
-though the method is agnostic to the choice of critic. %% # What?
-Training loss functions incorporate the validity masks to ensure that gradients 
-are computed only with respect to feasible observations and actions.
+% Consider theorem as "Any partitioned representation is representative?"
 
 
-\subsection{Practical Considerations}
+\section{Experiments}
+\label{con2:sec:experiments}
 
-% #TODO: Revise these considerations. They are close, but warrant more precise descriptions
-The homogenization framework introduces several implementation details:
-\begin{itemize}
-    \item Initialization: Care must be taken to prevent masked channels from destabilizing
-        training. Channel encoders should be initialized consistently across agents.
-    \item Partial observability: Sensor degradation or dropout can be 
-        modeled directly by modifying the mask \(m_i\) at inference time, without retraining.
-    \item Composite actions: Hybrid discrete/continuous spaces can be accommodated by 
-        treating each type as a separate unit dimension in \(A^\prime\).
-    \item Scalability: The dimensionality of \(O^\prime\) and \(A^\prime\) grows with 
-        the number of distinct observation and action elements.
-        In practice, this growth is modest in structured domains,
-        but it highlights the importance of evaluating the coherence of 
-        the spanning construction.
-\end{itemize}
+\subsection{Experimental Objectives}
 
+Our empirical evaluation examines whether implicit indication 
+realizes the capabilities predicted by our theoretical analysis 
+and overcomes the limitations of existing \gls{harl} approaches. 
+In particular, we evaluate whether a single parameter-sharing policy can:
+\begin{enumerate}
+    \item Learn effectively across agents with distinct observation-element subsets.
+    \item Generalize to novel combinations of observation structures not encountered during training.
+    \item Remain robust to structured perturbations such as sensor loss, sensor gain,
+          and changes in team composition.
+\end{enumerate}
 
----
+\subsection{Environment}
+% #TODO: Add image of environment
+%
+To support controlled manipulation of observation elements, we use a custom
+extension of the MiniGrid environment that enables multiple agents, 
+$n$-dimensional spatial layouts, and selectively visible entities whose
+properties determine which observation elements they appear on.  
+The task is a variant of level-based foraging in which agents 
+must coordinate to collect objects while navigating obstacles, but 
+objects and obstacles may be visible only on specific observation channels.
+This design provides fine-grained control over heterogeneous observability 
+while keeping the underlying task simple.  
+Full environment details are provided in \cref{con2:app:env_model}.
 
-6. Experimental Setup
-
-6.1 Environments
-	•	n-D gridworld family with configurable sensor channels (heterogeneous \(\mathcal{C}_i\)) and action heterogeneity; brief task description; pointers to appendix for details.
-6.2 Baselines
-	•	MAPPO (shared critic), IPPO (optional), ablation: parameter sharing + explicit ID (Terry-style) on matched encoders.
-6.3 Architectures
-	•	Shared encoder with channel-wise modules + pooling; masked action heads; critic variants.
-6.4 Protocols
-	•	Training budgets; seeds; eval regimes: (i) in-distribution, (ii) sensor dropout, (iii) team-size perturbation (± agents), (iv) composition shift (new \(\mathcal{C}_i\) mixes).
-6.5 Metrics
-	•	Reward vs agent-steps (your preferred cost metric), convergence sample-efficiency, robustness deltas, RAM/throughput snapshots.
-6.6 Implementation details
-	•	Framework (RLlib or equivalent), hyperparam ranges, masking specifics; reproducibility hooks (seeds, versions).
+\subsection{Training Setup}
 
 
+Because prior explicit-indication methods cannot operate directly on
+heterogeneous input structures, we compare implicit indication against a 
+heterogeneous-agent baseline, \gls{happo}, in which each agent type is trained
+with its own dedicated policy. This baseline provides strong representational
+flexibility without enforcing shared parameters beyond a shared critic and
+therefore serves as an appropriate reference point for evaluating
+representability and robustness.
 
+To ensure a controlled comparison, both implicit-indication and \gls{happo}
+policies use identical neural-network architectures and matched hyperparameters, 
+with all settings listed in \cref{con2:app:hyperparameters}. 
+The two implementations used networks of identical size.
+This choice ensures that any performance differences arise from 
+the representational method rather than model capacity.
+Each model is trained with a team of four agents for up to 500M steps; 
+during hyperparameter exploration, 
+longer training horizons did not meaningfully improve performance on the task.
+All reported results aggregate performance across 30 independent training runs.  
 
-% All configurations are evaluated across multiple independent 
-% training runs to account for stochastic variability.
-% Learning efficiency is defined in terms of convergence rate 
-% relative to total agent-training steps and computational cost.
+All experiments were conducted on a compute cluster using a Windows Subsystem 
+for Linux (WSL) virtual machine. Each training job was allocated 32 CPU cores on an 
+Intel(R) Xeon(R) E5-2660 v3 @ 2.60GHz processor and 128 GB of RAM. No GPUs were used.
 
+For each method, we train four compositions of teams that differ in the
+structure of their observation-element coverage:
+\begin{enumerate}
+    \item \emph{Full visibility}: \(C_i = C\) for all \(i \in I\).
+    \item \emph{Intersecting span}: \(\cup_{i\in I} C_i = C\) and 
+        \(C_i \cap C_j \neq \emptyset\) for all \(i,j\in I\).
+    \item \emph{Disjoint span}: \(\cup_{i\in I} C_i = C\) and 
+        \(C_i \cap C_j = \emptyset\) for all  \(i,j\in I\) where \(i\neq j\).
+    \item \emph{Incomplete coverage}: \(\exists c \in C\) such that 
+        \(c\notin \cup_{i\in I} C_i\)
+\end{enumerate}
 
-- Approach
-    - Implicit agent indication
-        - Allows for complete enumeration of agent types
-- Control
-    - MAPPO (with shared critic)
-        - Explain why using shared critic
-- Model/Environment
-    - nD Grid world
-    - Differ to appendix for further description for now, pending fully separate paper
+\subsection{Evaluation}
 
-% % #TODO : Make more terse (in favor of exporting)
-% \subsection{Environment Model}
+To assess robustness and generalization, we evaluate the trained policies
+under eight test conditions:
+\begin{enumerate}
+    \item Unmodified Team.
+    \item Loss of an agent.
+    \item Sensor degradation, in which an agent loses access to an element \(c \in C_i\).
+    \item Sensor improvement, in which an agent gains a new observation element.
+    \item Reduced coverage, in which the entire team loses access to a specific element.
+    \item Increased coverage, in which every agent gains \(c\in C\) if possible.
+    \item Shuffled assignments, in which agents are randomly permuted across policy outputs.
+    \item \emph{Novel spanning set}, in which the team is instantiated with
+        observation-element combinations not seen during training.
+\end{enumerate}
+These conditions probe representability, stability, and zero-shot compositional
+generalization in a unified manner.
 
-
-% % #TODO : Update Environment and agent design
-% \subsection{Environment and Agent Design}
-
-% To evaluate agents with overlapping but non-identical observation capabilities, 
-% we design a custom environment derived from the \gls{mpe}. 
-% Each agent is equipped with a subset of sensor types, 
-% and each sensor type defines a linearly independent subspace of the 
-% full observation space. An agent's full observation vector is constructed by 
-% concatenating the outputs of its sensors, and overlapping sensor types across 
-% agents induce structured correlations.
-
-% The agents are heterogeneous in both their observation and action spaces. 
-% The union of all agent sensor types forms a global spanning observation space. 
-% Likewise, the union of all agent action spaces defines a spanning action set, 
-% from which agent-specific valid actions are masked during inference.
-
-
-% \subsection{Perturbation Evaluation}
-
-% To assess runtime robustness, trained agents are tested under two types of perturbations:
-
-% \begin{itemize}
-%     \item \textbf{Sensor degradation}: Agents experience random dropout 
-%         of one or more observation channels during execution. 
-%         The masking vector is updated accordingly to simulate partial observability.
-%     \item \textbf{Team-size changes}: Agents are removed or added at test 
-%         time without retraining. Policies are evaluated for stability and 
-%         reward degradation in the new configuration.
-% \end{itemize}
-
-% Each condition is evaluated across multiple trials. 
-% Policy stability is measured by the variance and degradation in episode rewards, 
-% and recovery is assessed where applicable. 
-% Final comparisons are made between the two architectures across all perturbation conditions.
-
-
-Training \& Evaluation. 
-We compare a heterogeneous baseline (\gls{happo}), 
-a parameter-sharing baseline with explicit agent indication (MAPPO-share), 
-and our homogenization method (shared actor over a masked spanning space with a centralized critic). 
-Experiments vary team size \(N=4\) 
-and four heterogeneity regimes
-complete observation space,
-overlap, intersecting, and disjoint-heavy—across 10 random seeds per condition. 
-Training proceeds for a fixed budget of agent-steps (up to 500M, 5e8), 
-and evaluation occurs every 100k agent-steps on held-out scenarios: 
-in-distribution, sensor-dropout (removing 20-40\% of active channels), 
-team-size shifts \((N\rightarrow N\pm)\), and composition shifts 
-(resampled channel sets) including addition of cold-start agent types 
-formed from unions of seen channels. We report learning efficiency 
-via area-under-curve of return vs agent-steps, final return at budget, 
-and robustness deltas relative to in-distribution performance. 
-Statistical comparisons use Welch's t-tests with FDR control and Hedges' g effect sizes.
-
-
-
----
-
-7. Results
-
-7.1 Learning efficiency
-	•	Convergence curves (mean ± CI) vs agent-steps; comparisons to MAPPO/IPPO; any RAM/runtime notes.
-7.2 Robustness
-	•	Sensor-dropout performance; ablations on which channels are removed; stability variance.
-7.3 Team-size/Composition transfer
-	•	Add/remove agents at test time; policy degradation and recovery behaviors.
-7.4 Ablations
-	•	Remove masks → performance drop; replace mask with explicit ID only → effect; different pooling ops; equivariant vs plain MLP.
-7.5 Summary of trade-offs
-	•	When homogenization wins/loses; interaction with coherence.
+For all conditions, the primary evaluation metric is mean episodic return, 
+averaged over rollouts, which reflects overall task performance.
+All environment modifications and training code used in these experiments are included 
+in the public repository referenced in the introduction to support full reproducibility.
 
 
 \section{Results}
 \label{con2:sec:results}
 
+The first comparison examines whether implicit indication imposes any additional
+computational burden relative to the heterogeneous-agent baseline. At every
+training step, we recorded CPU utilization, RAM utilization, and wall-clock time
+per environment step for both methods. Because these measurements were not
+expected to follow a normal distribution, we evaluated distributional
+differences using a Mann-Whitney U test, with the null hypothesis that both
+samples were drawn from the same distribution. We found no statistically
+significant differences in any of the three metrics: RAM utilization (p = 0.161),
+CPU utilization (p = 0.687), and time per training step (p > 0.05 across all
+conditions). Accordingly, we do not reject the null hypothesis and conclude that,
+under our experimental conditions, implicit indication does not introduce any
+measurable increase or decrease in computational resource usage relative to the
+baseline.
 
+\subsection{Training}
 
+The training curves for all conditions are provided in Appendix \ref{con2:app:training_curve}. 
+Across all four team-composition settings, the two approaches exhibited remarkably similar 
+learning dynamics: convergence rates, variance across seeds, and asymptotic returns were 
+nearly indistinguishable. The most notable difference lies in model size; 
+as the implicit method has a storage footprint \(1/|I|\) that of this baseline, 
+which maintains a separate policy per agent. 
 
-- Training
-    - did not have significant benefit on way or another
-    - slight improvement in RAM usage
-        - Insert table of diffs
+\subsection{Evaluation}
+\label{con2:app:evaluations}
 
-- Evaluation
-    - (Some combos of training v eval are redundant or unnecessary)
-    - Overall Trends:
-    - Complete Conf:
-        - Greater robustness
-            - From greater use of information? vs mappo
-    - Intersecting:
-    - Disjoint:
-        - 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Data/performance_delta.png}
+    \caption{Comparison between methods trained with different observation-element coverage.}
+    \label{con2:fig:eval_delta}
+\end{figure}
 
+To compare generalization performance across evaluation conditions, 
+we selected the top 15 policies out of 30 for each condition. 
+This reflects the common practice of training multiple models and evaluating 
+the superlative subset, balancing removal of underperforming runs with avoidance 
+of excessive variance.
+A summary of performance over evaluations is presented in 
+Appendix~\ref{con2:app:evaluations}. \Cref{con2:fig:eval_delta} 
+presents a heatmap summarizing the performance 
+differences between implicit indication and the \gls{happo} baseline. 
+For these evaluations, evaluation episodes were longer than individual training 
+episodes.
 
----
+Across most evaluation conditions, implicit indication showed modest but 
+consistent improvements relative to the baseline, 
+particularly in regimes involving altered observability or changes in team composition. 
+The most pronounced gains appeared in the \emph{complete-visibility} training case; 
+agents trained in this condition share identical observation-element coverage,
+resulting in implicit-indication's equivalence to parameter sharing over a 
+homogeneous team. 
 
-8. Discussion
-•	Practical guidance: when the coherence assumption is plausible; how to design channels; pitfalls (aliasing, mis-specified spans).
-•	Relation to parameter sharing: complementary tools; when to prefer which.
-•	Limitations: emergent behavioral heterogeneity not directly modeled; partial support for heterogeneous action types; potential masking overhead.
-
-
-
----
+The resulting performance advantage therefore reflects more efficient 
+use of shared experience rather than differences in representational capacity. 
+A difference that becomes most pronounced in the case of agent loss,
+where \gls{happo} allowed for emergent specialization, and 
+implicit indication did not.
 
 \section{Conclusion}
 \label{con2:sec:conclusion}
 
-- Benefits
-    - Allowing better than naive novel agents
-    - Improved stability at deployment
-- Limitations
-    - Ours does not currently support emergent (behavioral) heterogeneity
-    - This can be introduced as needed using a similar (arbitrary distinguishing variable)
-- Future work
-    - (While the current focus is on observation-space heterogeneity, 
-    additional forms such as action-space heterogeneity may be considered in future extensions, 
-    pending environment support.)
+This paper introduced homogenization with implicit indication as a
+representation-based approach for enabling shared policies across
+heterogeneous agents. By embedding agent observations into a unified
+spanning space and allowing the policy to condition implicitly on active
+observation elements, the method avoids explicit identity encodings and
+removes the need for per-type policy networks. We formalized conditions
+under which this embedding preserves representability and clarified the
+role of semantic alignment among observation elements.
 
-    
-% \section{}
-% \label{con2:sec:}
+Empirically, implicit indication matched the performance of a
+\gls{happo} baseline during training, with no detectable
+differences in computational resource usage. 
+Despite its smaller model footprint, it showed comparable 
+or improved robustness under sensor loss, sensor gain,
+and loss of member agents. These results suggest that a
+single homogenized policy can generalize effectively across 
+structured heterogeneity and provide greater deployment 
+stability than per-configuration training.
+
+Future extensions include handling richer action-space heterogeneity,
+improvements in information sharing and communication between agents 
+reflect differences in composition and information access,
+and exploring how behavioral heterogeneity might be facilitated
+through some method of accounting for the total capabilities of 
+a group of agents. 
+Taken together, our
+results indicate that homogenization offers a simple and practical tool
+for enabling shared learning across structurally diverse agents.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %           Other JAIR Items
@@ -1038,7 +804,7 @@ Statistical comparisons use Welch's t-tests with FDR control and Hedges' g effec
 \appendix
 
 \section{Hyperparameters}
-\label{app:hyperparameters}
+\label{con2:app:hyperparameters}
 
 For transparency and reproducibility, we report both 
 (i) the final hyperparameters selected for our experiments, and 
@@ -1134,137 +900,167 @@ Optuna-search \cite{akiba2019}.
         \bottomrule
     \end{tabular}
 \end{table}
+\clearpage
+
+\section{Training Curves}
+\label{con2:app:training_curve}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Data/training_curves.png}
+    \caption{Training curves representing mean \(\pm\) standard deviation for each 
+        policy configuration and visibility regime.}
+\end{figure}
+\clearpage
+
+\section{Evaluation Comparison}
+\label{con2:app:evaluations}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Data/eval_scale.png}
+    \caption{Comparison between methods trained with different observation-element coverage.}
+\end{figure}
+\clearpage
 
 \section{Environment Model}
 \label{con2:app:env_model}
 
-% We model the environment following the structure outlined by Powell~\cite{powell2022}, 
-% consisting of the state, decision/action, exogenous information, transition function, and 
-% objective function.
+We model the environment using a structure consisting of the state, 
+decision/action, exogenous information, transition function, and 
+objective function~\cite{powell2022}.
 
-% \paragraph{State.} 
-% Let \(T \subset \mathbb{N}\) be the set of decision epochs, 
-% and define entities \(E := (I, J, K, L)\), where 
-% \(i \in I\) are agents, 
-% \(j \in J\) are objectives, 
-% \(k \in K\) are hazards, and 
-% \(l \in L\) are obstacles. 
-% At each time \(t \in T\), the joint state \(s\in S\) is:
-% \[
-%     s_t := \{s_{te} \mid e \in E\}, \quad s_t \in S
-% \]
-% Where the marginal state for agents \(i \in I\), 
-% includes both location and orientation:
-% \[
-%     s_{ti} := (d_{ti}, \theta_{ti})
-% \]
-% and the non-agent entities \(e \in (J, K, L)\) are represented by location alone:
-% \[
-%     s_{te} := (d_{te})
-% \]
-% For spatial dimensions \(N \in \mathbb{N}\), 
-% let \(D^{(n)} \in \mathbb{F}\) be the domain of dimension \(n\).
-% Then, we define each entity \(e\)'s location as a tuple:
-% \[
-%     d_{te} := \left(d_{te}^{(1)},\ldots,d_{te}^{(N)}\right) \in \prod_{n=1}^N D_e^{(n)},
-% \]
-% and orientation is represented by the tuple:
-% \[
-%     \theta_{ti} := \left(\theta_{ti}^{(1,2)},\ldots,\theta_{ti}^{(N-1,N)}\right)
-%     \in \prod_{n=1}^{N-1} \Theta_i^{(n,n+1)}
-% \]
+\paragraph{State.} 
+Let \(T \subset \mathbb{N}\) be the set of decision epochs, 
+and define entities \(E := I\cup J\cup K\cup L\), where 
+\(i \in I\) are agents, 
+\(j \in J\) are objectives, 
+\(k \in K\) are hazards, and 
+\(l \in L\) are obstacles. 
+At each time \(t \in T\), the joint state \(s\in S\) is:
+\[
+    s_t := \{s_{te} \mid e \in E\}, \quad s_t \in S
+\]
+Where the marginal state for agents \(i \in I\), 
+includes both location and orientation:
+\[
+    s_{ti} := (d_{ti}, \theta_{ti})
+\]
+and the non-agent entities \(e \in (J, K, L)\) are represented by location alone:
+\[
+    s_{te} := (d_{te})
+\]
+For spatial dimensions \(N \in \mathbb{N}\), 
+let \(D^{(n)} \in \mathbb{F}\) be the domain of dimension \(n\).
+Then, we define each entity \(e\)'s location as a tuple:
+\[
+    d_{te} := \left(d_{te}^{(1)},\ldots,d_{te}^{(N)}\right) \in \prod_{n=1}^N D_e^{(n)},
+\]
+and orientation is represented by the tuple:
+\[
+    \theta_{ti} := \left(\theta_{ti}^{(1,2)},\ldots,\theta_{ti}^{(N-1,N)}\right)
+    \in \prod_{n=1}^{N-1} \Theta_i^{(n,n+1)}
+\]
 
-% \paragraph{Observation Model.}
-% Let \({C} := \{c_1, \ldots, c_m\}\) denote a set of abstract sensor channels.
-% Each sensor channel \(c \in {C}\) corresponds to a linearly 
-% independent observation subspace.
+\paragraph{Observation Model.}
+Let \({C} := \{c_1, \ldots, c_m\}\) denote a set of abstract sensor channels.
+Each sensor channel \(c \in {C}\) corresponds to a linearly 
+independent observation subspace.
 
-% For each entity visibility in each channel must be defined,
-% as a trait this may be referred to as \(e^{(c)} \in \{\text{True, False}\}\).
-% It may be encoded in the state as:
-% \[
-% s_{tec} = 
-% \begin{cases}
-%     1& \text{if \(e\) is visible in \(c\)} \\ 
-%     0& \text{if \(e\) is not visible in \(c\)}
-% \end{cases} 
-% \quad\forall t\in T, e\in E, c\in C.
-% \]
-% Thus the marginal states becomes
-% \[s_{ti} :(c_{ti},d_{ti},\theta_{ti})\]
-% for agents, and
-% \[s_{te} :(c_{te},d_{te})\]
-% for all other entities.
+For each entity visibility in each channel must be defined,
+as a trait this may be referred to as \(e^{(c)} \in \{\text{True, False}\}\).
+It may be encoded in the state as:
+\[
+s_{tec} = 
+\begin{cases}
+    1& \text{if \(e\) is visible in \(c\)} \\ 
+    0& \text{if \(e\) is not visible in \(c\)}
+\end{cases} 
+\quad\forall t\in T, e\in E, c\in C.
+\]
+Thus the marginal states becomes
+\[s_{ti} :(c_{ti},d_{ti},\theta_{ti})\]
+for agents, and
+\[s_{te} :(c_{te},d_{te})\]
+for all other entities.
 
-% Each agent \(i \in I\) is assigned a subset of sensor channels 
-% \({C}_i \subseteq {C}\), 
-% with their observation defined as the concatenation of the outputs 
-% from the corresponding subspaces:
-% Note that an agent's ability to perceive an entity within a given 
-% subspace may be limited by spatial range, meaning each agent may 
-% only observe a portion of the environment within each active channel.
-% \[
-%     o_{ti} := \bigoplus_{c \in {C}_i} o_{tic}
-% \]
-% where \(o_{tic}\) is agent \(i\)'s observation of channel \(c\) at time \(t\), 
-% and \(\oplus\) denotes concatenation over the ordered tuple of subspaces.
+Each agent \(i \in I\) is assigned a subset of sensor channels 
+\({C}_i \subseteq {C}\), 
+with their observation defined as the concatenation of the outputs 
+from the corresponding subspaces:
+Note that an agent's ability to perceive an entity within a given 
+subspace may be limited by spatial range, meaning each agent may 
+only observe a portion of the environment within each active channel.
+\[
+    o_{ti} := \bigoplus_{c \in {C}_i} o_{tic}
+\]
+where \(o_{tic}\) is agent \(i\)'s observation of channel \(c\) at time \(t\), 
+and \(\oplus\) denotes concatenation over the ordered tuple of subspaces.
 
-% The global observation space \(O\) is the Cartesian product of all channel subspaces:
-% \[
-%     O := \prod_{c \in {C}} O_c
-% \]
-% and each agent's observation is a masked subset of this space.
-% During policy training and inference, a binary mask vector \(m_i \in \{0,1\}^{|\mathcal{C}|}\) 
-% is applied to indicate which subspaces are active for agent \(i\), 
-% allowing a shared network to condition on heterogeneous observations without assuming symmetry.
-
-
-% \paragraph{Action Space.} 
-% The joint action \(a \in A\) consists of marginal agent actions:
-% \[
-%     a := (a_1, \ldots, a_{|I|}) \in A := \prod_{i \in I} A_i
-% \]
-% Each agent's action at time \(t\) is a tuple:
-% \[
-%     a_{ti} := (a_{ti}^\text{interact}, a_{ti}^\text{move}, \Delta\theta_{ti})
-% \]
-% where:
-% \begin{itemize}
-%     \item \(a_{ti}^\text{interact} \in \{0,1\}\) toggles interaction,
-%     \item \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\) denotes movement magnitude,
-%     \item \(\Delta\theta_{ti} \in \prod_{n=1}^{N-1} \Delta\Theta_i^{(n,n+1)}\) encodes orientation adjustments.
-% \end{itemize}
-
-% % \paragraph{Exogenous Information.} 
-% % Agents observe a partially observable state with complete reward knowledge. 
-% % Probabilistic channel observability is future work.
-
-% \paragraph{Transition Function.} 
-% Deterministic and synchronous:
-% \[
-%     s_{t+1} = \mathcal{T}(s_t, a_t) \quad \text{or} \quad \mathcal{T}(a_t \mid s_t) = s_{t+1}.
-% \]
-% Provided that the actions chosen by the agents are valid, they are executed.
-
-% \paragraph{Objective Function.} 
-% The cumulative reward is defined as:
-% \[
-%     \max \sum_{t \in T} \left[
-%         \sum_{i \in I, j \in J} r_j \cdot \mathbb{I}[\Xi]
-%         - \sum_{i \in I} r_i \cdot \mathbb{I}[a_{ti}^\text{interact} = 1]
-%         - \sum_{i \in I, k \in K} r_k \cdot \mathbb{I}[\|s_{ti} - s_{tk}\|_\infty \leq k^\text{range}]
-%     \right]
-% \]
-% where:
-% \begin{itemize}
-%     \item \(r_j \in \mathbb{R}_{>0}\) is the reward for collecting objective \(j \in J\),
-%     \item \(\mathbb{I}[\Xi]\) encodes conditions under which \(j\) is valid for collection,
-%     \item \(r_i \in \mathbb{R}_{<0}\) is the cost for agent \(i \in I\) to interact,
-%     \item \(r_k \in \mathbb{R}_{<0}\) is a penalty for agent \(i\) being near hazard \(k \in K\).
-% \end{itemize}
+The global observation space \(O\) is the Cartesian product of all channel subspaces:
+\[
+    O := \prod_{c \in {C}} O_c
+\]
+and each agent's observation is a masked subset of this space.
+During policy training and inference, a binary mask vector \(m_i \in \{0,1\}^{|\mathcal{C}|}\) 
+is applied to indicate which subspaces are active for agent \(i\), 
+allowing a shared network to condition on heterogeneous observations without assuming symmetry.
 
 
-% #TODO: Reproducibility Checklist
+\paragraph{Action Space.} 
+The joint action \(a \in A\) consists of marginal agent actions:
+\[
+    a := (a_1, \ldots, a_{|I|}) \in A := \prod_{i \in I} A_i
+\]
+Each agent's action at time \(t\) is a tuple:
+\[
+    a_{ti} := (a_{ti}^\text{interact}, a_{ti}^\text{move}, \Delta\theta_{ti})
+\]
+where:
+\begin{itemize}
+    \item \(a_{ti}^\text{interact} \in \{0,1\}\) toggles interaction,
+    \item \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\) denotes movement magnitude,
+    \item \(\Delta\theta_{ti} \in \prod_{n=1}^{N-1} \Delta\Theta_i^{(n,n+1)}\) encodes orientation adjustments.
+\end{itemize}
+
+% \paragraph{Exogenous Information.} 
+% Agents observe a partially observable state with complete reward knowledge. 
+% Probabilistic channel observability is future work.
+
+\paragraph{Transition Function.} 
+Deterministic and synchronous:
+\[
+    s_{t+1} = \mathcal{T}(s_t, a_t) \quad \text{or} \quad \mathcal{T}(a_t \mid s_t) = s_{t+1}.
+\]
+Provided that the actions chosen by the agents are valid, they are executed.
+
+\paragraph{Objective Function.} 
+The cumulative reward is defined as:
+\[
+    \max \sum_{t \in T} \left[
+        \sum_{i \in I, j \in J} r_j \cdot \mathbb{I}[\Xi]
+        - \sum_{i \in I} r_i \cdot \mathbb{I}[a_{ti}^\text{interact} = 1]
+        - \sum_{i \in I, k \in K} r_k \cdot \mathbb{I}[\|s_{ti} - s_{tk}\|_\infty \leq k^\text{range}]
+    \right]
+\]
+where:
+\begin{itemize}
+    \item \(r_j \in \mathbb{R}_{>0}\) is the reward for collecting objective \(j \in J\),
+    \item \(\mathbb{I}[\Xi]\) encodes conditions under which \(j\) is valid for collection e.g.
+    distance threshold, orientation requirement, or agent interaction flag,
+    \item \(r_i \in \mathbb{R}_{<0}\) is the cost for agent \(i \in I\) to interact,
+    \item \(r_k \in \mathbb{R}_{<0}\) is a penalty for agent \(i\) being near hazard \(k \in K\).
+\end{itemize}
+
+\subsection{Implementation}
+The environment model described here reflects the full generality of 
+the underlying framework, which was developed as a configurable 
+multi-agent environment independent of the present study. 
+For the experiments in this paper, we use a restricted instantiation 
+\(M_i \subseteq \mathbb{Z}\) 
+Several components of the formal model—such as general N-dimensional orientation, 
+continuous movement magnitudes, and broad state definitions—are therefore 
+supersets of the configuration actually used in our evaluations.
+
+
 \clearpage
 % [\st{yes} / \st{no}]
 % [\st{yes} / \st{partially} / \st{no} / \st{NA}]
@@ -1277,28 +1073,23 @@ Select the answers that apply to your research -- one per item.
 %\hh{revised for stylistic consistency:}
 \begin{enumerate}
     \item All claims investigated in this work are clearly stated. \newline
-    % #TODO: Explicit summary of claims
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % #OPT: Explicit summary of claims like
+    [\bf{yes} / \st{partially} / \st{no}]
     \item Clear explanations are given how the work reported substantiates the claims. \newline
-    % #TODO: Connect work to claims - intro or methods
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item Limitations or technical assumptions are stated clearly and explicitly. \newline
-    % #TODO: Recheck limits and assumptions
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item Conceptual outlines and/or pseudo-code descriptions of the AI methods introduced 
     in this work are provided, and important implementation details are discussed. \newline
-    % #TODO: Figure out what this is to meant to be
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item 
     Motivation is provided for all design choices, including algorithms, implementation choices, 
     parameters, data sets and experimental protocols beyond metrics. \newline
-    % #TODO: This is an entire-paper concern. Ongoing need.
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
 \end{enumerate}
 
 \subsection*{Articles containing theoretical contributions:}
@@ -1309,36 +1100,31 @@ If yes, please complete the list below.
 
 \begin{enumerate}
     \item All assumptions and restrictions are stated clearly and formally. \newline
-    % #TODO: Recheck theoretical results section
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item All novel claims are stated formally (e.g., in theorem statements). \newline
-    % #TODO: Add theorems
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % #OPT: Add theorem
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item Proofs of all non-trivial claims are provided in sufficient detail
     to permit verification by readers with a reasonable degree of expertise
     (e.g., that expected from a PhD candidate in the same area of AI). \newline
-    % #TODO: Recheck theoretical results section
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item Complex formalism, such as definitions or proofs,
     is motivated and explained clearly. \newline
     %Proof sketches or intuitions are given for complex and/or novel results.
-    % #TODO: Recheck theoretical results section
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item The use of mathematical notation and formalism serves the purpose of 
     enhancing clarity and precision; gratuitous use of mathematical formalism 
     (i.e., use that does not enhance clarity or precision) is avoided. \newline
-    % #TODO: Recheck theoretical results section
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item Appropriate citations are given for all non-trivial
     theoretical tools and techniques. \newline
-    % #TODO: Recheck theoretical results section - Cite lemma 1
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
 \end{enumerate}
 
 \subsection*{Articles reporting on computational experiments:}
@@ -1366,9 +1152,8 @@ If yes, please complete the list below.
     Raw, unaggregated data from all experiments is included in an online appendix 
     or will be made publicly available upon publication of the paper.
     The online appendix follows best practices for long-term accessibility. \newline
-    % #TODO: Add CSV to the git repo?
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item The unaggregated data comes with a license that
     allows free usage for reproducibility purposes. \newline
     % [yes/partially/no]
@@ -1387,26 +1172,22 @@ If yes, please complete the list below.
     including GPU/CPU makes and models; amount of memory (cache and RAM); 
     make and version of operating system; names and versions of relevant software 
     libraries and frameworks. 
-    % #TODO: Add Hardware data
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item 
     The evaluation metrics used in experiments are clearly explained and 
     their choice is explicitly motivated. \newline
-    % #TODO: Explain evaluation metrics
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item 
     The number of algorithm runs used to compute each result is reported. \newline
-    % #TODO: Report run numbers
-    [yes/no]
-    % [\bf{yes} / \st{no}]
+    % [yes/no]
+    [\bf{yes} / \st{no}]
     \item 
     Reported results have not been ``cherry-picked'' by silently ignoring unsuccessful 
     or unsatisfactory experiments. \newline
-    % #TODO: Explain superlatives chosen for analysis
-    [yes/partially/no]
-    % [\bf{yes} / \st{partially} / \st{no}]
+    % [yes/partially/no]
+    [\bf{yes} / \st{partially} / \st{no}]
     \item 
     Analysis of results goes beyond single-dimensional summaries of performance 
     (e.g., average, median) to include measures of variation, confidence, or 
@@ -1427,9 +1208,8 @@ If yes, please complete the list below.
     \item 
     Appropriately chosen statistical hypothesis tests are used to establish 
     statistical significance in the presence of noise effects. \newline
-    % #TODO: Results section stats
-    [yes/partially/no/NA]
-    % [\bf{yes} / \st{partially} / \st{no} / \st{NA}]
+    % [yes/partially/no/NA]
+    [\bf{yes} / \st{partially} / \st{no} / \st{NA}]
 \end{enumerate}
 
 
