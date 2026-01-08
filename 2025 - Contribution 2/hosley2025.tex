@@ -1,9 +1,15 @@
 \documentclass[]{jair}
 % \documentclass[manuscript, screen, review]{jair}
+% --- Paths ---
+\makeatletter
+\def\input@path{{Figures/}}
+\makeatother
+\graphicspath{{Figures}}
+
 \usepackage[capitalize]{cleveref}
-% Fix cref appendix error
-\AddToHook{cmd/appendix/before}{\crefalias{section}{appendix}}
-\usepackage{enumitem} 
+\AddToHook{cmd/appendix/before}{\crefalias{section}{appendix}} % Fixes cref appendix error
+\usepackage{enumitem}
+\usepackage{svg}
 
 %% For JAIR Checklist:
 \usepackage{soul}                   % Strikeout with \st{}
@@ -86,18 +92,16 @@
 \newabbreviation{ctde}{CTDE}{centralized training with decentralized execution}
 \newabbreviation{posg}{POSG}{partially observable stochastic game}
 \newabbreviation{dec-pomdp}{Dec-POMDP}{decentralised partially observable Markov decision process}
-% \newabbreviation{lbf}{LBF}{Level-based Foraging}
-% \newabbreviation{mpe}{MPE}{Multi Particle Environments}
-% \newabbreviation{gnn}{GNN}{graph neural network}
-% \newabbreviation{mlp}{MLP}{mulit-layer perceptron}
-% \newabbreviation{maddpg}{MADDPG}{multi-agent deep-deterministic policy gradient}
-% \newabbreviation{sisl}{SISL}{Stanford Intelligent Systems Laboratory}
-% \newabbreviation{coma}{COMA}{counterfactual multi-agent policy gradients}
-% #TODO: Add the following glossary terms to Diss.
 \newabbreviation{ippo}{IPPO}{independent \gls{ppo}}
 \newabbreviation{hpn}{HPN}{hyper policy network}
 \newabbreviation{mlp}{MLP}{multi-layer perceptron}
 \newabbreviation{pic}{PIC}{permutation-invariant critic}
+% \newabbreviation{lbf}{LBF}{Level-based Foraging}
+% \newabbreviation{mpe}{MPE}{Multi Particle Environments}
+% \newabbreviation{gnn}{GNN}{graph neural network}
+% \newabbreviation{maddpg}{MADDPG}{multi-agent deep-deterministic policy gradient}
+% \newabbreviation{sisl}{SISL}{Stanford Intelligent Systems Laboratory}
+% \newabbreviation{coma}{COMA}{counterfactual multi-agent policy gradients}
 
 % \newglossaryentry{q}{text=q,name=Q,sort=q,type=symbols,category=symbol,
 %     description={Set of state-values or state-value functions.}}
@@ -128,35 +132,42 @@
 
 % Structured Abstract
 \begin{abstract}
-    {\bf Background:} MARL with heterogeneous agents; limits of standard parameter sharing and ad-hoc agent indication.\\
-    {\bf Objectives:} Introduce and analyze homogenized observation spaces and homogenized action spaces that enable input-invariant policies across heterogeneous agents.\\
-    {\bf Methods:} Formal definition of a covering (homogenized) observation space with validity masks and implicit agent indication; theoretical results on representability and invariance; empirical evaluation on $n$-D gridworld variants with MAPPO control.\\
-    {\bf Results:} Comparable or improved robustness under sensor degradation and team-size variation; small memory/runtime advantages in some regimes; limitations when coherence assumptions fail.\\
-    {\bf Conclusions:} Homogenization is a practical alternative to parameter sharing when a coherent spanning space exists; we outline conditions, trade-offs, and open questions.
+    {\bf Background:} \Gls{marl} with heterogeneous agents; 
+    limits of standard parameter sharing and ad-hoc agent indication.\\
+    {\bf Objectives:} Introduce and analyze homogenized observation spaces and
+    homogenized action spaces that enable input-invariant policies across heterogeneous agents.\\
+    {\bf Methods:} Formal definition of a covering (homogenized) observation space with validity
+    masks and implicit agent indication; theoretical results on representability and invariance;
+    empirical evaluation on $n$-D gridworld variants with MAPPO control.\\
+    {\bf Results:} Comparable or improved robustness under sensor degradation and
+    team-size variation; memory/runtime advantages in some regimes;
+    limitations when coherence assumptions fail.\\
+    {\bf Conclusions:} Homogenization is a practical alternative to parameter sharing when a
+    coherent spanning space exists; we outline conditions, trade-offs, and open questions.
 \end{abstract}
 
 % #FINAL: Submission date
 \received{DD Month YYYY}
 % \received[accepted]{DD Month YYYY}
 \maketitle
-
+\glsresetall
 
 \section{Introduction}
 
 \Gls{marl} addresses coordination among multiple decision 
-makers operating under partial observability. 
-Standard approaches such as parameter sharing and
-\gls{ctde} have enabled strong performance in many cooperative domains
-\cite{albrecht2024, christianos2021}, 
-but these methods typically assume that agents are interchangeable: 
+makers operating under partial observability.
+Standard approaches, such as parameter sharing and \gls{ctde},
+have enabled strong performance in many cooperative 
+domains~\cite{albrecht2024, christianos2021}.
+However, these methods typically assume that agents are interchangeable: 
 they possess the same observation structure, action capabilities, and behavioral roles. 
 This interchangeability assumption simplifies learning, 
 but may become restrictive in settings where agents differ due to hardware constraints, 
 sensing modalities, or mission specialization. 
-In such cases, na\:{i}ve parameter sharing obscures the 
+In such cases, na\"{i}ve parameter sharing obscures the 
 structural differences that matter for decision making, 
-while fully separating policies prevents useful knowledge sharing across the team
-\cite{albrecht2024, christianos2021, terry2020, canese2021}.
+while fully separating policies prevents useful knowledge sharing across the 
+group of agents~\cite{albrecht2024, christianos2021, terry2020, canese2021}.
 
 Heterogeneity is common in real-world multi-agent systems, where agents may differ 
 in sensing, actuation, or operational roles due to hardware constraints 
@@ -168,14 +179,32 @@ As a result, methods that assume agent interchangeability often degrade when app
 heterogeneous teams, motivating representations that preserve agent-specific structure 
 while still enabling shared learning \cite{christianos2021, albrecht2024}.
 
-An effective approach is to retain shared network parameters but append explicit agent identifiers
-or type embeddings to the input \cite{terry2020, christianos2021}. 
+An effective approach is to retain shared network parameters but append explicit agent 
+identifiers or type embeddings to the input \cite{terry2020, christianos2021}. 
 This strategy allows a network to distinguish among agents, 
 but it does not resolve structural heterogeneity. 
-When agents differ in the dimensionality or semantics of their observations or actions, 
-explicit identifiers must be coupled with padding, duplication, or handcrafted encodings. 
-Such fixes increase representational overhead and can obscure the information that truly 
+When agents differ in the dimensionality or interpretation of their observations or actions,
+explicit identifiers must be coupled with padding, duplication, or handcrafted encodings.
+Here, differences in interpretation include cases where observation vectors have the same
+dimensionality but encode different physical quantities, coordinate frames, or sensing
+modalities (e.g., forward-facing versus downward-facing visual inputs).
+Such fixes increase representational overhead and can obscure the information that
 distinguishes agents.
+
+% 
+To illustrate, consider a team of drones that all carry a forward-facing camera but 
+differ in their additional sensing capabilities.
+One drone may also carry a downward-facing camera for terrain mapping, 
+another a thermal camera for target detection, and a third only the forward-facing sensor.
+A parameter-sharing policy with explicit agent 
+identifiers must still pad missing channels or duplicate dimensions 
+to force these observations into a common tensor shape, despite the 
+fact that the additional channels encode distinct viewpoints or sensing modalities.
+In contrast, a homogenized representation defines a shared set of observation 
+elements (e.g., forward-facing imagery, downward-facing imagery, and thermal imagery) 
+and allows each drone to populate only the elements it observes.
+The policy can then infer sensor capabilities implicitly from the pattern of 
+populated elements, without requiring explicit identity features.
 
 We propose an alternative approach based on \emph{implicit indication}. 
 Rather than appending explicit identity features, we construct homogenized 
@@ -192,12 +221,15 @@ remains robust to degraded or partial observations,
 and can be transferred to new configurations without architectural change.
 
 Practically, this relies on \emph{semantic decomposability}: 
-that the observation and action spaces of different agents can be factorized 
-into elements that correspond meaningfully across agents, 
-such that spanning these elements preserves task-relevant semantics without aliasing. 
-Equivalently, it requires \emph{consistent element correspondence}: 
-the observation and action elements can be defined and matched across agents in a consistent, 
-semantically meaningful way.
+the assumption that an agent's observation and action spaces can be factorized
+into elements that play comparable functional roles across agents.
+For example, two agents may each observe an \(n\)-dimensional vector, 
+where corresponding components encode the same physical quantity 
+(e.g., distance to an object), even if other components differ or are absent.
+Under this assumption, homogenization requires \emph{consistent element correspondence},
+meaning that corresponding elements across agents refer to the same underlying quantity
+and are expressed on a compatible scale (e.g., the distance measurements represent
+the same physical distance in the same units).
 
 Applicability hinges on semantically aligned elements across agents; when present, 
 homogenization provides a lightweight basis for shared learning, and when 
@@ -258,34 +290,32 @@ These approaches allow divergent behavior under shared parameters,
 but they still require manually injecting identity information and 
 do not resolve underlying structural mismatches among agents.
 
-While these approaches remove symmetry from homogeneous agents,
-a complementary line of research exploits that symmetry directly by designing 
-policies that are invariant or equivariant to permutations in their inputs. 
-When agent order carries no semantic meaning, such architectures enforce this 
-symmetry through shared encoders and permutation-invariant aggregations. 
-These methods improve generalization and stability in settings where agents or 
-observed entities are structurally uniform.
-
 \subsection{Invariant and Equivariant Architectures}
 
-Invariant and equivariant models operationalize symmetry by applying a shared 
-encoder to each entity and aggregating the resulting features using symmetric 
-operations such as summation, mean fields~\cite{yang2018, li2021b}, 
-or attention~\cite{tang2021, zambaldi2018} without positional encodings. 
-These designs rely on the assumption that the ordering of agents 
-or entities is not semantically meaningful. 
-Although not required for our formulation, 
-exchangeability results 
-such as de Finetti's theorem~\cite{diaconis1980} help clarify when this assumption 
-is appropriate by formalizing conditions under which agents can be treated as 
-statistically interchangeable~\cite{alvarez-melis2015, zaheer2017}. 
-Deep Sets~\cite{zaheer2017} 
-and graph-based \gls{marl} architectures~\cite{yang2021a} instantiate this principle, 
-ensuring that reordering agents or entities leaves the policy unchanged. 
-These methods assume a uniform input structure across agents; 
-homogenization differs by aligning structurally heterogeneous observation 
-spaces within a shared spanning domain, allowing invariant processing even 
-when agents do not share identical feature sets.
+While explicit agent indication removes symmetry assumptions by conditioning on agent identity,
+a complementary line of research instead exploits symmetry directly by designing policies that are
+invariant or equivariant to permutations of their inputs~\cite{zaheer2017, yang2018}.
+When the ordering or indexing of agents and entities carries no semantic meaning,
+such architectures enforce permutation symmetry through shared encoders combined with
+symmetric aggregation operators.
+This inductive bias has been shown to improve generalization, stability, and sample efficiency
+in domains where agents or observed entities are structurally uniform.
+
+Invariant and equivariant models operationalize this principle by applying a common encoder
+to each entity and aggregating the resulting representations using commutative operations
+such as summation or averaging~\cite{yang2018, li2021b}, or through attention mechanisms
+without positional encodings~\cite{tang2021, zambaldi2018}.
+These designs rely on the assumption that agents are exchangeable, meaning that permuting
+their order does not alter the underlying decision problem.
+Exchangeability results, such as de Finetti's theorem~\cite{diaconis1980},
+provide a formal justification for this assumption and clarify when permutation-invariant
+modeling is appropriate~\cite{alvarez-melis2015, zaheer2017}.
+Deep Sets~\cite{zaheer2017} and graph-based \gls{marl} architectures~\cite{yang2021a} instantiate 
+this approach by ensuring that reordering agents or entities leaves the policy unchanged.
+While these methods assume a uniform input structure across agents,
+homogenization through implicit-indication differs by aligning structurally 
+heterogeneous observation spaces within a shared spanning domain, enabling invariant 
+processing even when agents do not share identical feature sets.
 
 A related class of invariant approximations arises in mean-field 
 \gls{marl} solutions, where interactions among many agents are 
@@ -431,7 +461,7 @@ it must at minimum form a superset of this union to serve as a valid spanning se
 Thus, the observation space of agent \(i\) is the collection of its active
 observation elements:
 \[
-    O_i = \{\, O_c \mid c \in C_i \,\}.
+    O_i := \{\, O_c \mid c \in C_i \,\}.
 \]
 and the homogenized observation space,
 \[
@@ -583,6 +613,9 @@ whose restriction to each image \(E_j(O_j)\) matches \(\pi^\star_j\):
 \]
 \end{lemma}
 
+% #TODO : add a proof
+% You have a lemma, but no Proof.  Therefore no theoretical results.  Can you rephrase your discussion as a proof of the lemma?
+
 In our homogenization setting, this lemma applies directly. 
 Each agent type corresponds to a subset of observation elements \(C_i\), 
 and the embedding \(E_{C_i}\) places its observations into the homogenized space 
@@ -618,8 +651,10 @@ In particular, we evaluate whether a single parameter-sharing policy can:
 \end{enumerate}
 
 \subsection{Environment}
-% #TODO: Add image of environment
-%
+% #TODO: Add Visuals
+% #TODO: Expand section (reposition app items)
+% Add some of the visuals you used in your dissertation to this section.  It seems like you just ran out of steam, the material above this is well developed from here down it is very sparse.
+% This probably needs about a page not a paragraph.
 To support controlled manipulation of observation elements, we use a custom
 extension of the MiniGrid environment that enables multiple agents, 
 $n$-dimensional spatial layouts, and selectively visible entities whose
@@ -631,8 +666,18 @@ This design provides fine-grained control over heterogeneous observability
 while keeping the underlying task simple.  
 Full environment details are provided in \cref{con2:app:env_model}.
 
-\subsection{Training Setup}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.4\linewidth]{Figures/marl-minigrid.png}
+    \caption{Mini-grid style rendering of multi-agent environment.}
+    \label{con2:fig:marl-minigrid}
+\end{figure}
+\cref{con2:fig:marl-minigrid} shows the two-dimensional rendering
+fo the environment retained from minigrid.
 
+
+
+\subsection{Training Setup}
 
 Because prior explicit-indication methods cannot operate directly on
 heterogeneous input structures, we compare implicit indication against a 
@@ -669,6 +714,11 @@ structure of their observation-element coverage:
         \(c\notin \cup_{i\in I} C_i\)
 \end{enumerate}
 
+\begin{figure}
+    \input{team_compositions.pdf_tex}
+    \caption{Team compositions and observation element coverage.}
+\end{figure}
+
 \subsection{Evaluation}
 
 To assess robustness and generalization, we evaluate the trained policies
@@ -695,6 +745,9 @@ in the public repository referenced in the introduction to support full reproduc
 
 \section{Results}
 \label{con2:sec:results}
+% #TODO: Expand, choose examplar
+% Similar to section 5 this is all FAR FAR too sparse.
+% Table or figure or anything?
 
 The first comparison examines whether implicit indication imposes any additional
 computational burden relative to the heterogeneous-agent baseline. At every
@@ -711,6 +764,8 @@ measurable increase or decrease in computational resource usage relative to the
 baseline.
 
 \subsection{Training}
+% #TODO: Add example
+% provide one here as an exemplar and then relegate the remainder to the appendix.  Use that exemplar as a discussion point.
 
 The training curves for all conditions are provided in Appendix \ref{con2:app:training_curve}. 
 Across all four team-composition settings, the two approaches exhibited remarkably similar 

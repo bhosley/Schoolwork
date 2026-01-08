@@ -1,0 +1,135 @@
+
+
+
+
+
+
+% #TODO: Revisit lemma 1
+
+% Lemma 1 (Disjoint Union Policy).
+If \(\{{O}_i\}_{i \in I}\) are disjoint, then there exists a policy \(\pi^*\)
+over the disjoint union \(\biguplus{i \in I} \Omega_i\) such that for each agent \(i\),
+the restriction of \(\pi\) to \(\Omega_i\) is equivalent to the agent's optimal policy 
+\(\pi_i\).
+
+% Proof sketch. Construct a union space \Omega^\uplus with an 
+% indicator for the originating subspace. Define \pi^(o) = \pi_i^(o) whenever o \in \Omega_i.
+% Since the subspaces are disjoint, \pi^* reproduces the per-agent policies exactly. \square
+
+% This lemma underpins the homogenization strategy: 
+% if embeddings are injective, the same representability result applies in the homogenized space.
+
+% #TODO: Implicit indication forgoes the possibility of divergent behavior for like agents
+% ⸻
+
+% 5.2 Representability with Masked Homogenization
+
+% We extend the argument to the case where agent observations are embedded into a shared spanning space O with masks.
+
+% Theorem 1 (Masked Representability).
+% Let each embedding E_i: \Omega_i \to O map agent i’s observation into the homogenized space, paired with a mask m_i \in \{0,1\}^{|\mathcal{C}|}. If each (o, m_i) uniquely identifies o \in \Omega_i, then there exists a policy \pi^ over O \times \{0,1\}^{|\mathcal{C}|} whose restriction to (o, m_i) is equivalent to the agent’s optimal policy \pi_i^.
+
+% Proof sketch. The embedding induces a bijection between \Omega_i and the masked subset of O. 
+% Construct \pi^(o, m_i) = \pi_i^(E_i^{-1}(o)). 
+% Since masks uniquely identify feasible subspaces, the homogenized policy recovers each optimal per-agent policy. \square
+
+% This result shows that homogenization does not sacrifice representability, provided embeddings are coherent.
+
+% ⸻
+
+
+
+
+% Proposition 1 (Permutation Invariance).
+% If encoded channel representations are aggregated by a commutative operation 
+% (e.g., sum, mean, or attention with symmetric keys), then \pi_\theta is invariant to permutations of active channels within an agent’s mask.
+
+% Proof sketch. Let \{z_c\} be encoded features. A commutative aggregation f(\{z_c\}) satisfies f(\{z_{c_1}, z_{c_2}, \ldots\}) = f(\{z_{c_{\pi(1)}}, z_{c_{\pi(2)}}, \ldots\}) for any permutation \pi. Since the downstream policy depends only on f(\{z_c\}), outputs are permutation-invariant. \square
+
+% This property ensures that policies are robust to channel ordering and supports scalability across varying team compositions.
+
+% ⸻
+
+% 5.4 Robustness to Dropout
+
+% The homogenized representation also supports resilience to missing inputs.
+
+% Corollary 1 (Dropout Robustness).
+% Suppose aggregation is mean pooling. If a channel c is removed (i.e., m_{ic} is set to 0), the resulting embedding differs from the full-channel embedding by at most \frac{1}{|\mathcal{C}_i|}\|z_c\|.
+
+% Thus, performance degrades smoothly with the loss of channels, rather than catastrophically.
+
+% ⸻
+
+% 5.5 The Coherence Assumption
+
+% The preceding results rely on an implicit assumption: that embeddings into the homogenized space preserve the semantics of the task.
+
+% Definition 1 (Coherence).
+% A homogenized embedding is coherent if, for each agent i, the mapping E_i:\Omega_i \to O together with mask m_i is a sufficient statistic for decision making in the POSG.
+
+% Intuitively, coherence requires that the spanning space separates distinct information without aliasing. Failure of coherence arises when two channels overlap in semantics (e.g., redundant encodings) or when masks do not adequately distinguish agent types. In such cases, the homogenized policy may not faithfully reproduce optimal behavior.
+
+% ⸻
+
+% 5.6 Summary
+
+% These results establish that homogenization preserves representability (Theorem 1), provides invariance guarantees (Proposition 1), and introduces robustness to missing inputs (Corollary 1). The primary limitation is the coherence assumption, which determines whether homogenization is valid in a given domain. This assumption must therefore be evaluated by practitioners when applying the method.
+
+
+
+
+
+
+\begin{proof}
+Because each \(E_{C'}\) is injective, every embedded observation uniquely 
+corresponds to an original observation \(o \in O_{C'}\). 
+Because the images of distinct structures are distinguishable via \(\iota\), 
+the structure \(C'\) is identifiable for any embedded input.
+
+Define the unified policy \(\pi^\star\) on \(O'\) by
+\[
+\pi^\star(x)
+= \pi_{C'}^\star(E_{C'}^{-1}(x))
+\quad \text{for } x \in E_{C'}(O_{C'}).
+\]
+This is well-defined because the sets \(E_{C'}(O_{C'})\) 
+form distinguishable regions of \(O'\), so no embedded observation belongs to two such regions. 
+The injectivity of \(E_{C'}\) guarantees the existence of the inverse on its image. 
+Therefore \(\pi^\star\) exactly reproduces each per-structure optimal policy under 
+homogenization.
+\end{proof}
+
+This result establishes that homogenization preserves representability: 
+the unified homogenized domain supports all optimal per-agent policies, 
+provided the element encoders preserve semantics and avoid aliasing.
+
+
+
+
+
+
+
+\begin{theorem}[Representability of Optimal Policies under Homogenization]
+Let \(O_{C'}\) be an observation space indexed by \(C' \subseteq C\), 
+and let \(E_{C'} : O_{C'} \to O'\) be the homogenized embedding. 
+Suppose that for every admissible structure \(C' \subseteq C\):
+
+(i) the embedding \(E_{C'}\) is injective on \(O_{C'}\), and  
+(ii) for any \(C' \neq C''\), the sets \(E_{C'}(O_{C'})\) and 
+\(E_{C''}(O_{C''})\) are distinguishable via their active-element patterns:
+\[
+\iota(x) = C' \quad \text{for all } x \in E_{C'}(O_{C'}).
+\]
+
+Then for any collection of policies \(\{\pi_{C'}^\star : O_{C'} \to \Delta(A_{C'})\}\), 
+there exists a single policy
+\[
+\pi^\star : O' \to \Delta(A')
+\]
+such that for every admissible structure \(C'\) and every \(o \in O_{C'}\),
+\[
+\pi^\star(E_{C'}(o)) = \pi_{C'}^\star(o).
+\]
+\end{theorem}
+
