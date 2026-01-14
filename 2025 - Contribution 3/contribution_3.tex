@@ -1,3 +1,7 @@
+
+
+
+
 \section{Introduction}
 Deep reinforcement learning (RL) traditionally relies on fixed-capacity neural networks that are architecturally determined before training. However, many real-world scenarios would benefit from adaptive model complexity: as an agent learns new tasks or faces increasing task difficulty, it may require additional network capacity to represent more complex policies or value functions. A naive approach to increasing capacity is to train a larger network from scratch or fine-tune a pre-trained smaller network, but this often leads to losing previously learned behaviors (catastrophic forgetting) or inefficient use of prior learning. Projection-based network expansion offers a promising alternative. In this paradigm, a policy network is progressively expanded (for example by adding neurons, layers, or modules) through functional or tensor projections that ensure the expanded network initially replicates the behavior of the original. This allows learning to continue with a larger architecture without discarding or overwriting prior knowledge. In other words, the agent’s policy is preserved as a subset of the expanded network’s functionality, providing a warm-start for further training.
 

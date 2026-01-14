@@ -123,10 +123,11 @@
 \newglossaryentry{i}{text=i,name=I,sort=i,type=symbols,category=symbol,
     description={Set of agents \(i\).}}
 
+% How to indicate homogenized space
+% \newcommand{\Hom}[1]{{#1}'}
+\newcommand{\Hom}[1]{\widetilde{#1}}
 
-% \title[]{Homogenization for Input-Invariant Solutions for Heterogeneous Agent Reinforcement Learning}
-\title{Homogenization and Implicit Indication: an Input-Invariant Solution for Heterogeneous Agent Reinforcement Learning}
-% TODO: For implicit agent embedding
+\title{ Implicit Indication for Shared Policies in Heterogeneous Agent Reinforcement Learning}
 
 \begin{document}
 
@@ -134,16 +135,16 @@
 \begin{abstract}
     {\bf Background:} \Gls{marl} with heterogeneous agents; 
     limits of standard parameter sharing and ad-hoc agent indication.\\
-    {\bf Objectives:} Introduce and analyze homogenized observation spaces and
-    homogenized action spaces that enable input-invariant policies across heterogeneous agents.\\
-    {\bf Methods:} Formal definition of a covering (homogenized) observation space with validity
-    masks and implicit agent indication; theoretical results on representability and invariance;
-    empirical evaluation on $n$-D gridworld variants with MAPPO control.\\
+    {\bf Objectives:} Introduce implicit indication, a representational framework for learning
+    input-invariant shared policies across heterogeneous agents.\\
+    {\bf Methods:} Formalize implicit indication via homogenized observation and action spaces
+    with validity masks; analyze representability and invariance properties; and evaluate the
+    approach empirically on $n$-D gridworld variants using MAPPO control.\\
     {\bf Results:} Comparable or improved robustness under sensor degradation and
     team-size variation; memory/runtime advantages in some regimes;
     limitations when coherence assumptions fail.\\
-    {\bf Conclusions:} Homogenization is a practical alternative to parameter sharing when a
-    coherent spanning space exists; we outline conditions, trade-offs, and open questions.
+    {\bf Conclusions:} Implicit indication provides a practical alternative to parameter sharing
+    when a coherent spanning space exists; we outline conditions, trade-offs, and open questions.
 \end{abstract}
 
 % #FINAL: Submission date
@@ -236,8 +237,9 @@ homogenization provides a lightweight basis for shared learning, and when
 absent it may function only as a representational scaffold without reliable transfer.
 
 The paper contributes three complementary advances. 
-First, it formalizes \emph{implicit indication} as a homogenization-based construction that 
-enables shared policy parameters across heterogeneous agents without explicit identifiers. 
+First, it formalizes \emph{implicit indication} as a representational framework that enables
+shared policy parameters across heterogeneous agents without explicit identifiers, realized
+via homogenized observation and action spaces.
 Second, it establishes theoretical conditions under which such constructions preserve 
 representability and analyzes the role of semantic decomposability in maintaining policy validity. 
 Finally, it provides empirical evidence using a configurable heterogeneous-agent 
@@ -413,7 +415,7 @@ The next section develops this representational perspective in detail and
 formalizes the homogenization framework used in this work.
 
 
-\section{Homogenization and Implicit Indication Method}
+\section{Implicit Indication via Homogenization}
 \label{con2:sec:method_homogenization}
 
 \subsection{Preliminaries}
@@ -451,13 +453,12 @@ decomposable into salient subspaces, referred to as \emph{observation elements}.
 Intuitively, an observation element may represent a distinct sensor on an agent,
 thus the combination of all such elements form the agent's observation.
 
-Let \(c\) be an observation element index and \(C\) be the global index set.
-Then, \(C_i \subseteq C\) represents the set of indices corresponding to 
-agent \(i\)'s available observation elements.
-In the absence of a predefined global index set, one may define
-\(C := \bigcup_{i \in I} C_i\).  If a global index set already exists,
-it must at minimum form a superset of this union to serve as a valid spanning set.
-% 
+Let \(C\) be the set of observation element indices.
+Let \(\mathcal{P}(C)\) be the power set of \(C\)
+such that \(C_i \in \mathcal{P}(C)\) is a member of the power set.
+\(C_i\) may be seen as a boolean vector in which each element \(c\in C_i\)
+is true if agent \(i\) has access to the observation element indexed by \(c\).
+
 Thus, the observation space of agent \(i\) is the collection of its active
 observation elements:
 \[
@@ -465,23 +466,33 @@ observation elements:
 \]
 and the homogenized observation space,
 \[
-    O^\prime := \{\, O_c \mid c \in C \,\},
+    \Hom{O}:= \{\, O_c \mid c \in C \,\}, 
+    % \equiv \bigcup_{i\in I} O_i
 \]
 which collects every observation element available to any agent.
 
-To map observations into the homogenized space, let \(C' \subseteq C\) 
-denote a set of observation element indices with corresponding 
-observation space \(O_{C'} := \{\, O_c \mid c \in C' \,\}\).
-Define \(E_{C'} : O_{C'} \to O^\prime\) by populating the coordinates
-\(c \in C'\) with their element values and assigning a distinguished null 
-value (e.g., \(0\) or \(\emptyset\)) to all coordinates in \(C \setminus C'\). 
-
+To map observations into the homogenized observation space,
+we use a zero padding: define \(E_{C'} : O_{C'} \to \widetilde{O}\) 
+for each \(C' \in \mathcal{P}(C)\) such that
+\[
+    E_{C'}(O_{C'}) := 
+    \begin{cases}
+        O_{c} & c \in C', \\
+        \emptyset & c \in C\setminus C'.
+    \end{cases}
+\]
 Then, the mapping
 \[
-    \iota : O^\prime \to \mathcal{P}(C), \qquad
+    \iota : \Hom{O} \to \mathcal{P}(C), \qquad
     \iota(o) := \{\, c \in C \mid o_c \notin \{0,\emptyset\} \,\},
 \]
-recovers the set of active observation elements from an observation in \(O^\prime\).
+recovers the set of active observation elements from an observation in \(\Hom{O}\).
+
+This allows us to define \(E^{-1}\) without \(C'\)
+\[
+    E^{-1} : \mathcal{P}(C) \times \Hom{O} \rightarrow O_{C'}, \qquad
+    E^{-1}(o) := E^{-1}_{\iota(o)}(o) \text{ for } o \in \Hom{O}.
+\]
 
 Although the observation elements \(\{O_c\}_{c \in C}\) are 
 defined as linearly independent subspaces of the representation, 
@@ -500,12 +511,12 @@ construction and assumptions described for observations.
 Formally, the homogenized action space is defined as the union 
 of all individual agent action spaces:
 \[
-    A' := \bigcup_{i \in I} A_i.
+    \Hom{A} := \bigcup_{i \in I} A_i.
 \]
 This spanning set provides a shared representational basis for 
 policy outputs across heterogeneous agents.
 
-A policy over the spanning action space \(A^\prime\) 
+A policy over the spanning action space \(\Hom{A}\) 
 must be mapped to an agent-feasible action in \(A_i\).
 For single-dimensional action domains, clipping continuous actions
 or masking invalid logits allow for selecting feasible actions.
@@ -555,85 +566,6 @@ Implicit indication therefore does not model emergent specialization
 within homogeneous subgroups; rather, it provides a unified representational 
 basis that enables parameter sharing across structurally distinct agents.
 
-
-\section{Theoretical Results}
-\label{con2:sec:theory}
-
-This section formalizes the conditions under which homogenization 
-supports valid shared policies across heterogeneous agents.
-% We show that representability is preserved when agent observations are embedded into a common 
-% spanning space with consistent element correspondence, derive the invariance properties that arise 
-% from channel-wise encoding and commutative aggregation, and examine the assumptions required for 
-% the homogenized embedding to remain decision-sufficient for control. These results clarify when an 
-% input-invariant policy can faithfully reproduce or approximate the optimal behaviors of structurally 
-% distinct agents.
-
-
-\subsection{Representability}
-
-A unified policy over the homogenized domain is most useful if it remains expressive 
-enough to reproduce the optimal policies associated with each heterogeneous agent. 
-Under implicit indication, each agent type is characterized by its subset of 
-observation elements \(C_i \subseteq C\), and its observations occupy the 
-embedded region \(E_{C_i}(O_{C_i}) \subseteq O^\prime\). 
-Because the active-element pattern is always recoverable via \(\iota(E_{C_i}(o)) = C_i\), 
-the homogenized space preserves the structural distinctions among agents: 
-each embedded observation carries both its value and the information 
-needed to determine which observation elements generated it. 
-These properties ensure that agents with different \(C_i\) remain 
-distinguishable in the shared domain, enabling a unified policy to 
-condition correctly on heterogeneous observation structures.
-
-With this structure in place, we can now show that this method of 
-homogenization preserves representability at the level of agent types: 
-for any collection of optimal per-agent-type policies, there exists 
-a single policy over \(O^\prime\) whose restriction to each region 
-\(E_{C^\prime}(O_{C^\prime})\) matches the corresponding optimal 
-policy over \(O_{C^\prime}\).
-
-\begin{lemma}[Representability under injective, disjoint embeddings]
-Let \(O'\) be a domain, and let \(\{O_j\}_{j \in J}\) be a family of sets with
-embeddings \(E_j : O_j \to O'\) such that
-\begin{enumerate}[label=(\roman*), nosep]
-    \item each \(E_j\) is injective; and
-    \item the images are pairwise disjoint:
-    \[
-        E_j(O_j) \cap E_k(O_k) = \emptyset
-        \quad\text{whenever } j \neq k.
-    \]
-\end{enumerate}
-Then for any collection of policies
-\(\{\pi^*_j : O_j \to \Delta(A_j)\}_{j\in J}\),
-there exists a single policy
-\(\pi^* : O' \to \Delta(A')\)
-whose restriction to each image \(E_j(O_j)\) matches \(\pi^\star_j\):
-\[
-    \pi^*(E_j(o)) = \pi^*_j(o)
-    \quad\text{for all } j\in J,\; o \in O_j.
-\]
-\end{lemma}
-
-% #TODO : add a proof
-% You have a lemma, but no Proof.  Therefore no theoretical results.  Can you rephrase your discussion as a proof of the lemma?
-
-In our homogenization setting, this lemma applies directly. 
-Each agent type corresponds to a subset of observation elements \(C_i\), 
-and the embedding \(E_{C_i}\) places its observations into the homogenized space 
-\(O'\) by activating only the coordinates associated with those elements. 
-Because no two distinct subsets \(C_i\) produce overlapping embeddings, 
-the images \(E_{C_i}(O_{C_i})\) form a disjoint family within \(O'\). 
-Injectivity follows from the fact that each observation element is 
-mapped to a unique coordinate block. 
-Consequently, any collection of per-type optimal policies can be 
-represented by a single unified policy defined over the homogenized space, 
-whose behavior restricted to each embedded region matches the corresponding 
-per-type policy. This establishes that implicit indication preserves representability 
-across heterogeneous agents and provides the foundation for using a 
-single policy network without explicit agent identifiers.
-
-% Consider theorem as "Any partitioned representation is representative?"
-
-
 \section{Experiments}
 \label{con2:sec:experiments}
 
@@ -651,31 +583,103 @@ In particular, we evaluate whether a single parameter-sharing policy can:
 \end{enumerate}
 
 \subsection{Environment}
-% #TODO: Add Visuals
-% #TODO: Expand section (reposition app items)
-% Add some of the visuals you used in your dissertation to this section.  It seems like you just ran out of steam, the material above this is well developed from here down it is very sparse.
-% This probably needs about a page not a paragraph.
-To support controlled manipulation of observation elements, we use a custom
-extension of the MiniGrid environment that enables multiple agents, 
-$n$-dimensional spatial layouts, and selectively visible entities whose
-properties determine which observation elements they appear on.  
-The task is a variant of level-based foraging in which agents 
-must coordinate to collect objects while navigating obstacles, but 
-objects and obstacles may be visible only on specific observation channels.
-This design provides fine-grained control over heterogeneous observability 
-while keeping the underlying task simple.  
-Full environment details are provided in \cref{con2:app:env_model}.
+
+To evaluate homogenization under controlled structural heterogeneity,
+we use a custom multi-agent gridworld environment derived from MiniGrid.
+The environment is designed to be intentionally simple in its dynamics
+while expressive in its observation structure, allowing us to isolate
+the effects of heterogeneous observability without introducing
+confounding differences in rewards or agent dynamics.
+All agents operate in a shared discrete spatial layout and pursue a
+fully cooperative objective, but may differ in which aspects of the
+environment they are able to perceive.
+
+\subsubsection{Spatial layout and task overview.}
+The environment consists of an $n$-dimensional discrete grid populated
+by multiple agents, collectible objectives, static obstacles, and
+hazards.
+Agents must coordinate to collect objectives while navigating around
+obstacles and avoiding hazards that incur penalties.
+Episodes terminate when all objectives are collected or when a
+fixed time horizon is reached.
+Rewards are shared across agents and reflect collective task success,
+ensuring that all agents are aligned toward a common goal.
+
+A two-dimensional rendering of the environment, retained from the
+MiniGrid visual interface, is shown in \cref{con2:fig:marl-minigrid}.
+Although this rendering is primarily illustrative, the underlying
+state and dynamics generalize naturally to higher-dimensional grids.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.4\linewidth]{Figures/marl-minigrid.png}
+    \includegraphics[width=0.3\linewidth]{Figures/marl-minigrid.png}
     \caption{Mini-grid style rendering of multi-agent environment.}
+    \Description{A screen shot of two agents in a two-dimensional hypergrid instance.}
     \label{con2:fig:marl-minigrid}
 \end{figure}
 \cref{con2:fig:marl-minigrid} shows the two-dimensional rendering
-fo the environment retained from minigrid.
+of the environment.
 
+\subsubsection{Agents and action capabilities.}
+All agents share the same movement and interaction mechanics.
+At each time step, an agent may move within the grid, adjust its
+orientation, and optionally interact with nearby entities.
+For the experiments performed for this paper the action 
+primitives are identical across agents; heterogeneity in this 
+instance arises exclusively from differences in observation,
+not from differences in control authority or reward structure.
+This design choice ensures that any observed behavioral differences
+across agents result from differences in information availability,
+rather than differences in what actions are possible.
 
+\subsubsection{Observation elements and heterogeneous sensing.}
+Typically, similar environments return observations based on 
+the agent's position, constrained by line-of-sight and sight-range.
+To support agent observations structured around \emph{observation elements},
+this environment further masks the state value based on the agent's access 
+to those observation elements.
+Crucially, this means that different entities in the environment 
+have a visibility identity indexed in \(\mathcal{P}(C)\).
+
+This structure allows heterogeneity to be expressed purely through
+observability.
+The underlying task, dynamics, and reward function remain identical
+for all agents, but each agent experiences a different projection of
+the same environment state.
+By selectively enabling or disabling observation elements, we can
+construct teams with intersecting, disjoint, or incomplete coverage of
+the environment state.
+
+This design also enables structured perturbations at evaluation time.
+Sensor loss corresponds to removing an observation element from an agent's 
+subset $C_i$, while sensor gain corresponds to adding a new element.
+Because all agents embed observations into the same spanning space,
+these perturbations require no architectural changes and no retraining.
+
+\subsubsection{Task dynamics and rewards.}
+State transitions are deterministic and synchronous.
+Valid agent actions are executed simultaneously at each time step,
+updating agent positions, orientations, and entity states.
+Objectives are collected when an agent satisfies the interaction
+conditions defined for that entity, yielding a positive team reward.
+Agents incur penalties for unsafe interactions, such as proximity to
+hazards or unnecessary interaction actions.
+The reward structure is shared across agents and does not depend on
+agent type or observation subset.
+
+\subsubsection{Rationale for environment design.}
+This environment is not intended to model a specific real-world domain,
+but rather to serve as a controlled testbed for studying representation
+in heterogeneous-agent reinforcement learning.
+By localizing heterogeneity entirely in the observation structure,
+we can directly evaluate whether homogenized representations enable a
+single policy to operate effectively across agents with differing
+information access. At the same time, the simplicity of the dynamics 
+minimizes extraneous variables and computational resource requirements and
+facilitates direct comparison against heterogeneous-agent baselines.
+Full formal details of the environment model, including state
+definitions and transition functions, are provided in
+\cref{con2:app:env_model}.
 
 \subsection{Training Setup}
 
@@ -702,6 +706,13 @@ All experiments were conducted on a compute cluster using a Windows Subsystem
 for Linux (WSL) virtual machine. Each training job was allocated 32 CPU cores on an 
 Intel(R) Xeon(R) E5-2660 v3 @ 2.60GHz processor and 128 GB of RAM. No GPUs were used.
 
+\begin{figure}
+    \input{team_compositions.pdf_tex}
+    \caption{Team compositions and observation element coverage.}
+    \Description{A table illustrating the different team compositions discussed below.}
+    \label{con2:fig:team_compositions}
+\end{figure}
+
 For each method, we train four compositions of teams that differ in the
 structure of their observation-element coverage:
 \begin{enumerate}
@@ -713,11 +724,7 @@ structure of their observation-element coverage:
     \item \emph{Incomplete coverage}: \(\exists c \in C\) such that 
         \(c\notin \cup_{i\in I} C_i\)
 \end{enumerate}
-
-\begin{figure}
-    \input{team_compositions.pdf_tex}
-    \caption{Team compositions and observation element coverage.}
-\end{figure}
+These compositions are illustrated in \cref{con2:fig:team_compositions}.
 
 \subsection{Evaluation}
 
@@ -745,10 +752,10 @@ in the public repository referenced in the introduction to support full reproduc
 
 \section{Results}
 \label{con2:sec:results}
-% #TODO: Expand, choose examplar
-% Similar to section 5 this is all FAR FAR too sparse.
-% Table or figure or anything?
 
+\subsection{Training}
+
+\subsubsection{Resource Costs}
 The first comparison examines whether implicit indication imposes any additional
 computational burden relative to the heterogeneous-agent baseline. At every
 training step, we recorded CPU utilization, RAM utilization, and wall-clock time
@@ -760,14 +767,20 @@ significant differences in any of the three metrics: RAM utilization (p = 0.161)
 CPU utilization (p = 0.687), and time per training step (p > 0.05 across all
 conditions). Accordingly, we do not reject the null hypothesis and conclude that,
 under our experimental conditions, implicit indication does not introduce any
-measurable increase or decrease in computational resource usage relative to the
-baseline.
+measurable change in computational resource usage relative to the baseline.
 
-\subsection{Training}
-% #TODO: Add example
-% provide one here as an exemplar and then relegate the remainder to the appendix.  Use that exemplar as a discussion point.
+\subsubsection{Task Performance}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Data/training_curves.png}
+    \caption{Training curves representing mean \(\pm\) standard deviation for each 
+        policy configuration and visibility regime.}
+    \Description{Training curves comparing implicit indication with a \gls{harl}
+        baseline faceted on the previously mentioned training compositions.}
+    \label{con2:fig:training_curve}
+\end{figure}
 
-The training curves for all conditions are provided in Appendix \ref{con2:app:training_curve}. 
+The training curves for all conditions are provided in \cref{con2:fig:training_curve}. 
 Across all four team-composition settings, the two approaches exhibited remarkably similar 
 learning dynamics: convergence rates, variance across seeds, and asymptotic returns were 
 nearly indistinguishable. The most notable difference lies in model size; 
@@ -777,45 +790,167 @@ which maintains a separate policy per agent.
 \subsection{Evaluation}
 \label{con2:app:evaluations}
 
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Data/performance_delta.png}
-    \caption{Comparison between methods trained with different observation-element coverage.}
-    \label{con2:fig:eval_delta}
-\end{figure}
-
 To compare generalization performance across evaluation conditions, 
 we selected the top 15 policies out of 30 for each condition. 
 This reflects the common practice of training multiple models and evaluating 
 the superlative subset, balancing removal of underperforming runs with avoidance 
-of excessive variance.
-A summary of performance over evaluations is presented in 
-Appendix~\ref{con2:app:evaluations}. \Cref{con2:fig:eval_delta} 
-presents a heatmap summarizing the performance 
-differences between implicit indication and the \gls{happo} baseline. 
-For these evaluations, evaluation episodes were longer than individual training 
-episodes.
+of excessive variance. Additionally, to further reduce variance, 
+the evaluation episodes were longer than training episodes.
 
-Across most evaluation conditions, implicit indication showed modest but 
-consistent improvements relative to the baseline, 
-particularly in regimes involving altered observability or changes in team composition. 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Data/performance_delta.png}
+    \caption{Comparison between methods trained with different observation-element coverage.}
+    \Description{}
+    \label{con2:fig:eval_delta}
+\end{figure}
+
+A summary of performance over evaluations is presented in \cref{con2:app:evaluations}. 
+\Cref{con2:fig:eval_delta} presents a heatmap summarizing the performance 
+differences between implicit indication and the \gls{happo} baseline. 
+
 The most pronounced gains appeared in the \emph{complete-visibility} training case; 
 agents trained in this condition share identical observation-element coverage,
-resulting in implicit-indication's equivalence to parameter sharing over a 
-homogeneous team. 
+resulting in implicit-indication's equivalence to a standard parameter sharing 
+approach.
 
-The resulting performance advantage therefore reflects more efficient 
-use of shared experience rather than differences in representational capacity. 
-A difference that becomes most pronounced in the case of agent loss,
-where \gls{happo} allowed for emergent specialization, and 
-implicit indication did not.
+Training a team under the \emph{disjoint-span} condition yields
+substantial performance gains for implicit indication over \gls{happo} 
+in the baseline evaluation.
+In the baseline evaluation, the disjoint-span training condition yields the largest positive performance differences relative to \gls{happo} among all training conditions (see \cref{con2:fig:eval_delta}). 
+While somewhat counterintuitive, this result
+is consistent with known challenges of shared-parameter learning in cooperative
+\gls{marl}. As noted by \cite{zhong2024}, simultaneous gradient updates from agents
+with partially overlapping information can induce conflicting updates to a
+shared policy, leading to slower or less stable convergence.
+
+In the disjoint-span setting, each agent observes a distinct subset of the
+environment state, and gradients arising from one agent's experience are less
+likely to interfere with those of another. The shared policy is therefore
+updated on more clearly separated informational regimes, reducing destructive
+interference during training. This effect may explain why the disjoint-span
+configuration exhibits stronger relative performance improvements than the
+intersecting-span case.
+
+By contrast, in the \emph{intersecting-span} training condition—where agents share
+overlapping observation elements—implicit indication provides its clearest advantage
+under structured perturbations. In particular, the largest performance differences
+appear when agents gain or lose access to individual observation elements, as in the
+sensor degradation and sensor addition evaluations. In these cases, the homogenized
+representation allows the shared policy to adapt seamlessly to changing observation
+structure, while the heterogeneous baseline must rely on policies trained for fixed
+input configurations.
+
+% \section{Theoretical Results}
+% \label{con2:sec:theory}
+
+% This section formalizes the conditions under which homogenization 
+% supports valid shared policies across heterogeneous agents.
+
+% \subsection{Representability}
+
+% A unified policy over the homogenized domain is most useful if it remains expressive 
+% enough to reproduce the optimal policies associated with each heterogeneous agent. 
+% Under implicit indication, each agent type is characterized by its subset of 
+% observation elements \(C_i \subseteq C\), and its observations occupy the 
+% embedded region \(E_{C_i}(O_{C_i}) \subseteq \Hom{O}\). Because the 
+% active-element pattern is always recoverable via \(\iota(E_{C_i}(o)) = C_i\), 
+% the homogenized space preserves the structural distinctions among agents: 
+% each embedded observation carries both its value and the information 
+% needed to determine which observation elements generated it. 
+% These properties ensure that agents with different \(C_i\) remain 
+% distinguishable in the shared domain, enabling a unified policy to 
+% condition correctly on heterogeneous observation structures.
+
+% With this structure in place, we can now show that this method of 
+% homogenization preserves representability at the level of agent types: 
+% for any collection of optimal per-agent-type policies, there exists 
+% a single policy over \(\Hom{O}\) whose restriction to each region 
+% \(E_{C^\prime}(O_{C^\prime})\) matches the corresponding optimal 
+% policy over \(O_{C^\prime}\).
+
+% \begin{lemma}[Representability under injective, disjoint embeddings]
+% Let \(O'\) be a domain, and let \(\{O_j\}_{j \in J}\) be a family of sets with
+% embeddings \(E_j : O_j \to O'\) such that
+% \begin{enumerate}[label=(\roman*), nosep]
+%     \item each \(E_j\) is injective; and
+%     \item the images are pairwise disjoint:
+%     \[
+%         E_j(O_j) \cap E_k(O_k) = \emptyset
+%         \quad\text{whenever } j \neq k.
+%     \]
+% \end{enumerate}
+% Then for any collection of policies
+% \(\{\pi^*_j : O_j \to \Delta(A_j)\}_{j\in J}\),
+% there exists a single policy
+% \(\pi^* : O' \to \Delta(A')\)
+% whose restriction to each image \(E_j(O_j)\) matches \(\pi^\star_j\):
+% \[
+%     \pi^*(E_j(o)) = \pi^*_j(o)
+%     \quad\text{for all } j\in J,\; o \in O_j.
+% \]
+% \end{lemma}
+
+% In our homogenization setting, this lemma applies directly. 
+% Each agent type corresponds to a subset of observation elements \(C_i\), 
+% and the embedding \(E_{C_i}\) places its observations into the homogenized space 
+% \(\Hom{O}\) by activating only the coordinates associated with those elements. 
+% Because no two distinct subsets \(C_i\) produce overlapping embeddings, 
+% the images \(E_{C_i}(O_{C_i})\) form a disjoint family within \(\Hom{O}\). 
+% Injectivity follows from the fact that each observation element is 
+% mapped to a unique coordinate block. 
+% Consequently, any collection of per-type optimal policies can be 
+% represented by a single unified policy defined over the homogenized space, 
+% whose behavior restricted to each embedded region matches the corresponding 
+% per-type policy. This establishes that implicit indication preserves representability 
+% across heterogeneous agents and provides the foundation for using a 
+% single policy network without explicit agent identifiers.
+
+% % Consider theorem as "Any partitioned representation is representative?"
+
+\subsection{Representability via Disjoint Injective Embeddings}
+
+The empirical results above rely on a general representational property that is
+independent of reinforcement learning, environment dynamics, or optimization
+procedures. Specifically, any injective embedding of heterogeneous input spaces
+into a shared domain with disjoint support preserves representability: no
+expressivity is lost by using a single function over the shared domain in place of
+separate functions over the original spaces.
+
+Formally, let \(\{O_j\}_{j \in J}\) be a collection of input spaces and let
+\(E_j : O_j \rightarrow O'\) be injective mappings whose images are pairwise
+disjoint,
+\[
+E_j(O_j) \cap E_k(O_k) = \emptyset \quad \text{for all } j \neq k.
+\]
+Then for any collection of functions
+\(\{f_j : O_j \rightarrow Y\}_{j \in J}\),
+there exists a single function \(f : O' \rightarrow Y\) whose restriction to each
+embedded region reproduces the original behavior,
+\[
+f(E_j(o)) = f_j(o)
+\quad \text{for all } j \in J,\; o \in O_j.
+\]
+This construction follows directly from disjointness, which partitions the shared
+domain into non-overlapping regions associated with each input space and permits a
+piecewise definition of \(f\). In this sense, \emph{any disjoint injection}
+constitutes a valid transformation that preserves representational capacity.
+
+Implicit indication is a concrete instantiation of this
+principle for heterogeneous-agent policies. Each agent's observation space is
+embedded injectively into the homogenized space \(\Hom{O}\) by activating a subset
+of observation elements while leaving all others empty or masked. 
+When these subsets induce disjoint embedded regions a single shared policy 
+over \(\Hom{O}\) can, in principle, realize the same input--output mappings 
+as a collection of per-agent policies without requiring explicit agent identifiers.
+
 
 \section{Conclusion}
 \label{con2:sec:conclusion}
 
-This paper introduced homogenization with implicit indication as a
-representation-based approach for enabling shared policies across
-heterogeneous agents. By embedding agent observations into a unified
+This paper introduced implicit indication as a representation-based approach
+for enabling shared policies across heterogeneous agents, realized through
+homogenized observation and action spaces. By embedding agent observations into a unified
 spanning space and allowing the policy to condition implicitly on active
 observation elements, the method avoids explicit identity encodings and
 removes the need for per-type policy networks. We formalized conditions
@@ -955,16 +1090,6 @@ Optuna-search \cite{akiba2019}.
         \bottomrule
     \end{tabular}
 \end{table}
-\clearpage
-
-\section{Training Curves}
-\label{con2:app:training_curve}
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Data/training_curves.png}
-    \caption{Training curves representing mean \(\pm\) standard deviation for each 
-        policy configuration and visibility regime.}
-\end{figure}
 \clearpage
 
 \section{Evaluation Comparison}
