@@ -71,7 +71,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>labeldateparts</bcf:key>
-      <bcf:value>1</bcf:value>
+      <bcf:value>0</bcf:value>
     </bcf:option>
     <bcf:option type="multivalued">
       <bcf:key>labeldatespec</bcf:key>
@@ -96,7 +96,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxbibnames</bcf:key>
-      <bcf:value>9</bcf:value>
+      <bcf:value>6</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxcitenames</bcf:key>
@@ -104,7 +104,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxsortnames</bcf:key>
-      <bcf:value>9</bcf:value>
+      <bcf:value>6</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxitems</bcf:key>
@@ -180,11 +180,11 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>uniquelist</bcf:key>
-      <bcf:value>true</bcf:value>
+      <bcf:value>false</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>uniquename</bcf:key>
-      <bcf:value>init</bcf:value>
+      <bcf:value>false</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>uniqueprimaryauthor</bcf:key>
@@ -314,7 +314,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>labeldateparts</bcf:key>
-      <bcf:value>1</bcf:value>
+      <bcf:value>0</bcf:value>
     </bcf:option>
     <bcf:option type="multivalued">
       <bcf:key>labeldatespec</bcf:key>
@@ -331,7 +331,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxbibnames</bcf:key>
-      <bcf:value>9</bcf:value>
+      <bcf:value>6</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxcitenames</bcf:key>
@@ -339,7 +339,7 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxsortnames</bcf:key>
-      <bcf:value>9</bcf:value>
+      <bcf:value>6</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>maxitems</bcf:key>
@@ -395,11 +395,11 @@
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>uniquelist</bcf:key>
-      <bcf:value>true</bcf:value>
+      <bcf:value>false</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>uniquename</bcf:key>
-      <bcf:value>init</bcf:value>
+      <bcf:value>false</bcf:value>
     </bcf:option>
     <bcf:option type="singlevalued">
       <bcf:key>uniqueprimaryauthor</bcf:key>
@@ -642,14 +642,8 @@
     <bcf:option datatype="boolean">doi</bcf:option>
     <bcf:option datatype="boolean">eprint</bcf:option>
     <bcf:option datatype="boolean">related</bcf:option>
+    <bcf:option datatype="boolean">subentry</bcf:option>
     <bcf:option datatype="boolean">dashed</bcf:option>
-    <bcf:option datatype="boolean">mergedate</bcf:option>
-    <bcf:option datatype="boolean">halid</bcf:option>
-    <bcf:option datatype="boolean">swhid</bcf:option>
-    <bcf:option datatype="boolean">shortswhid</bcf:option>
-    <bcf:option datatype="boolean">swlabels</bcf:option>
-    <bcf:option datatype="boolean">vcs</bcf:option>
-    <bcf:option datatype="boolean">license</bcf:option>
     <bcf:option datatype="boolean">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="integer">mincrossrefs</bcf:option>
     <bcf:option datatype="integer">minxrefs</bcf:option>
@@ -731,7 +725,7 @@
     <bcf:option datatype="boolean">doi</bcf:option>
     <bcf:option datatype="boolean">eprint</bcf:option>
     <bcf:option datatype="boolean">related</bcf:option>
-    <bcf:option datatype="boolean">mergedate</bcf:option>
+    <bcf:option datatype="boolean">subentry</bcf:option>
     <bcf:option datatype="boolean">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="xml">labelalphatemplate</bcf:option>
     <bcf:option datatype="xml">translit</bcf:option>
@@ -820,7 +814,7 @@
     <bcf:option datatype="boolean" backendout="1">doi</bcf:option>
     <bcf:option datatype="boolean" backendout="1">eprint</bcf:option>
     <bcf:option datatype="boolean" backendout="1">related</bcf:option>
-    <bcf:option datatype="boolean" backendout="1">mergedate</bcf:option>
+    <bcf:option datatype="boolean" backendout="1">subentry</bcf:option>
     <bcf:option datatype="boolean" backendout="1">bibtexcaseprotection</bcf:option>
     <bcf:option datatype="integer" backendin="maxcitenames,maxbibnames,maxsortnames">maxnames</bcf:option>
     <bcf:option datatype="integer" backendin="mincitenames,minbibnames,minsortnames">minnames</bcf:option>
@@ -881,22 +875,6 @@
   </bcf:datafieldset>
   <!-- SOURCEMAP -->
   <bcf:sourcemap>
-    <bcf:maps datatype="bibtex" map_overwrite="1" level="style">
-      <bcf:map>
-        <bcf:map_step map_field_source="swhid" map_match="\s" map_replace=""/>
-      </bcf:map>
-      <bcf:map>
-        <bcf:map_step map_field_source="swhid"/>
-        <bcf:map_step map_field_set="swhidcore" map_origfieldval="1"/>
-        <bcf:map_step map_field_source="swhidcore" map_match=";.*" map_replace=""/>
-      </bcf:map>
-    </bcf:maps>
-    <bcf:maps datatype="bibtex" level="style">
-      <bcf:map>
-        <bcf:map_step map_type_source="artifactsoftware" map_type_target="software"/>
-        <bcf:map_step map_type_source="artifactdataset" map_type_target="dataset"/>
-      </bcf:map>
-    </bcf:maps>
     <bcf:maps datatype="bibtex" level="driver">
       <bcf:map>
         <bcf:map_step map_field_set="day" map_null="1"/>
@@ -1079,21 +1057,6 @@
       <bcf:field source="shorthandintro" skip="true"/>
       <bcf:field source="sortkey" skip="true"/>
     </bcf:inherit>
-    <bcf:inherit>
-      <bcf:type_pair source="software" target="softwareversion"/>
-      <bcf:type_pair source="software" target="softwaremodule"/>
-      <bcf:type_pair source="software" target="codefragment"/>
-      <bcf:field source="*" target="*"/>
-    </bcf:inherit>
-    <bcf:inherit>
-      <bcf:type_pair source="softwareversion" target="softwaremodule"/>
-      <bcf:type_pair source="softwareversion" target="codefragment"/>
-      <bcf:field source="*" target="*"/>
-    </bcf:inherit>
-    <bcf:inherit>
-      <bcf:type_pair source="softwaremodule" target="codefragment"/>
-      <bcf:field source="*" target="*"/>
-    </bcf:inherit>
   </bcf:inheritance>
   <!-- UNIQUENAME TEMPLATES -->
   <bcf:uniquenametemplate name="global">
@@ -1185,10 +1148,6 @@
       <bcf:entrytype>unpublished</bcf:entrytype>
       <bcf:entrytype>video</bcf:entrytype>
       <bcf:entrytype skip_output="true">xdata</bcf:entrytype>
-      <bcf:entrytype>software</bcf:entrytype>
-      <bcf:entrytype>softwareversion</bcf:entrytype>
-      <bcf:entrytype>softwaremodule</bcf:entrytype>
-      <bcf:entrytype>codefragment</bcf:entrytype>
     </bcf:entrytypes>
     <bcf:fields>
       <bcf:field fieldtype="field" datatype="integer">sortyear</bcf:field>
@@ -1393,20 +1352,6 @@
       <bcf:field fieldtype="field" format="xsv" datatype="option" skip_output="true">relatedoptions</bcf:field>
       <bcf:field fieldtype="field" datatype="range">pages</bcf:field>
       <bcf:field fieldtype="field" datatype="code">execute</bcf:field>
-      <bcf:field fieldtype="field" datatype="literal">numpages</bcf:field>
-      <bcf:field fieldtype="field" datatype="literal">articleno</bcf:field>
-      <bcf:field fieldtype="list" datatype="uri">urls</bcf:field>
-      <bcf:field fieldtype="list" datatype="literal">school</bcf:field>
-      <bcf:field fieldtype="field" datatype="literal">key</bcf:field>
-      <bcf:field fieldtype="field" datatype="literal">lastaccessed</bcf:field>
-      <bcf:field fieldtype="field" datatype="literal">distinctURL</bcf:field>
-      <bcf:field fieldtype="field" datatype="literal">introducedin</bcf:field>
-      <bcf:field fieldtype="list" datatype="literal">license</bcf:field>
-      <bcf:field fieldtype="field" datatype="uri">repository</bcf:field>
-      <bcf:field fieldtype="field" datatype="verbatim">hal_id</bcf:field>
-      <bcf:field fieldtype="field" datatype="verbatim">hal_version</bcf:field>
-      <bcf:field fieldtype="field" datatype="verbatim">swhid</bcf:field>
-      <bcf:field fieldtype="field" datatype="verbatim">swhidcore</bcf:field>
     </bcf:fields>
     <bcf:entryfields>
       <bcf:field>abstract</bcf:field>
@@ -2170,155 +2115,6 @@
       <bcf:field>type</bcf:field>
       <bcf:field>venue</bcf:field>
     </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:field>numpages</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:field>articleno</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:field>urls</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:entrytype>thesis</bcf:entrytype>
-      <bcf:field>school</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:field>key</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:field>lastaccessed</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:field>distinctURL</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:entrytype>software</bcf:entrytype>
-      <bcf:field>abstract</bcf:field>
-      <bcf:field>author</bcf:field>
-      <bcf:field>date</bcf:field>
-      <bcf:field>doi</bcf:field>
-      <bcf:field>editor</bcf:field>
-      <bcf:field>eprint</bcf:field>
-      <bcf:field>eprintclass</bcf:field>
-      <bcf:field>eprinttype</bcf:field>
-      <bcf:field>file</bcf:field>
-      <bcf:field>hal_id</bcf:field>
-      <bcf:field>hal_version</bcf:field>
-      <bcf:field>institution</bcf:field>
-      <bcf:field>license</bcf:field>
-      <bcf:field>month</bcf:field>
-      <bcf:field>note</bcf:field>
-      <bcf:field>organization</bcf:field>
-      <bcf:field>publisher</bcf:field>
-      <bcf:field>related</bcf:field>
-      <bcf:field>relatedstring</bcf:field>
-      <bcf:field>repository</bcf:field>
-      <bcf:field>swhid</bcf:field>
-      <bcf:field>title</bcf:field>
-      <bcf:field>url</bcf:field>
-      <bcf:field>urldate</bcf:field>
-      <bcf:field>version</bcf:field>
-      <bcf:field>year</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:entrytype>softwareversion</bcf:entrytype>
-      <bcf:field>abstract</bcf:field>
-      <bcf:field>author</bcf:field>
-      <bcf:field>crossref</bcf:field>
-      <bcf:field>date</bcf:field>
-      <bcf:field>doi</bcf:field>
-      <bcf:field>editor</bcf:field>
-      <bcf:field>eprint</bcf:field>
-      <bcf:field>eprintclass</bcf:field>
-      <bcf:field>eprinttype</bcf:field>
-      <bcf:field>file</bcf:field>
-      <bcf:field>hal_id</bcf:field>
-      <bcf:field>hal_version</bcf:field>
-      <bcf:field>institution</bcf:field>
-      <bcf:field>introducedin</bcf:field>
-      <bcf:field>license</bcf:field>
-      <bcf:field>month</bcf:field>
-      <bcf:field>note</bcf:field>
-      <bcf:field>organization</bcf:field>
-      <bcf:field>publisher</bcf:field>
-      <bcf:field>related</bcf:field>
-      <bcf:field>relatedstring</bcf:field>
-      <bcf:field>relatedtype</bcf:field>
-      <bcf:field>repository</bcf:field>
-      <bcf:field>subtitle</bcf:field>
-      <bcf:field>swhid</bcf:field>
-      <bcf:field>title</bcf:field>
-      <bcf:field>url</bcf:field>
-      <bcf:field>urldate</bcf:field>
-      <bcf:field>version</bcf:field>
-      <bcf:field>year</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:entrytype>softwaremodule</bcf:entrytype>
-      <bcf:field>abstract</bcf:field>
-      <bcf:field>author</bcf:field>
-      <bcf:field>crossref</bcf:field>
-      <bcf:field>date</bcf:field>
-      <bcf:field>doi</bcf:field>
-      <bcf:field>editor</bcf:field>
-      <bcf:field>eprint</bcf:field>
-      <bcf:field>eprintclass</bcf:field>
-      <bcf:field>eprinttype</bcf:field>
-      <bcf:field>file</bcf:field>
-      <bcf:field>hal_id</bcf:field>
-      <bcf:field>hal_version</bcf:field>
-      <bcf:field>institution</bcf:field>
-      <bcf:field>introducedin</bcf:field>
-      <bcf:field>license</bcf:field>
-      <bcf:field>month</bcf:field>
-      <bcf:field>note</bcf:field>
-      <bcf:field>organization</bcf:field>
-      <bcf:field>publisher</bcf:field>
-      <bcf:field>related</bcf:field>
-      <bcf:field>relatedstring</bcf:field>
-      <bcf:field>relatedtype</bcf:field>
-      <bcf:field>repository</bcf:field>
-      <bcf:field>subtitle</bcf:field>
-      <bcf:field>swhid</bcf:field>
-      <bcf:field>title</bcf:field>
-      <bcf:field>url</bcf:field>
-      <bcf:field>urldate</bcf:field>
-      <bcf:field>version</bcf:field>
-      <bcf:field>year</bcf:field>
-    </bcf:entryfields>
-    <bcf:entryfields>
-      <bcf:entrytype>codefragment</bcf:entrytype>
-      <bcf:field>abstract</bcf:field>
-      <bcf:field>author</bcf:field>
-      <bcf:field>crossref</bcf:field>
-      <bcf:field>date</bcf:field>
-      <bcf:field>doi</bcf:field>
-      <bcf:field>eprint</bcf:field>
-      <bcf:field>eprintclass</bcf:field>
-      <bcf:field>eprinttype</bcf:field>
-      <bcf:field>file</bcf:field>
-      <bcf:field>hal_id</bcf:field>
-      <bcf:field>hal_version</bcf:field>
-      <bcf:field>institution</bcf:field>
-      <bcf:field>introducedin</bcf:field>
-      <bcf:field>license</bcf:field>
-      <bcf:field>month</bcf:field>
-      <bcf:field>note</bcf:field>
-      <bcf:field>organization</bcf:field>
-      <bcf:field>publisher</bcf:field>
-      <bcf:field>related</bcf:field>
-      <bcf:field>relatedstring</bcf:field>
-      <bcf:field>relatedtype</bcf:field>
-      <bcf:field>repository</bcf:field>
-      <bcf:field>subtitle</bcf:field>
-      <bcf:field>swhid</bcf:field>
-      <bcf:field>title</bcf:field>
-      <bcf:field>url</bcf:field>
-      <bcf:field>urldate</bcf:field>
-      <bcf:field>version</bcf:field>
-      <bcf:field>year</bcf:field>
-    </bcf:entryfields>
     <bcf:multiscriptfields>
       <bcf:field>abstract</bcf:field>
       <bcf:field>addendum</bcf:field>
@@ -2570,104 +2366,143 @@
         <bcf:field>gender</bcf:field>
       </bcf:constraint>
     </bcf:constraints>
-    <bcf:constraints>
-      <bcf:entrytype>software</bcf:entrytype>
-      <bcf:constraint type="mandatory">
-        <bcf:fieldor>
-          <bcf:field>author</bcf:field>
-          <bcf:field>editor</bcf:field>
-        </bcf:fieldor>
-        <bcf:field>title</bcf:field>
-        <bcf:field>url</bcf:field>
-        <bcf:field>year</bcf:field>
-      </bcf:constraint>
-    </bcf:constraints>
-    <bcf:constraints>
-      <bcf:entrytype>softwareversion</bcf:entrytype>
-      <bcf:constraint type="mandatory">
-        <bcf:fieldor>
-          <bcf:field>author</bcf:field>
-          <bcf:field>editor</bcf:field>
-        </bcf:fieldor>
-        <bcf:field>title</bcf:field>
-        <bcf:field>url</bcf:field>
-        <bcf:field>version</bcf:field>
-        <bcf:field>year</bcf:field>
-      </bcf:constraint>
-    </bcf:constraints>
-    <bcf:constraints>
-      <bcf:entrytype>softwaremodule</bcf:entrytype>
-      <bcf:constraint type="mandatory">
-        <bcf:field>author</bcf:field>
-        <bcf:field>subtitle</bcf:field>
-        <bcf:field>url</bcf:field>
-        <bcf:field>year</bcf:field>
-      </bcf:constraint>
-    </bcf:constraints>
-    <bcf:constraints>
-      <bcf:entrytype>codefragment</bcf:entrytype>
-      <bcf:constraint type="mandatory">
-        <bcf:field>url</bcf:field>
-      </bcf:constraint>
-    </bcf:constraints>
   </bcf:datamodel>
   <!-- CITATION DATA -->
   <!-- SECTION 0 -->
   <bcf:bibdata section="0">
-    <bcf:datasource type="file" datatype="bibtex" glob="false">../2025Bibs/Prospectus.bib</bcf:datasource>
+    <bcf:datasource type="file" datatype="bibtex" glob="false">Other/refs.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1" intorder="1">albrecht2024</bcf:citekey>
-    <bcf:citekey order="1" intorder="2">christianos2021</bcf:citekey>
-    <bcf:citekey order="2" intorder="1">albrecht2024</bcf:citekey>
-    <bcf:citekey order="2" intorder="2">christianos2021</bcf:citekey>
-    <bcf:citekey order="2" intorder="3">terry2020</bcf:citekey>
-    <bcf:citekey order="2" intorder="4">canese2021</bcf:citekey>
-    <bcf:citekey order="3" intorder="1">calvo2018</bcf:citekey>
-    <bcf:citekey order="3" intorder="2">cao2012</bcf:citekey>
-    <bcf:citekey order="4" intorder="1">canese2021</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">christianos2021</bcf:citekey>
-    <bcf:citekey order="5" intorder="2">albrecht2024</bcf:citekey>
-    <bcf:citekey order="6" intorder="1">terry2020</bcf:citekey>
-    <bcf:citekey order="6" intorder="2">christianos2021</bcf:citekey>
-    <bcf:citekey order="7" intorder="1">zhong2024</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">gupta2017</bcf:citekey>
-    <bcf:citekey order="8" intorder="2">foerster2018</bcf:citekey>
-    <bcf:citekey order="9" intorder="1">christianos2021</bcf:citekey>
-    <bcf:citekey order="9" intorder="2">albrecht2024</bcf:citekey>
-    <bcf:citekey order="10" intorder="1">terry2020</bcf:citekey>
-    <bcf:citekey order="11" intorder="1">zaheer2017</bcf:citekey>
-    <bcf:citekey order="11" intorder="2">yang2018</bcf:citekey>
-    <bcf:citekey order="12" intorder="1">yang2018</bcf:citekey>
-    <bcf:citekey order="12" intorder="2">li2021b</bcf:citekey>
-    <bcf:citekey order="13" intorder="1">tang2021</bcf:citekey>
-    <bcf:citekey order="13" intorder="2">zambaldi2018</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">diaconis1980</bcf:citekey>
-    <bcf:citekey order="15" intorder="1">alvarez-melis2015</bcf:citekey>
-    <bcf:citekey order="15" intorder="2">zaheer2017</bcf:citekey>
-    <bcf:citekey order="16" intorder="1">zaheer2017</bcf:citekey>
-    <bcf:citekey order="17" intorder="1">yang2021a</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">yang2018</bcf:citekey>
-    <bcf:citekey order="18" intorder="2">li2021b</bcf:citekey>
-    <bcf:citekey order="19" intorder="1">liu2020b</bcf:citekey>
-    <bcf:citekey order="20" intorder="1">zambaldi2018</bcf:citekey>
-    <bcf:citekey order="21" intorder="1">hao2023</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">tang2021</bcf:citekey>
-    <bcf:citekey order="23" intorder="1">calvo2018</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">cao2012</bcf:citekey>
-    <bcf:citekey order="24" intorder="2">canese2021</bcf:citekey>
-    <bcf:citekey order="24" intorder="3">hao2023</bcf:citekey>
-    <bcf:citekey order="25" intorder="1">yu2022</bcf:citekey>
-    <bcf:citekey order="26" intorder="1">zhong2024</bcf:citekey>
-    <bcf:citekey order="27" intorder="1">hao2023</bcf:citekey>
-    <bcf:citekey order="27" intorder="2">witt2020</bcf:citekey>
-    <bcf:citekey order="28" intorder="1">hao2023</bcf:citekey>
-    <bcf:citekey order="29" intorder="1">christianos2021</bcf:citekey>
-    <bcf:citekey order="30" intorder="1">zhong2024</bcf:citekey>
-    <bcf:citekey order="31" intorder="1">liaw2018</bcf:citekey>
-    <bcf:citekey order="32" intorder="1">li2018b</bcf:citekey>
-    <bcf:citekey order="33" intorder="1">akiba2019</bcf:citekey>
-    <bcf:citekey order="34" intorder="1">powell2022</bcf:citekey>
+    <bcf:citekey order="1" intorder="1">yielding2023</bcf:citekey>
+    <bcf:citekey order="2" intorder="1">mohddaud2022</bcf:citekey>
+    <bcf:citekey order="3" intorder="1">mohddaud2022</bcf:citekey>
+    <bcf:citekey order="4" intorder="1">hambling2021</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">rogers2022</bcf:citekey>
+    <bcf:citekey order="5" intorder="2">kallenborn2024</bcf:citekey>
+    <bcf:citekey order="6" intorder="1">zotero-2835</bcf:citekey>
+    <bcf:citekey order="7" intorder="1">jin2025</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">rizk2019</bcf:citekey>
+    <bcf:citekey order="8" intorder="2">liang2024</bcf:citekey>
+    <bcf:citekey order="9" intorder="1">silver2016</bcf:citekey>
+    <bcf:citekey order="9" intorder="2">vinyals2019</bcf:citekey>
+    <bcf:citekey order="9" intorder="3">berner2019</bcf:citekey>
+    <bcf:citekey order="10" intorder="1">abeywickrama2022</bcf:citekey>
+    <bcf:citekey order="11" intorder="1">rizk2019</bcf:citekey>
+    <bcf:citekey order="11" intorder="2">yang2021a</bcf:citekey>
+    <bcf:citekey order="12" intorder="1">ackermann2019</bcf:citekey>
+    <bcf:citekey order="12" intorder="2">zhou2023</bcf:citekey>
+    <bcf:citekey order="13" intorder="1">vinyals2019</bcf:citekey>
+    <bcf:citekey order="13" intorder="2">hoang2023</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">zhong2024</bcf:citekey>
+    <bcf:citekey order="15" intorder="1">smit2023</bcf:citekey>
+    <bcf:citekey order="16" intorder="1">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="17" intorder="1">iqbal2021</bcf:citekey>
+    <bcf:citekey order="17" intorder="2">foerster2018</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">rizk2019</bcf:citekey>
+    <bcf:citekey order="19" intorder="1">shoham2007</bcf:citekey>
+    <bcf:citekey order="19" intorder="2">ackermann2019</bcf:citekey>
+    <bcf:citekey order="20" intorder="1">smit2023</bcf:citekey>
+    <bcf:citekey order="21" intorder="1">narvekar2020</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">gupta2017</bcf:citekey>
+    <bcf:citekey order="23" intorder="1">gupta2017</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="25" intorder="1">smit2023</bcf:citekey>
+    <bcf:citekey order="26" intorder="1">zheng2017</bcf:citekey>
+    <bcf:citekey order="27" intorder="1">terry2021</bcf:citekey>
+    <bcf:citekey order="28" intorder="1">samvelyan2019</bcf:citekey>
+    <bcf:citekey order="29" intorder="1">kurach2020</bcf:citekey>
+    <bcf:citekey order="30" intorder="1">canese2021</bcf:citekey>
+    <bcf:citekey order="30" intorder="2">krouka2022</bcf:citekey>
+    <bcf:citekey order="31" intorder="1">shoham2007</bcf:citekey>
+    <bcf:citekey order="31" intorder="2">busoniu2008</bcf:citekey>
+    <bcf:citekey order="32" intorder="1">ackermann2019</bcf:citekey>
+    <bcf:citekey order="33" intorder="1">foerster2018</bcf:citekey>
+    <bcf:citekey order="33" intorder="2">lowe2020</bcf:citekey>
+    <bcf:citekey order="34" intorder="1">sukhbaatar2016</bcf:citekey>
+    <bcf:citekey order="34" intorder="2">wei2022</bcf:citekey>
+    <bcf:citekey order="35" intorder="1">shukla2022</bcf:citekey>
+    <bcf:citekey order="36" intorder="1">shi2023</bcf:citekey>
+    <bcf:citekey order="37" intorder="1">smit2023</bcf:citekey>
+    <bcf:citekey order="37" intorder="2">albrecht2024</bcf:citekey>
+    <bcf:citekey order="38" intorder="1">cui2022</bcf:citekey>
+    <bcf:citekey order="39" intorder="1">smit2023</bcf:citekey>
+    <bcf:citekey order="40" intorder="1">smit2023</bcf:citekey>
+    <bcf:citekey order="41" intorder="1">hoang2023</bcf:citekey>
+    <bcf:citekey order="42" intorder="1">calvo2018</bcf:citekey>
+    <bcf:citekey order="43" intorder="1">rizk2019</bcf:citekey>
+    <bcf:citekey order="44" intorder="1">gupta2017a</bcf:citekey>
+    <bcf:citekey order="45" intorder="1">huttenrauch2019</bcf:citekey>
+    <bcf:citekey order="46" intorder="1">iqbal2021</bcf:citekey>
+    <bcf:citekey order="47" intorder="1">samvelyan2019</bcf:citekey>
+    <bcf:citekey order="48" intorder="1">kurach2020</bcf:citekey>
+    <bcf:citekey order="49" intorder="1">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="50" intorder="1">iqbal2021</bcf:citekey>
+    <bcf:citekey order="51" intorder="1">huttenrauch2019</bcf:citekey>
+    <bcf:citekey order="52" intorder="1">yang2021a</bcf:citekey>
+    <bcf:citekey order="53" intorder="1">kouzeghar2023</bcf:citekey>
+    <bcf:citekey order="54" intorder="1">gupta2017a</bcf:citekey>
+    <bcf:citekey order="55" intorder="1">foerster2018</bcf:citekey>
+    <bcf:citekey order="56" intorder="1">bitzer2010</bcf:citekey>
+    <bcf:citekey order="56" intorder="2">tangkaratt2016</bcf:citekey>
+    <bcf:citekey order="57" intorder="1">wakilpoor2020</bcf:citekey>
+    <bcf:citekey order="58" intorder="1">koster2020</bcf:citekey>
+    <bcf:citekey order="59" intorder="1">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="60" intorder="1">leibo2021</bcf:citekey>
+    <bcf:citekey order="61" intorder="1">zheng2017</bcf:citekey>
+    <bcf:citekey order="62" intorder="1">ellis2023</bcf:citekey>
+    <bcf:citekey order="63" intorder="1">kurach2020</bcf:citekey>
+    <bcf:citekey order="64" intorder="1">guo2024</bcf:citekey>
+    <bcf:citekey order="65" intorder="1">schulman2017a</bcf:citekey>
+    <bcf:citekey order="66" intorder="1">gupta2017</bcf:citekey>
+    <bcf:citekey order="67" intorder="1">gupta2017</bcf:citekey>
+    <bcf:citekey order="68" intorder="1">papoudakis2021</bcf:citekey>
+    <bcf:citekey order="69" intorder="1">schulman2017</bcf:citekey>
+    <bcf:citekey order="70" intorder="1">albrecht2024</bcf:citekey>
+    <bcf:citekey order="70" intorder="2">christianos2021</bcf:citekey>
+    <bcf:citekey order="71" intorder="1">albrecht2024</bcf:citekey>
+    <bcf:citekey order="71" intorder="2">christianos2021</bcf:citekey>
+    <bcf:citekey order="71" intorder="3">terry2020</bcf:citekey>
+    <bcf:citekey order="71" intorder="4">canese2021</bcf:citekey>
+    <bcf:citekey order="72" intorder="1">calvo2018</bcf:citekey>
+    <bcf:citekey order="72" intorder="2">cao2012</bcf:citekey>
+    <bcf:citekey order="73" intorder="1">canese2021</bcf:citekey>
+    <bcf:citekey order="74" intorder="1">christianos2021</bcf:citekey>
+    <bcf:citekey order="74" intorder="2">albrecht2024</bcf:citekey>
+    <bcf:citekey order="75" intorder="1">terry2020</bcf:citekey>
+    <bcf:citekey order="75" intorder="2">christianos2021</bcf:citekey>
+    <bcf:citekey order="76" intorder="1">zhong2024</bcf:citekey>
+    <bcf:citekey order="77" intorder="1">gupta2017</bcf:citekey>
+    <bcf:citekey order="77" intorder="2">foerster2018</bcf:citekey>
+    <bcf:citekey order="78" intorder="1">christianos2021</bcf:citekey>
+    <bcf:citekey order="78" intorder="2">albrecht2024</bcf:citekey>
+    <bcf:citekey order="79" intorder="1">terry2020</bcf:citekey>
+    <bcf:citekey order="80" intorder="1">zaheer2017</bcf:citekey>
+    <bcf:citekey order="80" intorder="2">yang2018</bcf:citekey>
+    <bcf:citekey order="81" intorder="1">yang2018</bcf:citekey>
+    <bcf:citekey order="81" intorder="2">li2021b</bcf:citekey>
+    <bcf:citekey order="82" intorder="1">tang2021</bcf:citekey>
+    <bcf:citekey order="82" intorder="2">zambaldi2018</bcf:citekey>
+    <bcf:citekey order="83" intorder="1">diaconis1980</bcf:citekey>
+    <bcf:citekey order="84" intorder="1">alvarez-melis2015</bcf:citekey>
+    <bcf:citekey order="84" intorder="2">zaheer2017</bcf:citekey>
+    <bcf:citekey order="85" intorder="1">zaheer2017</bcf:citekey>
+    <bcf:citekey order="86" intorder="1">yang2021a</bcf:citekey>
+    <bcf:citekey order="87" intorder="1">yang2018</bcf:citekey>
+    <bcf:citekey order="87" intorder="2">li2021b</bcf:citekey>
+    <bcf:citekey order="88" intorder="1">liu2020b</bcf:citekey>
+    <bcf:citekey order="89" intorder="1">zambaldi2018</bcf:citekey>
+    <bcf:citekey order="90" intorder="1">hao2023</bcf:citekey>
+    <bcf:citekey order="91" intorder="1">tang2021</bcf:citekey>
+    <bcf:citekey order="92" intorder="1">calvo2018</bcf:citekey>
+    <bcf:citekey order="93" intorder="1">cao2012</bcf:citekey>
+    <bcf:citekey order="93" intorder="2">canese2021</bcf:citekey>
+    <bcf:citekey order="93" intorder="3">hao2023</bcf:citekey>
+    <bcf:citekey order="94" intorder="1">yu2022</bcf:citekey>
+    <bcf:citekey order="95" intorder="1">zhong2024</bcf:citekey>
+    <bcf:citekey order="96" intorder="1">hao2023</bcf:citekey>
+    <bcf:citekey order="96" intorder="2">witt2020</bcf:citekey>
+    <bcf:citekey order="97" intorder="1">hao2023</bcf:citekey>
+    <bcf:citekey order="98" intorder="1">christianos2021</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="nty">

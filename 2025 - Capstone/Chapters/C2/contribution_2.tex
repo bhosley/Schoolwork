@@ -1,0 +1,289 @@
+% #TODO: add short captions to relevant figures.
+
+\section{Introduction}
+
+\Gls{marl} addresses coordination among multiple decision 
+makers operating under partial observability.
+Standard approaches, such as parameter sharing and \gls{ctde},
+have enabled strong performance in many cooperative 
+domains~\cite{albrecht2024, christianos2021}.
+However, these methods typically assume that agents are interchangeable: 
+they possess the same observation structure, action capabilities, and behavioral roles. 
+This interchangeability assumption simplifies learning, 
+but may become restrictive in settings where agents differ due to hardware constraints, 
+sensing modalities, or mission specialization. 
+In such cases, na\"{i}ve parameter sharing obscures the 
+structural differences that matter for decision making, 
+while fully separating policies prevents useful knowledge sharing across the 
+group of agents~\cite{albrecht2024, christianos2021, terry2020, canese2021}.
+
+Heterogeneity is common in real-world multi-agent systems, where agents may differ 
+in sensing, actuation, or operational roles due to hardware constraints 
+or task specialization \cite{calvo2018, cao2012}. 
+These structural differences complicate parameter sharing, generalization, and transfer, 
+since policies must account for observation and action spaces that are not merely 
+variations of a shared template but may differ in dimensionality and semantics \cite{canese2021}. 
+As a result, methods that assume agent interchangeability often degrade when applied to 
+heterogeneous teams, motivating representations that preserve agent-specific structure 
+while still enabling shared learning \cite{christianos2021, albrecht2024}.
+
+An effective approach is to retain shared network parameters but append explicit agent 
+identifiers or type embeddings to the input \cite{terry2020, christianos2021}. 
+This strategy allows a network to distinguish among agents, 
+but it does not resolve structural heterogeneity. 
+When agents differ in the dimensionality or interpretation of their observations or actions,
+explicit identifiers must be coupled with padding, duplication, or handcrafted encodings.
+Here, differences in interpretation include cases where observation vectors have the same
+dimensionality but encode different physical quantities, coordinate frames, or sensing
+modalities (e.g., forward-facing versus downward-facing visual inputs).
+Such fixes increase representational overhead and can obscure the information that
+distinguishes agents.
+
+To illustrate, consider a team of drones that all carry a forward-facing camera but 
+differ in their additional sensing capabilities.
+One drone may also carry a downward-facing camera for terrain mapping, 
+another a thermal camera for target detection, and a third only the forward-facing sensor.
+A parameter-sharing policy with explicit agent 
+identifiers must still pad missing channels or duplicate dimensions 
+to force these observations into a common tensor shape, despite the 
+fact that the additional channels encode distinct viewpoints or sensing modalities.
+In contrast, a homogenized representation defines a shared set of observation 
+elements (e.g., forward-facing imagery, downward-facing imagery, and thermal imagery) 
+and allows each drone to populate only the elements it observes.
+The policy can then infer sensor capabilities implicitly from the pattern of 
+populated elements, without requiring explicit identity features.
+
+We propose an alternative approach based on \emph{implicit indication}. 
+Rather than appending explicit identity features, we construct homogenized 
+observation and action spaces that jointly span all agent-specific subspaces. 
+Each agent's individual capabilities correspond to a distinct subset within 
+these shared domains, realized by leaving unused elements empty or null. 
+Policies are trained over the complete domain, 
+learning to condition implicitly on which elements are populated. 
+Differences among agents therefore arise naturally from the structure of 
+their accessible subsets, eliminating the need for separate identifiers. 
+This construction yields an input-invariant policy class;
+a single network that generalizes across heterogeneous teams, 
+remains robust to degraded or partial observations, 
+and can be transferred to new configurations without architectural change.
+
+Practically, this relies on \emph{semantic decomposability}: 
+the assumption that an agent's observation and action spaces can be factorized
+into elements that play comparable functional roles across agents.
+For example, two agents may each observe an \(n\)-dimensional vector, 
+where corresponding components encode the same physical quantity 
+(e.g., distance to an object), even if other components differ or are absent.
+Under this assumption, homogenization requires \emph{consistent element correspondence},
+meaning that corresponding elements across agents refer to the same underlying quantity
+and are expressed on a compatible scale (e.g., the distance measurements represent
+the same physical distance in the same units).
+
+Applicability hinges on semantically aligned elements across agents; when present, 
+homogenization provides a lightweight basis for shared learning, and when 
+absent it may function only as a representational scaffold without reliable transfer.
+
+The paper contributes three complementary advances. 
+First, it formalizes \emph{implicit indication} as a representational framework that enables
+shared policy parameters across heterogeneous agents without explicit identifiers, realized
+via homogenized observation and action spaces.
+Second, it establishes theoretical conditions under which such constructions preserve 
+representability and analyzes the role of semantic decomposability in maintaining policy validity. 
+Finally, it provides empirical evidence using a configurable heterogeneous-agent 
+environment\footnote{
+    Code availability---The custom multi-agent environment (HyperGrid) 
+    and all training/evaluation scripts used in this study are available at 
+    \href{https://github.com/bhosley/Hypergrid}{\texttt{https://github.com/bhosley/Hypergrid}}.
+}, 
+comparing the proposed approach against \gls{happo}~\cite{zhong2024} and 
+evaluating robustness to sensor dropout, team-size variation, and composition changes. 
+Together, these results position homogenization as a lightweight mechanism 
+for parameter sharing in \gls{harl}.
+
+We next situate this formulation relative to prior work on parameter sharing, 
+agent indication, and invariant architectures.
+
+
+\section{Related Work}
+\label{con2:sec:related_work}
+
+Enabling shared learning across heterogeneous agents 
+presents a continuing challenge in \gls{marl}.
+Existing research addresses this challenge through three main paradigms: 
+parameter-sharing mechanisms, invariant and equivariant policy architectures, 
+and policy-optimization algorithms designed for heterogeneous settings. 
+Homogenization offers a complementary framework that integrates these 
+paradigms by providing a shared representational domain in which 
+heterogeneous agents can be trained under a unified policy structure.
+
+\subsection{Parameter Sharing and Agent Indication}
+
+Parameter sharing has been highly effective in homogeneous \gls{marl},
+where agents have identical observation and action spaces and are intended
+to learn interchangeable behaviors~\cite{gupta2017, foerster2018}.
+In these settings, a single shared policy improves sample efficiency and
+can promote coordinated behavior without additional architectural machinery.
+However, this benefit relies critically on structural symmetry:
+once agents differ in sensing, actuation, or role, parameter sharing
+no longer applies straightforwardly, and consequently most heterogeneous-agent
+systems instead train separate policies for each agent or agent type.
+
+To recover some of the efficiency benefits of sharing, 
+prior work has introduced \emph{explicit agent indication};
+supplying the policy with features that distinguish among agents.
+One approach is to use learned type or role embeddings~\cite{christianos2021, albrecht2024}, 
+while Terry et al.~\cite{terry2020} evaluated encodings; 
+such as geometric masks, binary indicators, and inversion-based transforms; 
+that are all functionally equivalent to providing a one-hot identity signal.
+These approaches allow divergent behavior under shared parameters, 
+but they still require manually injecting identity information and 
+do not resolve underlying structural mismatches among agents.
+
+\subsection{Invariant and Equivariant Architectures}
+
+While explicit agent indication removes symmetry assumptions by conditioning on agent identity,
+a complementary line of research instead exploits symmetry directly by designing policies that are
+invariant or equivariant to permutations of their inputs~\cite{zaheer2017, yang2018}.
+When the ordering or indexing of agents and entities carries no semantic meaning,
+such architectures enforce permutation symmetry through shared encoders combined with
+symmetric aggregation operators.
+This inductive bias has been shown to improve generalization, stability, and sample efficiency
+in domains where agents or observed entities are structurally uniform.
+
+Invariant and equivariant models operationalize this principle by applying a common encoder
+to each entity and aggregating the resulting representations using commutative operations
+such as summation or averaging~\cite{yang2018, li2021b}, or through attention mechanisms
+without positional encodings~\cite{tang2021, zambaldi2018}.
+These designs rely on the assumption that agents are exchangeable, meaning that permuting
+their order does not alter the underlying decision problem.
+Exchangeability results, such as de Finetti's theorem~\cite{diaconis1980},
+provide a formal justification for this assumption and clarify when permutation-invariant
+modeling is appropriate~\cite{alvarez-melis2015, zaheer2017}.
+Deep Sets~\cite{zaheer2017} and graph-based \gls{marl} architectures~\cite{yang2021a} instantiate 
+this approach by ensuring that reordering agents or entities leaves the policy unchanged.
+While these methods assume a uniform input structure across agents,
+homogenization through implicit-indication differs by aligning structurally 
+heterogeneous observation spaces within a shared spanning domain, enabling invariant 
+processing even when agents do not share identical feature sets.
+
+A related class of invariant approximations arises in mean-field 
+\gls{marl} solutions, where interactions among many agents are 
+aggregated through an averaging operator~\cite{yang2018, li2021b}, 
+yielding permutation invariance and insensitivity to team size. 
+These methods demonstrate that invariant aggregation can 
+significantly reduce sample complexity in large populations, 
+but the commutative pooling they employ inevitably discards 
+relational structure among interacting agents.
+
+To recover relational information while retaining permutation invariance, 
+the \gls{pic}~\cite{liu2020b} introduces a graph-based critic that aggregates 
+per-agent information through message passing. \Gls{pic} improves information 
+utilization in centralized training and remains insensitive to agent ordering; 
+moreover, by including type or role labels as node attributes, \gls{pic} can 
+accommodate heterogeneous agents without departing from its invariant design. 
+These developments motivate more expressive invariant architectures; notably, 
+attention-based pooling~\cite{zambaldi2018} and graph-based attention~\cite{hao2023};
+which preserve relational structure while maintaining order invariance, 
+though at the cost of losing population-size invariance due to pairwise 
+message passing or full attention matrices. Such findings parallel observations 
+in single-agent settings, where relational encoders have shown robustness 
+to missing or occluded inputs~\cite{tang2021}, reinforcing the 
+importance of architectural invariance in domains where observation 
+availability varies across agents.
+
+While invariant and relational architectures can support heterogeneous agents
+through node- or type-specific features in graph and attention-based models,
+they still assume a fixed architectural template and incur costs that 
+grow with the number of entities. In many practical multi-agent systems, 
+agents differ more fundamentally in their observation and action 
+structures~\cite{calvo2018}, and handling these differences purely 
+architecturally can become cumbersome~\cite{cao2012, canese2021, hao2023}. 
+This motivates other lines of work that address heterogeneity at 
+the level of policy parameterization and training algorithms, 
+for example by decoupling per-type policy heads or generating 
+agent-specific parameters via hypernetworks.
+
+\subsection{Handling Heterogeneity in MARL}
+
+Several recent frameworks have explicitly targeted the challenges of heterogeneity 
+in cooperative \gls{marl}. \Gls{ippo} and \gls{mappo}~\cite{yu2022} 
+provide stable baselines for homogeneous teams but require architectural duplication 
+to handle differing agent spaces. \Gls{happo}~\cite{zhong2024} 
+extends these ideas by enabling joint training across agent types while maintaining 
+distinct policy heads, improving sample efficiency and role specialization.
+Other works introduce selective sharing mechanisms or hypernetworks to generate 
+per-agent parameters~\cite{hao2023, witt2020}. These approaches primarily 
+address heterogeneity through network architecture or parameterization, 
+whereas the method introduced here addresses it through representation: 
+homogenization creates a shared input-output space in which a single 
+policy can operate across agents with structurally distinct capabilities.
+
+Other methods address heterogeneity through conditional parameter sharing, 
+combining a shared backbone with modules whose parameters are generated 
+by an auxiliary network. Hypernetwork-based approaches, such as 
+\gls{hpn}~\cite{hao2023}, use a separate \gls{mlp} to produce the 
+parameters of an input module that processes aggregated per-agent inputs 
+before they are passed through a single shared backbone that outputs actions 
+for all agents, effectively treating the team as a single structured entity. 
+Selective-sharing mechanisms~\cite{christianos2021} allow agents to 
+access shared components when beneficial and retain specialized modules where needed. 
+
+These strategies offer flexible ways to capture cross-agent commonalities without 
+enforcing strict parameter tying. The approach introduced in this work is complementary: 
+rather than conditioning parameterization on agent identity or type, 
+homogenization aligns heterogeneous observation and action spaces within a 
+shared representational domain, enabling a single policy to operate across 
+structurally distinct agents without explicit identifiers or per-type modules.
+
+Together, these methods illustrate the range of existing strategies for 
+handling heterogeneity; through explicit indication, invariant architectures, 
+selective parameter sharing, or type-specific policy modules. 
+Yet all of these approaches treat heterogeneity as an architectural or 
+algorithmic constraint on how policies are parameterized. 
+In contrast, the approach introduced in this work treats heterogeneity as a 
+representational problem: rather than specializing networks per agent type, 
+it constructs shared input and action domains, homogenized across agents,
+that allow a single policy to operate over structurally distinct observation 
+and action spaces without requiring architectural specialization.
+The next section develops this representational perspective in detail and 
+formalizes the homogenization framework used in this work.
+
+
+\section{Implicit Indication via Homogenization}
+\label{con2:sec:method_homogenization}
+
+\subsection{Preliminaries}
+
+The homogenization approach constructs a unified space defined by the union set 
+of the elements that comprise the heterogeneous spaces of the constituent agents.
+This can be done for action spaces, observation spaces, or both independently.
+
+This construction enables parameter sharing without requiring explicit agent identifiers, 
+while still preserving the structural distinctions that arise from heterogeneity. 
+In what follows, we define the homogenized spaces, describe the role of validity masks, 
+and outline the resulting invariant policy class.
+
+To formally represent the cooperative multi-agent setting,
+we model the environment as a \gls{dec-pomdp}
+defined by the tuple \((\Gls{i},\Gls{s},\Gls{o},\Gls{a},\Gls{p},\Gls{r},\gls{discount})\) where:
+%
+% #TODO: Perhaps this shoudl be converted to a table akin to C1's definitions
+\begin{description}%[labelindent=2em, labelwidth=5em, itemsep=3pt, topsep=8pt]
+    \item[\(\Gls{i}\)] : Set of all agents
+    % \item[\(\Gls{s} = \{S_i\}_{i\in I}\)] : Joint state space
+    \item[\(\Gls{s} = \{\Gls{s}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint state space
+    % \item[\(\Gls{o} = \{O_i\}_{i\in I}\)] : Joint observation space
+    \item[\(\Gls{o} = \{\Gls{o}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint observation space
+    % \item[\(\Gls{a} = \{A_i\}_{i\in I}\)] : Joint action space
+    \item[\(\Gls{a} = \{\Gls{a}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint action space
+    % \item[\(\Gls{p}(s^\prime|s,a)\)] : Transition probability function
+    \item[\(\Gls{p}(\gls{s}^\prime|\gls{s},\gls{a})\)] : Transition probability function
+    % \item[\(\Gls{r} = \{R_i\}_{i\in I}\)] : Joint rewards
+    \item[\(\Gls{r} = \{\Gls{r}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint rewards
+    \item[\gls{discount}] : Reward discount factor.
+\end{description}
+%
+When combined with a joint policy \(\gls{pi} = \{\gls{pi}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\) 
+we have a \gls{posg}.
+
+
+

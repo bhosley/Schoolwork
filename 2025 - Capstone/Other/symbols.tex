@@ -1,0 +1,73 @@
+% Specialized command for this section:
+\NewDocumentCommand{\glsNewSymbol}{m m m O{} O{#1}}{%
+    \newglossaryentry{#1}{%
+        text=\ensuremath{#2}, 
+        name=\ensuremath{#3}, 
+        description={#4},
+        sort={#5}, 
+        type=symbols, 
+        % group={#6}
+    }%
+    % This function allows me to use the commands: 
+    % \gls{x} -> \(x\) and \Gls{x} -> \(X\)
+} 
+% \glsNewSymbol{name}{printed in text}{printed in glossary}[description in glossary]
+
+% -------------- General -------------- %
+% Reals
+\glsNewSymbol{reals}{\mathbb{R}}{\mathbb{R}}[Set of all real numbers.]
+
+
+% -------------- Games -------------- %
+% Agents
+\glsNewSymbol{i}{i}{I}[Set of agents \(i\).]
+% Time steps
+\glsNewSymbol{t}{t}{T}[Set of time steps \(t\).]
+% States
+\glsNewSymbol{s}{s}{s,S,\bar{S}}[State, state space, set of terminal states.]
+% Observation Space
+\glsNewSymbol{O}{O}{O,O_i}[Observation space, marginal observation space of agent \(i\).]
+\glsNewSymbol{o}{o}{o,o_i}[Joint observation, observation of agent \(i\).]
+% Actions
+\glsNewSymbol{A}{A}{A,A_i}[Action space, marginal action space of agent \(i\).]
+\glsNewSymbol{a}{a}{a,a_i}[Joint action, action of agent \(i\).]
+% Reward function
+\glsNewSymbol{r}{r}{r,r_i}[Reward, reward for agent \(i\).]
+\glsNewSymbol{rew}{\mathcal{R}}{\mathcal{R},\mathcal{R}_i}[
+    Reward function, reward function for agent \(i\).]
+% Transition Probability Matrix
+\glsNewSymbol{P}{\textbf{P}}{\textbf{P}}[
+    \(\text{dim}(\Gls{s})\times\text{dim}(\Gls{s})\) 
+    State-transition probability matrix.]
+% #TODO: Write a better description for probability transition function and transition probability
+\glsNewSymbol{p}{p}{P}[Transition probability function.]
+% Reward value
+\glsNewSymbol{g}{g}{G_t}[Return at time \gls{t}.]
+
+
+% -------------- Machine Learning -------------- %
+% Policy
+\glsNewSymbol{pi}{\pi}{\pi,\pi_i}[Policy (decision-making rule), Policy of agent \(i\).]
+\glsNewSymbol{pi_opt}{\pi^*}{\pi^*}[Optimal joint policy.]
+% Action Value
+\glsNewSymbol{q}{q}{Q}[Set of state-values or state-value functions.]
+\glsNewSymbol{q_pi}{q_\pi}{q_\pi(a|s)}[Value of action \gls{a} given state \gls{s} by policy \gls{pi}.]
+\glsNewSymbol{q_*}{q_*}{q_*(a|s)}[Value of state action\gls{a} given state \gls{s} under optimal policy.]
+% State Value
+\glsNewSymbol{v}{v}{V}[Set of action-values or action-value functions.]
+\glsNewSymbol{v_pi}{v_\pi}{v_\pi(s)}[Value of state \gls{s} given by policy \gls{pi}.]
+\glsNewSymbol{v_*}{v_*}{v_*(s)}[Value of state \gls{s} under optimal policy.]
+
+
+% -------------- Optimization -------------- %
+% Expected Value
+\glsNewSymbol{expRet}{\mathbb{E}}{\mathbb{E}_{\pi}[\cdot]}[Expected return from policy \gls{pi}.]
+% Discount factor
+\glsNewSymbol{discount}{\gamma}{\gamma}[Discount-rate.]
+% Step size parameter
+\glsNewSymbol{step-size}{\alpha}{\alpha}[Policy update step-size parameter.]
+
+
+% -------------- Other -------------- %
+
+% #OPT: Ensure function of symbol links

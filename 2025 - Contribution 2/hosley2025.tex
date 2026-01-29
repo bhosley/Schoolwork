@@ -116,9 +116,11 @@
     description={Reward.}}
 \newglossaryentry{p}{text=p,name=P,sort=p,type=symbols,category=symbol,
     description={Transition probability.}}
-\newglossaryentry{discount}{text=\ensuremath{\gamma},name=\ensuremath{\gamma},sort=\ensuremath{\gamma},type=symbols,category=symbol,
+\newglossaryentry{discount}{text=\ensuremath{\gamma},name=\ensuremath{\gamma},
+    sort=\ensuremath{\gamma},type=symbols,category=symbol,
     description={Discount factor.}}
-\newglossaryentry{pi}{text=\ensuremath{\pi},name=\ensuremath{\pi},sort=\ensuremath{\pi},type=symbols,category=symbol,
+\newglossaryentry{pi}{text=\ensuremath{\pi},name=\ensuremath{\pi},
+sort=\ensuremath{\pi},type=symbols,category=symbol,
     description={Policy.}}
 \newglossaryentry{i}{text=i,name=I,sort=i,type=symbols,category=symbol,
     description={Set of agents \(i\).}}
@@ -152,6 +154,10 @@
 % \received[accepted]{DD Month YYYY}
 \maketitle
 \glsresetall
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ----- Begin: Dissertation Copy ----- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Introduction}
 
@@ -192,7 +198,6 @@ modalities (e.g., forward-facing versus downward-facing visual inputs).
 Such fixes increase representational overhead and can obscure the information that
 distinguishes agents.
 
-% 
 To illustrate, consider a team of drones that all carry a forward-facing camera but 
 differ in their additional sensing capabilities.
 One drone may also carry a downward-facing camera for terrain mapping, 
@@ -359,30 +364,17 @@ agent-specific parameters via hypernetworks.
 \subsection{Handling Heterogeneity in MARL}
 
 Several recent frameworks have explicitly targeted the challenges of heterogeneity 
-in cooperative MARL. Independent PPO (IPPO) and Multi-Agent PPO (MAPPO)\cite{yu2022} 
+in cooperative \gls{marl}. \Gls{ippo} and \gls{mappo}~\cite{yu2022} 
 provide stable baselines for homogeneous teams but require architectural duplication 
-to handle differing agent spaces. Heterogeneous-Agent PPO (HAPPO)\cite{zhong2024} 
+to handle differing agent spaces. \Gls{happo}~\cite{zhong2024} 
 extends these ideas by enabling joint training across agent types while maintaining 
 distinct policy heads, improving sample efficiency and role specialization.
 Other works introduce selective sharing mechanisms or hypernetworks to generate 
-per-agent parameters~\cite{hao2023, witt2020}.These approaches primarily 
+per-agent parameters~\cite{hao2023, witt2020}. These approaches primarily 
 address heterogeneity through network architecture or parameterization, 
 whereas the method introduced here addresses it through representation: 
 homogenization creates a shared input-output space in which a single 
 policy can operate across agents with structurally distinct capabilities.
-
-Several frameworks directly target the challenge of handling heterogeneity in \gls{marl}.
-\Gls{ippo} and \gls{mappo}~\cite{witt2020, yu2022} provide stable baselines for 
-homogeneous teams, but accommodating agents with different observation or action 
-spaces typically requires duplicating architectures or maintaining separate policies. 
-\Gls{happo}~\cite{zhong2024} provides a strong solution for behaviorally 
-heterogeneous teams by enabling agents to learn distinct, emergent behaviors 
-under a shared optimization framework while maintaining separate policy networks 
-for agents with structurally different observation or action spaces. 
-This improves sample efficiency and role specialization, but because differently 
-structured agents cannot share parameters directly, \gls{happo} does not by itself 
-support unified policies across structurally heterogeneous agents without additional 
-architectural mechanisms.
 
 Other methods address heterogeneity through conditional parameter sharing, 
 combining a shared backbone with modules whose parameters are generated 
@@ -431,19 +423,25 @@ and outline the resulting invariant policy class.
 
 To formally represent the cooperative multi-agent setting,
 we model the environment as a \gls{dec-pomdp}
-defined by the tuple \((I,S,O,A,P,R,\gamma)\) where:
+defined by the tuple \((\Gls{i},\Gls{s},\Gls{o},\Gls{a},\Gls{p},\Gls{r},\gls{discount})\) where:
 %
 \begin{description}[labelindent=2em, labelwidth=5em, itemsep=3pt, topsep=8pt]
     \item[\(\Gls{i}\)] : Set of all agents
-    \item[\(\Gls{s} = \{S_i\}_{i\in I}\)] : Joint state space
-    \item[\(\Gls{o} = \{O_i\}_{i\in I}\)] : Joint observation space
-    \item[\(\Gls{a} = \{A_i\}_{i\in I}\)] : Joint action space
-    \item[\(\Gls{p}(s^\prime|s,a)\)] : Transition probability function
-    \item[\(\Gls{r} = \{R_i\}_{i\in I}\)] : Joint rewards
+    % \item[\(\Gls{s} = \{S_i\}_{i\in I}\)] : Joint state space
+    \item[\(\Gls{s} = \{\Gls{s}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint state space
+    % \item[\(\Gls{o} = \{O_i\}_{i\in I}\)] : Joint observation space
+    \item[\(\Gls{o} = \{\Gls{o}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint observation space
+    % \item[\(\Gls{a} = \{A_i\}_{i\in I}\)] : Joint action space
+    \item[\(\Gls{a} = \{\Gls{a}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint action space
+    % \item[\(\Gls{p}(s^\prime|s,a)\)] : Transition probability function
+    \item[\(\Gls{p}(\gls{s}^\prime|\gls{s},\gls{a})\)] : Transition probability function
+    % \item[\(\Gls{r} = \{R_i\}_{i\in I}\)] : Joint rewards
+    \item[\(\Gls{r} = \{\Gls{r}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint rewards
     \item[\gls{discount}] : Reward discount factor.
 \end{description}
 %
-When combined with a joint policy \(\gls{pi} = \{\pi_i\}_{i\in I}\) we have a \gls{posg}.
+When combined with a joint policy \(\gls{pi} = \{\gls{pi}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\) 
+we have a \gls{posg}.
 
 \subsection{Decomposition of Observations}
 
@@ -944,6 +942,9 @@ When these subsets induce disjoint embedded regions a single shared policy
 over \(\Hom{O}\) can, in principle, realize the same input--output mappings 
 as a collection of per-agent policies without requiring explicit agent identifiers.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ------ End: Dissertation Copy ------ %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Conclusion}
 \label{con2:sec:conclusion}
@@ -989,9 +990,12 @@ for enabling shared learning across structurally diverse agents.
 % \nocite{*}
 \printbibliography
 
-% % --- End Dissertation Inclusion ---
 \clearpage
 \appendix
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ----- Add to: Dissertation Appendix ----- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Hyperparameters}
 \label{con2:app:hyperparameters}
@@ -1240,6 +1244,9 @@ Several components of the formal model—such as general N-dimensional orientati
 continuous movement magnitudes, and broad state definitions—are therefore 
 supersets of the configuration actually used in our evaluations.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ----- End Add: Dissertation Appendix ----- %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \clearpage
 % [\st{yes} / \st{no}]

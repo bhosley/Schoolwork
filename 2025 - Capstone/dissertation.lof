@@ -1,0 +1,27 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces Environments used in \cref {ch:contribution_1}.}}{5}{figure.caption.4}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Example of Training Progression for Waterworld and \gls {lbf}}}{14}{figure.caption.6}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Example of Training Progression for Multiwalker}}{14}{figure.caption.7}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Training Iteration Timing Across Agent Counts.}}{16}{figure.caption.9}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Waterworld Retraining (4 agents, 2-agent pretraining).}}{18}{figure.caption.10}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Waterworld Retraining (8 agents, 2-agent pretraining).}}{19}{figure.caption.11}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Waterworld Pretraining Impact.}}{20}{figure.caption.12}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Multiwalker Retraining (5 agents, 3-agent pretraining).}}{21}{figure.caption.13}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Multiwalker Retraining (6 agents, 3-agent pretraining).}}{22}{figure.caption.14}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Multiwalker Pretraining Impact.}}{22}{figure.caption.15}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Level-Based Foraging Retraining (7 agents, 2-agent pretraining).}}{23}{figure.caption.17}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Level-Based Foraging Pretraining Impact.}}{24}{figure.caption.18}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Training curves for Waterworld, 3\ agents.}}{35}{figure.caption.24}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Training curves for Waterworld, 4\ agents.}}{36}{figure.caption.25}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Training curves for Waterworld, 5\ agents.}}{36}{figure.caption.26}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Training curves for Waterworld, 6\ agents.}}{37}{figure.caption.27}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Training curves for Waterworld, 7\ agents.}}{37}{figure.caption.28}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Training curves for Waterworld, 8\ agents.}}{38}{figure.caption.29}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Training curves for Multiwalker, 4\ agents.}}{38}{figure.caption.30}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Training curves for Multiwalker, 5\ agents.}}{39}{figure.caption.31}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Training curves for Multiwalker, 6\ agents.}}{39}{figure.caption.32}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Training curves for Multiwalker, 7\ agents.}}{40}{figure.caption.33}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Training curves for LBF, 3\ agents.}}{40}{figure.caption.34}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Training curves for LBF, 4\ agents.}}{41}{figure.caption.35}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Training curves for LBF, 5\ agents.}}{41}{figure.caption.36}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Training curves for LBF, 6\ agents.}}{42}{figure.caption.37}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Training curves for LBF, 7\ agents.}}{42}{figure.caption.38}%
