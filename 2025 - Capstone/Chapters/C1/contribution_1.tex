@@ -860,4 +860,86 @@ interactions encountered by larger groups.
     \label{con1:fig:lbf-aucs}
 \end{figure}
 
-\FloatBarrier
+% \section{Conclusion}
+
+% As cooperative \gls{marl} systems grow in scale and complexity, the challenge of efficiently 
+% training large, heterogeneous teams becomes a critical barrier to real-world deployment. 
+% This study addresses whether this training bottleneck can be mitigated by 
+% first pretraining smaller teams of agents and then scaling up to full-size configurations 
+% through policy duplication and subsequent retraining—a direct scaling strategy that 
+% promises to reduce computational cost while maintaining or improving performance.
+
+% We investigate this question using Proximal Policy Optimization within the 
+% RLlib framework, evaluating the approach across three benchmark environments: 
+% Waterworld, Multiwalker, and Level-Based Foraging. Each environment was 
+% selected to probe different coordination requirements and forms of heterogeneity: 
+% Waterworld features structurally identical agents with independently updated policies; 
+% Multiwalker introduces fixed spatial roles and static observation asymmetries; 
+% and \gls{lbf} incorporates dynamic intrinsic heterogeneity through 
+% skill level variation. Our methodology maintains consistent network architectures across 
+% team sizes, using lightweight observation adjustments to ensure that policies remain 
+% transferable without requiring architectural modification.
+
+% The results reveal that the efficacy of small-team pretraining and scaling is highly dependent 
+% on the nature of the environment and the degree of agent specialization required. 
+% In Waterworld, 
+% where agents are structurally identical and coordination demands are comparatively low, 
+% scaling from a small pretrained team consistently accelerates convergence, 
+% reflecting a clear efficiency gain. 
+% Multiwalker introduces mild intrinsic heterogeneity through fixed spatial roles and 
+% asymmetric observations, which exacerbate coordination demands as team size increases. 
+% In larger teams, the likelihood of a single agent failing, thus terminating the episode 
+% for all agents, becomes a critical bottleneck. In this setting, pretraining serves as a 
+% stabilizing influence by equipping agents with sufficient initial competence to avoid 
+% early termination and enable meaningful learning progression where tabula rasa training 
+% frequently fails to make progress.
+% \gls{lbf} posed the most significant challenges, 
+% combining dynamic intrinsic heterogeneity with shifting coordination 
+% demands based on agent skill levels. 
+% Here, the benefits of pretraining are modest and inconsistent, 
+% particularly for larger teams, where coordination complexity intensifies.
+
+% These findings indicate that reduced-size pretraining can be effective in cooperative \gls{marl} 
+% settings where agent roles are symmetric or only weakly specialized. In such cases, 
+% the strategy offers not only measurable gains in sample efficiency but also greater 
+% training stability in configurations prone to early failure. However, as environments 
+% demand more intricate coordination or stronger role differentiation, the utility of 
+% this approach diminishes. We further observe that the benefit of early pretraining 
+% often plateaus quickly—short curricula may provide comparable advantages to longer 
+% ones in many settings, offering a favorable cost-benefit tradeoff when compute is limited.
+
+% By introducing and employing agent-steps as a normalized metric for training cost, and by 
+% systematically evaluating policy reuse across a spectrum of team sizes and heterogeneity 
+% profiles, this study provides practical insight into the tradeoffs of using upsampling 
+% as a curricular training strategy. The results support the value of reduced-size pretraining 
+% and policy duplication as a practical tool for improving training efficiency in \gls{marl}, 
+% especially in domains where agent roles are largely interchangeable. However, this approach 
+% is not a complete solution but rather a useful technique that complements 
+% more comprehensive training frameworks. In settings where agent specialization or 
+% coordination complexity increases, tailored strategies that incorporate upsampling as 
+% one component may be necessary to achieve robust performance and scalability.
+
+% \section{Future Work}
+
+% Building on the findings of this study, several promising research directions emerge. 
+% One especially compelling area centers on the design of \emph{invariant observation spaces};
+% representations that remain structurally consistent across team sizes and configurations. 
+% Our current strategies for handling observation dimensionality in \gls{lbf}, 
+% though effective for transferability, are deliberately simple. More advanced techniques may 
+% unlock broader generalization without the tradeoffs seen in truncated or ally-ignorant designs.
+
+% In particular, adopting observation encodings that are \emph{permutation-invariant} or derived 
+% from structured representations (e.g., graphs or attention-based pooling) 
+% could offer a more robust solution. These techniques may allow policies to flexibly 
+% incorporate variable team sizes and agent contexts without the need for retraining or 
+% hard-coded constraints.
+
+% Another important avenue is to investigating whether such invariant representations 
+% improve robustness in the face of \emph{dynamic heterogenation}, that is, 
+% when agents change roles, capabilities, or sensory access over time. 
+% Current methods generally assume fixed or known agent types during training; 
+% relaxing this assumption may yield policies that are more adaptable to real-world 
+% systems with evolving requirements or agent failures.
+
+% Ultimately, these directions aim to extend the benefits of scalable policy training 
+% beyond static team setups, enabling more versatile and resilient multi-agent systems.

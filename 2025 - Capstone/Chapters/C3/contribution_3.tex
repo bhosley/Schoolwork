@@ -1,3 +1,808 @@
-% #TODO: add short captions to relevant figures.
-\graphicspath{{Chapters/C3/Figures/}}
+\glsunset{gae}
+
+\section{Introduction}
+
+\Gls{marl} has achieved remarkable success in cooperative 
+domains ranging from multiplayer video games to robotic coordination tasks~\cite{albrecht2024}. 
+A key enabler of this success has been parameter sharing, where multiple agents utilize the 
+same policy network, dramatically improving sample efficiency and enabling scalable 
+training~\cite{gupta2017, terry2020}. However, standard parameter sharing assumes 
+agent interchangeability: all agents possess identical observation and action spaces 
+and can be treated as functionally equivalent. This assumption breaks down in 
+heterogeneous multi-agent systems, where agents differ in their sensing capabilities, 
+actuation constraints, or operational roles due to hardware limitations, 
+mission specialization, or environmental constraints~\cite{calvo2018, cao2012}.
+
+When agents are structurally heterogeneous, possessing different observation or 
+action spaces, standard parameter sharing becomes problematic. 
+Na\"ive approaches such as padding observations to a common dimensionality or 
+concatenating inputs in a fixed order either obscure meaningful differences 
+between agents or create spurious dependencies on arbitrary ordering decisions~\cite{terry2020}. 
+This has motivated two distinct paradigms for enabling shared learning across heterogeneous 
+agents: architectural solutions that enforce invariance through network design, and 
+representational solutions that construct unified input spaces that preserve 
+structural distinctions.
+
+The architectural paradigm, exemplified by the \gls{pic}~\cite{liu2020b}, 
+addresses heterogeneity by employing \glspl{gnn} to aggregate agent 
+information in a permutation-invariant manner. \Gls{pic}'s graph-based critic treats each 
+agent as a node and uses graph convolutional layers with symmetric pooling operations 
+to produce a team-level value estimate that remains unchanged under agent permutations. 
+To handle heterogeneity, \gls{pic} augments node representations with explicit attribute 
+vectors encoding agent types or capabilities, allowing the \gls{gnn} to distinguish between 
+agents while maintaining permutation invariance. 
+This architectural approach has demonstrated effectiveness in scaling to large teams 
+and handling varying numbers of agents~\cite{liu2020b}.
+
+The representational paradigm, exemplified by Implicit Indication,%~\cite{hosley2025}, 
+takes a fundamentally different approach. Rather than enforcing invariance architecturally, 
+it constructs a homogenized observation space that spans all observation elements available 
+to any agent in the team. Each agent's observation occupies a subset of this space, 
+with unused elements masked or left empty. The policy network receives these homogenized 
+observations and implicitly infers agent capabilities from the pattern of populated 
+observation elements—hence ``implicit indication" of agent identity through observable 
+structure rather than explicit identifiers. 
+This representational approach enables parameter sharing without specialized 
+network architectures, using standard feed-forward or convolutional networks.
+
+While both paradigms address the same fundamental challenge, 
+enabling shared policies across heterogeneous agents, 
+they embody different philosophical commitments about 
+where complexity should reside. 
+The architectural approach places the burden on the network structure, 
+requiring specialized layers (graph convolutions, attention mechanisms) 
+to handle agent heterogeneity. 
+The representational approach shifts this burden to the input encoding, 
+relying on explicit masking to communicate observation availability 
+while using standard network architectures. 
+This raises a fundamental question: 
+\textit{which paradigm is more effective for heterogeneous multi-agent learning?}
+
+This work provides a direct empirical comparison between these two paradigms 
+through controlled experiments in a multi-agent gridworld environment designed 
+to isolate observation heterogeneity. 
+We evaluate \gls{pic} against Implicit Indication across four sensor configurations 
+spanning complete visibility, intersecting observation coverage, disjoint observation coverage, 
+and incomplete coverage. 
+Both methods are trained with identical hyperparameters and network capacities, 
+and evaluated under eight conditions designed to assess robustness to structural perturbations: 
+baseline performance, agent loss, sensor degradation, sensor improvement, coverage reduction, 
+coverage expansion, shuffled agent assignments, 
+and zero-shot generalization to novel observation patterns.
+
+Our empirical findings reveal a consistent and substantial performance advantage for 
+the representational approach. 
+Notably, Implicit Indication also outperforms a heterogeneous baseline employing 
+separate policies per agent, suggesting that the homogenized representation not 
+only enables parameter sharing but actively facilitates learning. 
+While both methods exhibit similar training dynamics, 
+their evaluation performance diverges significantly, 
+with Implicit Indication demonstrating superior robustness to sensor changes, 
+team composition modifications, and novel agent configurations.
+
+These results challenge the intuition that architectural invariance 
+through graph neural networks is necessary for effective heterogeneous MARL. 
+In domains where heterogeneity stems primarily from differing observation 
+capabilities that can be decomposed into semantically aligned elements, 
+explicit representational structure through masking appears to provide 
+more effective conditioning for policy learning than learned graph-based aggregation. 
+The simplicity of the representational approach—requiring no specialized architectural 
+components beyond standard policy networks—makes it readily accessible for 
+practitioners while delivering strong empirical performance.
+
+The contributions of this work are threefold. 
+First, we provide the first direct comparison between architectural and representational 
+approaches to heterogeneity in MARL, using controlled experiments with matched network 
+capacities and hyperparameters. 
+Second, we demonstrate through comprehensive evaluation 
+that representational homogenization can substantially outperform graph-based architectural 
+solutions in domains characterized by observation heterogeneity. 
+Third, we offer insights into when and why representational approaches may be preferable, 
+identifying domain characteristics and design principles that favor explicit 
+observation masking over learned invariant architectures. 
+These findings have practical implications for multi-agent system design, 
+suggesting that careful representation design can be as important as architectural 
+innovation for enabling effective learning in heterogeneous teams.
+
+\section{Related Work}
+
+\subsection{Parameter Sharing in Multi-Agent Reinforcement Learning}
+
+Parameter sharing has been a cornerstone of scalable \gls{marl}, 
+enabling efficient learning in cooperative scenarios by allowing 
+multiple agents to utilize the same policy network~\cite{gupta2017, foerster2018}. 
+In homogeneous settings where agents possess identical observation and action spaces, 
+parameter sharing improves sample efficiency by aggregating experience across agents 
+and promotes coordinated behavior through shared representations~\cite{terry2020}. 
+\Gls{mappo}~\cite{yu2022} has established parameter sharing as a 
+strong baseline for cooperative tasks, demonstrating that simple weight-sharing 
+schemes can achieve state-of-the-art performance when agents are structurally identical.
+
+However, this paradigm breaks down when agents are heterogeneous. 
+Terry et al.~\cite{terry2020} systematically evaluated various agent indication schema, 
+methods for distinguishing agents under shared parameters; 
+including one-hot identity vectors, learned embeddings, and geometric encodings. 
+While these approaches enable differentiation among agents, 
+they do not resolve underlying structural heterogeneity when 
+observation or action spaces differ in dimensionality or semantics. 
+Christianos et al.~\cite{christianos2021} proposed selective parameter sharing 
+mechanisms that allow agents to share some network components while 
+maintaining specialized modules, though this approach requires careful 
+design of which components to share.
+
+\subsection{Invariant and Equivariant Architectures}
+
+A parallel line of research has explored architectures that explicitly 
+enforce invariance or equivariance to input permutations. 
+Deep Sets~\cite{zaheer2017} established a theoretical foundation for 
+permutation-invariant functions over sets, proving that any such function 
+can be decomposed into a transformation of aggregated element-wise representations. 
+This framework has been widely adopted in domains where input ordering is arbitrary, 
+providing both theoretical guarantees and practical architectures for set-based learning.
+
+In \gls{marl}, these principles naturally extend to agent sets where 
+agents exhibit exchangeability, when permuting agent identities does 
+not change the underlying decision problem. 
+Mean field approaches~\cite{yang2018, li2021b} leverage this by 
+aggregating agent interactions through symmetric operations, 
+achieving invariance to team size and agent ordering. 
+However, these methods sacrifice relational information through commutative pooling, 
+motivating richer architectures that preserve both invariance and expressiveness.
+
+\Glspl{gnn} provide one solution by representing agents as nodes and their 
+interactions as edges~\cite{yang2021a}. Graph convolutional layers process agent 
+information through neighborhood aggregation, producing representations that are 
+invariant to node ordering while capturing relational structure. 
+Yang et al.~\cite{yang2021a} demonstrated that graph-based policies can adapt to 
+dynamic interaction topologies in cooperative tasks, outperforming non-relational baselines. 
+Attention mechanisms offer an alternative, using learned weights to aggregate 
+information without fixed graph structure~\cite{zambaldi2018, tang2021}. 
+These architectures have shown improved credit assignment and scalability in 
+multi-agent domains~\cite{hao2023}.
+
+\subsection{Permutation Invariant Critic}
+
+The \gls{pic}~\cite{liu2020b} represents a 
+prominent application of graph-based architectures to \gls{ctde}. 
+\Gls{pic} addresses a fundamental challenge in centralized critics: na\"ive 
+concatenation of agent observations in a fixed order creates arbitrary 
+dependencies on agent indexing, breaking when agents are permuted or 
+when team size varies. \Gls{pic} resolves this by employing a \gls{gnn} as the critic, 
+where each agent corresponds to a node and graph 
+convolutional layers aggregate information symmetrically.
+
+Critically for heterogeneous teams, \gls{pic} augments node representations 
+with explicit attribute vectors encoding agent types or capabilities~\cite{liu2020b}. 
+This allows the GNN to distinguish between agents with different roles or capabilities 
+while maintaining permutation invariance among agents of the same type. 
+Liu et al. demonstrated that \gls{pic} scales effectively to teams of hundreds of 
+agents and handles varying team compositions without architectural modifications, 
+substantially outperforming fixed-order critics in environments 
+requiring flexible coordination~\cite{liu2020b}.
+
+The success of \gls{pic} has motivated extensions incorporating attention 
+mechanisms and more sophisticated graph structures~\cite{hao2023, hao2022}. 
+These variants demonstrate that architectural invariance through graph-based processing 
+represents a viable paradigm for handling both permutation symmetry and agent heterogeneity. 
+However, graph-based approaches introduce architectural complexity and may incur 
+computational overhead compared to standard feed-forward networks, 
+motivating investigation of alternative solutions.
+
+\subsection{Handling Heterogeneity in Multi-Agent Systems}
+
+Several frameworks specifically target heterogeneous multi-agent learning. 
+\Gls{happo}~\cite{zhong2024} extends \gls{ppo} to heterogeneous 
+teams by maintaining separate policy networks for agents with different observation 
+or action spaces, while using a shared optimization framework to ensure joint training. 
+\Gls{happo} achieves strong performance by allowing specialized policies per agent type, 
+though this approach does not enable parameter sharing across structurally distinct 
+agents and scales linearly with the number of agent types.
+
+Hypernetwork-based approaches offer an alternative by using auxiliary 
+networks to generate agent-specific parameters~\cite{hao2023}. 
+Hao et al. proposed \gls{hpn} that use a separate network to produce 
+the parameters of input processing modules conditioned on agent features, 
+effectively treating the team as a single structured entity. 
+This enables flexible parameter generation while maintaining a unified architecture, 
+though at the cost of additional meta-network complexity.
+
+Implicit Indication%~\cite{hosley2025} 
+takes a different approach entirely, 
+addressing heterogeneity through representational rather than architectural means. 
+By constructing a homogenized observation space that spans all 
+observation elements available to any agent, and using masking to 
+indicate which elements each agent can observe, 
+Implicit Indication enables standard network architectures to handle heterogeneous agents. 
+The method demonstrated comparable or superior performance to HAPPO in evaluation scenarios 
+while using a single shared policy, suggesting that representational solutions can be 
+competitive with architectural and algorithmic approaches.
+
+\subsection{Positioning This Work}
+
+While prior work has developed both architectural solutions (\gls{pic}, graph-based methods) 
+and representational solutions (Implicit Indication) for \gls{harl}, 
+no previous study has directly compared these paradigms under controlled conditions. 
+Most comparisons in the literature focus on variants within a single paradigm 
+(e.g., comparing different graph architectures or different indication schemes) 
+rather than evaluating fundamentally different approaches to the same problem.
+
+This work fills that gap by providing a systematic empirical comparison between 
+\gls{pic} (architectural invariance) and Implicit Indication (representational invariance) 
+using matched experimental conditions. 
+We isolate the impact of the invariance mechanism itself (architectural versus 
+representational) by controlling for network capacity, hyperparameters, training procedures, 
+and evaluation protocols. 
+This enables us to directly assess which paradigm is more effective for 
+heterogeneous multi-agent learning and to identify the conditions under which each approach excels.
+
+Our findings have implications beyond the specific methods compared. 
+By demonstrating that representational homogenization can substantially 
+outperform architectural invariance in certain domains, we challenge 
+assumptions about the necessity of specialized architectures for heterogeneous MARL. 
+These results suggest that the choice between architectural and representational 
+solutions should be guided by domain characteristics, particularly the nature of 
+heterogeneity (observation-based versus behavioral) 
+and the semantic structure of observation spaces. 
+This work thus contributes both specific empirical findings and broader insights 
+into design principles for heterogeneous multi-agent learning systems.
+
+\section{Methodology}
+
+This section describes the experimental methodology used to compare architectural and 
+representational approaches to heterogeneity in \gls{marl}.
+We provide a detailed account of both methods under evaluation, the experimental environment, 
+training procedures, and evaluation protocols to ensure reproducibility and facilitate 
+interpretation of results.
+
+\subsection{Methods Under Comparison}
+
+\subsubsection{Implicit Indication (Representational Approach)}
+
+Implicit Indication addresses heterogeneity through representational homogenization.
+%~\cite{hosley2025}.
+The method constructs a unified observation space \(\Hom{\Gls{o}}\)
+defined as the union of all observation elements $O_c$ available to any agent in the team. 
+Each agent \(\gls{i}\) has access to a subset of these elements determined by its sensor 
+configuration \(\Gls{c}_{\gls{i}} \subseteq \Gls{c}\), 
+where \(\Gls{c}\) is the set of all possible observation element indices.
+
+For agent \(\gls{i}\) with observation capability \(\Gls{c}_{\gls{i}}\), 
+the homogenized observation \(\Hom{\gls{o}}_{\gls{i}}\) is constructed by:
+\begin{equation*}
+    \Hom{\gls{o}}_{\gls{i}}[\gls{c}] =
+    \begin{cases}
+        \gls{o}_{\gls{i}\gls{c}} & \text{if } \gls{c}\in\Gls{c}_{\gls{i}} \\
+        \mathbf{0} & \text{if } \gls{c} \notin\Gls{c}_{\gls{i}}
+    \end{cases}
+\end{equation*}
+where \(\gls{o}_{\gls{i}\gls{c}}\) is the observation from element 
+\(\gls{c}\) and \(\mathbf{0}\) represents a null or masked value. 
+The policy network \(\gls{pi}_\theta(\Hom{\gls{o}}_{\gls{i}})\)
+receives this homogenized observation and implicitly infers agent 
+capabilities from the pattern of populated versus masked elements. 
+No explicit agent identifiers are provided; agent differentiation emerges 
+naturally from the observation structure.
+
+The implementation uses \gls{mappo}~\cite{yu2022} with a centralized value 
+function and decentralized execution. The policy network processes the 
+homogenized observation through convolutional layers (for spatial observation elements) 
+and fully-connected layers, with masking implemented via zero-padding of 
+unavailable observation channels. The critic receives the concatenation of all agents' 
+homogenized observations, enabling centralized training while the policy 
+operates only on individual observations during execution.
+
+\subsubsection{Permutation Invariant Critic (Architectural Approach)}
+
+The \gls{pic}~\cite{liu2020b} addresses heterogeneity through architectural invariance. 
+\Gls{pic} employs a \gls{gnn} as the centralized critic, 
+treating each agent as a node in a graph. 
+Node features are constructed by concatenating each agent's observation 
+with an explicit attribute vector encoding its type or capabilities.
+
+For a team of \(N\in\gls{reals}\) agents, the critic constructs a 
+fully-connected graph where each node \(\gls{i}\) has feature vector 
+\(\mathbf{h}_{\gls{i}}^{(0)} = [\mathbf{\gls{o}}_{\gls{i}}; \mathbf{\gls{a}}_{\gls{i}}]\), 
+where \(\mathbf{\gls{o}}_{\gls{i}}\) is the agent's observation and 
+\(\mathbf{\gls{a}}_{\gls{i}}\) is its one-hot encoded agent type. 
+Graph convolutional layers update node representations through neighborhood aggregation:
+\begin{equation*}
+    \mathbf{h}_{\gls{i}}^{(l+1)} 
+    = \sigma\left(\mathbf{W}^{(l)}\mathbf{h}_i^{(l)} 
+    + \sum_{j \in \mathcal{N}(\gls{i})} \frac{1}{|\mathcal{N}(\gls{i})|
+        }\mathbf{W}^{(l)}\mathbf{h}_j^{(l)}
+    \right)
+\end{equation*}
+where \(\mathcal{N}(\gls{i})\) denotes the neighbors of node \(\gls{i}\) and 
+\(\sigma\) is a nonlinear activation. After \(L\) graph convolutional layers, 
+node representations are aggregated through max-pooling to produce a 
+team-level value estimate that is invariant to node ordering.
+
+The decentralized policies in \gls{pic} use standard actor networks that process 
+individual observations augmented with agent type attributes. 
+The architectural invariance resides entirely in the critic,
+which enables learning a shared value function that generalizes across 
+agent permutations while the explicit attributes enable differentiation 
+based on agent capabilities.
+
+\subsubsection{Heterogeneous Baseline}
+
+As an additional baseline, we include \gls{happo}~\cite{zhong2024}, 
+which maintains separate policy and value networks for each agent type. 
+\Gls{happo} employs a sequential update scheme that ensures monotonic policy improvement 
+while accommodating different policy parameterizations across agents. 
+This represents the standard approach to heterogeneous MARL without parameter sharing, 
+providing a reference point for evaluating the benefits of shared representations.
+
+\subsection{Experimental Environment}
+
+Experiments are conducted in the HyperGrid environment, 
+a multi-agent gridworld designed to isolate observation 
+heterogeneity from other confounding factors.%~\cite{hosley2025}. 
+The environment features discrete spatial navigation with cooperative 
+objectives and supports flexible specification of per-agent observation capabilities.
+
+\subsubsection{Environment Structure}
+
+The environment consists of an \(n\)-dimensional discrete grid populated 
+by multiple agents, collectible objectives, static obstacles, and hazards. 
+All agents share the same action space (movement, orientation adjustment, 
+and object interaction) and pursue a fully cooperative objective: 
+collecting target objects while avoiding hazards. 
+Episodes terminate when all objectives are collected or a fixed time horizon is reached. 
+Rewards are shared across agents, ensuring alignment toward the common goal.
+
+The key feature enabling our comparison is the environment's 
+support for heterogeneous observation configurations. 
+Each entity type in the environment (objectives, hazards, obstacles, agents) 
+has an associated visibility profile across observation channels. 
+Agents are assigned subsets of these channels corresponding to 
+different sensor modalities. For example, one agent might 
+observe through ``forward camera" and ``LIDAR" channels, 
+while another uses ``forward camera" and ``thermal" channels. 
+The environment respects these assignments when constructing agent observations, 
+masking entities that are not visible in an agent's available channels.
+
+\subsubsection{Sensor Configurations}
+
+We evaluate performance across four sensor configurations that 
+span a range of heterogeneity structures:
+
+\begin{itemize}
+    \item \textbf{Complete Visibility}: 
+        All agents have access to all observation elements 
+        (\(\Gls{c}_{\gls{i}} = \Gls{c}\) for all \(\gls{i}\)). 
+        This configuration serves as a homogeneous baseline 
+        where both methods should perform identically in principle.
+        \item \textbf{Intersecting Span}: 
+        Agents have partially overlapping observation capabilities such that 
+        \(\cup_{\gls{i}} \Gls{c}_{\gls{i}} = \Gls{c}\) and 
+        \(\Gls{c}_i \cap \Gls{c}_j \neq \emptyset\) for all pairs \(i,j\). 
+        This represents moderate heterogeneity where agents have some 
+        shared observational capacity.
+        \item \textbf{Disjoint Span}: 
+        Agents have non-overlapping observation elements such that 
+        \(\cup_{\gls{i}} \Gls{c}_{\gls{i}} = \Gls{c}\) and
+        \(\Gls{c}_i \cap \Gls{c}_j = \emptyset\) for \(i \neq j\).
+        This maximal heterogeneity ensures agents observe completely different 
+        aspects of the environment state.
+        \item \textbf{Incomplete Coverage}: 
+        Agents' combined observation capabilities do not span the full state space: 
+        \(\exists \gls{c}\in\Gls{c}\) such that 
+        \(\gls{c} \notin \cup_{\gls{i}} \Gls{c}_{\gls{i}}\). 
+        This configuration tests robustness when information is 
+        fundamentally missing from the team.
+\end{itemize}
+
+These configurations enable systematic evaluation of how observation structure 
+affects the relative performance of architectural versus representational approaches.
+
+\subsection{Training Setup}
+
+\subsubsection{Network Architectures}
+
+To ensure fair comparison, both methods use equivalent network capacities. 
+For observation processing, convolutional encoders with architecture 
+\([16, 32, 64]\) filters (kernel size \(2 \times 2\)) process spatial observation channels. 
+Direction information is encoded through a small \gls{mlp} with \(16\) hidden units. 
+These encoded representations are concatenated and passed through a shared trunk with 
+hidden layers \([128, 64]\) using tanh activations. 
+he policy head outputs action probabilities over the discrete action space.
+
+For \gls{pic}, the graph convolutional network uses \(2\) layers with hidden dimension \(128\), 
+followed by max-pooling aggregation. Node features are constructed by concatenating
+encoded observations with \(4\)-dimensional one-hot agent type vectors. 
+For Implicit Indication, the critic processes the concatenation of all agents' 
+homogenized observations through an \gls{mlp} with architecture matching the total 
+parameter count of \gls{pic}'s graph network.
+
+\subsubsection{Training Hyperparameters}
+
+All methods are trained using \gls{ppo} with the following hyperparameters: 
+learning rate \(\alpha = 0.001\), discount factor \(\gls{discount} = 0.99\), 
+\gls{gae} parameter \(\lambda = 0.95\), \gls{ppo} clip ratio \(\epsilon = 0.2\), 
+value function clip parameter \(5.0\), batch size of 4096 samples, 
+and entropy coefficient \(0.0\). 
+Training proceeds for up to 500M environment steps across 8 parallel rollout workers. 
+These hyperparameters were selected through preliminary tuning to ensure strong 
+baseline performance for both methods.
+
+Each sensor configuration is trained with 30 independent runs for Implicit Indication 
+and the heterogeneous baseline, and 5 independent runs for \gls{pic}
+(reflecting resource constraints while ensuring statistical validity). 
+All runs use different random seeds affecting environment initialization, 
+network initialization, and sampling procedures.
+
+\subsection{Evaluation Protocol}
+
+Following training, we evaluate learned policies under eight distinct 
+conditions designed to assess robustness, generalization, and adaptability:
+
+\begin{enumerate}
+    \item \textbf{Baseline}: 
+    Standard evaluation in the training configuration with no modifications.
+    \item \textbf{Agent Loss}: 
+    One agent is removed from the team, testing robustness to team size reduction.
+    \item \textbf{Sensor Degradation}: 
+    A randomly selected agent loses access to one observation element 
+    \(\gls{c}\in\Gls{c}_{\gls{i}}\) , simulating sensor failure.
+    \item \textbf{Sensor Improvement}: 
+    An agent gains access to a new observation element \(\gls{c}\notin\Gls{c}_{\gls{i}}\) 
+    (where possible), testing adaptability to enhanced sensing.
+    \item \textbf{Degrade Coverage}: 
+    All agents simultaneously lose access to a specific observation element, 
+    reducing total team observability.
+    \item \textbf{Improve Coverage}: 
+    All agents simultaneously gain access to a 
+    new observation element (where possible), enhancing team observability.
+    \item \textbf{Shuffled Set}: 
+    Agent-to-policy assignments are randomly permuted, testing sensitivity 
+    to agent ordering assumptions.
+    \item \textbf{Novel Span}: 
+    The team is reconfigured with observation-element combinations not 
+    encountered during training, evaluating zero-shot generalization.
+\end{enumerate}
+
+Each evaluation condition is assessed over multiple episodes, 
+and we report mean episode return as the primary performance metric. 
+Evaluations use the top-performing 15 policies (out of 30 training runs) 
+selected based on final training performance, 
+to focus analysis on well-learned policies while maintaining sufficient 
+sample size for statistical analysis. 
+
+This evaluation framework enables comprehensive assessment of 
+learned policies beyond in-distribution performance, probing the 
+fundamental robustness and generalization properties that distinguish 
+architectural and representational approaches to heterogeneity.
+
+\subsection{Implementation Details}
+
+All experiments are implemented using RLlib~\cite{yu2022} 
+with custom environment and policy modifications. 
+The HyperGrid environment is implemented as a multi-agent extension of MiniGrid, 
+with modifications to support flexible observation masking and heterogeneous 
+sensor configurations. Training is conducted on a compute cluster using 
+Intel Xeon E5-2660 v3 processors with 32 CPU cores and 128 GB RAM per job. 
+No GPU is used.
+
+section{Experimental Evaluation}
+
+\subsection{Training Performance}
+
+Training dynamics for both methods were evaluated across all four sensor configurations: 
+complete visibility, intersecting span, disjoint span, and incomplete coverage.
+Each configuration was trained using identical hyperparameters and network architectures 
+to ensure controlled comparison. Each were trained for 30 independent 
+runs per configuration.
+
+\Cref{fig:training_curves} presents the learning curves for Implicit Indication and 
+\gls{pic} across all configurations. Both methods exhibited similar convergence behavior, 
+with comparable asymptotic performance and variance during training. This similarity 
+suggests that the choice between architectural invariance (\gls{pic}'s graph-based critic) 
+and representational invariance (Implicit Indication's homogenized input space) does not 
+significantly impact training efficiency or the ability to learn from experience in this domain.
+
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=0.95\linewidth]{Figures/training_curves.png}
+    \caption[Implicit Indication & PIC Training Comparison]{
+        Training performance comparison between Implicit Indication and \gls{pic} across 
+        sensor configurations. Shaded regions indicate standard error across training runs.}
+    \label{fig:training_curves}
+\end{figure*}
+
+\subsection{Evaluation Performance}
+
+Following training, policies were evaluated under eight distinct conditions designed 
+to assess robustness and generalization: baseline performance, agent loss, 
+sensor degradation, sensor improvement, coverage reduction, coverage expansion, 
+shuffled agent assignments, and novel spanning sets. For comparison, 
+we also evaluated the heterogeneous baseline (\gls{happo} with separate policies per agent).
+
+\subsubsection{Overall Performance Comparison}
+
+\Cref{fig:eval_comparison} presents the evaluation 
+performance across all conditions and sensor configurations. 
+The results reveal a clear and consistent pattern: Implicit Indication 
+substantially outperforms both \gls{pic} and the heterogeneous baseline 
+across virtually all evaluation scenarios.
+
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=0.95\linewidth]{Figures/eval_scale.png}
+    \caption[Compared Evaluation Performance of Implicit Indication, PIC, HAPPO]{
+        Evaluation performance across all conditions and sensor configurations. 
+        Error bars represent standard error across evaluation trials. 
+        Higher values indicate better performance. Implicit Indication (red) 
+        consistently outperforms both the heterogeneous baseline (blue) and 
+        \gls{pic} (green) across all tested scenarios.}
+    \label{fig:eval_comparison}
+\end{figure*}
+
+\Cref{tab:overall_performance} summarizes the aggregate performance across all 
+evaluation conditions. In the complete-visibility configuration, 
+Implicit Indication achieves a mean return of $9.10$, compared to $5.22$ 
+for the heterogeneous baseline and $3.89$ for \gls{pic}. 
+This performance advantage persists across all sensor configurations: 
+in intersecting-span ($5.04$ vs. $1.61$), 
+disjoint-span ($5.80$ vs. $1.84$), and incomplete ($4.63$ vs. $1.05$).
+
+\begin{table}[ht]
+    \centering
+    \caption[Aggregate performance of training with different observation configurations.]{
+        Overall evaluation performance across sensor configurations. 
+        Values represent mean episode return averaged across all evaluation conditions.}
+    \label{tab:overall_performance}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Sensor Configuration} & \textbf{Heterogeneous} & 
+            \textbf{Implicit Indication} & \textbf{PIC} \\
+        \midrule
+        Complete             & $5.22$ & $9.10$ & $3.89$ \\
+        Intersecting Span    & $3.43$ & $5.04$ & $1.61$ \\
+        Disjoint Span        & $3.96$ & $5.80$ & $1.84$ \\
+        Incomplete           & $3.58$ & $4.63$ & $1.05$ \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsubsection{Performance Across Evaluation Types}
+
+\Cref{fig:eval_heatmaps} provides a detailed breakdown of performance across 
+evaluation types and sensor configurations. The heatmaps demonstrate that 
+Implicit Indication's advantage is not limited to specific evaluation conditions 
+but extends consistently across all tested scenarios.
+
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=0.95\linewidth]{Figures/eval_heatmaps.png}
+    \caption[Evaluation of Relative Performance of Implicit Indication and PIC]{
+        Evaluation performance heatmaps showing mean returns for Implicit 
+        Indication (left), \gls{pic} (center), and their difference (right). 
+        The difference heatmap shows \gls{pic} - Implicit Indication, 
+        where negative values (blue) indicate Implicit Indication outperforms.
+        Implicit Indication demonstrates superior performance across all 
+        evaluation types and sensor configurations.}
+    \label{fig:eval_heatmaps}
+\end{figure*}
+
+In the baseline evaluation, Implicit Indication achieves mean 
+returns ranging from $4.63$ (incomplete) to $9.10$ (complete), 
+while \gls{pic} achieves $1.05$ to $3.89$ in the same configurations. 
+This pattern persists under structured perturbations: 
+in sensor degradation evaluations, Implicit Indication maintains 
+performance ($4.37$ to $8.69$) while \gls{pic} shows reduced performance 
+($1.13$ to $5.07$). Similarly, under sensor improvement conditions, 
+Implicit Indication achieves $4.79$ to $5.22$, 
+compared t \gls{pic}'s $1.14$ to $1.86$.
+
+The novel-span evaluation, which tests zero-shot generalization to 
+unseen observation-element combinations, reveals the same pattern. 
+Implicit Indication achieves mean returns of $4.23$ to $7.79$ across 
+configurations, while \gls{pic} achieves $1.33$ to $3.39$. 
+This suggests that Implicit Indication's representational 
+approach provides more robust transfer to novel agent compositions.
+
+\subsubsection{Robustness Analysis}
+
+The consistency of Implicit Indication's performance advantage across 
+all evaluation types; including agent loss, coverage changes, 
+and shuffled assignments; demonstrates robust handling 
+of team composition changes and observation perturbations. 
+In the agent-loss condition, where one agent is removed from the team, 
+Implicit Indication maintains strong performance ($5.03$ to $8.87$) 
+compared to \gls{pic} ($1.49$ to $3.61$). Similarly, 
+in the shuffled-set condition, which randomizes agent-to-policy assignments, 
+Implicit Indication achieves $4.10$ to $9.00$ while PIC achieves $1.18$ to $3.99$.
+
+These results indicate that the explicit masking mechanism in Implicit Indication 
+provides stable and interpretable encoding of observation availability, 
+enabling the policy to adapt effectively to structural changes in the observation space. 
+The performance gap between methods is particularly pronounced in configurations with 
+inherent observation heterogeneity (intersecting-span and incomplete).
+
+\subsubsection{Comparison with Heterogeneous Baseline}
+
+Notably, Implicit Indication also outperforms the heterogeneous baseline 
+(\gls{happo} with separate policies per agent) across all configurations, 
+despite using a single shared policy. In the complete-visibility configuration, 
+Implicit Indication achieves $9.10$ compared to the heterogeneous baseline's $5.22$. 
+This advantage suggests that the homogenized representation not only enables parameter 
+sharing but may also facilitate more effective learning by providing a unified 
+representation space that captures commonalities across agent types.
+
+\subsection{Discussion of Results}
+
+The experimental results demonstrate that Implicit Indication's 
+representational approach to handling heterogeneity provides 
+substantial performance advantages over both architectural 
+solutions (\gls{pic}) and agent-specific policies (heterogeneous baseline). 
+While training dynamics were similar between Implicit Indication and \gls{pic}, 
+evaluation performance diverged significantly, with Implicit Indication 
+consistently achieving higher returns across configurations.
+
+The observed performance gap between methods warrants careful consideration. 
+While \gls{pic}'s graph-based architecture has demonstrated effectiveness in 
+other domains~\cite{liu2020b}, several factors may contribute to its relative 
+underperformance in this environment. 
+These may include the discrete nature of the gridworld domain, 
+the specific observation structure used, hyperparameter sensitivities, 
+or fundamental differences in how the two approaches handle partial observability. 
+A comprehensive analysis of these factors remains a direction for future investigation.
+
+Regardless of the underlying causes, the empirical findings provide clear evidence 
+that representational homogenization through Implicit Indication offers a practical 
+and effective approach for enabling shared policies in heterogeneous multi-agent teams. 
+The method's consistent performance across diverse evaluation conditions, 
+including structural perturbations, team composition changes, 
+and zero-shot generalization scenarios—suggests broad applicability to 
+heterogeneous multi-agent domains where observation heterogeneity is a primary challenge.
+
+\section{Discussion}
+
+\subsection{Representational vs. Architectural Approaches to Heterogeneity}
+
+The experimental results demonstrate a clear performance advantage for 
+the representational approach (Implicit Indication) over the architectural 
+approach (\gls{pic}) in this domain. While both methods address heterogeneity, 
+\gls{pic} through graph-based invariant architectures and Implicit Indication 
+through homogenized observation spaces, the empirical evidence indicates that 
+representational homogenization provides superior performance across all 
+tested configurations and evaluation conditions.
+
+This finding challenges the intuition that architectural solutions leveraging 
+graph neural networks would necessarily outperform simpler representational approaches. 
+\gls{pic}'s graph-based critic was designed to aggregate agent information in a 
+permutation-invariant manner while explicitly encoding agent types through node 
+attributes~\cite{liu2020b}. However, in environments where heterogeneity stems 
+primarily from differing observation capabilities rather than complex relational 
+structures, the explicit masking mechanism of Implicit Indication appears to provide 
+more effective conditioning for policy learning.
+
+The performance advantage of Implicit Indication suggests that when observation 
+heterogeneity is structural and can be decomposed into semantically aligned elements, 
+direct representation of this structure through masking may be preferable to 
+learning implicit representations through graph convolutions. 
+The homogenized observation space provides the policy network with explicit information 
+about which observation elements are available, potentially enabling more 
+direct learning of observation-conditioned behaviors.
+
+\subsection{Implications for Multi-Agent System Design}
+
+Beyond the comparison with \gls{pic}, the results reveal that Implicit Indication 
+also outperforms the heterogeneous baseline using separate policies per agent. 
+This finding is particularly noteworthy as it demonstrates that parameter 
+sharing under the Implicit Indication framework not only enables computational 
+efficiency but may actually facilitate learning by providing a unified 
+representational space that captures commonalities across agent types.
+
+This has practical implications for multi-agent system design. 
+In scenarios where agents differ primarily in their observation capabilities, 
+such as heterogeneous robot teams with varying sensor suites or 
+mixed-capability surveillance networks.Implicit Indication offers a 
+straightforward implementation path that requires minimal 
+architectural specialization while delivering strong empirical performance. 
+The method's consistent advantage across diverse evaluation conditions, 
+including sensor loss, sensor gain, and novel agent compositions, 
+further suggests robust generalization properties that are valuable 
+for deployment in dynamic operational environments.
+
+\subsection{Understanding PIC's Performance}
+
+The observed underperformance of \gls{pic} relative to expectations 
+warrants discussion. While \gls{pic} has demonstrated effectiveness 
+in other multi-agent domains~\cite{liu2020b}, several factors may 
+contribute to the results observed in this study. 
+The discrete gridworld environment used for evaluation differs substantially 
+from the continuous control tasks where \gls{pic} was originally validated. 
+Additionally, the specific structure of observation heterogeneity in 
+our experiments, characterized by varying observation element availability 
+rather than complex relational patterns, may not align optimally with the 
+relational inductive biases of \glspl{gnn}.
+
+Hyperparameter sensitivity could also play a role, as graph-based 
+architectures often require careful tuning of graph construction parameters, 
+aggregation functions, and attention mechanisms. The relatively small team 
+size (four agents) used in our experiments may not fully leverage the 
+scalability advantages that graph-based approaches can provide in larger populations. 
+Furthermore, the homogenized observation space used by Implicit Indication provides 
+very direct gradient signals about observation availability, whereas \gls{pic} must 
+learn these relationships through the graph structure.
+
+These considerations suggest that the comparison between methods may be 
+domain-dependent and that \gls{pic}'s architectural approach may prove more 
+effective in environments with richer relational structure or larger team sizes. 
+A comprehensive analysis isolating the impact of domain characteristics, 
+team size, and hyperparameter choices on relative performance remains an 
+important direction for future work.
+
+\subsection{Limitations and Assumptions}
+
+The effectiveness of Implicit Indication relies on semantic decomposability, 
+the assumption that observation spaces can be factorized into elements 
+with consistent meaning across agents. In domains where heterogeneity is 
+purely behavioral (agents have identical observations but require 
+different behaviors based on role), Implicit Indication provides no 
+mechanism for differentiation without reintroducing explicit agent identifiers. 
+In such cases, architectural approaches that explicitly model agent types 
+may be necessary.
+
+The evaluation environment, while designed to isolate observation 
+heterogeneity, represents a simplified testbed. Real-world multi-agent systems 
+may involve additional complexities such as communication constraints, 
+asynchronous execution, or continuous observation and action spaces. 
+The extent to which the observed performance advantages transfer to 
+such settings requires empirical validation in more complex domains.
+
+Additionally, the computational comparison focused primarily on final 
+performance rather than training efficiency or inference cost. 
+While Implicit Indication avoids the architectural complexity of 
+\glspl{gnn}, a comprehensive evaluation of computational trade-offs, 
+including wall-clock training time, memory usage, and inference latency, 
+would provide a more complete picture of the practical advantages of 
+each approach.
+
+% \section{Conclusion}
+
+% This work presented a comparative evaluation of representational and architectural 
+% approaches to handling heterogeneity in multi-agent reinforcement learning. 
+% Through controlled experiments in a gridworld environment with varying observation 
+% structures, we demonstrated that Implicit Indication's representational approach, 
+% based on homogenized observation spaces with explicit masking, provides substantial 
+% performance advantages over both \gls{pic}'s graph-based architectural approach 
+% and heterogeneous baselines using separate per-agent policies.
+
+% The consistent performance of Implicit Indication across diverse evaluation 
+% conditions, including structural perturbations, team composition changes, 
+% and zero-shot generalization scenarios, demonstrates the practical 
+% viability of representational homogenization for heterogeneous teams. 
+% The method's simplicity, requiring no specialized architectural components 
+% beyond standard policy networks,makes it readily accessible for practitioners 
+% working with heterogeneous multi-agent systems.
+
+% While the reasons for \gls{pic}'s relative underperformance in this 
+% domain remain an open question requiring further investigation, 
+% the empirical evidence clearly indicates that representational 
+% solutions can be highly effective when observation heterogeneity 
+% is structural and semantically decomposable. 
+% The success of Implicit Indication suggests that explicitly 
+% encoding observation availability through masking may provide 
+% more direct learning signals than requiring the network to 
+% infer such structure through learned graph representations.
+
+% Future work should extend this comparison to more complex domains, 
+% including continuous control tasks, larger team sizes, and 
+% environments with richer relational structure. Investigating the 
+% interaction between domain characteristics and method performance 
+% would help establish clearer guidelines for when representational 
+% versus architectural approaches are most appropriate. Additionally, 
+% exploring hybrid approaches that combine explicit observation masking 
+% with relational architectures could potentially capture the benefits 
+% of both paradigms.
+
+% The broader implication of this work is that addressing heterogeneity through 
+% careful representation design—rather than solely through architectural innovation, 
+% can yield significant practical benefits. As multi-agent systems continue to 
+% grow in complexity and diversity, understanding when and how to leverage 
+% representational structure will be essential for building effective learning 
+% algorithms for heterogeneous teams.
 

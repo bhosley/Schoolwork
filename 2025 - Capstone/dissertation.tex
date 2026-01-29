@@ -151,8 +151,6 @@
 %%%% Older version things I had:
 
 
-
-
 % --- Figures ---
 % \usepackage{pgfgantt}
 \usetikzlibrary{automata, positioning, arrows, fit, calc, shapes.geometric, shapes.misc}
@@ -172,6 +170,10 @@
 % \usepackage{tcolorbox}  % For call out boxes
 % \usepackage{titlesec}
 
+% How to indicate homogenized space
+% \newcommand{\Hom}[1]{{#1}'}
+\newcommand{\Hom}[1]{\widetilde{#1}}
+
 % --- Fixing LaTeX Warnings ---
 
 \usepackage{silence}
@@ -183,6 +185,7 @@
 
 \begin{document}
 \maketitle % Creates all the prefatory pages.
+% #TODO: Remove sub-sub section from ToC
 
 % --------------------
 \chapter{Introduction}%
@@ -203,11 +206,10 @@
 \label{ch:contribution_2}
 \subimport*{Chapters/C2/}{contribution_2.tex}
 
-
-% % -------------------------
-% \chapter{Contribution 3}%
-% \label{ch:contribution_3}
-% \subimport*{Chapters/C3/}{contribution_3.tex}
+% -------------------------
+\chapter{Contribution 3}%
+\label{ch:contribution_3}
+\subimport*{Chapters/C3/}{contribution_3.tex}
 
 
 % % ----------------------------
@@ -237,8 +239,12 @@
 \printglossaries
 %\printabbreviations[title=]
 %\printunsrtglossary[type=symbols,style=long]
+% #TODO: Appendix label references contribution; fix?
 \chapter{Contribution 1 Supplementary Material}
-\input{{C1/appendix.tex}}
+\subimport{Chapters/C1/}{appendix.tex}
+
+\chapter{Contribution 2 Supplementary Material}
+\subimport{Chapters/C2/}{appendix.tex}
 
 % Contribution 1 Supporting curves
 % \usepackage{pgffor} %enables for loop used in appendix

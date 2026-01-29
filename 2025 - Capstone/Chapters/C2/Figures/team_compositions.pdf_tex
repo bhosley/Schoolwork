@@ -1,0 +1,99 @@
+%% Creator: Inkscape 1.4 (e7c3feb1, 2024-10-09), www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'compositions.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{148.33007813bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,2.22982421)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{compositions.pdf}}%
+    \put(0.37669366,2.00734742){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{compositions.pdf}}%
+    \put(0.37669366,1.88094015){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{compositions.pdf}}%
+    \put(0.37669366,1.75453289){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 3\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{compositions.pdf}}%
+    \put(0.37669366,1.62812562){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 4\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{compositions.pdf}}%
+    \put(0.0556192,1.85313056){\rotatebox{90}{\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Full Visibility\end{tabular}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{compositions.pdf}}%
+    \put(0.0556192,0.7913095){\rotatebox{90}{\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Disjoint Span\end{tabular}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{compositions.pdf}}%
+    \put(0.0556192,0.26039897){\rotatebox{90}{\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Incomplete\end{tabular}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=8]{compositions.pdf}}%
+    \put(0.05309105,1.3095793){\rotatebox{90}{\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Instersecting\end{tabular}}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=9]{compositions.pdf}}%
+    \put(0.37669366,1.4764369){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=10]{compositions.pdf}}%
+    \put(0.37669366,1.35002963){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=11]{compositions.pdf}}%
+    \put(0.37669366,1.22362236){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 3\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=12]{compositions.pdf}}%
+    \put(0.37669366,1.09721509){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 4\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=13]{compositions.pdf}}%
+    \put(0.37669366,0.94552637){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=14]{compositions.pdf}}%
+    \put(0.37669366,0.8191191){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=15]{compositions.pdf}}%
+    \put(0.37669366,0.69271183){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 3\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=16]{compositions.pdf}}%
+    \put(0.37669366,0.56630456){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 4\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=17]{compositions.pdf}}%
+    \put(0.37669366,0.41461584){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 1\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=18]{compositions.pdf}}%
+    \put(0.37669366,0.28820857){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 2\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=19]{compositions.pdf}}%
+    \put(0.37669366,0.1618013){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 3\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=20]{compositions.pdf}}%
+    \put(0.37669366,0.03539404){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Agent 4\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=21]{compositions.pdf}}%
+    \put(0.03286589,2.15903614){\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}All \(\Hom{O}\) elements\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

@@ -1,0 +1,24 @@
+\begin{tikzpicture}[>=stealth, node distance=1cm, on grid, auto,
+    entry/.style = {draw, rectangle, inner sep=8pt, rounded corners=3pt,
+                    minimum width=3cm},
+    arrow/.style = {thick,-stealth}]
+
+    % States
+    \node [] (center) {};
+    \node [entry, fill= Blue!15] (agent) [above=of center] {Agent};
+    \node [entry, fill=Green!15] (env) [below=of center] {Environment};
+    \node [] (time) [below left= 0.6cm and 2.3cm of env]{\scriptsize\(t:=t+1\)};
+    \draw [dashed] (time) -- +(0,1);
+
+    % Transitions
+    \draw [arrow] (agent.east) -- +(1,0) --coordinate(A) +(1,-2) -- (env.east);
+    \draw [arrow] ([yshift=-0.2cm]env.west) -- +(-1.8,0) --coordinate(S) 
+                    +(-1.8,2.4) -- ([yshift=+0.2cm]agent.west);
+    \draw [arrow] ([yshift=+0.2cm]env.west) -- +(-1.4,0) --coordinate(R) 
+                    +(-1.4,1.6) -- ([yshift=-0.2cm]agent.west);
+
+    % Labels
+    \node [] () [right= 1pt of A] {\(a_t\in\) \Gls{a}};
+    \node [] () [left=  1pt of S] {\(s_t\in\) \Gls{s}};
+    \node [] () [right= 1pt of R] {\(r_t\in\) \Gls{r}};
+\end{tikzpicture}

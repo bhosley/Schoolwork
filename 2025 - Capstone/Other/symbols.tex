@@ -14,8 +14,13 @@
 % \glsNewSymbol{name}{printed in text}{printed in glossary}[description in glossary]
 
 % -------------- General -------------- %
-% Reals
+% Number Systems
+\glsNewSymbol{field}{\mathbb{F}}{\mathbb{F}}[A field.]
+\glsNewSymbol{naturals}{\mathbb{N}}{\mathbb{N}}[The set of all natural numbers.]
+\glsNewSymbol{integers}{\mathbb{Z}}{\mathbb{Z}}[The set of all integers.]
+\glsNewSymbol{rationals}{\mathbb{Q}}{\mathbb{Q}}[The set of all rational numbers.]
 \glsNewSymbol{reals}{\mathbb{R}}{\mathbb{R}}[Set of all real numbers.]
+\glsNewSymbol{complex}{\mathbb{C}}{\mathbb{C}}[The set of all complex numbers.]
 
 
 % -------------- Games -------------- %
@@ -28,6 +33,7 @@
 % Observation Space
 \glsNewSymbol{O}{O}{O,O_i}[Observation space, marginal observation space of agent \(i\).]
 \glsNewSymbol{o}{o}{o,o_i}[Joint observation, observation of agent \(i\).]
+\glsNewSymbol{c}{c}{C}[Channel or obervation element index.]
 % Actions
 \glsNewSymbol{A}{A}{A,A_i}[Action space, marginal action space of agent \(i\).]
 \glsNewSymbol{a}{a}{a,a_i}[Joint action, action of agent \(i\).]
@@ -39,8 +45,8 @@
 \glsNewSymbol{P}{\textbf{P}}{\textbf{P}}[
     \(\text{dim}(\Gls{s})\times\text{dim}(\Gls{s})\) 
     State-transition probability matrix.]
-% #TODO: Write a better description for probability transition function and transition probability
-\glsNewSymbol{p}{p}{P}[Transition probability function.]
+\glsNewSymbol{p}{p}{p(\gls{s}^\prime|\gls{s},\gls{a})}[Probability of transitioning to 
+    state \(\gls{s}^\prime\) from state \(\gls{s}\) given action \gls{a}.]
 % Reward value
 \glsNewSymbol{g}{g}{G_t}[Return at time \gls{t}.]
 
@@ -69,5 +75,10 @@
 
 
 % -------------- Other -------------- %
+% P(S) Powerset
+\glsNewSymbol{powerset}{\ensuremath{\mathcal{P}}}{\ensuremath{\mathcal{P}(\mathcal{S})}}[
+    Power set; the set of all subsets of set \(\mathcal{S}\).]
+% II(a=b) -> 0 or 1 Indicator function
+\glsNewSymbol{indicator}{\mathbb{I}}{\mathbb{I}}[
+    Indicator function. \(1\) if input is true, \(0\) otherwise.]
 
-% #OPT: Ensure function of symbol links

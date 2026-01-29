@@ -5,11 +5,11 @@
 \def\input@path{{Figures/}}
 \makeatother
 \graphicspath{{Figures}}
+\usepackage{import}
 
 \usepackage[capitalize]{cleveref}
 \AddToHook{cmd/appendix/before}{\crefalias{section}{appendix}} % Fixes cref appendix error
 \usepackage{enumitem}
-\usepackage{svg}
 
 %% For JAIR Checklist:
 \usepackage{soul}                   % Strikeout with \st{}
@@ -96,38 +96,48 @@
 \newabbreviation{hpn}{HPN}{hyper policy network}
 \newabbreviation{mlp}{MLP}{multi-layer perceptron}
 \newabbreviation{pic}{PIC}{permutation-invariant critic}
-% \newabbreviation{lbf}{LBF}{Level-based Foraging}
-% \newabbreviation{mpe}{MPE}{Multi Particle Environments}
-% \newabbreviation{gnn}{GNN}{graph neural network}
-% \newabbreviation{maddpg}{MADDPG}{multi-agent deep-deterministic policy gradient}
-% \newabbreviation{sisl}{SISL}{Stanford Intelligent Systems Laboratory}
-% \newabbreviation{coma}{COMA}{counterfactual multi-agent policy gradients}
+\newabbreviation{asha}{ASHA}{Asynchronous Successive Halving Algorithm}
+\newabbreviation{gae}{GAE}{generalized advantage estimator}
 
-% \newglossaryentry{q}{text=q,name=Q,sort=q,type=symbols,category=symbol,
-%     description={Set of state-values or state-value functions.}}
-% #TODO: Change math to glossary symbols
 \newglossaryentry{s}{text=s,name=S,sort=s,type=symbols,category=symbol,
     description={State.}}
 \newglossaryentry{o}{text=o,name=O,sort=o,type=symbols,category=symbol,
     description={Observation.}}
 \newglossaryentry{a}{text=a,name=A,sort=a,type=symbols,category=symbol,
     description={Action.}}
-\newglossaryentry{r}{text=r,name=R,sort=r,type=symbols,category=symbol,
-    description={Reward.}}
 \newglossaryentry{p}{text=p,name=P,sort=p,type=symbols,category=symbol,
     description={Transition probability.}}
+\newglossaryentry{r}{text=r,name=R,sort=r,type=symbols,category=symbol,
+    description={Reward.}}
 \newglossaryentry{discount}{text=\ensuremath{\gamma},name=\ensuremath{\gamma},
-    sort=\ensuremath{\gamma},type=symbols,category=symbol,
-    description={Discount factor.}}
+    sort=\ensuremath{\gamma},type=symbols,category=symbol, description={Discount factor.}}
+\newglossaryentry{t}{text=t,name=T,sort=t,type=symbols,category=symbol,
+    description={Time Step.}}
+
+
 \newglossaryentry{pi}{text=\ensuremath{\pi},name=\ensuremath{\pi},
-sort=\ensuremath{\pi},type=symbols,category=symbol,
-    description={Policy.}}
+    sort=\ensuremath{\pi},type=symbols,category=symbol, description={Policy.}}
 \newglossaryentry{i}{text=i,name=I,sort=i,type=symbols,category=symbol,
     description={Set of agents \(i\).}}
+\newglossaryentry{c}{text=c,name=C,sort=c,type=symbols,category=symbol,
+    description={Channel or obervation element index.}}
+\newglossaryentry{powerset}{text=\ensuremath{\mathcal{P}},name=\ensuremath{\mathcal{P}},
+    sort=P,type=symbols,category=symbol, description={Power set.}}
+\newglossaryentry{naturals}{text=\ensuremath{\mathbb{N}},name=\ensuremath{\mathbb{N}},
+    sort=nat,type=symbols,category=symbol, description={The set of natural numbers.}}
+\newglossaryentry{integers}{text=\ensuremath{\mathbb{Z}},name=\ensuremath{\mathbb{Z}},
+    sort=int,type=symbols,category=symbol, description={The set of integers.}}
+\newglossaryentry{reals}{text=\ensuremath{\mathbb{R}},name=\ensuremath{\mathbb{R}},
+    sort=real,type=symbols,category=symbol, description={The set of real numbers.}}
+\newglossaryentry{field}{text=\ensuremath{\mathbb{F}},name=\ensuremath{\mathbb{F}},
+    sort=field,type=symbols,category=symbol, description={A field.}}
+\newglossaryentry{indicator}{text=\ensuremath{\mathbb{I}},name=\ensuremath{\mathbb{I}},
+    sort=field,type=symbols,category=symbol, description={Indicator Function.}}
 
 % How to indicate homogenized space
 % \newcommand{\Hom}[1]{{#1}'}
 \newcommand{\Hom}[1]{\widetilde{#1}}
+\usepackage{showframe}
 
 \title{ Implicit Indication for Shared Policies in Heterogeneous Agent Reinforcement Learning}
 
@@ -376,7 +386,7 @@ whereas the method introduced here addresses it through representation:
 homogenization creates a shared input-output space in which a single 
 policy can operate across agents with structurally distinct capabilities.
 
-Other methods address heterogeneity through conditional parameter sharing, 
+Other methods to address heterogeneity through conditional parameter sharing by
 combining a shared backbone with modules whose parameters are generated 
 by an auxiliary network. Hypernetwork-based approaches, such as 
 \gls{hpn}~\cite{hao2023}, use a separate \gls{mlp} to produce the 
@@ -445,54 +455,62 @@ we have a \gls{posg}.
 
 \subsection{Decomposition of Observations}
 
-For some agent \(i\), consider its observation space \({O}_i\).
+For some agent \(\gls{i}\), consider its observation space \(\Gls{o}_{\gls{i}}\).
 The proposed homogenization method assumes that these spaces are 
 decomposable into salient subspaces, referred to as \emph{observation elements}.
 Intuitively, an observation element may represent a distinct sensor on an agent,
 thus the combination of all such elements form the agent's observation.
 
-Let \(C\) be the set of observation element indices.
-Let \(\mathcal{P}(C)\) be the power set of \(C\)
-such that \(C_i \in \mathcal{P}(C)\) is a member of the power set.
-\(C_i\) may be seen as a boolean vector in which each element \(c\in C_i\)
-is true if agent \(i\) has access to the observation element indexed by \(c\).
+Let \(\Gls{c}\) be the set of observation element indices.
+Let \(\mathcal{P}(\Gls{c})\) be the power set of \(\Gls{c}\)
+such that \(\Gls{c}_{\gls{i}} \in \mathcal{P}(\Gls{c})\) is a member of the power set.
+\(\Gls{c}_{\gls{i}}\) may be seen as a boolean vector in which each element \(c\in \Gls{c}_i\)
+is true if agent \(\gls{i}\) has access to the observation element indexed by \(\gls{c}\).
 
-Thus, the observation space of agent \(i\) is the collection of its active
+Thus, the observation space of agent \(\gls{i}\) is the collection of its active
 observation elements:
 \[
-    O_i := \{\, O_c \mid c \in C_i \,\}.
+    % O_i := \{\, O_c \mid c \in C_i \,\}.
+    \Gls{o}_{\gls{i}} := \{\, \Gls{o}_{\gls{c}} \mid \gls{c} \in \Gls{c}_{\gls{i}} \,\}.
 \]
 and the homogenized observation space,
 \[
-    \Hom{O}:= \{\, O_c \mid c \in C \,\}, 
-    % \equiv \bigcup_{i\in I} O_i
+    % \Hom{O}:= \{\, O_c \mid c \in C \,\},
+    \Hom{O}:= \{\, \Gls{o}_{\gls{c}} \mid \gls{c} \in \Gls{c} \,\},
 \]
 which collects every observation element available to any agent.
 
 To map observations into the homogenized observation space,
-we use a zero padding: define \(E_{C'} : O_{C'} \to \widetilde{O}\) 
+we use a zero padding: define \(E_{C'} : O_{C'} \to \Hom{O}\) 
 for each \(C' \in \mathcal{P}(C)\) such that
 \[
-    E_{C'}(O_{C'}) := 
+    % E_{C'}(O_{C'}) := 
+    E_{\Gls{c}'}(\Gls{o}_{\Gls{c}'}) := 
     \begin{cases}
-        O_{c} & c \in C', \\
-        \emptyset & c \in C\setminus C'.
+        % O_{c} & c \in C', \\
+        \Gls{o}_{\gls{c}} & \gls{c} \in \Gls{c}', \\
+        % \emptyset & c \in C\setminus C'.
+        \emptyset & \gls{c} \in \Gls{c}\setminus \Gls{c}'.
     \end{cases}
 \]
 Then, the mapping
 \[
-    \iota : \Hom{O} \to \mathcal{P}(C), \qquad
-    \iota(o) := \{\, c \in C \mid o_c \notin \{0,\emptyset\} \,\},
+    % \iota : \Hom{O} \to \mathcal{P}(C), \qquad
+    \iota : \Hom{\Gls{o}} \to \gls{powerset}(\Gls{c}), \qquad
+    % \iota(o) := \{\, c \in C \mid o_c \notin \{0,\emptyset\} \,\},
+    \iota(\gls{o}) := \{\, \gls{c} \in \Gls{c} \mid \gls{o}_{\gls{c}} \notin \{0,\emptyset\} \,\},
 \]
-recovers the set of active observation elements from an observation in \(\Hom{O}\).
+recovers the set of active observation elements from an observation in \(\Hom{\Gls{o}}\).
 
-This allows us to define \(E^{-1}\) without \(C'\)
+This allows us to define \(E^{-1}\) without \(\Gls{c}'\)
 \[
-    E^{-1} : \mathcal{P}(C) \times \Hom{O} \rightarrow O_{C'}, \qquad
-    E^{-1}(o) := E^{-1}_{\iota(o)}(o) \text{ for } o \in \Hom{O}.
+    % E^{-1} : \mathcal{P}(C) \times \Hom{O} \rightarrow O_{C'}, \qquad
+    E^{-1} : \gls{powerset}(\Gls{c}) \times \Hom{\Gls{o}} \rightarrow \Gls{o}_{\Gls{c}'}, \qquad
+    % E^{-1}(o) := E^{-1}_{\iota(o)}(o) \text{ for } o \in \Hom{O}.
+    E^{-1}(\gls{o}) := E^{-1}_{\iota(\gls{o})}(\gls{o}) \text{ for } \gls{o} \in \Hom{\Gls{o}}.
 \]
 
-Although the observation elements \(\{O_c\}_{c \in C}\) are 
+Although the observation elements \(\{\Gls{o}_{\gls{c}}\}_{\gls{c} \in \Gls{c}}\) are 
 defined as linearly independent subspaces of the representation, 
 they are not necessarily statistically independent. 
 Two elements may encode distinct representational dimensions while 
@@ -509,13 +527,14 @@ construction and assumptions described for observations.
 Formally, the homogenized action space is defined as the union 
 of all individual agent action spaces:
 \[
-    \Hom{A} := \bigcup_{i \in I} A_i.
+    % \Hom{A} := \bigcup_{i \in I} A_i.
+    \Hom{\Gls{a}} := \bigcup_{\gls{i} \in \Gls{i}} \Gls{a}_{\gls{i}}.
 \]
 This spanning set provides a shared representational basis for 
 policy outputs across heterogeneous agents.
 
-A policy over the spanning action space \(\Hom{A}\) 
-must be mapped to an agent-feasible action in \(A_i\).
+A policy over the spanning action space \(\Hom{\Gls{a}}\) 
+must be mapped to an agent-feasible action in \(\Gls{a}_{\gls{i}}\).
 For single-dimensional action domains, clipping continuous actions
 or masking invalid logits allow for selecting feasible actions.
 % 
@@ -526,7 +545,7 @@ can change which joint action is optimal.
 In such cases, mapping the homogenized action to an agent-feasible 
 action amounts to projecting onto a constrained joint action set, 
 which may only approximate the action that would have been 
-chosen had the policy been trained directly in \(A_i\).
+chosen had the policy been trained directly in \(\Gls{a}_{\gls{i}}\).
 
 \subsection{Implicit Indication}
 
@@ -546,11 +565,13 @@ subspaces are populated, not on any arbitrary agent identifiers.
 Because agent identity is implicit by the set of populated observation elements, 
 the framework naturally supports unseen agent compositions: 
 an agent defined by a previously unobserved subset of elements 
-\(\iota(O_j) = C_j \subseteq C,\) \(j \notin I\)
+% \(\iota(O_j) = C_j \subseteq C,\) \(j \notin I\)
+\(\iota(\Gls{o}_j) = \Gls{c}_j \subseteq \Gls{c},\) \(j \notin \Gls{i}\)
 can be introduced without changing the policy architecture, 
 provided its observations embed into the same spanning space. 
 This same mechanism yields inherent robustness to sensor dropout, 
-since the temporary loss of a sensor simply produces a different subset \(C_j\), 
+since the temporary loss of a sensor simply produces a 
+different subset \(\Gls{c}_j\), % \(C_j\), 
 allowing the shared policy to operate without retraining.
 The same principle also yields team-size robustness: 
 adding or removing agents simply changes the set of evaluated inputs 
@@ -559,7 +580,9 @@ only on the populated observation elements of each individual agent.
 
 A natural limitation of this approach is that it does not introduce behavioral 
 diversity among agents that share the same set of observation elements: 
-for agents \(i,j \in I\), \(i\neq j\), if \(C_i = C_j\), then \(\pi_i = \pi_j\).
+% for agents \(i,j \in I\), \(i\neq j\), if \(C_i = C_j\), then \(\pi_i = \pi_j\).
+for agents \(i,j \in \Gls{i}\), \(i\neq j\), 
+if \(\Gls{c}_i = \Gls{c}_j\), then \(\gls{pi}_i = \gls{pi}_j\).
 Implicit indication therefore does not model emergent specialization 
 within homogeneous subgroups; rather, it provides a unified representational 
 basis that enables parameter sharing across structurally distinct agents.
@@ -637,7 +660,7 @@ To support agent observations structured around \emph{observation elements},
 this environment further masks the state value based on the agent's access 
 to those observation elements.
 Crucially, this means that different entities in the environment 
-have a visibility identity indexed in \(\mathcal{P}(C)\).
+have a visibility identity indexed in \(\gls{powerset}(\Gls{c})\).%\(\mathcal{P}(C)\).
 
 This structure allows heterogeneity to be expressed purely through
 observability.
@@ -649,8 +672,8 @@ construct teams with intersecting, disjoint, or incomplete coverage of
 the environment state.
 
 This design also enables structured perturbations at evaluation time.
-Sensor loss corresponds to removing an observation element from an agent's 
-subset $C_i$, while sensor gain corresponds to adding a new element.
+Sensor loss corresponds to removing an observation element from an agent's subset 
+\(\Gls{c}_{\gls{i}}\), while sensor gain corresponds to adding a new element.
 Because all agents embed observations into the same spanning space,
 these perturbations require no architectural changes and no retraining.
 
@@ -705,7 +728,9 @@ for Linux (WSL) virtual machine. Each training job was allocated 32 CPU cores on
 Intel(R) Xeon(R) E5-2660 v3 @ 2.60GHz processor and 128 GB of RAM. No GPUs were used.
 
 \begin{figure}
-    \input{team_compositions.pdf_tex}
+    \begin{center}
+        \subimport{Figures/}{team_compositions.pdf_tex}
+    \end{center}
     \caption{Team compositions and observation element coverage.}
     \Description{A table illustrating the different team compositions discussed below.}
     \label{con2:fig:team_compositions}
@@ -714,13 +739,20 @@ Intel(R) Xeon(R) E5-2660 v3 @ 2.60GHz processor and 128 GB of RAM. No GPUs were 
 For each method, we train four compositions of teams that differ in the
 structure of their observation-element coverage:
 \begin{enumerate}
-    \item \emph{Full visibility}: \(C_i = C\) for all \(i \in I\).
-    \item \emph{Intersecting span}: \(\cup_{i\in I} C_i = C\) and 
-        \(C_i \cap C_j \neq \emptyset\) for all \(i,j\in I\).
-    \item \emph{Disjoint span}: \(\cup_{i\in I} C_i = C\) and 
-        \(C_i \cap C_j = \emptyset\) for all  \(i,j\in I\) where \(i\neq j\).
-    \item \emph{Incomplete coverage}: \(\exists c \in C\) such that 
-        \(c\notin \cup_{i\in I} C_i\)
+    % \item \emph{Full visibility}: \(C_i = C\) for all \(i \in I\).
+    \item \emph{Full visibility}: \(\Gls{c}_{\gls{i}} = \Gls{c}\) for all \(\gls{i} \in \Gls{i}\).
+    % \item \emph{Intersecting span}: \(\cup_{i\in I} C_i = C\) and 
+    \item \emph{Intersecting span}: \(\cup_{\gls{i} \in \Gls{i}} \Gls{c}_i = \Gls{c}\) and 
+        % \(C_i \cap C_j \neq \emptyset\) for all \(i,j\in I\). 
+        \(\Gls{c}_i \cap \Gls{c}_j \neq \emptyset\) for all \(i,j\in I\).
+    % \item \emph{Disjoint span}: \(\cup_{i\in I} C_i = C\) and 
+    \item \emph{Disjoint span}: \(\cup_{\gls{i} \in \Gls{i}} \Gls{c}_i = \Gls{c}\) and 
+        % \(C_i \cap C_j = \emptyset\) for all  \(i,j\in I\) where \(i\neq j\).
+        \(\Gls{c}_i \cap \Gls{c}_j = \emptyset\) for all  \(i,j\in \Gls{i}\) where \(i\neq j\).
+    % \item \emph{Incomplete coverage}: \(\exists c \in C\) such that 
+    \item \emph{Incomplete coverage}: \(\exists \gls{c} \in \Gls{c}\) such that 
+        % \(c\notin \cup_{i\in I} C_i\)
+        \(\gls{c}\notin \cup_{\gls{i} \in \Gls{i}} \Gls{c}_i\)
 \end{enumerate}
 These compositions are illustrated in \cref{con2:fig:team_compositions}.
 
@@ -731,10 +763,10 @@ under eight test conditions:
 \begin{enumerate}
     \item Unmodified Team.
     \item Loss of an agent.
-    \item Sensor degradation, in which an agent loses access to an element \(c \in C_i\).
+    \item Sensor degradation, in which an agent loses access to an element \(\gls{c}\in\Gls{c}_i\).
     \item Sensor improvement, in which an agent gains a new observation element.
     \item Reduced coverage, in which the entire team loses access to a specific element.
-    \item Increased coverage, in which every agent gains \(c\in C\) if possible.
+    \item Increased coverage, in which every agent gains \(\gls{c}\in\Gls{c}\) if possible.
     \item Shuffled assignments, in which agents are randomly permuted across policy outputs.
     \item \emph{Novel spanning set}, in which the team is instantiated with
         observation-element combinations not seen during training.
@@ -770,8 +802,9 @@ measurable change in computational resource usage relative to the baseline.
 \subsubsection{Task Performance}
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.75\linewidth]{Data/training_curves.png}
-    \caption{Training curves representing mean \(\pm\) standard deviation for each 
+    \includegraphics[width=0.75\linewidth]{Figures/training_curves.png}
+    \caption[Comparison of training policy configurations with different visibility regimes.]{
+        Training curves representing mean \(\pm\) standard deviation for each 
         policy configuration and visibility regime.}
     \Description{Training curves comparing implicit indication with a \gls{harl}
         baseline faceted on the previously mentioned training compositions.}
@@ -782,11 +815,11 @@ The training curves for all conditions are provided in \cref{con2:fig:training_c
 Across all four team-composition settings, the two approaches exhibited remarkably similar 
 learning dynamics: convergence rates, variance across seeds, and asymptotic returns were 
 nearly indistinguishable. The most notable difference lies in model size; 
-as the implicit method has a storage footprint \(1/|I|\) that of this baseline, 
+as the implicit method has a storage footprint \(1/|\Gls{i}|\) that of this baseline, 
 which maintains a separate policy per agent. 
 
 \subsection{Evaluation}
-\label{con2:app:evaluations}
+\label{con2:evaluations}
 
 To compare generalization performance across evaluation conditions, 
 we selected the top 15 policies out of 30 for each condition. 
@@ -797,7 +830,7 @@ the evaluation episodes were longer than training episodes.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.9\linewidth]{Data/performance_delta.png}
+    \includegraphics[width=0.9\linewidth]{Figures/performance_delta.png}
     \caption{Comparison between methods trained with different observation-element coverage.}
     \Description{}
     \label{con2:fig:eval_delta}
@@ -815,7 +848,9 @@ approach.
 Training a team under the \emph{disjoint-span} condition yields
 substantial performance gains for implicit indication over \gls{happo} 
 in the baseline evaluation.
-In the baseline evaluation, the disjoint-span training condition yields the largest positive performance differences relative to \gls{happo} among all training conditions (see \cref{con2:fig:eval_delta}). 
+In the baseline evaluation, the disjoint-span training condition yields the 
+largest positive performance differences relative to \gls{happo} 
+among all training conditions (see \cref{con2:fig:eval_delta}). 
 While somewhat counterintuitive, this result
 is consistent with known challenges of shared-parameter learning in cooperative
 \gls{marl}. As noted by \cite{zhong2024}, simultaneous gradient updates from agents
@@ -915,19 +950,21 @@ into a shared domain with disjoint support preserves representability: no
 expressivity is lost by using a single function over the shared domain in place of
 separate functions over the original spaces.
 
-Formally, let \(\{O_j\}_{j \in J}\) be a collection of input spaces and let
-\(E_j : O_j \rightarrow O'\) be injective mappings whose images are pairwise
-disjoint,
+Formally, let \(\{\Gls{o}_j\}_{j \in J}\) be a collection of input spaces and let
+\(E_j : \Gls{o}_j \rightarrow \Gls{o}'\) % \(E_j : O_j \rightarrow O'\)
+be injective mappings whose images are pairwise disjoint,
 \[
-E_j(O_j) \cap E_k(O_k) = \emptyset \quad \text{for all } j \neq k.
+    % E_j(O_j) \cap E_k(O_k) = \emptyset \quad \text{for all } j \neq k.
+    E_j(\Gls{o}_j) \cap E_k(\Gls{o}_k) = \emptyset \quad \text{for all } j \neq k.
 \]
 Then for any collection of functions
-\(\{f_j : O_j \rightarrow Y\}_{j \in J}\),
-there exists a single function \(f : O' \rightarrow Y\) whose restriction to each
-embedded region reproduces the original behavior,
+\(\{f_j : \Gls{o}_j \rightarrow Y\}_{j \in J}\),
+there exists a single function \(f : \Gls{o}' \rightarrow Y\) 
+whose restriction to each embedded region reproduces the original behavior,
 \[
-f(E_j(o)) = f_j(o)
-\quad \text{for all } j \in J,\; o \in O_j.
+    f(E_j(\gls{o})) = f_j(\gls{o}) % f(E_j(o)) = f_j(o)
+    % \quad \text{for all } j \in J,\; o \in O_j.
+    \quad \text{for all } j \in J,\; \gls{o} \in \Gls{o}_j.
 \]
 This construction follows directly from disjointness, which partitions the shared
 domain into non-overlapping regions associated with each input space and permits a
@@ -936,10 +973,10 @@ constitutes a valid transformation that preserves representational capacity.
 
 Implicit indication is a concrete instantiation of this
 principle for heterogeneous-agent policies. Each agent's observation space is
-embedded injectively into the homogenized space \(\Hom{O}\) by activating a subset
+embedded injectively into the homogenized space \(\Hom{\Gls{o}}\) by activating a subset
 of observation elements while leaving all others empty or masked. 
 When these subsets induce disjoint embedded regions a single shared policy 
-over \(\Hom{O}\) can, in principle, realize the same input--output mappings 
+over \(\Hom{\Gls{o}}\) can, in principle, realize the same input--output mappings 
 as a collection of per-agent policies without requiring explicit agent identifiers.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -996,6 +1033,9 @@ for enabling shared learning across structurally diverse agents.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ----- Add to: Dissertation Appendix ----- %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\glsunset{ppo}
+\glsunset{gae}
+\glsunset{asha}
 
 \section{Hyperparameters}
 \label{con2:app:hyperparameters}
@@ -1014,7 +1054,7 @@ aggregated over tuning runs, with consistency checks across random seeds.
 
 \begin{table}[H]
     \centering
-    \caption{
+    \caption[Final Hyperparameters use for Implicit Indication Experiments]{
         Final hyperparameters used for homogenization and baseline methods. 
         Values are reported as applied across all main experiments.
     }
@@ -1024,13 +1064,13 @@ aggregated over tuning runs, with consistency checks across random seeds.
         \textbf{Parameter} & \textbf{Value} & \textbf{Notes} \\
         \midrule
         Learning rate & \(0.001\) & Selected via Ray Tune search \\
-        Batch size & \(4096\) & Number of samples per PPO update \\
-        PPO clip ratio & \(0.2\) & Standard PPO clipping parameter \\
+        Batch size & \(4096\) & Number of samples per \gls{ppo} update \\
+        \gls{ppo} clip ratio & \(0.2\) & Standard \gls{ppo} clipping parameter \\
         Value Function Clip & \(5\) & Clipping parameter for the value function \\
-        GAE parameter $\lambda$ & \(0.95\) & Used in all methods \\
+        \gls{gae} parameter $\lambda$ & \(0.95\) & Used in all methods \\
         Discount factor $\gamma$ & \(0.99\) & Applied across all methods \\
         Entropy coefficient & \(0.0\) & Exploration regularization \\
-        Value loss coefficient & \(1.0\) & PPO value function weight \\
+        Value loss coefficient & \(1.0\) & \gls{ppo} value function weight \\
         Number of rollout workers & \(8\) & Vectorized env instances \\
         \bottomrule
     \end{tabular}
@@ -1038,7 +1078,7 @@ aggregated over tuning runs, with consistency checks across random seeds.
 
 \begin{table}[H]
     \centering
-    \caption{
+    \caption[Policy Network Parameters used for Implicit Indication Experiments.]{
         Final architecture specifications for the policy networks used in all experiments.
         Layer dimensions, activation functions, and convolutional parameters correspond to the 
         configuration selected after hyperparameter tuning and applied uniformly across methods.
@@ -1061,10 +1101,9 @@ aggregated over tuning runs, with consistency checks across random seeds.
 
 \subsection{Hyperparameter Search Space}
 Table~\ref{tab:hparam-search} summarizes the ranges considered during tuning.
-We used the Asynchronous Successive Halving Algorithm (ASHA) scheduler \cite{li2018b}
-with early stopping under a fixed budget of \(1e6\) agent-steps per trial. 
-The hyperparameter search space was explored with
-Optuna-search \cite{akiba2019}.
+We used the \gls{asha} scheduler~\cite{li2018b} with early 
+stopping under a fixed budget of \(1e6\) agent-steps per trial. 
+The hyperparameter search space was explored with Optuna-search \cite{akiba2019}.
 
 \begin{table}[H]
     \centering
@@ -1076,9 +1115,9 @@ Optuna-search \cite{akiba2019}.
         \midrule
         Learning rate & \([5\mathrm{e}{-5}, 1\mathrm{e}{-3}]\) Log-uniform\\
         Batch size & \(\{4096, 8192, 16384\}\) \\
-        PPO Clipping & \(\{0.1, 0.2, 0.3\}\) \\
+        \gls{ppo} Clipping & \(\{0.1, 0.2, 0.3\}\) \\
         Value Function Clipping & \(\{5.0, 10.0\}\) \\
-        GAE parameter $\lambda$ & \([0.90, 0.99]\) Uniform \\
+        \gls{gae} parameter $\lambda$ & \([0.90, 0.99]\) Uniform \\
         Discount factor $\gamma$ & \(\{0.95, 0.99\}\) \\
         Entropy coefficient & \(\{0.0, 0.005, 0.01, 0.02\}\) \\
         Number of epochs per update & \(\{2, 4, 6, 8\}\) \\
@@ -1100,12 +1139,13 @@ Optuna-search \cite{akiba2019}.
 \label{con2:app:evaluations}
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.9\linewidth]{Data/eval_scale.png}
+    \includegraphics[width=0.9\linewidth]{Figures/eval_scale.png}
     \caption{Comparison between methods trained with different observation-element coverage.}
+    \Description{}
 \end{figure}
 \clearpage
 
-\section{Environment Model}
+\section{HyperGrid Environment Model}
 \label{con2:app:env_model}
 
 We model the environment using a structure consisting of the state, 
@@ -1113,96 +1153,123 @@ decision/action, exogenous information, transition function, and
 objective function~\cite{powell2022}.
 
 \paragraph{State.} 
-Let \(T \subset \mathbb{N}\) be the set of decision epochs, 
-and define entities \(E := I\cup J\cup K\cup L\), where 
-\(i \in I\) are agents, 
+Let \(\Gls{t} \subset \gls{naturals}\) be the set of decision epochs, 
+% Let \(T \subset \mathbb{N}\) be the set of decision epochs, 
+and define entities \(E := \Gls{i}\cup J\cup K\cup L\), where 
+\(i \in \Gls{i}\) are agents, 
 \(j \in J\) are objectives, 
 \(k \in K\) are hazards, and 
 \(l \in L\) are obstacles. 
-At each time \(t \in T\), the joint state \(s\in S\) is:
+At each time \(\gls{t}\in\Gls{t}\), the joint state \(\gls{s}\in\Gls{s}\) is:
 \[
-    s_t := \{s_{te} \mid e \in E\}, \quad s_t \in S
+    % s_t := \{s_{te} \mid e \in E\}, \quad s_t \in S
+    \gls{s}_{\gls{t}} := \{\gls{s}_{\gls{t}e} \mid e \in E\}, \quad \gls{s}_{\gls{t}} \in\Gls{s}
 \]
-Where the marginal state for agents \(i \in I\), 
+Where the marginal state for agents \(\gls{i}\in\Gls{i}\), 
 includes both location and orientation:
 \[
-    s_{ti} := (d_{ti}, \theta_{ti})
+    % \gls{s}_{ti} := (d_{ti}, \theta_{ti})
+    \gls{s}_{\gls{t}\gls{i}} := (d_{\gls{t}\gls{i}}, \theta_{\gls{t}\gls{i}})
 \]
 and the non-agent entities \(e \in (J, K, L)\) are represented by location alone:
 \[
-    s_{te} := (d_{te})
+    % \gls{s}_{te} := (d_{te})
+    \gls{s}_{\gls{t}e} := (d_{\gls{t}e})
 \]
-For spatial dimensions \(N \in \mathbb{N}\), 
-let \(D^{(n)} \in \mathbb{F}\) be the domain of dimension \(n\).
+For spatial dimensions \(N\in\gls{naturals}\), %\(N \in \mathbb{N}\),
+% let \(D^{(n)} \in \mathbb{F}\) be the domain of dimension \(n\).
+let \(D^{(n)} \in\gls{field}\) be the domain of dimension \(n\).
 Then, we define each entity \(e\)'s location as a tuple:
 \[
-    d_{te} := \left(d_{te}^{(1)},\ldots,d_{te}^{(N)}\right) \in \prod_{n=1}^N D_e^{(n)},
+    d_{te} := \left(d_{\gls{t}e}^{(1)},\ldots,d_{\gls{t}e}^{(N)}\right) 
+        \in \prod_{n=1}^N D_e^{(n)},
+    % d_{te} := \left(d_{te}^{(1)},\ldots,d_{te}^{(N)}\right) \in \prod_{n=1}^N D_e^{(n)},
 \]
 and orientation is represented by the tuple:
 \[
-    \theta_{ti} := \left(\theta_{ti}^{(1,2)},\ldots,\theta_{ti}^{(N-1,N)}\right)
-    \in \prod_{n=1}^{N-1} \Theta_i^{(n,n+1)}
+    % \theta_{ti} := \left(\theta_{ti}^{(1,2)},\ldots,\theta_{ti}^{(N-1,N)}\right)
+    \theta_{\gls{t}i} := \left(\theta_{\gls{t}i}^{(1,2)},\ldots,
+        \theta_{\gls{t}i}^{(N-1,N)}\right) \in \prod_{n=1}^{N-1} \Theta_i^{(n,n+1)}
 \]
 
 \paragraph{Observation Model.}
-Let \({C} := \{c_1, \ldots, c_m\}\) denote a set of abstract sensor channels.
-Each sensor channel \(c \in {C}\) corresponds to a linearly 
-independent observation subspace.
+Let \(\Gls{c} := \{\gls{c}_1, \ldots, \gls{c}_m\}\) %\({C} := \{c_1, \ldots, c_m\}\)
+denote a set of abstract sensor channels. Each sensor channel 
+\(\gls{c} \in \Gls{c}\) %\(c \in {C}\)
+corresponds to a linearly independent observation subspace.
 
 For each entity visibility in each channel must be defined,
-as a trait this may be referred to as \(e^{(c)} \in \{\text{True, False}\}\).
+as a trait this may be referred to as \(e^{(\gls{c})} \in \{\text{True, False}\}\).
 It may be encoded in the state as:
 \[
-s_{tec} = 
-\begin{cases}
-    1& \text{if \(e\) is visible in \(c\)} \\ 
-    0& \text{if \(e\) is not visible in \(c\)}
-\end{cases} 
-\quad\forall t\in T, e\in E, c\in C.
+    \gls{s}_{\gls{t}e\gls{c}} = % s_{tec} = 
+    \begin{cases}
+        1& \text{if \(e\) is visible in \(\gls{c}\)} \\ 
+        0& \text{if \(e\) is not visible in \(\gls{c}\)}
+    \end{cases} 
+    % \quad\forall t\in T, e\in E, \gls{c}\in\Gls{c}.
+    \quad\forall \gls{t}\in\Gls{t}, e\in E, \gls{c}\in\Gls{c}.
 \]
 Thus the marginal states becomes
-\[s_{ti} :(c_{ti},d_{ti},\theta_{ti})\]
+\[\gls{s}_{\gls{t}\gls{i}} :(\gls{c}_{\gls{t}\gls{i}},d_{\gls{t}\gls{i}},\theta_{\gls{t}\gls{i}})\]
+% \[s_{ti} :(c_{ti},d_{ti},\theta_{ti})\]
 for agents, and
-\[s_{te} :(c_{te},d_{te})\]
+\[\gls{s}_{\gls{t}e} :(\gls{c}_{\gls{t}e},d_{\gls{t}e})\]
+% \[s_{te} :(c_{te},d_{te})\]
 for all other entities.
 
-Each agent \(i \in I\) is assigned a subset of sensor channels 
-\({C}_i \subseteq {C}\), 
+Each agent \(\gls{i} \in\Gls{i}\) is assigned a subset of sensor channels 
+\(\Gls{c}_{\gls{i}} \subseteq \Gls{c}\), % \({C}_{i} \subseteq {C}\), 
 with their observation defined as the concatenation of the outputs 
 from the corresponding subspaces:
 Note that an agent's ability to perceive an entity within a given 
 subspace may be limited by spatial range, meaning each agent may 
 only observe a portion of the environment within each active channel.
 \[
-    o_{ti} := \bigoplus_{c \in {C}_i} o_{tic}
+    \gls{o}_{\gls{t}\gls{i}} 
+    := \bigoplus_{\gls{c} \in {C}_{\gls{i}}} \gls{o}_{\gls{t}\gls{i}\gls{c}}
+    % o_{ti} := \bigoplus_{c \in {C}_i} o_{tic}
 \]
-where \(o_{tic}\) is agent \(i\)'s observation of channel \(c\) at time \(t\), 
+where \(\gls{o}_{\gls{t}\gls{i}\gls{c}}\) is agent \(\gls{i}\)'s 
+observation of channel \(\gls{c}\) at time \(\gls{t}\), 
 and \(\oplus\) denotes concatenation over the ordered tuple of subspaces.
 
-The global observation space \(O\) is the Cartesian product of all channel subspaces:
+The global observation space \(\Gls{o}\) is the Cartesian product of all channel subspaces:
 \[
-    O := \prod_{c \in {C}} O_c
+    \Gls{o} := \prod_{\gls{c}\in{\Gls{c}}} \Gls{o}_{\gls{c}}
+    % O := \prod_{c \in {C}} O_c
 \]
 and each agent's observation is a masked subset of this space.
-During policy training and inference, a binary mask vector \(m_i \in \{0,1\}^{|\mathcal{C}|}\) 
-is applied to indicate which subspaces are active for agent \(i\), 
-allowing a shared network to condition on heterogeneous observations without assuming symmetry.
-
+During policy training and inference, a binary mask vector 
+\(m_{\gls{i}} \in \{0,1\}^{|\mathcal{C}|}\) is applied to 
+indicate which subspaces are active for agent \(\gls{i}\), 
+allowing a shared network to condition on heterogeneous 
+observations without assuming symmetry.
 
 \paragraph{Action Space.} 
-The joint action \(a \in A\) consists of marginal agent actions:
+The joint action \(\gls{a}\in\Gls{a}\) %\(a \in A\)
+consists of marginal agent actions:
 \[
-    a := (a_1, \ldots, a_{|I|}) \in A := \prod_{i \in I} A_i
+    % a := (a_1, \ldots, a_{|I|}) \in A := \prod_{i \in I} A_i
+    \gls{a} := (\gls{a}_1, \ldots, \gls{a}_{|\Gls{i}|})\in\Gls{a} 
+    := \prod_{\gls{i}\in\Gls{i}} \Gls{a}_{\gls{i}}
 \]
-Each agent's action at time \(t\) is a tuple:
+Each agent's action at time \(\gls{t}\) is a tuple:
 \[
-    a_{ti} := (a_{ti}^\text{interact}, a_{ti}^\text{move}, \Delta\theta_{ti})
+    % a_{ti} := (a_{ti}^\text{interact}, a_{ti}^\text{move}, \Delta\theta_{ti})
+    \gls{a}_{\gls{t}\gls{i}} := (\gls{a}_{\gls{t}\gls{i}}^\text{interact}, 
+        \gls{a}_{\gls{t}\gls{i}}^\text{move}, \Delta\theta_{\gls{t}\gls{i}})
 \]
 where:
 \begin{itemize}
-    \item \(a_{ti}^\text{interact} \in \{0,1\}\) toggles interaction,
-    \item \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\) denotes movement magnitude,
-    \item \(\Delta\theta_{ti} \in \prod_{n=1}^{N-1} \Delta\Theta_i^{(n,n+1)}\) encodes orientation adjustments.
+    % \item \(a_{ti}^\text{interact} \in \{0,1\}\) toggles interaction,
+    \item \(\gls{a}_{\gls{t}\gls{i}}^\text{interact}\in\{0,1\}\) toggles interaction,
+    % \item \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\)
+    \item \(\gls{a}_{\gls{t}\gls{i}}^\text{move} \in M_{\gls{i}}\in\gls{field}\) 
+    denotes movement magnitude,
+    % \item \(\Delta\theta_{ti} \in \prod_{n=1}^{N-1} \Delta\Theta_i^{(n,n+1)}\)
+    \item \(\Delta\theta_{\gls{t}\gls{i}} \in \prod_{n=1}^{N-1} \Delta\Theta_i^{(n,n+1)}\)
+    encodes orientation adjustments.
 \end{itemize}
 
 % \paragraph{Exogenous Information.} 
@@ -1212,26 +1279,38 @@ where:
 \paragraph{Transition Function.} 
 Deterministic and synchronous:
 \[
-    s_{t+1} = \mathcal{T}(s_t, a_t) \quad \text{or} \quad \mathcal{T}(a_t \mid s_t) = s_{t+1}.
+    % s_{t+1} = \mathcal{T}(s_t, a_t) \quad \text{or} \quad \mathcal{T}(a_t \mid s_t) = s_{t+1}.
+    \gls{s}_{\gls{t}+1} = \mathcal{\Gls{t}}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) 
+    \quad \text{or} \quad 
+    \mathcal{\Gls{t}}(\gls{a}_{\gls{t}} \mid \gls{s}_{\gls{t}}) = \gls{s}_{\gls{t}+1}.
 \]
 Provided that the actions chosen by the agents are valid, they are executed.
 
 \paragraph{Objective Function.} 
 The cumulative reward is defined as:
 \[
-    \max \sum_{t \in T} \left[
-        \sum_{i \in I, j \in J} r_j \cdot \mathbb{I}[\Xi]
-        - \sum_{i \in I} r_i \cdot \mathbb{I}[a_{ti}^\text{interact} = 1]
-        - \sum_{i \in I, k \in K} r_k \cdot \mathbb{I}[\|s_{ti} - s_{tk}\|_\infty \leq k^\text{range}]
+    % \max \sum_{t \in T} \left[
+    %     \sum_{i \in I, j \in J} r_j \cdot \mathbb{I}[\Xi]
+    %     - \sum_{i \in I} r_i \cdot \mathbb{I}[a_{ti}^\text{interact} = 1]
+    %     - \sum_{i \in I, k \in K} r_k \cdot \mathbb{I}[\|s_{ti} 
+    %         - s_{tk}\|_\infty \leq k^\text{range}]
+    % \right]
+    \max\sum_{\gls{t}\in\Gls{t}} \left[
+        \sum_{\gls{i}\in\Gls{i}, j \in J} r_j \cdot\gls{indicator}[\Xi]
+        - \sum_{\gls{i}\in\Gls{i}} r_{\gls{i}} \cdot\gls{indicator}[
+            \gls{a}_{\gls{t}\gls{i}}^\text{interact} = 1]
+        - \sum_{\gls{i}\in\Gls{i}, k \in K} r_k \cdot\gls{indicator}[
+            \|\gls{s}_{\gls{t}\gls{i}} - \gls{s}_{\gls{t}k}\|_\infty \leq k^\text{range}]
     \right]
 \]
 where:
 \begin{itemize}
-    \item \(r_j \in \mathbb{R}_{>0}\) is the reward for collecting objective \(j \in J\),
-    \item \(\mathbb{I}[\Xi]\) encodes conditions under which \(j\) is valid for collection e.g.
-    distance threshold, orientation requirement, or agent interaction flag,
-    \item \(r_i \in \mathbb{R}_{<0}\) is the cost for agent \(i \in I\) to interact,
-    \item \(r_k \in \mathbb{R}_{<0}\) is a penalty for agent \(i\) being near hazard \(k \in K\).
+    \item \(\gls{r}_j\in\gls{reals}_{>0}\) is the reward for collecting objective \(j \in J\),
+    \item \(\gls{indicator}[\Xi]\) encodes conditions under which \(j\) is valid for collection 
+        e.g. distance threshold, orientation requirement, or agent interaction flag,
+    \item \(\gls{r}_i\in\gls{reals}_{<0}\) is the cost for agent \(i \in I\) to interact,
+    \item \(\gls{r}_k\in\gls{reals}_{<0}\) is a penalty for agent \(i\) being near 
+        hazard \(k \in K\).
 \end{itemize}
 
 \subsection{Implementation}
@@ -1239,7 +1318,7 @@ The environment model described here reflects the full generality of
 the underlying framework, which was developed as a configurable 
 multi-agent environment independent of the present study. 
 For the experiments in this paper, we use a restricted instantiation 
-\(M_i \subseteq \mathbb{Z}\) 
+\(M_{\gls{i}} \subseteq \gls{integers}\) 
 Several components of the formal model—such as general N-dimensional orientation, 
 continuous movement magnitudes, and broad state definitions—are therefore 
 supersets of the configuration actually used in our evaluations.

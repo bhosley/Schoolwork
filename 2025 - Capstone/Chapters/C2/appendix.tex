@@ -1,0 +1,284 @@
+\glsunset{ppo}
+\glsunset{gae}
+\glsunset{asha}
+
+\section{Hyperparameters}
+\label{con2:app:hyperparameters}
+
+For transparency and reproducibility, we report both 
+(i) the final hyperparameters selected for our experiments, and 
+(ii) the ranges explored during tuning. 
+All tuning was conducted using \texttt{Ray Tune}~\cite{liaw2018}, 
+which automatically schedules and evaluates candidate configurations under 
+fixed computational budgets.
+
+\subsection{Final Hyperparameters Used}
+Table~\ref{tab:final-hparams} lists the hyperparameters used for the 
+experiments reported in the main text. These were selected based on performance 
+aggregated over tuning runs, with consistency checks across random seeds.
+
+\begin{table}[H]
+    \centering
+    \caption[Final Hyperparameters use for Implicit Indication Experiments]{
+        Final hyperparameters used for homogenization and baseline methods. 
+        Values are reported as applied across all main experiments.
+    }
+    \label{tab:final-hparams}
+    \begin{tabular}{l l l}
+        \toprule
+        \textbf{Parameter} & \textbf{Value} & \textbf{Notes} \\
+        \midrule
+        Learning rate & \(0.001\) & Selected via Ray Tune search \\
+        Batch size & \(4096\) & Number of samples per \gls{ppo} update \\
+        \gls{ppo} clip ratio & \(0.2\) & Standard \gls{ppo} clipping parameter \\
+        Value Function Clip & \(5\) & Clipping parameter for the value function \\
+        \gls{gae} parameter $\lambda$ & \(0.95\) & Used in all methods \\
+        Discount factor $\gamma$ & \(0.99\) & Applied across all methods \\
+        Entropy coefficient & \(0.0\) & Exploration regularization \\
+        Value loss coefficient & \(1.0\) & \gls{ppo} value function weight \\
+        Number of rollout workers & \(8\) & Vectorized env instances \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption[Policy Network Parameters used for Implicit Indication Experiments.]{
+        Final architecture specifications for the policy networks used in all experiments.
+        Layer dimensions, activation functions, and convolutional parameters correspond to the 
+        configuration selected after hyperparameter tuning and applied uniformly across methods.
+    }
+    \label{tab:policy_network}
+    \begin{tabular}{l l}
+        \toprule
+        \textbf{Layer} & \textbf{Value} \\
+        \midrule
+        Image Conv. Layers & \([16, 32, 64]\) \\
+        Image Conv. Kernel size & \([2,2]\) \\
+        Img Enc. Activation Function & \(\text{relu}\) \\
+        Dir Enc. Activation Function & \(\text{relu}\) \\
+        Encoder Dimensions (Image, Direction) & \([256, 16]\) \\
+        Trunk Layers & \([128, 64]\) \\
+        Trunk Activation Function & \(\text{tanh}\) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+\subsection{Hyperparameter Search Space}
+Table~\ref{tab:hparam-search} summarizes the ranges considered during tuning.
+We used the \gls{asha} scheduler~\cite{li2018b} with early 
+stopping under a fixed budget of \(1e6\) agent-steps per trial. 
+The hyperparameter search space was explored with Optuna-search \cite{akiba2019}.
+
+\begin{table}[H]
+    \centering
+    \caption{Hyperparameter ranges explored during tuning.}
+    \label{tab:hparam-search}
+    \begin{tabular}{l l l}
+        \toprule
+        \textbf{Parameter} & \textbf{Range / Options} \\
+        \midrule
+        Learning rate & \([5\mathrm{e}{-5}, 1\mathrm{e}{-3}]\) Log-uniform\\
+        Batch size & \(\{4096, 8192, 16384\}\) \\
+        \gls{ppo} Clipping & \(\{0.1, 0.2, 0.3\}\) \\
+        Value Function Clipping & \(\{5.0, 10.0\}\) \\
+        \gls{gae} parameter $\lambda$ & \([0.90, 0.99]\) Uniform \\
+        Discount factor $\gamma$ & \(\{0.95, 0.99\}\) \\
+        Entropy coefficient & \(\{0.0, 0.005, 0.01, 0.02\}\) \\
+        Number of epochs per update & \(\{2, 4, 6, 8\}\) \\
+        \midrule
+        \textbf{Network Parameters} & \\
+        \midrule
+        Image Conv. Channels & \(\{16, 32, 64\}\) \\
+        Image Conv. Layers & \(\{[32], [32, 32], [32, 64], [64, 64], [16, 32, 64], [32, 64, 64]\}\) \\
+        Image Conv. Kernel size & \(\{[2,2],[3,3]\}\) \\
+        Encoder Dimensions (Image, Direction) & \(\{[128, 16], [128, 32], [256, 16], [256, 32]\}\) \\
+        Trunk Layers & \(\{[64], [128], [128, 64], [256, 128, 64]\}\) \\
+        Activation Functions & \(\{\text{relu, tanh}\}\) \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+\clearpage
+
+\section{Evaluation Comparison}
+\label{con2:app:evaluations}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/eval_scale.png}
+    \caption{Comparison between methods trained with different observation-element coverage.}
+\end{figure}
+\clearpage
+
+\section{HyperGrid Environment Model}
+\label{con2:app:env_model}
+
+We model the environment using a structure consisting of the state, 
+decision/action, exogenous information, transition function, and 
+objective function~\cite{powell2022}.
+
+\paragraph{State.} 
+Let \(\Gls{t} \subset \gls{naturals}\) be the set of decision epochs, 
+% Let \(T \subset \mathbb{N}\) be the set of decision epochs, 
+and define entities \(E := \Gls{i}\cup J\cup K\cup L\), where 
+\(i \in \Gls{i}\) are agents, 
+\(j \in J\) are objectives, 
+\(k \in K\) are hazards, and 
+\(l \in L\) are obstacles. 
+At each time \(\gls{t}\in\Gls{t}\), the joint state \(\gls{s}\in\Gls{s}\) is:
+\[
+    % s_t := \{s_{te} \mid e \in E\}, \quad s_t \in S
+    \gls{s}_{\gls{t}} := \{\gls{s}_{\gls{t}e} \mid e \in E\}, \quad \gls{s}_{\gls{t}} \in\Gls{s}
+\]
+Where the marginal state for agents \(\gls{i}\in\Gls{i}\), 
+includes both location and orientation:
+\[
+    % \gls{s}_{ti} := (d_{ti}, \theta_{ti})
+    \gls{s}_{\gls{t}\gls{i}} := (d_{\gls{t}\gls{i}}, \theta_{\gls{t}\gls{i}})
+\]
+and the non-agent entities \(e \in (J, K, L)\) are represented by location alone:
+\[
+    % \gls{s}_{te} := (d_{te})
+    \gls{s}_{\gls{t}e} := (d_{\gls{t}e})
+\]
+For spatial dimensions \(N\in\gls{naturals}\), %\(N \in \mathbb{N}\),
+% let \(D^{(n)} \in \mathbb{F}\) be the domain of dimension \(n\).
+let \(D^{(n)} \in\gls{field}\) be the domain of dimension \(n\).
+Then, we define each entity \(e\)'s location as a tuple:
+\[
+    d_{te} := \left(d_{\gls{t}e}^{(1)},\ldots,d_{\gls{t}e}^{(N)}\right) 
+        \in \prod_{n=1}^N D_e^{(n)},
+    % d_{te} := \left(d_{te}^{(1)},\ldots,d_{te}^{(N)}\right) \in \prod_{n=1}^N D_e^{(n)},
+\]
+and orientation is represented by the tuple:
+\[
+    % \theta_{ti} := \left(\theta_{ti}^{(1,2)},\ldots,\theta_{ti}^{(N-1,N)}\right)
+    \theta_{\gls{t}i} := \left(\theta_{\gls{t}i}^{(1,2)},\ldots,
+        \theta_{\gls{t}i}^{(N-1,N)}\right) \in \prod_{n=1}^{N-1} \Theta_i^{(n,n+1)}
+\]
+
+\paragraph{Observation Model.}
+Let \(\Gls{c} := \{\gls{c}_1, \ldots, \gls{c}_m\}\) %\({C} := \{c_1, \ldots, c_m\}\)
+denote a set of abstract sensor channels. Each sensor channel 
+\(\gls{c} \in \Gls{c}\) %\(c \in {C}\)
+corresponds to a linearly independent observation subspace.
+
+For each entity visibility in each channel must be defined,
+as a trait this may be referred to as \(e^{(\gls{c})} \in \{\text{True, False}\}\).
+It may be encoded in the state as:
+\[
+    \gls{s}_{\gls{t}e\gls{c}} = % s_{tec} = 
+    \begin{cases}
+        1& \text{if \(e\) is visible in \(\gls{c}\)} \\ 
+        0& \text{if \(e\) is not visible in \(\gls{c}\)}
+    \end{cases} 
+    % \quad\forall t\in T, e\in E, \gls{c}\in\Gls{c}.
+    \quad\forall \gls{t}\in\Gls{t}, e\in E, \gls{c}\in\Gls{c}.
+\]
+Thus the marginal states becomes
+\[\gls{s}_{\gls{t}\gls{i}} :(\gls{c}_{\gls{t}\gls{i}},d_{\gls{t}\gls{i}},\theta_{\gls{t}\gls{i}})\]
+% \[s_{ti} :(c_{ti},d_{ti},\theta_{ti})\]
+for agents, and
+\[\gls{s}_{\gls{t}e} :(\gls{c}_{\gls{t}e},d_{\gls{t}e})\]
+% \[s_{te} :(c_{te},d_{te})\]
+for all other entities.
+
+Each agent \(\gls{i} \in\Gls{i}\) is assigned a subset of sensor channels 
+\(\Gls{c}_{\gls{i}} \subseteq \Gls{c}\), % \({C}_{i} \subseteq {C}\), 
+with their observation defined as the concatenation of the outputs 
+from the corresponding subspaces:
+Note that an agent's ability to perceive an entity within a given 
+subspace may be limited by spatial range, meaning each agent may 
+only observe a portion of the environment within each active channel.
+\[
+    \gls{o}_{\gls{t}\gls{i}} 
+    := \bigoplus_{\gls{c} \in {C}_{\gls{i}}} \gls{o}_{\gls{t}\gls{i}\gls{c}}
+    % o_{ti} := \bigoplus_{c \in {C}_i} o_{tic}
+\]
+where \(\gls{o}_{\gls{t}\gls{i}\gls{c}}\) is agent \(\gls{i}\)'s 
+observation of channel \(\gls{c}\) at time \(\gls{t}\), 
+and \(\oplus\) denotes concatenation over the ordered tuple of subspaces.
+
+The global observation space \(\Gls{o}\) is the Cartesian product of all channel subspaces:
+\[
+    \Gls{o} := \prod_{\gls{c}\in{\Gls{c}}} \Gls{o}_{\gls{c}}
+    % O := \prod_{c \in {C}} O_c
+\]
+and each agent's observation is a masked subset of this space.
+During policy training and inference, a binary mask vector 
+\(m_{\gls{i}} \in \{0,1\}^{|\mathcal{C}|}\) is applied to 
+indicate which subspaces are active for agent \(\gls{i}\), 
+allowing a shared network to condition on heterogeneous 
+observations without assuming symmetry.
+
+\paragraph{Action Space.} 
+The joint action \(\gls{a}\in\Gls{a}\) %\(a \in A\)
+consists of marginal agent actions:
+\[
+    % a := (a_1, \ldots, a_{|I|}) \in A := \prod_{i \in I} A_i
+    \gls{a} := (\gls{a}_1, \ldots, \gls{a}_{|\Gls{i}|})\in\Gls{a} 
+    := \prod_{\gls{i}\in\Gls{i}} \Gls{a}_{\gls{i}}
+\]
+Each agent's action at time \(\gls{t}\) is a tuple:
+\[
+    % a_{ti} := (a_{ti}^\text{interact}, a_{ti}^\text{move}, \Delta\theta_{ti})
+    \gls{a}_{\gls{t}\gls{i}} := (\gls{a}_{\gls{t}\gls{i}}^\text{interact}, 
+        \gls{a}_{\gls{t}\gls{i}}^\text{move}, \Delta\theta_{\gls{t}\gls{i}})
+\]
+where:
+\begin{itemize}
+    % \item \(a_{ti}^\text{interact} \in \{0,1\}\) toggles interaction,
+    \item \(\gls{a}_{\gls{t}\gls{i}}^\text{interact}\in\{0,1\}\) toggles interaction,
+    % \item \(a_{ti}^\text{move} \in M_i \subseteq \mathbb{F}\)
+    \item \(\gls{a}_{\gls{t}\gls{i}}^\text{move} \in M_{\gls{i}}\in\gls{field}\) 
+    denotes movement magnitude,
+    % \item \(\Delta\theta_{ti} \in \prod_{n=1}^{N-1} \Delta\Theta_i^{(n,n+1)}\) 
+    \item \(\Delta\theta_{\gls{t}\gls{i}} \in \prod_{n=1}^{N-1} \Delta\Theta_i^{(n,n+1)}\) 
+    encodes orientation adjustments.
+\end{itemize}
+
+\paragraph{Transition Function.} 
+Deterministic and synchronous:
+\[
+    % s_{t+1} = \mathcal{T}(s_t, a_t) \quad \text{or} \quad \mathcal{T}(a_t \mid s_t) = s_{t+1}.
+    \gls{s}_{\gls{t}+1} = \mathcal{\Gls{t}}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) 
+    \quad \text{or} \quad 
+    \mathcal{\Gls{t}}(\gls{a}_{\gls{t}} \mid \gls{s}_{\gls{t}}) = \gls{s}_{\gls{t}+1}.
+\]
+Provided that the actions chosen by the agents are valid, they are executed.
+
+\paragraph{Objective Function.} 
+The cumulative reward is defined as:
+\[
+    % \max \sum_{t \in T} \left[
+    %     \sum_{i \in I, j \in J} r_j \cdot \mathbb{I}[\Xi]
+    %     - \sum_{i \in I} r_i \cdot \mathbb{I}[a_{ti}^\text{interact} = 1]
+    %     - \sum_{i \in I, k \in K} r_k \cdot \mathbb{I}[\|s_{ti} 
+    %         - s_{tk}\|_\infty \leq k^\text{range}]
+    % \right]
+    \max\sum_{\gls{t}\in\Gls{t}} \left[
+        \sum_{\gls{i}\in\Gls{i}, j \in J} r_j \cdot\gls{indicator}[\Xi]
+        - \sum_{\gls{i}\in\Gls{i}} r_{\gls{i}} \cdot\gls{indicator}[
+            \gls{a}_{\gls{t}\gls{i}}^\text{interact} = 1]
+        - \sum_{\gls{i}\in\Gls{i}, k \in K} r_k \cdot\gls{indicator}[
+            \|\gls{s}_{\gls{t}\gls{i}} - \gls{s}_{\gls{t}k}\|_\infty \leq k^\text{range}]
+    \right]
+\]
+where:
+\begin{itemize}
+    \item \(\gls{r}_j\in\gls{reals}_{>0}\) is the reward for collecting objective \(j \in J\),
+    \item \(\gls{indicator}[\Xi]\) encodes conditions under which \(j\) is valid for collection 
+        e.g. distance threshold, orientation requirement, or agent interaction flag,
+    \item \(\gls{r}_i\in\gls{reals}_{<0}\) is the cost for agent \(i \in I\) to interact,
+    \item \(\gls{r}_k\in\gls{reals}_{<0}\) is a penalty for agent \(i\) being near 
+        hazard \(k \in K\).
+\end{itemize}
+
+\subsection{Implementation}
+The environment model described here reflects the full generality of 
+the underlying framework, which was developed as a configurable 
+multi-agent environment independent of the present study. 
+For the experiments in this paper, we use a restricted instantiation 
+\(M_{\gls{i}} \subseteq \gls{integers}\) 
+Several components of the formal model—such as general N-dimensional orientation, 
+continuous movement magnitudes, and broad state definitions—are therefore 
+supersets of the configuration actually used in our evaluations.
