@@ -7,7 +7,7 @@
     \node [] (center) {};
     \node [entry, fill= Blue!15] (agent) [above=of center] {Agent};
     \node [entry, fill=Green!15] (env) [below=of center] {Environment};
-    \node [] (time) [below left= 0.6cm and 2.3cm of env]{\scriptsize\(t:=t+1\)};
+    \node [] (time) [below left= 0.6cm and 2.3cm of env]{\scriptsize\(\gls{t}:=\gls{t}+1\)};
     \draw [dashed] (time) -- +(0,1);
 
     % Transitions
@@ -18,7 +18,7 @@
                     +(-1.4,1.6) -- ([yshift=-0.2cm]agent.west);
 
     % Labels
-    \node [] () [right= 1pt of A] {\(a_t\in\) \Gls{a}};
-    \node [] () [left=  1pt of S] {\(s_t\in\) \Gls{s}};
-    \node [] () [right= 1pt of R] {\(r_t\in\) \Gls{r}};
+    \node [] () [right= 1pt of A] {\(\gls{a}_{\gls{t}}\in\) \Gls{a}};
+    \node [] () [left=  1pt of S] {\(\gls{s}_{\gls{t}}\in\) \Gls{s}};
+    \node [] () [right= 1pt of R] {\(\gls{r}_{\gls{t}}\in\) \Gls{r}};
 \end{tikzpicture}

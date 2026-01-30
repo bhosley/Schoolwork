@@ -1,35 +1,36 @@
-\contentsline {figure}{\numberline {1}{\ignorespaces Environments used in \cref {ch:contribution_1}.}}{5}{figure.caption.4}%
-\contentsline {figure}{\numberline {2}{\ignorespaces Example of Training Progression for Waterworld and \gls {lbf}}}{14}{figure.caption.6}%
-\contentsline {figure}{\numberline {3}{\ignorespaces Example of Training Progression for Multiwalker}}{14}{figure.caption.7}%
-\contentsline {figure}{\numberline {4}{\ignorespaces Training Iteration Timing Across Agent Counts.}}{16}{figure.caption.9}%
-\contentsline {figure}{\numberline {5}{\ignorespaces Waterworld Retraining (4 agents, 2-agent pretraining).}}{18}{figure.caption.10}%
-\contentsline {figure}{\numberline {6}{\ignorespaces Waterworld Retraining (8 agents, 2-agent pretraining).}}{19}{figure.caption.11}%
-\contentsline {figure}{\numberline {7}{\ignorespaces Waterworld Pretraining Impact.}}{20}{figure.caption.12}%
-\contentsline {figure}{\numberline {8}{\ignorespaces Multiwalker Retraining (5 agents, 3-agent pretraining).}}{21}{figure.caption.13}%
-\contentsline {figure}{\numberline {9}{\ignorespaces Multiwalker Retraining (6 agents, 3-agent pretraining).}}{22}{figure.caption.14}%
-\contentsline {figure}{\numberline {10}{\ignorespaces Multiwalker Pretraining Impact.}}{22}{figure.caption.15}%
-\contentsline {figure}{\numberline {11}{\ignorespaces Level-Based Foraging Retraining (7 agents, 2-agent pretraining).}}{23}{figure.caption.17}%
-\contentsline {figure}{\numberline {12}{\ignorespaces Level-Based Foraging Pretraining Impact.}}{24}{figure.caption.18}%
-\contentsline {figure}{\numberline {13}{\ignorespaces Mini-grid style rendering of multi-agent environment.}}{35}{figure.caption.19}%
-\contentsline {figure}{\numberline {14}{\ignorespaces Team compositions and observation element coverage.}}{38}{figure.caption.20}%
-\contentsline {figure}{\numberline {15}{\ignorespaces Comparison of training policy configurations with different visibility regimes.}}{40}{figure.caption.21}%
-\contentsline {figure}{\numberline {16}{\ignorespaces Comparison between methods trained with different observation-element coverage.}}{41}{figure.caption.22}%
-\contentsline {figure}{\numberline {17}{\ignorespaces Implicit Indication & PIC Training Comparison}}{54}{figure.caption.23}%
-\contentsline {figure}{\numberline {18}{\ignorespaces Compared Evaluation Performance of Implicit Indication, PIC, HAPPO}}{61}{figure.caption.24}%
-\contentsline {figure}{\numberline {19}{\ignorespaces Evaluation of Relative Performance of Implicit Indication and PIC}}{62}{figure.caption.26}%
-\contentsline {figure}{\numberline {20}{\ignorespaces Training curves for Waterworld, 3\ agents.}}{67}{figure.caption.32}%
-\contentsline {figure}{\numberline {21}{\ignorespaces Training curves for Waterworld, 4\ agents.}}{68}{figure.caption.33}%
-\contentsline {figure}{\numberline {22}{\ignorespaces Training curves for Waterworld, 5\ agents.}}{68}{figure.caption.34}%
-\contentsline {figure}{\numberline {23}{\ignorespaces Training curves for Waterworld, 6\ agents.}}{69}{figure.caption.35}%
-\contentsline {figure}{\numberline {24}{\ignorespaces Training curves for Waterworld, 7\ agents.}}{69}{figure.caption.36}%
-\contentsline {figure}{\numberline {25}{\ignorespaces Training curves for Waterworld, 8\ agents.}}{70}{figure.caption.37}%
-\contentsline {figure}{\numberline {26}{\ignorespaces Training curves for Multiwalker, 4\ agents.}}{70}{figure.caption.38}%
-\contentsline {figure}{\numberline {27}{\ignorespaces Training curves for Multiwalker, 5\ agents.}}{71}{figure.caption.39}%
-\contentsline {figure}{\numberline {28}{\ignorespaces Training curves for Multiwalker, 6\ agents.}}{71}{figure.caption.40}%
-\contentsline {figure}{\numberline {29}{\ignorespaces Training curves for Multiwalker, 7\ agents.}}{72}{figure.caption.41}%
-\contentsline {figure}{\numberline {30}{\ignorespaces Training curves for LBF, 3\ agents.}}{72}{figure.caption.42}%
-\contentsline {figure}{\numberline {31}{\ignorespaces Training curves for LBF, 4\ agents.}}{73}{figure.caption.43}%
-\contentsline {figure}{\numberline {32}{\ignorespaces Training curves for LBF, 5\ agents.}}{73}{figure.caption.44}%
-\contentsline {figure}{\numberline {33}{\ignorespaces Training curves for LBF, 6\ agents.}}{74}{figure.caption.45}%
-\contentsline {figure}{\numberline {34}{\ignorespaces Training curves for LBF, 7\ agents.}}{74}{figure.caption.46}%
-\contentsline {figure}{\numberline {35}{\ignorespaces Comparison between methods trained with different observation-element coverage.}}{78}{figure.caption.50}%
+\contentsline {figure}{\numberline {1}{\ignorespaces RL exemplified by a fully reduced MDP.}}{3}{figure.caption.4}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Environments used in \cref {ch:contribution_1}.}}{61}{figure.caption.6}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Example of Training Progression for Waterworld and \gls {lbf}}}{70}{figure.caption.8}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Example of Training Progression for Multiwalker}}{70}{figure.caption.9}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Training Iteration Timing Across Agent Counts.}}{72}{figure.caption.11}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Waterworld Retraining (4 agents, 2-agent pretraining).}}{74}{figure.caption.12}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Waterworld Retraining (8 agents, 2-agent pretraining).}}{75}{figure.caption.13}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Waterworld Pretraining Impact.}}{76}{figure.caption.14}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Multiwalker Retraining (5 agents, 3-agent pretraining).}}{77}{figure.caption.15}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Multiwalker Retraining (6 agents, 3-agent pretraining).}}{78}{figure.caption.16}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Multiwalker Pretraining Impact.}}{78}{figure.caption.17}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Level-Based Foraging Retraining (7 agents, 2-agent pretraining).}}{79}{figure.caption.19}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Level-Based Foraging Pretraining Impact.}}{80}{figure.caption.20}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Mini-grid style rendering of multi-agent environment.}}{91}{figure.caption.21}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Team compositions and observation element coverage.}}{94}{figure.caption.22}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Comparison of training policy configurations with different visibility regimes.}}{96}{figure.caption.23}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Comparison between methods trained with different observation-element coverage.}}{97}{figure.caption.24}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Implicit Indication & PIC Training Comparison}}{110}{figure.caption.25}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Compared Evaluation Performance of Implicit Indication, PIC, HAPPO}}{117}{figure.caption.26}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Evaluation of Relative Performance of Implicit Indication and PIC}}{118}{figure.caption.28}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Training curves for Waterworld, 3\ agents.}}{124}{figure.caption.34}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Training curves for Waterworld, 4\ agents.}}{125}{figure.caption.35}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Training curves for Waterworld, 5\ agents.}}{125}{figure.caption.36}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Training curves for Waterworld, 6\ agents.}}{126}{figure.caption.37}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Training curves for Waterworld, 7\ agents.}}{126}{figure.caption.38}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Training curves for Waterworld, 8\ agents.}}{127}{figure.caption.39}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Training curves for Multiwalker, 4\ agents.}}{127}{figure.caption.40}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Training curves for Multiwalker, 5\ agents.}}{128}{figure.caption.41}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Training curves for Multiwalker, 6\ agents.}}{128}{figure.caption.42}%
+\contentsline {figure}{\numberline {30}{\ignorespaces Training curves for Multiwalker, 7\ agents.}}{129}{figure.caption.43}%
+\contentsline {figure}{\numberline {31}{\ignorespaces Training curves for LBF, 3\ agents.}}{129}{figure.caption.44}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Training curves for LBF, 4\ agents.}}{130}{figure.caption.45}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Training curves for LBF, 5\ agents.}}{130}{figure.caption.46}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Training curves for LBF, 6\ agents.}}{131}{figure.caption.47}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Training curves for LBF, 7\ agents.}}{131}{figure.caption.48}%
+\contentsline {figure}{\numberline {36}{\ignorespaces Comparison between methods trained with different observation-element coverage.}}{135}{figure.caption.52}%
