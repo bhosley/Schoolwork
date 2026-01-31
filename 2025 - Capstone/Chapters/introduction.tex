@@ -1,286 +1,341 @@
-% #TODO: Introduction
-INTRODUCTION PLACEHOLDER
+\section{The Promise and Challenge of Autonomous Multi-Agent Systems}%
+\label{sec:intro_motivation}
 
-% % Introduction %
-% \section{Motivation}%
-% \label{sec:motivation}
+In August 2023, Deputy Secretary of Defense Kathleen Hicks announced the 
+\emph{Replicator Initiative}, signaling a strategic shift toward fielding 
+autonomous systems at scale~\cite{robertson2023,zotero-2656}. 
+Unlike previous efforts focused on bespoke military platforms, 
+\emph{Replicator} aims to leverage commercial technologies; 
+an approach partly inspired by the demonstrated effectiveness of 
+\gls{cots} \glspl{uas} during the conflict in Ukraine~\cite{bajak2023a}. 
+This initiative reflects a broader recognition that autonomous multi-agent 
+systems represent a transformative capability across domains ranging from 
+defense to disaster response and agricultural 
+automation~\cite{mohddaud2022,hambling2021,rogers2022}.
 
-% In August 2023, at the National Defense Industrial Association's 
-% Emerging Technologies conference, Deputy Secretary of Defense Kathleen Hicks 
-% announced the \emph{Replicator Initiative}~\cite{robertson2023}. 
-% This initiative aims to field all-domain attritable autonomous (ADA2) systems,
-% leveraging autonomous technology to address production disadvantages the 
-% United States may face in great-power competition~\cite{zotero-2656}. 
-% Unlike previous efforts that sought bespoke military drones~\cite{bajak2023}, 
-% \emph{Replicator} aims to leverage more readily available technologies, 
-% potentially inspired by the demonstrated effectiveness of \gls{cots} \glspl{uas} 
-% employed by both belligerents during the Russian invasion of Ukraine~\cite{bajak2023a}.
+The technical feasibility of coordinated autonomous swarms has been 
+demonstrated through programs such as \gls{darpa}'s \gls{offset} initiative, 
+which fielded teams of over 100 autonomous agents in complex urban 
+environments~\cite{zotero-2835}. Yet despite these demonstrations, 
+a significant gap remains between controlled showcases and operational deployment. 
+A 2024 Rand Corporation study predicted that effective, intelligent 
+swarms remain years from realization, citing the need for convergent 
+advances in communications, manufacturing, \gls{ai}, and usability~\cite{gerstein2024}. 
+The study particularly highlighted the difficulty of transitioning from 
+\emph{surrogate swarms} (many agents controlled by human operators) 
+to fully autonomous systems.
 
-% Despite the strategic push of the \emph{Replicator Initiative}, 
-% a Rand Corporation study from February 2024~\cite{gerstein2024} predicted 
-% that effective, intelligent swarms are still several years from realization. 
-% These advancements will require the confluence of developments in several 
-% different areas; communications and signals, manufacturing, \gls{ai},
-% and usability. In the study they highlight a difficulty in the transition 
-% from what they call \emph{Surrogate Swarms} (many \gls{uas} controlled
-% by at least one human) to fully autonomous ones.
-% The area they termed \gls*{ai} likely refers to the systems used for autonomous 
-% decision making, which presents a host of constituent problems to be solved.
+At the heart of this challenge lies a fundamental training problem. 
+The computational cost of developing robust multi-agent policies 
+scales poorly with team size, creating a bottleneck that limits 
+practical deployment~\cite{jin2025,canese2021}. 
+Sample complexity in \gls{marl} grows with both the number of 
+agents and task difficulty, while the gap between controlled 
+benchmarks and operational environments remains 
+substantial~\cite{gronauer2022,krouka2022}. Overcoming these 
+barriers requires not merely incremental algorithmic improvements, 
+but rethinking how we approach the learning problem itself.
 
-% One of the primary difficulties in achieving effective swarm behavior 
-% lies in the training of these agents. Traditional methods often 
-% involve predefined team sizes and uniform capabilities among agents, 
-% which limits their adaptability and scalability. To overcome these limitations, 
-% it is essential to develop training methodologies that enable agents to 
-% generalize across variable team sizes and diverse hardware configurations. 
-% This adaptability is crucial for deploying flexible and resilient autonomous 
-% systems in dynamic environments.
+Compounding this challenge is the reality that practical swarms 
+are rarely homogeneous. Real-world deployments typically involve 
+agents with varying sensors, effectors, and capabilities; 
+whether mixed drone fleets combining reconnaissance and strike platforms, 
+robotic warehouses with specialized material handlers, 
+or agricultural systems integrating imaging, spraying, 
+and harvesting robots~\cite{rizk2019,hoang2023,amarasinghe2019,carbone2018}. 
+This heterogeneity is both a requirement for operational effectiveness 
+and a complicating factor for training. \Gls{harl} addresses these 
+settings but introduces additional complexity that existing methods 
+handle incompletely~\cite{calvo2018,zhong2024}.
 
-% \Gls{rl} has emerged as the most promising paradigm for addressing 
-% these challenges. \Gls{rl} has become the cornerstone for developing 
-% autonomous decision-making systems~\cite{sutton2018}. However, 
-% the application of RL to multi-agent systems, particularly in swarm scenarios, 
-% introduces additional layers of complexity. 
-% Agents must not only learn to achieve individual goals but also to 
-% collaborate effectively to maximize the collective reward~\cite{cao2012}.
-% \Gls{marl} extends beyond single-agent \gls{rl} to provide solutions 
-% to many such problems, even significantly exceeding the capabilities 
-% of the latter within certain domains that do not necessitate multiple 
-% agents~\cite{gronauer2022}. 
-
-% In the pursuit of a flexible training framework
-% it is essential to consider the potential of heterogeneous agents. 
-% Leveraging open-source and commercial off-the-shelf (COTS) resources 
-% logically extends to a framework that can utilize disparate hardware. 
-% This flexibility allows for the integration of various sensors, processors, 
-% and capabilities, maximizing the potential of each agent within the swarm. 
-
-% \Gls{harl}, is an extension of \gls{marl} characterized by agents having 
-% distinct roles, capabilities, policies, or objectives. It is an 
-% underexplored area, but early results suggest that \gls{harl} algorithms
-% have the potential to significantly improve problem-solving efficiency 
-% and adaptability~\cite{calvo2018}.
-
-% The practical applications of heterogeneous actors are vast, particularly in 
-% scenarios where coordination and cooperation are crucial. For example, 
-% drone swarms in search and rescue missions can leverage diverse capabilities, 
-% such as various sensory equipment or distinct maneuverability traits, 
-% enabling more thorough area coverage and expedited victim detection
-% ~\cite{hoang2023,kouzeghar2023}.
-% Similarly, agricultural robots outfitted with different sensors and tools can 
-% concurrently execute multiple tasks—ranging from harvesting to soil analysis and
-% pest control—thereby substantially enhancing efficiency and increasing crop 
-% yields~\cite{carbone2018,amarasinghe2019}.
-
-% While some scenarios necessitate a \gls{harl} approach, the central aim of 
-% this dissertation is to investigate strategies that improve the training 
-% efficiency of multi-agent systems, including, heterogeneous settings. 
-% Across three planned contributions, we explore methods that reduce the 
-% computational cost of learning while maintaining or improving final policy 
-% performance. These methods span policy upsampling, invariant observation processing, 
-% and progressive network expansion. The remainder of this document 
-% presents a unified background and research plan supporting these contributions.
+This dissertation argues that training efficiency, heterogeneity handling, 
+and deployment flexibility in \gls{harl} are fundamentally \emph{representational} 
+problems before they are architectural ones. Task structure and heterogeneity 
+type determine optimal method selection, and good representational 
+design yields robustness as a natural consequence. 
+The contributions presented herein develop and validate this thesis 
+through systematic investigation of curriculum-based training, 
+observation-space homogenization, and comparative evaluation of invariance paradigms.
 
 
-% \section{Background}%
-% \label{sec:background}
+\section{Multi-Agent Reinforcement Learning Foundations}%
+\label{sec:intro_marl}
 
-%     \subsection*{Reinforcement Learning: From Deep Blue to AlphaStar}%
+\Gls{rl} provides the foundational framework for autonomous decision-making under uncertainty. 
+In the single-agent setting, the problem is typically formalized as a \gls{mdp}, 
+where an agent learns a policy $\pi$ mapping states to actions that maximizes 
+expected cumulative reward~\cite{sutton2018}. 
+Deep \gls{rl} extends these methods through function approximation 
+using neural networks, enabling application to high-dimensional 
+state and action spaces~\cite{mnih2015}.
 
-% \Gls{rl} has marked a number of significant milestones in outperforming humans 
-% in competitive domains. One of the most pivotal events occurred in 1997 
-% when IBM's Deep Blue defeated world chess champion Garry Kasparov. Though 
-% powered mainly by brute force computation and hand-tuned algorithms rather than 
-% learning-based approaches~\cite{campbell2002}, Deep Blue's victory set the 
-% stage for the broader application of \gls{ai} in complex strategic games.
+The extension to multiple agents introduces fundamental complications. 
+From any single agent's perspective, the environment becomes 
+non-stationary as other agents' policies evolve during training~\cite{busoniu2008}. 
+This non-stationarity violates the assumptions underlying standard 
+\gls{rl} convergence guarantees. The multi-agent setting is typically 
+formalized through \glspl{dec-pomdp} for cooperative settings or \glspl{posg} 
+for general-sum games, capturing both the partial observability inherent in 
+decentralized execution and the strategic interdependence among 
+agents~\cite{littman1994,shoham2007}.
 
-% The field progressed significantly with DeepMind's introduction of AlphaGo 
-% in 2015. AlphaGo employed a combination of deep neural networks and 
-% \gls{mcts}~\cite{silver2016}, initially trained on human expert games and 
-% further improved through self-play.
-% This method enabled AlphaGo to defeat Lee Sedol, one of the world's top Go 
-% players, illustrating \gls{rl}'s potential to tackle challenges in games with 
-% vast state spaces and decisions typically driven by human intuition.
+The \gls{ctde} paradigm has emerged as the dominant approach for 
+cooperative \gls{marl}~\cite{lowe2020,foerster2018,rashid2018}. 
+Under \gls{ctde}, agents have access to global information during 
+training but must execute using only local observations. 
+This paradigm enables coordination learning while maintaining deployability, 
+as trained policies can execute in a fully decentralized manner. 
+Recent work has questioned whether the centralized component 
+is always necessary~\cite{zhou2023}, but \gls{ctde} remains the 
+practical standard for most applications.
 
-% This breakthrough was quickly followed by the development of 
-% AlphaZero~\cite{silver2017}, which revolutionized the field by mastering chess,
-% Go, and Shogi through self-play alone, without any human-derived 
-% data~\cite{silver2017a}. The method of self-play demonstrated not only 
-% versatility across different games but also the capacity of RL systems to 
-% develop domain-independent strategies.
-
-% A subsequent major advancement was achieved with DeepMind's 
-% AlphaStar~\cite{vinyals2019}, 
-% which demonstrated that advanced RL models could handle complex strategies, 
-% real-time decision-making, and intricate player interactions. 
-% AlphaStar's success in defeating professional StarCraft II players
-% was particularly notable due to the game's demand for long-term strategic 
-% planning and quick tactical responses in an open-ended scenario.
-
-% To achieve the level of proficiency demonstrated in AlphaStar, 
-% Vinyals et al.~\cite{vinyals2019} employed a multifaceted approach 
-% that integrated deep learning, imitation learning, 
-% reinforcement learning, and multi-agent learning. 
-% The specifics of these contributions are explored in detail 
-% in~\Cref{ch:literature_review}.
-
-%     \subsection*{Multi-agent Reinforcement Learning}%:Learning to Work Together}
-
-% Well before the the rise of \gls*{rl}, research in game theory 
-% provided foundational work that would be indispensable to multi-agent systems.
-% As early as 1951, Brown~\cite{brown1951iterative} proposed a method for 
-% calculating \gls{nash} in two-player games through a process he termed 
-% fictitious play, which involves iteratively updating strategies. 
-% Unlike simultaneous strategy updates, Brown's method applies updates 
-% sequentially—a condition that Berger~\cite{berger2005, berger2007} 
-% later proved to be sufficient for guaranteed convergence to 
-% \gls{nash} in nondegenerate ordinal games. 
-
-% The development in this area remained comparatively stunted until 
-% significant strides were made in single-agent methods. 
-% Traditional Bellman-Equation-style solutions, while effective in single-agent 
-% settings and certain types of multi-agent games like zero-sum and 
-% common-payoff games, faced greater difficulty in stochastic or 
-% degenerate games~\cite{shoham2007}.
-% These challenges highlighted the limitations of extending single-agent 
-% frameworks directly to multi-agent environments without modifications.
-
-% The introduction of multiple independent agents in an environment introduces 
-% additional complexity; the game becomes non-stationary from 
-% the perspective of any single agent~\cite{busoniu2008}. 
-% This non-stationarity poses unique challenges as each agent must adapt 
-% to the actions of others whose strategies are also evolving, 
-% significantly complicating the learning process.
-
-% In this realm, the extension into \gls{marl} allows for the consideration 
-% of a wide spectrum of interactions as described in game theory, 
-% ranging from purely competitive to purely cooperative. 
-% \gls{marl} addresses the multitude of challenges associated with these 
-% diverse styles of interaction, offering frameworks and strategies that 
-% are adaptable to varying degrees of cooperation and competition among 
-% agents~\cite{lowe2020}.
-
-% In some cases, the interactions of interest in \gls{marl} are asymmetrical, 
-% adding another layer of complexity to strategy formulation and 
-% execution~\cite*{sun2023}.
-% Among the most notable successes in handling mixed modes of cooperation 
-% and competition is OpenAI's achievement with OpenAI Five. In this project, 
-% a team of agents reached superhuman performance in the multiplayer game Dota 2,
-% utilizing a blend of techniques including a unique method of skill transfer 
-% known as ``surgery'' and extensive use of self-play~\cite{berner2019}.
-% This milestone not only demonstrated the capability of \gls{marl} systems to 
-% manage and excel in intricate, dynamically shifting competitive environments 
-% but also showcased the potential for these systems to develop and refine 
-% collaborative strategies among heterogeneous agents.
-
-%     \subsection*{The Game Theoretical Concerns}%:
-
-% In both papers describing AlphaStar~\cite{vinyals2019} and OpenAI 
-% Five~\cite{berner2019}, the authors mention in sparse detail the 
-% ``game theoretic'' concerns their respective frameworks seek to address. 
-% These concerns are primarily attributed to the potential pitfalls of self-play. 
-% Two major problems are highlighted.
-
-% The first problem, often called strategic 
-% collapse~\cite{berner2019,vinyals2019}, describes a phenomenon 
-% where an agent overfits to a self-defeating strategy, 
-% resulting in a feedback loop and a counter-intuitive observation where 
-% cumulative rewards per episode may suddenly drop and become unrecoverable 
-% during continued training.
-
-% The second problem is cyclic strategy chasing, where multiple agents 
-% converge on a set of strategies that balance wins against one strategy 
-% with losses to another. An example of this is the game rock-paper-scissors. 
-% Balduzzi et al. (2019) discuss this phenomenon in~\cite{balduzzi2019}.
-
-% To mitigate these risks, AlphaStar implemented a structured league-play 
-% schema that continuously pitted different agent policies against each other. 
-% OpenAI Five, on the other hand, used a simpler approach by maintaining a pool
-% of previous milestone agents for ongoing comparison and refinement.
-
-%     \subsection*{Towards Flexible Training Methodologies}
-
-% The advancements made by AlphaStar~\cite{vinyals2019} and 
-% OpenAI Five~\cite{berner2019} have underscored the potential of \gls{marl}
-% to achieve superhuman performance in complex, dynamic environments,
-% and inspired a large amount of follow-on research.
-% However, their approaches still involve training agents to 
-% operate as a team with a predefined number of members;
-% AlphaStar~\cite{vinyals2019} effectively a team of one,
-% and OpenAI Five~\cite{berner2019} always a team of five.
-
-% Smit et al.~\cite{smit2023} was inspired by AlphaStar~\cite{vinyals2019},
-% and attempted to make significant efficiency improvements.
-% One of the methods that they tried (ultimately unsuccessfully) was to train a 
-% subset of the final team, effectively the same as the scalability problem.
-% We revisit Smit et al.~\cite{smit2023} in \cref{ch:literature_review}.
-
-% While these pioneering efforts have demonstrated remarkable achievements, 
-% they also highlight significant challenges that remain unresolved. 
-% Notably, the ability to train agents that can generalize across variable 
-% team sizes and configurations is crucial for advancing the field of 
-% multi-agent reinforcement learning. Addressing these challenges requires 
-% innovative methodologies that enhance the flexibility and efficiency of 
-% training processes. 
-
-% This leads us to our core research questions, which aim to evaluate
-% the potential of \gls{marl} or \gls{harl} to overcome these limitations 
-% and achieve scalable, robust, and adaptable autonomous systems.
+Within the \gls{ctde} framework, policy gradient methods (particularly \gls{ppo})
+have proven remarkably effective~\cite{schulman2017a}. 
+\Gls{ppo}'s clipped objective provides stable optimization 
+without the computational overhead of trust region methods, 
+making it well-suited to the high sample demands of multi-agent learning. 
+Extensions including \gls{mappo} and \gls{ippo} have demonstrated 
+surprising effectiveness across diverse benchmarks~\cite{yu2022}, 
+while \gls{happo} extends these methods to heterogeneous settings 
+with theoretical guarantees~\cite{zhong2024}. 
+All three contributions in this dissertation build upon 
+\gls{ppo}-based methods within the \gls{ctde} paradigm.
 
 
-% \section{Research Questions}%
-% \label{sec:research_question}%
-% \label{sec:relevance_and_importance}
+\section{The Heterogeneity Challenge}%
+\label{sec:intro_heterogeneity}
 
-% \begin{description}
-%     \item[] \textbf{\hyperref[ch:contribution_1]{Contribution 1}:} Policy Upsampling
-%     \begin{itemize}
-%         \item[RQ 1.1:] Can pretraining smaller teams of agents and then scaling to the target 
-%         team size via policy duplication and retraining improve training efficiency 
-%         without sacrificing final policy performance in MARL?
-%         \item[RQ 1.2:] How does the effectiveness of this direct scaling strategy vary across 
-%         environments with different forms of agent heterogeneity 
-%         (e.g., behavioral vs. intrinsic)?
-%     \end{itemize}
-%     \item[]\textbf{\hyperref[ch:contribution_2]{Contribution 2}:} Invariant Observation Processing
-%     \begin{itemize}
-%         \item[RQ 2.1:] How does incorporating input-invariant structures—such as policies 
-%         robust to observation permutations and variable team sizes—impact learning efficiency 
-%         and team robustness in settings with heterogeneous observations?
-%         \item[RQ 2.2:] Do input-invariant architectures support more stable policy behavior 
-%         under changes to team size and partial observation loss during execution?
-%     \end{itemize}
-%     \item[] \textbf{\hyperref[ch:contribution_3]{Contribution 3}:} Progressive Network Expansion
-%     \begin{itemize}
-%         \item[RQ 3.1:] Can tensor-based projections be used to grow a policy networks 
-%         capacity during training while preserving its prior functional behavior?
-%         \item[RQ 3.2:] Can we identify appropriate transition points during training 
-%         when projecting to a larger policy network yields the greatest benefit?
-%         \item[RQ 3.3:] Does this progressive architectural growth strategy reduce total training 
-%         cost or improve final policy performance compared to fixed-size architectures?
-%     \end{itemize}
-% \end{description}
+Heterogeneity in multi-agent systems manifests in two distinct 
+forms that require different treatment~\cite{zhong2024,guo2024}. 
+\emph{Behavioral heterogeneity} arises when structurally identical 
+agents develop different behaviors through independent learning;
+a natural outcome when agents occupy different positions or roles 
+despite sharing the same capabilities. \emph{Intrinsic heterogeneity}
+occurs when agents differ in their sensors, effectors, or internal 
+structure, leading to varying observation or action spaces. 
+This distinction is not merely taxonomic; it fundamentally 
+determines which methods are applicable and effective.
+
+Parameter sharing, where all agents share a single policy network, 
+provides substantial benefits for sample efficiency and coordination~\cite{gupta2017}. 
+When agents are truly interchangeable, shared parameters reduce the 
+learning problem's dimensionality and promote consistent behavior. 
+However, parameter sharing implicitly assumes agent interchangeability;
+an assumption that breaks down under intrinsic heterogeneity. 
+Agents with different observation spaces cannot directly share policies, 
+and even behavioral heterogeneity may require agents to learn distinct 
+strategies that conflict under full sharing.
+
+Existing approaches to heterogeneity fall into several categories. 
+\emph{Explicit agent indication} augments observations with agent identifiers 
+(one-hot vectors, learned embeddings) to enable a shared policy to 
+condition on agent type~\cite{terry2020}. While effective for behavioral heterogeneity, 
+this approach does not resolve structural mismatches in observation or action spaces. 
+\emph{Selective parameter sharing} groups similar agents and shares 
+parameters within groups~\cite{christianos2021,hao2022}, 
+but requires predetermining which agents are similar and 
+does not scale gracefully to continuous variation. 
+\emph{Separate policies} per agent type maintain distinct networks, 
+providing full flexibility but at the cost of \(1/|\Gls{i}|\) storage 
+efficiency and no cross-agent generalization~\cite{zhong2024}.
+
+Architectural approaches have sought to handle heterogeneity 
+through specialized network structures. Attention mechanisms 
+enable policies to weight different observation components 
+dynamically~\cite{iqbal2019}. Graph neural networks (\glspl{gnn}) 
+treat agents as nodes and can aggregate information across varying 
+numbers of neighbors~\cite{yang2021a,liu2020b}. 
+The Permutation-Invariant Critic (\gls{pic}) uses graph-based 
+aggregation to achieve invariance to agent ordering in the critic, 
+enabling scalable centralized training~\cite{liu2020b}. 
+These architectural solutions introduce inductive biases 
+that may or may not align with the structure of particular problems.
 
 
-% \section{Outline}%
+\section{Research Gaps and Dissertation Positioning}%
+\label{sec:intro_gaps}
 
-% %%%% Prospectus Version %%%%
-% The remainder of this document is organized as a dissertation prospectus 
-% supporting a k-paper dissertation format. It begins with a literature review in 
-% \cref{ch:literature_review}, establishing foundational context across reinforcement 
-% learning, multi-agent systems, and heterogeneous coordination. 
-% Following this, \cref{ch:contribution_1,ch:contribution_2,ch:contribution_3} 
-% contain each of the three planned contributions:
-% \begin{itemize}
-%     \item \textbf{\hyperref[ch:contribution_1]{Contribution 1}:} Investigates whether direct 
-%         upsampling of policies from smaller teams can reduce training cost while preserving 
-%         final performance.
-%     \item \textbf{\hyperref[ch:contribution_2]{Contribution 2}:} Evaluates input-invariant 
-%         policy architectures as a method to support shared learning across heterogeneous 
-%         observation structures.
-%     \item \textbf{\hyperref[ch:contribution_3]{Contribution 3}:} Explores progressive network 
-%         growth using tensor projection to improve training efficiency in high-capacity networks.
-% \end{itemize}
-% Each contribution is framed as a standalone study but collectively supports 
-% the overarching goal of building scalable, flexible HARL systems. 
-% The document concludes with a timeline and project plan for completing the proposed research.
+Despite significant progress in \gls{marl} and emerging work in \gls{harl}, 
+several critical gaps limit our ability to efficiently train and deploy 
+heterogeneous multi-agent systems. This dissertation addresses three interconnected challenges.
+
+\textbf{Curriculum Learning for Team Scaling.} 
+Curriculum learning (the principle of training on progressively 
+more difficult tasks) has proven effective across machine learning 
+domains~\cite{narvekar2020}. In \gls{marl}, natural curricula exist 
+along the dimension of team size: smaller teams present simpler 
+coordination challenges that may accelerate early learning. 
+Yet Smit et al.'s attempt to apply team-scaling curricula in 
+\gls{grf} yielded mixed results~\cite{smit2023}, and no systematic 
+investigation has characterized \emph{when} and \emph{why} such 
+curricula succeed or fail. The role of task structure and 
+heterogeneity form in moderating curriculum effectiveness remains unexplored.
+
+\textbf{Parameter Sharing Across Structural Heterogeneity.} 
+Current methods for handling intrinsic heterogeneity force a choice 
+between flexibility and efficiency. Explicit indication methods do 
+not resolve structural mismatches; separate policies scale poorly 
+in storage and forgo cross-agent generalization. 
+No existing framework enables shared policy parameters across 
+agents with genuinely different observation or action spaces 
+while preserving the representational capacity to learn agent-specific behaviors.
+
+\textbf{Systematic Comparison of Invariance Paradigms.} 
+Both architectural (e.g., \glspl{gnn}) and representational 
+(e.g., observation encoding) approaches can achieve invariance 
+properties desirable for \gls{harl}, but no controlled comparison 
+has established their relative effectiveness. When is the added 
+complexity of specialized architectures justified? Can simpler 
+representational solutions match or exceed architectural approaches? 
+These questions have significant implications for practical system design.
+
+
+\section{Contributions and Overview}%
+\label{sec:intro_contributions}
+
+This dissertation presents three contributions that collectively 
+advance the efficiency, flexibility, and deployability of 
+heterogeneous multi-agent systems.
+
+\subsection{Contribution 1: Curriculum-Based Team Scaling}
+
+The first contribution investigates whether pretraining 
+smaller teams of agents and scaling to target team sizes 
+via policy duplication can reduce training cost without 
+sacrificing final performance. We introduce \emph{agent-steps} 
+(agents $\times$ training steps) as a normalized metric for 
+comparing training efficiency across team sizes, enabling 
+fair comparison of curriculum strategies.
+
+Experiments span three benchmark environments exhibiting 
+different forms of heterogeneity: Waterworld 
+(behavioral heterogeneity, low coordination requirements), 
+Multiwalker (mild intrinsic heterogeneity through spatial position, 
+tight coordination requirements), and 
+\gls{lbf} (dynamic intrinsic heterogeneity through 
+variable skill levels)~\cite{gupta2017,papoudakis2021}. 
+Results demonstrate that task structure critically moderates 
+curriculum effectiveness. In Waterworld, pretraining accelerates 
+convergence; in Multiwalker, it provides stabilization for 
+otherwise failure-prone large teams; in \gls{lbf}, benefits 
+are limited and inconsistent due to complex role dynamics.
+
+This contribution establishes that curriculum learning across 
+team sizes is not universally beneficial but depends on the 
+alignment between pretraining structure and target task demands. 
+It also identifies observation-space dimensionality coupling as 
+a barrier to policy transfer, motivating the representational 
+focus of subsequent contributions.
+
+\subsection{Contribution 2: Implicit Indication via Homogenization}
+
+The second contribution proposes \emph{implicit indication}, 
+a representational framework enabling shared policy parameters 
+across structurally heterogeneous agents without explicit 
+agent identifiers. The core insight is that agent identity 
+can be inferred from the pattern of populated observation 
+elements rather than requiring explicit labels.
+
+We construct \emph{homogenized observation spaces} spanning 
+all agent-specific subspaces. Each agent's capabilities 
+correspond to a distinct subset of observation elements; 
+unused elements are masked or zeroed. Policies learn to 
+condition implicitly on which elements are populated, 
+enabling a single network to operate across heterogeneous agents. 
+This approach requires \emph{semantic decomposability}: 
+observation elements must have consistent meaning across agents.
+
+We develop a custom HyperGrid environment (MiniGrid-based) 
+with configurable observation heterogeneity and compare 
+implicit indication against \gls{happo} (separate policies per agent type) 
+across training configurations varying in observation overlap. 
+Results show that implicit indication matches \gls{happo} 
+performance with \(1/|\Gls{i}|\) model storage footprint relative to
+heterogeneous models. 
+
+Theoretical analysis formalizes conditions under which 
+disjoint injective embeddings preserve representability, 
+establishing that any collection of functions over heterogeneous 
+input spaces can be represented by a single function over the 
+homogenized domain~\cite{zaheer2017}.
+
+\subsection{Contribution 3: Architectural versus Representational Approaches}
+
+The third contribution directly compares architectural 
+and representational paradigms for handling heterogeneity 
+through controlled experiments. We evaluate the \gls{pic}~\cite{liu2020b}, 
+representing the architectural approach, against implicit indication 
+from Contribution 2.
+
+Using matched network capacities and hyperparameters in the 
+HyperGrid environment, we find that while both methods show 
+similar training convergence, implicit indication substantially 
+outperforms \gls{pic} across all evaluation configurations. 
+Complete visibility conditions show mean returns of 9.10 versus 3.89; 
+similar gaps persist across intersecting-span, disjoint-span, and 
+incomplete observation conditions. Implicit indication also 
+demonstrates superior robustness to sensor changes, 
+team composition modifications, and zero-shot generalization to novel agent types.
+
+These results suggest that for structurally heterogeneous 
+agents in discrete domains with semantically decomposable observations, 
+representational solutions can substantially outperform architectural 
+alternatives. \Gls{pic}'s graph-based architecture may be better 
+suited to environments with richer relational structure, but the 
+added complexity does not provide benefits in this domain.
+
+% \subsection{Unifying Thesis}
+
+% Across these three contributions, a consistent theme emerges: 
+% \emph{representation design matters as much as algorithmic 
+% architecture for enabling efficient, extensible \gls{harl}}. 
+% Curriculum effectiveness depends on observation structure; 
+% shared policies become possible through representational 
+% homogenization; and representational approaches can 
+% outperform architectural ones when properly designed. 
+% Task structure and heterogeneity type should guide method 
+% selection, and good representational design yields robustness 
+% as a natural consequence rather than an engineered feature.
+
+
+\section{Dissertation Structure}%
+\label{sec:intro_structure}
+
+The remainder of this dissertation develops these contributions 
+and synthesizes their implications for \gls{harl} system design.
+
+\textbf{\Cref{ch:literature_review}} provides comprehensive 
+technical background spanning \gls{rl} foundations, 
+\gls{marl} paradigms, approaches to scalability and heterogeneity, 
+curriculum learning, and permutation invariance. This chapter establishes 
+the theoretical and empirical context for the contributions that follow.
+
+\textbf{\Cref{ch:contribution_1}} presents the curriculum-based 
+team scaling investigation. We detail the agent-steps framework, 
+describe observation schema modifications enabling fixed-architecture 
+training across team sizes, and present experimental results across 
+Waterworld, Multiwalker, and \gls{lbf}.
+
+\textbf{\Cref{ch:contribution_2}} develops the implicit indication framework. 
+We formalize the homogenization procedure, establish theoretical conditions 
+for representability preservation, describe the HyperGrid environment, 
+and present comparative results against \gls{happo} across multiple 
+training and evaluation configurations.
+
+\textbf{\Cref{ch:contribution_3}} provides the controlled comparison 
+between architectural and representational approaches. We detail the 
+\gls{pic} implementation, present matched experimental conditions, 
+and analyze performance differences across training and generalization scenarios.
+
+\textbf{\Cref{ch:conclusion}} synthesizes findings across contributions, 
+articulates design principles for \gls{harl} systems, discusses limitations, 
+and identifies directions for future research.
+
+The three contributions are structured as standalone studies suitable 
+for independent publication while collectively supporting the unifying 
+thesis that representational design is central to efficient, flexible \gls{harl}. 
+% Cross-chapter connections reinforce this coherence: 
+% Contribution 1 identifies observation-space coupling as a barrier that Contribution 2 addresses; 
+% Contributions 1 and 3 both investigate training efficiency through complementary lenses; 
+% and Contribution 3 directly compares the approach from 
+% Contribution 2 against architectural alternatives.

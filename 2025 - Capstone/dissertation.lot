@@ -1,8 +1,7 @@
-\contentsline {table}{\numberline {1}{\ignorespaces Summary of research gaps, contributions, and literature connections.}}{57}{table.caption.5}%
-\contentsline {table}{\numberline {2}{\ignorespaces Notation used in PPO objective and advantage estimation}}{67}{table.caption.7}%
-\contentsline {table}{\numberline {3}{\ignorespaces PPO hyperparameters used in experiments}}{71}{table.caption.10}%
-\contentsline {table}{\numberline {4}{\ignorespaces Pairwise $t$-test comparisons between observation schemas.}}{77}{table.caption.18}%
-\contentsline {table}{\numberline {5}{\ignorespaces Aggregate performance of training with different observation configurations.}}{111}{table.caption.27}%
-\contentsline {table}{\numberline {6}{\ignorespaces Final Hyperparameters use for Implicit Indication Experiments}}{132}{table.caption.49}%
-\contentsline {table}{\numberline {7}{\ignorespaces Policy Network Parameters used for Implicit Indication Experiments.}}{133}{table.caption.50}%
-\contentsline {table}{\numberline {8}{\ignorespaces Hyperparameter ranges explored during tuning.}}{134}{table.caption.51}%
+\contentsline {table}{\numberline {1}{\ignorespaces Summary of research gaps, contributions, and literature connections.}}{52}{table.caption.6}%
+\contentsline {table}{\numberline {2}{\ignorespaces Notation used in PPO objective and advantage estimation}}{61}{table.caption.8}%
+\contentsline {table}{\numberline {3}{\ignorespaces PPO hyperparameters used in experiments}}{65}{table.caption.11}%
+\contentsline {table}{\numberline {4}{\ignorespaces Pairwise $t$-test comparisons between observation schemas.}}{71}{table.caption.19}%
+\contentsline {table}{\numberline {5}{\ignorespaces Final Hyperparameters use for Implicit Indication Experiments}}{119}{table.caption.46}%
+\contentsline {table}{\numberline {6}{\ignorespaces Policy Network Parameters used for Implicit Indication Experiments.}}{120}{table.caption.47}%
+\contentsline {table}{\numberline {7}{\ignorespaces Hyperparameter ranges explored during tuning.}}{121}{table.caption.48}%

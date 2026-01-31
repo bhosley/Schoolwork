@@ -23,10 +23,13 @@
 
 % Define the default location to look for supporting documents.
 \makeatletter
-\def\input@path{{Chapters/}{Other/}{Tables/}{Figures/}}
+\def\input@path{{Chapters/}{Other/}{Tables/}{Figures/}
+    {Chapters/C1}{Chapters/C2/}{Chapters/C3/}
+    {Chapters/C2/Figures}
+}
 \makeatother
 % Define the default location to look for figures.
-\graphicspath{{Figures}}
+\graphicspath{{Figures}{Chapters/C1/}{Chapters/C2/}{Chapters/C3/}{Chapters/C2/Figures}}
 \usepackage{import} % For subimporting chapters with dedicated Figures folder
 
 % ------------------------ Main document information ---------------------------
@@ -37,9 +40,12 @@
 % commented out because they are probably not needed for your situation.
 
 % #TODO: Settle on a title
-\title{% WORKING TITLE:\\
-    Increasing Efficiency, Efficacy, and Extensibility\\
-    in Heterogeneous Agent Reinforcement Learning }
+\title{
+    % WORKING TITLE:\\
+    % Increasing Efficiency, Efficacy, and Extensibility\\
+    % in Heterogeneous Agent Reinforcement Learning 
+    Reducing Computational Barriers to Heterogeneous Multi-Agent Reinforcement Learning
+}
 \author{Brandon Hosley}
 % \authorsecond{} % Use these if other students contributed.
 % \authorthird{}
@@ -68,8 +74,15 @@
 % end of your thesis or dissertation. If it does not fit in the small box on
 % the form, make a shorter version using the
 % \texttt{\textbackslash{}sfAbstract} command.
-% #TODO: Add keywords
-\keywords{earth; water; air; fire}
+\keywords{
+    Multi-Agent Reinforcement Learning;
+    Heterogeneous Agents;
+    Parameter Sharing;
+    Curriculum Learning;
+    Implicit Indication;
+    Observation Homogenization;
+    Centralized Training with Decentralized Execution;
+}
 % #OPT: Add Dedication
 %\dedication{To the one who loves me most.}
 % #OPT: Add acknowledgements
@@ -178,17 +191,23 @@
 
 \usepackage{silence}
 \WarningFilter*{latex}{Text page \thepage\space contains only floats}
+\WarningFilter*{bookmark}{Ignoring unknown style}
 % Under full h boxes in bibliography:
 \apptocmd{\bibsetup}{\setlength{\emergencystretch}{2em}}{}{}
+\usepackage{xurl}
+% \usepackage{showframe} % For help finding under/over full boxes
+
+\usepackage{bookmark}
 
 % ============================== Body of paper =================================
 
 \begin{document}
+\setcounter{tocdepth}{1}
 \maketitle % Creates all the prefatory pages.
-% #TODO: Remove sub-sub section from ToC
 
 % --------------------
 \chapter{Introduction}%
+\label{ch:introduction}
 \input{introduction.tex}
 
 % -------------------------
@@ -197,32 +216,24 @@
 \input{literature_review.tex}
 
 % -------------------------
-\chapter{Contribution 1}
+\chapter{Contribution 1}%
 \label{ch:contribution_1}
-\subimport*{Chapters/C1/}{contribution_1.tex}
+\input{C1/contribution_1.tex}
 
 % -------------------------
-\chapter{Contribution 2}
+\chapter{Contribution 2}%
 \label{ch:contribution_2}
-\subimport*{Chapters/C2/}{contribution_2.tex}
+\input{C2/contribution_2.tex}
 
 % -------------------------
 \chapter{Contribution 3}%
 \label{ch:contribution_3}
-\subimport*{Chapters/C3/}{contribution_3.tex}
+\input{C3/contribution_3.tex}
 
-
-% % ----------------------------
-% \chapter{Results and Analysis}%
-% \label{ch:results}% chktex 24
-% \input{results.tex}
-% \label{ch:discussion}
-
-
-% % ------------------
-% \chapter{Conclusion}%
-% \label{ch:conclusion}% chktex 24
-% \input{conclusion.tex}
+% ------------------
+\chapter{Conclusion}
+\label{ch:conclusion}
+\input{conclusion.tex}
 
 
 % --------------------------------- Optional -----------------------------------
@@ -241,10 +252,12 @@
 %\printunsrtglossary[type=symbols,style=long]
 % #TODO: Appendix label references contribution; fix?
 \chapter{Contribution 1 Supplementary Material}
-\subimport{Chapters/C1/}{appendix.tex}
+\input{C1/appendix.tex}
+% \subimport{Chapters/C1/}{appendix.tex}
 
 \chapter{Contribution 2 Supplementary Material}
-\subimport{Chapters/C2/}{appendix.tex}
+\input{C2/appendix.tex}
+% \subimport{Chapters/C2/}{appendix.tex}
 
 % Contribution 1 Supporting curves
 % \usepackage{pgffor} %enables for loop used in appendix
@@ -252,11 +265,8 @@
 % ------------------------------- Bibliography ---------------------------------
 
 % \nocite{*} % Uncomment to print all .bib entries, regardless of use.
-% #TODO: Uncomment after adding .bib file
 % \clearpage\phantomsection       % Creates new page and section for bibliography.
-% \addcontentsline{toc}{appendix}{\bibname}   % Adds bib to table of contents.
 \printbibliography                          % Prints the bibliography.
-% #TODO: Fix under full hbox errors
 
 % ---------------------------- Optional biography ------------------------------
 

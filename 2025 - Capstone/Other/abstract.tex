@@ -1,3 +1,17 @@
-% #TODO: Add Abstract.
-
-PLACEHOLDER FOR ABSTRACT
+\begin{abstract}
+Deploying autonomous multi-agent systems at scale requires training robust 
+cooperative policies efficiently under heterogeneous agent configurations. 
+This dissertation presents three contributions addressing training efficiency 
+in \gls{marl} and \gls{harl}. First, we investigate curriculum-based 
+pretraining on smaller teams followed by policy upsampling, demonstrating 
+environment-dependent benefits for convergence acceleration \cite{narvekar2020, smit2023}. 
+Second, we introduce \textit{implicit indication}, a representational 
+framework enabling parameter-shared policies across structurally heterogeneous 
+agents through homogenized observation spaces, achieving comparable performance 
+to \gls{happo} with reduced storage requirements \cite{terry2020, zhong2024}. 
+Third, we empirically compare architectural approaches (\gls{gnn}-based \gls{pic}) 
+against representational approaches (implicit indication), finding that 
+explicit masking in homogenized spaces substantially outperforms graph-based 
+aggregation for observation heterogeneity \cite{liu2020b}. Together, 
+these contributions advance scalable, flexible \gls{harl} methods.
+\end{abstract}

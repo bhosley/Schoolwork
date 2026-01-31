@@ -1,3 +1,118 @@
-% #TODO: Conclusion
+This dissertation addressed the challenge of training robust multi-agent 
+policies in heterogeneous settings, where agents may differ in their sensing capabilities, 
+actuation constraints, or behavioral roles. 
+The three contributions examined complementary strategies for improving 
+training efficiency, enabling parameter sharing across structurally distinct agents, 
+and evaluating the relative merits of architectural versus representational 
+approaches to heterogeneity. Together, these investigations advance both the 
+theoretical understanding and practical application of \gls{harl}.
 
-PLACEHOLDER CONCLUSION
+\section{Summary of Contributions}
+
+The first contribution established that curriculum-based team scaling, 
+where policies are pretrained on smaller teams before upsampling to target 
+configurations, can meaningfully reduce training costs in cooperative \gls{marl}. 
+Results across Waterworld, Multiwalker, and \gls{lbf} demonstrated that the 
+effectiveness of this strategy depends critically on task structure. 
+In environments with low coordination demands and symmetric agent roles, 
+pretraining accelerated convergence without compromising final performance. 
+In settings requiring tight coordination under sparse rewards, pretraining 
+served as a stabilizing mechanism that enabled learning in configurations 
+where training from scratch frequently failed. However, when dynamic role 
+complexity was high, the benefits diminished, indicating that small-team 
+pretraining offers limited foresight into the diverse interactions encountered 
+by larger, more heterogeneous groups.
+
+The second contribution introduced implicit indication as a representational 
+framework for enabling shared policies across heterogeneous agents. 
+By constructing homogenized observation spaces that span all agent-specific 
+subspaces and allowing policies to condition implicitly on the pattern of 
+populated observation elements, this approach eliminates the need for 
+explicit agent identifiers or per-type policy networks. 
+Empirical evaluation demonstrated that implicit indication matches the 
+performance of heterogeneous baselines while achieving a storage footprint
+of $1/|\gls{i}|$ relative to methods maintaining separate policies per agent type. 
+The disjoint-span training condition yielded particularly strong relative improvements, 
+suggesting that non-overlapping observation structures may reduce gradient interference 
+during shared-parameter learning~\cite{zhong2024}.
+
+The third contribution provided a direct comparison between architectural 
+and representational paradigms for handling observation heterogeneity. 
+The \gls{pic}~\cite{liu2020b}, which employs \glspl{gnn} to achieve 
+permutation-invariant value estimation, was evaluated against implicit 
+indication under controlled experimental conditions. Results demonstrated 
+that the representational approach substantially outperformed the 
+architectural alternative across all sensor configurations and evaluation 
+conditions, including scenarios involving sensor loss, team composition 
+changes, and zero-shot generalization to novel observation patterns. 
+These findings indicate that when heterogeneity is structural and 
+semantically decomposable, explicit observation masking provides 
+more effective conditioning for policy learning than learned graph-based aggregation.
+
+\section{Unifying Insights}
+
+Across all three contributions, a consistent theme emerged: the manner 
+in which the learning problem is represented matters as much or more 
+than algorithmic sophistication in enabling effective \gls{harl}. 
+Observation schema design in the first contribution, homogenized 
+spaces in the second, and the comparison of masking-based versus graph-based 
+approaches in the third all point toward the primacy of representational 
+choices in determining learning outcomes. This finding aligns with broader 
+trends in machine learning, where feature engineering and input encoding have 
+historically played decisive roles even as model architectures have grown more powerful.
+
+A second insight concerns the relationship between heterogeneity type and method 
+selection. The distinction between behavioral heterogeneity, where structurally 
+identical agents develop divergent behaviors through independent learning, and 
+intrinsic heterogeneity, where agents differ in their observation or action spaces, 
+proves consequential for determining which strategies are most effective. 
+Curriculum-based scaling addresses behavioral heterogeneity by providing 
+foundational coordination skills that transfer to larger teams, while 
+homogenization addresses intrinsic heterogeneity by enabling a single 
+policy to operate across structurally distinct agents. Practitioners 
+confronting heterogeneous multi-agent systems should first characterize 
+the nature of the heterogeneity present before selecting an appropriate training methodology.
+
+A third insight concerns robustness. The implicit indication framework exhibited 
+inherent tolerance to sensor dropout, team-size changes, and novel agent compositions 
+without requiring explicit robustness training. This suggests that well-designed 
+representations can yield deployment flexibility as a natural consequence rather 
+than as an additional objective to be optimized. For autonomous systems operating 
+in dynamic environments where configurations may change during operation, such 
+inherent robustness properties offer practical advantages over methods requiring 
+retraining or architectural modification.
+
+\section{Significance}
+
+The barriers to deploying autonomous multi-agent systems remain substantial~\cite{jin2025}. 
+Training costs scale with team size and interaction complexity, 
+heterogeneous agent configurations complicate policy design, 
+and deployed systems must operate reliably under conditions that 
+may differ from training. This dissertation contributes to addressing each of these barriers.
+
+By demonstrating that reduced-size pretraining can lower computational 
+costs in settings where role differentiation is limited, the first 
+contribution offers a practical tool for improving training efficiency. 
+By establishing implicit indication as a viable framework for shared 
+learning across structurally distinct agents, the second contribution 
+reduces the architectural overhead traditionally associated with heterogeneous teams. 
+By showing that representational solutions can outperform more complex architectural 
+alternatives, the third contribution simplifies the design space confronting 
+practitioners building heterogeneous multi-agent systems.
+
+These findings have particular relevance for domains where heterogeneity is 
+common and computational resources are constrained. 
+Multi-robot systems deployed for disaster response, environmental monitoring, 
+or defense applications often involve agents with varying sensor suites and 
+must be trained efficiently to meet operational 
+timelines~\cite{mohddaud2022, kouzeghar2023}. The methods 
+developed here offer paths toward more tractable training regimes 
+and more flexible deployment configurations.
+
+More broadly, this work underscores that the challenges of 
+heterogeneous multi-agent learning are fundamentally representational 
+before they are algorithmic. Advances in optimization and architecture 
+remain valuable, but their impact is mediated by how the learning 
+problem is structured. As multi-agent systems continue to grow in 
+scale and diversity, attending carefully to representational design 
+will be essential for realizing their potential in real-world applications.

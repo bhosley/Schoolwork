@@ -744,34 +744,34 @@ When these subsets induce disjoint embedded regions a single shared policy
 over \(\Hom{\Gls{o}}\) can, in principle, realize the same input--output mappings 
 as a collection of per-agent policies without requiring explicit agent identifiers.
 
-% \section{Conclusion}
-% \label{con2:sec:conclusion}
+\section{Conclusion}
+\label{con2:sec:conclusion}
 
-% This paper introduced implicit indication as a representation-based approach
-% for enabling shared policies across heterogeneous agents, realized through
-% homogenized observation and action spaces. By embedding agent observations into a unified
-% spanning space and allowing the policy to condition implicitly on active
-% observation elements, the method avoids explicit identity encodings and
-% removes the need for per-type policy networks. We formalized conditions
-% under which this embedding preserves representability and clarified the
-% role of semantic alignment among observation elements.
+This paper introduced implicit indication as a representation-based approach
+for enabling shared policies across heterogeneous agents, realized through
+homogenized observation and action spaces. By embedding agent observations into a unified
+spanning space and allowing the policy to condition implicitly on active
+observation elements, the method avoids explicit identity encodings and
+removes the need for per-type policy networks. We formalized conditions
+under which this embedding preserves representability and clarified the
+role of semantic alignment among observation elements.
 
-% Empirically, implicit indication matched the performance of a
-% \gls{happo} baseline during training, with no detectable
-% differences in computational resource usage. 
-% Despite its smaller model footprint, it showed comparable 
-% or improved robustness under sensor loss, sensor gain,
-% and loss of member agents. These results suggest that a
-% single homogenized policy can generalize effectively across 
-% structured heterogeneity and provide greater deployment 
-% stability than per-configuration training.
+Empirically, implicit indication matched the performance of a
+\gls{happo} baseline during training, with no detectable
+differences in computational resource usage. 
+Despite its smaller model footprint, it showed comparable 
+or improved robustness under sensor loss, sensor gain,
+and loss of member agents. These results suggest that a
+single homogenized policy can generalize effectively across 
+structured heterogeneity and provide greater deployment 
+stability than per-configuration training.
 
-% Future extensions include handling richer action-space heterogeneity,
-% improvements in information sharing and communication between agents 
-% reflect differences in composition and information access,
-% and exploring how behavioral heterogeneity might be facilitated
-% through some method of accounting for the total capabilities of 
-% a group of agents. 
-% Taken together, our
-% results indicate that homogenization offers a simple and practical tool
-% for enabling shared learning across structurally diverse agents.
+Future extensions include handling richer action-space heterogeneity,
+improvements in information sharing and communication between agents 
+reflect differences in composition and information access,
+and exploring how behavioral heterogeneity might be facilitated
+through some method of accounting for the total capabilities of 
+a group of agents. 
+Taken together, our
+results indicate that homogenization offers a simple and practical tool
+for enabling shared learning across structurally diverse agents.
