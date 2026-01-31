@@ -175,17 +175,11 @@
 % \usepackage{tabularx}
 % \usepackage{multirow}
 % \usepackage{pgfplotstable}
-% \pgfplotsset{compat=1.7}
 
-% \newtheorem{theorem}{Theorem}
 
 % --- Formatting Tools ---
 % \usepackage{tcolorbox}  % For call out boxes
-% \usepackage{titlesec}
-
-% How to indicate homogenized space
-% \newcommand{\Hom}[1]{{#1}'}
-\newcommand{\Hom}[1]{\widetilde{#1}}
+\newcommand{\Hom}[1]{\widetilde{#1}}    % How to indicate homogenized space
 
 % --- Fixing LaTeX Warnings ---
 
@@ -195,14 +189,14 @@
 % Under full h boxes in bibliography:
 \apptocmd{\bibsetup}{\setlength{\emergencystretch}{2em}}{}{}
 \usepackage{xurl}
-% \usepackage{showframe} % For help finding under/over full boxes
 
-\usepackage{bookmark}
+% \usepackage{bookmark}
+% \usepackage{showframe} % For help finding under/over full boxes
 
 % ============================== Body of paper =================================
 
 \begin{document}
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{1} % Only print sections and higher to ToC.
 \maketitle % Creates all the prefatory pages.
 
 % --------------------
@@ -218,7 +212,8 @@
 % -------------------------
 \chapter{Contribution 1}%
 \label{ch:contribution_1}
-\input{C1/contribution_1.tex}
+\subimport{Chapters/C1/}{contribution_1.tex}
+% \input{C1/contribution_1.tex}
 
 % -------------------------
 \chapter{Contribution 2}%
@@ -235,37 +230,31 @@
 \label{ch:conclusion}
 \input{conclusion.tex}
 
-
 % --------------------------------- Optional -----------------------------------
 
-% #TODO: Appropriate separation of glossary items
 \appendix % Necessary before any appendix chapters
-% \section*{Appendix}
-% \addcontentsline{toc}{section}{Appendix}
-% \glsresetall
-\chapter{Glossary}
-% #OPT: Improve Glossary Formatting
-% \setglossarystyle{long-booktabs}% Possible change to style (Currently has double-spaced newline problem)
-%\printunsrtglossary[type=symbols,title=Summary of Notation]
-\printglossaries
-%\printabbreviations[title=]
-%\printunsrtglossary[type=symbols,style=long]
 % #TODO: Appendix label references contribution; fix?
 \chapter{Contribution 1 Supplementary Material}
 \input{C1/appendix.tex}
 % \subimport{Chapters/C1/}{appendix.tex}
-
 \chapter{Contribution 2 Supplementary Material}
 \input{C2/appendix.tex}
-% \subimport{Chapters/C2/}{appendix.tex}
 
-% Contribution 1 Supporting curves
-% \usepackage{pgffor} %enables for loop used in appendix
+
+% #TODO: Appropriate separation of glossary items
+\chapter{Glossary}
+% #OPT: Improve Glossary Formatting
+% \setglossarystyle{long-booktabs}% Possible change to style (Currently has double-spaced newline problem)
+%\printunsrtglossary[type=symbols,title=Summary of Notation]
+
+% \printglossaries
+\printglossary[type=\acronymtype,title={Abbreviations}]
+%\printabbreviations[title=]
+%\printunsrtglossary[type=symbols,style=long]
 
 % ------------------------------- Bibliography ---------------------------------
 
 % \nocite{*} % Uncomment to print all .bib entries, regardless of use.
-% \clearpage\phantomsection       % Creates new page and section for bibliography.
 \printbibliography                          % Prints the bibliography.
 
 % ---------------------------- Optional biography ------------------------------
