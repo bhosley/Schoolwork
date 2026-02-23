@@ -282,3 +282,141 @@ For the experiments in this paper, we use a restricted instantiation
 Several components of the formal model—such as general N-dimensional orientation, 
 continuous movement magnitudes, and broad state definitions—are therefore 
 supersets of the configuration actually used in our evaluations.
+
+
+\section{An Intuition for Observation Decomposition}
+\label{con2:app:intuition}
+
+The formal observation model in \cref{con2:app:env_model} relies on 
+the assumption that observation spaces can be decomposed into 
+semantically meaningful channels. This appendix provides visual 
+intuition for how such decomposition arises naturally in 
+multi-agent environments and how it enables the homogenization 
+framework central to Implicit Indication.
+
+\subsection{Channels as Entity Visibility}
+
+Consider an environment populated by distinct entity types: 
+obstacles, pursuers, and evaders. A natural decomposition assigns 
+each entity type to its own observation channel, where visibility 
+is encoded as a binary mapping.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.3\linewidth]{Figures/screen_pursuit_channels.png}
+    \caption[Binary Channel Mapping]{
+        Observation channels as binary mappings from entity types. 
+        Each channel corresponds to a specific entity class 
+        (obstacles, pursuers, evaders), with visibility encoded 
+        as presence or absence in that channel. This decomposition 
+        ensures semantic consistency: the ``obstacle'' channel 
+        carries the same meaning regardless of which agent observes it.
+    }
+    \label{fig:binary_channels}
+\end{figure}
+
+\Cref{fig:binary_channels} illustrates this structure. Each column 
+represents an observation channel, and each row an entity type. 
+The key insight is that channels carry \emph{semantic meaning} 
+independent of the observing agent—an obstacle observed through 
+the obstacle channel has the same interpretation whether observed 
+by agent 1 or agent 4. This consistency is what enables a shared 
+policy to learn meaningful behaviors across heterogeneous agents.
+
+\subsection{Sensor Modalities as Observation Subspaces}
+
+In practice, agents may differ not in \emph{what} entities they 
+can observe, but in \emph{how} they observe them—through different 
+sensor modalities. \Cref{fig:modality_legend} provides a legend for 
+interpreting the sensor modality visualizations that follow.
+
+\begin{figure}[ht]
+    \centering
+    \input{Figures/rgb_example_legend.tex}
+    % \includegraphics[width=0.5\linewidth]{Figures/rgb_example_legend.tex}
+    \caption[Sensor Modality Legend]{
+        Legend for sensor modality visualizations. Colors indicate 
+        distinct observation modalities (red, blue, green), each 
+        corresponding to a different sensor type or perceptual channel.
+    }
+    \label{fig:modality_legend}
+\end{figure}
+
+\Cref{fig:env_modalities} depicts an environment where three 
+sensor modalities—represented by red, blue, and green—provide 
+different views of the same underlying state. An agent equipped 
+with the ``red'' sensor perceives certain entities, while an 
+agent with the ``blue'' sensor perceives others. The union of 
+all modalities spans the complete observable state.
+
+\begin{figure}[ht]
+    \centering
+    \input{Figures/rgb_example_grid.tex}
+    % \includegraphics[width=0.7\linewidth]{Figures/rgb_example_grid.tex}
+    \caption[Environment with Multiple Sensor Modalities]{
+        A multi-agent environment with three sensor modalities 
+        (red, blue, green) overlaid. Each modality reveals 
+        different aspects of the environment state. Agents 
+        equipped with different sensor subsets observe 
+        correspondingly different projections of this scene.
+    }
+    \label{fig:env_modalities}
+\end{figure}
+
+\subsection{Decomposition into Observation Planes}
+
+To clarify how heterogeneous observations arise from this structure, 
+\cref{fig:modality_planes} separates the combined view into 
+individual observation planes—one per sensor modality.
+
+\begin{figure}[ht]
+    \centering
+    \input{Figures/rgb_example_open_grid.tex}
+    % \includegraphics[width=0.95\linewidth]{Figures/rgb_example_open_grid.tex}
+    \caption[Decomposed Observation Planes]{
+        The environment from \cref{fig:env_modalities} decomposed 
+        into separate observation planes. Each plane represents 
+        the view available through a single sensor modality. 
+        An agent's observation is the concatenation of planes 
+        corresponding to its equipped sensors. Agents with 
+        different sensor configurations receive different 
+        subsets of these planes, creating structural heterogeneity 
+        that is nonetheless semantically aligned.
+    }
+    \label{fig:modality_planes}
+\end{figure}
+
+This decomposition reveals the structure exploited by homogenization. 
+Each observation plane corresponds to an element of the channel set 
+\(\Gls{c}\) from the formal model. An agent \(\gls{i}\) with sensor 
+configuration \(\Gls{c}_{\gls{i}} \subseteq \Gls{c}\) receives only 
+the planes in its subset. The homogenized observation 
+\(\Hom{\gls{o}}_{\gls{i}}\) then places these planes in their 
+canonical positions within the full observation space, with 
+unobserved planes masked to zero.
+
+The critical property is \emph{semantic alignment}: the red plane 
+carries the same meaning for any agent that can observe it. This 
+alignment is what permits a single policy network to interpret 
+observations from heterogeneous agents—the network learns that 
+``information in position \(k\)'' has consistent semantics, and 
+the masking pattern indicates which positions contain valid 
+information for the current agent.
+
+\subsection{Connection to Implicit Indication}
+
+This visual intuition grounds the theoretical framework of 
+Implicit Indication. The decomposition into semantically 
+aligned channels satisfies the \emph{semantic decomposability} 
+assumption: observation elements have consistent meaning across 
+agents. Given this structure, the homogenized representation 
+\(\Hom{\gls{o}}\) constructed as the union of all channel 
+subspaces provides a natural shared domain for policy learning.
+
+The pattern of populated versus masked channels implicitly 
+indicates agent identity—an agent observing planes 
+\(\{\text{red}, \text{blue}\}\) is distinguishable from one 
+observing \(\{\text{blue}, \text{green}\}\) without explicit 
+identifiers. The policy learns to condition on observation 
+\emph{structure} rather than arbitrary agent indices, enabling 
+generalization to novel sensor configurations not seen during training.

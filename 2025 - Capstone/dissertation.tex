@@ -15,7 +15,7 @@
 %   Use the `style` option to customize citations: `style=ieee`.
 %   Use the `dvipsnames` option to add the dvipsnames for colors.
 
-\documentclass[style=ieee,dvipsnames]{afitthesis}
+\documentclass[style=nature,dvipsnames]{afitthesis}
 % #OPT: Fix AFIT crest
     % Missing Stars, and Eagle
 
@@ -23,10 +23,10 @@
 
 % Define the default location to look for supporting documents.
 \makeatletter
-\def\input@path{{Chapters/}{Other/}{Tables/}{Figures/}
+\def\input@path{
+    {Chapters/}{Other/}{Tables/}{Figures/}
     {Chapters/C1}{Chapters/C2/}{Chapters/C3/}
-    {Chapters/C2/Figures}
-}
+    {Chapters/C2/Figures}}
 \makeatother
 % Define the default location to look for figures.
 \graphicspath{{Figures}{Chapters/C1/}{Chapters/C2/}{Chapters/C3/}{Chapters/C2/Figures}}
@@ -39,12 +39,11 @@
 % in the section after this, apply to the SF 298 form only. Several are
 % commented out because they are probably not needed for your situation.
 
-% #TODO: Settle on a title
 \title{
-    % WORKING TITLE:\\
-    % Increasing Efficiency, Efficacy, and Extensibility\\
-    % in Heterogeneous Agent Reinforcement Learning 
-    Reducing Computational Barriers to Heterogeneous Multi-Agent Reinforcement Learning
+    % Reducing Computational Barriers to Heterogeneous Multi-Agent Reinforcement Learning
+    DIE-HARL: Durable, Implicit, and Extensible 
+    Heterogeneous Agent Reinforcement Learning
+    % Through Representational Design
 }
 \author{Brandon Hosley}
 % \authorsecond{} % Use these if other students contributed.
@@ -157,47 +156,59 @@
 % the bibliographic entry.
 \usepackage{cleveref}
 
+% ----------------------------- Optional  Extras -------------------------------
 
+\usetikzlibrary{
+    automata, positioning, arrows, fit, calc, 
+    shapes.geometric, shapes.misc, perspective
+}
+\usepackage{subcaption} % Needed to import pdf-latex inputs
 
+% --- Warning Fixes ---
+
+\usepackage{silence}
+\WarningFilter*{latex}{Text page \thepage\space contains only floats}
+% Under full h boxes in bibliography:
+\apptocmd{\bibsetup}{\setlength{\emergencystretch}{2em}}{}{}
+% \usepackage{showframe} % For help finding under/over full boxes
 
 % ============================== 
 %%%% Older version things I had:
 
-
-% --- Figures ---
-% \usepackage{pgfgantt}
-\usetikzlibrary{automata, positioning, arrows, fit, calc, shapes.geometric, shapes.misc}
-\usepackage{wrapfig}
-\usepackage{subcaption}
-
-% --- Tables ---
+% \usepackage{xurl}
+% \usepackage{wrapfig}
 % \usepackage{booktabs}
 % \usepackage{tabularx}
 % \usepackage{multirow}
 % \usepackage{pgfplotstable}
-
-
-% --- Formatting Tools ---
-% \usepackage{tcolorbox}  % For call out boxes
-\newcommand{\Hom}[1]{\widetilde{#1}}    % How to indicate homogenized space
-
-% --- Fixing LaTeX Warnings ---
-
-\usepackage{silence}
-\WarningFilter*{latex}{Text page \thepage\space contains only floats}
-\WarningFilter*{bookmark}{Ignoring unknown style}
-% Under full h boxes in bibliography:
-\apptocmd{\bibsetup}{\setlength{\emergencystretch}{2em}}{}{}
-\usepackage{xurl}
-
 % \usepackage{bookmark}
-% \usepackage{showframe} % For help finding under/over full boxes
+
+% #OPT: Add figures elsewhere (like intro and review)
+% #OPT: Fix in-figure link color issue (see Actor-critic CTDE specifically)
 
 % ============================== Body of paper =================================
 
 \begin{document}
 \setcounter{tocdepth}{1} % Only print sections and higher to ToC.
-\maketitle % Creates all the prefatory pages.
+% \maketitle % Creates all the prefatory pages.
+\maketitle{% Creates all the prefatory pages. +Options
+    % Add custom summary of notation
+    \phantomsection
+    \addcontentsline{toc}{chapter}{Summary of Notation}
+    \noindent\textbf{Summary of Notation}\par
+    \begin{spacing}{1.17}
+        \glssetwidest{testblank}
+        \printglossary[
+            title=Summary of Notation,
+            type=symbols,
+            style=alttreegroup,
+            nonumberlist,
+            % nogroupskip
+            % #TODO: Fix the unfortunate spacing on summary of notation
+        ]
+    \end{spacing}
+    \clearpage
+}
 
 % --------------------
 \chapter{Introduction}%
@@ -210,18 +221,24 @@
 \input{literature_review.tex}
 
 % -------------------------
-\chapter{Contribution 1}%
+\chapter[Investigating Training Efficiency of Direct Scaling]{
+    Investigating Training Efficiency of Direct Scaling in Multi-Agent Reinforcement Learning
+}%
 \label{ch:contribution_1}
-\subimport{Chapters/C1/}{contribution_1.tex}
-% \input{C1/contribution_1.tex}
+\input{C1/contribution_1.tex}
 
 % -------------------------
-\chapter{Contribution 2}%
+\chapter[Implicit Indication for Shared Policies]{
+    Implicit Indication for Shared Policies in Heterogeneous Agent Reinforcement Learning
+}%
 \label{ch:contribution_2}
 \input{C2/contribution_2.tex}
 
 % -------------------------
-\chapter{Contribution 3}%
+\chapter[Representational vs. Architectural Invariance]{
+    Representational vs. Architectural Invariance: \\ 
+    Comparing Implicit Indication and Permutation Invariant Critics in Heterogeneous MARL
+}%
 \label{ch:contribution_3}
 \input{C3/contribution_3.tex}
 
@@ -230,27 +247,21 @@
 \label{ch:conclusion}
 \input{conclusion.tex}
 
-% --------------------------------- Optional -----------------------------------
+% ==============================  Back Matter  =================================
 
-\appendix % Necessary before any appendix chapters
-% #TODO: Appendix label references contribution; fix?
-\chapter{Contribution 1 Supplementary Material}
+\appendix % Changes chapter numbering to back matter lettering
+
+% ------------------
+\chapter{\texorpdfstring{\Cref{ch:contribution_1}}{Contribution 1} Supplementary Material}
 \input{C1/appendix.tex}
-% \subimport{Chapters/C1/}{appendix.tex}
-\chapter{Contribution 2 Supplementary Material}
+
+% ------------------
+\chapter{\texorpdfstring{\Cref{ch:contribution_2}}{Contribution 2} Supplementary Material}
 \input{C2/appendix.tex}
 
-
-% #TODO: Appropriate separation of glossary items
-\chapter{Glossary}
-% #OPT: Improve Glossary Formatting
-% \setglossarystyle{long-booktabs}% Possible change to style (Currently has double-spaced newline problem)
-%\printunsrtglossary[type=symbols,title=Summary of Notation]
-
-% \printglossaries
-\printglossary[type=\acronymtype,title={Abbreviations}]
-%\printabbreviations[title=]
-%\printunsrtglossary[type=symbols,style=long]
+% ------------------
+\chapter{List of Abbreviations}
+\printabbreviations[style=abbr-gloss]
 
 % ------------------------------- Bibliography ---------------------------------
 

@@ -264,21 +264,24 @@ To formally represent the cooperative multi-agent setting,
 we model the environment as a \gls{dec-pomdp}
 defined by the tuple \((\Gls{i},\Gls{s},\Gls{o},\Gls{a},\Gls{p},\Gls{r},\gls{discount})\) where:
 %
-% #TODO: Perhaps this should be converted to a table akin to C1's definitions
-\begin{description}
-    \item[\(\Gls{i}\)] : Set of all agents
-    % \item[\(\Gls{s} = \{S_i\}_{i\in I}\)] : Joint state space
-    \item[\(\Gls{s} = \{\Gls{s}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint state space
-    % \item[\(\Gls{o} = \{O_i\}_{i\in I}\)] : Joint observation space
-    \item[\(\Gls{o} = \{\Gls{o}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint observation space
-    % \item[\(\Gls{a} = \{A_i\}_{i\in I}\)] : Joint action space
-    \item[\(\Gls{a} = \{\Gls{a}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint action space
-    % \item[\(\Gls{p}(s^\prime|s,a)\)] : Transition probability function
-    \item[\(\Gls{p}(\gls{s}^\prime|\gls{s},\gls{a})\)] : Transition probability function
-    % \item[\(\Gls{r} = \{R_i\}_{i\in I}\)] : Joint rewards
-    \item[\(\Gls{r} = \{\Gls{r}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint rewards
-    \item[\gls{discount}] : Reward discount factor.
-\end{description}
+% \begin{description}
+%     \item[\(\Gls{i}\)] : Set of all agents
+%     \item[\(\Gls{s} = \{\Gls{s}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint state space
+%     \item[\(\Gls{o} = \{\Gls{o}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint observation space
+%     \item[\(\Gls{a} = \{\Gls{a}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint action space
+%     \item[\(\Gls{p}(\gls{s}^\prime|\gls{s},\gls{a})\)] : Transition probability function
+%     \item[\(\Gls{r} = \{\Gls{r}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\)] : Joint rewards
+%     \item[\gls{discount}] : Reward discount factor.
+% \end{description}
+\begin{align*}
+    \Gls{i}& && \text{: Set of all agents} \\
+    \Gls{s}& = \{\Gls{s}_{\gls{i}}\}_{\gls{i}\in \Gls{i}} && \text{: Joint state space} \\
+    \Gls{o}& = \{\Gls{o}_{\gls{i}}\}_{\gls{i}\in \Gls{i}} && \text{: Joint observation space} \\
+    \Gls{a}& = \{\Gls{a}_{\gls{i}}\}_{\gls{i}\in \Gls{i}} && \text{: Joint action space} \\
+    \Gls{p}&(\gls{s}^\prime|\gls{s},\gls{a}) && \text{: Transition probability function} \\
+    \Gls{r}& = \{\Gls{r}_{\gls{i}}\}_{\gls{i}\in \Gls{i}} && \text{J: oint rewards} \\
+    \gls{discount}& && \text{: Reward discount factor.}
+\end{align*}
 %
 When combined with a joint policy \(\gls{pi} = \{\gls{pi}_{\gls{i}}\}_{\gls{i}\in \Gls{i}}\) 
 we have a \gls{posg}.

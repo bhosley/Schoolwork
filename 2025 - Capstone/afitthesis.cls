@@ -986,7 +986,7 @@
     \pagenumbering{arabic}
 }
 
-\renewcommand{\maketitle}{
+\renewcommand{\maketitle}[1]{
     % Create prefatory pages.
     \clearpage
     \pagestyle{nopageheadfoot}
@@ -1019,6 +1019,7 @@
         \listoftables
     \fi
     % Make note of the number of prefatory pages.
+    #1
     \setcounter{@prepages}{\the\numexpr\value{page}\relax}
     % Switch to arabic page numbering
     \pagenumbering{arabic}
@@ -1028,7 +1029,9 @@
     \begin{center}
         \vspace*{\fill}
         % Display the AFIT crest (2.5 inches wide).
-        \tikz{\path (0,0) pic[scale=3.67]{afitcrest};}\\[3em]
+        % \tikz{\path (0,0) pic[scale=3.67]{afitcrest};}\\[3em] % Tikz option
+        % \includegraphics[width=7.2cm]{afitlogo.eps} \\[3em]
+        \includegraphics[height=7.875cm]{afitlogo.eps} \\[3em] % #BUG: include EPS option
         % Display the title, name, and rank of the student.
         \textbf{\MakeUppercase\@title}\\[1em]
         \MakeUppercase\@doctype\\[1em]

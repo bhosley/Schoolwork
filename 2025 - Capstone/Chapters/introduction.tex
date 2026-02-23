@@ -3,7 +3,7 @@
 
 In August 2023, Deputy Secretary of Defense Kathleen Hicks announced the 
 \emph{Replicator Initiative}, signaling a strategic shift toward fielding 
-autonomous systems at scale~\cite{robertson2023,zotero-2656}. 
+autonomous systems at scale~\cites{robertson2023,zotero-2656}. 
 Unlike previous efforts focused on bespoke military platforms, 
 \emph{Replicator} aims to leverage commercial technologies; 
 an approach partly inspired by the demonstrated effectiveness of 
@@ -265,7 +265,7 @@ The third contribution directly compares architectural
 and representational paradigms for handling heterogeneity 
 through controlled experiments. We evaluate the \gls{pic}~\cite{liu2020b}, 
 representing the architectural approach, against implicit indication 
-from Contribution 2.
+from \cref{ch:contribution_2}.
 
 Using matched network capacities and hyperparameters in the 
 HyperGrid environment, we find that while both methods show 
@@ -301,8 +301,37 @@ added complexity does not provide benefits in this domain.
 \section{Dissertation Structure}%
 \label{sec:intro_structure}
 
+\begin{table}[htbp]
+\centering
+\caption{Mapping of research challenges to dissertation contributions.}
+\label{tab:challenge-contribution-map}
+\begin{tabular}{@{}l c c c @{}}
+\toprule
+\textbf{Challenge / Gap} & \textbf{C1} & \textbf{C2} & \textbf{C3} \\
+\midrule
+Training cost scales poorly with team size 
+    & \checkmark &            &            \\
+Curriculum approaches untested for heterogeneous teams 
+    & \checkmark &            &            \\
+Intrinsic heterogeneity prevents parameter sharing 
+    &            & \checkmark & \checkmark \\
+Explicit indication required for agent differentiation 
+    &            & \checkmark &            \\
+Permutation sensitivity in centralized critics 
+    &            & \checkmark & \checkmark \\
+No controlled comparison of invariance paradigms 
+    &            &            & \checkmark \\
+Robustness to dynamic team compositions 
+    &            & \checkmark & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 The remainder of this dissertation develops these contributions 
-and synthesizes their implications for \gls{harl} system design.
+and synthesizes their implications for aspects of \gls{harl} 
+system design as indicated by \cref{tab:challenge-contribution-map}.
+\Cref{sec:contribution-summary} will revisit this within the 
+context provided by the literature review in the next chapter.
 
 \textbf{\Cref{ch:literature_review}} provides comprehensive 
 technical background spanning \gls{rl} foundations, 
@@ -334,8 +363,4 @@ and identifies directions for future research.
 The three contributions are structured as standalone studies suitable 
 for independent publication while collectively supporting the unifying 
 thesis that representational design is central to efficient, flexible \gls{harl}. 
-% Cross-chapter connections reinforce this coherence: 
-% Contribution 1 identifies observation-space coupling as a barrier that Contribution 2 addresses; 
-% Contributions 1 and 3 both investigate training efficiency through complementary lenses; 
-% and Contribution 3 directly compares the approach from 
-% Contribution 2 against architectural alternatives.
+

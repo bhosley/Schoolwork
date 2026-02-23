@@ -1,86 +1,94 @@
 % Specialized command for this section:
-\NewDocumentCommand{\glsNewSymbol}{m m m O{} O{#1}}{%
+\NewDocumentCommand{\glsNewSymbol}{m m m O{} O{a}}{%
     \newglossaryentry{#1}{%
         text=\ensuremath{#2}, 
         name=\ensuremath{#3}, 
         description={#4},
-        sort={#5}, 
+        sort=#5#1, 
         type=symbols, 
-        % group={#6}
     }%
     % This function allows me to use the commands: 
     % \gls{x} -> \(x\) and \Gls{x} -> \(X\)
 } 
 % \glsNewSymbol{name}{printed in text}{printed in glossary}[description in glossary]
 
+
 % -------------- General -------------- %
+\newcommand*{\Agroupname}{General}
 % Number Systems
-\glsNewSymbol{field}{\mathbb{F}}{\mathbb{F}}[A field.]
-\glsNewSymbol{naturals}{\mathbb{N}}{\mathbb{N}}[The set of all natural numbers.]
-\glsNewSymbol{integers}{\mathbb{Z}}{\mathbb{Z}}[The set of all integers.]
-\glsNewSymbol{rationals}{\mathbb{Q}}{\mathbb{Q}}[The set of all rational numbers.]
-\glsNewSymbol{reals}{\mathbb{R}}{\mathbb{R}}[Set of all real numbers.]
-\glsNewSymbol{complex}{\mathbb{C}}{\mathbb{C}}[The set of all complex numbers.]
+\glsNewSymbol{field}{\mathbb{F}}{\mathbb{F}}[The set of all fields.][a1]
+\glsNewSymbol{naturals}{\mathbb{N}}{\mathbb{N}}[The set of all natural numbers.][a2]
+\glsNewSymbol{integers}{\mathbb{Z}}{\mathbb{Z}}[The set of all integers.][a3]
+\glsNewSymbol{rationals}{\mathbb{Q}}{\mathbb{Q}}[The set of all rational numbers.][a4]
+\glsNewSymbol{reals}{\mathbb{R}}{\mathbb{R}}[The set of all real numbers.][a5]
+\glsNewSymbol{complex}{\mathbb{C}}{\mathbb{C}}[The set of all complex numbers.][a6]
+% P(S) Powerset
+\glsNewSymbol{powerset}{\ensuremath{\mathcal{P}}}{\ensuremath{\mathcal{P}(\mathcal{S})}}[
+    Power set; the set of all subsets of set \(\mathcal{S}\).][a]
+% II(a=b) -> 0 or 1 Indicator function
+\glsNewSymbol{indicator}{\mathbb{I}}{\mathbb{I}}[
+    Indicator function. \(1\) if input is true, \(0\) otherwise.][az]
 
 
 % -------------- Games -------------- %
+\newcommand*{\Ggroupname}{Games and Modeling}
 % Agents
-\glsNewSymbol{i}{i}{I}[Set of agents \(i\).]
+\glsNewSymbol{i}{i}{I}[Set of agents \(i\).][g]
 % Time steps
-\glsNewSymbol{t}{t}{T}[Set of time steps \(t\).]
+\glsNewSymbol{t}{t}{T}[Set of time steps \(t\).][g]
 % States
-\glsNewSymbol{s}{s}{s,S,\bar{S}}[State, state space, set of terminal states.]
+\glsNewSymbol{s}{s}{s,S,\bar{S}}[State, state space, set of terminal states.][g]
 % Observation Space
-\glsNewSymbol{O}{O}{O,O_i}[Observation space, marginal observation space of agent \(i\).]
-\glsNewSymbol{o}{o}{o,o_i}[Joint observation, observation of agent \(i\).]
-\glsNewSymbol{c}{c}{C}[Channel or obervation element index.]
+\glsNewSymbol{O}{O}{O,O_i}[Observation space, marginal observation space of agent \(i\).][g]
+\glsNewSymbol{o}{o}{o,o_i}[Joint observation, observation of agent \(i\).][g]
+\glsNewSymbol{c}{c}{C}[Channel or obervation element index.][g]
 % Actions
-\glsNewSymbol{A}{A}{A,A_i}[Action space, marginal action space of agent \(i\).]
-\glsNewSymbol{a}{a}{a,a_i}[Joint action, action of agent \(i\).]
+\glsNewSymbol{A}{A}{A,A_i}[Action space, marginal action space of agent \(i\).][g]
+\glsNewSymbol{a}{a}{a,a_i}[Joint action, action of agent \(i\).][g]
 % Reward function
-\glsNewSymbol{r}{r}{r,r_i}[Reward, reward for agent \(i\).]
-\glsNewSymbol{rew}{\mathcal{R}}{\mathcal{R},\mathcal{R}_i}[
-    Reward function, reward function for agent \(i\).]
+\glsNewSymbol{r}{r}{r,r_i}[Reward, reward for agent \(i\).][g]
+% \glsNewSymbol{rew}{\mathcal{R}}{\mathcal{R},\mathcal{R}_i}[
+\glsNewSymbol{rew}{R}{{R},{R}_i}[
+    Reward function, reward function for agent \(i\).][g]
 % Transition Probability Matrix
 \glsNewSymbol{P}{\textbf{P}}{\textbf{P}}[
     \(\text{dim}(\Gls{s})\times\text{dim}(\Gls{s})\) 
-    State-transition probability matrix.]
+    State-transition probability matrix.][g]
 \glsNewSymbol{p}{p}{p(\gls{s}^\prime|\gls{s},\gls{a})}[Probability of transitioning to 
-    state \(\gls{s}^\prime\) from state \(\gls{s}\) given action \gls{a}.]
+    state \(\gls{s}^\prime\) from state \(\gls{s}\) given action \gls{a}.][g]
 % Reward value
-\glsNewSymbol{g}{g}{G_t}[Return at time \gls{t}.]
+\glsNewSymbol{g}{g}{G_t}[Return at time \gls{t}.][g]
 
 
 % -------------- Machine Learning -------------- %
+\newcommand*{\Mgroupname}{Machine Learning}
 % Policy
-\glsNewSymbol{pi}{\pi}{\pi,\pi_i}[Policy (decision-making rule), Policy of agent \(i\).]
-\glsNewSymbol{pi_opt}{\pi^*}{\pi^*}[Optimal joint policy.]
+\glsNewSymbol{pi}{\pi}{\pi,\pi_i}[Policy (decision-making rule), Policy of agent \(i\).][m]
+\glsNewSymbol{pi_opt}{\pi^*}{\pi^*}[Optimal joint policy.][m]
 % Action Value
-\glsNewSymbol{q}{q}{Q}[Set of state-values or state-value functions.]
-\glsNewSymbol{q_pi}{q_\pi}{q_\pi(a|s)}[Value of action \gls{a} given state \gls{s} by policy \gls{pi}.]
-\glsNewSymbol{q_*}{q_*}{q_*(a|s)}[Value of state action\gls{a} given state \gls{s} under optimal policy.]
+\glsNewSymbol{q}{q}{Q}[Set of state-values or state-value functions.][m]
+\glsNewSymbol{q_pi}{q_\pi}{q_\pi(a|s)}[
+    Value of action \gls{a} given state \gls{s} by policy \gls{pi}.][m]
+\glsNewSymbol{q_*}{q_*}{q_*(a|s)}[
+    Value of state action\gls{a} given state \gls{s} under optimal policy.][m]
 % State Value
-\glsNewSymbol{v}{v}{V}[Set of action-values or action-value functions.]
-\glsNewSymbol{v_pi}{v_\pi}{v_\pi(s)}[Value of state \gls{s} given by policy \gls{pi}.]
-\glsNewSymbol{v_*}{v_*}{v_*(s)}[Value of state \gls{s} under optimal policy.]
+\glsNewSymbol{v}{v}{V}[Set of action-values or action-value functions.][m]
+\glsNewSymbol{v_pi}{v_\pi}{v_\pi(s)}[Value of state \gls{s} given by policy \gls{pi}.][m]
+\glsNewSymbol{v_*}{v_*}{v_*(s)}[Value of state \gls{s} under optimal policy.][m]
 
 
 % -------------- Optimization -------------- %
-% Expected Value
-\glsNewSymbol{expRet}{\mathbb{E}}{\mathbb{E}_{\pi}[\cdot]}[Expected return from policy \gls{pi}.]
-% Discount factor
-\glsNewSymbol{discount}{\gamma}{\gamma}[Discount-rate.]
+\newcommand*{\Ogroupname}{Optimization}
 % Step size parameter
-\glsNewSymbol{step-size}{\alpha}{\alpha}[Policy update step-size parameter.]
-\glsNewSymbol{step}{\alpha}{\alpha}[Policy update step-size parameter.]
-\glsNewSymbol{adv}{A}{A}[Advantage value.]
+\glsNewSymbol{step-size}{\alpha}{\alpha}[Policy update step-size parameter.][o]
+% Advantage Estimate
+\glsNewSymbol{adv}{A}{A}[Advantage value.][o]
+% Expected Value
+\glsNewSymbol{expRet}{\mathbb{E}}{\mathbb{E}_{\pi}[\cdot]}[
+    Expected return from policy \gls{pi}.][o]
+% Discount factor
+\glsNewSymbol{discount}{\gamma}{\gamma}[Discount-rate.][o]
 
 
 % -------------- Other -------------- %
-% P(S) Powerset
-\glsNewSymbol{powerset}{\ensuremath{\mathcal{P}}}{\ensuremath{\mathcal{P}(\mathcal{S})}}[
-    Power set; the set of all subsets of set \(\mathcal{S}\).]
-% II(a=b) -> 0 or 1 Indicator function
-\glsNewSymbol{indicator}{\mathbb{I}}{\mathbb{I}}[
-    Indicator function. \(1\) if input is true, \(0\) otherwise.]
-
+\newcommand{\Hom}[1]{\widetilde{#1}}    % How to indicate homogenized space

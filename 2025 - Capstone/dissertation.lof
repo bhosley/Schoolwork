@@ -1,0 +1,46 @@
+\contentsline {figure}{\numberline {1}{\ignorespaces RL exemplified by a fully reduced MDP.}}{10}{figure.caption.6}%
+\contentsline {figure}{\numberline {2}{\ignorespaces Multi-agent-environment cycle.}}{15}{figure.caption.7}%
+\contentsline {figure}{\numberline {3}{\ignorespaces Basic CTDE.}}{18}{figure.caption.9}%
+\contentsline {figure}{\numberline {4}{\ignorespaces Actor-Critic \glsxtrshort {ctde}.}}{18}{figure.caption.10}%
+\contentsline {figure}{\numberline {5}{\ignorespaces Heterogeneous-agent-environment cycle.}}{30}{figure.caption.11}%
+\contentsline {figure}{\numberline {6}{\ignorespaces Set-transformer model}}{45}{figure.caption.12}%
+\contentsline {figure}{\numberline {7}{\ignorespaces Hypernetwork architecture overview}}{46}{figure.caption.13}%
+\contentsline {figure}{\numberline {8}{\ignorespaces Environments used in \cref {ch:contribution_1}.}}{57}{figure.caption.14}%
+\contentsline {figure}{\numberline {9}{\ignorespaces Example of Training Progression for Waterworld and \gls {lbf}}}{66}{figure.caption.16}%
+\contentsline {figure}{\numberline {10}{\ignorespaces Example of Training Progression for Multiwalker}}{66}{figure.caption.17}%
+\contentsline {figure}{\numberline {11}{\ignorespaces Training Iteration Timing Across Agent Counts.}}{68}{figure.caption.19}%
+\contentsline {figure}{\numberline {12}{\ignorespaces Waterworld Retraining (4 agents, 2-agent pretraining).}}{70}{figure.caption.20}%
+\contentsline {figure}{\numberline {13}{\ignorespaces Waterworld Retraining (8 agents, 2-agent pretraining).}}{71}{figure.caption.21}%
+\contentsline {figure}{\numberline {14}{\ignorespaces Waterworld Pretraining Impact.}}{72}{figure.caption.22}%
+\contentsline {figure}{\numberline {15}{\ignorespaces Multiwalker Retraining (5 agents, 3-agent pretraining).}}{73}{figure.caption.23}%
+\contentsline {figure}{\numberline {16}{\ignorespaces Multiwalker Retraining (6 agents, 3-agent pretraining).}}{74}{figure.caption.24}%
+\contentsline {figure}{\numberline {17}{\ignorespaces Multiwalker Pretraining Impact.}}{74}{figure.caption.25}%
+\contentsline {figure}{\numberline {18}{\ignorespaces Level-Based Foraging Retraining (7 agents, 2-agent pretraining).}}{75}{figure.caption.27}%
+\contentsline {figure}{\numberline {19}{\ignorespaces Level-Based Foraging Pretraining Impact.}}{76}{figure.caption.28}%
+\contentsline {figure}{\numberline {20}{\ignorespaces Mini-grid style rendering of multi-agent environment.}}{89}{figure.caption.29}%
+\contentsline {figure}{\numberline {21}{\ignorespaces Team compositions and observation element coverage.}}{92}{figure.caption.30}%
+\contentsline {figure}{\numberline {22}{\ignorespaces Comparison of training policy configurations with different visibility regimes.}}{94}{figure.caption.31}%
+\contentsline {figure}{\numberline {23}{\ignorespaces Comparison between methods trained with different observation-element coverage.}}{95}{figure.caption.32}%
+\contentsline {figure}{\numberline {24}{\ignorespaces Implicit Indication \& PIC Training Comparison}}{110}{figure.caption.33}%
+\contentsline {figure}{\numberline {25}{\ignorespaces Compared Evaluation Performance of Implicit Indication, PIC, HAPPO}}{111}{figure.caption.34}%
+\contentsline {figure}{\numberline {26}{\ignorespaces Evaluation of Relative Performance of Implicit Indication and PIC}}{112}{figure.caption.36}%
+\contentsline {figure}{\numberline {27}{\ignorespaces Training curves for Waterworld, 3\ agents.}}{123}{figure.caption.42}%
+\contentsline {figure}{\numberline {28}{\ignorespaces Training curves for Waterworld, 4\ agents.}}{124}{figure.caption.43}%
+\contentsline {figure}{\numberline {29}{\ignorespaces Training curves for Waterworld, 5\ agents.}}{124}{figure.caption.44}%
+\contentsline {figure}{\numberline {30}{\ignorespaces Training curves for Waterworld, 6\ agents.}}{125}{figure.caption.45}%
+\contentsline {figure}{\numberline {31}{\ignorespaces Training curves for Waterworld, 7\ agents.}}{125}{figure.caption.46}%
+\contentsline {figure}{\numberline {32}{\ignorespaces Training curves for Waterworld, 8\ agents.}}{126}{figure.caption.47}%
+\contentsline {figure}{\numberline {33}{\ignorespaces Training curves for Multiwalker, 4\ agents.}}{126}{figure.caption.48}%
+\contentsline {figure}{\numberline {34}{\ignorespaces Training curves for Multiwalker, 5\ agents.}}{127}{figure.caption.49}%
+\contentsline {figure}{\numberline {35}{\ignorespaces Training curves for Multiwalker, 6\ agents.}}{127}{figure.caption.50}%
+\contentsline {figure}{\numberline {36}{\ignorespaces Training curves for Multiwalker, 7\ agents.}}{128}{figure.caption.51}%
+\contentsline {figure}{\numberline {37}{\ignorespaces Training curves for LBF, 3\ agents.}}{128}{figure.caption.52}%
+\contentsline {figure}{\numberline {38}{\ignorespaces Training curves for LBF, 4\ agents.}}{129}{figure.caption.53}%
+\contentsline {figure}{\numberline {39}{\ignorespaces Training curves for LBF, 5\ agents.}}{129}{figure.caption.54}%
+\contentsline {figure}{\numberline {40}{\ignorespaces Training curves for LBF, 6\ agents.}}{130}{figure.caption.55}%
+\contentsline {figure}{\numberline {41}{\ignorespaces Training curves for LBF, 7\ agents.}}{130}{figure.caption.56}%
+\contentsline {figure}{\numberline {42}{\ignorespaces Comparison between methods trained with different observation-element coverage.}}{134}{figure.caption.60}%
+\contentsline {figure}{\numberline {43}{\ignorespaces Binary Channel Mapping}}{138}{figure.caption.66}%
+\contentsline {figure}{\numberline {44}{\ignorespaces Sensor Modality Legend}}{138}{figure.caption.67}%
+\contentsline {figure}{\numberline {45}{\ignorespaces Environment with Multiple Sensor Modalities}}{139}{figure.caption.68}%
+\contentsline {figure}{\numberline {46}{\ignorespaces Decomposed Observation Planes}}{140}{figure.caption.69}%

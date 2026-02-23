@@ -1,3 +1,4 @@
+
 %------------------------------------------------------------------------------
 \section{Foundations of Reinforcement Learning}
 \label{sec:foundations}
@@ -35,7 +36,7 @@ stochastic dynamics~\cite{puterman2005}. An \gls{mdp} is defined by a tuple
         given the current state \(\gls{s}\in \Gls{s}\) and action \(\gls{a}\in \Gls{a}\).
         This captures the stochastic nature of the environment.
     \item \(\gls{rew}: \Gls{s} \times \Gls{a} \rightarrow \gls{reals}\) is the reward 
-        function and written as \(R(\gls{s}, \gls{a})\) defines the immediate reward 
+        function and written as \(\gls{rew}(\gls{s}, \gls{a})\) defines the immediate reward 
         received after taking action \(\gls{a}\in \Gls{a}\) in state \(\gls{s}\in \Gls{s}\). 
         This reward guides the agent's learning process.
     \item \(\gls{discount} \in [0, 1]\) is the discount factor, which 
@@ -71,13 +72,13 @@ state and action, not on the history of prior states:
 This memoryless property enables tractable computation while 
 remaining sufficiently expressive to model a wide range of decision problems.
 
-A policy \(\gls{pi}: \mathcal{\Gls{s}} \rightarrow \Delta(\mathcal{\Gls{a}})\) maps 
+A policy \(\gls{pi}: {\Gls{s}} \rightarrow \Delta({\Gls{a}})\) maps 
 states to probability distributions over actions, where \(\gls{pi}(\gls{a}|\gls{s})\) 
 denotes the probability of selecting action \(\gls{a}\) in state \(\gls{s}\). 
-The agent's objective is to find an optimal policy \(\gls{pi}^*\) that maximizes 
+The agent's objective is to find an optimal policy \(\gls{pi_opt}\) that maximizes 
 the expected discounted return:
 \begin{equation}
-    \gls{pi}^* = \arg\max_{\gls{pi}} \gls{expRet}_{\gls{pi}} \left[ \sum_{\gls{t}=0}^{\infty} 
+    \gls{pi_opt} = \arg\max_{\gls{pi}} \gls{expRet}_{\gls{pi}} \left[ \sum_{\gls{t}=0}^{\infty} 
         \gls{discount}^{\gls{t}} \Gls{r}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) \right]
 \end{equation}
 
@@ -85,18 +86,18 @@ the expected discounted return:
 
 Central to RL are value functions, which estimate the expected return 
 from a given state or state-action pair under a particular policy. 
-The state value function \(\Gls{v}_{\gls{pi}}\) represents the expected return 
+The state value function \(\Gls{v_pi}\) represents the expected return 
 starting from state \(\gls{s}\) and following policy \(\gls{pi}\):
 \begin{equation}
-    \Gls{v}_{\gls{pi}} = \gls{expRet}_{\gls{pi}} \left[ \sum_{\gls{t}=0}^{\infty} 
+    \Gls{v_pi} = \gls{expRet}_{\gls{pi}} \left[ \sum_{\gls{t}=0}^{\infty} 
         \gls{discount}^{\gls{t}} \Gls{r}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) 
         \mid \gls{s}_0 = \gls{s} \right]
 \end{equation}
 
-Similarly, the action-value function \(\Gls{q}_{\gls{pi}}(\gls{s},\gls{a})\) captures 
+Similarly, the action-value function \(\Gls{q_pi}(\gls{s},\gls{a})\) captures 
 the expected return of taking action $a$ in state $s$ and subsequently following \(\gls{pi}\):
 \begin{equation}
-    \Gls{q}_{\gls{pi}}(\gls{s}, \gls{a}) = \gls{expRet}_{\gls{pi}} \left[ \sum_{\gls{t}=0}^{\infty}
+    \Gls{q_pi}(\gls{s}, \gls{a}) = \gls{expRet}_{\gls{pi}} \left[ \sum_{\gls{t}=0}^{\infty}
         \gls{discount}^{\gls{t}} \Gls{r}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) 
         \mid \gls{s}_0 = \gls{s}, \gls{a}_0 = \gls{a} \right]
 \end{equation}
@@ -104,19 +105,19 @@ the expected return of taking action $a$ in state $s$ and subsequently following
 These functions satisfy the Bellman equations, recursive relationships that 
 decompose the value of a state into immediate reward and discounted future value. 
 The Bellman optimality equations characterize the optimal value functions 
-\(\Gls{v}^*\) and \(\Gls{q}^*\), from which optimal policies can be derived \cite{sutton2018}.
+\(\Gls{v_*}\) and \(\Gls{q_*}\), from which optimal policies can be derived \cite{sutton2018}.
 
 Q-learning, introduced by \cite{watkins1992}, provides a model-free method for learning 
-\(\Gls{q}^*\) directly from experience without requiring knowledge of the transition dynamics. 
+\(\Gls{q_*}\) directly from experience without requiring knowledge of the transition dynamics. 
 The algorithm updates \(\Gls{q}\)-values toward a target that combines the observed reward 
 with the maximum estimated future value:
 \begin{equation}
     \Gls{q}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) \leftarrow 
-    \Gls{q}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) + \gls{step} \left[ \gls{r}_{\gls{t}} 
+    \Gls{q}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) + \gls{step-size} \left[ \gls{r}_{\gls{t}} 
         + \gls{discount} \max_{\gls{a}'} \Gls{q}(\gls{s}_{\gls{t}+1}, \gls{a}') 
         - \Gls{q}(\gls{s}_{\gls{t}}, \gls{a}_{\gls{t}}) \right]
 \end{equation}
-where \(\gls{step}\) is the learning rate. Under appropriate conditions on the learning rate 
+where \(\gls{step-size}\) is the learning rate. Under appropriate conditions on the learning rate 
 and exploration, Q-learning converges to the optimal action-value function in tabular settings.
 
 \subsubsection{Policy Gradient Methods}
@@ -200,7 +201,6 @@ a deterministic policy alongside the Q-function \cite{lillicrap2019}.
 through double Q-learning and delayed policy updates \cite{fujimoto2018}.
 
 \subsubsection{Actor-Critic Architectures}
-% #OPT: Add Actor critic diagram?
 
 Actor-critic methods combine the advantages of policy gradient and 
 value-based approaches by maintaining both a policy (the actor) 
@@ -210,8 +210,8 @@ while the actor enables direct policy optimization.
 
 The \gls{a2c} algorithm uses the advantage function 
 \(\Gls{a}_{\gls{pi}}(\gls{s}, \gls{a}) 
-= \Gls{q}_{\gls{pi}}(\gls{s}, \gls{a}) 
-- \Gls{v}_{\gls{pi}}(\gls{s})\)
+= \Gls{q_pi}(\gls{s}, \gls{a}) 
+- \Gls{v_pi}(\gls{s})\)
 to reduce variance while maintaining an unbiased gradient estimate. 
 The advantage captures how much better an action is compared to the 
 average action under the current policy, providing a 
@@ -308,136 +308,118 @@ The multi-agent extensions of \gls{ppo}, including \gls{mappo} and \gls{happo},
 form the algorithmic basis for the experiments throughout this dissertation. 
 \Gls{mappo} adapts \gls{ppo} to the centralized training with decentralized 
 execution paradigm by conditioning the critic on global information while 
-maintaining decentralized actors, while \gls{happo} extends this framework 
-to heterogeneous agent settings where agents may have different observation 
-and action spaces \cite{zhong2024}. These extensions and their relationship 
-to the contributions of this dissertation are examined in detail in subsequent 
-sections.
-
-% #TODO: Work GPI cycle image back in
-%     \subsection*{Monte Carlo Methods}%
-
-% Monte Carlo methods learn directly from an agent's experience in an episode, 
-% estimating value functions by averaging the returns observed in actual episodes.
-% These methods are model-free and do not require knowledge of the environment's 
-% dynamics. They are generally divided into two categories; 
-% \textbf{First-Visit Monte Carlo}, averaging the returns of the first visit to 
-% each state, or \textbf{Every-Visit Monte Carlo}, averaging the returns of every
-% visit to each state in a given episode.
-% %
-% \begin{wrapfigure}[7]{R}{0.4\textwidth}
-%     \vspace*{-3em}
-%     \centering
-%     \resizebox{0.3\textwidth}{!}{%
-%         \input{gpi}
-%     }
-%     \captionsetup{margin=1.2em}
-%     \caption{Generalized Policy Iteration.}
-%     \label{fig:gpi_cycle}
-% \end{wrapfigure}
-% %
-% In either method, the policy and action values are updated iteratively.
-% Sutton and Barto~\cite{sutton2018} provide a graphic intuition for this 
-% iterative cycle, which we have replicated in~\cref{fig:gpi_cycle}.
-
-% A key distinction between Monte Carlo in this context and methods described 
-% later is that Monte Carlo methods execute an entire episode. In the following 
-% section, this principle will be applied to smaller segments of experience. 
-% Additionally, we will reference \gls{mcts}, 
-% a heuristic that simulates the results of future actions. Despite its name, 
-% \gls{mcts} is distinct from the Monte Carlo methods discussed here.
+maintaining decentralized actors, while \gls{happo}, extends 
+this framework to heterogeneous agent settings \cite{zhong2024}. 
+These extensions and their relationship to the contributions of this 
+dissertation are examined in detail in \cref{subsec:mappo-variants}.
 
 %------------------------------------------------------------------------------
 \section{Multi-Agent Reinforcement Learning}
 \label{sec:marl-fundamentals}
 %------------------------------------------------------------------------------
 
+\begin{figure}
+    \centering
+    \input{hae_cycle}
+    \caption{Multi-agent-environment cycle.}
+    \label{fig:mae_cycle}
+\end{figure}
+
 While single-agent \gls{rl} provides the foundational tools for sequential 
 decision-making under uncertainty, many real-world problems involve 
 multiple interacting agents whose decisions jointly determine outcomes. 
-\Gls{marl} extends the single-agent framework to accommodate these multi-agent settings, 
-introducing new challenges related to non-stationarity, coordination, and scalability. 
-This section formalizes the \gls{marl} problem, introduces the dominant training paradigms, 
-and surveys the key algorithmic approaches that underpin the contributions of this dissertation.
+\Gls{marl} extends the single-agent framework to accommodate these 
+multi-agent settings (\cref{fig:mae_cycle}), introducing new challenges 
+related to non-stationarity, coordination, and scalability. This section 
+formalizes the \gls{marl} problem, introduces the dominant training paradigms, 
+and surveys the key algorithmic approaches that underpin the contributions 
+of this dissertation.
 
-% \subsection{Problem Formalization}
-% \label{subsec:marl-formalization}
+\subsection{Problem Formalization}
+\label{subsec:marl-formalization}
 
-% The transition from single-agent to multi-agent settings requires 
-% extending the \gls{mdp} framework to account for multiple decision-makers 
-% whose actions jointly influence state transitions and rewards. 
-% Two primary formalisms capture this extension: \glspl{posg} and \glspl{dec-pomdp}.
+The transition from single-agent to multi-agent settings requires
+extending the \gls{mdp} framework to account for multiple decision-makers
+whose actions jointly influence state transitions and rewards.
+The \gls{posg}, which generalizes the Markov game framework
+introduced by~\cite{littman1994} to settings with partial observability,
+captures this extension through the components defined in \cref{tab:posg-notation}.
 
-% \subsubsection{Partially Observable Stochastic Games}
+\begin{table}[htbp]
+\centering
+\caption{Components of a Partially Observable Stochastic Game.}
+\label{tab:posg-notation}
+\begin{tabular}{@{}cl@{}}
+\toprule
+\textbf{Symbol} & \textbf{Description} \\
+\midrule
+\(\Gls{i} = \{1, \ldots, n\}\) & Set of $n$ agents \\
+\(\Gls{s}\) & Global state space \\
+\(\Gls{a}_{\gls{i}}\) & Action space for agent \(\gls{i}\) \\
+\(\Gls{o}_{\gls{i}}\) & Observation space for agent \(\gls{i}\) \\
+\(\gls{P}: \Gls{s} \times \Gls{a} \times \Gls{s} \rightarrow [0,1]\)
+    & Transition probability over joint action \(\gls{a} \in \prod_{i} \Gls{a}_{\gls{i}}\) \\
+\(\Gls{r}_{\gls{i}}: \Gls{s} \times \Gls{a} \times \Gls{s} \rightarrow \gls{reals}\)
+    & Reward function for agent \(\gls{i}\) \\
+\(Z_i: \Gls{s} \times \Gls{a} \times \Gls{o}_{\gls{i}} \rightarrow [0,1]\)
+    & Observation function for agent \(\gls{i}\) \\
+\(\gls{discount} \in [0,1)\) & Discount factor \\
+\bottomrule
+\end{tabular}
+\end{table}
 
-% A \gls{posg} generalizes the Markov game framework introduced 
-% by \cite{littman1994} to settings with partial observability. 
-% Formally, a \gls{posg} is defined by the tuple 
-% $\langle \mathcal{I}, \mathcal{S}, \{\mathcal{A}_i\}_{i \in \mathcal{I}}, 
-% \{\mathcal{O}_i\}_{i \in \mathcal{I}}, P, \{R_i\}_{i \in \mathcal{I}}, 
-% \{Z_i\}_{i \in \mathcal{I}}, \gamma \rangle$, where $\mathcal{I} = \{1, \ldots, n\}$ 
-% denotes the set of $n$ agents, $\mathcal{S}$ is the global state space, 
-% $\mathcal{A}_i$ and $\mathcal{O}_i$ are the action and observation spaces 
-% for agent $i$ respectively, 
-% $P: \mathcal{S} \times \mathcal{A} \times \mathcal{S} \rightarrow [0,1]$ 
-% defines the state transition probabilities conditioned on the joint action 
-% $\mathbf{a} = (a_1, \ldots, a_n) \in \mathcal{A} = \prod_{i \in \mathcal{I}} 
-% \mathcal{A}_i$, $R_i: \mathcal{S} \times \mathcal{A} \times \mathcal{S} \rightarrow \mathbb{R}$ 
-% specifies the reward function for agent 
-% $i$, $Z_i: \mathcal{S} \times \mathcal{A} \times \mathcal{O}_i \rightarrow [0,1]$ 
-% defines the observation function for agent $i$, and $\gamma \in [0,1)$ 
-% is the discount factor.
+When all agents share a common reward function
+(\(\Gls{r}_1 = \Gls{r}_2 = \cdots = \Gls{r}_n = \Gls{r}\)), the 
+\gls{posg} reduces to a \gls{dec-pomdp}, the canonical formalism 
+for fully cooperative multi-agent problems~\cite{busoniu2008}. 
+This dissertation focuses exclusively on cooperative settings 
+formalized as \glspl{dec-pomdp}.
 
-% This formalism captures the fundamental challenge of \gls{marl}: 
-% from any individual agent's perspective, the environment appears 
-% non-stationary because state transitions depend on the actions of other 
-% agents whose policies may be simultaneously evolving \cite{busoniu2008}. 
-% This non-stationarity violates the Markov property that guarantees convergence 
-% in single-agent settings, making multi-agent learning substantially more challenging.
+The joint policy \(\gls{pi} = (\gls{pi}_1, \ldots, \gls{pi}_n)\) 
+induces a probability distribution over trajectories, 
+and the objective is to maximize the expected discounted return:
+\begin{equation}
+    J(\gls{pi}) 
+    = \gls{expRet}\left[
+        \sum_{\gls{t}=0}^{\infty} \gls{discount}^{t} 
+        \Gls{r}(\gls{s}_{t}, \gls{a}_t, \gls{s}_{t+1} \mid \gls{pi})
+    \right]
+    \label{eq:joint-objective}
+\end{equation}
 
-% \subsubsection{Decentralized Partially Observable Markov Decision Processes}
+This formalism captures the fundamental challenge of \gls{marl}:
+from any individual agent's perspective, the environment appears
+non-stationary because state transitions depend on the actions of other
+agents whose policies may be simultaneously evolving \cite{busoniu2008}.
+This non-stationarity violates the assumptions that guarantee
+convergence in single-agent settings, making multi-agent
+learning substantially more challenging.
 
-% The \gls{dec-pomdp} represents a special case of the \gls{posg} where all 
-% agents share a common reward function: 
-% \(\Gls{r}_1 = \Gls{r}_2 = \cdots = \Gls{r}_n = \Gls{r}\). 
-% This shared reward structure makes the \gls{dec-pomdp} the canonical 
-% formalism for fully cooperative multi-agent problems \cite{busoniu2008}. 
-% Despite the cooperative objective, \glspl{dec-pomdp} remain computationally 
-% challenging solving them optimally is NEXP-complete in the number of agents, 
-% motivating the development of approximate solution methods \cite{busoniu2008}.
+A further challenge arises from the exponential growth of the joint
+action space. For \(n\) agents each with \(|\Gls{a}_{\gls{i}}| = k\) actions,
+the joint action space has cardinality \(k^n\). This combinatorial explosion
+renders naive approaches intractable even for moderate team sizes,
+motivating the scalable training methods explored in this dissertation.
 
-% In a \gls{dec-pomdp}, each agent $i$ maintains a policy 
-% $\pi_i: \mathcal{O}_i \rightarrow \Delta(\mathcal{A}_i)$ 
-% that maps local observations to action distributions. 
-% The joint policy $\boldsymbol{\pi} = (\pi_1, \ldots, \pi_n)$ 
-% induces a probability distribution over trajectories, 
-% and the objective is to maximize the expected discounted return:
-% \begin{equation}
-%     J(\boldsymbol{\pi}) = \mathbb{E}\left[\sum_{t=0}^{\infty} \gamma^t R(s_t, \mathbf{a}_t, s_{t+1}) \mid \boldsymbol{\pi}\right]
-%     \label{eq:joint-objective}
-% \end{equation}
+\subsubsection{Cooperative, Competitive, and Mixed Settings}
 
-% \subsubsection{Joint Action Spaces and Scalability}
+Multi-agent environments span a spectrum of agent relationships. 
+In \textit{cooperative} settings (as in \glspl{dec-pomdp}), agents 
+share a common objective and must coordinate to maximize collective reward. 
+\textit{Competitive} or zero-sum games represent the opposite extreme, 
+where one agent's gain is another's loss; exemplified by two-player 
+board games that motivated early game-theoretic \gls{rl} \cite{littman1994}. 
+\textit{Mixed-motive} environments involve elements of both cooperation and 
+competition, requiring agents to balance individual and collective interests.
 
-% A defining characteristic of multi-agent systems is the exponential growth of the joint action space. For $n$ agents each with $|\mathcal{A}_i| = k$ actions, the joint action space has cardinality $k^n$. This combinatorial explosion poses severe scalability challenges: naive approaches that enumerate joint actions become intractable even for moderate team sizes. The joint observation space $\mathcal{O} = \prod_{i \in \mathcal{I}} \mathcal{O}_i$ exhibits similar exponential scaling, compounding the difficulty of learning effective joint policies.
-
-% \subsubsection{Cooperative, Competitive, and Mixed Settings}
-
-% Multi-agent environments span a spectrum of agent relationships. 
-% In \textit{cooperative} settings (as in \glspl{dec-pomdp}), agents 
-% share a common objective and must coordinate to maximize collective reward. 
-% \textit{Competitive} or zero-sum games represent the opposite extreme, 
-% where one agent's gain is another's loss---exemplified by two-player 
-% board games that motivated early game-theoretic \gls{rl} \cite{littman1994}. \textit{Mixed-motive} environments involve elements of both cooperation and competition, requiring agents to balance individual and collective interests.
-
-% \cite{shoham2007} argue that clearly specifying the multi-agent 
-% learning objective is essential for meaningful algorithm development and evaluation. 
-% In cooperative settings, the objective is typically the shared reward signal of 
-% Equation~\ref{eq:joint-objective}. For competitive settings, solution concepts from game 
-% theory---such as \gls{nash}---provide alternative optimization targets, though computing 
-% Nash equilibria in general-sum games is computationally intractable. This dissertation focuses 
-% primarily on cooperative settings where the research questions center on training efficiency 
-% rather than strategic equilibrium computation.
+Shoham et al.~\cite{shoham2007} argue that clearly specifying the multi-agent 
+learning objective is essential for meaningful algorithm development and evaluation. 
+In cooperative settings, the objective is typically the shared reward signal of 
+Equation~\ref{eq:joint-objective}. For competitive settings, solution concepts from game 
+theory (such as \gls{nash}) provide alternative optimization targets, though computing 
+Nash equilibria in general-sum games is computationally intractable. This dissertation focuses 
+primarily on cooperative settings where the research questions center on training efficiency 
+rather than strategic equilibrium computation.
 
 
 \subsection{Centralized Training with Decentralized Execution}
@@ -447,6 +429,16 @@ The \gls{ctde} paradigm has emerged as the dominant framework for cooperative \g
 elegantly resolving the tension between the coordination requirements of multi-agent 
 learning and the decentralized execution constraints of real-world deployment 
 \cite{lowe2020, foerster2018}.
+
+\begin{figure}[!ht]
+    \centering
+    \input{basic_ctde}
+    \caption{Basic CTDE.}
+    \label{fig:basic_ctde}
+\end{figure}
+\Cref{fig:basic_ctde} shows an example of this in which centralization is
+performed by a \emph{mixing} function that combines a global state with 
+the actions of each agent to provide a single state or action-state value.
 
 \subsubsection{The Paradigm Explained}
 
@@ -467,7 +459,15 @@ stabilize learning in the face of multi-agent non-stationarity.
 
 \subsubsection{Critic Architectures and Centralized Information}
 
+\begin{figure}
+    \centering
+    \input{ctde_actor-critic}
+    \caption{Actor-Critic \glsxtrshort{ctde}.}
+    \label{fig:ctde_actor-critic}
+\end{figure}
+
 The actor-critic architecture provides a natural implementation of \gls{ctde}: 
+for example, \cref{fig:ctde_actor-critic} illustrates the relationship in which
 actors (policies) condition only on local observations to ensure decentralized 
 executability, while critics (value functions) access centralized information 
 to reduce variance and improve credit assignment. 
@@ -476,26 +476,6 @@ centralized critic \(\Gls{q}_{\gls{i}}(\gls{s}, \gls{a}_1, \ldots, \gls{a}_n)\)
 for each agent that conditions on the global state and all agents' actions. 
 This centralized critic provides stable gradient estimates while 
 maintaining decentralized policies.
-
-% \begin{wrapfigure}[10]{R}{0.4\textwidth}
-%     \vspace*{-1em}
-%     % \vspace*{-2em}
-%     \centering
-%     \input{basic_ctde}
-%     \caption{Basic \gls{ctde}.}
-%     \label{fig:basic_ctde}
-% \end{wrapfigure}
-%
-\begin{figure}[!ht]
-    \centering
-    \input{basic_ctde}
-    \caption{Basic CTDE.}
-    \label{fig:basic_ctde}
-\end{figure}
-
-\Cref{fig:basic_ctde} shows an example of this in which centralization is
-performed by a \emph{mixing} function that combines a global state with 
-the actions of each agent to provide a single state or action-state value.
 
 \cite{foerster2018} extended this approach with \gls{coma}, 
 which uses a centralized critic to compute counterfactual baselines. 
@@ -604,10 +584,9 @@ explicit communication.
 \subsection{Multi-Agent PPO Variants}
 \label{subsec:mappo-variants}
 
-\Gls{ppo} has become the algorithm of choice for many \gls{marl} 
-applications due to its stability, sample efficiency, 
-and ease of implementation. Several multi-agent variants extend 
-\gls{ppo} to address specific challenges in cooperative settings.
+Building on \gls{ppo}'s properties discussed in \cref{sec:ppo},
+sever multi-agent variants have emerged to address specific 
+challenges in cooperative settings.
 
 \subsubsection{MAPPO and Parameter Sharing}
 
@@ -615,11 +594,8 @@ and ease of implementation. Several multi-agent variants extend
 optionally with parameter sharing across agents. 
 In the fully shared variant, a single policy network 
 parameterizes all agents' behaviors, with agent 
-identity encoded through observation augmentation. 
-\cite{yu2022} demonstrated that \gls{mappo} with 
-shared parameters achieves strong performance across 
-diverse benchmarks while dramatically reducing the 
-number of trainable parameters.
+identity encoded through observation augmentation
+reducing the number of trainable parameters \cite{yu2022}.
 
 Parameter sharing offers several advantages beyond reduced memory footprint. 
 By aggregating experiences from all agents, shared policies enjoy improved 
@@ -631,8 +607,9 @@ an assumption that breaks down in settings with intrinsic heterogeneity,
 as explored in subsequent chapters.
 
 \subsubsection{HAPPO}
+\label{subsubsec:happo}
 
-\Gls{happo}, introduced by \cite{zhong2024}, addresses the challenge of 
+\Gls{happo}~\cite{zhong2024}, addresses the challenge of 
 heterogeneous agents with different observation and action spaces. 
 The key insight is that the standard multi-agent policy gradient 
 objective decomposes across agents when updates are performed 
@@ -673,13 +650,10 @@ The heterogeneous variants (\gls{hatrpo}, \gls{happo}) extend
 these guarantees to settings where agents may have different 
 policy parameterizations \cite{zhong2024}.
 
-% #TODO: Refer to Contribution X or as "Chapter-X"?
-These multi-agent \gls{ppo} variants form the algorithmic foundation 
-for the contributions of this dissertation. 
-Contribution~1 employs \gls{ppo} within a curriculum learning framework, 
-Contribution~2 extends parameter sharing to heterogeneous settings 
+\Cref{ch:contribution_1} employs \gls{ppo} within a curriculum learning framework, 
+\Cref{ch:contribution_2} extends parameter sharing to heterogeneous settings 
 through implicit indication, and 
-Contribution~3 compares architectural versus representational 
+\Cref{ch:contribution_3} compares architectural versus representational 
 approaches to heterogeneity using \gls{mappo} and \gls{happo} 
 as baseline implementations. The choice of \gls{ppo}-based methods 
 is motivated by their empirical effectiveness, implementation stability, 
@@ -699,12 +673,8 @@ becomes increasingly intractable.
 This section examines the sources of these scalability bottlenecks, 
 surveys approaches for mitigating them through parameter sharing, 
 and characterizes the benchmark environments used to evaluate scalability. 
-These challenges directly motivate the contributions of this dissertation: 
-% #TODO: Contribution X ref?
-Contribution~1 addresses training cost through curriculum-based team scaling, 
-Contribution~2 extends parameter sharing to heterogeneous settings through 
-implicit indication, and 
-Contribution~3 compares paradigms for handling heterogeneity at scale.
+These challenges directly motivate the contributions of this dissertation, 
+which are detailed in \Cref{sec:research-gaps}.
 
 \subsection{Computational Complexity and Team Size}
 \label{subsec:computational-complexity}
@@ -718,10 +688,10 @@ is essential for developing efficient training strategies.
 \subsubsection{Exponential Growth of Joint Spaces}
 
 Consider a multi-agent system with \(n\in\gls{naturals}\) agents, 
-where each agent \(\gls{i}\) has observation space \(\Gls{o}_{\gls{i}}\)
-with \(|\Gls{o}_{\gls{i}}| = d_{\gls{o}}\) dimensions and action space 
+where each agent \(\gls{i}\) has observation space \(\gls{O}_{\gls{i}}\)
+with \(|\gls{O}_{\gls{i}}| = d_{\gls{o}}\) dimensions and action space 
 \(\Gls{A}_{\gls{i}}\) with \(|\Gls{A}_{\gls{i}}| = k\) discrete actions. 
-The joint observation space \(\Gls{o} = \prod_{i=1}^{n} \Gls{o}_i\)
+The joint observation space \(\gls{O} = \prod_{i=1}^{n} \gls{O}_i\)
 grows as (Big \(O\)) \(\mathcal{O}(d_o^n)\), while the joint action space 
 \(\Gls{a} = \prod_{i=1}^{n} \Gls{a}_{i}\) grows as \(\mathcal{O}(k^n)\). 
 This combinatorial explosion means that algorithms which explicitly 
@@ -824,10 +794,8 @@ to \(\mathcal{O}(p)\), a dramatic reduction for large teams.
 Full parameter sharing assumes that agents are sufficiently similar 
 that a single policy can adequately represent all required behaviors. 
 This assumption holds in many cooperative settings with homogeneous agents, 
-where the optimal behavior in a given state-action context is agent-invariant. 
-\cite{yu2022} demonstrated that \gls{mappo} with full parameter sharing 
-achieves state-of-the-art performance across diverse cooperative benchmarks, 
-establishing shared policies as a strong default approach.
+where the optimal behavior in a given state-action context is agent-invariant,
+as demonstrated by Yu et al.~\cite{yu2022} with \gls{mappo}.
 
 Beyond memory efficiency, full parameter sharing improves 
 sample efficiency by pooling experience across agents. 
@@ -839,33 +807,11 @@ behaviors naturally align without explicit communication mechanisms.
 
 \subsubsection{Limitations of Full Sharing}
 
-Despite these advantages, full parameter sharing fails when agents 
-require fundamentally different behaviors. 
-Three categories of differentiation challenge the shared policy assumption:
-
-\textit{Behavioral heterogeneity} 
-arises when agents occupy different roles despite sharing the same capabilities. 
-In predator-prey scenarios, some agents may specialize as chasers while others 
-serve as blockers. A shared policy with one-hot agent identifiers can, in principle, 
-learn role-specific behaviors, but this places the burden of role differentiation 
-entirely on the policy network's capacity to condition on the agent index.
-
-\textit{Observation heterogeneity} 
-occurs when agents have access to different sensory information. 
-A drone equipped with a camera and another with \glsentryshort{lidar} receive 
-observations from incompatible spaces, precluding direct parameter sharing. 
-Similarly, agents at different positions in spatially-structured tasks
-(such as the lead, middle, and rear walkers in Multiwalker)
-receive observations with different semantic content.
-
-\textit{Action heterogeneity} 
-manifests when agents have different available actions. 
-A ground robot and an aerial vehicle share the goal of 
-reaching a target but command distinct actuator spaces. 
-A shared policy cannot directly output actions for both 
-agent types without architectural modifications.
-
-These limitations motivate the development of selective and 
+Despite these advantages, full parameter sharing fails 
+when agents require fundamentally different behaviors. 
+In \cref{subsec:taxonomy-heterogeneity} we approach the different 
+aspects that condition or result from heterogeneity in more detail.
+This limitation motivates the development of selective and 
 heterogeneous parameter sharing approaches that preserve 
 efficiency benefits while accommodating agent differences.
 
@@ -908,11 +854,10 @@ These explicit indication methods share a common limitation:
 they require agents to occupy compatible observation and action spaces. 
 When agents differ structurally, explicit indication cannot resolve the 
 dimensional mismatch between agent types. This limitation motivates the 
-implicit indication approach developed in Contribution~2, 
-where agent identity is inferred from the pattern of populated elements 
-in a homogenized observation space rather than from explicit identifiers.
+implicit indication approach developed in \cref{ch:contribution_2}.
 
 \subsubsection{Trade-offs: Efficiency versus Specialization}
+\label{subsubsec:trade-offs_eff_v_spec}
 
 Parameter sharing introduces a fundamental trade-off between 
 computational efficiency and behavioral specialization. 
@@ -932,7 +877,7 @@ The parameter sharing literature largely assumes that agents occupy compatible s
 that sharing is possible, and the question is merely how much to share. 
 Contribution~2 extends this literature by developing a sharing mechanism 
 for agents with incompatible observation spaces through observation homogenization,
-while Contribution~3 compares this representational approach against architectural 
+while \Cref{ch:contribution_3} compares this representational approach against architectural 
 solutions that encode heterogeneity through specialized network structures.
 
 
@@ -949,27 +894,17 @@ characterizes the specific environments used in this dissertation.
 
 \subsubsection{Evolution of MARL Benchmarks}
 
-% #TODO: Clean up this lead-in to benchmarks
-% Early \gls{marl} research relied on simple matrix games and 
-% small-scale simulations that, while theoretically informative, 
-% failed to capture the complexity of realistic multi-agent coordination. 
-% The success of deep \gls{rl} on single-agent benchmarks like Atari 
-% motivated the development of more challenging multi-agent environments.
-
-% The StarCraft Multi-Agent Challenge (SMAC) \cite{samvelyan2019} 
-% established a widely-adopted benchmark based on micromanagement 
-% scenarios from the real-time strategy game StarCraft II. 
-% SMAC's popularity stems from its diversity of scenarios, 
-% clear evaluation metrics, and challenging coordination requirements. 
-% However, \cite{ellis2023} identified limitations in SMAC's original scenarios, 
-% including exploitable opponent behaviors and insufficient scenario diversity, 
-% motivating the development of SMACv2 with procedurally generated maps 
-% and more robust evaluation protocols.
-
-% \Gls{grf} \cite{kurach2020} provides another influential benchmark based on simulated football. 
-% The environment supports variable team sizes and requires both local coordination 
-% (passing, positioning) and global strategy (formations, set pieces). 
-% However, its computational cost limits its accessibility for resource-constrained research.
+Early \gls{marl} research relied on simple matrix games and 
+small-scale simulations that, while theoretically informative, 
+failed to capture the complexity of realistic multi-agent coordination. 
+The success of deep \gls{rl} on single-agent benchmarks like Atari 
+motivated the development of more challenging multi-agent environments.
+The StarCraft Multi-Agent Challenge (SMAC)~\cite{samvelyan2019} established a 
+widely-adopted benchmark based on micromanagement scenarios from StarCraft II. 
+However, Ellis et al.~\cite{ellis2023} identified limitations including 
+exploitable opponent behaviors, motivating SMACv2 with procedurally generated maps. 
+\Gls{grf}~\cite{kurach2020} provides another influential benchmark, 
+though its computational cost limits accessibility.
 
 PettingZoo \cite{terry2021} standardized the multi-agent environment 
 interface through a Gymnasium-compatible API, enabling systematic 
@@ -986,6 +921,7 @@ where the goal is often to reduce training cost;
 a goal that faster simulators directly support.
 
 \subsubsection{Environments Used in This Dissertation}
+\label{subsubsec:environments}
 
 The contributions of this dissertation employ environments 
 selected to span a range of coordination challenges, 
@@ -1080,22 +1016,29 @@ given equivalent computational budgets or parameter counts.
 
 These evaluation practices inform the experimental designs of all 
 three contributions, enabling fair comparison of curriculum strategies 
-(Contribution~1), parameter sharing approaches (Contribution~2), 
-and paradigms for handling heterogeneity (Contribution~3).
+(\Cref{ch:contribution_1}), parameter sharing approaches (\Cref{ch:contribution_2}), 
+and paradigms for handling heterogeneity (\Cref{ch:contribution_3}).
 
 %------------------------------------------------------------------------------
 \section{Heterogeneous Multi-Agent Reinforcement Learning}
 \label{sec:heterogeneous-marl}
 %------------------------------------------------------------------------------
 
+\begin{figure}
+    \centering
+    \input{hae_cycle}
+    \caption{Heterogeneous-agent-environment cycle.}
+    \label{fig:hae_cycle}
+\end{figure}
+
 The preceding sections have established the foundations of \gls{rl} and \gls{marl}, 
 along with the scalability challenges that arise as team sizes grow. However, 
 an additional dimension of complexity emerges when agents within a team are not identical. 
 This section examines \gls{harl}, a subfield that addresses the unique challenges 
-posed by teams of structurally or behaviorally distinct agents. 
-Understanding heterogeneity is central to the contributions of this dissertation, 
-as both the implicit indication framework (C2) and the architectural comparison study (C3) 
-directly engage with the problem of training shared policies across non-identical agents.
+posed by teams of structurally or behaviorally distinct agents (illustrated in 
+\cref{fig:hae_cycle}). Understanding heterogeneity is central to this dissertation, 
+as training shared policies across non-identical agents represents 
+a core challenge addressed in \Cref{sec:research-gaps}.
 
 \subsection{Taxonomy of Heterogeneity}
 \label{subsec:taxonomy-heterogeneity}
@@ -1151,7 +1094,7 @@ on intrinsic heterogeneity, specifically observation-space heterogeneity,
 as this represents the more challenging and practically relevant case for 
 real-world deployments where sensor diversity is common.
 
-% #TODO: Add drone multi agent graphic from prospectus presentation.
+
 The challenge of heterogeneity is compounded by the fact that many 
 real-world multi-agent systems exhibit both forms simultaneously. 
 A drone swarm might include quadcopters and fixed-wing aircraft 
@@ -1164,7 +1107,7 @@ handle the full spectrum of heterogeneity while remaining computationally tracta
 \label{subsec:agent-indication}
 
 When training shared policies across multiple agents, a fundamental 
-question arises: how should agents be distinguished from one another? 
+question arises: \emph{how should agents be distinguished from one another?} 
 This question becomes particularly acute in heterogeneous settings, 
 where the policy must produce appropriate behavior for agents with 
 different capabilities. The literature has developed 
@@ -1209,7 +1152,7 @@ but if agent types have observation vectors of different dimensions,
 the policy network cannot directly process inputs from all agent 
 types without additional architectural accommodations. 
 This limitation motivates the homogenization approach developed in 
-Contribution 2 of this dissertation, which achieves agent indication 
+\cref{ch:contribution_2} of this dissertation, which achieves agent indication 
 implicitly through the pattern of populated observation elements rather 
 than through explicit identifiers.
 
@@ -1228,44 +1171,11 @@ Chapter~\ref{ch:contribution_2}.
 \label{subsec:separate-vs-shared}
 
 The algorithmic treatment of heterogeneous agents 
-in \gls{marl} broadly divides into two paradigms: 
-maintaining separate policy networks for each agent or agent type, 
-versus sharing parameters across agents through various mechanisms. 
-Each approach carries distinct trade-offs in terms of computational cost, 
-sample efficiency, and representational flexibility.
-
-\textbf{Separate policy approaches} assign independent 
-neural networks to each agent or agent type. 
-The \gls{happo} algorithm introduced by \cite{zhong2024} 
-exemplifies this paradigm, maintaining distinct actor networks for 
-each agent while employing a sequential update scheme that preserves 
-monotonic improvement guarantees across the heterogeneous team. 
-Separate policies naturally accommodate intrinsic heterogeneity, 
-as each network can have an architecture tailored to its agent's 
-specific observation and action spaces. 
-The sequential factor decomposition in \gls{happo} enables 
-credit assignment across heterogeneous agents while avoiding 
-the issues that arise when agents with different action spaces 
-attempt to share policy representations.
-
-However, separate policy approaches incur significant costs. 
-The storage footprint scales linearly with the number of agent types: 
-for \(k\) agent types, \(k\) separate actor networks must be maintained. 
-Training costs also increase, as each network requires separate gradient 
-computations and parameter updates. Perhaps more critically, 
-separate policies forgo the sample efficiency benefits of parameter sharing;
-experience collected by one agent cannot directly improve the policy of another, 
-even when the agents face similar sub-problems \cite{christianos2021}.
-
-\textbf{Shared policy approaches} aim to amortize these costs by training 
-a single network that serves all agents. Full parameter sharing, 
-where all agents execute identical copies of a single policy, 
-has proven surprisingly effective in homogeneous settings \cite{yu2022}. 
-The sample efficiency gains are substantial: every agent's experience 
-contributes to improving the shared policy, effectively multiplying 
-the data available for learning. Storage requirements also drop dramatically, 
-from $\mathcal{O}(n)$ or $\mathcal{O}(k)$ separate networks to a single network 
-regardless of team size.
+in \gls{marl} broadly remains the same as \gls{marl} in general;
+recalling the approaches of \cref{subsec:parameter-sharing}
+(independent and shared policy networks), we consider the implications 
+of a specifically heterogeneous set of agents in terms of computational 
+cost, sample efficiency, and representational flexibility.
 
 The challenge for shared policies in heterogeneous settings is achieving 
 differentiation while sharing. Several strategies have been proposed. 
@@ -1275,23 +1185,14 @@ creating a middle ground between full sharing and full separation.
 The F2A2 framework \cite{li2023d} enables flexible agent-to-architecture assignment, 
 allowing the degree of sharing to be optimized jointly with policy parameters. 
 These approaches can reduce storage and training costs while still 
-accommodating some degree of heterogeneity.
+accommodating some degree of heterogeneity,
+and represents a mid-point between a fully heterogeneous approach and
+the homogenization approach developed for \cref{ch:contribution_2}.
 
-The homogenization approach developed in this dissertation takes a different path: 
-rather than modifying the sharing structure, it modifies the representation to
-make full parameter sharing feasible across heterogeneous agents. 
-By embedding all agent observations into a common space, 
-a single policy network can process inputs from any agent 
-type while learning type-specific behaviors through the implicit indication mechanism. 
-
-The trade-off between separate and shared policies is not merely 
-computational but also relates to generalization and robustness. 
-Shared policies, by their nature, must find representations that 
-work across diverse agent types, which can provide regularization 
-benefits and enable generalization to novel agent compositions not 
-seen during training. Separate policies, while potentially achieving 
-higher performance on specific configurations, may overfit to training 
-conditions. Contribution 2 empirically examines these trade-offs, 
+The trade-offs between separate and shared policies, 
+discussed in \cref{subsubsec:trade-offs_eff_v_spec} were not merely 
+computational but also related to generalization and robustness. 
+\Cref{ch:contribution_2} empirically examines these trade-offs, 
 demonstrating that the implicit indication approach matches or exceeds 
 \gls{happo}'s performance while providing superior robustness to agent 
 composition changes.
@@ -1366,7 +1267,7 @@ require adapting to available rather than planned force compositions.
 The implicit indication framework addresses these requirements 
 by enabling efficient shared policies across heterogeneous agents 
 while maintaining robustness to composition changes. 
-The architectural comparison in Contribution 3 further 
+The architectural comparison in \cref{ch:contribution_3} further 
 illuminates which algorithmic paradigms are best suited to 
 different heterogeneity structures, providing guidance for 
 practitioners deploying \gls{harl} systems in real-world applications.
@@ -1633,12 +1534,11 @@ required for each role in the target configuration. This finding suggests that
 team-size curricula may be most effective in relatively homogeneous settings 
 where role distinctions are less pronounced.
 
-The \gls{lbf} environment illustrates these curriculum limitations concretely. 
-In \gls{lbf}, agents possess varying skill levels that determine which food items 
-they can collect, creating intrinsic heterogeneity through capability differences. 
-As team sizes increase, the combinatorial complexity of matching agent 
-capabilities to food requirements grows substantially. Policies learned 
-with smaller teams may fail to develop the coordination patterns necessary 
+The \gls{lbf}~(\cref{subsubsec:environments}) environment illustrates 
+these curriculum limitations concretely. As team sizes increase, 
+the combinatorial complexity of matching agent capabilities to food 
+requirements grows substantially. Policies learned with smaller 
+teams may fail to develop the coordination patterns necessary 
 for larger configurations, where successful foraging requires more 
 sophisticated capability matching. Furthermore, the dynamic assignment 
 of roles based on food placement and agent positioning does not simplify 
@@ -1682,44 +1582,6 @@ or fundamentally different coordination structures across scales may
 benefit less from curriculum-based strategies and may require 
 alternative approaches to managing training complexity.
 
-% #TODO: Add this figure back in?
-% \begin{wrapfigure}[9]{R}{0.4\textwidth}
-%     \vspace*{-1em}
-%     \centering
-%     % \includegraphics[width=0.4\textwidth]{ctde_actor-critic.png}
-%     % #TODO: Tikz this diagram
-%     \resizebox{0.4\textwidth}{!}{%
-%        \input{ctde_actor-critic}
-%     }
-%     %\captionsetup{margin=1.2em}
-%     \caption{Actor-Critic \gls{ctde}.}
-%     \label{fig:ctde_actor-critic}
-% \end{wrapfigure}
-
-% #TODO: Add figure back into the benchmarks section
-% \begin{figure}[ht]
-%     \centering
-%     \caption{Environments used in this work.}
-%     \begin{subfigure}{0.3\textwidth}
-%         \includegraphics[width=\textwidth]{waterworld.png}
-%         \caption{Waterworld.}
-%         \label{fig:waterworld}
-%     \end{subfigure}
-%     \hfil
-%     \begin{subfigure}{0.3\textwidth}
-%         \includegraphics[width=\textwidth]{multiwalker.png}
-%         \caption{Multiwalker.}
-%         \label{fig:multiwalker}
-%     \end{subfigure}
-%     \hfil
-%     \begin{subfigure}{0.3\textwidth}
-%         \includegraphics[width=\textwidth]{lbf.png}
-%         \caption{Level-based foraging.}
-%         \label{fig:lbf}
-%     \end{subfigure}
-%     \label{fig:envs-overview}
-% \end{figure}
-
 %------------------------------------------------------------------------------
 \section{Permutation Invariance and Architectural Approaches}
 \label{sec:permutation-invariance}
@@ -1752,7 +1614,7 @@ ordering creates several challenges for \gls{marl} algorithms.
 
 \subsubsection{Agent Ordering Sensitivity}
 
-% #TODO: Revise math from here:
+% #OPT: Revise math from here:
 Consider a centralized critic that takes as input the observations
 and actions of all agents to estimate the joint value function.
 If this critic is implemented as a standard \gls{mlp} that
@@ -1784,7 +1646,7 @@ between equivalent states, forcing the learning algorithm to
 separately learn what should be recognized as identical situations.
 This increases sample complexity and slows convergence. Second,
 policies trained with a particular agent ordering may fail to
-generalize when agents are reordered, added, or removed---a
+generalize when agents are reordered, added, or removed; a
 significant limitation for real-world applications where team
 compositions may change dynamically \cite{kimura2024}.
 
@@ -1863,14 +1725,23 @@ equivariance property ensures that structurally equivalent
 configurations produce equivalent representations, regardless
 of how agents happen to be indexed.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.4\linewidth]{lee2019_set_transformer.png}
+    \caption[Set-transformer model]{
+        Set-transformer model from Lee et al.~\cite{lee2019}.}
+    \label{fig:transformer}
+    % #OPT: TiKZ this Diagram
+\end{figure}
+
 Attention mechanisms provide a powerful extension to basic
 message passing, allowing the network to learn which neighbor
 interactions are most relevant. The Transformer architecture
 \cite{vaswani2017} pioneered attention-based sequence modeling,
 and subsequent work adapted these mechanisms for graph-structured
-data. The Set Transformer \cite{lee2019} demonstrated that
-attention-based architectures could achieve permutation invariance
-while capturing complex interactions between set elements,
+data. The Set Transformer (\cref{fig:transformer}) \cite{lee2019} 
+demonstrated that attention-based architectures could achieve permutation 
+invariance while capturing complex interactions between set elements,
 providing a foundation for attention-based \gls{marl} approaches.
 
 \subsubsection{Graph-Based Methods in MARL}
@@ -1885,12 +1756,21 @@ passing to compute a permutation-invariant value estimate. This
 approach demonstrated improved sample efficiency and scalability
 compared to concatenation-based critics.
 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.45\linewidth]{hao2022_network_overview.png}
+    \caption[Hypernetwork architecture overview]{
+        Hypernetwork architecture overview Hao et al.~\cite{hao2022}.}
+    \label{fig:hypernetwork}
+    % #OPT: TiKZ this Diagram
+\end{figure}
+
 Yang et al. \cite{yang2021a} developed IHG-MA, which employs
 graph attention networks to model interactions in traffic signal
 control. Their approach uses a hypergraph representation that
 can capture higher-order relationships between agents,
 demonstrating the flexibility of graph-based methods for
-domains with complex interaction structures. The GAT-MF
+domains with complex interaction structures. The GAT-MF (shown in \cref{fig:hypernetwork})
 architecture \cite{hao2023} combines graph attention with
 mean-field approximations to scale to large numbers of agents
 while maintaining the benefits of relational modeling.
@@ -2009,15 +1889,9 @@ methods that can handle varying input dimensions while
 maintaining invariance to agent ordering within homogeneous
 subgroups.
 
-The concept of homogenization (constructing a unified
-representation space that spans all agent-specific subspaces)
-provides a framework for extending representational approaches to
-heterogeneous settings. By defining a superset of observation
-elements and using masking to indicate each agent's available
-information, a single network can process inputs from agents
-with different capabilities. This approach, explored in
-Contribution 2 of this dissertation, enables parameter sharing
-across heterogeneous agents without explicit agent identifiers.
+The implicit indication approach \cref{subsec:agent-indication}
+addresses this through its homogenization of the input spaces,
+without explicit agent identifiers.
 
 \subsection{Comparing Paradigms: When to Use What}
 \label{sec:paradigm-comparison}
@@ -2027,7 +1901,7 @@ invariance have demonstrated success in \gls{marl} applications,
 but they embody different design philosophies and offer distinct
 trade-offs. Understanding when each paradigm is most appropriate
 is essential for practitioners and motivates the empirical
-comparison undertaken in Contribution 3 of this dissertation.
+comparison undertaken in \cref{ch:contribution_3} of this dissertation.
 
 \subsubsection{Architectural vs. Representational Trade-offs}
 
@@ -2093,7 +1967,7 @@ relative effectiveness. The choice between paradigms often
 relies on intuition or implementation convenience rather than
 evidence-based selection.
 
-This gap motivates the research presented in Contribution 3
+This gap motivates the research presented in \cref{ch:contribution_3} 
 of this dissertation, which provides a controlled empirical
 comparison between the \gls{pic} architecture (representing
 the architectural paradigm) and implicit indication through
@@ -2153,7 +2027,7 @@ Whether the efficiency gains observed in homogeneous settings transfer to hetero
 (and under what conditions curriculum approaches may be counterproductive)
 remains an open question.
 
-\textbf{Contribution 1} addresses this gap by evaluating curriculum-based 
+\textbf{\Cref{ch:contribution_1}} addresses this gap by evaluating curriculum-based 
 team scaling across environments exhibiting distinct heterogeneity characteristics. 
 The contribution investigates two primary research questions:
 
@@ -2187,12 +2061,13 @@ not resolve the fundamental architectural challenge posed by intrinsic heterogen
 agents with different observation or action spaces cannot share policy parameters 
 because their network input/output dimensions differ.
 
-The \gls{happo} framework \cite{zhong2024} addresses intrinsic 
-heterogeneity by maintaining separate policy networks per agent type, 
-ensuring theoretical convergence guarantees through sequential policy updates. 
-However, this approach incurs storage costs proportional to the number of agent 
-types and foregoes the data efficiency benefits of experience sharing across 
-structurally different agents.
+As discussed in \cref{subsec:mappo-variants}, the \gls{happo} 
+framework \cite{zhong2024} addresses intrinsic heterogeneity, 
+in a manner that ensures theoretical convergence guarantees 
+through sequential policy updates. However, this approach 
+incurs storage costs proportional to the number of agent 
+types and foregoes the data efficiency benefits of experience 
+sharing across structurally different agents.
 
 A representational alternative would construct a unified observation 
 space spanning all agent-specific subspaces, allowing a single policy 
@@ -2205,9 +2080,8 @@ suggest the viability of such representations, no existing framework
 systematically exploits observation structure to enable parameter sharing across 
 intrinsically heterogeneous agents without explicit indication signals.
 
-\textbf{Contribution 2} addresses this gap by introducing \emph{implicit indication}; 
-a representational framework where agent identity is inferred from the pattern of 
-populated observation elements rather than explicit identifiers. 
+\textbf{\Cref{ch:contribution_2}} addresses this gap by 
+introducing \emph{implicit indication}~(\cref{subsec:agent-indication}). 
 The contribution investigates three research questions:
 
 \begin{enumerate}[label=\textbf{RQ2.\arabic*:}, leftmargin=2.5cm]
@@ -2249,13 +2123,13 @@ between architectural and representational paradigms under matched
 experimental conditions in \gls{harl} settings. 
 The relative advantages of each approach;
 in terms of sample efficiency, final performance, robustness to distribution shift, 
-and computational overhead---remain unclear. This gap is particularly 
+and computational overhead; remain unclear. This gap is particularly 
 significant because the paradigms involve fundamentally different trade-offs: 
 architectural approaches require specialized network components that may limit
 flexibility, while representational approaches impose assumptions about 
 observation structure that may not hold across all domains.
 
-\textbf{Contribution 3} addresses this gap through direct empirical 
+\textbf{\Cref{ch:contribution_3}} addresses this gap through direct empirical 
 comparison of architectural (\gls{pic}) and representational 
 (implicit indication) approaches under controlled experimental conditions. 
 The contribution investigates three research questions:
@@ -2274,72 +2148,26 @@ The contribution investigates three research questions:
 \subsection{Contribution Summary and Dissertation Structure}
 \label{sec:contribution-summary}
 
-Table~\ref{tab:contributions-summary} synthesizes the relationship between the 
-identified research gaps, the dissertation contributions, and the 
-literature surveyed in this chapter. The three contributions 
-form a coherent research program addressing barriers to efficient and 
-flexible training of \gls{harl} systems.
-
-% #TODO: Redo this table, sizing is off; may become redundant with Dr. Cox's suggested table
-\begin{table}[htbp]
-\centering
-\caption{Summary of research gaps, contributions, and literature connections.}
-\label{tab:contributions-summary}
-\small
-\begin{tabular}{p{2.2cm}p{4cm}p{3.8cm}p{3.5cm}}
-% \toprule
-% \textbf{Contribution} & \textbf{Research Gap} & \textbf{Approach} & \textbf{Key Literature} \\
-% \midrule
-% \textbf{C1}: Curriculum Learning &
-% Team scaling curriculum unexplored for heterogeneous settings; role specialization 
-% barriers unknown &
-% Evaluate policy upsampling across environments with varying heterogeneity forms &
-% \cite{smit2023}, \cite{narvekar2020}, \cite{gupta2017}, \cite{papoudakis2021} \\
-% \addlinespace
-% \textbf{C2}: Implicit Indication &
-% Parameter sharing requires explicit indication or separate networks; no unified 
-% framework for intrinsic heterogeneity &
-% Homogenized observation spaces enabling identity inference from observation patterns &
-% \cite{terry2020}, \cite{christianos2021}, \cite{zaheer2017}, \cite{zhong2024} \\
-% \addlinespace
-% \textbf{C3}: Paradigm Comparison &
-% Architectural vs. representational invariance compared only informally; no controlled 
-% \gls{harl} evaluation &
-% Direct empirical comparison of \gls{pic} (architectural) and implicit indication 
-% (representational) &
-% \cite{liu2020b}, \cite{yang2021a}, \cite{yu2022}, \cite{zhong2024} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
+Together, the research gaps identified in this chapter motivate a 
+coherent program of three contributions addressing barriers to 
+efficient and flexible training of \gls{harl} systems. The following 
+chapters develop each contribution in turn, beginning with 
+curriculum-based approaches to team scaling.
 
 The contributions exhibit deliberate interconnections. 
-Contribution 1 identifies observation space dimensionality 
+\Cref{ch:contribution_1} identifies observation space dimensionality 
 as a barrier to policy transfer across team sizes;
-a limitation that Contribution 2 addresses through homogenization. 
+a limitation that \cref{ch:contribution_2} addresses through homogenization. 
 Both Contributions 1 and 3 investigate training efficiency, 
 but from complementary perspectives: curriculum learning structures 
 \emph{when} training occurs, while representation choice determines 
-\emph{how} agents are encoded during training. Contribution 3 directly 
-evaluates the homogenization approach developed in Contribution 2 
+\emph{how} agents are encoded during training. \Cref{ch:contribution_3} directly 
+evaluates the homogenization approach developed in \cref{ch:contribution_2} 
 against the leading architectural alternative.
 
-All three contributions operate within the \gls{ctde} paradigm 
-\cite{lowe2020, foerster2018} and employ \gls{ppo} \cite{schulman2017a} 
-as the base optimization algorithm, building on its demonstrated effectiveness 
-in cooperative multi-agent settings \cite{yu2022}. This methodological 
-consistency enables meaningful comparison across contributions while 
-% #TODO: Fig Contribution reference
-isolating the specific effects of curriculum structure (C1), 
-observation representation (C2), and invariance paradigm (C3).
-
-The following chapters present each contribution in detail. 
-Chapter~\ref{ch:contribution_1} evaluates curriculum-based 
-team scaling across three benchmark environments. 
-Chapter~\ref{ch:contribution_2} develops the theoretical 
-foundations of implicit indication and demonstrates its 
-effectiveness for heterogeneous parameter sharing. 
-Chapter~\ref{ch:contribution_3} provides systematic 
-comparison between architectural and representational 
-approaches to invariance in \gls{harl}.
+All three contributions operate within the \gls{ctde} 
+paradigm and employ \gls{ppo} as the base algorithm, 
+enabling meaningful comparison across contributions.
+The following chapters present each contribution in detail,
+beginning with curriculum-based team scaling in \Cref{ch:contribution_1}.
 

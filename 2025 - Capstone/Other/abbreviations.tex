@@ -1,3 +1,13 @@
+% Custom Styling for this list of abbreviations
+\newglossarystyle{abbr-gloss}{%
+    \setglossarystyle{longragged3col-booktabs}%
+    \singlespacing
+    \renewcommand*{\arraystretch}{1.3}
+    \renewcommand\entryname{Abbreviation}
+    \renewenvironment{theglossary}%
+    {\begin{longtable}[l]{@{}lp{0.47\hsize}p{0.275\hsize}}}%
+    {\end{longtable}}%
+}
 
 % General AI
 \newabbreviation{ai}{AI}{artificial intelligence}
@@ -29,8 +39,8 @@
 
 \newabbreviation{ppo}{PPO}{proximal policy optimization}
 \newabbreviation{ippo}{IPPO}{independent \gls{ppo}}
-\newabbreviation{happo}{HAPPO}{heterogeneous-agent \gls{ppo}}
 \newabbreviation{mappo}{MAPPO}{multi-agent \gls{ppo}}
+\newabbreviation{happo}{HAPPO}{heterogeneous agent \gls{ppo}}
 
 \newabbreviation{trpo}{TRPO}{trust region policy optimization}
 \newabbreviation{hatrpo}{HATRPO}{heterogeneous-agent \gls{trpo}}
