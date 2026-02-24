@@ -1,7 +1,7 @@
 This is makeindex, version 2.17 [TeX Live 2025] (kpathsea + Thai support).
 Scanning style file ./dissertation.ist...........................done (27 attributes redefined, 0 ignored).
-Scanning input file dissertation.glo-abr....done (433 entries accepted, 0 rejected).
-Sorting entries......done (4066 comparisons).
-Generating output file dissertation.gls-abr....done (245 lines written, 0 warnings).
+Scanning input file dissertation.glo-abr....done (439 entries accepted, 0 rejected).
+Sorting entries......done (4138 comparisons).
+Generating output file dissertation.gls-abr....done (250 lines written, 0 warnings).
 Output written in dissertation.gls-abr.
 Transcript written in dissertation.glg-abr.

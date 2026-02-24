@@ -1,0 +1,20 @@
+% Stub replacement for matlab-prettifier.sty
+% Defines a minimal Matlab-editor listings style so afitdefense.cls compiles.
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{matlab-prettifier}[2025/01/01 matlab-prettifier stub]
+\RequirePackage{listings}
+
+% Minimal Matlab-editor style
+\lstdefinestyle{Matlab-editor}{
+    language=Matlab,
+    basicstyle=\ttfamily\footnotesize,
+    keywordstyle=\color{blue}\bfseries,
+    commentstyle=\color{green!50!black},
+    stringstyle=\color{red},
+    numbers=left,
+    numberstyle=\tiny\ttfamily\color{gray},
+    upquote=true,
+    showstringspaces=false,
+    tabsize=4,
+    breaklines=true
+}

@@ -101,31 +101,31 @@
 % \banner{cui} % automatically inserted into the header and footer
 
 % -------------- SF 298 (Report Documentation Page) information ----------------
-% #TODO: SF 298
 
 % Necessary fields
-% \sfStartDate{Sep 2023}
-% \sfEndDate{Mar 2024}
-% \sfContractNumber{XXXXXX-XX-X-XXXX}
-% \sfGrantNumber{}
-% \sfProgramElementNumber{}
-% \sfProjectNumber{XXXXXXXX}
-% \sfTaskNumber{}
-% \sfWorkUnitNumber{}
-% \sfSponsorAgency{AFXX/XXXX\\
-%     Building XXX, WPAFB OH 45433-7765\\
-%     DSN XXX-XXXX, COMM 937-XXX-XXXX, Email: first.last@us.af.mil }
-% \sfSponsorAcronyms{}
-% \sfSponsorReportNumber{}
-% \sfDistribution{\DistA}
-% \sfSupplementaryNotes{}
-% \sfReportClassification{}
-% \sfAbstractClassification{}
-% \sfPageClassification{}
-% \sfAbstractLimitation{UU}
-% \sfResponsiblePerson{Dr. Your Advisor, AFIT/ENG}
-% \sfPhoneNumber{(937) XXX-XXXX}
-% \sfClassification{}
+\sfStartDate{Sep 2022}
+\sfEndDate{Mar 2026}
+\sfContractNumber{}
+\sfGrantNumber{}
+\sfProgramElementNumber{}
+\sfProjectNumber{}
+\sfTaskNumber{}
+\sfWorkUnitNumber{}
+\sfSponsorAgency{AFIT/ENS\\
+    Building 641, WPAFB OH 45433-7765\\
+    DSN 785-2549, COMM 937-255-2549, Email: brandon.hosley.1@us.af.mil }
+\sfSponsorAcronyms{}
+\sfSponsorReportNumber{}
+\sfDistribution{\MakeUppercase{***Pending Approval*** Distribution Statement A:\\
+    Approved for public release: distribution is unlimited.}}
+\sfSupplementaryNotes{}
+\sfReportClassification{U}
+\sfAbstractClassification{U}
+\sfPageClassification{U}
+\sfAbstractLimitation{U}
+\sfResponsiblePerson{Dr. Bruce Cox, AFIT/ENS}
+\sfPhoneNumber{(937) 255-6357}
+\sfClassification{U}
 
 % SF 298 Override default variables
 % \sfReportDate{}       % defaults to today's date
@@ -135,7 +135,7 @@
 % \sfDepartment{}       % defaults to \department{}
 % \sfAddress{}          % defaults to \address{}
 % \sfDocDesignator{}    % defaults to \docdesignator{}
-% \sfAbstract{}         % defaults to \abstract{}
+\sfAbstract{\fontsize{8}{2}\selectfont\input{abstract}}         % defaults to \abstract{}
 % \sfSubjectTerms{}     % defaults to \keywords{}
 % \sfPageCount{}        % defaults to total number of pages
 
@@ -203,8 +203,7 @@
             type=symbols,
             style=alttreegroup,
             nonumberlist,
-            % nogroupskip
-            % #TODO: Fix the unfortunate spacing on summary of notation
+            % nogroupskip % Not needed
         ]
     \end{spacing}
     \clearpage
@@ -261,7 +260,11 @@
 
 % ------------------
 \chapter{List of Abbreviations}
-\printabbreviations[style=abbr-gloss]
+\newglossarystyle{sml-grp-skip-gloss}{
+    \setglossarystyle{abbr-gloss} % base this style on the abbr-gloss style
+    \renewcommand*{\glsgroupskip}{\vspace{8pt}}
+}
+\printabbreviations[style=sml-grp-skip-gloss]
 
 % ------------------------------- Bibliography ---------------------------------
 
@@ -279,5 +282,5 @@
 
 % ---------------------------- Standard Form 298 -------------------------------
 
-% \sfTwoNineEight % Required for every thesis and dissertation
+\sfTwoNineEight % Required for every thesis and dissertation
 \end{document}

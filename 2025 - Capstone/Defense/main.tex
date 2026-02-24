@@ -1,0 +1,1396 @@
+% Defense Slides
+% DIE-HARL: Durable, Implicit, and Extensible Heterogeneous Agent Reinforcement Learning
+% Capt Brandon Hosley, USAF | AFIT-ENS-DS-26-M-094
+
+\documentclass{afitdefense}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{pifont}   % \ding symbols for checkmarks
+\usepackage{nicefrac} % \nicefrac{1}{n} inline fractions
+\usetikzlibrary{positioning, shapes.geometric}
+
+\graphicspath{
+    {../Chapters/C1/Figures/}
+    {../Chapters/C2/Figures/}
+    {../Chapters/C3/Figures/}
+    {../Figures/}
+    {./}
+}
+
+% Convenience: colored bold inline text
+\newcommand{\term}[1]{\textbf{\textit{#1}}}
+\newcommand{\accentbold}[1]{\textcolor{light}{\textbf{#1}}}
+\newcommand{\yes}{\textcolor{green}{\ding{51}}}  % checkmark
+\newcommand{\done}{\textbf{\textcolor{green}{Complete}}}
+
+\pretitle{Ph.D.\ Defense \textbullet\ AFIT-ENS-DS-26-M-094}
+\title{DIE-HARL}
+\subtitle{Durable, Implicit, and Extensible\\Heterogeneous Agent Reinforcement Learning}
+\author{Capt Brandon Hosley, USAF\\[0.5ex]
+    \footnotesize
+    Dr.\ Bruce Cox (Chair)\qquad
+    Dr.\ Matthew Robbins\qquad
+    Maj Nicholas Yielding, Ph.D.}
+
+\begin{document}
+\maketitle
+
+
+%% ==========================================================================
+%% OVERVIEW
+%% ==========================================================================
+
+\chapter{Overview}
+
+%% ------------------------------------------------------------------
+\section[Roadmap]{Dissertation Roadmap}
+
+Three questions, one unified answer.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}C{0.3cm}L{3.5cm}L{4.5cm}L{4.0cm}@{}}
+    \cellcolor{dark}\textcolor{light}{\textbf{\#}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Contribution}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Central Question}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Thread}} \\[0.3em]
+    \textbf{C1} & \textbf{Policy Upsampling} &
+        Can pretraining \textit{smaller} teams reduce training cost? &
+        \textit{Efficiency} \\
+    \textbf{C2} & \textbf{Implicit Indication} &
+        Can one policy serve \textit{heterogeneous} agents without IDs? &
+        \textit{Flexibility} \\
+    \textbf{C3} & \textbf{Paradigm Comparison} &
+        Representational or architectural invariance---which wins? &
+        \textit{Validation} \\
+\end{tabular}
+\end{center}
+
+\vspace{0.5ex}
+\shadedbox{Unifying thesis: HARL efficiency and flexibility are fundamentally
+\textbf{representational} problems before they are architectural ones.}
+
+%% ------------------------------------------------------------------
+\section[Contributions Status]{Contributions at a Glance}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{}L{2.5cm}L{4.5cm}L{3.5cm}C{2.0cm}@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Contribution}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Key Finding}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Environments}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Status}} \\[0.3em]
+    \textbf{C1:} Policy Upsampling &
+        Environment-dependent benefit; \textit{task structure} governs curriculum utility &
+        Waterworld, Multiwalker, LBF &
+        \done \\
+    \textbf{C2:} Implicit Indication &
+        Matches HAPPO; $\nicefrac{1}{|I|}$ storage; \textit{zero-shot} robustness &
+        HyperGrid &
+        \done \\
+    \textbf{C3:} Paradigm Comparison &
+        Masking outperforms GNNs by \textbf{2.3--4.4$\times$} &
+        HyperGrid &
+        \done \\
+\end{tabular}
+\end{center}
+
+\vspace{0.5ex}
+\textit{All three contributions complete and integrated into a single coherent framework.}
+
+
+%% ==========================================================================
+%% MOTIVATION
+%% ==========================================================================
+
+\chapter{Motivation}
+
+%% ------------------------------------------------------------------
+\section{The Autonomous Systems Imperative}\twocolumn\raggedright
+
+\subsection{Deployments We Can Imagine}
+
+\begin{itemize}
+    \item 2023: Deputy Sec.\ Hicks announces the \textbf{Replicator Initiative}---hundreds of autonomous systems fielded in \textit{months, not years}
+    \item DARPA \textbf{OFFSET}: 100+ agent swarm demonstrations
+    \item Robotic warehouses, mixed-sensor drone fleets, agricultural robotics---heterogeneous multi-agent systems are \textit{already here}
+\end{itemize}
+
+\subsection{The Gap}
+
+\begin{itemize}
+    \item Capability exists in demonstration
+    \item \textbf{Training cost} remains the primary bottleneck to operational deployment
+    \item Heterogeneous fleets break the assumptions of standard MARL methods
+\end{itemize}
+
+\pagebreak
+
+\begin{Center}
+\vspace{1em}
+\includegraphics[width=0.9\columnwidth, keepaspectratio]{drone-mid.pdf}
+\vspace{0.5em}
+
+\scriptsize\textit{Heterogeneous autonomous systems require more than\\
+homogeneous assumptions can provide.}
+\end{Center}
+
+%% ------------------------------------------------------------------
+\section{Heterogeneity: The Operational Reality}\twocolumn\raggedright
+
+\subsection{Two Kinds of Heterogeneity}
+
+\begin{itemize}
+    \item \term{Behavioral heterogeneity}: same structure, different \textit{learned} roles
+    \begin{itemize}
+        \item Standard parameter sharing handles this well
+    \end{itemize}
+    \item \term{Intrinsic (structural) heterogeneity}: different sensors, effectors, or observation types
+    \begin{itemize}
+        \item Shared policies break down---observation spaces \textit{don't align}
+    \end{itemize}
+\end{itemize}
+
+\subsection{The Status Quo}
+
+\begin{itemize}
+    \item Explicit agent IDs (one-hot vectors)
+    \item Per-type separate policies
+    \item Architectural solutions (attention, GNNs)
+    \item Each carries costs in storage, flexibility, or sample efficiency
+\end{itemize}
+
+\pagebreak
+
+\begin{Center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}L{2.5cm}L{3.0cm}@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Approach}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Cost}} \\
+    One-hot IDs & Brittle at deployment \\
+    Per-type policies & $|I|\times$ storage \\
+    Attention / GNNs & Architectural complexity \\
+    \textbf{Implicit Indication} & \textcolor{green}{\textbf{None of the above}} \\
+\end{tabular}
+\end{Center}
+
+%% ------------------------------------------------------------------
+\section{Three Research Challenges}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.8}
+\begin{tabular}{@{}C{0.4cm}L{4.0cm}L{7.5cm}@{}}
+    \cellcolor{dark}\textcolor{light}{\textbf{1}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Efficiency}} &
+    \cellcolor{dark}\textcolor{white}{Training large heterogeneous teams is expensive.
+        Can \textit{curricula} help?} \\
+    \textbf{C1} &
+        Policy Upsampling &
+        Pretrain smaller teams; scale up via \textbf{policy duplication} \\[0.3em]
+    \cellcolor{dark}\textcolor{light}{\textbf{2}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Flexibility}} &
+    \cellcolor{dark}\textcolor{white}{Structural heterogeneity breaks parameter sharing.
+        Can \textit{representation} fix it?} \\
+    \textbf{C2} &
+        Implicit Indication &
+        Shared policy via \textbf{observation homogenization} \\[0.3em]
+    \cellcolor{dark}\textcolor{light}{\textbf{3}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Validation}} &
+    \cellcolor{dark}\textcolor{white}{When we solve heterogeneity,
+        which paradigm actually wins?} \\
+    \textbf{C3} &
+        Paradigm Comparison &
+        Representational vs.\ \textbf{architectural} invariance \\
+\end{tabular}
+\end{center}
+
+%% ------------------------------------------------------------------
+\section{Unifying Thesis}
+
+\begin{Center}
+    \large
+    Training efficiency, heterogeneity handling, and deployment
+    flexibility in HARL are fundamentally\\[1ex]
+    \LARGE\textbf{representational} problems\\[1ex]
+    \large before they are \textbf{architectural} ones.
+
+    \vspace{1.5ex}
+    \normalsize
+    \textit{Task structure and heterogeneity type determine optimal method selection;\\
+    good representational design yields robustness as a natural consequence.}
+\end{Center}
+
+
+%% ==========================================================================
+%% TECHNICAL FOUNDATIONS
+%% ==========================================================================
+
+\chapter{Technical Foundations}
+
+%% ------------------------------------------------------------------
+\section{Multi-Agent RL Foundations}\twocolumn\raggedright
+
+\subsection{From Single-Agent to Multi-Agent}
+
+\begin{itemize}
+    \item \term{MDP}: states $s$, actions $a$, rewards $r$, transitions $\mathcal{T}$,
+        policy $\pi$
+    \item \term{Dec-POMDP}: each agent $i$ observes only $o_i \subset s$;
+        acts on local information alone
+    \item Core challenge: \term{non-stationarity}---the environment appears
+        non-stationary to each agent as others learn simultaneously
+\end{itemize}
+
+\subsection{The CTDE Paradigm}
+
+\begin{itemize}
+    \item \term{Centralized Training, Decentralized Execution (CTDE)}: train with
+        global information; deploy with local policies only
+    \item Resolves non-stationarity during training
+    \item Preserves real-world deployability
+\end{itemize}
+
+\pagebreak
+
+\begin{Center}
+\vspace{0.3em}
+\begin{tikzpicture}[
+    box/.style={draw=dark, fill=dark!10, rounded corners=3pt,
+                minimum width=2.4cm, minimum height=0.7cm,
+                align=center, font=\scriptsize},
+    crit/.style={draw=dark, fill=light!40, rounded corners=3pt,
+                minimum width=2.4cm, minimum height=0.7cm,
+                align=center, font=\scriptsize\bfseries},
+    arr/.style={-stealth, thick, dark}]
+
+    % Critic (centralized)
+    \node[crit] (critic) at (0, 0) {Centralized\\Critic $V(s)$};
+    % Actors
+    \node[box] (a1) at (-2.2, -1.5) {Actor $\pi_1(o_1)$};
+    \node[box] (a2) at (0,    -1.5) {Actor $\pi_2(o_2)$};
+    \node[box] (a3) at ( 2.2, -1.5) {Actor $\pi_i(o_i)$};
+    % Global state node
+    \node[font=\scriptsize, dark] (gs) at (0, 1.1) {Global state $s$ (training only)};
+    % Arrows
+    \draw[arr] (gs) -- (critic);
+    \draw[arr] (critic) -- (a1);
+    \draw[arr] (critic) -- (a2);
+    \draw[arr] (critic) -- (a3);
+    % Labels
+    \node[font=\tiny, dark] at (-2.2, -2.15) {deploy: $o_1$ only};
+    \node[font=\tiny, dark] at (0,    -2.15) {deploy: $o_2$ only};
+    \node[font=\tiny, dark] at ( 2.2, -2.15) {deploy: $o_i$ only};
+\end{tikzpicture}
+\vspace{0.2em}
+
+\scriptsize\textit{CTDE: centralized critic (global state, training only)\\
+    drives decentralized actors (local obs, deployment)}
+\end{Center}
+
+%% ------------------------------------------------------------------
+\section{The PPO Family in MARL}\twocolumn\raggedright
+
+\subsection{Algorithm Lineage}
+
+\begin{itemize}
+    \item \textbf{PPO} (Schulman 2017): stable on-policy gradient updates
+        via clipped surrogate objective
+    \item \textbf{MAPPO}: PPO with shared centralized critic across agents
+    \item \textbf{IPPO}: independent PPO---each agent trains its own critic
+    \item \textbf{HAPPO} (Zhong 2024): \term{Heterogeneous-Agent PPO}---
+        separate actor \textit{and} critic per agent type
+\end{itemize}
+
+\subsection{Baselines in This Work}
+
+\begin{itemize}
+    \item \textbf{HAPPO} serves as the primary comparison in C2 and C3
+    \item \textbf{PIC} (Liu 2020): \term{Permutation Invariant Critic}
+        using graph neural networks---the architectural baseline in C3
+\end{itemize}
+
+\pagebreak
+
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{}L{2.2cm}ccc@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Algorithm}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Shared $\pi$?}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Shared $V$?}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Heterogeneous?}} \\
+    MAPPO  & \yes & \yes & Limited \\
+    IPPO   & ---  & ---  & Implicit \\
+    HAPPO  & ---  & ---  & \yes \\
+    \textbf{Impl.\ Ind.} & \textbf{\yes} & \textbf{\yes} & \textbf{\yes} \\
+\end{tabular}
+
+%% ------------------------------------------------------------------
+\section{The Heterogeneity Challenge}
+
+\begin{itemize}
+    \item \term{Parameter sharing} is the most efficient strategy when it
+        applies---one network, all agents
+    \item With \textbf{structural heterogeneity}, observation dimensions differ:
+        agent $i$ observes $o_i \in \mathbb{R}^{d_i}$, agent $j$ observes
+        $o_j \in \mathbb{R}^{d_j}$, $d_i \neq d_j$
+    \item Feeding $o_i$ and $o_j$ to the same network is not directly possible
+    \item Current solutions force a choice:
+    \begin{itemize}
+        \item \textit{Explicit IDs} --- one-hot vectors reveal type but are
+            brittle under sensor change or team-size variation
+        \item \textit{Per-type policies} --- full flexibility but $|I|\times$ storage
+            and no generalization across types
+        \item \textit{Architectural invariance (GNNs)} --- handles variable teams
+            but adds complexity and may not generalize
+    \end{itemize}
+\end{itemize}
+
+\shadedbox{None of the existing approaches simultaneously achieve
+\textbf{shared parameters}, \textbf{structural heterogeneity},
+and \textbf{deployment robustness}.}
+
+%% ------------------------------------------------------------------
+\section{The Observation-Space Coupling Problem}
+
+\begin{itemize}
+    \item In many standard MARL benchmarks, \textbf{observation dimension is
+        coupled to team size}: $d_i \propto N$ agents
+    \item Adding or removing an agent changes the \textit{input shape} of every
+        policy network
+    \item This makes policy reuse across team sizes \textbf{architecturally impossible}
+        without modification
+    \item C1 confronts this directly: policy \textit{upsampling} requires
+        \textbf{decoupled observation schemas}
+    \begin{itemize}
+        \item \term{Truncated schema}: fixed-width observation regardless of team size;
+            missing ally slots are zero-padded
+        \item \term{Ally-ignorant schema}: agents observe environment state only,
+            no ally information at all
+    \end{itemize}
+\end{itemize}
+
+\shadedbox{Solving team-scaling is not primarily an algorithmic challenge---
+it is a \textbf{representational} one.}
+
+%% ------------------------------------------------------------------
+\section{Environments Overview}
+
+\begin{center}
+\begin{tabular}{C{3.0cm}C{3.0cm}C{3.0cm}C{3.5cm}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Waterworld}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Multiwalker}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{LBF}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{HyperGrid}} \\[0.3em]
+    \includegraphics[width=2.8cm, keepaspectratio]{waterworld.png} &
+    \includegraphics[width=2.8cm, keepaspectratio]{multiwalker.png} &
+    \includegraphics[width=2.8cm, keepaspectratio]{lbf.png} &
+    \includegraphics[width=3.2cm, keepaspectratio]{marl-minigrid.png} \\[0.3em]
+    Continuous control;\newline homogeneous;\newline low coordination &
+    Tight temporal coordination;\newline sparse reward;\newline spatial roles &
+    Discrete;\newline dynamic skill heterogeneity;\newline role variation &
+    $n$-d MiniGrid;\newline configurable sensors;\newline intrinsic heterogeneity \\[0.3em]
+    \multicolumn{3}{c}{\textit{Contribution 1}} & \textit{Contributions 2 \& 3} \\
+\end{tabular}
+\end{center}
+
+
+%% ==========================================================================
+%% CONTRIBUTION 1
+%% ==========================================================================
+
+\chapter[C1]{Contribution 1: Policy Upsampling}
+
+%% ------------------------------------------------------------------
+\section[C1: Central Question]{C1---Can We Train Fewer, Then Scale?}\twocolumn\raggedright
+
+\subsection{The Core Hypothesis}
+
+\begin{itemize}
+    \item Training an $N$-agent team from scratch is expensive
+    \item \textbf{What if we pretrain a smaller $k$-agent team, then duplicate
+        policies to fill an $N$-agent team?}
+    \item The duplicated policy provides a warm start;
+        \term{policy upsampling} completes the team
+\end{itemize}
+
+\subsection{Challenges to Address}
+
+\begin{itemize}
+    \item Observation-space coupling: adding agents changes input shapes
+    \item Requires a \textbf{fixed-width observation schema} (truncated or ally-ignorant)
+    \item Does a ``warm-start'' policy \textit{actually} accelerate training---
+        or does it hinder adaptation to the larger team?
+\end{itemize}
+
+\pagebreak
+
+\vspace{1em}
+\includegraphics[width=\columnwidth, height=4.5cm, keepaspectratio]{training_1.png}
+\vspace{0.4em}
+
+\scriptsize\textbf{Phase 1:} Pretrain $k$-agent policy.
+\textbf{Phase 2:} Duplicate to $N$ agents; continue training.
+
+%% ------------------------------------------------------------------
+\section{The Agent-Steps Metric}
+
+\begin{itemize}
+    \item Standard metrics (training steps, wall time) \textbf{obscure true cost}
+        when team sizes differ
+    \item An 8-agent team does 8$\times$ as much work per environment step as a
+        single agent
+    \item \term{Agent-steps} $= \text{agents} \times \text{training steps}$
+        provides a \textbf{normalized cost measure} across configurations
+\end{itemize}
+
+\vspace{0.8em}
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}L{4.5cm}cc@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Scenario}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Env.\ Steps}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Agent-Steps}} \\
+    Train 8 agents from scratch & $T$ & $8T$ \\
+    Pretrain 3, fine-tune to 8 &
+        $T_{\text{pre}} + T_{\text{ft}}$ &
+        $3T_{\text{pre}} + 8T_{\text{ft}}$ \\
+    \textbf{Curriculum benefit} & \textbf{same $T$} &
+        \textbf{$< 8T$ if $T_{\text{ft}} \ll T$} \\
+\end{tabular}
+\end{center}
+
+\vspace{0.6em}
+\shadedbox{AUC (area under the reward curve) normalized by agent-steps
+serves as the primary \textbf{efficiency metric}.}
+
+%% ------------------------------------------------------------------
+\section{Observation Schema Design}\twocolumn\raggedright
+
+\subsection{The Problem}
+
+Standard benchmarks encode ally observations in a \textbf{variable-length}
+block---adding one ally changes every agent's observation dimension.
+
+\subsection{Two Proposed Schemas}
+
+\begin{itemize}
+    \item \term{Truncated schema}: observation has a fixed maximum width;
+        present allies fill slots from the front; absent slots are \textbf{zero-padded}
+    \begin{itemize}
+        \item Preserves ally information up to a maximum team size
+    \end{itemize}
+    \item \term{Ally-ignorant schema}: ally observations are removed entirely;
+        agent observes only its own sensors and task features
+    \begin{itemize}
+        \item Fully decoupled; limits coordination but eliminates coupling
+    \end{itemize}
+\end{itemize}
+
+\textit{Both schemas enable the same network to operate at any team size
+without architectural changes.}
+
+\pagebreak
+
+\vspace{1em}
+\includegraphics[width=\columnwidth, height=4.5cm, keepaspectratio]{training_2.png}
+
+\scriptsize\textit{Fixed-width observation schema: ally slots are filled
+or zero-padded, keeping input dimension constant across team sizes.}
+
+%% ------------------------------------------------------------------
+\section{C1 Results: Waterworld}\twocolumn\raggedright
+
+\subsection{Environment}
+
+Continuous control; agents collect food and avoid poison pellets;
+low coordination requirements; \textbf{homogeneous} agent structure.
+
+\subsection{Findings}
+
+\begin{itemize}
+    \item Pretraining \textbf{accelerates convergence} at all target team sizes
+    \item Benefit scales with the \textit{ratio} of pretrain size to target size
+    \item Largest gains seen for greatest size jump (e.g., $3 \to 8$)
+    \item Final performance matches or exceeds baseline
+\end{itemize}
+
+\shadedbox{\textbf{Clear curriculum win.} This is the ideal case:
+low coordination means the smaller-team policy transfers directly.}
+
+\pagebreak
+
+\includegraphics[width=\columnwidth, height=5cm, keepaspectratio]{Waterworld-AUCs.png}
+
+%% ------------------------------------------------------------------
+\section{C1 Results: Multiwalker}\twocolumn\raggedright
+
+\subsection{Environment}
+
+Tight \textbf{temporal coordination}; agents must carry a package cooperatively;
+failure of any agent collapses the whole team; sparse reward.
+
+\subsection{Findings}
+
+\begin{itemize}
+    \item Without pretraining, large teams ($\geq 6$ walkers) \textbf{frequently fail
+        to learn} at all
+    \item Pretraining acts as a \term{stabilization mechanism}---it gives the
+        team a coordinated foundation to build from
+    \item Final performance is similar, but \textit{the path matters}:
+        curriculum avoids catastrophic failure modes
+\end{itemize}
+
+\shadedbox{\textbf{Curriculum as stability, not just speed.}
+Task structure determines the nature of the curriculum benefit.}
+
+\pagebreak
+
+\includegraphics[width=\columnwidth, height=5cm, keepaspectratio]{Multiwalker-AUCs.png}
+
+%% ------------------------------------------------------------------
+\section{C1 Results: Level-Based Foraging}\twocolumn\raggedright
+
+\subsection{Environment}
+
+Discrete gridworld; agents have \textbf{skill levels} that determine which items
+they can collect; roles emerge dynamically from skill distribution;
+\term{intrinsic heterogeneity} via level variation.
+
+\subsection{Findings}
+
+\begin{itemize}
+    \item Results are \textbf{limited and inconsistent} across team configurations
+    \item Skill-level heterogeneity creates complex role relationships
+        that do not transfer cleanly from smaller teams
+    \item The ``correct'' team composition at small scale may be suboptimal
+        at large scale due to shifting skill distributions
+\end{itemize}
+
+\shadedbox{\textbf{Task structure moderates curriculum benefit.}
+When heterogeneity \textit{itself} changes with team size,
+simple policy duplication cannot bridge the gap.}
+
+\pagebreak
+
+\includegraphics[width=\columnwidth, height=5cm, keepaspectratio]{LBF-AUCs.png}
+
+%% ------------------------------------------------------------------
+\section[C1 Synthesis]{C1 Synthesis: What We Learned}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{}L{2.5cm}L{3.5cm}L{5.5cm}@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Environment}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Outcome}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Driver}} \\
+    Waterworld & Strong acceleration & Low coordination; clean transfer \\
+    Multiwalker & Stabilization benefit & Prevents failure; tight coordination \\
+    LBF & Limited, inconsistent & Dynamic heterogeneity resists scaling \\
+\end{tabular}
+\end{center}
+
+\vspace{0.6em}
+\textbf{Cross-cutting insight:} The bottleneck in every case is
+\textit{representational}---either the observation schema prevents transfer,
+or the heterogeneity structure changes with team size.
+
+\vspace{0.6em}
+\shadedbox{If we could design observation spaces to \textbf{naturally support}
+structural heterogeneity, we would eliminate these barriers at the source.
+\textit{That is the motivation for C2.}}
+
+
+%% ==========================================================================
+%% CONTRIBUTION 2
+%% ==========================================================================
+
+\chapter[C2]{Contribution 2: Implicit Indication}
+
+%% ------------------------------------------------------------------
+\section[C2: Central Question]{C2---Can One Policy Serve Many Agent Types?}\twocolumn\raggedright
+
+\subsection{The Challenge}
+
+\begin{itemize}
+    \item Structural heterogeneity: agent $i$ has sensors $\mathcal{C}_i$,
+        agent $j$ has sensors $\mathcal{C}_j$, and $\mathcal{C}_i \neq \mathcal{C}_j$
+    \item Existing approaches: \textit{explicit} type indicators
+        (one-hot vectors, embeddings) fed alongside observations
+    \item These are \textbf{fragile}: change the team composition, retrain from scratch
+\end{itemize}
+
+\subsection{The Proposal}
+
+\begin{itemize}
+    \item \textbf{No explicit type indicators}
+    \item Instead, design an observation space that \textit{implicitly} encodes
+        agent identity through the pattern of \textbf{which elements are populated}
+    \item A single shared policy---one network, all agent types
+\end{itemize}
+
+\pagebreak
+
+\begin{Center}
+    \vspace{1em}
+    \includegraphics[width=0.95\columnwidth, keepaspectratio]{screen_pursuit_channels.png}
+    \vspace{0.5em}
+
+    \scriptsize\textit{Agents with different sensor channels occupy
+    different regions of the homogenized observation space.}
+\end{Center}
+
+%% ------------------------------------------------------------------
+\section{The Implicit Indication Framework}
+
+\begin{itemize}
+    \item \term{Homogenized observation space $\tilde{\mathcal{O}}$}:
+        the union of all agent-specific observation elements
+        $\tilde{\mathcal{O}} = \bigcup_{i \in I} \mathcal{O}_i$
+    \item Each agent $i$ populates only its relevant elements;
+        all other elements are \textbf{masked to zero}
+    \item The policy $\pi_\theta(\cdot \mid \tilde{o})$ receives the full
+        $\tilde{o}$ vector but infers agent identity from the
+        \term{pattern of populated vs.\ masked elements}
+    \item \textbf{No explicit type label is needed}---the structure of the
+        observation \textit{is} the indicator
+    \item \term{Semantic decomposability} (required): each observation element
+        must have a \textbf{consistent meaning} across all agent types
+    \begin{itemize}
+        \item A ``forward-facing camera channel'' means the same thing
+            for any agent that has it
+        \item A ``thermal sensor channel'' may be absent in an agent with only RGB
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------------
+\section{Semantic Decomposability}\twocolumn\raggedright
+
+\subsection{Formal Requirement}
+
+\begin{itemize}
+    \item Observation elements must have \textbf{type-consistent semantics}:
+        $\mathcal{O}_i \cap \mathcal{O}_j$ contains elements with the same
+        meaning for both agents $i$ and $j$
+    \item Elements in $\mathcal{O}_i \setminus \mathcal{O}_j$ are
+        simply absent (zeroed) for agent $j$
+\end{itemize}
+
+\subsection{Theoretical Guarantee}
+
+\begin{itemize}
+    \item Based on \textbf{Deep Sets} theory (Zaheer 2017):
+        any collection of functions over heterogeneous input spaces can be
+        represented by a \textit{single} function over the homogenized domain
+    \item Masking preserves representability: the injective embedding from
+        each $\mathcal{O}_i$ into $\tilde{\mathcal{O}}$ is disjoint for
+        type-distinct elements
+\end{itemize}
+
+\pagebreak
+
+\vspace{0.5em}
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{}L{1.5cm}L{2.0cm}L{2.0cm}@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Agent}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{RGB cam}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Thermal}} \\
+    Type A & \yes & --- \\
+    Type B & --- & \yes \\
+    Type C & \yes & \yes \\
+\end{tabular}
+\end{center}
+
+\vspace{0.8em}
+\shadedbox{The policy \textit{sees} the pattern and infers agent type
+without being told explicitly.}
+
+%% ------------------------------------------------------------------
+\section[HyperGrid]{HyperGrid: A Purpose-Built Evaluation Environment}\twocolumn\raggedright
+
+\subsection{Why a New Environment?}
+
+\begin{itemize}
+    \item Existing benchmarks do not support \textbf{configurable sensor
+        heterogeneity} at the level needed for systematic evaluation
+    \item A controlled environment is needed to isolate the effect of
+        \textit{observation structure} from other confounds
+\end{itemize}
+
+\subsection{Design}
+
+\begin{itemize}
+    \item MiniGrid-based $n$-dimensional discrete gridworld
+    \item Heterogeneity arises from \textbf{sensor channel configuration}:
+        which channels an agent observes
+    \item Four training configurations tested:
+    \begin{itemize}
+        \item \term{Complete}: all agents see all channels
+        \item \term{Intersecting-span}: overlapping channel subsets
+        \item \term{Disjoint-span}: non-overlapping channel subsets
+        \item \term{Incomplete}: some channels missing from all agents
+    \end{itemize}
+\end{itemize}
+
+\pagebreak
+
+\vspace{0.5em}
+\includegraphics[width=\columnwidth, height=4.5cm, keepaspectratio]{marl-minigrid.png}
+
+\scriptsize\textit{HyperGrid environment: color-coded sensor channels
+determine each agent's observation space.}
+
+%% ------------------------------------------------------------------
+\section{C2 Training Results}\twocolumn\raggedright
+
+\subsection{Comparison: Implicit Indication vs.\ HAPPO}
+
+\begin{itemize}
+    \item \textbf{HAPPO} (Zhong 2024) maintains separate policies per agent type;
+        serves as the strong heterogeneous baseline
+    \item Implicit Indication uses a \textbf{single shared policy} across all types
+\end{itemize}
+
+\subsection{Finding}
+
+\begin{itemize}
+    \item Implicit Indication \textbf{matches HAPPO training performance}
+        across all four sensor configurations
+    \item Same reward achieved with \textbf{$\frac{1}{|I|}$ storage}
+        (one policy instead of $|I|$ per-type policies)
+    \item Disjoint-span configuration shows the \textit{strongest} relative
+        improvement for implicit indication
+\end{itemize}
+
+\pagebreak
+
+\includegraphics[width=\columnwidth, height=5cm, keepaspectratio]{training_curves.png}
+
+%% ------------------------------------------------------------------
+\section{C2 Robustness Results}\twocolumn\raggedright
+
+\subsection{Eight Evaluation Conditions}
+
+After training, agents are evaluated under conditions they were
+\textit{not trained for}:
+
+\begin{enumerate}
+    \item Sensor loss (channel removed)
+    \item Sensor degradation (noise added)
+    \item Sensor improvement (noise removed)
+    \item Coverage reduction (fewer channels)
+    \item Coverage expansion (more channels)
+    \item Shuffled agent assignments
+    \item Incomplete coverage generalization
+    \item \textbf{Zero-shot}: novel agent type, unseen during training
+\end{enumerate}
+
+\pagebreak
+
+\subsection{Finding}
+
+\includegraphics[width=\columnwidth, height=3.5cm, keepaspectratio]{performance_delta.png}
+
+\vspace{0.5em}
+\shadedbox{\textbf{Robustness emerges naturally.}
+Implicit Indication handles novel configurations without explicit
+robustness training---a \textit{free} benefit of representational design.}
+
+%% ------------------------------------------------------------------
+\section[C2 Synthesis]{C2 Synthesis: One Policy, Many Agents}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}L{4.5cm}L{7.0cm}@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Property}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Result}} \\
+    Performance vs.\ HAPPO & \textbf{Matches} HAPPO across all configurations \\
+    Storage footprint & $\frac{1}{|I|}$ vs.\ per-type policies \\
+    Zero-shot generalization & \textbf{Yes}---novel agent types handled gracefully \\
+    Sensor change tolerance & \textbf{Yes}---no retraining required \\
+    Team-size flexibility & \textbf{Yes}---same policy, variable team size \\
+    Requirement & \textit{Semantic decomposability} of observation elements \\
+\end{tabular}
+\end{center}
+
+\vspace{0.6em}
+\shadedbox{C2 demonstrates that the right \textbf{representational choice}
+eliminates the need for explicit type indicators entirely.
+But is this approach better than architectural alternatives?
+\textit{That is the question for C3.}}
+
+
+%% ==========================================================================
+%% CONTRIBUTION 3
+%% ==========================================================================
+
+\chapter[C3]{Contribution 3: Paradigm Comparison}
+
+%% ------------------------------------------------------------------
+\section[C3: Central Question]{C3---Representation or Architecture?}\twocolumn\raggedright
+
+\subsection{Two Paths to Invariance}
+
+There are two principled ways to handle structural heterogeneity:
+
+\begin{itemize}
+    \item \term{Representational invariance}: design the \textit{input space}
+        to accommodate all agent types (Implicit Indication---C2)
+    \item \term{Architectural invariance}: design the \textit{network architecture}
+        to be invariant to agent type and team composition (GNNs, attention)
+\end{itemize}
+
+\subsection{The Hypothesis Going In}
+
+\begin{itemize}
+    \item GNNs are expressive, flexible, and have strong theoretical properties
+    \item PIC (Liu 2020): \term{Permutation Invariant Critic}---
+        a purpose-built GNN for heterogeneous MARL
+    \item \textit{Prior expectation}: the more sophisticated approach should win
+\end{itemize}
+
+\pagebreak
+
+\subsection{The Surprise}
+
+\vspace{1em}
+\begin{Center}
+\Large\textbf{It doesn't.}
+
+\vspace{1em}
+\normalsize
+Simple observation masking outperforms\\
+graph neural networks \textbf{consistently} and\\
+\textbf{substantially} across all conditions.
+\end{Center}
+
+%% ------------------------------------------------------------------
+\section{Architectural vs.\ Representational Invariance}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}L{3.0cm}L{4.5cm}L{4.5cm}@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Property}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Representational (Impl.\ Ind.)}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Architectural (PIC / GNN)}} \\
+    Mechanism & Homogenized obs.\ + masking &
+        Graph conv.\ layers + symmetric pooling \\
+    Agent info & Inferred from obs.\ pattern &
+        Explicit type attributes on GNN nodes \\
+    Network type & Standard feed-forward MLP & Graph Neural Network \\
+    Variable teams & Via fixed-width obs.\ schema & Via GNN node addition \\
+    Complexity & \textbf{Lower} & Higher \\
+    Trained with & MAPPO & MAPPO \\
+\end{tabular}
+\end{center}
+
+\vspace{0.5em}
+\textit{Both approaches are given matched network capacities and hyperparameters;
+the only difference is the invariance mechanism.}
+
+%% ------------------------------------------------------------------
+\section{C3 Experimental Design}
+
+\begin{itemize}
+    \item Same \textbf{HyperGrid} environment as C2---controlled, reproducible
+    \item \textbf{Four sensor configurations}: complete, intersecting-span,
+        disjoint-span, incomplete
+    \item \textbf{Eight evaluation conditions} (same as C2): sensor loss/gain,
+        coverage changes, shuffled assignments, zero-shot generalization
+    \item Matched network capacities; identical hyperparameter sweeps
+\end{itemize}
+
+\vspace{0.5em}
+\begin{center}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}L{3.5cm}cc@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Controlled Variable}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Impl.\ Ind.}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{PIC}} \\
+    Network capacity & Matched & Matched \\
+    Training algorithm & MAPPO & MAPPO \\
+    Hyperparameters & Identical sweep & Identical sweep \\
+    Environment & HyperGrid & HyperGrid \\
+    \textbf{Invariance mechanism} & \textbf{Representational} & \textbf{Architectural} \\
+\end{tabular}
+\end{center}
+
+%% ------------------------------------------------------------------
+\section{C3 Performance Results}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}L{4.0cm}ccc@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Sensor Configuration}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Impl.\ Ind.}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{PIC (GNN)}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Advantage}} \\
+    Complete Visibility   & 9.10 & 3.89 & \textbf{2.34$\times$} \\
+    Intersecting-Span     & 5.04 & 1.61 & \textbf{3.13$\times$} \\
+    Disjoint-Span         & 5.80 & 1.84 & \textbf{3.15$\times$} \\
+    Incomplete Coverage   & 4.63 & 1.05 & \textbf{4.41$\times$} \\
+\end{tabular}
+\end{center}
+
+\vspace{0.4em}
+\includegraphics[width=\textwidth, height=3.5cm, keepaspectratio]{eval_scale.png}
+
+\shadedbox{Implicit Indication \textbf{consistently and substantially} outperforms
+PIC across \textit{every} sensor configuration.
+The advantage grows as the environment becomes \textbf{more challenging}
+(incomplete coverage: $4.41\times$).}
+
+%% ------------------------------------------------------------------
+\section{C3 Robustness Comparison}\twocolumn\raggedright
+
+\subsection{Finding}
+
+\begin{itemize}
+    \item Implicit Indication also \textbf{outperforms} PIC across the
+        eight robustness evaluation conditions
+    \item Both sensor degradation and sensor improvement scenarios
+        favor the representational approach
+    \item Zero-shot generalization to novel agent types:
+        Implicit Indication handles it; PIC struggles
+\end{itemize}
+
+\subsection{Additional Baseline}
+
+\begin{itemize}
+    \item Implicit Indication also \textbf{outperforms HAPPO} under
+        perturbed conditions---despite using a \textit{single shared policy}
+        vs.\ HAPPO's per-type policies
+    \item The simpler, more general approach wins on every front
+\end{itemize}
+
+\pagebreak
+
+\includegraphics[width=\columnwidth, height=2.5cm, keepaspectratio]{eval_heatmaps.png}
+\vspace{0.4em}
+\includegraphics[width=\columnwidth, height=2.5cm, keepaspectratio]{eval_boxes.png}
+
+%% ------------------------------------------------------------------
+\section[C3 Synthesis]{C3 Synthesis: Why the Simpler Approach Wins}
+
+\begin{itemize}
+    \item PIC's GNN aggregates node features via symmetric pooling---
+        appropriate when \textbf{relational structure} between agents is rich
+    \item In HyperGrid, agent interactions are mediated by the task environment,
+        not by direct agent-to-agent relationships
+    \item Explicit \textbf{observation masking} provides a cleaner gradient signal:
+        each agent's distinct channel pattern carries informative structure
+        that the MLP can exploit directly
+    \item GNN aggregation may \textit{smooth away} that structure
+\end{itemize}
+
+\vspace{0.5em}
+\shadedbox{\textbf{Key principle:} Architectural sophistication is
+\textit{not} a substitute for representational clarity.
+Match the invariance mechanism to the \textbf{structure of the problem},
+not to the expressive power of the architecture.}
+
+\vspace{0.5em}
+\textit{For structurally heterogeneous discrete domains with semantically
+decomposable observations: \textbf{representation first, architecture second.}}
+
+
+%% ==========================================================================
+%% SYNTHESIS
+%% ==========================================================================
+
+\chapter{Synthesis}
+
+%% ------------------------------------------------------------------
+\section{Cross-Cutting Insights}
+
+\begin{enumerate}
+    \item \textbf{Representation Over Architecture}---Observation schemas,
+        homogenized spaces, and input encodings matter more than algorithmic
+        sophistication. C1, C2, and C3 all confirm this independently.
+
+    \item \textbf{Task Structure as Critical Moderator}---No universal method exists.
+        C1 shows curriculum benefit depends on coordination tightness and
+        heterogeneity type. C3 shows GNN advantage depends on relational richness.
+
+    \item \textbf{Unified Sharing Without Interchangeability}---Semantic
+        decomposability enables a single policy to serve structurally
+        distinct agents without assuming they are interchangeable.
+
+    \item \textbf{Match Method to Heterogeneity Type}---Behavioral heterogeneity
+        is a candidate for curriculum strategies; structural/intrinsic heterogeneity
+        calls for homogenization.
+
+    \item \textbf{Emergent Robustness}---Deployment flexibility (zero-shot
+        generalization, sensor tolerance, team-size flexibility) arises
+        \textit{for free} from representational design---no explicit robustness
+        training required.
+\end{enumerate}
+
+%% ------------------------------------------------------------------
+\section{Design Principles for HARL}
+
+\begin{itemize}
+    \item \textbf{Representation first.}
+        Before choosing an algorithm or architecture, ask:
+        \textit{does my observation space support the invariances I need?}
+
+    \item \textbf{Design for semantic decomposability.}
+        Observation elements should carry \textit{consistent meaning}
+        across all agent types that share them.
+
+    \item \textbf{Use masking and homogenization} for flexible team compositions;
+        it is simpler and more effective than architectural alternatives
+        in semantically decomposable domains.
+
+    \item \textbf{Consider gradient interference.}
+        Disjoint observation spans reduce shared-gradient noise;
+        structure the observation space to minimize unintended overlap.
+
+    \item \textbf{Choose curriculum strategies based on task structure.}
+        Tight coordination and high role-stability favor pretraining;
+        dynamic role heterogeneity may not benefit.
+\end{itemize}
+
+%% ------------------------------------------------------------------
+\section{Contributions Summary}
+
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{}L{1.5cm}L{4.0cm}L{4.0cm}L{3.5cm}@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Central Claim}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Key Finding}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Design Implication}} \\
+    \textbf{C1} &
+        Pretraining smaller teams can reduce cost &
+        Benefit depends on task coordination structure and heterogeneity type &
+        Obs.\ schema design determines \textit{whether} curricula can help \\
+    \textbf{C2} &
+        One shared policy can handle structural heterogeneity without IDs &
+        Matches HAPPO; $\frac{1}{|I|}$ storage; zero-shot robust &
+        Semantic decomposability is the key design requirement \\
+    \textbf{C3} &
+        Representational $>$ architectural invariance &
+        2.3--4.4$\times$ advantage over GNN-based PIC &
+        Simple masking beats complex graph aggregation in this problem class \\
+\end{tabular}
+\end{center}
+
+%% ------------------------------------------------------------------
+\section{The Unifying Answer}
+
+\begin{Center}
+    \large
+    \textbf{DIE-HARL}\\[0.8ex]
+    \normalsize
+    \begin{tabular}{@{}cL{9cm}@{}}
+        \textbf{\textcolor{light}{D}urable} &
+            (C3) --- Representational invariance yields robustness
+            to deployment variation without retraining \\[0.6ex]
+        \textbf{\textcolor{light}{I}mplicit} &
+            (C2) --- Observation structure encodes agent identity
+            without explicit type indicators \\[0.6ex]
+        \textbf{\textcolor{light}{E}xtensible} &
+            (C1) --- Fixed-width schemas enable policy reuse
+            across team sizes via curriculum \\
+    \end{tabular}
+
+    \vspace{1.5ex}
+    \shadedbox{Training efficiency, heterogeneity handling, and deployment
+    flexibility in HARL are fundamentally \textbf{representational} problems
+    before they are architectural ones.}
+\end{Center}
+
+
+%% ==========================================================================
+%% LIMITATIONS & FUTURE WORK
+%% ==========================================================================
+
+\chapter{Limitations \& Future Work}
+
+%% ------------------------------------------------------------------
+\section{Limitations}
+
+\begin{itemize}
+    \item \textbf{Single algorithm family (PPO-based)}---results may not
+        generalize to off-policy methods (SAC, TD3) or evolutionary approaches
+
+    \item \textbf{Controlled simulation environments}---real-world complexity
+        (noisy sensors, communication delay, physical dynamics) not yet tested
+
+    \item \textbf{Limited team sizes} (max 8 agents)---scaling properties
+        for much larger teams remain under-explored
+
+    \item \textbf{Semantic decomposability assumption}---not all operational
+        sensor suites will satisfy this; mixed-modality observations
+        (e.g., vision + LiDAR with different spatial encodings) require
+        additional engineering
+
+    \item \textbf{Predominantly discrete action spaces}---C2 and C3 evaluated
+        in HyperGrid; continuous-action heterogeneity not covered
+\end{itemize}
+
+%% ------------------------------------------------------------------
+\section{Future Directions}
+
+\begin{itemize}
+    \item \textbf{Action-space heterogeneity}: extending Implicit Indication
+        to agents with structurally different \textit{action spaces}, not just
+        observation spaces
+
+    \item \textbf{Dynamic team composition}: agents joining or leaving the
+        team mid-episode; evaluating how well homogenized policies adapt
+
+    \item \textbf{Hybrid approaches}: combining representational and architectural
+        invariance for domains with rich relational structure \textit{and}
+        semantic observation structure
+
+    \item \textbf{Real-world validation}: physical platforms with noisy sensors,
+        communication constraints, and partial failures
+
+    \item \textbf{Formal convergence guarantees}: theoretical analysis of
+        convergence rates for implicit indication under CTDE training
+
+    \item \textbf{Towards the Replicator vision}: scaling these methods to
+        operationally relevant heterogeneous swarms in contested environments
+\end{itemize}
+
+
+%% ==========================================================================
+%% CONCLUSION
+%% ==========================================================================
+
+\chapter{Conclusion}
+
+%% ------------------------------------------------------------------
+\section{Conclusion}
+
+\begin{itemize}
+    \item \textbf{C1} demonstrated that curriculum-based team scaling is
+        \textit{possible and beneficial} when the observation schema supports
+        policy transfer, and that task coordination structure determines
+        the nature of that benefit
+
+    \item \textbf{C2} introduced Implicit Indication: a representational
+        framework enabling a single shared policy to operate over
+        structurally heterogeneous agents without explicit type identifiers---
+        achieving HAPPO-level performance with $\frac{1}{|I|}$ storage and
+        zero-shot deployment robustness
+
+    \item \textbf{C3} provided empirical evidence that representational
+        invariance substantially outperforms architectural invariance
+        (GNN-based PIC) in structurally heterogeneous discrete domains,
+        with consistent advantages of 2.3--4.4$\times$
+
+    \item Together, these contributions support a unified design philosophy:
+        \textbf{invest in representation design before adding architectural
+        complexity}
+\end{itemize}
+
+\vspace{0.5em}
+\shadedbox{The path toward robust, efficient, and deployable heterogeneous
+multi-agent systems runs through \textbf{how we design the spaces our
+agents inhabit}---not just the algorithms that inhabit them.}
+
+\closing
+
+%% ==========================================================================
+%% BACKUP SLIDES
+%% ==========================================================================
+
+\chapter[Backup]{Backup Slides}
+
+%% ------------------------------------------------------------------
+\section[B1: Iteration Cost]{B1 --- C1 Iteration Cost Analysis}\twocolumn\raggedright
+
+\subsection{Normalized Training Cost}
+
+\begin{itemize}
+    \item How much does it actually cost to train via curriculum vs.\ from scratch?
+    \item Agent-steps metric enables fair comparison across team sizes
+    \item Pretraining at $k$ agents then fine-tuning to $N$ agents is cost-effective
+        when $T_\text{ft} \ll T_\text{scratch}$
+\end{itemize}
+
+\pagebreak
+
+\includegraphics[width=\columnwidth, height=5cm, keepaspectratio]{iter_cost.png}
+
+%% ------------------------------------------------------------------
+\section[B2: Deep Sets Theory]{B2 --- Theoretical Basis for Implicit Indication}
+
+\begin{itemize}
+    \item \textbf{Deep Sets} (Zaheer et al., 2017): any permutation-invariant function
+        $f: 2^\mathcal{X} \to \mathbb{R}$ can be decomposed as
+        $f(\mathcal{X}) = \rho\!\left(\sum_{x \in \mathcal{X}} \phi(x)\right)$
+        for suitable $\phi, \rho$
+
+    \item \textbf{Key result for C2}: for any collection of functions
+        $\{f_i : \mathcal{O}_i \to \mathbb{R}\}_{i \in I}$ over
+        heterogeneous input spaces, there exists a single function
+        $F : \tilde{\mathcal{O}} \to \mathbb{R}$ such that
+        $F(\tilde{o}) = f_i(o_i)$ for all $i \in I$
+
+    \item \textbf{Condition}: the embedding $\phi_i : \mathcal{O}_i \to \tilde{\mathcal{O}}$
+        must be \textit{injective} for each $i$, and the images
+        $\phi_i(\mathcal{O}_i)$ for distinct elements must not collide
+        (satisfied by disjoint-semantic channel assignment)
+
+    \item This formally guarantees that a single neural network over
+        $\tilde{\mathcal{O}}$ is \textbf{at least as expressive} as the
+        collection of per-type networks
+\end{itemize}
+
+%% ------------------------------------------------------------------
+\section[B3: HAPPO Detail]{B3 --- HAPPO vs.\ Implicit Indication (Detail)}\twocolumn\raggedright
+
+\subsection{HAPPO (Heterogeneous-Agent PPO)}
+
+\begin{itemize}
+    \item Maintains \textbf{separate actor and critic} for each agent type $i \in I$
+    \item Sequential update order: agents updated one type at a time,
+        treating others as part of the environment
+    \item Strong performance; the principled heterogeneous baseline
+\end{itemize}
+
+\subsection{The Trade-off}
+
+\begin{itemize}
+    \item Storage: $|I|$ actors + $|I|$ critics
+    \item No generalization across agent types (novel type $\Rightarrow$ retrain)
+    \item No zero-shot transfer to unseen team compositions
+\end{itemize}
+
+\pagebreak
+
+\begin{center}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{@{}L{2.5cm}cc@{}}
+    \cellcolor{dark}\textcolor{white}{\textbf{Property}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{HAPPO}} &
+    \cellcolor{dark}\textcolor{white}{\textbf{Impl.\ Ind.}} \\
+    Training perf. & Baseline & Matches \\
+    Storage & $|I|\times$ & $1\times$ \\
+    Novel type & Retrain & Zero-shot \\
+    Sensor change & Retrain & Tolerant \\
+    Team-size flex. & Fixed & Flexible \\
+\end{tabular}
+\end{center}
+
+%% ------------------------------------------------------------------
+\section[B4: HyperGrid Detail]{B4 --- HyperGrid Environment Details}\twocolumn\raggedright
+
+\subsection{Design Goals}
+
+\begin{itemize}
+    \item Isolate the effect of \textbf{observation structure} as the
+        independent variable
+    \item Allow precise control over which agents share which channels
+    \item Support systematic evaluation across heterogeneity configurations
+\end{itemize}
+
+\subsection{Mechanics}
+
+\begin{itemize}
+    \item $n$-dimensional discrete grid; agents collect items
+    \item Each cell has multiple \textbf{channel layers}
+        (analogous to sensor modalities)
+    \item Agent type determines which channels are populated in its observation
+    \item Task reward is cooperative; agents must coordinate based on
+        complementary observations
+\end{itemize}
+
+\pagebreak
+
+\includegraphics[width=\columnwidth, height=4.5cm, keepaspectratio]{marl-minigrid.png}
+
+\scriptsize\textit{Color-coded channels in the HyperGrid environment.
+Agent type determines which channels are visible.}
+
+%% ------------------------------------------------------------------
+\section[B5: C2 Eval Detail]{B5 --- C2 Robustness Evaluation (Detail)}\twocolumn\raggedright
+
+\subsection{Eight Conditions Explained}
+
+\begin{enumerate}
+    \item \textbf{Sensor loss}: remove a channel from agents that had it
+    \item \textbf{Sensor degradation}: add Gaussian noise to a channel
+    \item \textbf{Sensor improvement}: remove noise from a previously noisy channel
+    \item \textbf{Coverage reduction}: reduce total number of populated channels
+    \item \textbf{Coverage expansion}: add a new channel to some agents
+    \item \textbf{Shuffled assignments}: swap which agents get which channels
+    \item \textbf{Incomplete generalization}: test on incomplete coverage config
+    \item \textbf{Zero-shot}: introduce an agent type never seen in training
+\end{enumerate}
+
+\pagebreak
+
+\includegraphics[width=\columnwidth, height=5cm, keepaspectratio]{eval_scale.png}
+
+%% ------------------------------------------------------------------
+\section[B6: Disjoint Span]{B6 --- Why Disjoint-Span Training is Strongest}
+
+\begin{itemize}
+    \item \textbf{Disjoint-span}: no agent type shares channels with any other
+    \item This creates \textbf{maximally informative observation patterns}:
+        the populated/masked structure uniquely identifies the agent type
+    \item In intersecting-span configurations, some channels are shared---
+        the gradient signal for those elements is averaged across agent types,
+        potentially introducing \textit{gradient interference}
+    \item Disjoint spans \textbf{eliminate gradient interference}:
+        each channel's gradient comes exclusively from agents of one type
+    \item \textbf{Design implication}: where possible, prefer observation
+        designs with clean separation between agent-specific and shared elements
+\end{itemize}
+
+\vspace{0.5em}
+\shadedbox{The most semantically decomposable observation structure
+also yields the cleanest learning signal.
+\textbf{Good representational design has cascading benefits.}}
+
+%% ------------------------------------------------------------------
+\section[B7: Smit Comparison]{B7 --- Comparison to Prior Curriculum Work}
+
+\begin{itemize}
+    \item Smit et al.\ (2023) investigate curriculum-based team scaling in
+        football environments---the most directly comparable prior work
+    \item Their environments feature \textbf{fixed spatial roles} and
+        strong coordination requirements
+    \item Their findings: curriculum improves performance in high-coordination
+        settings, consistent with C1's Multiwalker results
+    \item \textbf{C1 extends} this finding by:
+    \begin{itemize}
+        \item Evaluating across multiple environment types
+        \item Introducing the agent-steps normalized cost metric
+        \item Explicitly identifying the observation-space coupling problem
+            as a prerequisite concern
+        \item Testing on LBF, which exposes the limits of the curriculum approach
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.5em}
+\includegraphics[width=0.5\textwidth, height=3cm, keepaspectratio]{smit_football.png}
+
+%% ------------------------------------------------------------------
+\section[B8: Action-Space Heterogeneity]{B8 --- Future: Action-Space Heterogeneity}
+
+\begin{itemize}
+    \item C2 and C3 address \textbf{observation-space} structural heterogeneity:
+        agents differ in what they \textit{see}
+    \item The natural next extension: \textbf{action-space heterogeneity}---
+        agents differ in what they \textit{can do}
+    \item Example: a UAV can fly; a ground vehicle can drive; both must coordinate
+    \item Challenges:
+    \begin{itemize}
+        \item A homogenized action space is non-trivial---invalid actions
+            must be masked or penalized
+        \item The policy must learn that certain actions are
+            \textit{structurally unavailable} to it, not just suboptimal
+        \item Multi-discrete and hybrid continuous-discrete action spaces
+            add further complexity
+    \end{itemize}
+    \item Preliminary hypothesis: the same semantic decomposability principle
+        should extend---but the masking must occur at both \textit{input} and
+        \textit{output} stages
+\end{itemize}
+
+\end{document}

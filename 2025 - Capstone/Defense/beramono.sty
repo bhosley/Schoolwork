@@ -1,0 +1,8 @@
+% Stub replacement for beramono.sty (Bera Mono font not installed)
+% Falls back to Latin Modern Typewriter (lmtt)
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{beramono}[2025/01/01 Bera Mono stub -- using lmtt fallback]
+\DeclareOption{scaled}{}   % accept but ignore the scaled= option
+\DeclareOption*{}
+\ProcessOptions\relax
+\renewcommand{\ttdefault}{lmtt}

@@ -470,9 +470,9 @@
     % allcolors fixed this by reverting them to black. 
     % But then intentionally colored text was forced black.
     % This change fixes the border but allows text to be colored:
-    colorlinks=true,        %-
-    allcolors=black}        %-
-    % pdfborder={0 0 0}}    %+
+    % colorlinks=true,        %-
+    % allcolors=black}        %-
+    pdfborder={0 0 0}}    %+
 
 % Remove pdf image warnings.
 \pdfsuppresswarningpagegroup=1
