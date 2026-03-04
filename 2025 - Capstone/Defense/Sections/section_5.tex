@@ -1,0 +1,222 @@
+% =============================================================================
+%  SECTION 5 — C3: Architectural vs. Representational Approaches
+%  Slides 5.1–5.6  |  Target time: ~10 minutes
+%
+%  Corresponds to dissertation Ch. 5 (Contribution 3)
+%
+%  Drop this \section{} call and the six frames that follow into main.tex
+%  after the §4 C2 slides (slide 4.8), before §6 (Synthesis).
+% =============================================================================
+
+%%==========================================================================
+%% CONTRIBUTION 3
+%%==========================================================================
+
+\begin{frame}{Two Varieties of Invariance}
+    C2 showed that a \emph{representational} trick (homogenized observations
+    with zero-masking) matches HAPPO at a fraction of the storage.
+    
+    \vspace{0.4em}
+    \textbf{The Permutation Invariant Critic}
+    (PIC)~\cite{liu2020b} replaces the standard centralized critic
+    with a \textbf{graph neural network}:
+    \begin{itemize}
+        \item Each agent is a \emph{node} for the critic
+        \item Agent heterogeneity is encoded via explicit
+        \emph{one-hot attribute vectors} on each node.
+        \item The output is a team-level value estimate that is
+        invariant to agent ordering and flexible to team size.
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Two Varieties of Invariance}
+
+    \vspace{0.3em}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{Implicit Indication (Representational)}
+                Invariance lives in the \emph{input encoding}.\\
+                Standard MLP; identity inferred from mask pattern.
+            \end{block}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{block}{PIC (Architectural)}
+                Invariance achieved through GNN convolution. \\
+                With agents as nodes in the critic, 
+                and observation elements as nodes in the agent.
+            \end{block}
+        \end{column}
+    \end{columns}
+    \vspace{1em}
+
+    \small \textbf{Experimental control:} matched network capacities,
+    identical hyperparameters, same HyperGrid environment;
+    only the invariance mechanism differs.
+
+    \note{About 2 minutes.}
+\end{frame}
+
+
+\begin{frame}{C3 Research Questions}
+    \begin{itemize}
+        \item[\textbf{RQ3.1}]
+        To what extent do graph-based policies (PIC) improve learning
+        efficiency vs.\ representational alternatives?
+        \item[\textbf{RQ3.2}]
+        How robust are graph-based policies to sensor configuration
+        and team composition changes vs.\ representational approaches?
+        \item[\textbf{RQ3.3}]
+        What are the computational and implementation costs of
+        architectural vs.\ representational invariance?
+    \end{itemize}
+    
+    \note{About 45 seconds — reference slide
+    ``Three questions, mirroring C2's structure.
+    }
+    \note[item]{Learning Efficiency}
+    \note[item]{Robustness}
+    \note[item]{Cost vs.\ Benefit}
+\end{frame}
+
+
+\begin{frame}[shrink=20]{Training Results}
+    \vspace{1.1em}
+    \begin{figure}
+        \begin{center}
+            \includegraphics[width=0.65\linewidth]{c3_training_curves.png}
+            \caption{Evaluation performance across all conditions
+                and sensor configurations.
+                Implicit Indication (red) consistently
+                outperforms PIC (green) and HAPPO (blue).}
+            \label{fig:c3-eval-boxes}
+        \end{center}
+    \end{figure}
+
+    \note{More of the same. For better or worse.}
+\end{frame}
+
+
+\begin{frame}{Evaluations}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{eval_heatmaps.png}
+        \caption{Evaluation heatmaps: Implicit Indication (left),
+                PIC (center), difference (right).
+                Higher values (blue) in the difference map
+                indicate Implicit Indication outperforms.}
+        \label{fig:c3-heatmaps}
+    \end{figure}
+\end{frame}
+
+
+\begin{frame}[shrink=7]{Interpreting the Gap}
+    \vspace{1.5em}
+
+    \textbf{PIC was designed for inter-agent structure:}
+    \begin{itemize}
+        \item The GNN critic models \emph{relationships between agents}:
+            it excels when coordination patterns are rich
+            and the graph topology is informative.
+        \item In HyperGrid, heterogeneity lives at the
+            \textbf{observation-element level} within each agent,
+            not in the relational structure between agents.
+    \end{itemize}
+
+    \vspace{0.4em}
+    \textbf{The signal problem:}
+    \begin{itemize}
+        \item We hoped PIC's graph structure over observation elements
+            would help the critic learn \emph{which elements matter} —
+            but the value signal it provides to the actors
+            is too coarse to guide observation-conditioned behavior.
+        \item Implicit Indication gives each actor \textbf{direct access}
+            to observation availability via masking;
+            no intermediary architecture required.
+    \end{itemize}
+
+    \vspace{0.3em}
+    \begin{alertblock}{Takeaway}
+        When heterogeneity is \emph{observational}, the actor needs
+        direct information about what it can see; 
+        not a critic-mediated summary of agent relationships.
+    \end{alertblock}
+
+    \note{About 1.5 minutes.
+    Frame this charitably toward PIC:
+    ``PIC is a good tool for the problem it was designed for.
+    When agents interact richly — think formation control, communication
+    networks — the graph structure carries real information, and a GNN
+    critic can exploit that to provide strong value estimates.''
+    Then the pivot:
+    ``In HyperGrid, heterogeneity is not about how agents relate to
+    each other. It is about which observation channels each agent has.
+    We hoped the GNN, with observation elements as nodes within each agent,
+    would learn to value those element-level distinctions.
+    But the critic's signal passes through graph aggregation before
+    reaching the actor — by the time it arrives, the fine-grained
+    observation structure has been compressed away.''
+    Then contrast:
+    ``Implicit indication sidesteps this entirely. The actor sees the
+    mask directly. Zero means `I cannot observe this.' The gradient
+    for those input weights is exactly zero for that agent type.
+    No intermediary, no compression, no information loss.''
+    Deliver the alertblock to close.}
+\end{frame}
+
+
+% % -----------------------------------------------------------------------------
+% % Slide 5.6 — C3 Summary
+% % -----------------------------------------------------------------------------
+% \begin{frame}{C3 Summary}
+
+%     \vspace{-0.2em}
+%     \begin{center}
+%     \renewcommand{\arraystretch}{1.5}
+%     \small
+%     \begin{tabular}{@{} l p{8cm} @{}}
+%         \toprule
+%         \textbf{Dimension} & \textbf{Finding} \\
+%         \midrule
+%         Training
+%             & Similar convergence dynamics; no clear training-time advantage
+%               for either paradigm. \\
+%         Evaluation
+%             & Implicit Indication outperforms PIC by $2.2$--$3.7\times$
+%               across all sensor configurations. \\
+%         Robustness
+%             & Implicit Indication dominates across all 8 perturbation conditions;
+%               also outperforms the HAPPO baseline. \\
+%         Cost
+%             & Representational approach requires no specialized architectural
+%               components — standard MLP/CNN suffices. \\
+%         \bottomrule
+%     \end{tabular}
+%     \end{center}
+
+%     \vspace{0.5em}
+%     \begin{alertblock}{C3 Verdict}
+%         In domains where heterogeneity stems from differing observation capabilities,
+%         representational invariance via explicit masking outperforms
+%         architectural invariance via graph neural networks —
+%         with lower implementation complexity.
+%     \end{alertblock}
+
+%     \vspace{0.3em}
+%     \centering
+%     \small\emph{Three contributions, three results — all pointing the same direction.}
+
+%     \note{About 1 minute.
+%     Walk down the table briefly — one sentence per row.
+%     ``Training: both learn at the same rate. Evaluation: implicit indication
+%     wins by two to nearly four times. Robustness: implicit indication dominates
+%     every perturbation. Cost: no GNN, no graph construction — just a
+%     standard network with a well-designed input.''
+%     Read the alertblock verdict.
+%     Then deliver the transition line at the bottom:
+%     ``Three contributions, three results — all pointing the same direction.
+%     The next section pulls them together.''
+%     This should feel like the climax resolving;
+%     the synthesis section that follows is the denouement.}
+% \end{frame}
+

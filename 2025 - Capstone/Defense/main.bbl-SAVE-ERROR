@@ -1,0 +1,1139 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{calvo2018}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=714301dd2a30055a734f8f8ddf9f18af}{%
+           family={Calvo},
+           familyi={C\bibinitperiod},
+           given={Jeancarlo\bibnamedelima Arguello},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=d9cfb32feeafc29e489d22e64a37a8a9}{%
+           family={Dusparic},
+           familyi={D\bibinitperiod},
+           given={Ivana},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{7401ae94bd6c78bee9b0583a6cf64bd1}
+      \strng{fullhash}{7401ae94bd6c78bee9b0583a6cf64bd1}
+      \strng{fullhashraw}{7401ae94bd6c78bee9b0583a6cf64bd1}
+      \strng{bibnamehash}{7401ae94bd6c78bee9b0583a6cf64bd1}
+      \strng{authorbibnamehash}{7401ae94bd6c78bee9b0583a6cf64bd1}
+      \strng{authornamehash}{7401ae94bd6c78bee9b0583a6cf64bd1}
+      \strng{authorfullhash}{7401ae94bd6c78bee9b0583a6cf64bd1}
+      \strng{authorfullhashraw}{7401ae94bd6c78bee9b0583a6cf64bd1}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Reinforcement Learning (RL) has been extensively used in Urban Traffic Control (UTC) optimization due its capability to learn the dynamics of complex problems from interactions with the environment. Recent advances in Deep Reinforcement Learning (DRL) have opened up the possibilities for extending this work to more complex situations due to it overcoming the curse of dimensionality resulting from the exponential growth of the state and action spaces when incorporating fine-grained information. DRL has been shown to work very well for UTC on a single intersection, however, due to large training times, multi-junction implementations have been limited to training a single agent and replicating behaviour to other junctions, assuming homogeneity of all agents.}
+      \field{journaltitle}{AICS}
+      \field{langid}{english}
+      \field{month}{12}
+      \field{title}{Heterogeneous {{Multi-Agent Deep Reinforcement Learning}} for {{Traﬃc Lights Control}}}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{pages}{2\bibrangedash 13}
+      \range{pages}{12}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/KIDZZFHR/Calvo and Dusparic - Heterogeneous Multi-Agent Deep Reinforcement Learn.pdf
+      \endverb
+    \endentry
+    \entry{canese2021}{article}{}{}
+      \name{author}{7}{}{%
+        {{hash=1e9cd968439d1ce1a4811ac247d39bf0}{%
+           family={Canese},
+           familyi={C\bibinitperiod},
+           given={Lorenzo},
+           giveni={L\bibinitperiod}}}%
+        {{hash=38d35bd3858486c4ed1e58f9ab8d07c6}{%
+           family={Cardarilli},
+           familyi={C\bibinitperiod},
+           given={Gian\bibnamedelima Carlo},
+           giveni={G\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+        {{hash=8a94f6be09a7243131fb661f3b9ca83f}{%
+           family={Di\bibnamedelima Nunzio},
+           familyi={D\bibinitperiod\bibinitdelim N\bibinitperiod},
+           given={Luca},
+           giveni={L\bibinitperiod}}}%
+        {{hash=95606a870779f6783427c94bf660365a}{%
+           family={Fazzolari},
+           familyi={F\bibinitperiod},
+           given={Rocco},
+           giveni={R\bibinitperiod}}}%
+        {{hash=46d05bf67ac60105ff28759467e84253}{%
+           family={Giardino},
+           familyi={G\bibinitperiod},
+           given={Daniele},
+           giveni={D\bibinitperiod}}}%
+        {{hash=51a48be033404de5c2027a90f13ada68}{%
+           family={Re},
+           familyi={R\bibinitperiod},
+           given={Marco},
+           giveni={M\bibinitperiod}}}%
+        {{hash=fcc3435f64a45f95f6b120c69b02ae26}{%
+           family={Spanò},
+           familyi={S\bibinitperiod},
+           given={Sergio},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Multidisciplinary Digital Publishing Institute}%
+      }
+      \strng{namehash}{ed78b4c350aab6f69347e265227fcfb8}
+      \strng{fullhash}{a012182fbc452022ce8b21bd0659ccd6}
+      \strng{fullhashraw}{a012182fbc452022ce8b21bd0659ccd6}
+      \strng{bibnamehash}{ed78b4c350aab6f69347e265227fcfb8}
+      \strng{authorbibnamehash}{ed78b4c350aab6f69347e265227fcfb8}
+      \strng{authornamehash}{ed78b4c350aab6f69347e265227fcfb8}
+      \strng{authorfullhash}{a012182fbc452022ce8b21bd0659ccd6}
+      \strng{authorfullhashraw}{a012182fbc452022ce8b21bd0659ccd6}
+      \field{sortinit}{C}
+      \field{sortinithash}{4d103a86280481745c9c897c925753c0}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{In this review, we present an analysis of the most used multi-agent reinforcement learning algorithms. Starting with the single-agent reinforcement learning algorithms, we focus on the most critical issues that must be taken into account in their extension to multi-agent scenarios. The analyzed algorithms were grouped according to their features. We present a detailed taxonomy of the main multi-agent approaches proposed in the literature, focusing on their related mathematical models. For each algorithm, we describe the possible application fields, while pointing out its pros and cons. The described multi-agent algorithms are compared in terms of the most important characteristics for multi-agent reinforcement learning applications—namely, nonstationarity, scalability, and observability. We also describe the most common benchmark environments used to evaluate the performances of the considered methods.}
+      \field{issn}{2076-3417}
+      \field{issue}{11}
+      \field{journaltitle}{Applied Sciences}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{number}{11}
+      \field{shorttitle}{Multi-{{Agent Reinforcement Learning}}}
+      \field{title}{Multi-{{Agent Reinforcement Learning}}: {{A Review}} of {{Challenges}} and {{Applications}}}
+      \field{urlday}{16}
+      \field{urlmonth}{4}
+      \field{urlyear}{2025}
+      \field{volume}{11}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{4948}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.3390/app11114948
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/565YJNJJ/Canese et al_2021_Multi-Agent Reinforcement Learning.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://www.mdpi.com/2076-3417/11/11/4948
+      \endverb
+      \verb{url}
+      \verb https://www.mdpi.com/2076-3417/11/11/4948
+      \endverb
+      \keyw{machine learning,multi-agent,reinforcement learning,swarm}
+    \endentry
+    \entry{foerster2018}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=d62c75690ab7c754f6e7217a242a4318}{%
+           family={Foerster},
+           familyi={F\bibinitperiod},
+           given={Jakob},
+           giveni={J\bibinitperiod}}}%
+        {{hash=de7fc27bb6e6105440cd3039a5c9b684}{%
+           family={Farquhar},
+           familyi={F\bibinitperiod},
+           given={Gregory},
+           giveni={G\bibinitperiod}}}%
+        {{hash=c15e1ba2ced206763fad02b814aa569e}{%
+           family={Afouras},
+           familyi={A\bibinitperiod},
+           given={Triantafyllos},
+           giveni={T\bibinitperiod}}}%
+        {{hash=a07891d2d6d3da5f1827c01269cc6da6}{%
+           family={Nardelli},
+           familyi={N\bibinitperiod},
+           given={Nantas},
+           giveni={N\bibinitperiod}}}%
+        {{hash=0d05819cf2b4fe22ba972c9b2b5d8c9d}{%
+           family={Whiteson},
+           familyi={W\bibinitperiod},
+           given={Shimon},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{bacd311c6a08d138cde55b969b44b0f3}
+      \strng{fullhash}{9b69be1387a30ea5191e83c832c30ed5}
+      \strng{fullhashraw}{9b69be1387a30ea5191e83c832c30ed5}
+      \strng{bibnamehash}{bacd311c6a08d138cde55b969b44b0f3}
+      \strng{authorbibnamehash}{bacd311c6a08d138cde55b969b44b0f3}
+      \strng{authornamehash}{bacd311c6a08d138cde55b969b44b0f3}
+      \strng{authorfullhash}{9b69be1387a30ea5191e83c832c30ed5}
+      \strng{authorfullhashraw}{9b69be1387a30ea5191e83c832c30ed5}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Many real-world problems, such as network packet routing and the coordination of autonomous vehicles, are naturally modelled as cooperative multi-agent systems. There is a great need for new reinforcement learning methods that can efficiently learn decentralised policies for such systems. To this end, we propose a new multi-agent actor-critic method called counterfactual multi-agent (COMA) policy gradients. COMA uses a centralised critic to estimate the Q-function and decentralised actors to optimise the agents’ policies. In addition, to address the challenges of multi-agent credit assignment, it uses a counterfactual baseline that marginalises out a single agent’s action, while keeping the other agents’ actions fixed. COMA also uses a critic representation that allows the counterfactual baseline to be computed efficiently in a single forward pass. We evaluate COMA in the testbed of StarCraft unit micromanagement, using a decentralised variant with significant partial observability. COMA significantly improves average performance over other multi-agent actorcritic methods in this setting, and the best performing agents are competitive with state-of-the-art centralised controllers that get access to the full state.}
+      \field{day}{29}
+      \field{issn}{2374-3468, 2159-5399}
+      \field{journaltitle}{Proceedings of the AAAI Conference on Artificial Intelligence}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{number}{1}
+      \field{shortjournal}{AAAI}
+      \field{title}{Counterfactual {{Multi-Agent Policy Gradients}}}
+      \field{urlday}{30}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{volume}{32}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.1609/aaai.v32i1.11794
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/8B7JFA9Y/Foerster et al. - 2018 - Counterfactual Multi-Agent Policy Gradients.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://arxiv.org/abs/1705.08926
+      \endverb
+      \verb{url}
+      \verb https://arxiv.org/abs/1705.08926
+      \endverb
+    \endentry
+    \entry{gronauer2022}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=ae0518f1e8f7a634269e7864240c575f}{%
+           family={Gronauer},
+           familyi={G\bibinitperiod},
+           given={Sven},
+           giveni={S\bibinitperiod}}}%
+        {{hash=82d927455f03a14711dd2326b1fc9146}{%
+           family={Diepold},
+           familyi={D\bibinitperiod},
+           given={Klaus},
+           giveni={K\bibinitperiod}}}%
+      }
+      \strng{namehash}{bfac1a2a6d3fbc161611f8388c36fca5}
+      \strng{fullhash}{bfac1a2a6d3fbc161611f8388c36fca5}
+      \strng{fullhashraw}{bfac1a2a6d3fbc161611f8388c36fca5}
+      \strng{bibnamehash}{bfac1a2a6d3fbc161611f8388c36fca5}
+      \strng{authorbibnamehash}{bfac1a2a6d3fbc161611f8388c36fca5}
+      \strng{authornamehash}{bfac1a2a6d3fbc161611f8388c36fca5}
+      \strng{authorfullhash}{bfac1a2a6d3fbc161611f8388c36fca5}
+      \strng{authorfullhashraw}{bfac1a2a6d3fbc161611f8388c36fca5}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The advances in reinforcement learning have recorded sublime success in various domains. Although the multi-agent domain has been overshadowed by its single-agent counterpart during this progress, multi-agent reinforcement learning gains rapid traction, and the latest accomplishments address problems with real-world complexity. This article provides an overview of the current developments in the field of multi-agent deep reinforcement learning. We focus primarily on literature from recent years that combines deep reinforcement learning methods with a multi-agent scenario. To survey the works that constitute the contemporary landscape, the main~contents are divided into three parts. First, we analyze the structure of training schemes that are applied to train multiple agents. Second, we consider the emergent patterns of agent behavior in cooperative, competitive and mixed scenarios. Third, we systematically enumerate challenges that exclusively arise in the multi-agent domain and review methods that are leveraged to cope with these challenges. To conclude this survey, we discuss advances, identify trends, and outline possible directions for future work in this research area.}
+      \field{day}{1}
+      \field{issn}{1573-7462}
+      \field{journaltitle}{Artificial Intelligence Review}
+      \field{langid}{english}
+      \field{month}{2}
+      \field{number}{2}
+      \field{shortjournal}{Artif Intell Rev}
+      \field{shorttitle}{Multi-Agent Deep Reinforcement Learning}
+      \field{title}{Multi-Agent Deep Reinforcement Learning: A Survey}
+      \field{urlday}{26}
+      \field{urlmonth}{6}
+      \field{urlyear}{2024}
+      \field{volume}{55}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{895\bibrangedash 943}
+      \range{pages}{49}
+      \verb{doi}
+      \verb 10.1007/s10462-021-09996-w
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/UJLZVR4C/Gronauer_Diepold_2022_Multi-agent deep reinforcement learning.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/s10462-021-09996-w
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/s10462-021-09996-w
+      \endverb
+      \keyw{Deep learning,Machine learning,Multi-agent learning,Multi-agent systems,Reinforcement learning,Survey}
+    \endentry
+    \entry{gupta2017}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=fe52f7f3365727a86a07b7c519c958b1}{%
+           family={Gupta},
+           familyi={G\bibinitperiod},
+           given={Jayesh\bibnamedelima K},
+           giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=f54d2cf50019ddff2faf8a3ff0b086fd}{%
+           family={Egorov},
+           familyi={E\bibinitperiod},
+           given={Maxim},
+           giveni={M\bibinitperiod}}}%
+        {{hash=e36ad022497396d3ca41ea1594ac09ec}{%
+           family={Kochenderfer},
+           familyi={K\bibinitperiod},
+           given={Mykel},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{e96796c55326b509d6061753f49c4b82}
+      \strng{fullhash}{e96796c55326b509d6061753f49c4b82}
+      \strng{fullhashraw}{e96796c55326b509d6061753f49c4b82}
+      \strng{bibnamehash}{e96796c55326b509d6061753f49c4b82}
+      \strng{authorbibnamehash}{e96796c55326b509d6061753f49c4b82}
+      \strng{authornamehash}{e96796c55326b509d6061753f49c4b82}
+      \strng{authorfullhash}{e96796c55326b509d6061753f49c4b82}
+      \strng{authorfullhashraw}{e96796c55326b509d6061753f49c4b82}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{International Conference on Autonomous Agents and Multiagent Systems}
+      \field{title}{Cooperative Multi-Agent Control Using Deep Reinforcement Learning}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{pages}{66\bibrangedash 83}
+      \range{pages}{18}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/2FJVAMV9/Gupta et al_2017_Cooperative multi-agent control using deep reinforcement learning.pdf
+      \endverb
+    \endentry
+    \entry{hoang2023}{incollection}{}{}
+      \name{author}{6}{}{%
+        {{hash=519a2c85c408a53b30730d311071f6da}{%
+           family={Hoang},
+           familyi={H\bibinitperiod},
+           given={Maria-Theresa\bibnamedelima Oanh},
+           giveni={M\bibinithyphendelim T\bibinitperiod\bibinitdelim O\bibinitperiod}}}%
+        {{hash=3833fbffd346f0912bc0ed96c6dc30b3}{%
+           family={Grøntved},
+           familyi={G\bibinitperiod},
+           given={Kasper\bibnamedelimb Andreas\bibnamedelima Rømer},
+           giveni={K\bibinitperiod\bibinitdelim A\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=685b9ea4bbe3cfd182b2f6de14392df7}{%
+           family={Van\bibnamedelima Berkel},
+           familyi={V\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Niels},
+           giveni={N\bibinitperiod}}}%
+        {{hash=9adb34bb3d94b6b03a5e7aeae989aca7}{%
+           family={Skov},
+           familyi={S\bibinitperiod},
+           given={Mikael\bibnamedelima B},
+           giveni={M\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=9bcfcdaddcb7ce07a993c8896270eecd}{%
+           family={Christensen},
+           familyi={C\bibinitperiod},
+           given={Anders\bibnamedelima Lyhne},
+           giveni={A\bibinitperiod\bibinitdelim L\bibinitperiod}}}%
+        {{hash=dc5a47d852a6263c511e4ba4f52ebc1b}{%
+           family={Merritt},
+           familyi={M\bibinitperiod},
+           given={Timothy},
+           giveni={T\bibinitperiod}}}%
+      }
+      \name{editor}{4}{}{%
+        {{hash=a234b822a6d76c8a9cb5f078e801d411}{%
+           family={Dunstan},
+           familyi={D\bibinitperiod},
+           given={Belinda\bibnamedelima J.},
+           giveni={B\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=3e8eb7293272c2087e88443048b77198}{%
+           family={Koh},
+           familyi={K\bibinitperiod},
+           given={Jeffrey\bibnamedelimb T.\bibnamedelimi K.\bibnamedelimi V.},
+           giveni={J\bibinitperiod\bibinitdelim T\bibinitperiod\bibinitdelim K\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+        {{hash=0dbb722262c73e12749c4022266a4c7c}{%
+           family={Turnbull\bibnamedelima Tillman},
+           familyi={T\bibinitperiod\bibinitdelim T\bibinitperiod},
+           given={Deborah},
+           giveni={D\bibinitperiod}}}%
+        {{hash=a8d06e1e090867d306cf81c9bdd48e85}{%
+           family={Brown},
+           familyi={B\bibinitperiod},
+           given={Scott\bibnamedelima Andrew},
+           giveni={S\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{bba7e2d066a0f511a3ef8adea78073d2}
+      \strng{fullhash}{9cb03b966aadaffa0ad4a6c8f281f01c}
+      \strng{fullhashraw}{9cb03b966aadaffa0ad4a6c8f281f01c}
+      \strng{bibnamehash}{bba7e2d066a0f511a3ef8adea78073d2}
+      \strng{authorbibnamehash}{bba7e2d066a0f511a3ef8adea78073d2}
+      \strng{authornamehash}{bba7e2d066a0f511a3ef8adea78073d2}
+      \strng{authorfullhash}{9cb03b966aadaffa0ad4a6c8f281f01c}
+      \strng{authorfullhashraw}{9cb03b966aadaffa0ad4a6c8f281f01c}
+      \strng{editorbibnamehash}{b310fd650be253b5989b532de2bab857}
+      \strng{editornamehash}{b310fd650be253b5989b532de2bab857}
+      \strng{editorfullhash}{a1cf2c6552df80185d8e46469a5a17b8}
+      \strng{editorfullhashraw}{a1cf2c6552df80185d8e46469a5a17b8}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{booktitle}{Cultural {{Robotics}}: {{Social Robots}} and {{Their Emergent Cultural Ecologies}}}
+      \field{isbn}{978-3-031-28137-2 978-3-031-28138-9}
+      \field{langid}{english}
+      \field{shorttitle}{Drone {{Swarms}} to {{Support Search}} and {{Rescue Operations}}}
+      \field{title}{Drone {{Swarms}} to {{Support Search}} and {{Rescue Operations}}: {{Opportunities}} and {{Challenges}}}
+      \field{urlday}{12}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{163\bibrangedash 176}
+      \range{pages}{14}
+      \verb{doi}
+      \verb 10.1007/978-3-031-28138-9_11
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/EWGATS8U/Hoang et al. - 2023 - Drone Swarms to Support Search and Rescue Operatio.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://link.springer.com/10.1007/978-3-031-28138-9_11
+      \endverb
+      \verb{url}
+      \verb https://link.springer.com/10.1007/978-3-031-28138-9_11
+      \endverb
+    \endentry
+    \entry{jin2025}{online}{}{}
+      \name{author}{6}{}{%
+        {{hash=e50468811cd22d27b53d5663a4310021}{%
+           family={Jin},
+           familyi={J\bibinitperiod},
+           given={Weiqiang},
+           giveni={W\bibinitperiod}}}%
+        {{hash=0a33edcd9cf079959a9301994561b007}{%
+           family={Du},
+           familyi={D\bibinitperiod},
+           given={Hongyang},
+           giveni={H\bibinitperiod}}}%
+        {{hash=e0a8441ea5e9cb783ba0bcb3fc549126}{%
+           family={Zhao},
+           familyi={Z\bibinitperiod},
+           given={Biao},
+           giveni={B\bibinitperiod}}}%
+        {{hash=4ce2153d6b98c2c5f0c681ad4c0dbeeb}{%
+           family={Tian},
+           familyi={T\bibinitperiod},
+           given={Xingwu},
+           giveni={X\bibinitperiod}}}%
+        {{hash=1e3d82466f2347b8ede6c970ceab13b5}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Bohang},
+           giveni={B\bibinitperiod}}}%
+        {{hash=11a33b1aa9e89479e304318dff521b9c}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Guang},
+           giveni={G\bibinitperiod}}}%
+      }
+      \strng{namehash}{2f0d809d993de22304f454b21f857387}
+      \strng{fullhash}{7dd07e5f7cc5a6b58a95c3de84648976}
+      \strng{fullhashraw}{7dd07e5f7cc5a6b58a95c3de84648976}
+      \strng{bibnamehash}{2f0d809d993de22304f454b21f857387}
+      \strng{authorbibnamehash}{2f0d809d993de22304f454b21f857387}
+      \strng{authornamehash}{2f0d809d993de22304f454b21f857387}
+      \strng{authorfullhash}{7dd07e5f7cc5a6b58a95c3de84648976}
+      \strng{authorfullhashraw}{7dd07e5f7cc5a6b58a95c3de84648976}
+      \field{sortinit}{J}
+      \field{sortinithash}{b2f54a9081ace9966a7cb9413811edb4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{With the rapid development of artificial intelligence, intelligent decision-making techniques have gradually surpassed human levels in various human-machine competitions, especially in complex multi-agent cooperative task scenarios. Multi-agent cooperative decision-making involves multiple agents working together to complete established tasks and achieve specific objectives. These techniques are widely applicable in real-world scenarios such as autonomous driving, drone navigation, disaster rescue, and simulated military confrontations. This paper begins with a comprehensive survey of the leading simulation environments and platforms used for multi-agent cooperative decision-making. Specifically, we provide an in-depth analysis for these simulation environments from various perspectives, including task formats, reward allocation, and the underlying technologies employed. Subsequently, we provide a comprehensive overview of the mainstream intelligent decision-making approaches, algorithms and models for multi-agent systems (MAS). Theseapproaches can be broadly categorized into five types: rule-based (primarily fuzzy logic), game theory-based, evolutionary algorithms-based, deep multi-agent reinforcement learning (MARL)-based, and large language models(LLMs)reasoning-based. Given the significant advantages of MARL andLLMs-baseddecision-making methods over the traditional rule, game theory, and evolutionary algorithms, this paper focuses on these multi-agent methods utilizing MARL and LLMs-based techniques. We provide an in-depth discussion of these approaches, highlighting their methodology taxonomies, advantages, and drawbacks. Further, several prominent research directions in the future and potential challenges of multi-agent cooperative decision-making are also detailed.}
+      \field{day}{17}
+      \field{eprintclass}{cs}
+      \field{eprinttype}{arXiv}
+      \field{month}{3}
+      \field{pubstate}{prepublished}
+      \field{shorttitle}{A {{Comprehensive Survey}} on {{Multi-Agent Cooperative Decision-Making}}}
+      \field{title}{A {{Comprehensive Survey}} on {{Multi-Agent Cooperative Decision-Making}}: {{Scenarios}}, {{Approaches}}, {{Challenges}} and {{Perspectives}}}
+      \field{urlday}{16}
+      \field{urlmonth}{4}
+      \field{urlyear}{2025}
+      \field{version}{1}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2503.13415
+      \endverb
+      \verb{eprint}
+      \verb 2503.13415
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/4VBMU7EK/Jin et al_2025_A Comprehensive Survey on Multi-Agent Cooperative Decision-Making.pdf;/Users/brandonhosley/Zotero/storage/NGAVTUPQ/2503.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2503.13415
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2503.13415
+      \endverb
+      \keyw{Computer Science - Artificial Intelligence,Computer Science - Multiagent Systems}
+    \endentry
+    \entry{krouka2022}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=616e6d8961032bfb45ba2d908c5bd579}{%
+           family={Krouka},
+           familyi={K\bibinitperiod},
+           given={Mounssif},
+           giveni={M\bibinitperiod}}}%
+        {{hash=3a3569c9399ccbb0e5a839392163d978}{%
+           family={Elgabli},
+           familyi={E\bibinitperiod},
+           given={Anis},
+           giveni={A\bibinitperiod}}}%
+        {{hash=dc57afe6da11419e9f5baa24fc305874}{%
+           family={Issaid},
+           familyi={I\bibinitperiod},
+           given={Chaouki\bibnamedelima Ben},
+           giveni={C\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+        {{hash=eaf666d93aee903b2bbd8a40853a4243}{%
+           family={Bennis},
+           familyi={B\bibinitperiod},
+           given={Mehdi},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{7824fd2537fe178ac791ce5b3523e4d1}
+      \strng{fullhash}{1a92a0bbb9600f65ab789efffe6fce9f}
+      \strng{fullhashraw}{1a92a0bbb9600f65ab789efffe6fce9f}
+      \strng{bibnamehash}{7824fd2537fe178ac791ce5b3523e4d1}
+      \strng{authorbibnamehash}{7824fd2537fe178ac791ce5b3523e4d1}
+      \strng{authornamehash}{7824fd2537fe178ac791ce5b3523e4d1}
+      \strng{authorfullhash}{1a92a0bbb9600f65ab789efffe6fce9f}
+      \strng{authorfullhashraw}{1a92a0bbb9600f65ab789efffe6fce9f}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In this paper, we consider a distributed reinforcement learning setting where agents are communicating with a central entity in a shared environment to maximize a global reward. A main challenge in this setting is that the randomness of the wireless channel perturbs each agent’s model update while multiple agents’ updates may cause interference when communicating under limited bandwidth. To address this issue, we propose a novel distributed reinforcement learning algorithm based on the alternating direction method of multipliers (ADMM) and “over air aggregation” using analog transmission scheme, referred to as A-RLADMM. Our algorithm incorporates the wireless channel into the formulation of the ADMM method, which enables agents to transmit each element of their updated models over the same channel using analog communication. Numerical experiments on a multi-agent collaborative navigation task show that our proposed algorithm significantly outperforms the digital communication baseline of A-RLADMM (D-RLADMM), the lazily aggregated policy gradient (RL-LAPG), as well as the analog and the digital communication versions of the vanilla FL, (A-FRL) and (D-FRL) respectively.}
+      \field{issn}{2332-7731}
+      \field{journaltitle}{IEEE Transactions on Cognitive Communications and Networking}
+      \field{month}{3}
+      \field{number}{1}
+      \field{title}{Communication-{{Efficient}} and {{Federated Multi-Agent Reinforcement Learning}}}
+      \field{urlday}{16}
+      \field{urlmonth}{4}
+      \field{urlyear}{2025}
+      \field{volume}{8}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{311\bibrangedash 320}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1109/TCCN.2021.3130993
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/YXIAE97H/Krouka et al_2022_Communication-Efficient and Federated Multi-Agent Reinforcement Learning.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/abstract/document/9627728
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/abstract/document/9627728
+      \endverb
+      \keyw{ADMM,analog communications,Collaboration,Computational modeling,Convergence,Digital communication,distributed optimization,Numerical models,policy gradient,Privacy,Reinforcement learning}
+    \endentry
+    \entry{liu2020b}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=1658eb9cc7f03d088ee134bd5c51d441}{%
+           family={Liu},
+           familyi={L\bibinitperiod},
+           given={Iou-Jen},
+           giveni={I\bibinithyphendelim J\bibinitperiod}}}%
+        {{hash=53b85b47b32486923f598b78fc90443f}{%
+           family={Yeh},
+           familyi={Y\bibinitperiod},
+           given={Raymond\bibnamedelima A.},
+           giveni={R\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=0c14478283bed70b2c487f3fba643a7b}{%
+           family={Schwing},
+           familyi={S\bibinitperiod},
+           given={Alexander\bibnamedelima G.},
+           giveni={A\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {PMLR}%
+      }
+      \strng{namehash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{fullhash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{fullhashraw}{bc7473e651fd56a500db06682bc9392a}
+      \strng{bibnamehash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{authorbibnamehash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{authornamehash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{authorfullhash}{bc7473e651fd56a500db06682bc9392a}
+      \strng{authorfullhashraw}{bc7473e651fd56a500db06682bc9392a}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{Sample efficiency and scalability to a large number of agents are two important goals for multi-agent reinforcement learning systems. Recent works got us closer to those goals, addressing non-stationarity of the environment from a single agent’s perspective by utilizing a deep net critic which depends on all observations and actions. The critic input concatenates agent observations and actions in a user-specified order. However, since deep nets aren’t permutation invariant, a permuted input changes the critic output despite the environment remaining identical. To avoid this inefficiency, we propose a ‘permutation invariant critic’ (PIC), which yields identical output irrespective of the agent permutation. This consistent representation enables our model to scale to 30 times more agents and to achieve improvements of test episode reward between 15\% to 50\% on the challenging multi-agent particle environment (MPE).}
+      \field{booktitle}{Proceedings of the {{Conference}} on {{Robot Learning}}}
+      \field{day}{12}
+      \field{eventtitle}{Conference on {{Robot Learning}}}
+      \field{issn}{2640-3498}
+      \field{langid}{english}
+      \field{month}{5}
+      \field{shorttitle}{{{PIC}}}
+      \field{title}{{{PIC}}: {{Permutation Invariant Critic}} for {{Multi-Agent Deep Reinforcement Learning}}}
+      \field{urlday}{25}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{590\bibrangedash 602}
+      \range{pages}{13}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/C5YEN3SD/Liu et al_2020_PIC.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://proceedings.mlr.press/v100/liu20a.html
+      \endverb
+      \verb{url}
+      \verb https://proceedings.mlr.press/v100/liu20a.html
+      \endverb
+    \endentry
+    \entry{lowe2020}{online}{}{}
+      \name{author}{6}{}{%
+        {{hash=7be01fa6277ef22b804ff6cc54c87b72}{%
+           family={Lowe},
+           familyi={L\bibinitperiod},
+           given={Ryan},
+           giveni={R\bibinitperiod}}}%
+        {{hash=e2101a0f6a72a2fb022cd3e2d45461e1}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Yi},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=41ea42ab7e09607e91466632ce419d8c}{%
+           family={Tamar},
+           familyi={T\bibinitperiod},
+           given={Aviv},
+           giveni={A\bibinitperiod}}}%
+        {{hash=5de1025172ba2cd90c9f04ae0ba17006}{%
+           family={Harb},
+           familyi={H\bibinitperiod},
+           given={Jean},
+           giveni={J\bibinitperiod}}}%
+        {{hash=e28d4ee199593959d8c29980a64f1974}{%
+           family={Abbeel},
+           familyi={A\bibinitperiod},
+           given={Pieter},
+           giveni={P\bibinitperiod}}}%
+        {{hash=7570e7c3fc2c13d59af4d7cdb9962a4d}{%
+           family={Mordatch},
+           familyi={M\bibinitperiod},
+           given={Igor},
+           giveni={I\bibinitperiod}}}%
+      }
+      \strng{namehash}{dde2b308cb02077d5b0dcf690cd4ea7e}
+      \strng{fullhash}{d649a4bfdfab1502cd7ae45ec8e10355}
+      \strng{fullhashraw}{d649a4bfdfab1502cd7ae45ec8e10355}
+      \strng{bibnamehash}{dde2b308cb02077d5b0dcf690cd4ea7e}
+      \strng{authorbibnamehash}{dde2b308cb02077d5b0dcf690cd4ea7e}
+      \strng{authornamehash}{dde2b308cb02077d5b0dcf690cd4ea7e}
+      \strng{authorfullhash}{d649a4bfdfab1502cd7ae45ec8e10355}
+      \strng{authorfullhashraw}{d649a4bfdfab1502cd7ae45ec8e10355}
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{We explore deep reinforcement learning methods for multi-agent domains. We begin by analyzing the difficulty of traditional algorithms in the multi-agent case: Q-learning is challenged by an inherent non-stationarity of the environment, while policy gradient suffers from a variance that increases as the number of agents grows. We then present an adaptation of actor-critic methods that considers action policies of other agents and is able to successfully learn policies that require complex multi-agent coordination. Additionally, we introduce a training regimen utilizing an ensemble of policies for each agent that leads to more robust multi-agent policies. We show the strength of our approach compared to existing methods in cooperative as well as competitive scenarios, where agent populations are able to discover various physical and informational coordination strategies.}
+      \field{day}{14}
+      \field{eprintclass}{cs}
+      \field{eprinttype}{arXiv}
+      \field{month}{3}
+      \field{pubstate}{prepublished}
+      \field{title}{Multi-{{Agent Actor-Critic}} for {{Mixed Cooperative-Competitive Environments}}}
+      \field{urlday}{12}
+      \field{urlmonth}{2}
+      \field{urlyear}{2023}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1706.02275
+      \endverb
+      \verb{eprint}
+      \verb 1706.02275
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/Q54TTJQQ/Lowe et al. - 2020 - Multi-Agent Actor-Critic for Mixed Cooperative-Com.pdf;/Users/brandonhosley/Zotero/storage/F3DU3EG3/1706.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/1706.02275
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/1706.02275
+      \endverb
+      \keyw{Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing}
+    \endentry
+    \entry{zotero-2835}{online}{}{}
+      \field{sortinit}{O}
+      \field{sortinithash}{2cd7140a07aea5341f9e2771efe90aae}
+      \field{labeltitlesource}{title}
+      \field{title}{{{OFFSET Swarm Systems Integrators Demonstrate Tactics}} to {{Conduct Urban Raid}}}
+      \field{urlday}{16}
+      \field{urlmonth}{4}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/8ENUG5EW/offset-swarm-urban-raid.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.darpa.mil/news/2020/offset-swarm-urban-raid
+      \endverb
+      \verb{url}
+      \verb https://www.darpa.mil/news/2020/offset-swarm-urban-raid
+      \endverb
+    \endentry
+    \entry{papoudakis2021}{online}{}{}
+      \name{author}{4}{}{%
+        {{hash=d0631db9b5ca2e6150a04082663ca08d}{%
+           family={Papoudakis},
+           familyi={P\bibinitperiod},
+           given={Georgios},
+           giveni={G\bibinitperiod}}}%
+        {{hash=f355421623a9ce0d54965817f05f6ad0}{%
+           family={Christianos},
+           familyi={C\bibinitperiod},
+           given={Filippos},
+           giveni={F\bibinitperiod}}}%
+        {{hash=c32fcecebc45af27f83fbcfea1c93b31}{%
+           family={Schäfer},
+           familyi={S\bibinitperiod},
+           given={Lukas},
+           giveni={L\bibinitperiod}}}%
+        {{hash=9da4f3f413d514d731efe34067976909}{%
+           family={Albrecht},
+           familyi={A\bibinitperiod},
+           given={Stefano\bibnamedelima V.},
+           giveni={S\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+      }
+      \strng{namehash}{f2473647f2bd5df0777ba1def078b0af}
+      \strng{fullhash}{fb48708063b34a78b84029004ce47bdb}
+      \strng{fullhashraw}{fb48708063b34a78b84029004ce47bdb}
+      \strng{bibnamehash}{f2473647f2bd5df0777ba1def078b0af}
+      \strng{authorbibnamehash}{f2473647f2bd5df0777ba1def078b0af}
+      \strng{authornamehash}{f2473647f2bd5df0777ba1def078b0af}
+      \strng{authorfullhash}{fb48708063b34a78b84029004ce47bdb}
+      \strng{authorfullhashraw}{fb48708063b34a78b84029004ce47bdb}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Multi-agent deep reinforcement learning (MARL) suffers from a lack of commonly-used evaluation tasks and criteria, making comparisons between approaches difficult. In this work, we provide a systematic evaluation and comparison of three different classes of MARL algorithms (independent learning, centralised multi-agent policy gradient, value decomposition) in a diverse range of cooperative multi-agent learning tasks. Our experiments serve as a reference for the expected performance of algorithms across different learning tasks, and we provide insights regarding the effectiveness of different learning approaches. We open-source EPyMARL, which extends the PyMARL codebase to include additional algorithms and allow for flexible configuration of algorithm implementation details such as parameter sharing. Finally, we open-source two environments for multi-agent research which focus on coordination under sparse rewards.}
+      \field{day}{9}
+      \field{eprintclass}{cs, stat}
+      \field{eprinttype}{arXiv}
+      \field{month}{11}
+      \field{pubstate}{prepublished}
+      \field{title}{Benchmarking {{Multi-Agent Deep Reinforcement Learning Algorithms}} in {{Cooperative Tasks}}}
+      \field{urlday}{28}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2006.07869
+      \endverb
+      \verb{eprint}
+      \verb 2006.07869
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/X55NBJGK/Papoudakis et al_2021_Benchmarking Multi-Agent Deep Reinforcement Learning Algorithms in Cooperative.pdf;/Users/brandonhosley/Zotero/storage/9S95S7UZ/2006.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2006.07869
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2006.07869
+      \endverb
+      \keyw{Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems,Statistics - Machine Learning}
+    \endentry
+    \entry{rizk2019}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=3bf0bdfcd1ad3a4d6ed3e1a1a5d94555}{%
+           family={Rizk},
+           familyi={R\bibinitperiod},
+           given={Yara},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=ab9ad0fd1072886327bd8fcf16882d22}{%
+           family={Awad},
+           familyi={A\bibinitperiod},
+           given={Mariette},
+           giveni={M\bibinitperiod}}}%
+        {{hash=a696139e89c3f6d7152594d068cab433}{%
+           family={Tunstel},
+           familyi={T\bibinitperiod},
+           given={E.},
+           giveni={E\bibinitperiod}}}%
+      }
+      \strng{namehash}{92270213c4e822e5c8cb023f26b5a06b}
+      \strng{fullhash}{92270213c4e822e5c8cb023f26b5a06b}
+      \strng{fullhashraw}{92270213c4e822e5c8cb023f26b5a06b}
+      \strng{bibnamehash}{92270213c4e822e5c8cb023f26b5a06b}
+      \strng{authorbibnamehash}{92270213c4e822e5c8cb023f26b5a06b}
+      \strng{authornamehash}{92270213c4e822e5c8cb023f26b5a06b}
+      \strng{authorfullhash}{92270213c4e822e5c8cb023f26b5a06b}
+      \strng{authorfullhashraw}{92270213c4e822e5c8cb023f26b5a06b}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{The emergence of the Internet of things and the wide spread deployment of diverse computing systems have led to the formation of heterogeneous multi-agent systems (MAS) to complete a variety of tasks. Motivated to highlight the state of the art on existing MAS while identifying their limitations, remaining challenges and possible future directions, we survey recent contributions to the field. We focus on robot agents and emphasize the challenges of MAS sub-fields including task decomposition, coalition formation, task allocation, perception, and multi-agent planning and control. While some components have seen more advancements than others, more research is required before effective autonomous MAS can be deployed in real smart city settings that are less restrictive than the assumed validation environments of MAS. Specifically, more autonomous end-to-end solutions need to be experimentally tested and developed while incorporating natural language ontology and dictionaries to automate complex task decomposition and leveraging big data advancements to improve perception algorithms for robotics. Y. Rizk et al. 1 INTRODUCTION The dynamic and unpredictable nature of the world we live in makes it difficult to design one autonomous robot that can efficiently adapt to all circumstances. Therefore, robots of various shapes, sizes and capabilities such as unmanned aerial vehicles (UAVs), unmanned ground vehicles (UGVs), humanoids and others have been designed to cooperate with each other and humans, to successfully accomplish complex tasks. Allowing these diverse connected devices, expected to surpass \$20 billion by 2020 with the emergence of the Internet of things (IoT) [39], to cooperate will significantly increase the spectrum of automated tasks. Integrating these devices in areas such as health care, transportation systems, emergency response systems, household chores, and elderly care, among others will make smart cities even smarter. In this work, we discuss the literature on automating complex tasks using heterogeneous multi-robot systems (MRS), after a brief overview of the more general multi-agent system (MAS) field. We present the main components of a workflow to automate MRS: task decomposition, coalition formation, task allocation, perception, and MAS planning and control, survey existing work in each area and identify some remaining challenges and possible future research directions. However, many aspects of heterogeneous MAS are not covered in this survey. They include, but are not limited to, credit assignment which studies reward distribution among agents [226], consensus which investigates protocols that ensure agent agreement under different circumstances [102, 237], containment control which is a type of consensus in leader-follower models [236] and robot hardware design. Although communication protocols for robot-robot communication which enable agent cooperation through information exchange [30, 56] and the information flow problem which seeks to design efficient information exchange strategies [30] are an important component of MAS, we do not include them in this survey. Instead readers are invited to check the literature of [30, 56]. Few end-to-end frameworks have been presented for MRS, the most notable is swarmanoids [55] which accomplished search and retrieval tasks using a swarm of three types of robots. Many solutions still required significant human intervention to achieve complex tasks. Furthermore, individual aspects of MRS have been tackled, such as giving robots access to information on the cloud [175] and simultaneous coalition formation and task allocation [233]. However, more end-to-end testing on IoT-aided robotics [77] and MRS applications should be conducted to achieve more progress. Natural language ontology and dictionaries could help automate complex task decomposition and big data advancements could be leveraged to improve perception and consequently decision making. Two of the closest surveys to our work were published almost a decade ago; one covered MRS coordination including task allocation, decomposition and resource distribution [54]. However, it focused on market-based approaches and did not include work on coalition formation and decision making models. A more recent survey discussed existing MRS architectures, communication schemes, swarm robotics, task allocation, and learning [157] in applications like foraging, formation control, cooperative object manipulation and displacement, path planning and soccer [157]. Other surveys had a narrower scope than our work and focused on a specific research area such as cooperative MAS planning and control models and algorithms [155] and distributed consensus in MAS [235]. Some surveys focused on MRS and their assigned tasks; Arai et al. identified seven main research areas in MRS, including robot architectures, mapping and exploration, and motion coordination, and discussed state of the art research and challenges in each area [13]. Ota surveyed tasks assigned to MRS, classifying them into point reaching, region sweeping and compound tasks, in addition to one-time and many-time tasks, i.e. tasks that require multiple iterations for completion [152]. Murray surveyed cooperative control of multi-vehicle systems and their applications in the}
+      \field{day}{7}
+      \field{month}{1}
+      \field{shorttitle}{Cooperative {{Heterogeneous Multi-Robot Systems}}}
+      \field{title}{Cooperative {{Heterogeneous Multi-Robot Systems}}: {{A Survey}}}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/HNKQIAI6/Rizk et al_2019_Cooperative Heterogeneous Multi-Robot Systems.pdf
+      \endverb
+    \endentry
+    \entry{robertson2023}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=2ded787643cdde3609f2946604ba703d}{%
+           family={Robertson},
+           familyi={R\bibinitperiod},
+           given={Noah},
+           giveni={N\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Defense News}%
+      }
+      \strng{namehash}{2ded787643cdde3609f2946604ba703d}
+      \strng{fullhash}{2ded787643cdde3609f2946604ba703d}
+      \strng{fullhashraw}{2ded787643cdde3609f2946604ba703d}
+      \strng{bibnamehash}{2ded787643cdde3609f2946604ba703d}
+      \strng{authorbibnamehash}{2ded787643cdde3609f2946604ba703d}
+      \strng{authornamehash}{2ded787643cdde3609f2946604ba703d}
+      \strng{authorfullhash}{2ded787643cdde3609f2946604ba703d}
+      \strng{authorfullhashraw}{2ded787643cdde3609f2946604ba703d}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The program will seek to scale unmanned, attritable systems to offset China's bulk capacity, Hicks said.}
+      \field{day}{28}
+      \field{hour}{15}
+      \field{langid}{english}
+      \field{minute}{50}
+      \field{month}{8}
+      \field{second}{14}
+      \field{title}{Pentagon Unveils ‘{{Replicator}}’ Drone Program to Compete with {{China}}}
+      \field{urlday}{25}
+      \field{urlmonth}{6}
+      \field{urlyear}{2024}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/BUYKV3CJ/pentagon-unveils-replicator-drone-program-to-compete-with-china.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.defensenews.com/pentagon/2023/08/28/pentagon-unveils-replicator-drone-program-to-compete-with-china/
+      \endverb
+      \verb{url}
+      \verb https://www.defensenews.com/pentagon/2023/08/28/pentagon-unveils-replicator-drone-program-to-compete-with-china/
+      \endverb
+    \endentry
+    \entry{smit2023}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=4b49a4ae46f23bdc584e1f6576d46f1d}{%
+           family={Smit},
+           familyi={S\bibinitperiod},
+           given={Andries},
+           giveni={A\bibinitperiod}}}%
+        {{hash=1ad14539972beb801f05fa896097879e}{%
+           family={Engelbrecht},
+           familyi={E\bibinitperiod},
+           given={Herman\bibnamedelima A.},
+           giveni={H\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=03ceb98a1190ebc6471f95bf82e2c060}{%
+           family={Brink},
+           familyi={B\bibinitperiod},
+           given={Willie},
+           giveni={W\bibinitperiod}}}%
+        {{hash=eb6e9b62595b1500b93f495d875bb6c2}{%
+           family={Pretorius},
+           familyi={P\bibinitperiod},
+           given={Arnu},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{e57bd41a1b18a599096ba2b49b452d55}
+      \strng{fullhash}{34a9e177b906a01ef2c329e82775bf13}
+      \strng{fullhashraw}{34a9e177b906a01ef2c329e82775bf13}
+      \strng{bibnamehash}{e57bd41a1b18a599096ba2b49b452d55}
+      \strng{authorbibnamehash}{e57bd41a1b18a599096ba2b49b452d55}
+      \strng{authornamehash}{e57bd41a1b18a599096ba2b49b452d55}
+      \strng{authorfullhash}{34a9e177b906a01ef2c329e82775bf13}
+      \strng{authorfullhashraw}{34a9e177b906a01ef2c329e82775bf13}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Robotic football has long been seen as a grand challenge in artificial intelligence. Despite recent success of learned policies over heuristics and handcrafted rules in general, current teams in the simulated RoboCup football leagues, where autonomous agents compete against each other, still rely on handcrafted strategies with only a few using reinforcement learning directly. This limits a learning agent’s ability to find stronger high-level strategies for the full game. In this paper, we show that it is possible for agents to learn competent football strategies on a full 22 player setting using limited computation resources (one GPU and one CPU), from tabula rasa through self-play. To do this, we build a 2D football simulator with faster simulation times than the RoboCup simulator. We propose various improvements to the standard single-agent PPO training algorithm which help it scale to our multi-agent setting. These improvements include (1) using a policy and critic network with an attention mechanism that scales linearly in the number of agents, (2) sharing networks between agents which allow for faster throughput using batching, and (3) using Polyak averaged opponents, league opponents and freezing the opponent team when necessary. We show through experimental results that stable training in the full 22 player setting is possible. Agents trained in the 22 player setting learn to defeat a variety of handcrafted strategies, and also achieve a higher win rate compared to agents trained in the 4 player setting and evaluated in the full game.}
+      \field{annotation}{https://github.com/DriesSmit/MARL2DSoccer}
+      \field{day}{24}
+      \field{issn}{1573-7454}
+      \field{journaltitle}{Autonomous Agents and Multi-Agent Systems}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{number}{1}
+      \field{shortjournal}{Auton Agent Multi-Agent Syst}
+      \field{title}{Scaling Multi-Agent Reinforcement Learning to Full 11 versus 11 Simulated Robotic Football}
+      \field{urlday}{16}
+      \field{urlmonth}{3}
+      \field{urlyear}{2024}
+      \field{volume}{37}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{20}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1007/s10458-023-09603-y
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/5UPXMZ63/Smit et al. - 2023 - Scaling multi-agent reinforcement learning to full.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://doi.org/10.1007/s10458-023-09603-y
+      \endverb
+      \verb{url}
+      \verb https://doi.org/10.1007/s10458-023-09603-y
+      \endverb
+      \keyw{11 versus 11 football,Multi-agent reinforcement learning,RoboCup,RoboCup 2D,Simulated robotic football,Soccer}
+    \endentry
+    \entry{terry2020}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=1342abb514dea17718be30300aca1831}{%
+           family={Terry},
+           familyi={T\bibinitperiod},
+           given={Justin\bibnamedelima K.},
+           giveni={J\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=562720b3b3dc0da7beff80f5a9658a96}{%
+           family={Grammel},
+           familyi={G\bibinitperiod},
+           given={Nathaniel},
+           giveni={N\bibinitperiod}}}%
+        {{hash=c55e7aa1fc30130c5305084200967810}{%
+           family={Son},
+           familyi={S\bibinitperiod},
+           given={Sanghyun},
+           giveni={S\bibinitperiod}}}%
+        {{hash=bfd91affe76615f3a790a36f0715a769}{%
+           family={Black},
+           familyi={B\bibinitperiod},
+           given={Benjamin},
+           giveni={B\bibinitperiod}}}%
+      }
+      \strng{namehash}{89a595a101e3ce18333680ac01e40d71}
+      \strng{fullhash}{e00231150cca572b7c2d6ffc4574d96e}
+      \strng{fullhashraw}{e00231150cca572b7c2d6ffc4574d96e}
+      \strng{bibnamehash}{89a595a101e3ce18333680ac01e40d71}
+      \strng{authorbibnamehash}{89a595a101e3ce18333680ac01e40d71}
+      \strng{authornamehash}{89a595a101e3ce18333680ac01e40d71}
+      \strng{authorfullhash}{e00231150cca572b7c2d6ffc4574d96e}
+      \strng{authorfullhashraw}{e00231150cca572b7c2d6ffc4574d96e}
+      \field{sortinit}{T}
+      \field{sortinithash}{9af77f0292593c26bde9a56e688eaee9}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Parameter sharing, where each agent independently learns a policy with fully shared parameters between all policies, is a popular baseline method for multi-agent deep reinforcement learning. Unfortunately, since all agents share the same policy network, they cannot learn different policies or tasks. This issue has been circumvented experimentally by adding an agent-specific indicator signal to observations, which we term "agent indication". Agent indication is limited, however, in that without modification it does not allow parameter sharing to be applied to environments where the action spaces and/or observation spaces are heterogeneous. This work formalizes the notion of agent indication and proves that it enables convergence to optimal policies for the first time. Next, we formally introduce methods to extend parameter sharing to learning in heterogeneous observation and action spaces, and prove that these methods allow for convergence to optimal policies. Finally, we experimentally confirm that the methods we introduce function empirically, and conduct a wide array of experiments studying the empirical efficacy of many different agent indication schemes for image based observation spaces.}
+      \field{day}{1}
+      \field{journaltitle}{CoRR}
+      \field{langid}{english}
+      \field{month}{1}
+      \field{title}{Parameter {{Sharing For Heterogeneous Agents}} in {{Multi-Agent Reinforcement Learning}}}
+      \field{urlday}{29}
+      \field{urlmonth}{9}
+      \field{urlyear}{2025}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/TFF4HGXS/Terry et al. - 2020 - Parameter Sharing For Heterogeneous Agents in Multi-Agent Reinforcement Learning.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://openreview.net/forum?id=ih3hbqfg3E
+      \endverb
+      \verb{url}
+      \verb https://openreview.net/forum?id=ih3hbqfg3E
+      \endverb
+    \endentry
+    \entry{yu2022}{online}{}{}
+      \name{author}{7}{}{%
+        {{hash=a10237d1d57fbf19311761320dafceb5}{%
+           family={Yu},
+           familyi={Y\bibinitperiod},
+           given={Chao},
+           giveni={C\bibinitperiod}}}%
+        {{hash=113762107382f1db1aebbc7a01ac3084}{%
+           family={Velu},
+           familyi={V\bibinitperiod},
+           given={Akash},
+           giveni={A\bibinitperiod}}}%
+        {{hash=c8a6a2cc029452189ac51ad8cb0d6d0b}{%
+           family={Vinitsky},
+           familyi={V\bibinitperiod},
+           given={Eugene},
+           giveni={E\bibinitperiod}}}%
+        {{hash=48e044f1d97f0e7b51746a59b87dbf49}{%
+           family={Gao},
+           familyi={G\bibinitperiod},
+           given={Jiaxuan},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b2eccb185095fccfeb40fdffd8b2105f}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=b294f0d3a2c6bab74ae96ed8c1a11b01}{%
+           family={Bayen},
+           familyi={B\bibinitperiod},
+           given={Alexandre},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e2101a0f6a72a2fb022cd3e2d45461e1}{%
+           family={Wu},
+           familyi={W\bibinitperiod},
+           given={Yi},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{e8e7ddbab774078659f78cda4aa60fe4}
+      \strng{fullhash}{606d06502f6751690748eb76e0b730b7}
+      \strng{fullhashraw}{606d06502f6751690748eb76e0b730b7}
+      \strng{bibnamehash}{e8e7ddbab774078659f78cda4aa60fe4}
+      \strng{authorbibnamehash}{e8e7ddbab774078659f78cda4aa60fe4}
+      \strng{authornamehash}{e8e7ddbab774078659f78cda4aa60fe4}
+      \strng{authorfullhash}{606d06502f6751690748eb76e0b730b7}
+      \strng{authorfullhashraw}{606d06502f6751690748eb76e0b730b7}
+      \field{sortinit}{Y}
+      \field{sortinithash}{fd67ad5a9ef0f7456bdd9aab10fe1495}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Proximal Policy Optimization (PPO) is a ubiquitous on-policy reinforcement learning algorithm but is significantly less utilized than off-policy learning algorithms in multi-agent settings. This is often due to the belief that PPO is significantly less sample efficient than off-policy methods in multi-agent systems. In this work, we carefully study the performance of PPO in cooperative multi-agent settings. We show that PPO-based multi-agent algorithms achieve surprisingly strong performance in four popular multi-agent testbeds: the particle-world environments, the StarCraft multi-agent challenge, Google Research Football, and the Hanabi challenge, with minimal hyperparameter tuning and without any domain-specific algorithmic modifications or architectures. Importantly, compared to competitive off-policy methods, PPO often achieves competitive or superior results in both final returns and sample efficiency. Finally, through ablation studies, we analyze implementation and hyperparameter factors that are critical to PPO's empirical performance, and give concrete practical suggestions regarding these factors. Our results show that when using these practices, simple PPO-based methods can be a strong baseline in cooperative multi-agent reinforcement learning. Source code is released at \textbackslash url\{https://github.com/marlbenchmark/on-policy\}.}
+      \field{day}{4}
+      \field{eprintclass}{cs}
+      \field{eprinttype}{arXiv}
+      \field{month}{11}
+      \field{pubstate}{prepublished}
+      \field{title}{The {{Surprising Effectiveness}} of {{PPO}} in {{Cooperative}}, {{Multi-Agent Games}}}
+      \field{urlday}{25}
+      \field{urlmonth}{5}
+      \field{urlyear}{2024}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.2103.01955
+      \endverb
+      \verb{eprint}
+      \verb 2103.01955
+      \endverb
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/SDH5KMVS/Yu et al_2022_The Surprising Effectiveness of PPO in Cooperative, Multi-Agent Games.pdf;/Users/brandonhosley/Zotero/storage/3KM2DXK5/2103.html
+      \endverb
+      \verb{urlraw}
+      \verb http://arxiv.org/abs/2103.01955
+      \endverb
+      \verb{url}
+      \verb http://arxiv.org/abs/2103.01955
+      \endverb
+      \keyw{Computer Science - Artificial Intelligence,Computer Science - Machine Learning,Computer Science - Multiagent Systems}
+    \endentry
+    \entry{zhong2024}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=b95d1a2055e09b96f430caf3d4d35616}{%
+           family={Zhong},
+           familyi={Z\bibinitperiod},
+           given={Yifan},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=0fb5c75e0d48bc9eacbbc94daa482547}{%
+           family={Kuba},
+           familyi={K\bibinitperiod},
+           given={Jakub\bibnamedelima Grudzien},
+           giveni={J\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=0e1c640014bac9108baa5a3600006e86}{%
+           family={Feng},
+           familyi={F\bibinitperiod},
+           given={Xidong},
+           giveni={X\bibinitperiod}}}%
+        {{hash=ee936fa0fa279c00e808275482941636}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Siyi},
+           giveni={S\bibinitperiod}}}%
+        {{hash=f08383385e5e86d608bf053e10579e54}{%
+           family={Ji},
+           familyi={J\bibinitperiod},
+           given={Jiaming},
+           giveni={J\bibinitperiod}}}%
+        {{hash=616d3b0b19e3536f5c65dfab2a48a659}{%
+           family={Yang},
+           familyi={Y\bibinitperiod},
+           given={Yaodong},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{2d1f4bb5b8a73da311fb4b059b2b8b41}
+      \strng{fullhash}{811d441c2dcb8ddce046201441d67105}
+      \strng{fullhashraw}{811d441c2dcb8ddce046201441d67105}
+      \strng{bibnamehash}{2d1f4bb5b8a73da311fb4b059b2b8b41}
+      \strng{authorbibnamehash}{2d1f4bb5b8a73da311fb4b059b2b8b41}
+      \strng{authornamehash}{2d1f4bb5b8a73da311fb4b059b2b8b41}
+      \strng{authorfullhash}{811d441c2dcb8ddce046201441d67105}
+      \strng{authorfullhashraw}{811d441c2dcb8ddce046201441d67105}
+      \field{sortinit}{Z}
+      \field{sortinithash}{96892c0b0a36bb8557c40c49813d48b3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Machine Learning Research}
+      \field{langid}{english}
+      \field{number}{32}
+      \field{shortjournal}{JMLR}
+      \field{title}{Heterogeneous-{{Agent Reinforcement Learning}}}
+      \field{volume}{25}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{pages}{1\bibrangedash 67}
+      \range{pages}{67}
+      \verb{file}
+      \verb /Users/brandonhosley/Zotero/storage/RP4HSFZU/Zhong et al. - Heterogeneous-Agent Reinforcement Learning.pdf
+      \endverb
+      \verb{urlraw}
+      \verb http://jmlr.org/papers/v25/23-0488.html
+      \endverb
+      \verb{url}
+      \verb http://jmlr.org/papers/v25/23-0488.html
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+

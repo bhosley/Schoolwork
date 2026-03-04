@@ -1,0 +1,353 @@
+% =============================================================================
+%  SECTION 4 — C2: Implicit Indication via Homogenization
+%  Slides 4.1–4.8  |  Target time: ~13 minutes
+%
+%  Corresponds to dissertation Ch. 4 (Contribution 2)
+% =============================================================================
+
+\begin{frame}
+    \frametitle{C2 Motivation:}
+    \framesubtitle{What If the Observation Space Were Invariant?}
+
+    \textbf{A question from C1:}
+    \begin{itemize}
+        \item In Level-Based Foraging, \(O_i\) incompatibility
+            was a significant obstacle.
+        \item This raised a natural question: \emph{what if we could make
+            the observation space invariant to agent number?}
+    \end{itemize}
+
+    \vspace{0.4em}
+    \textbf{Surveying the landscape:}
+    \begin{itemize}
+        \item Parameter sharing unlocks sample efficiency, cross-agent
+            generalization, and storage economy — but requires a
+            \textbf{common input space}.
+        \item Most relevant existing approaches:
+            \textbf{one-hot agent IDs}~\cite{terry2020}
+                (brittle; no zero-shot transfer) and
+            \textbf{separate policies}~\cite{papoudakis2021}
+                ($|I|\times$ storage; no cross-type sharing).
+        \item Little work addresses invariant representations
+            as a direct path to parameter sharing for
+            \emph{intrinsically} heterogeneous teams.
+    \end{itemize}
+
+    \note[item]{what if we could make it invariant to number of allies?}
+    \note[item]{Which then naturally leads to invariant to subsets of the observation space}
+    \note[item]{Further, }
+    \note{About 1.5 minutes.
+    Then mention the landscape briefly:
+    ``The two most relevant approaches \\
+    — one-hot IDs \\
+    - separate policies. \\
+    Each solve the problem but give up something important.
+    And when we looked for work on invariant representations
+    as a way to enable parameter sharing in heterogeneous teams,
+    there was surprisingly little.
+    So we decided to investigate.''
+    The alertblock should feel like a research direction being set,
+    not a conclusion being announced.}
+\end{frame}
+
+
+\begin{frame}{C2 Research Questions}
+        \begin{itemize}
+            \item[\textbf{RQ2.1}] 
+            How do input-invariant (homogenized) structures affect learning efficiency?
+            \item[\textbf{RQ2.2}] 
+            Do input-invariant architectures stabilize performance under
+            team-size changes, sensor dropout, and novel agent compositions?
+            \item[\textbf{RQ2.3}] 
+            What are the computational and implementation costs
+            relative to separate per-type policies?
+        \end{itemize}
+        
+    \note{About 45 seconds — this is a reference slide.}
+    \note[item]{Learning Efficiency}
+    \note[item]{Robustness \& Generalization}
+    \note[item]{Cost vs.\ Benefit}
+    \note{
+        Mention the HAPPO baseline explicitly:
+        ``HAPPO is the strongest existing method that handles intrinsic heterogeneity,
+        so it is the fairest comparison.''\\
+        Move on quickly; the next slides deliver the answers.
+    }
+\end{frame}
+
+
+\subsection{Hypergrid}
+
+
+\begin{frame}{HyperGrid: Purpose-Built Evaluation Environment}
+\begin{columns}
+    \begin{column}{0.55\textwidth}
+        \textbf{Why a new environment?}
+        \begin{itemize}
+            \item Existing benchmarks lack \textbf{configurable sensor heterogeneity}.
+            \item Need to isolate observation structure as the \emph{independent variable}.
+        \end{itemize}
+        \vspace{0.4em}
+
+        \textbf{Design:}
+        \begin{itemize}
+            \item $n$-dimensional discrete gridworld (derived from MiniGrid).
+            \item Agent type $=$ sensor channel configuration $C_i \subseteq C$.
+            \item Definable dynamics, actions, and rewards for agents.
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.43\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.85\linewidth]{marl-minigrid.png}
+            \caption{Two-dimensional rendering of the HyperGrid environment
+                    (MiniGrid visual interface).}
+            \label{fig:c2-hypergrid}
+        \end{figure}
+    \end{column}
+\end{columns}
+
+    \note{About 2 minutes.\\
+    }
+\end{frame}
+
+% #TODO: Expand upon Hypergrid implementation
+
+\begin{frame}[shrink=5]{The Implicit Indication Framework}
+\vspace{1.5em}
+\begin{columns}
+    \begin{column}{0.48\textwidth}
+        \textbf{Core construction:}
+        \begin{itemize}
+            \item \textbf{Homogenized observation space:}
+                $\widetilde{{O}} = \bigcup_{i \in {I}} {O}_i$,
+                union of all agent observation elements.
+            \item Each agent populates \emph{only its active channels};
+                unused elements are \textbf{zero}.
+            \item A \textbf{single shared policy} $\pi_\theta(\cdot \mid \tilde{o})$
+                learns to condition on the pattern of populated elements.
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+        \begin{figure}
+            \centering
+            \resizebox{!}{0.75\linewidth}{%
+                \input{../Chapters/C2/Figures/rgb_example_open_grid.tex}}
+            \caption{An example 2D hypergrid with RGB channels as observation elements.
+                The top layer is ground truth, subsequent layers represent observation elements.}
+                \label{fig:rgb_hypergrid_example2}
+        \end{figure}
+    \end{column}
+\end{columns}
+\note{About 2 minutes — this is the most important technical slide in the talk.
+    Deliver it in three beats.
+    \textbf{Beat 1 — The idea:} ``Take every observation channel any agent could have
+    and define a shared space over all of them. Each agent fills in what it can see
+    and leaves the rest as zeros. The policy reads the pattern of filled-in channels
+    to figure out what kind of agent it is controlling.''
+    }
+\end{frame}
+
+
+\begin{frame}[shrink=5]{The Implicit Indication Framework}
+\vspace{1.5em}
+\begin{columns}
+    \begin{column}{0.48\textwidth}
+        \textbf{Required condition:}
+        \begin{itemize}
+            \item \textbf{Semantic decomposability} — observation elements
+                must have type-consistent meanings across agents
+                (e.g., ``distance to target'' means the same thing
+                for every agent that reports it).
+        \end{itemize}
+        \vspace{0.3em}
+
+        \textbf{Theoretical grounding:}
+        \begin{itemize}
+            \item Disjoint injective embeddings preserve
+                  representability.
+            \item A single function over $\widetilde{\mathcal{O}}$ can
+                  replicate any collection of per-type policies.
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+        \begin{figure}
+            \centering
+            \resizebox{!}{0.75\linewidth}{%
+                \input{../Chapters/C2/Figures/rgb_example_open_grid.tex}}
+            \caption{An example 2D hypergrid with RGB channels as observation elements.
+                The top layer is ground truth, subsequent layers represent observation elements.}
+            \label{fig:rgb_hypergrid_example}
+        \end{figure}
+        % #TODO: What if we replace this with a sketch for disjoint - injective functions?
+    \end{column}
+\end{columns}
+\note{    
+    \textbf{Beat 2 — The requirement:} ``This only works if the channels mean the same thing
+    across agents. We call that semantic decomposability. In practice, it means your sensor
+    outputs have to be aligned — distance means distance, heading means heading.''
+    \textbf{Beat 3 — The guarantee:} ``Deep Sets tells us that if the embedded regions
+    are disjoint, we lose no expressivity. One network can, in principle, do
+    everything that $|\mathcal{I}|$ separate networks can do.''
+    Point to the channel figure on the right to make it concrete.}
+\end{frame}
+
+
+\begin{frame}[shrink=10]{Training Setup}
+    \vspace{2em}
+    \begin{columns}
+        \begin{column}{0.69\textwidth}
+            \textbf{Baseline:} HAPPO~\cite{zhong2024}: separate actor + critic per agent type.
+        
+            \vspace{0.4em}
+            \textbf{Controlled comparison:}
+            \begin{itemize}
+                \item Identical network architecture and hyperparameters across methods.
+                \item Teams of 4 agents, trained for up to 500M steps.
+                \item 30 independent seeds per condition.
+            \end{itemize}
+            \vspace{0.4em}
+        
+            \textbf{Four team compositions} (varying observation-element coverage):
+            \renewcommand{\arraystretch}{1.05}
+            \begin{tabular}{ll}
+                \emph{Complete:} & $C_i = C$ for all $i$ \\
+                \emph{Intersecting-span:} & $\bigcup C_i = C$, overlapping \\
+                \emph{Disjoint-span:} & $\bigcup C_i = C$, non-overlapping \\
+                \emph{Incomplete:} & $\exists\, c \in C$ not covered by any agent 
+            \end{tabular}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+            \begin{figure}
+                \scalebox{.65}{
+                \subimport{../Chapters/C2/Figures/}{team_compositions.pdf_tex}}
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+    \note{About 1 minute.
+    ``Both methods use the same network, the same hyperparameters,
+    and the same compute budget.
+    The only difference is how heterogeneity is handled —
+    HAPPO trains a separate policy per agent type,
+    while implicit indication trains one shared policy over
+    the homogenized space.''}
+\end{frame}
+
+
+\begin{frame}{Evaluation Protocol}
+    \textbf{Eight evaluation conditions:}
+    \begin{columns}
+        \begin{column}{0.48\textwidth}
+            \begin{enumerate}
+                \item Unmodified team (control)
+                \item Loss of an agent
+                \item Sensor degradation ($-1$ channel)
+                \item Sensor improvement ($+1$ channel)
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{enumerate}
+                \setcounter{enumi}{4}
+                \item Reduced team coverage
+                \item Increased team coverage
+                \item Shuffled channel assignments
+                \item Novel spanning set (zero-shot)
+            \end{enumerate}
+        \end{column}
+    \end{columns}
+
+    \vspace{1em}
+    \textbf{Selection and metric:}
+    \begin{itemize}
+        \item Top 15 of 30 trained policies per condition
+            (balances noise removal with variance preservation).
+        \item Evaluation episodes longer than training episodes
+            to further reduce variance.
+        \item Primary metric: mean episodic return.
+    \end{itemize}
+
+    \note{About 1 minute.
+    Frame the eight conditions as a stress test:
+    ``We trained under four known configurations.
+    Then we asked: what happens when the world changes?
+    What if an agent drops out? What if a sensor fails — or improves?
+    What if we shuffle who has what? And the hardest test:
+    what if we deploy a team composition that was never seen in training?''
+    The selection protocol deserves a sentence:
+    ``We took the top half of seeds to filter out clearly failed runs,
+    then evaluated on longer episodes for tighter confidence intervals.''
+    Then transition: ``Now let us see what happened.''}
+\end{frame}
+
+
+\begin{frame}[shrink=15]{Training Results}
+\vspace{1em}
+\begin{columns}
+    \begin{column}{0.45\textwidth}
+        \textbf{Comparison:}
+        \begin{itemize}
+            \item Implicit Indication
+            \item HAPPO
+            \item Identical network architecture and hyperparameters.
+        \end{itemize}
+
+        \vspace{0.5em}
+        \textbf{Findings:}
+        \begin{itemize}
+            \item \textbf{Matched performance}
+            \item No statistically significant differences in Training Reward, CPU, RAM,
+                or wall-clock time per step.
+        \end{itemize}
+
+        \vspace{0.3em}
+        \begin{alertblock}{Take-away}
+            Same reward, $\frac{1}{|I|}$ the storage.
+        \end{alertblock}
+    \end{column}
+    \begin{column}{0.53\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\linewidth]{training_curves.png}
+            \caption{Training curves (mean $\pm$ s.d.) for Implicit Indication
+                     vs.\ HAPPO across four visibility configurations.
+                     30 independent seeds per condition.}
+            \label{fig:c2-training}
+        \end{figure}
+    \end{column}
+\end{columns}
+
+    \note{About 2 minutes.
+    Not shown on slide is the non-difference in the other measurements}
+\end{frame}
+
+
+\begin{frame}{Robustness: Eight Perturbation Conditions}
+    \begin{figure}
+        \vspace{1em}
+        \begin{columns}
+            \begin{column}{0.48\textwidth}
+                \centering
+                \includegraphics[width=0.9\linewidth]{performance_delta_cropped.png}
+            \end{column}
+            \begin{column}{0.48\textwidth}
+                \begin{alertblock}{Key Result}
+                    Policies trained via Implicit Indication are more robust and 
+                    exhibit superior handling of novel configurations.
+                \end{alertblock}
+                \vspace{1em}
+                \caption{Performance difference (Implicit Indication $-$ HAPPO)
+                        across training configurations (rows) and evaluation
+                        conditions (columns). Positive values favor
+                        Implicit Indication.}
+                \label{fig:c2-delta}
+            \end{column}
+        \end{columns}
+    \end{figure}
+
+    \note{About 2 minutes.
+    This is the slide that demonstrates deployment flexibility.
+    End by connecting to RQ2.2: ``These results directly answer RQ2.2 —
+    yes, the method stabilizes performance under all tested perturbations.''}
+\end{frame}
+

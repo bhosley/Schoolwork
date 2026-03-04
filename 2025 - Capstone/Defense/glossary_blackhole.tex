@@ -1,0 +1,45 @@
+\usepackage[nomain,symbols,abbreviations]{glossaries-extra}
+\makeatletter
+\glsdisablehyper
+\makeatother
+\newabbreviation{rl}{RL}{reinforcement learning}
+\newabbreviation{harl}{HARL}{heterogeneous-agent reinforcement learning}
+\newabbreviation{marl}{MARL}{multi-agent reinforcement learning}
+\newabbreviation{ppo}{PPO}{proximal policy optimization}
+\newabbreviation{mappo}{MAPPO}{multi-agent \gls{ppo}}
+\newabbreviation{happo}{HAPPO}{heterogeneous-agent \gls{ppo}}
+\newabbreviation{ctde}{CTDE}{centralized training with decentralized execution}
+\newabbreviation{posg}{POSG}{partially observable stochastic game}
+\newabbreviation{dec-pomdp}{Dec-POMDP}{decentralised partially observable Markov decision process}
+\newabbreviation{ippo}{IPPO}{independent \gls{ppo}}
+\newabbreviation{hpn}{HPN}{hyper policy network}
+\newabbreviation{mlp}{MLP}{multi-layer perceptron}
+\newabbreviation{pic}{PIC}{permutation-invariant critic}
+\newabbreviation{gnn}{GNN}{graph neural network}
+\newabbreviation{gae}{GAE}{generalized advantage estimator}
+
+\newglossaryentry{reals}{text=\ensuremath{\mathbb{R}},name=\ensuremath{\mathbb{R}},
+    sort=real,type=symbols,category=symbol, description={The set of real numbers.}}
+
+\newglossaryentry{i}{text=i,name=I,sort=i,type=symbols,category=symbol,
+    description={Set of agents \(i\).}}
+\newglossaryentry{o}{text=o,name=O,sort=o,type=symbols,category=symbol,
+    description={Observation.}}
+\newglossaryentry{a}{text=a,name=A,sort=a,type=symbols,category=symbol,
+    description={Action.}}
+\newglossaryentry{c}{text=c,name=C,sort=c,type=symbols,category=symbol,
+    description={Channel or obervation element index.}}
+\newglossaryentry{pi}{text=\ensuremath{\pi},name=\ensuremath{\pi},
+    sort=\ensuremath{\pi},type=symbols,category=symbol, description={Policy.}}
+\newglossaryentry{discount}{text=\ensuremath{\gamma},name=\ensuremath{\gamma},
+    sort=\ensuremath{\gamma},type=symbols,category=symbol, description={Discount factor.}}
+
+% #TODO: Fix defs:
+\newglossaryentry{q}{text=q,name=Q,sort=q,type=symbols,category=symbol,
+    description={.}}
+\newglossaryentry{r}{text=r,name=R,sort=r,type=symbols,category=symbol,
+    description={.}}
+\newglossaryentry{s}{text=s,name=S,sort=s,type=symbols,category=symbol,
+    description={.}}
+\newglossaryentry{t}{text=t,name=T,sort=t,type=symbols,category=symbol,
+    description={.}}

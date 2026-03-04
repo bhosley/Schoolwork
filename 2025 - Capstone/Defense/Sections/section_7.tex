@@ -1,0 +1,208 @@
+% =============================================================================
+%  SECTION 7 — Conclusions & Future Work
+%  Slides 7.1–7.3  |  Target time: ~5 minutes
+%
+%  Corresponds to dissertation Ch. 6 §§5–7
+%
+% =============================================================================
+
+%%==========================================================================
+%% CONCLUSIONS & FUTURE WORK
+%%==========================================================================
+\begin{frame}[shrink=15]{Novelty}
+    \vspace{2.5em}
+
+    \textbf{C1 — Policy Upsampling}
+    \begin{itemize}\small
+        \item First systematic evaluation of curriculum-based team scaling
+            across \emph{heterogeneous} MARL environments
+        \item Introduction of \textbf{agent-steps} as a normalized training
+            cost metric for cross-configuration comparison
+        \item Identification of observation schema design as the gating factor
+            for policy transfer across team sizes
+    \end{itemize}
+
+    \textbf{C2 — Implicit Indication}
+    \begin{itemize}\small
+        \item First formalization of \textbf{implicit indication} — agent
+            identity conveyed through observation structure, not explicit labels
+        \item Theoretical guarantee (via Deep Sets) that a single shared policy
+            is at least as expressive as the per-type collection
+        \item Demonstrated zero-shot robustness to sensor dropout, team-size
+            change, and novel compositions \emph{without retraining}
+    \end{itemize}
+
+    \textbf{C3 — Paradigm Comparison}
+    \begin{itemize}\small
+        \item First controlled comparison of architectural (GNN/PIC) vs.\
+            representational invariance under matched conditions in HARL
+        \item Finding that the simpler representational approach outperforms
+            by $2.2$--$3.7\times$ across all configurations
+    \end{itemize}
+
+    \note{About 1.5 minutes.
+    Walk through each contribution in one breath:
+    ``C1 gave us the first systematic look at curriculum scaling
+    in heterogeneous settings and a metric to measure training cost fairly.
+    C2 gave us implicit indication — a single shared policy that works
+    across structurally different agents, with a theoretical guarantee
+    and emergent robustness we never trained for.
+    C3 showed that this simple representational approach beats
+    a purpose-built GNN architecture by two-to-four times.''
+    Keep energy high — this is the `so what' for the committee.}
+\end{frame}
+
+
+\begin{frame}[shrink=7]{Minimum Tasks to Meet Objectives}
+    \vspace{1em}
+    \scriptsize
+    % \renewcommand{\arraystretch}{1.15}
+    \newcommand{\chit}{\item[\checkmark]}
+    
+    \begin{multicols}{2}
+        \textbf{C1 — Policy Upsampling}
+        \begin{itemize}
+            \chit Design upsampling curriculum (pretrain $\to$ duplicate $\to$ retrain) % RT1.1
+            \chit Define and validate agent-steps metric ($\rho > 0.999$) % RT1.2
+            \chit Train tabula rasa baselines across all team sizes % RT1.3
+            \chit Evaluate curriculum across pretraining lengths and team sizes % RT1.4
+            \chit Select environments with distinct heterogeneity type % RT2.1
+            \chit Adapt observation schemas for fixed-architecture transfer % RT2.2
+            \chit Evaluate heterogeneity type effect on curriculum benefit % RT2.3
+        \end{itemize}
+        \vspace{0.4em}
+        
+        \textbf{C2 — Implicit Indication}
+        \begin{itemize}
+            \chit Design input-invariant (homogenized) architecture % RT1.1
+            \chit Identify/build heterogeneous benchmark environment (HyperGrid) % RT1.2
+            \chit Train and measure convergence across sensor configurations % RT1.3
+            \chit Compare against HAPPO per-type baseline % RT1.4
+            \chit Simulate sensor failure and degradation conditions % RT2.1
+            \chit Simulate dynamic team-size changes and novel compositions % RT2.2
+            \chit Measure stability and reward degradation under perturbation  % RT2.3
+            \chit Statistical comparison across 8 perturbation conditions % RT2.4
+            \chit Benchmark training/inference cost vs.\ per-type policies % RT3.1
+            \chit Statistical comparison of convergence rate and degradation % RT3.2
+        \end{itemize}
+        \vspace{0.4em}
+        
+        \textbf{C3 — Paradigm Comparison}
+        \begin{itemize}
+            \chit Implement PIC under matched experimental conditions % RT1.1
+            \chit Measure convergence and final performance vs.\ C2 baselines % RT1.2
+            \chit Compare learning efficiency: PIC vs.\ implicit indication % RT1.3
+            \chit Evaluate robustness to agent dropout and team-size changes % RT2.1
+            \chit Random channel masking evaluation % RT2.2
+            \chit Compare perturbation curves with C2 results % RT2.3
+            \chit Benchmark computational cost of each paradigm % RT3.1
+            \chit Statistical comparison: architectural vs.\ representational % RT3.2
+        \end{itemize}
+    \end{multicols}
+
+    \note{
+        This slide is presented to recall the research tasks discussed with 
+        the committee in the prospectus.
+    }
+\end{frame}
+
+
+\begin{frame}{Contribution Status}
+% #TODO: Update Contribution statuses
+\vspace{0.5em}
+\begin{center}
+\renewcommand{\arraystretch}{1.6}
+\begin{tabular}{@{} l c l l @{}}
+    \toprule
+    \textbf{Contribution} & \textbf{Chapter} & \textbf{Status} & \textbf{Venue} \\
+    \midrule
+    C1: Policy Upsampling      & Ch.\ 3 & In Review & AAMAS \\
+    C2: Implicit Indication    & Ch.\ 4 & Submitting & Journal \\
+    C3: Paradigm Comparison    & Ch.\ 5 & Awaiting Feedback& Committee \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+    \note{State this briefly and move on.
+    The committee already knows the status — this slide is for the record.
+    Simply say: ``All three contributions are complete and in the document you have in front of you.''
+    If publication venues update before the defense, fill in the Venue column accordingly
+    (e.g., journal name, conference acronym, or ``In Review'').
+    Total time target: 30 seconds.}
+\end{frame}
+
+
+% # TODO: Consider consolidated Futures Slide:
+% % -----------------------------------------------------------------------------
+% % Slide 7.3 — Limitations & Future Directions
+% % -----------------------------------------------------------------------------
+% \begin{frame}{Limitations \& Future Directions}
+
+%     \begin{columns}[t]
+%         \begin{column}{0.45\textwidth}
+%             \textbf{Limitations}
+%             \begin{itemize}\small
+%                 \item Single algorithm family (PPO-based);
+%                     generalization to value-decomposition or
+%                     off-policy methods is untested.
+%                 \item Controlled simulation environments;
+%                     maximum 8 agents — real swarms will be larger.
+%                 \item Semantic decomposability assumption may not
+%                     hold for all sensor modalities.
+%                 \item Limited action-space heterogeneity —
+%                     all agents share the same action space.
+%             \end{itemize}
+%         \end{column}
+%         \begin{column}{0.52\textwidth}
+%             \textbf{Future Work}
+%             \begin{itemize}\small
+%                 \item \textbf{Action-space heterogeneity:}
+%                     extend homogenization to heterogeneous action
+%                     spaces via action masking.
+%                 \item \textbf{Dynamic team composition:}
+%                     agents entering/leaving during training,
+%                     not just at evaluation.
+%                 \item \textbf{Hybrid approaches:}
+%                     combine representational invariance with
+%                     lightweight graph augmentation.
+%                 \item \textbf{Physical validation:}
+%                     noisy sensors, sim-to-real transfer,
+%                     communication constraints.
+%                 \item \textbf{Scale:}
+%                     push toward Replicator-relevant swarm sizes
+%                     ($50$--$100+$ agents).
+%             \end{itemize}
+%         \end{column}
+%     \end{columns}
+
+%     \vspace{0.3em}
+%     \begin{center}
+%         \small\emph{This dissertation opens more questions than it closes
+%         — and that is a feature, not a bug.}
+%     \end{center}
+
+%     \note{About 1.5 minutes.
+%     Be brief and honest on limitations —
+%     the committee will respect candor more than defensiveness.
+%     ``Four honest limitations: we used one algorithm family,
+%     we stayed in simulation with small teams,
+%     semantic decomposability is an assumption we did not relax,
+%     and we did not vary action spaces.
+%     Each of these is a natural next step.''
+%     Then walk through the future work column:
+%     ``Action-space heterogeneity is the most immediate extension —
+%     homogenized action masking is a direct analogue of what C2 did
+%     for observations.
+%     Dynamic team composition during training, not just evaluation,
+%     is the next frontier for robustness.
+%     Hybrid representational-plus-architectural approaches could
+%     capture relational structure that C3 showed pure GNNs miss.
+%     And ultimately, physical validation and scaling toward
+%     Replicator-relevant swarm sizes are where this work
+%     connects back to the strategic motivation I opened with.''
+%     End on the closing line — deliver it with a slight smile.
+%     Then transition naturally to the closing slide:
+%     ``With that, I'd like to thank my committee and open the floor
+%     for questions.''}
+% \end{frame}
+

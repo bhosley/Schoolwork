@@ -1,0 +1,492 @@
+%%==========================================================================
+%% CONTRIBUTION 1
+%%==========================================================================
+\begin{frame}[shrink=5]{C1 Motivation: Curriculum-Based Team Scaling}
+\vspace{2em}
+\textbf{Motivation:}
+\begin{itemize}
+    \item Inspired by Smit et al.'s~\footcite{smit2023} 
+    work using MARL to scale training in 2v2 to playing 11v11 in a football-like game.
+\end{itemize}
+\begin{columns}
+    \begin{column}{0.5\textwidth}
+        \textbf{Method:}
+        \begin{enumerate}
+            \item Trained teams with 4 methods
+            \begin{itemize}
+                \item Naive Heuristic
+                \item ``Team Work'' Heuristic
+                \item 2v2 Trained Agents
+                \item 11v11 Trained Agents
+            \end{itemize}
+            \item Evaluated through full games (11v11) against each other.
+        \end{enumerate}
+    \end{column}
+    \begin{column}{0.43\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.45\linewidth]{smit2v2.png}
+            \includegraphics[width=0.45\linewidth]{smit_football.png}
+            \caption{Smit et al.'s Game~\cite{smit2023}, 2v2 and 11v11 versions.}
+            \label{table:smit_envs}
+        \end{figure}
+    \end{column}
+\end{columns}
+\vspace{0.5em}
+\textbf{Key Result:}
+\begin{itemize}
+    \item Computational limitations led to generalization issue and overall underperformance.
+\end{itemize}
+
+    \note{Spend about 1.5 minutes here.
+    The key narrative beat: Smit et al.\ showed some promise promise.\\
+    \emph{What if we add a retraining phase?} \\
+    And critically, \emph{does the answer depend on the type of heterogeneity?}
+    }
+
+    \note{
+        Very low resource access.
+        Contemporeneous to bigger successes like OpenAI Five and AlphaStar
+    }
+\end{frame}
+
+\begin{frame}{C1 Research Questions}
+    % \begin{block}{Research Questions}
+        \begin{itemize}
+            \item[\textbf{RQ1.1}] Can smaller-team pretraining + policy duplication +
+                retraining improve training efficiency (agent-steps)
+                without sacrificing final performance?
+            \item[\textbf{RQ1.2}] How does effectiveness vary across environments with
+                different heterogeneity forms?
+        \end{itemize}
+    % \end{block}
+
+    \note{About 1.5 minutes. \\
+    Recall research questions. \\
+    Walk through the two-phase pipeline quickly. \\
+    The critical detail to stress is that both phases use \emph{independent policy updates}:
+    we are not doing parameter sharing.
+    }
+\end{frame}
+
+\begin{frame}{C1 Methodology}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{Training pipeline:}
+                \begin{enumerate}
+                    \item \textbf{Phase 1 — Pretrain:} Train a small team ($k$ agents)
+                        until a checkpoint criterion is reached.
+                    \item \textbf{Phase 2 — Upsample \& Retrain:} Duplicate policies to
+                        construct a target team of $N$ agents; continue training
+                        with all policies updating independently.
+                \end{enumerate}
+            \end{block}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.95\linewidth]{training_1.tex}
+                \caption{Resampling between training phases.}
+            \end{figure}
+        \end{column}
+    \end{columns}
+
+    \note{About 1.5 minutes. \\
+    Walk through the two-phase pipeline quickly. \\
+    The critical detail to stress is that both phases use \emph{independent policy updates}:
+    we are not doing parameter sharing.
+    }
+\end{frame}
+
+\begin{frame}[shrink=5]{The Agent-Steps Metric}
+\vspace{3em}
+\begin{columns}
+    \begin{column}{0.52\textwidth}
+        \textbf{Why not other common metrics?}
+        \begin{itemize}
+            \item \textbf{Training steps} obscure the cost difference
+                between 2-agent and 8-agent runs.
+            \item \textbf{Wall-clock time} varies with hardware and cluster load.
+        \end{itemize}
+
+        \vspace{0.3em}
+        \textbf{Validation:}
+        \begin{itemize}
+            \item Per-iteration wall-clock time scales \textbf{linearly}
+                with agent count across all three environments.
+            \item Pearson $\rho > 0.999$ in every case.
+        \end{itemize}
+
+        \small This metric enables cross-configuration comparison in C1.
+    \end{column}
+    \begin{column}{0.46\textwidth}
+        \begin{equation*}
+            \text{Agent-steps} = |I| \times T
+        \end{equation*}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{iter_cost.png}
+            \caption{Mean wall-clock time per training iteration scales
+                     linearly with agent count ($\rho > 0.999$).}
+            \label{fig:agent-steps}
+        \end{figure}
+    \end{column}
+\end{columns}
+
+    \note{About 1.5 minutes. \\
+    Smit only compared final performance. \\
+    We care about the trade-offs between and timing;\\
+    thus need a cost comparison. \\
+    
+    Training steps is a common metric, but does not consider cost of greater numbers of agents.\\
+    Wall-clock time would be a better proxy, but we use a cluster.
+    
+    Agent-steps gave us a fairer cost metric.
+
+    with 8 agents costs four times as much as a 100-step run with 2 agents.''\\
+    Then transition: ``Now that we have a fair yardstick, let us see what happens.''}
+    \note[item]{This further allowed us to approximate the none-agent overhead cost in training.}
+\end{frame}
+
+\begin{frame}{Waterworld}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \textbf{Environment character:}
+            \begin{itemize}
+                \item Continuous control, homogeneous structure.
+                \item Low coordination demand; behavioral heterogeneity only.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.5\linewidth]{waterworld.png}
+                \caption{Waterworld environment~\cite{gupta2017}.}
+                \label{fig:waterworld-env}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Waterworld Results}
+Example Training Curves
+\begin{columns}
+    \begin{column}{0.48\textwidth}
+        \begin{figure}
+            \includegraphics[width=\linewidth]{Waterworld-4-agent.png}
+            \caption{4-agent Waterworld: retrained vs. tabula rasa.}
+        \end{figure}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+        \begin{figure}
+            \includegraphics[width=\linewidth]{Waterworld-8-agent.png}
+            \caption{8-agent Waterworld: retrained vs. tabula rasa.}
+        \end{figure}
+    \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Waterworld Results}
+\begin{columns}
+    \begin{column}{0.48\textwidth}
+        \textbf{Findings:}
+        \begin{itemize}
+            \item Pretraining \textbf{accelerates convergence}; benefit
+                scales with the size ratio (pretrain $\rightarrow$ target).
+            \item Final performance matches tabula rasa baselines.
+        \end{itemize}
+
+        \vspace{0.3em}
+        \begin{alertblock}{Take-away}
+            Clear curriculum win — low coordination means
+            small-team policy transfers cleanly.
+        \end{alertblock}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{Waterworld-AUCs.png}
+            \caption{Waterworld AUC improvement over tabula rasa.}
+            \label{fig:waterworld-aucs}
+        \end{figure}
+    \end{column}
+\end{columns}
+
+    \note{About 1.5 minutes.
+    Waterworld is the ``easy win'' environment — use it to build confidence
+    in the method before showing the harder cases.
+    Walk through the heatmap: rows are target team sizes, columns are
+    pretraining durations.
+    The gradient is clear — bigger teams gain more from small-team pretraining.
+    Mention the diminishing returns after 60 steps: this is practically useful
+    because it means you do not need long pretraining to capture most of the benefit.
+    Emphasize that final performance is not sacrificed — the curriculum
+    reaches the same reward, just faster.
+    Transition: ``Waterworld is cooperative but loosely coupled.
+    What happens when coordination is tight and failure is catastrophic?''}
+\end{frame}
+
+\begin{frame}{Multiwalker}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \textbf{Environment character:}
+            \begin{itemize}
+                \item Tight temporal coordination among physically coupled walkers.
+                \item Fixed spatial roles create \textbf{static intrinsic heterogeneity}.
+                \item Sparse rewards; single-agent failure terminates the episode.
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.75\linewidth]{multiwalker.png}
+                \caption{Multiwalker environment~\cite{gupta2017}.}
+                \label{fig:multiwalker-env}
+            \end{figure}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Multiwalker Results}
+Example Training Curves
+\begin{columns}
+    \begin{column}{0.48\textwidth}
+        \begin{figure}
+            \includegraphics[width=\linewidth]{Multiwalker-5-agent.png}
+            \caption{5-agent Multiwalker: retrained vs. tabula rasa.}
+        \end{figure}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+        \begin{figure}
+            \includegraphics[width=\linewidth]{Multiwalker-6-agent.png}
+            \caption{6-agent Multiwalker: retrained vs. tabula rasa.}
+        \end{figure}
+    \end{column}
+\end{columns}
+\note{
+    Multiwalker experienced drastically differing results. \\
+    It became an issue with stability of training. \\
+    Too many untrained agents caused failure too early for any to learn.
+}
+\end{frame}
+
+\begin{frame}{Multiwalker Results}
+\begin{columns}
+    \begin{column}{0.48\textwidth}
+        \textbf{Findings:}
+        \begin{itemize}
+            \item For smaller teams (4--5), pretraining offers modest gains.
+            \item For larger teams (6--7), tabula rasa \textbf{frequently fails}
+                to converge — pretraining acts as \textbf{stabilization}.
+            \item Pretraining provides baseline competence to survive early episodes.
+        \end{itemize}
+
+        \vspace{0.3em}
+        \begin{alertblock}{Take-away}
+            Task structure determines the \emph{nature} of the benefit:
+            speed in Waterworld, stability in Multiwalker.
+        \end{alertblock}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{Multiwalker-AUCs.png}
+            \caption{Multiwalker AUC improvement. Large teams
+                     show dramatic gains where tabula rasa often fails.}
+            \label{fig:multiwalker-aucs}
+        \end{figure}
+    \end{column}
+\end{columns}
+
+    \note{About 1.5 minutes.
+    The narrative shift here is important: in Waterworld the benefit was speed;
+    in Multiwalker the benefit is \emph{survival}. \\
+    
+    Explain the failure mode: when one walker falls, the payload drops and
+    the episode terminates for everyone.
+
+    Without a baseline competence,
+    episodes end almost immediately and the agents never get meaningful
+    gradient signal.}
+\end{frame}
+
+\begin{frame}{Level-Based Foraging}
+    \begin{columns}
+        \begin{column}{0.50\textwidth}
+            \textbf{Environment character:}
+            \begin{itemize}
+                \item Discrete gridworld; dynamic intrinsic heterogeneity.
+                \item Higher level tasks require coordination.
+                \item Shared observation space
+            \end{itemize}
+            \textbf{Size-invariant Observation Schemas Compared:}
+            \begin{enumerate}
+                \item Full: All teammate features included.
+                \item Truncated: Fixed-size subset of teammate features.
+                \item Ally-Ignorant: No teammate features included.
+            \end{enumerate}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=0.75\linewidth]{lbf.png}
+                \caption{Level-Based Foraging environment~\cite{papoudakis2021}.}
+                \label{fig:lbf-env}
+            \end{figure}
+        \end{column}
+    \end{columns}
+    \note{
+        The built-in observation space presented a problem that would inspire C2. \\
+        Agents are passed each other's observations in a fixed concatenation.
+    }
+\end{frame}
+
+\begin{frame}[shrink=20]{LBF: Schema Comparison Statistics}
+    \vspace{2em}
+\begin{columns}
+    \begin{column}{0.65\linewidth}
+        \begin{center}
+            \scriptsize
+            \begin{tabular}{cccccc}
+                \toprule
+                \textbf{Agents} & \textbf{Obs. 1} & \textbf{Obs. 2} & \textbf{t-stat} & \textbf{Bonf. p-value} \\
+                \midrule
+                3 & Ally-ignorant & Full      & 306.28 & \textbf{0.000} \\
+                3 & Ally-ignorant & Truncated & 252.39 & \textbf{0.000} \\
+                3 & Full          & Truncated &  -0.97 & 1.008 \\
+                4 & Ally-ignorant & Full      &  53.09 & \textbf{0.000} \\
+                4 & Ally-ignorant & Truncated &  88.01 & \textbf{0.000} \\
+                4 & Full          & Truncated &   0.56 & 1.728 \\
+                5 & Ally-ignorant & Full      &  73.35 & \textbf{0.000} \\
+                5 & Ally-ignorant & Truncated &  23.91 & \textbf{0.000} \\
+                5 & Full          & Truncated &  -1.49 & 0.423 \\
+                6 & Ally-ignorant & Full      &  16.52 & \textbf{0.000} \\
+                6 & Ally-ignorant & Truncated &  28.51 & \textbf{0.000} \\
+                6 & Full          & Truncated &   1.47 & 0.440 \\
+                7 & Ally-ignorant & Full      &  11.88 & \textbf{0.000} \\
+                7 & Ally-ignorant & Truncated &  12.90 & \textbf{0.000} \\
+                7 & Full          & Truncated &   0.45 & 1.955 \\
+                \bottomrule
+            \end{tabular}
+        \end{center}
+        \vspace{0.5em}
+        \centering
+        \footnotesize
+        Pairwise $t$-tests comparing schema performance for each agent count. 
+        Bonferroni correction applied within each group of comparisons by team size.
+    \end{column}
+    \begin{column}{0.30\linewidth}
+        \begin{alertblock}{Take-away}
+            Full and Truncated schema had a similar distribution of results,
+            where Ally-ignorant was significantly different.
+        \end{alertblock}
+    \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Level-Based Foraging Results}
+Example Training Curves
+\begin{columns}
+    \begin{column}{0.48\textwidth}
+        \begin{figure}
+            \includegraphics[width=\linewidth]{LBF-6-agent.png}
+            \caption{6-agent LBF: retrained vs. tabula rasa.}
+        \end{figure}
+    \end{column}
+    \begin{column}{0.48\textwidth}
+        \begin{figure}
+            \includegraphics[width=\linewidth]{LBF-7-agent.png}
+            \caption{7-agent LBF: retrained vs. tabula rasa.}
+        \end{figure}
+    \end{column}
+\end{columns}
+\note{
+    Modest early training advantages, very rapidly lost
+}
+\end{frame}
+
+\begin{frame}[shrink=5]{Level-Based Foraging Results}
+\vspace{2em}
+\begin{columns}
+    \begin{column}{0.48\textwidth}
+        \textbf{Findings:}
+        \begin{itemize}
+            \item Benefits are \textbf{limited and inconsistent};
+                gains diminish as target team grows.
+            \item Observation schema matters critically.
+            \item Dynamic heterogeneity creates coordination demands
+                that \textbf{do not transfer} from smaller teams.
+        \end{itemize}
+
+        \vspace{0.3em}
+        \begin{alertblock}{Take-away}
+            When heterogeneity itself changes with team size,
+            policy duplication cannot bridge the gap.
+        \end{alertblock}
+    \end{column}
+    \begin{column}{0.50\textwidth}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\linewidth]{LBF-AUCs.png}
+            \caption{LBF AUC improvement. Benefits favor small
+                     target teams; diminish sharply at scale.}
+            \label{fig:lbf-aucs}
+        \end{figure}
+    \end{column}
+\end{columns}
+
+    \note{About 2 minutes — this is the most nuanced results slide.
+        LBF is where the method hits its wall, and it is important to explain \emph{why}.\\
+
+    Is it because coordination limitations? \\
+    And how team size creates a fundamental difficulty in training that coordination,
+    particularly with the environment's built-in handling of the space.
+
+    The observation schema result is also worth a sentence:\\
+    full observability significantly outperforms both reduced schemas,
+    but truncated and ally-ignorant are indistinguishable from each other.
+    This means that \emph{partial} teammate information is no better than none —
+    a striking finding that motivates the representational rethinking in C2.
+    End on the alertblock and let it land: this is the ``villain'' moment
+    in the C1 story.}
+\end{frame}
+
+\begin{frame}{C1 Summary \& Bridge to C2}
+    \vspace{-0.3em}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \small
+    \begin{tabular}{@{} l l l @{}}
+        \toprule
+        \textbf{Environment} & \textbf{Outcome} & \textbf{Driver} \\
+        \midrule
+        Waterworld      & Accelerated convergence
+            & Low coordination; homogeneous structure \\
+        Multiwalker     & Training stabilization
+            & Sparse rewards; failure-sensitive coupling \\
+        LBF             & Limited / inconsistent benefit
+            & Dynamic heterogeneity; schema sensitivity \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \vspace{0.5em}
+    \begin{alertblock}{Bridge to C2}
+        If we design observation spaces to \emph{naturally support}
+        structural heterogeneity, we eliminate these barriers at the source.
+        \textbf{That is Contribution 2.}
+    \end{alertblock}
+
+    \note{About 1.5 minutes.
+    This is the synthesis slide — pull the three threads together.
+    Walk through the table row by row (one sentence each).
+    How the observation space changed between situations matterdd}
+    \note[item]{In Waterworld it was not a problem (homogeneous structure).}
+    \note[item]{In Multiwalker it was manageable (fixed roles, compatible schemas).}
+    \note[item]{In LBF it was the primary obstacle (observation structure changes with team size).}
+    \note{
+        The committee should feel that C2 is the \emph{natural next question}
+        that C1 raises.
+        This is the most important narrative transition in the defense.}
+\end{frame}

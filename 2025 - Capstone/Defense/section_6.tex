@@ -1,0 +1,127 @@
+% =============================================================================
+%  SECTION 6 — Synthesis & Cross-Cutting Insights
+%  Slides 6.1–6.3  |  Target time: ~5 minutes
+%
+%  Corresponds to dissertation Ch. 6 §§2–3
+%
+%  Drop this \section{} call and the three frames that follow into main.tex
+%  after the §5 C3 slides (slide 5.6), before §7 (Conclusions).
+% =============================================================================
+
+%%==========================================================================
+%% SYNTHESIS
+%%==========================================================================
+% -----------------------------------------------------------------------------
+% Slide 6.2 — Four Cross-Cutting Insights
+% -----------------------------------------------------------------------------
+\begin{frame}{Through-lines}
+
+    \vspace{-0.3em}
+    \begin{enumerate}
+        \item \textbf{Representation v. Architecture} \\
+            \small Simpler representational solutions may outperform complex
+            architectures when the invariance mechanism matches the
+            problem structure.
+            \hfill\emph{(C2, C3)}
+        \note[item]{Rep over architecture: moreover }
+
+        \vspace{0.4em}
+        \item \textbf{Task Structure as Critical Moderator} \\
+            \small Coordination demands, reward
+            sparsity, and heterogeneity type determine what works.
+            \hfill\emph{(C1)}
+
+        \vspace{0.4em}
+        \item \textbf{Unified Sharing Without Interchangeability} \\
+            \small Semantic decomposability unlocks full parameter sharing
+            across structurally heterogeneous agents without assuming
+            agents are identical.
+            \hfill\emph{(C2, C3)}
+
+        \vspace{0.4em}
+        \item \textbf{Emergent Robustness} \\
+            \small Deployment flexibility — sensor dropout, team changes,
+            novel compositions — comes for free from well-designed
+            representations, not from explicit robustness objectives.
+            \hfill\emph{(C2, C3)}
+    \end{enumerate}
+
+    \note{About 1.5 minutes.
+    Walk through each insight briskly — one sentence of elaboration each.
+    ``First: representation beats architecture. We saw this directly in C3,
+    and C2 laid the groundwork.
+    Second: task structure matters. C1 showed that curriculum benefits
+    depend on coordination demands and heterogeneity type —
+    there is no one-size-fits-all.
+    Third: parameter sharing does not require agent interchangeability.
+    Semantic decomposability is the key condition — if observation
+    elements mean the same thing across agents, you can share everything.
+    Fourth: robustness emerged for free. We never trained for sensor dropout
+    or novel team compositions — the representation handled it naturally.''
+    These four points are the take-home value for anyone building
+    real heterogeneous systems. Pause briefly before moving on.}
+\end{frame}
+
+
+% -----------------------------------------------------------------------------
+% Slide 6.3 — Practitioner Decision Framework
+% -----------------------------------------------------------------------------
+\begin{frame}[shrink=5]{Practitioner Decision Framework}
+
+    \vspace{2em}
+    \centering
+    \renewcommand{\arraystretch}{1.5}
+    \small
+    \begin{tabular}{@{} p{4.5cm} p{5.5cm} @{}}
+        \toprule
+        \textbf{If your system has \ldots}
+            & \textbf{Then consider \ldots} \\
+        \midrule
+        Behavioral heterogeneity \newline
+        {\scriptsize (identical structure, divergent roles)}
+            & Adding curriculum-based upsampling into your
+            MARL/HARL \hfill\emph{(C1)} \\
+        Intrinsic heterogeneity \newline
+        {\scriptsize (differing sensor suites)}
+            & Implicit Indication \hfill\emph{(C2)} \\
+        Rich relational agent interactions \newline
+        {\scriptsize (agent-to-agent dependencies)}
+            & Architectural augmentation (GNN) — but verify
+              the graph carries meaningful structure
+              \hfill\emph{(C3)} \\
+        Semantically decomposable observations
+            & Implicit Indication as the \textbf{default}; add
+              architectural complexity only if needed
+              \hfill\emph{(C2, C3)} \\
+        \bottomrule
+    \end{tabular}
+
+    % \vspace{0.5em}
+    % \begin{alertblock}{Central Thesis — Revisited}
+    %     Training efficiency, heterogeneity handling, and deployment flexibility
+    %     in \gls{harl} are fundamentally \textbf{representational} problems
+    %     before they are architectural ones.
+    % \end{alertblock}
+
+    \note{About 1.5 minutes.
+    Frame this as practical advice:
+    ``If you are building a heterogeneous multi-agent system,
+    here is the decision framework this dissertation provides.''
+    Walk down the table row by row.
+    ``Behavioral heterogeneity — agents look the same but act differently —
+    start with curriculum pretraining.
+    Structural heterogeneity — agents have different sensors —
+    build a homogenized observation space and let implicit indication
+    handle the rest.
+    If your agents interact richly with each other,
+    graph-based methods may add value — but C3 shows you should verify
+    that the graph structure actually carries information.
+    And if your observations are semantically decomposable,
+    implicit indication should be your default starting point.''
+    Then read the alertblock — this is the thesis statement from slide 1.5,
+    now supported by all three contributions.
+    Let it land. Pause. Then transition:
+    ``With those insights established, let me close with
+    a summary of what was accomplished and where the work goes next.''}
+\end{frame}
+

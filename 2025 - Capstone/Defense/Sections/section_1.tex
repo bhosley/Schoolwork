@@ -1,0 +1,291 @@
+\begin{frame}{The Vision for Autonomy in Defense}
+\begin{columns}
+    \begin{column}{0.6\textwidth}
+        \begin{itemize}
+            \item 
+                \textbf{DoD initiatives for autonomous systems.}
+            \begin{itemize}
+                \item 
+                    \textbf{Replicator Initiative:}
+                    Calls for the rapid integration of commercial-off-the-shelf (COTS)
+                    autonomous systems for scalable deployment. \cite{robertson2023}
+                \note[item]{Deputy Sec.\ Hicks announced replicator in 2023}
+                \note[item]{Replicator: Reps COTS motivation}
+                \note[item]{    Which is both a production economy plus}
+                \item 
+                    \textbf{DARPA's OFFSET:}
+                    Demonstrated feasibility of swarm-enabled ground and aerial 
+                    assets in contested environments. \cite{zotero-2835}
+                \note[item]{OFFSET: Reps combined arms motivation}
+            \end{itemize}
+        \end{itemize}
+    \end{column}
+    \begin{column}{0.4\textwidth}
+        \begin{figure}[!h]
+            \centering
+            \includegraphics[width=0.95\textwidth]{replicator_collage.png}
+            \caption{
+                \textbf{Replicator Initiative} intended for multiple platforms. 
+                \cite{robertson2023}
+            }
+            \label{fig:replicator_collage}
+        \end{figure}
+    \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{The Training Bottleneck}
+    \begin{itemize}
+        \item \textbf{Sample complexity scales with team size.}
+            Learning in multi-agent systems requires exponentially more
+            environment interactions as team size grows~\cite{jin2025,canese2021}.
+
+        \item \textbf{Benchmark $\neq$ operational.}
+            Controlled evaluation environments mask the cost gap between
+            research settings and real-world deployment pipelines
+            \cite{gronauer2022,krouka2022}.
+
+        \item \textbf{Current training pipelines do not generalize.}
+            Policies trained for one team size or composition
+            typically must be retrained from scratch for any
+            change in team structure.
+
+        \item \textbf{Bottom line:} Overcoming these barriers requires
+            rethinking \emph{how} we represent the learning problem —
+            not merely which algorithm we apply.
+    \end{itemize}
+
+    \note{This is a transitional slide — keep it brisk (about 1 minute).
+    The key message is that the computational bottleneck is \emph{real and structural},
+    not just a hardware problem that more GPUs will solve.
+    The audience should leave this slide with a clear sense of urgency:
+    training cost is the primary reason MARL has not translated from
+    benchmark wins to operational fielding.
+    The final bullet plants the seed for the representational thesis
+    you will state explicitly on slide 1.5.}
+\end{frame}
+
+\begin{frame}{Heterogeneity as the Core Challenge}
+    \begin{itemize}
+        \item Real swarms may be \textbf{non-homogeneous}.
+            Operational teams mix UAVs, UGVs, sensors, and roles
+            \cite{rizk2019,hoang2023}.
+
+        \item Heterogeneity is a \textbf{requirement} for effectiveness
+            and a \textbf{complicating factor} for training
+            \cite{calvo2018,zhong2024}.
+    \end{itemize}
+\begin{columns}
+    \begin{column}{0.55\textwidth}
+
+        % \vspace{0.5em}
+        \begin{block}{Two Kinds of Heterogeneity}
+            \renewcommand{\arraystretch}{1.3}
+            \begin{tabular}{@{} p{2.1cm} >{\raggedright\arraybackslash}p{4.9cm} @{}}
+                \textbf{Behavioral} &
+                    Structurally identical agents developing different roles \\
+                \textbf{Intrinsic} &
+                    Agents differ in sensors, effectors, or observation spaces \\
+            \end{tabular}
+        \end{block}
+
+        \vspace{0.3em}
+        \small This distinction is not merely taxonomic —
+        it \textbf{determines which methods are applicable}.
+    \end{column}
+    \begin{column}{0.45\textwidth}
+        \begin{figure}
+            \centering
+            % \includegraphics[width=0.95\linewidth]{offset_collage.jpg}
+            \includegraphics[width=0.85\textwidth]{hae_cycle.tex}
+            \caption{Mixed-platform teams combine agents with
+                     different sensors and roles.}
+        \end{figure}
+    \end{column}
+\end{columns}
+
+    \note{Spend about 90 seconds here.
+    The behavioral vs.\ intrinsic taxonomy is foundational vocabulary
+    for everything that follows — the committee needs to have it before
+    you get to the contribution slides.\\
+    Emphasize 
+    \emph{Behavioral}: as emergent, learned differences
+    \emph{Intrinsic}: as structural, based on some attribute(s) of the agents}
+    \note[item]{
+        Replicator and OFFSET call to the desire for more than a fleet of identical quadcopters.
+    }
+    \note[item]{
+        Call out the asymmetry: the capability advantage of mixed platforms 
+        comes at a real training cost.
+        But in hardware: a potential for savings,
+        like my kitchen utensils when I move out, cheap and mismatched
+    }
+\end{frame}
+
+
+\begin{frame}{Why Standard MARL Breaks Down}
+    \begin{itemize}
+        \item Homogeneous MARL assumes a shared domain and image for the policy function.
+        \item Intrinsic heterogeneity implies a difference in domain or image.
+        \item Making parameter sharing difficult or impossible.
+    \end{itemize}
+    \begin{center}
+    \renewcommand{\arraystretch}{1.4}
+    \footnotesize
+    \begin{tabular}{@{} l l l @{}}
+        \toprule
+        \textbf{Approach} & \textbf{Key Mechanism} & \textbf{Limitation} \\
+        \midrule
+        Per-type policies~\cite{papoudakis2021} & Separate network per type
+            & $|{I}|\times$ storage; no shared learning \\
+        One-hot agent IDs~\cite{terry2020} & Append type label to obs.
+            & Arbitrary; fails on zero-shot novel agents \\
+        GNN / Architectural~\cite{liu2020b} & Graph aggregation of input
+            & Added complexity; inductive bias mismatch \\
+        \textbf{Implicit Indication} & Homogenized obs.\ space
+            & \textbf{Single network, no behavioral-HARL} \\
+        \bottomrule
+    \end{tabular}
+    \end{center}
+
+    \note[item]{MARL typically requires a consistent input (observation) space, and common output (action) space}
+    \note[item]{as a function, the policy has one domain and image, and agents are expected to reflect it}
+
+    \note{
+        We found approaches to  behavioral-HARL to be more common.\\
+        This table highlights the main approaches that we found:
+    }
+    \note[item]{Most straight-forward: give them all policies}
+    \note[item]{Tried to work around this in C1}
+    \note[item]{One-hot (Explicit Encoding): provides a flag to dif agents, great for emergent HARL}
+    \note[item]{GNN: usually as a means of communication between agents, but can be used in HARL\\
+        We found it vulnerable to inductive bias.}
+    \note[item]{Implicit Indication proposed in this work: big limit on emergent/behavioral HARL}
+    
+    \note[item]{In C2 (Diss:Chapter 3) (Def:Section 4) we do II}
+    \note[item]{In C3 (Diss:Chapter 4) (Def:Section 5) we eval against a GNN}
+    \note{\bfseries TIME:}
+\end{frame}
+
+
+\begin{frame}[shrink=18]{Research Questions}
+\vspace{1em}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{@{} l >{\raggedright\arraybackslash}p{0.9\linewidth} @{}}
+    \toprule
+    \multicolumn{2}{@{}l}{\textbf{C1 — Policy Upsampling}} \\
+    \midrule
+    \textbf{RQ1.1} & Does smaller-team pretraining + policy duplication
+                      improve efficiency without sacrificing performance? \\
+    \textbf{RQ1.2} & How does effectiveness vary across environments with
+                      different heterogeneity forms? \\
+    \midrule
+    \multicolumn{2}{@{}l}{\textbf{C2 — Implicit Indication}} \\
+    \midrule
+    \textbf{RQ2.1} & How do invariant observation spaces affect learning
+                      efficiency? \\
+    \textbf{RQ2.2} & Do they stabilize performance under team-size changes,
+                      sensor dropout, and novel compositions? \\
+    \textbf{RQ2.3} & What are the computational costs relative to per-type policies? \\
+    \midrule
+    \multicolumn{2}{@{}l}{\textbf{C3 — Paradigm Comparison}} \\
+    \midrule
+    \textbf{RQ3.1} & To what extent do graph-based policies (PIC) improve
+                      learning efficiency vs.\ representational alternatives? \\
+    \textbf{RQ3.2} & How robust are graph-based policies to sensor and
+                      composition changes? \\
+    \textbf{RQ3.3} & What are the computational costs of architectural
+                      vs.\ representational invariance? \\
+    \bottomrule
+\end{tabular}
+\end{center}
+    \note{Walk through at a high level — the committee has read the prospectus.
+    A good framing: ``Eight research questions, three clusters, one thread.''
+    Gesture down the table by group (about 20 seconds per group) and move on.
+    Total time target: 1 minute.}
+\end{frame}
+
+
+\begin{frame}[shrink=24]{Research Objectives}
+\vspace{1em}
+\begin{center}
+\renewcommand{\arraystretch}{1.2}
+\small
+\begin{tabular}{@{} l >{\raggedright\arraybackslash}p{0.75\linewidth} @{}}
+    \toprule
+    \multicolumn{2}{@{}l}{\textbf{C1 — Policy Upsampling}} \\
+    \midrule
+    \textbf{RO1.1} & Design curriculum-based team-scaling via policy duplication and retraining \\
+    \textbf{RO1.2} & Define and validate agent-steps as a normalized training cost metric \\
+    \textbf{RO1.3} & Evaluate curriculum effectiveness across distinct heterogeneity environments \\
+    \textbf{RO1.4} & Identify task characteristics that moderate curriculum benefit or failure \\
+    \midrule
+    \multicolumn{2}{@{}l}{\textbf{C2 — Implicit Indication}} \\
+    \midrule
+    \textbf{RO2.1} & Formalize implicit indication as a representational approach to parameter sharing \\
+    \textbf{RO2.2} & Design HyperGrid environment for controlled heterogeneity experiments \\
+    \textbf{RO2.3} & Evaluate learning efficiency vs.\ per-type baselines \\
+    \textbf{RO2.4} & Characterize robustness and zero-shot generalization \\
+    \textbf{RO2.5} & Assess computational and storage costs \\
+    \midrule
+    \multicolumn{2}{@{}l}{\textbf{C3 — Paradigm Comparison}} \\
+    \midrule
+    \textbf{RO3.1} & Implement PIC and train under matched experimental conditions \\
+    \textbf{RO3.2} & Compare learning efficiency: PIC vs.\ implicit indication \\
+    \textbf{RO3.3} & Evaluate relative robustness to sensor and composition changes \\
+    \textbf{RO3.4} & Assess computational costs of each paradigm \\
+    \textbf{RO3.5} & Identify domain characteristics favoring each approach \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+    \note{Walk through by contribution group — about 15 seconds per group.
+    The committee is checking coverage, not evaluating individual RO wording.
+    A simple framing: ``Fourteen objectives across three contributions.
+    Everything on this slide was executed; the next slide shows the mapping.''
+    Total time target: 1 minute.}
+\end{frame}
+
+
+\begin{frame}[shrink=20]{Research Questions and Objectives}
+\vspace{1.5em}
+\begin{center}
+\renewcommand{\arraystretch}{1.35}
+\small
+\begin{tabular}{@{} l c l @{}}
+    \toprule
+    \textbf{Question} & & \textbf{Objectives} \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textbf{C1 — Policy Upsampling} \hfill \textit{Ch.\ 3}} \\
+    \midrule
+    RQ1.1 & $\longrightarrow$ & RO1.1, RO1.2, RO1.3 \\
+    RQ1.2 & $\longrightarrow$ & RO1.3, RO1.4 \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textbf{C2 — Implicit Indication} \hfill \textit{Ch.\ 4}} \\
+    \midrule
+    RQ2.1 & $\longrightarrow$ & RO2.1, RO2.2, RO2.3 \\
+    RQ2.2 & $\longrightarrow$ & RO2.4 \\
+    RQ2.3 & $\longrightarrow$ & RO2.5 \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textbf{C3 — Paradigm Comparison} \hfill \textit{Ch.\ 5}} \\
+    \midrule
+    RQ3.1 & $\longrightarrow$ & RO3.1, RO3.2 \\
+    RQ3.2 & $\longrightarrow$ & RO3.3 \\
+    RQ3.3 & $\longrightarrow$ & RO3.4, RO3.5 \\
+    \bottomrule
+\end{tabular}
+\end{center}
+
+    \note{This slide is a navigational reference — the committee is checking coverage.
+    You do not need to read each row.
+    A single sentence works: ``Every RQ maps to one or more objectives,
+    all executed in the corresponding chapter.''
+    Call out the shared objective if it catches their eye:
+    ``RO1.3 appears twice because evaluating across environments
+    answers both the efficiency and the heterogeneity question.''
+    Total time target: 30--45 seconds.}
+\end{frame}
+

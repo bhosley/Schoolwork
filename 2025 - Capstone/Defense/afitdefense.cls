@@ -19,64 +19,68 @@
 % OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 % SOFTWARE.
 % ------------------------------------------------------------------------------
-% Author: David Woodburn
+% Author: Brandon Hosley
 % Description: thesis and dissertation defense template
 % ------------------------------------------------------------------------------
-% The dimensions of the text box are
-%
-%   Columns |  Width  | Height
-%   ------- | ------- | ------
-%      1    | 14.0 cm | 6.5 cm
-%      2    |  6.5 cm | 6.5 cm
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{afitdefense}[2025/03/31 AFIT Defense]
-\def\@version{20250331}
+\ProvidesClass{afitdefense}[2026/02/23 AFIT Defense]
+\def\@version{20260223}
+
+% -------------
+% Class Options
+% -------------
 
 % Process options.
-\newif\ifstandard\standardfalse
 \newif\ifdefineul\defineultrue
-\def\@theme{0} % default color theme
-\DeclareOption{standard}{\standardtrue}
-\DeclareOption{wide}{\standardfalse}
 \DeclareOption{noul}{\defineulfalse}
+\def\@theme{0} % default color theme
 \DeclareOption{yellow}{\def\@theme{1}}
 \DeclareOption{orange}{\def\@theme{2}}
 \DeclareOption{red}{\def\@theme{3}}
 \DeclareOption{blue}{\def\@theme{4}}
 \DeclareOption{purple}{\def\@theme{5}}
 \DeclareOption{green}{\def\@theme{6}}
-\DeclareOption*{\PackageWarning{antbrief}{Unknown '\CurrentOption'}}
+\def\@aspectratio{169}
+\DeclareOption{aspectratio}{\def\@aspectratio{#1}}
+\PassOptionsToClass{aspectratio=\@aspectratio}{beamer}
+\newif\ifsectiontitle\sectiontitlefalse
+\DeclareOption{sectiontitles}{\sectiontitletrue}
+\newif\ifsectiontoc\sectiontocfalse
+\DeclareOption{sectiontocs}{\sectiontoctrue}
+\newif\ifsubsectiontoc\subsectiontocfalse
+\DeclareOption{subsectiontocs}{\subsectiontoctrue}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{beamer}}
 \ProcessOptions\relax
-\ifstandard
-    \LoadClass[10pt]{article}
-\else
-    \LoadClass[12pt]{article}
-\fi
 
-% Packages
-\RequirePackage[T1]{fontenc} % use 8-bit fonts
-\RequirePackage{geometry} % page dimensions and margins
-\RequirePackage{fancyhdr} % custom headers
-\RequirePackage{float} % custom floats
-\RequirePackage{flafter} % (builtin) floats after their definitions
-\RequirePackage[table]{xcolor} % custom table cell colors
-\RequirePackage{pgfplots} % includes tikz, xcolor, graphicx
-\RequirePackage{adjustbox} % automatically scale to fit
-\RequirePackage[scaled=0.95]{beramono} % custom teletype font
+\LoadClass{beamer}
+
+% -----------------
+% Required Packages
+% -----------------
+\RequirePackage[T1]{fontenc}                % use 8-bit fonts
+\RequirePackage{setspace}                   % control the line spacing (e.g. doublespacing)
+\RequirePackage[table, svgnames]{xcolor}              % custom table cell colors
+\RequirePackage{float}                      % custom floats and more assertive placement
 \RequirePackage{amsmath, amsfonts, amssymb} % improved math
-\RequirePackage{bm} % bold math (must be after amsmath)
-\RequirePackage{cancel} % strike-through in equations
-\RequirePackage{listings} % code and algorithms
-\RequirePackage{matlab-prettifier} % better MATLAB code formatting
-\RequirePackage{upquote} % upright single quotes in verbatim
-\RequirePackage{array} % custom column alignment types
-\RequirePackage[absolute]{textpos} % free placement of objects
-\RequirePackage{enumitem} % custom lists and list spacing
-\RequirePackage{hyperref} % hyperlinks
+\RequirePackage{bm}                         % bold math (must be after amsmath)
+\RequirePackage{cancel}                     % strike-through in equations
+\RequirePackage{pgfplots}                   % includes tikz, xcolor, graphicx
+\RequirePackage{adjustbox}                  % automatically scale to fit
+\RequirePackage{array}                      % custom column alignment types
+\RequirePackage{listings}                   % code and algorithms
+\RequirePackage[scaled=0.95]{beramono}      % custom teletype font
+\RequirePackage{matlab-prettifier}          % better MATLAB code formatting
+\RequirePackage{upquote}                    % upright single quotes in verbatim
+\RequirePackage[absolute,overlay]{textpos}  % free placement of objects
+\RequirePackage{hyperref}                   % hyperlinks
+\RequirePackage{multicol}                   % Support columnar slides
+\RequirePackage{datetime}                   % Formatting for /today
 
-% TikZ libraries
+% % TikZ libraries
 \usetikzlibrary{math} % general math calculations in TikZ
+\usetikzlibrary{calc}
+\usetikzlibrary{positioning}
 
 % PGF Plot configuration
 \pgfplotsset{compat=newest}
@@ -84,6 +88,12 @@
 % ----------------------
 % Added content features
 % ----------------------
+
+% Set date format to month, year
+\newdateformat{monthyeardate}{\monthname[\THEMONTH], \THEYEAR}
+
+% Clickable mailto email addresses
+\newcommand{\mailto}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
 
 % Standard math macros
 \ifdefineul
@@ -169,27 +179,22 @@
     \definecolor{dark}{RGB}{7,38,4}
     \colorlet{light}{green}
 \fi
+\setbeamercolor{palette primary}{fg=dark,bg=light}
 
-% Clickable mailto email addresses
-\newcommand{\mailto}[1]{\href{mailto:#1}{\nolinkurl{#1}}}
+% ---------------------------
+% General document formatting
+% ---------------------------
 
-% Horizontal line with middle text
-\newsavebox{\@btext}
-\newlength{\@bwidth}
-\newcommand{\breaktext}[2][light]{%
-    \sbox{\@btext}{#2}%
-    \setlength{\@bwidth}{0.5\textwidth}%
-    \addtolength{\@bwidth}{-0.5\wd\@btext}%
-    \addtolength{\@bwidth}{-1ex}%
-    \par{\color{#1!20}\rule[0.5ex]{\@bwidth}{1pt}}%
-    \hfill{\usebox{\@btext}}\hfill%
-    {\color{#1!20}\rule[0.5ex]{\@bwidth}{1pt}}\par}
-
-% Vertical and horizontal centering
-\newenvironment{Center}
-    {\topskip0pt\par\vspace*{\fill}\vspace*{-\parskip}\vspace*{-\topsep}%
-    \begin{minipage}{\textwidth}\centering}
-    {\end{minipage}\vspace*{\fill}\vspace*{-\topsep}\par}
+% Dimensions
+\newlength{\@xw}\setlength{\@xw}{0.5\paperwidth}    % half page width
+\newlength{\@yh}\setlength{\@yh}{0.5\paperheight}   % half page height
+\newlength{\swL}\setlength{\swL}{0.25\paperheight}  % SW corner to anchor len
+\newlength{\neL}\setlength{\neL}{0.33\paperwidth}   % NE corner to anchor len
+\newlength{\AccSpc}\setlength{\AccSpc}{3pt}         % Space between accent bar
+\newlength{\AccWd}\setlength{\AccWd}{15pt}          % Width of accent bar
+\newcommand{\logoScale}{1.75}                       % Size of logo
+\newlength{\logoX}\setlength{\logoX}{\logoScale cm} % Scaling for second logo
+\newlength{\logoY}\setlength{\logoY}{\logoScale cm}
 
 % Arbitrary object placement (textpos package)
 \newcommand{\pos}[4][]{%
@@ -204,37 +209,607 @@
         \end{textblock*}
     \fi}
 
-% Colored text box: \shadedbox[color]{text}
-\definecolor{shade}{RGB}{213,227,255}
-\newcommand{\shadedbox}[2][shade]{\setlength{\fboxsep}{5pt}%
-    \hspace*{-5pt}%
-    \colorbox{#1}{\parbox{\columnwidth}{#2}}% colorbox from xcolor package
-    \hspace*{-5pt}}
+% Default font family
+\renewcommand{\sfdefault}{qhv} % TeX Gyre Heros (like Helvetica)
+\renewcommand\familydefault{\sfdefault}
 
-% Quad charts: \quadchart{top-left}{top-right}{bottom-left}{bottom-right}
-\newlength{\@qw}
-\ifstandard
-    \setlength{\@qw}{4.84cm}
-\else
-    \setlength{\@qw}{6.81cm}
-\fi
-\newcommand{\quadchart}[4]{%
-    {\renewcommand{\arraystretch}{0}%
-    \begin{tabular}{@{}c|c@{}}
-        \begin{minipage}[t][3.22cm][t]{\@qw} % Top-left
+% Pretitle
+\newif\ifpretitle\pretitlefalse
+\def\@pretitle{}
+\newcommand{\pretitle}[1]{\pretitletrue\def\@pretitle{#1}}
+% Title
+\newif\iftitle\titlefalse
+\def\@title{}
+\renewcommand{\title}[1]{\titletrue\def\@title{#1}}
+% Subtitle
+\newif\ifsubtitle\subtitlefalse
+\def\@subtitle{}
+\renewcommand{\subtitle}[1]{\subtitletrue\def\@subtitle{#1}}
+% Author
+\newif\ifauthor\authorfalse
+\def\@author{}
+\renewcommand{\author}[1]{\authortrue\def\@author{#1}}
+% Committee:
+\newif\ifcommittee\committeefalse
+\def\@committee{}
+\newcommand{\committee}[1]{\committeetrue\def\@committee{#1}}
+
+% Contact info
+\def\@contactinfo{%
+    Air Force Institute of Technology \\
+    2950 Hobson Way \\
+    Wright Patterson AFB, Ohio 45433}
+\newcommand{\contact}[1]{\def\@contactinfo{{#1}}}
+
+% Copyright (e.g., \copyrighted[additional]{year}{author}). Note that the
+% copyright symbol is permitted regardless of whether the work has been
+% registered with the US Copyright Office, but it is also not required.
+\def\@copyrightstatement{}
+\newcommand{\copyrighted}[3][]{
+    \def\@copyrightstatement{%
+        Copyright {#2} {#3} \\[1ex]
+        All rights reserved. No part of this work may be reproduced or used in
+        any manner without the prior written permission of the copyright owner,
+        except for the use of brief quotations.
+        \if\relax\detokenize{#1}\relax
+        \else
+            \\[1ex]
             {#1}
-        \end{minipage} &
-        \begin{minipage}[t][3.22cm][t]{\@qw} % Top-right
-            {#2}
-        \end{minipage} \\
-        \hline\\[1ex]
-        \begin{minipage}[t][3.22cm][t]{\@qw} % Bottom-left
-            {#3}
-        \end{minipage} &
-        \begin{minipage}[t][3.22cm][t]{\@qw} % Bottom-right
-            {#4}
-        \end{minipage}
-    \end{tabular}}}
+        \fi}}
+
+% Disclaimer statement
+\def\@disclaimerstatement{
+    The views expressed in this article are those of the author and do
+    not necessarily reflect the official policy or position of the United States
+    government, Department of Defense, United States Air Force, or Air
+    University.}
+\newcommand{\disclaimer}[1]{\def\@disclaimerstatement{\par{#1}}}
+
+% AFIT motto
+\def\@afitmotto{
+    \begin{singlespace}
+        \itshape{The AFIT of today is the Air and \\
+        Space Force of Tomorrow.}
+    \end{singlespace}
+}
+
+% Custom logo
+\newif\ifextralogo\extralogofalse
+\newcommand{\extralogo}[1]{%
+    \extralogotrue%
+    \newsavebox\@extralogobox%
+    \sbox{\@extralogobox}{\includegraphics[%
+        width=1.75cm, height=1.75cm, keepaspectratio]{#1}}}
+
+% Default plot settings
+\pgfplotsset{%
+    tick label style={font=\scriptsize\sffamily},
+    every axis label={font=\sffamily},
+    legend style={font=\tiny\sffamily},
+    label style={font=\sffamily},
+    nodes near coords style=
+        {font=\scriptsize,/pgf/number format/assume math mode}
+}
+
+% List ticks
+\setbeamertemplate{itemize item}[ball]
+\setbeamertemplate{itemize subitem}[circle]
+
+% Hyperlink styling
+\hypersetup{
+    colorlinks=true,
+    linkcolor=dark,
+    citecolor=dark,
+    urlcolor=dark,
+    hypertexnames=false}
+\def\UrlFont{\sffamily\itshape}
+
+% Remove pdf image warnings.
+\pdfsuppresswarningpagegroup=1
+
+% Use French spacing.
+\frenchspacing
+
+% Distribution and CUI (see https://www.dodcui.mil/Distribution-Statements/)
+\newcommand{\DistA}{Distribution Statement A. Approved for public release:
+    distribution is unlimited.}
+\newcommand{\DistB}[3]{Distribution Statement B. Distribution authorized to U.S.
+    Government agencies {#1} {#2}. Other requests for this document must be
+    referred to {#3}.}
+    % \DistB{category}{date of determination}{controlling DoD office}
+\newcommand{\DistC}[3]{Distribution Statement C. Distribution authorized to U.S.
+    Government agencies and their contractors {#1} {#2}. Other requests for this
+    document must be referred to {#3}.}
+    % \DistC{category}{date of determination}{controlling DoD office}
+\newcommand{\DistD}[3]{Distribution Statement D. Distribution authorized to the
+    Department of Defense and U.S. DoD contractors only {#1} {#2}. Other
+    requests for this document must be referred to {#3}.}
+    % \DistD{category}{date of determination}{controlling DoD office}
+\newcommand{\DistE}[3]{Distribution Statement E. Distribution authorized to DoD
+    Components only {#1} {#2}. Other requests for this document must be referred
+    to {#3}.}
+    % \DistE{category}{date of determination}{controlling DoD office}
+\newcommand{\DistF}[2]{Distribution Statement F. Further distribution only as
+    directed by {#1} {#2} or higher DoD authority.}
+    % \DistE{controlling DoD office}{date of determination}
+% Distribution A
+\newif\ifDistA\DistAfalse
+\def\distributionA{\DistAtrue}
+
+% CUI (see DoDI 5200.48, p. 16)
+\newif\ifControlled\Controlledfalse
+\def\@cuiBlock{
+    Controlled By: AETC \\
+    Controlled By: AFIT/<school> \\
+    CUI Category(ies): <category> \\
+    Distribution: <DistB, ..., DistF command> \\
+    POC: <name>, <phone>}
+\newcommand{\cui}[1]{\Controlledtrue\def\@cuiBlock{#1}}
+% Classification
+\def\@classBlock{}
+\newcommand{\classified}[1]{\Controlledtrue\def\@classBlock{#1}}
+% Banner
+\def\@banner{CUI}
+\newcommand{\banner}[1]{\Controlledtrue\def\@banner{\MakeUppercase{#1}}}
+
+% ---------------------------
+% TikZ Misc
+% ---------------------------
+
+% TikZ predefined drawings
+\tikzset{
+    afitcrest/.pic={
+        % Make crest grey with "pic[]{afitcrest}".
+        % (-0.866,-0.866) to (0.866,0.866)
+        \usebeamercolor{palette primary}
+        \colorlet{crestdark}{fg}
+        \colorlet{crestlight}{bg}
+        % \definecolor{crestdark}{RGB}{0,0,76} % dark blue
+        % \colorlet{crestlight}{yellow}
+        % Ribbon
+        \draw[crestlight, thick, line cap=round, fill=white] (-0.61,-0.04)
+            .. controls (-0.62,-0.01) and (-0.64,0.092) .. (-0.72,0.092)
+            .. controls (-0.75,0.092) and (-0.78,0.06) .. (-0.78,0.025)
+            .. controls (-0.78,-0.05) and (-0.866,-0.13) .. (-0.866,-0.175)
+            .. controls (-0.866,-0.22) and (-0.82,-0.24) .. (-0.79,-0.235)
+            (0.79,-0.235)
+            .. controls (0.82,-0.24) and (0.866,-0.22) .. (0.866,-0.175)
+            .. controls (0.866,-0.13) and (0.78,-0.05) .. (0.78,0.025)
+            .. controls (0.78,0.06) and (0.75,0.092) .. (0.72,0.092)
+            .. controls (0.64,0.092) and (0.62,-0.01) .. (0.61,-0.04);
+        \draw[crestlight, thick, line cap=round, fill=white]
+            (-0.74,-0.04) -- (-0.703,0.025)
+            .. controls (-0.6,-0.07) and (-0.795,-0.16) .. (-0.795,-0.28)
+            .. controls (-0.795,-0.4) and (-0.652,-0.53) .. (-0.47,-0.619)
+            .. controls (-0.288,-0.709) and (-0.15,-0.735) .. (0,-0.866)
+            .. controls (0.15,-0.735) and (0.288,-0.709) .. (0.47,-0.619)
+            .. controls (0.652,-0.53) and (0.795,-0.4) .. (0.795,-0.28)
+            .. controls (0.795,-0.16) and (0.6,-0.07) .. (0.703,0.025) --
+            (0.74,-0.04);
+        \draw[crestlight, thick, line cap=round] (-0.78,0.025)
+            .. controls (-0.78,-0.04) and (-0.69,-0.09) .. (-0.676,-0.018)
+            (0.78,0.025)
+            .. controls (0.78,-0.04) and (0.69,-0.09) .. (0.676,-0.018);
+        % Shield background
+        \fill[crestlight, draw=crestdark, thin]
+            (-0.678,0.684) -- (-0.5,0.866) -- (0.5,0.866) -- (0.678,0.684)
+            .. controls (0.6,0.58) and (0.565,0.43) .. (0.565,0.308)
+            .. controls (0.565,0.12) and (0.622,0.0) .. (0.622,-0.1)
+            .. controls (0.622,-0.42) and (0.15,-0.41) .. (0,-0.61)
+            .. controls (-0.15,-0.41) and (-0.622,-0.42) .. (-0.622,-0.1)
+            .. controls (-0.622,0.0) and (-0.565,0.12) .. (-0.565,0.308)
+            .. controls (-0.565,0.43) and (-0.6,0.58) .. (-0.678,0.684) -- cycle;
+        % Shield foreground
+        \fill[crestdark]
+            (-0.56,0.0)
+            .. controls (-0.51,0.2) and (-0.493,0.5) .. (-0.625,0.676)
+            -- (-0.48,0.825) -- (0.48,0.825) -- (0.625,0.676)
+            .. controls (0.493,0.5) and (0.51,0.2) .. (0.56,0) % top
+            {[xshift=0.588cm]
+            .. controls (-0.038,0) and (-0.063,-0.01) .. (-0.063,-0.03) % cave
+            .. controls (-0.068,-0.05) and (-0.035,-0.06)
+            .. (-0.035,-0.08) % vex
+            .. controls (-0.035,-0.1) and (-0.06,-0.11)
+            .. (-0.098,-0.11)} % bottom
+            \foreach \xs in {0.392cm, 0.196cm, 0cm, -0.196cm, -0.392cm}{
+                [xshift=\xs]
+                .. controls (0.06,-0.11) and (0.035,-0.1)
+                .. (0.035,-0.08) % vex
+                .. controls (0.035,-0.06) and (0.068,-0.05)
+                .. (0.063,-0.03) % cave
+                .. controls (0.063,-0.01) and (0.038,0) .. (0,0) % top
+                .. controls (-0.038,0) and (-0.063,-0.01)
+                .. (-0.063,-0.03) % cave
+                .. controls (-0.068,-0.05) and (-0.035,-0.06)
+                .. (-0.035,-0.08) % vex
+                .. controls (-0.035,-0.1) and (-0.06,-0.11)
+                .. (-0.098,-0.11) % bottom
+            }
+            [xshift=-0.588cm]
+            .. controls (0.06,-0.11) and (0.035,-0.1) .. (0.035,-0.08) % vex
+            .. controls (0.035,-0.06) and (0.068,-0.05) .. (0.063,-0.03) % cave
+            .. controls (0.063,-0.01) and (0.038,0) .. (0.028,0); % top
+        % Gear
+        \def\ygear{0.4125cm}
+        \fill[crestlight, yshift=\ygear]
+            (-4.875:0.26)
+            \foreach \i in {0,1,...,15} {%
+                [rotate=(22.5*\i-5.625)] arc (0.75:10.5:0.26) --
+                (12:0.3) arc (12:21.75:0.3) -- (23.25:0.26)
+            };
+        % Circle
+        \draw[very thin, crestdark, yshift=\ygear]
+            (0,0) circle (0.2);
+        % Outer orbits
+        \begin{scope}[yshift=\ygear]
+            \foreach \i in {0, 30, 60, 90, 120, 150}{
+                \draw[very thin, crestdark, rotate=\i]
+                    (0,0) circle (0.17 and 0.05);
+            }
+        \end{scope}
+        % Inner orbits
+        \begin{scope}[yshift=\ygear]
+            \foreach \i in {45, 135}{
+                \draw[very thin, crestdark, rotate=\i]
+                    (0,0) circle (0.04 and 0.015);
+            }
+        \end{scope}
+        % Lightning
+        \foreach \xf/\yf in {1/1, 1/-1, -1/1, -1/-1}{
+            \begin{scope}[yshift=\ygear, xscale=\xf, yscale=\yf]
+                \fill[crestlight, very thin]
+                    (0.176,0.2) -- (0.186,0.217) -- (0.295,0.321) --
+                    (0.303,0.249) -- (0.362,0.306) -- (0.318,0.310) --
+                    (0.442,0.380) -- (0.392,0.240) -- (0.382,0.289) --
+                    (0.287,0.170) -- (0.278,0.250) -- (0.217,0.186) --
+                    (0.2,0.176) arc (41.35:48.65:0.2664);
+            \end{scope}
+        }
+        % Letters
+        \fontsize{2.6pt}{2.6pt}\fontfamily{ptm}\selectfont
+        \begin{scope}[transform shape, crestdark]
+            \node[rotate=-62, yscale=1.9] at (-0.681,-0.278){A};
+            \node[rotate=-50, yscale=1.9] at (-0.642,-0.333){F};
+            \node[rotate=-37, yscale=1.9] at (-0.565,-0.412){I};
+            \node[rotate=-33, yscale=1.9] at (-0.520,-0.443){N};
+            \node[rotate=-28, yscale=1.9] at (-0.467,-0.476){S};
+            \node[rotate=-24, yscale=1.9] at (-0.415,-0.503){T};
+            \node[rotate=-21, yscale=1.9] at (-0.370,-0.523){I};
+            \node[rotate=-22, yscale=1.9] at (-0.320,-0.544){T};
+            \node[rotate=-22, yscale=1.9, xslant=-0.25]
+                at (-0.251,-0.572){U};
+            \node[rotate=-26, yscale=1.9, xslant=-0.65]
+                at (-0.182,-0.605){T};
+            \node[rotate=-33, yscale=1.85, xslant=-1.10]
+                at (-0.120,-0.642){E};
+            \node[rotate=-41, xscale=1.2, yscale=1.72, xslant=-1.30]
+                at (-0.027,-0.708){O};
+            \node[rotate=41, xscale=1.5, yscale=1.65, xslant=0.95]
+                at (0.035,-0.700){F};
+            \node[rotate=37, xscale=1.35, yscale=1.7, xslant=0.85]
+                at (0.134,-0.633){T};
+            \node[rotate=30, xscale=1.19, yscale=1.95, xslant=0.65]
+                at (0.204,-0.593){E};
+            \node[rotate=12, yscale=2.05] at (0.262,-0.563){C};
+            \node[rotate=20, yscale=1.95] at (0.327,-0.538){H};
+            \node[rotate=23, yscale=1.95] at (0.398,-0.510){N};
+            \node[rotate=30, yscale=1.9] at (0.467,-0.477){O};
+            \node[rotate=32, yscale=1.9] at (0.529,-0.439){L};
+            \node[rotate=38, yscale=1.9] at (0.585,-0.398){O};
+            \node[rotate=51, yscale=1.9] at (0.640,-0.342){G};
+            \node[rotate=63, yscale=1.9] at (0.680,-0.276){Y};
+        \end{scope}
+        % Signature
+        \node[rotate=24, transform shape, scale=0.5, crestlight, opacity=0.03]
+            at (0.35,-0.63) {\sffamily DW~\@version};
+    },
+    afitlogo/.pic={
+        % (-0.866,-0.259) to (0.866,0.388)
+        % Atomic structure
+        \fill (-0.541,0.063) circle (0.0146);
+        \fill (-0.623,-0.015)
+            .. controls (-0.81,-0.075) and (-0.860,-0.071) .. (-0.866,-0.056)
+            .. controls (-0.876,-0.033) and (-0.8,0.035) .. (-0.548,0.140)
+            .. controls (-0.27,0.244) and (0,0.29) .. (0.44,0.34)
+            .. controls (0,0.273) and (-0.27,0.228) .. (-0.548,0.116)
+            .. controls (-0.685,0.053) and (-0.786,-0.010) .. (-0.773,-0.032)
+            .. controls (-0.760,-0.050) and (-0.700,-0.029) .. (-0.623,-0.015);
+        \fill (-0.806,0.187)
+            .. controls (-0.813,0.195) and (-0.815,0.204) .. (-0.813,0.211)
+            .. controls (-0.803,0.238) and (-0.700,0.212) .. (-0.541,0.130)
+            .. controls (-0.450,0.085) and (-0.246,-0.047) .. (-0.270,-0.088)
+            .. controls (-0.298,-0.133) and (-0.610,0.014) .. (-0.745,0.126)
+            .. controls (-0.485,-0.030) and (-0.341,-0.074) .. (-0.324,-0.051)
+            .. controls (-0.302,0.010) and (-0.760,0.239) .. (-0.759,0.171);
+        \fill (-0.591,0.197)
+            .. controls (-0.595,0.285) and (-0.574,0.373) .. (-0.549,0.373)
+            .. controls (-0.514,0.373) and (-0.484,0.220) .. (-0.482,0.061)
+            .. controls (-0.478,-0.095) and (-0.498,-0.247) .. (-0.533,-0.247)
+            .. controls (-0.567,-0.247) and (-0.590,-0.105) .. (-0.596,-0.014)
+            -- (-0.578,-0.025)
+            .. controls (-0.565,-0.120) and (-0.548,-0.182) .. (-0.528,-0.182)
+            .. controls (-0.500,-0.176) and (-0.491,-0.050) .. (-0.497,0.061)
+            .. controls (-0.503,0.195) and (-0.528,0.308) .. (-0.554,0.308)
+            .. controls (-0.574,0.308) and (-0.582,0.250) .. (-0.591,0.197)
+            (-0.599,0.035) -- (-0.601,0.100) -- (-0.587,0.110) --
+            (-0.583,0.030);
+        % Jet
+        \fill (0.498,0.377) -- (0.527,0.369) -- (0.647,0.381) --
+            (0.767,0.388) -- (0.702,0.377) -- (0.682,0.370) -- (0.658,0.350) --
+            (0.651,0.346) -- (0.634,0.344) -- (0.563,0.358) -- (0.512,0.352);
+        % AFIT
+        \fill[even odd rule] (-0.285,-0.259) -- (-0.285,-0.243)
+            .. controls (-0.265,-0.243) and (-0.260,-0.235) .. (-0.249,-0.203)
+            -- (-0.111,0.293) -- (-0.105,0.293) -- (0.028,-0.203)
+            .. controls (0.035,-0.230) and (0.040,-0.243) .. (0.065,-0.243)
+            -- (0.065,-0.259)
+            .. controls (0.035,-0.254) and (-0.023,-0.254) .. (-0.053,-0.259)
+            -- (-0.053,-0.243)
+            .. controls (-0.033,-0.243) and (-0.023,-0.239) .. (-0.030,-0.203)
+            -- (-0.059,-0.081) -- (-0.19,-0.081) -- (-0.223,-0.203)
+            .. controls (-0.231,-0.233) and (-0.215,-0.240) .. (-0.196,-0.243)
+            -- (-0.196,-0.259)
+            .. controls (-0.226,-0.254) and (-0.255,-0.254) .. (-0.285,-0.259)
+            (-0.181,-0.05) -- (-0.122,0.168) -- (-0.067,-0.05);
+        \fill (0.079,-0.259) -- (0.079,-0.243)
+            .. controls (0.111,-0.240) and (0.117,-0.240) .. (0.120,-0.203)
+            -- (0.120,0.235)
+            .. controls (0.117,0.263) and (0.111,0.267) .. (0.079,0.269)
+            -- (0.079,0.285)
+            .. controls (0.109,0.280) and (0.303,0.280) .. (0.333,0.285)
+            -- (0.338,0.166) -- (0.328,0.165)
+            .. controls (0.320,0.225) and (0.300,0.252) .. (0.245,0.252)
+            -- (0.182,0.252)
+            .. controls (0.176,0.252) and (0.173,0.246) .. (0.173,0.240)
+            -- (0.173,0.038) -- (0.253,0.039)
+            .. controls (0.273,0.045) and (0.285,0.055) .. (0.289,0.112)
+            -- (0.299,0.112) -- (0.300,-0.063) -- (0.290,-0.063)
+            .. controls (0.284,-0.006) and (0.275,0.004) .. (0.253,0.010)
+            -- (0.173,0.010) -- (0.173,-0.203)
+            .. controls (0.175,-0.235) and (0.180,-0.242) .. (0.214,-0.243)
+            -- (0.214,-0.259)
+            .. controls (0.184,-0.254) and (0.109,-0.254) .. (0.079,-0.259);
+        \fill (0.380,-0.259) -- (0.380,-0.243)
+            .. controls (0.415,-0.241) and (0.418,-0.235) .. (0.420,-0.203)
+            -- (0.420,0.235)
+            .. controls (0.417,0.261) and (0.413,0.267) .. (0.380,0.269)
+            -- (0.380,0.285)
+            .. controls (0.410,0.280) and (0.485,0.280) .. (0.515,0.285)
+            -- (0.515,0.269)
+            .. controls (0.485,0.266) and (0.477,0.265) .. (0.474,0.235)
+            -- (0.474,-0.203)
+            .. controls (0.475,-0.233) and (0.481,-0.243) .. (0.515,-0.243)
+            -- (0.515,-0.259)
+            .. controls (0.485,-0.254) and (0.410,-0.254) .. (0.380,-0.259);
+        \fill (0.641,-0.259) -- (0.641,-0.243)
+            .. controls (0.674,-0.242) and (0.681,-0.235) .. (0.681,-0.203)
+            -- (0.682,0.254) -- (0.652,0.254)
+            .. controls (0.595,0.253) and (0.570,0.207) .. (0.567,0.149)
+            -- (0.555,0.149)
+            .. controls (0.559,0.179) and (0.562,0.255) .. (0.563,0.285)
+            .. controls (0.593,0.280) and (0.828,0.280) .. (0.858,0.285)
+            .. controls (0.859,0.255) and (0.862,0.179) .. (0.866,0.149)
+            -- (0.854,0.149)
+            .. controls (0.851,0.207) and (0.826,0.253) .. (0.769,0.254)
+            -- (0.735,0.254) -- (0.735,-0.203)
+            .. controls (0.738,-0.237) and (0.744,-0.242) .. (0.776,-0.243)
+            -- (0.777,-0.259)
+            .. controls (0.747,-0.254) and (0.671,-0.254) .. (0.641,-0.259);},
+}
+
+\newcommand{\BGCoords}{%
+    \coordinate (cen) at (current page.center);
+    \coordinate (swX) at ($(current page.south west)+(\swL,0)$);
+    \coordinate (swY) at ($(current page.south west)+(0,\swL)$);
+    \coordinate (neX) at ($(current page.north east)-(\neL,0)$);
+    \coordinate (neY) at ($(current page.north east)-(0,\neL)$);
+}
+
+\newcommand{\titleBG}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        \usebeamercolor{palette primary}
+        \BGCoords
+        \fill[fg] (swY) |- (neX) -- (neY) |- (swX);
+        \fill[bg] ($(swY)-(0,\AccSpc)$) --++ (0,-\AccWd) 
+            -- ($(swX)-(\AccSpc+\AccWd,0)$) --++ (\AccWd,0);
+        \fill[bg] ($(neY)+(0,\AccSpc)$) --++ (0,\AccWd)
+            -- ($(neX)+(\AccSpc+\AccWd,0)$) --++ (-\AccWd,0);
+        \pic[scale=\logoScale] at ($(neX)!0.5!(neY)+(0.6*\AccWd,0.6*\AccWd)$) {afitcrest};
+        \ifextralogo
+            \node at ($(neX)!0.5!(neY)-(\logoX,\logoY)$) {\usebox{\@extralogobox}};
+        \fi
+    \end{tikzpicture}
+}
+
+\newcommand{\lightbackground}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        {\usebeamercolor{palette primary}
+        \fill[color=fg] (current page.south west) --+ (0,0.33\paperheight) 
+        --+ (0.33\paperheight,0);
+        \fill[color=fg] (current page.north east) --+ (0,-0.33\paperheight) 
+        --+ (-0.33\paperheight,0);
+        \fill[color=bg] 
+        ($(current page.south west)+(0,0.33\paperheight+3pt)$) --
+        ($(current page.south west)+(0,0.33\paperheight+18pt)$) --
+        ($(current page.south west)+(0.33\paperheight+18pt,0)$) --
+        ($(current page.south west)+(0.33\paperheight+3pt,0)$);
+        \fill[color=bg] 
+        ($(current page.north east)-(0,0.33\paperheight+3pt)$) --
+        ($(current page.north east)-(0,0.33\paperheight+18pt)$) --
+        ($(current page.north east)-(0.33\paperheight+18pt,0)$) --
+        ($(current page.north east)-(0.33\paperheight+3pt,0)$);
+        \ifControlled
+            % Classification banners
+            \node[anchor=south, fg] at ($(current page.south)$) {\Large\bfseries\@banner\strut};
+            \node[anchor=north, fg] at ($(current page.north)$) {\Large\bfseries\@banner\strut};
+        \fi
+        }
+    \end{tikzpicture}
+}
+
+\newcommand{\regularBG}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        {\usebeamercolor{palette primary}
+        % Background
+        \path ($(current page.north west)+(1.5cm,-0.65cm)$) pic[color=fg]{afitlogo};
+        \fill[color=bg] ($(current page.north west)+(0.3\paperheight,0)$)
+            --++ (18pt,0) --++ (1.1cm,-1.1cm) --++ (-18pt,0);
+        \fill[color=fg] ($(current page.north west)+(0.3\paperheight+21pt,0)$)
+            --++ (1.1cm,-1.1cm) -| (current page.north east);
+        \ifControlled
+            \node[anchor=south east, fg] at ($(current page.south east)+(-0,0)$) 
+                {\large\bfseries\@banner\enskip\strut};
+            \node[anchor=north east, bg, font=\large] at ($(current page.north east)+(-6pt,-6pt)$)
+                {\bfseries{\@banner\enskip\insertframenumber}};
+        \else
+            \node[anchor=north east, bg, font=\large] at ($(current page.north east)+(-6pt,-6pt)$)
+                {\bfseries{\insertframenumber}};
+        \fi
+        }
+        {\usebeamercolor{normal text}
+        \ifx\insertframesubtitle\@empty%
+            \node[anchor=north west, bg, font=\large] 
+                at (0.4\paperheight,7pt){\bfseries{\insertframetitle}};
+        \else
+            %#BUG: Fixed title spacing (was 0pt and -4pt)
+            \node[anchor=west, bg, font=\large] at (0.4\paperheight,3pt)
+                {\bfseries{\insertframetitle}};
+            \node[anchor=west, bg,] at (0.4\paperheight,-10pt)
+                {\small\bfseries{\insertframesubtitle}};
+        \fi
+        }
+    \end{tikzpicture}
+}
+
+% ---------------------------
+% Define Beamer Frames
+% ---------------------------
+
+% Title Page
+\setbeamerfont{pretitle}{size=\normalsize}
+\setbeamerfont{title}{size=\LARGE, series=\bfseries}
+\setbeamerfont{subtitle}{size=\Large, series=\bfseries}
+\setbeamerfont{author}{}
+
+\defbeamertemplate*{title page}{afitdefense}[1][t]{
+    \titleBG
+    \begin{minipage}[t][0.7\paperheight][s]{0.7\linewidth}
+        \vspace*{-2\topskip}
+        \raggedright
+        \usebeamercolor{normal text}
+        \color{bg}
+        \bigskip
+        \ifpretitle
+            {\usebeamerfont{pretitle}\@pretitle\par\bigskip}
+        \fi
+        \iftitle
+            {\usebeamerfont{title}\@title\par\bigskip}
+        \fi
+        \ifsubtitle{
+            % \usebeamercolor[bg]{frametitle}
+            \usebeamercolor[bg]{palette primary}
+            \usebeamerfont{subtitle}\@subtitle\par\bigskip}
+        \fi
+        \ifauthor
+            {\usebeamerfont{author}\@author\par\medskip}
+        \fi
+        {\usebeamerfont{date}\hspace*{1em} \monthyeardate\today\par\medskip}
+        \ifcommittee
+            {\normalsize \usebeamerfont{author}\@committee\par}
+        \fi
+        \bigskip
+        % \usebeamercolor[fg]{titlegraphic}\inserttitlegraphic
+    \end{minipage}
+    \vfill
+    \ifControlled
+        \usebeamercolor{normal text}
+        \begin{tikzpicture}[remember picture, overlay]
+            % Classification block
+            \node[anchor=south west, inner sep=0, text width=\@yh, bg] 
+                at ({1.25\@xw},{-0.5})
+                {\begin{minipage}[b]{0.575\@xw}
+                    \tiny\raggedright\setlength{\parindent}{-1em}%
+                    \@cuiBlock \\[1em]
+                    \@classBlock
+                \end{minipage}};
+            % Classification banners
+            \node[anchor=south, bg] at ($(current page.south)$) {\bfseries\@banner\strut};
+            \node[anchor=north, bg] at ($(current page.north)$) {\bfseries\@banner\strut};
+        \end{tikzpicture}
+    \else
+        \ifDistA
+            % Public release
+            \node[anchor=south west, inner sep=0, text width=\@yh, bg] 
+                at ({1.25\@xw},{-0.5})
+                {\begin{minipage}[t]{0.575\@xw}
+                    \tiny\raggedright\setlength{\parindent}{0pt}%
+                    \MakeUppercase\DistA
+                \end{minipage}};
+        \fi
+    \fi
+}
+
+% Regular Frame
+\defbeamertemplate*{frametitle}{afitdefense}[1][]{
+    \regularBG
+}
+
+% Section Title Page
+\ifsectiontitle
+    \RequirePackage{nameref}
+    \AtBeginSection[]{
+    \begin{frame}
+        \lightbackground
+        \begin{center}
+            \usebeamercolor[fg]{palette primary} \huge\textbf{\secname}
+        \end{center}
+    \end{frame}
+    }
+\fi
+
+% Recall table of contents each section
+\ifsectiontoc
+\AtBeginSection[]{
+    \begin{frame}{\phantom{Phantom Title}}
+        \tableofcontents[currentsection, hideothersubsections]
+    \end{frame}
+}
+\fi
+    
+% Recall table of contents each subsection
+\ifsubsectiontoc
+\AtBeginSubsection[]{
+    \begin{frame}{\phantom{Phantom Title}}
+        \tableofcontents[currentsection, currentsubsection,
+            subsectionstyle=show/shaded/hide, subsubsectionstyle=hide]
+    \end{frame}
+}
+\fi
+
+% Closing page
+\newcommand{\closing}{
+    \begin{frame}
+        \lightbackground
+        \begin{columns}
+            \begin{column}{.5\textwidth}
+                \begin{center}
+                    \begin{tikzpicture}
+                        \pic[scale=2] at ($(0.25\paperwidth,0.55\paperheight+1em)$) {afitcrest};
+                    \end{tikzpicture}
+                \end{center}
+            \end{column}
+            \begin{column}{.5\textwidth}
+                \begin{minipage}[c][0.9\paperheight][c]{0.85\linewidth}
+                    \raggedright
+                    \scriptsize\usebeamercolor[fg]{palette primary}%
+                    \@contactinfo \\[2ex]
+                    \@disclaimerstatement \\[2ex]
+                    \@afitmotto
+                \end{minipage}
+            \end{column}
+        \end{columns}
+    \end{frame}
+}
 
 % -------------------------------------
 % Custom code styles (listings package)
@@ -450,682 +1025,388 @@
 \newcommand{\HL}{\tikz[overlay]{\draw[black, line width=2pt]
     (-10pt,-4pt) -- (-10pt,10pt);}}
 
-% ---------------------------
-% General document formatting
-% ---------------------------
 
-% Default font family
-\renewcommand{\sfdefault}{qhv} % TeX Gyre Heros (like Helvetica)
-\renewcommand\familydefault{\sfdefault}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     Unneeded after conversion to Beamer:     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Default plot settings
-\pgfplotsset{%
-    tick label style={font=\scriptsize\sffamily},
-    every axis label={font=\sffamily},
-    legend style={font=\tiny\sffamily},
-    label style={font=\sffamily},
-    nodes near coords style=
-        {font=\scriptsize,/pgf/number format/assume math mode}
-}
+% \newenvironment{emptyframe}{%
+%     \begingroup
+%     % \newgeometry{margin=0cm, nohead}
+%     \begin{frame}[plain]
+%     % \vspace*{-0.5\topskip}\nointerlineskip
+% }{%
+%     \end{frame}%
+%     \endgroup
+%     % \clearpage
+%     % \restoregeometry
+% }
 
-% Define margins.
-\ifstandard
-    \newlength{\@xw}\setlength{\@xw}{6cm}   % half page width
-\else
-    \newlength{\@xw}\setlength{\@xw}{8cm}   % half page width
-\fi
-\newlength{\@yh}\setlength{\@yh}{4.5cm}     % half page height
-\newlength{\@mgnT}\setlength{\@mgnT}{1.5cm} % top margin
-\newlength{\@mgnB}\setlength{\@mgnB}{0.999cm} % bottom margin
-\newlength{\@mgnL}\setlength{\@mgnL}{1cm}   % left margin
-\newlength{\@mgnC}\setlength{\@mgnC}{1cm}   % column separation
-\newlength{\@mgnR}\setlength{\@mgnR}{1cm}   % right margin
-\newlength{\@mgnS}\setlength{\@mgnS}{\@mgnT} % head separation
-\addtolength{\@mgnS}{-1cm}
-\ifstandard
-    \addtolength{\@mgnS}{0.374cm}
-\else
-    \addtolength{\@mgnS}{0.348cm}
-\fi
+% \newif\ifstandard\standardfalse
+% \DeclareOption{standard}{\standardtrue}
+% \DeclareOption{wide}{\standardfalse}
+% \DeclareOption*{\PackageWarning{antbrief}{Unknown '\CurrentOption'}}
+% \ifstandard
+%     \LoadClass[10pt]{article}
+% \else
+%     \LoadClass[12pt]{article}
+% \fi
 
-% Page geometry
-\geometry{
-    paperwidth=2\@xw, paperheight=2\@yh,
-    top=\@mgnT, bottom=\@mgnB,
-    left=\@mgnL, right=\@mgnR,
-    columnsep=\@mgnC,
-    headheight=1cm, headsep=\@mgnS}
-\setlength{\columnseprule}{0.1pt}
-
-% Derived dimensions
-\newlength{\@xShift}\setlength{\@xShift}{\@xw} % full-page x shift
-\addtolength{\@xShift}{-\@mgnL}
-\newlength{\@yShift}\setlength{\@yShift}{\@mgnT} % full-page y shift
-\ifstandard
-    \addtolength{\@yShift}{-4.148cm}
-\else
-    \addtolength{\@yShift}{-4.078cm}
-\fi
-\newlength{\@xHead}\setlength{\@xHead}{-0.5\@mgnL} % header x position
-\addtolength{\@xHead}{0.5\@mgnR}
-\newlength{\@yHead}\setlength{\@yHead}{-4cm} % header y position
-
-% Paragraph parameters
-\setlength{\parindent}{0pt} % indentation of first line of paragraphs
-\setlength{\parskip}{1.2ex plus 6pt} % space between paragraphs
-\setlength{\emergencystretch}{\hsize} % overfull avoidance
-\overfullrule=1mm % overfull black bands
-\raggedbottom % page-ending empty space allowed
-\DeclareRobustCommand\justifying{%
-    \let\\\@normalcr
-    \@rightskip\z@skip \rightskip\@rightskip
-    \leftskip\z@skip
-    \finalhyphendemerits=5000
-    \parfillskip=0pt plus 1fil}
+% \RequirePackage{geometry} % page dimensions and margins
+% \RequirePackage{fancyhdr} % custom headers
+% \RequirePackage{enumitem}                   % custom lists and list spacing
 
 % Reduce list spacing (enumitem package).
-\setlist{
-    itemindent=0pt,
-    labelsep=0.2cm,
-    labelwidth=0.4cm,
-    leftmargin=0.6cm,
-    topsep=0pt,
-    parsep=0.5\parskip,
-    itemsep=0.5\parskip,
-    before=\raggedright}
+% \setlist{
+%     itemindent=0pt,
+%     labelsep=0.2cm,
+%     labelwidth=0.4cm,
+%     leftmargin=0.6cm,
+%     topsep=0pt,
+%     parsep=0.5\parskip,
+%     itemsep=0.5\parskip,
+%     before=\raggedright}
 
-% Reduce spacing of other environments (enumitem package).
-\setlist[trivlist]{topsep=0pt}
+% % Reduce spacing of other environments (enumitem package).
+% \setlist[trivlist]{topsep=0pt}
 
-% Hyperlink styling
-\hypersetup{
-    colorlinks=true,
-    linkcolor=dark,
-    citecolor=dark,
-    urlcolor=dark,
-    hypertexnames=false}
-\def\UrlFont{\sffamily\itshape}
+% % Headers and footers
+% \newcommand{\@headername}{}
+% \pagestyle{fancy}
+% \fancyhead[L,R]{}
+% \fancyhead[C]{\tikz[overlay]{\path (\@xHead,\@yHead) pic{sectionpage};}}
+% \fancyfoot[L,C,R]{}
+% \renewcommand{\headrulewidth}{0pt}
+% \renewcommand{\footrulewidth}{0pt}
 
-% Remove pdf image warnings.
-\pdfsuppresswarningpagegroup=1
+% % Horizontal line with middle text
+% \newsavebox{\@btext}
+% \newlength{\@bwidth}
+% \newcommand{\breaktext}[2][light]{%
+%     \sbox{\@btext}{#2}%
+%     \setlength{\@bwidth}{0.5\textwidth}%
+%     \addtolength{\@bwidth}{-0.5\wd\@btext}%
+%     \addtolength{\@bwidth}{-1ex}%
+%     \par{\color{#1!20}\rule[0.5ex]{\@bwidth}{1pt}}%
+%     \hfill{\usebox{\@btext}}\hfill%
+%     {\color{#1!20}\rule[0.5ex]{\@bwidth}{1pt}}\par}
 
-% Use French spacing.
-\frenchspacing
+% % Colored text box: \shadedbox[color]{text}
+% \definecolor{shade}{RGB}{213,227,255}
+% \newcommand{\shadedbox}[2][shade]{\setlength{\fboxsep}{5pt}%
+%     \hspace*{-5pt}%
+%     \colorbox{#1}{\parbox{\columnwidth}{#2}}% colorbox from xcolor package
+%     \hspace*{-5pt}}
 
-% Pretitle
-\newif\ifpretitle\pretitlefalse
-\def\@pretitle{}
-\newcommand{\pretitle}[1]{\pretitletrue\def\@pretitle{#1}}
-% Title
-\newif\iftitle\titlefalse
-\def\@title{}
-\renewcommand{\title}[1]{\titletrue\def\@title{#1}}
-% Subtitle
-\newif\ifsubtitle\subtitlefalse
-\def\@subtitle{}
-\newcommand{\subtitle}[1]{\subtitletrue\def\@subtitle{#1}}
-% Author
-\newif\ifauthor\authorfalse
-\def\@author{}
-\renewcommand{\author}[1]{\authortrue\def\@author{#1}}
+% % Paragraph parameters
+% \setlength{\parindent}{0pt} % indentation of first line of paragraphs
+% \setlength{\parskip}{1.2ex plus 6pt} % space between paragraphs
+% \setlength{\emergencystretch}{\hsize} % overfull avoidance
+% \overfullrule=1mm % overfull black bands
+% \raggedbottom % page-ending empty space allowed
+% \DeclareRobustCommand\justifying{%
+%     \let\\\@normalcr
+%     \@rightskip\z@skip \rightskip\@rightskip
+%     \leftskip\z@skip
+%     \finalhyphendemerits=5000
+%     \parfillskip=0pt plus 1fil}
 
-% Distribution and CUI (see https://www.dodcui.mil/Distribution-Statements/)
-\newcommand{\DistA}{Distribution Statement A. Approved for public release:
-    distribution is unlimited.}
-\newcommand{\DistB}[3]{Distribution Statement B. Distribution authorized to U.S.
-    Government agencies {#1} {#2}. Other requests for this document must be
-    referred to {#3}.}
-    % \DistB{category}{date of determination}{controlling DoD office}
-\newcommand{\DistC}[3]{Distribution Statement C. Distribution authorized to U.S.
-    Government agencies and their contractors {#1} {#2}. Other requests for this
-    document must be referred to {#3}.}
-    % \DistC{category}{date of determination}{controlling DoD office}
-\newcommand{\DistD}[3]{Distribution Statement D. Distribution authorized to the
-    Department of Defense and U.S. DoD contractors only {#1} {#2}. Other
-    requests for this document must be referred to {#3}.}
-    % \DistD{category}{date of determination}{controlling DoD office}
-\newcommand{\DistE}[3]{Distribution Statement E. Distribution authorized to DoD
-    Components only {#1} {#2}. Other requests for this document must be referred
-    to {#3}.}
-    % \DistE{category}{date of determination}{controlling DoD office}
-\newcommand{\DistF}[2]{Distribution Statement F. Further distribution only as
-    directed by {#1} {#2} or higher DoD authority.}
-    % \DistE{controlling DoD office}{date of determination}
-% Distribution A
-\newif\ifDistA\DistAfalse
-\def\distributionA{\DistAtrue}
-% CUI (see DoDI 5200.48, p. 16)
-\newif\ifControlled\Controlledfalse
-\def\@cuiBlock{
-    Controlled By: AETC \\
-    Controlled By: AFIT/<school> \\
-    CUI Category(ies): <category> \\
-    Distribution: <DistB, ..., DistF command> \\
-    POC: <name>, <phone>}
-\newcommand{\cui}[1]{\Controlledtrue\def\@cuiBlock{#1}}
-% Classification
-\def\@classBlock{}
-\newcommand{\classified}[1]{\Controlledtrue\def\@classBlock{#1}}
-% Banner
-\def\@banner{CUI}
-\newcommand{\banner}[1]{\Controlledtrue\def\@banner{\MakeUppercase{#1}}}
 
-% Contact info
-\def\@contactinfo{%
-    Air Force Institute of Technology \\
-    2950 Hobson Way \\
-    Wright Patterson AFB, Ohio 45433}
-\newcommand{\contact}[1]{\def\@contactinfo{{#1}}}
+% Define margins.
 
-% Copyright (e.g., \copyrighted[additional]{year}{author}). Note that the
-% copyright symbol is permitted regardless of whether the work has been
-% registered with the US Copyright Office, but it is also not required.
-\def\@copyrightstatement{}
-\newcommand{\copyrighted}[3][]{
-    \def\@copyrightstatement{%
-        \\[2ex] Copyright {#2} {#3} \\[1ex]
-        All rights reserved. No part of this work may be reproduced or used in
-        any manner without the prior written permission of the copyright owner,
-        except for the use of brief quotations.
-        \if\relax\detokenize{#1}\relax
-        \else
-            \\[1ex]
-            {#1}
-        \fi}}
+% \newlength{\@mgnT}\setlength{\@mgnT}{1.5cm} % top margin
+% \newlength{\@mgnB}\setlength{\@mgnB}{0.999cm} % bottom margin
+% \newlength{\@mgnL}\setlength{\@mgnL}{1cm}   % left margin
+% \newlength{\@mgnC}\setlength{\@mgnC}{1cm}   % column separation
+% \newlength{\@mgnR}\setlength{\@mgnR}{1cm}   % right margin
+% \newlength{\@mgnS}\setlength{\@mgnS}{\@mgnT} % head separation
+% \addtolength{\@mgnS}{-1cm}
+% \ifstandard
+%     \addtolength{\@mgnS}{0.374cm}
+% \else
+%     \addtolength{\@mgnS}{0.348cm}
+% \fi
 
-% Disclaimer statement
-\def\@disclaimerstatement{
-    \\[2ex] The views expressed in this article are those of the author and do
-    not necessarily reflect the official policy or position of the United States
-    government, Department of Defense, United States Air Force, or Air
-    University.}
-\newcommand{\disclaimer}[1]{\def\@disclaimerstatement{\par{#1}}}
+% % Page geometry
+% \geometry{
+%     paperwidth=2\@xw, paperheight=2\@yh,
+%     top=\@mgnT, bottom=\@mgnB,
+%     left=\@mgnL, right=\@mgnR,
+%     columnsep=\@mgnC,
+%     headheight=1cm, headsep=\@mgnS}
+% \setlength{\columnseprule}{0.1pt}
 
-% AFIT motto
-\def\@afitmotto{
-    \\[2ex] \itshape{The AFIT of today is the Air and \\
-    Space Force of Tomorrow.}}
+% % Derived dimensions
+% \newlength{\@xShift}\setlength{\@xShift}{\@xw} % full-page x shift
+% \addtolength{\@xShift}{-\@mgnL}
+% \newlength{\@yShift}\setlength{\@yShift}{\@mgnT} % full-page y shift
+% \ifstandard
+%     \addtolength{\@yShift}{-4.148cm}
+% \else
+%     \addtolength{\@yShift}{-4.078cm}
+% \fi
+% \newlength{\@xHead}\setlength{\@xHead}{-0.5\@mgnL} % header x position
+% \addtolength{\@xHead}{0.5\@mgnR}
+% \newlength{\@yHead}\setlength{\@yHead}{-4cm} % header y position
 
-% Custom logo
-\newif\ifextralogo\extralogofalse
-\newcommand{\extralogo}[1]{%
-    \extralogotrue%
-    \newsavebox\@extralogobox%
-    \sbox{\@extralogobox}{\includegraphics[%
-        width=1.732cm, height=1.5cm, keepaspectratio]{#1}}}
 
 % Define theme dimensions.
-\newlength{\lightwidth}\setlength{\lightwidth}{0.5cm}
-\newlength{\whitewidth}\setlength{\whitewidth}{0.1cm}
-% Cover slide graphics dimensions
-\newlength{\insetCovUpA}\setlength{\insetCovUpA}{5cm}
-\newlength{\insetCovUpB}\setlength{\insetCovUpB}{\insetCovUpA}
-\addtolength{\insetCovUpB}{\lightwidth}
-\newlength{\insetCovUpC}\setlength{\insetCovUpC}{\insetCovUpB}
-\addtolength{\insetCovUpC}{\whitewidth}
-\newlength{\insetCovDnA}\setlength{\insetCovDnA}{1.5cm}
-\newlength{\insetCovDnB}\setlength{\insetCovDnB}{\insetCovDnA}
-\addtolength{\insetCovDnB}{\lightwidth}
-\newlength{\insetCovDnC}\setlength{\insetCovDnC}{\insetCovDnB}
-\addtolength{\insetCovDnC}{\whitewidth}
-% Cover slide text dimensions
-\newlength{\@titlewidth}
-\setlength{\@titlewidth}{2\@xw}
-\addtolength{\@titlewidth}{-6.5cm}
-\newlength{\@legalwidth}
-% Chapter dimensions
-\newlength{\darkwidth}\setlength{\darkwidth}{3cm}
-\newlength{\insetChChA}\setlength{\insetChChA}{\darkwidth}
-\newlength{\insetChChB}\setlength{\insetChChB}{\insetChChA}
-\addtolength{\insetChChB}{\whitewidth}
-\newlength{\insetChC}\setlength{\insetChC}{\insetChChB}
-\addtolength{\insetChC}{\lightwidth}
+% \newlength{\lightwidth}\setlength{\lightwidth}{0.5cm}
+% \newlength{\whitewidth}\setlength{\whitewidth}{0.1cm}
+% % Cover slide graphics dimensions
+% \newlength{\insetCovUpA}\setlength{\insetCovUpA}{5cm}
+% \newlength{\insetCovUpB}\setlength{\insetCovUpB}{\insetCovUpA}
+% \addtolength{\insetCovUpB}{\lightwidth}
+% \newlength{\insetCovUpC}\setlength{\insetCovUpC}{\insetCovUpB}
+% \addtolength{\insetCovUpC}{\whitewidth}
+% \newlength{\insetCovDnA}\setlength{\insetCovDnA}{1.5cm}
+% \newlength{\insetCovDnB}\setlength{\insetCovDnB}{\insetCovDnA}
+% \addtolength{\insetCovDnB}{\lightwidth}
+% \newlength{\insetCovDnC}\setlength{\insetCovDnC}{\insetCovDnB}
+% \addtolength{\insetCovDnC}{\whitewidth}
+% % Cover slide text dimensions
+% \newlength{\@titlewidth}
+% \setlength{\@titlewidth}{2\@xw}
+% \addtolength{\@titlewidth}{-6.5cm}
+% \newlength{\@legalwidth}
+% % Chapter dimensions
+% \newlength{\darkwidth}\setlength{\darkwidth}{3cm}
+% \newlength{\insetChChA}\setlength{\insetChChA}{\darkwidth}
+% \newlength{\insetChChB}\setlength{\insetChChB}{\insetChChA}
+% \addtolength{\insetChChB}{\whitewidth}
+% \newlength{\insetChC}\setlength{\insetChC}{\insetChChB}
+% \addtolength{\insetChC}{\lightwidth}
 % Section dimensions
-\newlength{\secStripHeight}\setlength{\secStripHeight}{1cm}
-\newlength{\insetSecTopA}\setlength{\insetSecTopA}{2.5cm}
-\newlength{\insetSecTopB}\setlength{\insetSecTopB}{\insetSecTopA}
-\addtolength{\insetSecTopB}{\lightwidth}
-\newlength{\insetSecTopC}\setlength{\insetSecTopC}{\insetSecTopB}
-\addtolength{\insetSecTopC}{\whitewidth}
-\newlength{\insetSecBotA}\setlength{\insetSecBotA}{\insetSecTopA}
-\addtolength{\insetSecBotA}{\secStripHeight}
-\newlength{\insetSecBotB}\setlength{\insetSecBotB}{\insetSecBotA}
-\addtolength{\insetSecBotB}{\lightwidth}
-\newlength{\insetSecBotC}\setlength{\insetSecBotC}{\insetSecBotB}
-\addtolength{\insetSecBotC}{\whitewidth}
+% \newlength{\secStripHeight}\setlength{\secStripHeight}{1cm}
+% \newlength{\insetSecTopA}\setlength{\insetSecTopA}{2.5cm}
+% \newlength{\insetSecTopB}\setlength{\insetSecTopB}{\insetSecTopA}
+% \addtolength{\insetSecTopB}{\lightwidth}
+% \newlength{\insetSecTopC}\setlength{\insetSecTopC}{\insetSecTopB}
+% \addtolength{\insetSecTopC}{\whitewidth}
+% \newlength{\insetSecBotA}\setlength{\insetSecBotA}{\insetSecTopA}
+% \addtolength{\insetSecBotA}{\secStripHeight}
+% \newlength{\insetSecBotB}\setlength{\insetSecBotB}{\insetSecBotA}
+% \addtolength{\insetSecBotB}{\lightwidth}
+% \newlength{\insetSecBotC}\setlength{\insetSecBotC}{\insetSecBotB}
+% \addtolength{\insetSecBotC}{\whitewidth}
 
-% TikZ predefined drawings
-\tikzset{
-    afitcrest/.pic={
-        % Make crest grey with "pic[]{afitcrest}".
-        % (-0.866,-0.866) to (0.866,0.866)
-        \definecolor{crestdark}{RGB}{0,0,76} % dark blue
-        \colorlet{crestlight}{yellow}
-        % Ribbon
-        \draw[crestlight, thick, line cap=round, fill=white] (-0.61,-0.04)
-            .. controls (-0.62,-0.01) and (-0.64,0.092) .. (-0.72,0.092)
-            .. controls (-0.75,0.092) and (-0.78,0.06) .. (-0.78,0.025)
-            .. controls (-0.78,-0.05) and (-0.866,-0.13) .. (-0.866,-0.175)
-            .. controls (-0.866,-0.22) and (-0.82,-0.24) .. (-0.79,-0.235)
-            (0.79,-0.235)
-            .. controls (0.82,-0.24) and (0.866,-0.22) .. (0.866,-0.175)
-            .. controls (0.866,-0.13) and (0.78,-0.05) .. (0.78,0.025)
-            .. controls (0.78,0.06) and (0.75,0.092) .. (0.72,0.092)
-            .. controls (0.64,0.092) and (0.62,-0.01) .. (0.61,-0.04);
-        \draw[crestlight, thick, line cap=round, fill=white]
-            (-0.74,-0.04) -- (-0.703,0.025)
-            .. controls (-0.6,-0.07) and (-0.795,-0.16) .. (-0.795,-0.28)
-            .. controls (-0.795,-0.4) and (-0.652,-0.53) .. (-0.47,-0.619)
-            .. controls (-0.288,-0.709) and (-0.15,-0.735) .. (0,-0.866)
-            .. controls (0.15,-0.735) and (0.288,-0.709) .. (0.47,-0.619)
-            .. controls (0.652,-0.53) and (0.795,-0.4) .. (0.795,-0.28)
-            .. controls (0.795,-0.16) and (0.6,-0.07) .. (0.703,0.025) --
-            (0.74,-0.04);
-        \draw[crestlight, thick, line cap=round] (-0.78,0.025)
-            .. controls (-0.78,-0.04) and (-0.69,-0.09) .. (-0.676,-0.018)
-            (0.78,0.025)
-            .. controls (0.78,-0.04) and (0.69,-0.09) .. (0.676,-0.018);
-        % Shield background
-        \fill[crestlight, draw=crestdark, thin]
-            (-0.678,0.684) -- (-0.5,0.866) -- (0.5,0.866) -- (0.678,0.684)
-            .. controls (0.6,0.58) and (0.565,0.43) .. (0.565,0.308)
-            .. controls (0.565,0.12) and (0.622,0.0) .. (0.622,-0.1)
-            .. controls (0.622,-0.42) and (0.15,-0.41) .. (0,-0.61)
-            .. controls (-0.15,-0.41) and (-0.622,-0.42) .. (-0.622,-0.1)
-            .. controls (-0.622,0.0) and (-0.565,0.12) .. (-0.565,0.308)
-            .. controls (-0.565,0.43) and (-0.6,0.58) .. (-0.678,0.684) -- cycle;
-        % Shield foreground
-        \fill[crestdark]
-            (-0.56,0.0)
-            .. controls (-0.51,0.2) and (-0.493,0.5) .. (-0.625,0.676)
-            -- (-0.48,0.825) -- (0.48,0.825) -- (0.625,0.676)
-            .. controls (0.493,0.5) and (0.51,0.2) .. (0.56,0) % top
-            {[xshift=0.588cm]
-            .. controls (-0.038,0) and (-0.063,-0.01) .. (-0.063,-0.03) % cave
-            .. controls (-0.068,-0.05) and (-0.035,-0.06)
-            .. (-0.035,-0.08) % vex
-            .. controls (-0.035,-0.1) and (-0.06,-0.11)
-            .. (-0.098,-0.11)} % bottom
-            \foreach \xs in {0.392cm, 0.196cm, 0cm, -0.196cm, -0.392cm}{
-                [xshift=\xs]
-                .. controls (0.06,-0.11) and (0.035,-0.1)
-                .. (0.035,-0.08) % vex
-                .. controls (0.035,-0.06) and (0.068,-0.05)
-                .. (0.063,-0.03) % cave
-                .. controls (0.063,-0.01) and (0.038,0) .. (0,0) % top
-                .. controls (-0.038,0) and (-0.063,-0.01)
-                .. (-0.063,-0.03) % cave
-                .. controls (-0.068,-0.05) and (-0.035,-0.06)
-                .. (-0.035,-0.08) % vex
-                .. controls (-0.035,-0.1) and (-0.06,-0.11)
-                .. (-0.098,-0.11) % bottom
-            }
-            [xshift=-0.588cm]
-            .. controls (0.06,-0.11) and (0.035,-0.1) .. (0.035,-0.08) % vex
-            .. controls (0.035,-0.06) and (0.068,-0.05) .. (0.063,-0.03) % cave
-            .. controls (0.063,-0.01) and (0.038,0) .. (0.028,0); % top
-        % Gear
-        \def\ygear{0.4125cm}
-        \fill[crestlight, yshift=\ygear]
-            (-4.875:0.26)
-            \foreach \i in {0,1,...,15} {%
-                [rotate=(22.5*\i-5.625)] arc (0.75:10.5:0.26) --
-                (12:0.3) arc (12:21.75:0.3) -- (23.25:0.26)
-            };
-        % Circle
-        \draw[very thin, crestdark, yshift=\ygear]
-            (0,0) circle (0.2);
-        % Outer orbits
-        \begin{scope}[yshift=\ygear]
-            \foreach \i in {0, 30, 60, 90, 120, 150}{
-                \draw[very thin, crestdark, rotate=\i]
-                    (0,0) circle (0.17 and 0.05);
-            }
-        \end{scope}
-        % Inner orbits
-        \begin{scope}[yshift=\ygear]
-            \foreach \i in {45, 135}{
-                \draw[very thin, crestdark, rotate=\i]
-                    (0,0) circle (0.04 and 0.015);
-            }
-        \end{scope}
-        % Lightening
-        \foreach \xf/\yf in {1/1, 1/-1, -1/1, -1/-1}{
-            \begin{scope}[yshift=\ygear, xscale=\xf, yscale=\yf]
-                \fill[crestlight, very thin]
-                    (0.176,0.2) -- (0.186,0.217) -- (0.295,0.321) --
-                    (0.303,0.249) -- (0.362,0.306) -- (0.318,0.310) --
-                    (0.442,0.380) -- (0.392,0.240) -- (0.382,0.289) --
-                    (0.287,0.170) -- (0.278,0.250) -- (0.217,0.186) --
-                    (0.2,0.176) arc (41.35:48.65:0.2664);
-            \end{scope}
-        }
-        % Letters
-        \fontsize{2.6pt}{2.6pt}\fontfamily{ptm}\selectfont
-        \begin{scope}[transform shape, crestdark]
-            \node[rotate=-62, yscale=1.9] at (-0.681,-0.278){A};
-            \node[rotate=-50, yscale=1.9] at (-0.642,-0.333){F};
-            \node[rotate=-37, yscale=1.9] at (-0.565,-0.412){I};
-            \node[rotate=-33, yscale=1.9] at (-0.520,-0.443){N};
-            \node[rotate=-28, yscale=1.9] at (-0.467,-0.476){S};
-            \node[rotate=-24, yscale=1.9] at (-0.415,-0.503){T};
-            \node[rotate=-21, yscale=1.9] at (-0.370,-0.523){I};
-            \node[rotate=-22, yscale=1.9] at (-0.320,-0.544){T};
-            \node[rotate=-22, yscale=1.9, xslant=-0.25]
-                at (-0.251,-0.572){U};
-            \node[rotate=-26, yscale=1.9, xslant=-0.65]
-                at (-0.182,-0.605){T};
-            \node[rotate=-33, yscale=1.85, xslant=-1.10]
-                at (-0.120,-0.642){E};
-            \node[rotate=-41, xscale=1.2, yscale=1.72, xslant=-1.30]
-                at (-0.027,-0.708){O};
-            \node[rotate=41, xscale=1.5, yscale=1.65, xslant=0.95]
-                at (0.035,-0.700){F};
-            \node[rotate=37, xscale=1.35, yscale=1.7, xslant=0.85]
-                at (0.134,-0.633){T};
-            \node[rotate=30, xscale=1.19, yscale=1.95, xslant=0.65]
-                at (0.204,-0.593){E};
-            \node[rotate=12, yscale=2.05] at (0.262,-0.563){C};
-            \node[rotate=20, yscale=1.95] at (0.327,-0.538){H};
-            \node[rotate=23, yscale=1.95] at (0.398,-0.510){N};
-            \node[rotate=30, yscale=1.9] at (0.467,-0.477){O};
-            \node[rotate=32, yscale=1.9] at (0.529,-0.439){L};
-            \node[rotate=38, yscale=1.9] at (0.585,-0.398){O};
-            \node[rotate=51, yscale=1.9] at (0.640,-0.342){G};
-            \node[rotate=63, yscale=1.9] at (0.680,-0.276){Y};
-        \end{scope}
-        % Signature
-        \node[rotate=24, transform shape, scale=0.5, crestlight, opacity=0.03]
-            at (0.35,-0.63) {\sffamily DW~\@version};
-    },
-    afitlogo/.pic={
-        % (-0.866,-0.259) to (0.866,0.388)
-        % Atomic structure
-        \fill (-0.541,0.063) circle (0.0146);
-        \fill (-0.623,-0.015)
-            .. controls (-0.81,-0.075) and (-0.860,-0.071) .. (-0.866,-0.056)
-            .. controls (-0.876,-0.033) and (-0.8,0.035) .. (-0.548,0.140)
-            .. controls (-0.27,0.244) and (0,0.29) .. (0.44,0.34)
-            .. controls (0,0.273) and (-0.27,0.228) .. (-0.548,0.116)
-            .. controls (-0.685,0.053) and (-0.786,-0.010) .. (-0.773,-0.032)
-            .. controls (-0.760,-0.050) and (-0.700,-0.029) .. (-0.623,-0.015);
-        \fill (-0.806,0.187)
-            .. controls (-0.813,0.195) and (-0.815,0.204) .. (-0.813,0.211)
-            .. controls (-0.803,0.238) and (-0.700,0.212) .. (-0.541,0.130)
-            .. controls (-0.450,0.085) and (-0.246,-0.047) .. (-0.270,-0.088)
-            .. controls (-0.298,-0.133) and (-0.610,0.014) .. (-0.745,0.126)
-            .. controls (-0.485,-0.030) and (-0.341,-0.074) .. (-0.324,-0.051)
-            .. controls (-0.302,0.010) and (-0.760,0.239) .. (-0.759,0.171);
-        \fill (-0.591,0.197)
-            .. controls (-0.595,0.285) and (-0.574,0.373) .. (-0.549,0.373)
-            .. controls (-0.514,0.373) and (-0.484,0.220) .. (-0.482,0.061)
-            .. controls (-0.478,-0.095) and (-0.498,-0.247) .. (-0.533,-0.247)
-            .. controls (-0.567,-0.247) and (-0.590,-0.105) .. (-0.596,-0.014)
-            -- (-0.578,-0.025)
-            .. controls (-0.565,-0.120) and (-0.548,-0.182) .. (-0.528,-0.182)
-            .. controls (-0.500,-0.176) and (-0.491,-0.050) .. (-0.497,0.061)
-            .. controls (-0.503,0.195) and (-0.528,0.308) .. (-0.554,0.308)
-            .. controls (-0.574,0.308) and (-0.582,0.250) .. (-0.591,0.197)
-            (-0.599,0.035) -- (-0.601,0.100) -- (-0.587,0.110) --
-            (-0.583,0.030);
-        % Jet
-        \fill (0.498,0.377) -- (0.527,0.369) -- (0.647,0.381) --
-            (0.767,0.388) -- (0.702,0.377) -- (0.682,0.370) -- (0.658,0.350) --
-            (0.651,0.346) -- (0.634,0.344) -- (0.563,0.358) -- (0.512,0.352);
-        % AFIT
-        \fill[even odd rule] (-0.285,-0.259) -- (-0.285,-0.243)
-            .. controls (-0.265,-0.243) and (-0.260,-0.235) .. (-0.249,-0.203)
-            -- (-0.111,0.293) -- (-0.105,0.293) -- (0.028,-0.203)
-            .. controls (0.035,-0.230) and (0.040,-0.243) .. (0.065,-0.243)
-            -- (0.065,-0.259)
-            .. controls (0.035,-0.254) and (-0.023,-0.254) .. (-0.053,-0.259)
-            -- (-0.053,-0.243)
-            .. controls (-0.033,-0.243) and (-0.023,-0.239) .. (-0.030,-0.203)
-            -- (-0.059,-0.081) -- (-0.19,-0.081) -- (-0.223,-0.203)
-            .. controls (-0.231,-0.233) and (-0.215,-0.240) .. (-0.196,-0.243)
-            -- (-0.196,-0.259)
-            .. controls (-0.226,-0.254) and (-0.255,-0.254) .. (-0.285,-0.259)
-            (-0.181,-0.05) -- (-0.122,0.168) -- (-0.067,-0.05);
-        \fill (0.079,-0.259) -- (0.079,-0.243)
-            .. controls (0.111,-0.240) and (0.117,-0.240) .. (0.120,-0.203)
-            -- (0.120,0.235)
-            .. controls (0.117,0.263) and (0.111,0.267) .. (0.079,0.269)
-            -- (0.079,0.285)
-            .. controls (0.109,0.280) and (0.303,0.280) .. (0.333,0.285)
-            -- (0.338,0.166) -- (0.328,0.165)
-            .. controls (0.320,0.225) and (0.300,0.252) .. (0.245,0.252)
-            -- (0.182,0.252)
-            .. controls (0.176,0.252) and (0.173,0.246) .. (0.173,0.240)
-            -- (0.173,0.038) -- (0.253,0.039)
-            .. controls (0.273,0.045) and (0.285,0.055) .. (0.289,0.112)
-            -- (0.299,0.112) -- (0.300,-0.063) -- (0.290,-0.063)
-            .. controls (0.284,-0.006) and (0.275,0.004) .. (0.253,0.010)
-            -- (0.173,0.010) -- (0.173,-0.203)
-            .. controls (0.175,-0.235) and (0.180,-0.242) .. (0.214,-0.243)
-            -- (0.214,-0.259)
-            .. controls (0.184,-0.254) and (0.109,-0.254) .. (0.079,-0.259);
-        \fill (0.380,-0.259) -- (0.380,-0.243)
-            .. controls (0.415,-0.241) and (0.418,-0.235) .. (0.420,-0.203)
-            -- (0.420,0.235)
-            .. controls (0.417,0.261) and (0.413,0.267) .. (0.380,0.269)
-            -- (0.380,0.285)
-            .. controls (0.410,0.280) and (0.485,0.280) .. (0.515,0.285)
-            -- (0.515,0.269)
-            .. controls (0.485,0.266) and (0.477,0.265) .. (0.474,0.235)
-            -- (0.474,-0.203)
-            .. controls (0.475,-0.233) and (0.481,-0.243) .. (0.515,-0.243)
-            -- (0.515,-0.259)
-            .. controls (0.485,-0.254) and (0.410,-0.254) .. (0.380,-0.259);
-        \fill (0.641,-0.259) -- (0.641,-0.243)
-            .. controls (0.674,-0.242) and (0.681,-0.235) .. (0.681,-0.203)
-            -- (0.682,0.254) -- (0.652,0.254)
-            .. controls (0.595,0.253) and (0.570,0.207) .. (0.567,0.149)
-            -- (0.555,0.149)
-            .. controls (0.559,0.179) and (0.562,0.255) .. (0.563,0.285)
-            .. controls (0.593,0.280) and (0.828,0.280) .. (0.858,0.285)
-            .. controls (0.859,0.255) and (0.862,0.179) .. (0.866,0.149)
-            -- (0.854,0.149)
-            .. controls (0.851,0.207) and (0.826,0.253) .. (0.769,0.254)
-            -- (0.735,0.254) -- (0.735,-0.203)
-            .. controls (0.738,-0.237) and (0.744,-0.242) .. (0.776,-0.243)
-            -- (0.777,-0.259)
-            .. controls (0.747,-0.254) and (0.671,-0.254) .. (0.641,-0.259);},
-    titlepage/.pic={
-        % Background
-        \fill[color=light]
-            ({\@xw-\insetCovUpA},\@yh) -- (\@xw,{\@yh-\insetCovUpA}) --
-            (\@xw,{\@yh-\insetCovUpB}) -- ({\@xw-\insetCovUpB},\@yh)
-            ({\insetCovDnA-\@xw},-\@yh) -- (-\@xw,{\insetCovDnA-\@yh}) --
-            (-\@xw,{\insetCovDnB-\@yh}) -- ({\insetCovDnB-\@xw},-\@yh);
-        \fill[color=dark]
-            ({\@xw-\insetCovUpC},\@yh) -- (\@xw,{\@yh-\insetCovUpC}) --
-            (\@xw,-\@yh) -- ({\insetCovDnC-\@xw},-\@yh) --
-            (-\@xw,{\insetCovDnC-\@yh}) -- (-\@xw,\@yh);
-        % Logos
-        \path ({\@xw-0.5\insetCovUpA},{\@yh-0.5\insetCovUpA})
-            pic[scale=1.732]{afitcrest};
-        \ifextralogo
-            \node at ({\@xw-4.25cm},{\@yh-4.25cm}) {\usebox{\@extralogobox}};
-        \fi
-        \setlength{\@legalwidth}{4.5cm}
-        % Titles and authors
-        \node[below, inner sep=0, align=left, text width=\@titlewidth]
-            at ({1cm+0.5\@titlewidth-\@xw},{\@yh-1cm})
-            {\raggedright
-            \ifpretitle
-                \normalsize\color{white}{\@pretitle} \\[1.5ex]
-            \fi
-            \iftitle
-                \Large\color{white}{\bfseries{\@title}} \\[1.5ex]
-            \fi
-            \ifsubtitle
-                \large\color{light}{\bfseries{\@subtitle}}%
-                \\[2ex]
-            \fi
-            \ifauthor
-                \normalsize\color{white}{\@author}
-            \fi};
-        % Classification
-        \ifControlled
-            % Classification block
-            \node[above, inner sep=0, align=left,
-                    text width=\@legalwidth, white]
-                at ({\@xw-0.5cm-0.5\@legalwidth},{0.5cm-\@yh})
-                {\begin{minipage}[t]{\@legalwidth}
-                    \tiny\raggedright\setlength{\parindent}{-1em}%
-                    \@cuiBlock \\[1em]
-                    \@classBlock
-                \end{minipage}};
-            % Classification banners
-            \node[inner sep=0, text depth=0, light]
-                at (0,{\@yh-0.5cm}) {\bfseries\@banner\strut};
-            \node[inner sep=0, text depth=0, light]
-                at (0,{0.5cm-\@yh}) {\bfseries\@banner\strut};
-        \else
-            \ifDistA
-                % Public release
-                \node[above, inner sep=0, align=left,
-                        text width=\@legalwidth, white]
-                    at ({\@xw-0.5cm-0.5\@legalwidth},{0.5cm-\@yh})
-                    {\begin{minipage}[t]{\@legalwidth}
-                        \tiny\raggedright\setlength{\parindent}{0pt}%
-                        \MakeUppercase\DistA
-                    \end{minipage}};
-            \fi
-        \fi},
-    fullColorBkgnd/.pic={
-        \fill[color=light]
-            ({\@xw-\insetChC},\@yh) -- ({\@xw-\insetChChB},\@yh) --
-            (\@xw,{\@yh-\insetChChB}) -- (\@xw,{\@yh-\insetChC})
-            ({\insetChC-\@xw},-\@yh) -- ({\insetChChB-\@xw},-\@yh) --
-            (-\@xw,{\insetChChB-\@yh}) -- (-\@xw,{\insetChC-\@yh});
-        \fill[color=dark] ({\@xw-\insetChChA},\@yh) --
-            (\@xw,\@yh) -- (\@xw,{\@yh-\insetChChA})
-            (-\@xw,-\@yh) -- (-\@xw,{\insetChChA-\@yh}) --
-            ({\insetChChA-\@xw},-\@yh);},
-    chapterpage/.pic={
-        % Background
-        \path (0,0) pic{fullColorBkgnd};
-        % Text
-        \node[inner sep=0, text width={1.53\@xw},
-                dark, align=flush center]
-            at (0,0) {\huge\bfseries\strut\@headername\strut};
-        % Classification
-        \ifControlled
-            \node[inner sep=0, text depth=0, dark]
-                at (0,4) {\bfseries\@banner\strut};
-            \node[inner sep=0, text depth=0, dark]
-                at (0,-4) {\bfseries\@banner\strut};
-        \fi},
-    sectionpage/.pic={
-        % Background
-        \fill[color=light]
-            ({\insetSecTopA-\@xw},\@yh) -- ({\insetSecTopB-\@xw},\@yh) --
-            ({\insetSecBotB-\@xw},{\@yh-\secStripHeight}) --
-            ({\insetSecBotA-\@xw},{\@yh-\secStripHeight});
-        \fill[color=dark]
-            ({\insetSecTopC-\@xw},\@yh) -- (\@xw,\@yh) --
-            (\@xw,{\@yh-\secStripHeight}) --
-            ({\insetSecBotC-\@xw},{\@yh-\secStripHeight});
-        % Logo
-        \path ({0.5\insetSecTopA+0.1cm-\@xw},
-            {\@yh-0.5\secStripHeight-0.1cm})
-            pic[color=dark]{afitlogo};
-        % Title
-        \node[right, inner sep=0, white, text depth=0]
-            at ({\insetSecBotC+\whitewidth-\@xw},
-                {\@yh-0.5\secStripHeight+0.03cm})
-            {\begin{adjustbox}{max width={2\@xw-\insetSecBotC-1.5cm}}
-                    \large\bfseries\ignorespaces\@headername\strut
-                \end{adjustbox}};
-        \phantomsection\addcontentsline{toc}{section}{\@altheadername}
-        % Page number and banner
-        \ifControlled
-            \node[left, inner sep=0, text depth=0, light]
-                at ({\@xw-0.5cm},{\@yh-0.5\secStripHeight})
-                {\bfseries\@banner~\thepage\strut};
-            \node[left, inner sep=0, text depth=0, dark]
-                at ({\@xw-0.5cm},{0.5cm-\@yh})
-                {\bfseries\@banner\strut};
-        \else
-            \node[left, inner sep=0, text depth=0, light]
-                at ({\@xw-0.5cm},{\@yh-0.5\secStripHeight}) 
-                {\bfseries\thepage\strut};
-        \fi},
-    closingpage/.pic={
-        % Background
-        \path (0,0) pic{fullColorBkgnd};
-        % Logo
-        \path (-0.5\@xw,0)
-            pic[scale=2, dark] {afitcrest};
-        % Text
-        \node[right, inner sep=0, dark] at (0,0)
-            {\parbox{0.77\@xw}{%
-                \scriptsize\raggedright%
-                \@contactinfo
-                \@copyrightstatement
-                \@disclaimerstatement
-                \@afitmotto}};
-        % Classification
-        \ifControlled
-            \node[inner sep=0, text depth=0, dark]
-                at (0,4) {\bfseries\@banner\strut};
-            \node[inner sep=0, text depth=0, dark]
-                at (0,-4) {\bfseries\@banner\strut};
-        \fi}}
+%%% Unused tikzset
+% \tikzset{
+%     titlepage/.pic={
+%         % Background
+%         \fill[color=light]
+%             ({\@xw-\insetCovUpA},\@yh) -- (\@xw,{\@yh-\insetCovUpA}) --
+%             (\@xw,{\@yh-\insetCovUpB}) -- ({\@xw-\insetCovUpB},\@yh)
+%             ({\insetCovDnA-\@xw},-\@yh) -- (-\@xw,{\insetCovDnA-\@yh}) --
+%             (-\@xw,{\insetCovDnB-\@yh}) -- ({\insetCovDnB-\@xw},-\@yh);
+%         \fill[color=dark]
+%             ({\@xw-\insetCovUpC},\@yh) -- (\@xw,{\@yh-\insetCovUpC}) --
+%             (\@xw,-\@yh) -- ({\insetCovDnC-\@xw},-\@yh) --
+%             (-\@xw,{\insetCovDnC-\@yh}) -- (-\@xw,\@yh);
+%         % Logos
+%         \path ({\@xw-0.5\insetCovUpA},{\@yh-0.5\insetCovUpA})
+%             pic[scale=1.732]{afitcrest};
+%         \ifextralogo
+%             \node at ({\@xw-4.25cm},{\@yh-4.25cm}) {\usebox{\@extralogobox}};
+%         \fi
+%         \setlength{\@legalwidth}{4.5cm}
+%         % Titles and authors
+%         \node[below, inner sep=0, align=left, text width=\@titlewidth]
+%             at ({1cm+0.5\@titlewidth-\@xw},{\@yh-1cm})
+%             {\raggedright
+%             \ifpretitle
+%                 \normalsize\color{white}{\@pretitle} \\[1.5ex]
+%             \fi
+%             \iftitle
+%                 \Large\color{white}{\bfseries{\@title}} \\[1.5ex]
+%             \fi
+%             \ifsubtitle
+%                 \large\color{light}{\bfseries{\@subtitle}}%
+%                 \\[2ex]
+%             \fi
+%             \ifauthor
+%                 \normalsize\color{white}{\@author}
+%             \fi};
+%         % Classification
+%         \ifControlled
+%             % Classification block
+%             \node[above, inner sep=0, align=left,
+%                     text width=\@legalwidth, white]
+%                 at ({\@xw-0.5cm-0.5\@legalwidth},{0.5cm-\@yh})
+%                 {\begin{minipage}[t]{\@legalwidth}
+%                     \tiny\raggedright\setlength{\parindent}{-1em}%
+%                     \@cuiBlock \\[1em]
+%                     \@classBlock
+%                 \end{minipage}};
+%             % Classification banners
+%             \node[inner sep=0, text depth=0, light]
+%                 at (0,{\@yh-0.5cm}) {\bfseries\@banner\strut};
+%             \node[inner sep=0, text depth=0, light]
+%                 at (0,{0.5cm-\@yh}) {\bfseries\@banner\strut};
+%         \else
+%             \ifDistA
+%                 % Public release
+%                 \node[above, inner sep=0, align=left,
+%                         text width=\@legalwidth, white]
+%                     at ({\@xw-0.5cm-0.5\@legalwidth},{0.5cm-\@yh})
+%                     {\begin{minipage}[t]{\@legalwidth}
+%                         \tiny\raggedright\setlength{\parindent}{0pt}%
+%                         \MakeUppercase\DistA
+%                     \end{minipage}};
+%             \fi
+%         \fi},
+%     fullColorBkgnd/.pic={
+%         \fill[color=light]
+%             ({\@xw-\insetChC},\@yh) -- ({\@xw-\insetChChB},\@yh) --
+%             (\@xw,{\@yh-\insetChChB}) -- (\@xw,{\@yh-\insetChC})
+%             ({\insetChC-\@xw},-\@yh) -- ({\insetChChB-\@xw},-\@yh) --
+%             (-\@xw,{\insetChChB-\@yh}) -- (-\@xw,{\insetChC-\@yh});
+%         \fill[color=dark] ({\@xw-\insetChChA},\@yh) --
+%             (\@xw,\@yh) -- (\@xw,{\@yh-\insetChChA})
+%             (-\@xw,-\@yh) -- (-\@xw,{\insetChChA-\@yh}) --
+%             ({\insetChChA-\@xw},-\@yh);},
+%     chapterpage/.pic={
+%         % Background
+%         \path (0,0) pic{fullColorBkgnd};
+%         % Text
+%         \node[inner sep=0, text width={1.53\@xw},
+%                 dark, align=flush center]
+%             at (0,0) {\huge\bfseries\strut\@headername\strut};
+%         % Classification
+%         \ifControlled
+%             \node[inner sep=0, text depth=0, dark]
+%                 at (0,4) {\bfseries\@banner\strut};
+%             \node[inner sep=0, text depth=0, dark]
+%                 at (0,-4) {\bfseries\@banner\strut};
+%         \fi},
+%     sectionpage/.pic={
+%         % Background
+%         \fill[color=light]
+%             ({\insetSecTopA-\@xw},\@yh) -- ({\insetSecTopB-\@xw},\@yh) --
+%             ({\insetSecBotB-\@xw},{\@yh-\secStripHeight}) --
+%             ({\insetSecBotA-\@xw},{\@yh-\secStripHeight});
+%         \fill[color=dark]
+%             ({\insetSecTopC-\@xw},\@yh) -- (\@xw,\@yh) --
+%             (\@xw,{\@yh-\secStripHeight}) --
+%             ({\insetSecBotC-\@xw},{\@yh-\secStripHeight});
+%         % Logo
+%         \path ({0.5\insetSecTopA+0.1cm-\@xw},
+%             {\@yh-0.5\secStripHeight-0.1cm})
+%             pic[color=dark]{afitlogo};
+%         % Title
+%         \node[right, inner sep=0, white, text depth=0]
+%             at ({\insetSecBotC+\whitewidth-\@xw},
+%                 {\@yh-0.5\secStripHeight+0.03cm})
+%             {\begin{adjustbox}{max width={2\@xw-\insetSecBotC-1.5cm}}
+%                     \large\bfseries\ignorespaces\@headername\strut
+%                 \end{adjustbox}};
+%         \phantomsection\addcontentsline{toc}{section}{\@altheadername}
+%         % Page number and banner
+%         \ifControlled
+%             \node[left, inner sep=0, text depth=0, light]
+%                 at ({\@xw-0.5cm},{\@yh-0.5\secStripHeight})
+%                 {\bfseries\@banner~\thepage\strut};
+%             \node[left, inner sep=0, text depth=0, dark]
+%                 at ({\@xw-0.5cm},{0.5cm-\@yh})
+%                 {\bfseries\@banner\strut};
+%         \else
+%             \node[left, inner sep=0, text depth=0, light]
+%                 at ({\@xw-0.5cm},{\@yh-0.5\secStripHeight}) 
+%                 {\bfseries\thepage\strut};
+%         \fi},
+%     closingpage/.pic={
+%         % Background
+%         \path (0,0) pic{fullColorBkgnd};
+%         % Logo
+%         \path (-0.5\@xw,0)
+%             pic[scale=2, dark] {afitcrest};
+%         % Text
+%         \node[right, inner sep=0, dark] at (0,0)
+%             {\parbox{0.77\@xw}{%
+%                 \scriptsize\raggedright%
+%                 \@contactinfo
+%                 \@copyrightstatement
+%                 \@disclaimerstatement
+%                 \@afitmotto}};
+%         % Classification
+%         \ifControlled
+%             \node[inner sep=0, text depth=0, dark]
+%                 at (0,4) {\bfseries\@banner\strut};
+%             \node[inner sep=0, text depth=0, dark]
+%                 at (0,-4) {\bfseries\@banner\strut};
+%         \fi}
+% }
 
-% Headers and footers
-\newcommand{\@headername}{}
-\pagestyle{fancy}
-\fancyhead[L,R]{}
-\fancyhead[C]{\tikz[overlay]{\path (\@xHead,\@yHead) pic{sectionpage};}}
-\fancyfoot[L,C,R]{}
-\renewcommand{\headrulewidth}{0pt}
-\renewcommand{\footrulewidth}{0pt}
 
 % Title page
-\renewcommand{\maketitle}{
-    \clearpage\thispagestyle{empty}\justifying\onecolumn%
-    \tikz[overlay, xshift=\@xShift, yshift=\@yShift]{
-        \path (0,0) pic{titlepage};}
-    \clearpage}
+% \renewcommand{\maketitle}{
+%     \clearpage\thispagestyle{empty}\justifying\onecolumn%
+%     \tikz[overlay, xshift=\@xShift, yshift=\@yShift]{
+%         \path (0,0) pic{titlepage};}
+%     \clearpage}
 
-% Chapter page
-\newcommand{\chapter}[2][]{%
-    \clearpage\onecolumn\justifying\thispagestyle{empty}\normalsize%
-    \renewcommand{\@headername}{#2}%
-    \ifx&#1& % if parameter 1 is empty
-        \def\@altheadername{#2}
-    \else % if parameter 1 is not empty
-        \def\@altheadername{#1}
-    \fi
-    \phantomsection\addcontentsline{toc}{chapter}{\@altheadername}
-    \tikz[overlay, xshift=\@xShift, yshift=\@yShift]{
-        \path (0,0) pic{chapterpage};}%
-    \clearpage}
+% % Blank page for arbitrarily-placed graphics and text.
+% \newcommand\blankpage{\clearpage\null\thispagestyle{empty}}
 
-% Header name and sections
-\renewcommand{\section}[2][]{%
-    \clearpage\justifying\onecolumn\normalsize%
-    \renewcommand{\@headername}{#2}%
-    \ifx&#1& % if parameter 1 is empty
-        \def\@altheadername{#2}
-    \else % if parameter 1 is not empty
-        \def\@altheadername{#1}
-    \fi}
+% % Vertical and horizontal centering
+% \newenvironment{Center}
+%     {\topskip0pt\par\vspace*{\fill}\vspace*{-\parskip}\vspace*{-\topsep}%
+%     \begin{minipage}{\textwidth}\centering}
+%     {\end{minipage}\vspace*{\fill}\vspace*{-\topsep}\par}
 
-% Other sections
-\renewcommand{\subsection}[1]{\par\textcolor{light}{\textbf{#1}}\par}
-\renewcommand{\subsubsection}[1]{\par\textbf{#1}\par}
-\renewcommand{\paragraph}[1]{\par\textit{#1}\par}
-\renewcommand{\subparagraph}[1]{\par\textit{#1}\par}
+% % Quad charts: \quadchart{top-left}{top-right}{bottom-left}{bottom-right}
+% \newlength{\@qw}
+% \ifstandard
+%     \setlength{\@qw}{4.84cm}
+% \else
+%     \setlength{\@qw}{6.81cm}
+% \fi
+% \newcommand{\quadchart}[4]{%
+%     {\renewcommand{\arraystretch}{0}%
+%     \begin{tabular}{@{}c|c@{}}
+%         \begin{minipage}[t][3.22cm][t]{\@qw} % Top-left
+%             {#1}
+%         \end{minipage} &
+%         \begin{minipage}[t][3.22cm][t]{\@qw} % Top-right
+%             {#2}
+%         \end{minipage} \\
+%         \hline\\[1ex]
+%         \begin{minipage}[t][3.22cm][t]{\@qw} % Bottom-left
+%             {#3}
+%         \end{minipage} &
+%         \begin{minipage}[t][3.22cm][t]{\@qw} % Bottom-right
+%             {#4}
+%         \end{minipage}
+%     \end{tabular}}}
 
-% Blank page for arbitrarily-placed graphics and text.
-\newcommand\blankpage{\clearpage\null\thispagestyle{empty}}
+% % Chapter page
+% \newcommand{\chapter}[2][]{%
+%     \clearpage\onecolumn\justifying\thispagestyle{empty}\normalsize%
+%     \renewcommand{\@headername}{#2}%
+%     \ifx&#1& % if parameter 1 is empty
+%         \def\@altheadername{#2}
+%     \else % if parameter 1 is not empty
+%         \def\@altheadername{#1}
+%     \fi
+%     \phantomsection\addcontentsline{toc}{chapter}{\@altheadername}
+%     \tikz[overlay, xshift=\@xShift, yshift=\@yShift]{
+%         \path (0,0) pic{chapterpage};}%
+%     \clearpage}
 
-% Closing page
-\newcommand{\closing}{
-    \clearpage\thispagestyle{empty}\justifying\onecolumn\normalsize%
-    \tikz[overlay, xshift=\@xShift, yshift=\@yShift]{
-        \path (0,0) pic{closingpage};}%
-    \clearpage}
+% % Header name and sections
+% \renewcommand{\section}[2][]{%
+%     \clearpage\justifying\onecolumn\normalsize%
+%     \renewcommand{\@headername}{#2}%
+%     \ifx&#1& % if parameter 1 is empty
+%         \def\@altheadername{#2}
+%     \else % if parameter 1 is not empty
+%         \def\@altheadername{#1}
+%     \fi}
+
+% % Other sections
+% \renewcommand{\subsection}[1]{\par\textcolor{light}{\textbf{#1}}\par}
+% \renewcommand{\subsubsection}[1]{\par\textbf{#1}\par}
+% \renewcommand{\paragraph}[1]{\par\textit{#1}\par}
+% \renewcommand{\subparagraph}[1]{\par\textit{#1}\par}
+
+
