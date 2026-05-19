@@ -38,16 +38,17 @@
     \item Computational limitations led to generalization issue and overall underperformance.
 \end{itemize}
 
-    \note{Spend about 1.5 minutes here.
-    The key narrative beat: Smit et al.\ showed some promise promise.\\
-    \emph{What if we add a retraining phase?} \\
-    And critically, \emph{does the answer depend on the type of heterogeneity?}
-    }
+\note[note]{During Lit review foudn Smit}
+\note[note]{Inspired by their austere conditions compare to}
+\note[note]{Contemporeneous to bigger successes like OpenAI Five and AlphaStar}
+\note[note]{\textbf{Consequence:}}
+\note[note]{emphasis on efficiency and ease of access}
 
-    \note{
-        Very low resource access.
-        Contemporeneous to bigger successes like OpenAI Five and AlphaStar
-    }
+\note[note]{\textbf{Their method:}}
+\note[note]{four training conditions}
+\note[note]{one eval condition}
+
+\note[note]{Unimpressive results, but showed some promise}
 \end{frame}
 
 \begin{frame}{C1 Research Questions}
@@ -61,12 +62,10 @@
         \end{itemize}
     % \end{block}
 
-    \note{About 1.5 minutes. \\
-    Recall research questions. \\
-    Walk through the two-phase pipeline quickly. \\
-    The critical detail to stress is that both phases use \emph{independent policy updates}:
-    we are not doing parameter sharing.
-    }
+\note[note]{Recall research questions}
+\note[note]{Taking up where Smit left off}
+\note[note]{but hoping to improve results}
+\note[note]{AND extend to heterogeneous systems}
 \end{frame}
 
 \begin{frame}{C1 Methodology}
@@ -91,11 +90,11 @@
         \end{column}
     \end{columns}
 
-    \note{About 1.5 minutes. \\
-    Walk through the two-phase pipeline quickly. \\
-    The critical detail to stress is that both phases use \emph{independent policy updates}:
-    we are not doing parameter sharing.
-    }
+\note[note]{New approach building on theirs}
+\note[note]{We add retraining after the upscaling portion}
+\note[note]{We examing different ratios of pre-post training}
+\note[note]{We do a greater number of team size changes}
+\note[note]{Neither of us use parameter sharing}
 \end{frame}
 
 \begin{frame}[shrink=5]{The Agent-Steps Metric}
@@ -133,20 +132,19 @@
     \end{column}
 \end{columns}
 
-    \note{About 1.5 minutes. \\
-    Smit only compared final performance. \\
-    We care about the trade-offs between and timing;\\
-    thus need a cost comparison. \\
-    
-    Training steps is a common metric, but does not consider cost of greater numbers of agents.\\
-    Wall-clock time would be a better proxy, but we use a cluster.
-    
-    Agent-steps gave us a fairer cost metric.
-
-    with 8 agents costs four times as much as a 100-step run with 2 agents.''\\
-    Then transition: ``Now that we have a fair yardstick, let us see what happens.''}
-    \note[item]{This further allowed us to approximate the none-agent overhead cost in training.}
+\note[note]{Smit only evaluated final performance}
+\note[note]{not enough on costs and trade-offs on timing v performance}
+\note[note]{
+    Training steps is a common metric, 
+    but does not consider cost of greater numbers of agents.
+}
+\note[note]{Wall-clock time would be a better proxy, but we use a cluster.}
+\note[note]{Agent-steps gave us a fairer cost metric.}
+\note[item]{
+    This further allowed us to approximate the none-agent overhead cost in training.
+}
 \end{frame}
+
 
 \begin{frame}{Waterworld}
     \begin{columns}
@@ -184,7 +182,12 @@ Example Training Curves
         \end{figure}
     \end{column}
 \end{columns}
+
+\note[note]{Note: Matching asymptotic performance}
+\note[note]{But earlier convergent}
+\note[note]{next we measure how much earlier}
 \end{frame}
+
 
 \begin{frame}{Waterworld Results}
 \begin{columns}
@@ -212,18 +215,11 @@ Example Training Curves
     \end{column}
 \end{columns}
 
-    \note{About 1.5 minutes.
-    Waterworld is the ``easy win'' environment — use it to build confidence
-    in the method before showing the harder cases.
-    Walk through the heatmap: rows are target team sizes, columns are
-    pretraining durations.
-    The gradient is clear — bigger teams gain more from small-team pretraining.
-    Mention the diminishing returns after 60 steps: this is practically useful
-    because it means you do not need long pretraining to capture most of the benefit.
-    Emphasize that final performance is not sacrificed — the curriculum
-    reaches the same reward, just faster.
-    Transition: ``Waterworld is cooperative but loosely coupled.
-    What happens when coordination is tight and failure is catastrophic?''}
+\note[note]{Heatmap: compares area under the curve relative to tabula rasa}
+\note[note]{rows are target team size}
+\note[note]{columns, pre-training duration}
+\note[note]{Clear gradient - larger teams get more benefit}
+\note[note]{but overall, not too much pretraining needed}
 \end{frame}
 
 \begin{frame}{Multiwalker}
@@ -263,11 +259,10 @@ Example Training Curves
         \end{figure}
     \end{column}
 \end{columns}
-\note{
-    Multiwalker experienced drastically differing results. \\
-    It became an issue with stability of training. \\
-    Too many untrained agents caused failure too early for any to learn.
-}
+
+\note[note]{Multiwalker experienced drastically differing results.}
+\note[note]{It became an issue with stability of training.}
+\note[note]{Too many untrained agents caused failure too early for any to learn.}
 \end{frame}
 
 \begin{frame}{Multiwalker Results}
@@ -298,16 +293,10 @@ Example Training Curves
     \end{column}
 \end{columns}
 
-    \note{About 1.5 minutes.
-    The narrative shift here is important: in Waterworld the benefit was speed;
-    in Multiwalker the benefit is \emph{survival}. \\
-    
-    Explain the failure mode: when one walker falls, the payload drops and
-    the episode terminates for everyone.
-
-    Without a baseline competence,
-    episodes end almost immediately and the agents never get meaningful
-    gradient signal.}
+\note[note]{That stability chang is illsutrated here}
+\note[note]{Small teams need less, training}
+\note[note]{Larger teams benefit a lot}
+\note[note]{Small teams show potential overfiting}
 \end{frame}
 
 \begin{frame}{Level-Based Foraging}
@@ -339,6 +328,7 @@ Example Training Curves
         The built-in observation space presented a problem that would inspire C2. \\
         Agents are passed each other's observations in a fixed concatenation.
     }
+\note[note]{Explain the observation space schemas}
 \end{frame}
 
 \begin{frame}[shrink=20]{LBF: Schema Comparison Statistics}
@@ -382,6 +372,10 @@ Example Training Curves
         \end{alertblock}
     \end{column}
 \end{columns}
+
+\note[note]{Bonferoni comparison, to determine statistical difference between schema}
+\note[note]{Full and truncated knowledge may have been similar distributions}
+\note[note]{but ally-ignorance was statistically different enough}
 \end{frame}
 
 
@@ -436,20 +430,10 @@ Example Training Curves
     \end{column}
 \end{columns}
 
-    \note{About 2 minutes — this is the most nuanced results slide.
-        LBF is where the method hits its wall, and it is important to explain \emph{why}.\\
 
-    Is it because coordination limitations? \\
-    And how team size creates a fundamental difficulty in training that coordination,
-    particularly with the environment's built-in handling of the space.
-
-    The observation schema result is also worth a sentence:\\
-    full observability significantly outperforms both reduced schemas,
-    but truncated and ally-ignorant are indistinguishable from each other.
-    This means that \emph{partial} teammate information is no better than none —
-    a striking finding that motivates the representational rethinking in C2.
-    End on the alertblock and let it land: this is the ``villain'' moment
-    in the C1 story.}
+\note[note]{small benefits, particular in larger teams}
+\note[note]{likely an issue with coordination}
+\note[note]{failure to specialize}
 \end{frame}
 
 \begin{frame}{C1 Summary \& Bridge to C2}
@@ -478,15 +462,11 @@ Example Training Curves
         \textbf{That is Contribution 2.}
     \end{alertblock}
 
-    \note{About 1.5 minutes.
+\note{About 1.5 minutes.
     This is the synthesis slide — pull the three threads together.
     Walk through the table row by row (one sentence each).
-    How the observation space changed between situations matterdd}
-    \note[item]{In Waterworld it was not a problem (homogeneous structure).}
-    \note[item]{In Multiwalker it was manageable (fixed roles, compatible schemas).}
-    \note[item]{In LBF it was the primary obstacle (observation structure changes with team size).}
-    \note{
-        The committee should feel that C2 is the \emph{natural next question}
-        that C1 raises.
-        This is the most important narrative transition in the defense.}
+    How the observation space changed between situations mattered}
+\note[item]{In Waterworld it was not a problem (homogeneous structure).}
+\note[item]{In Multiwalker it was manageable (fixed roles, compatible schemas).}
+\note[item]{In LBF it was the primary obstacle (observation structure changes with team size).}
 \end{frame}

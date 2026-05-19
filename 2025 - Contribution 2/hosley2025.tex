@@ -137,9 +137,9 @@
 % How to indicate homogenized space
 % \newcommand{\Hom}[1]{{#1}'}
 \newcommand{\Hom}[1]{\widetilde{#1}}
-\usepackage{showframe}
+% \usepackage{showframe}
 
-\title{ Implicit Indication for Shared Policies in Heterogeneous Agent Reinforcement Learning}
+\title{Implicit Indication for Shared Policies in Heterogeneous Agent Reinforcement Learning}
 
 \begin{document}
 
@@ -151,9 +151,10 @@
     input-invariant shared policies across heterogeneous agents.\\
     {\bf Methods:} Formalize implicit indication via homogenized observation and action spaces
     with validity masks; analyze representability and invariance properties; and evaluate the
-    approach empirically on $n$-D gridworld variants using MAPPO control.\\
-    {\bf Results:} Comparable or improved robustness under sensor degradation and
-    team-size variation; memory/runtime advantages in some regimes;
+    approach empirically on arbitrary dimensional gridworld variants using MAPPO control.\\
+    {\bf Results:} Comparable or improved robustness under sensor degradation and 
+    team-size variation; an \(n\)-fold reduction in model storage relative to per-type baselines, 
+    where \(n\) scales with team size; no measurable difference in runtime or memory usage; 
     limitations when coherence assumptions fail.\\
     {\bf Conclusions:} Implicit indication provides a practical alternative to parameter sharing
     when a coherent spanning space exists; we outline conditions, trade-offs, and open questions.
@@ -189,7 +190,7 @@ group of agents~\cite{albrecht2024, christianos2021, terry2020, canese2021}.
 Heterogeneity is common in real-world multi-agent systems, where agents may differ 
 in sensing, actuation, or operational roles due to hardware constraints 
 or task specialization \cite{calvo2018, cao2012}. 
-These structural differences complicate parameter sharing, generalization, and transfer, 
+These structural differences complicate parameter sharing, generalization, and transfer
 since policies must account for observation and action spaces that are not merely 
 variations of a shared template but may differ in dimensionality and semantics \cite{canese2021}. 
 As a result, methods that assume agent interchangeability often degrade when applied to 
@@ -297,12 +298,12 @@ no longer applies straightforwardly, and consequently most heterogeneous-agent
 systems instead train separate policies for each agent or agent type.
 
 To recover some of the efficiency benefits of sharing, 
-prior work has introduced \emph{explicit agent indication};
+prior work has introduced \emph{explicit agent indication},
 supplying the policy with features that distinguish among agents.
-One approach is to use learned type or role embeddings~\cite{christianos2021, albrecht2024}, 
-while Terry et al.~\cite{terry2020} evaluated encodings; 
-such as geometric masks, binary indicators, and inversion-based transforms; 
-that are all functionally equivalent to providing a one-hot identity signal.
+One approach is to use learned type or role embeddings~\cite{christianos2021, albrecht2024}.
+\citet{terry2020} evaluated encodings such as geometric masks, 
+binary indicators, and inversion-based transforms that are all 
+functionally equivalent to providing a one-hot identity signal.
 These approaches allow divergent behavior under shared parameters, 
 but they still require manually injecting identity information and 
 do not resolve underlying structural mismatches among agents.
@@ -480,9 +481,8 @@ and the homogenized observation space,
 \]
 which collects every observation element available to any agent.
 
-To map observations into the homogenized observation space,
-we use a zero padding: define \(E_{C'} : O_{C'} \to \Hom{O}\) 
-for each \(C' \in \mathcal{P}(C)\) such that
+To map observations into the homogenized observation space we use a zero padding. 
+Define \(E_{C'} : O_{C'} \to \Hom{O}\) for each \(C' \in \mathcal{P}(C)\) such that
 \[
     % E_{C'}(O_{C'}) := 
     E_{\Gls{c}'}(\Gls{o}_{\Gls{c}'}) := 
@@ -715,7 +715,7 @@ representability and robustness.
 To ensure a controlled comparison, both implicit-indication and \gls{happo}
 policies use identical neural-network architectures and matched hyperparameters, 
 with all settings listed in \cref{con2:app:hyperparameters}. 
-The two implementations used networks of identical size.
+The two implementations use networks of identical size.
 This choice ensures that any performance differences arise from 
 the representational method rather than model capacity.
 Each model is trained with a team of four agents for up to 500M steps; 
@@ -828,6 +828,14 @@ the superlative subset, balancing removal of underperforming runs with avoidance
 of excessive variance. Additionally, to further reduce variance, 
 the evaluation episodes were longer than training episodes.
 
+\label{con2:fig:evaluations}
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Figures/eval_scale.png}
+    \caption{Comparison between methods trained with different observation-element coverage.}
+    \Description{}
+\end{figure}
+
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.9\linewidth]{Figures/performance_delta.png}
@@ -836,7 +844,7 @@ the evaluation episodes were longer than training episodes.
     \label{con2:fig:eval_delta}
 \end{figure}
 
-A summary of performance over evaluations is presented in \cref{con2:app:evaluations}. 
+A summary of performance over evaluations is presented in \cref{con2:fig:evaluations}. 
 \Cref{con2:fig:eval_delta} presents a heatmap summarizing the performance 
 differences between implicit indication and the \gls{happo} baseline. 
 
@@ -1006,8 +1014,8 @@ structured heterogeneity and provide greater deployment
 stability than per-configuration training.
 
 Future extensions include handling richer action-space heterogeneity,
-improvements in information sharing and communication between agents 
-reflect differences in composition and information access,
+improving information sharing and communication between agents that
+reflects differences in composition and information access,
 and exploring how behavioral heterogeneity might be facilitated
 through some method of accounting for the total capabilities of 
 a group of agents. 
@@ -1135,15 +1143,6 @@ The hyperparameter search space was explored with Optuna-search \cite{akiba2019}
 \end{table}
 \clearpage
 
-\section{Evaluation Comparison}
-\label{con2:app:evaluations}
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9\linewidth]{Figures/eval_scale.png}
-    \caption{Comparison between methods trained with different observation-element coverage.}
-    \Description{}
-\end{figure}
-\clearpage
 
 \section{HyperGrid Environment Model}
 \label{con2:app:env_model}

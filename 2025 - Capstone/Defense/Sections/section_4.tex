@@ -33,46 +33,34 @@
             \emph{intrinsically} heterogeneous teams.
     \end{itemize}
 
-    \note[item]{what if we could make it invariant to number of allies?}
-    \note[item]{Which then naturally leads to invariant to subsets of the observation space}
-    \note[item]{Further, }
-    \note{About 1.5 minutes.
-    Then mention the landscape briefly:
-    ``The two most relevant approaches \\
-    — one-hot IDs \\
-    - separate policies. \\
-    Each solve the problem but give up something important.
-    And when we looked for work on invariant representations
-    as a way to enable parameter sharing in heterogeneous teams,
-    there was surprisingly little.
-    So we decided to investigate.''
-    The alertblock should feel like a research direction being set,
-    not a conclusion being announced.}
+\note[note]{Recall difficulty in obs from LBF}
+
+\note[item]{what if we could make it invariant to number of allies?}
+\note[item]{Which then naturally leads to invariant to subsets of the observation space}
+\note[item]{Further, explain relevant approaches}
+\note[note]{separate policies}
+\note[note]{one-hot}
 \end{frame}
 
 
 \begin{frame}{C2 Research Questions}
-        \begin{itemize}
-            \item[\textbf{RQ2.1}] 
-            How do input-invariant (homogenized) structures affect learning efficiency?
-            \item[\textbf{RQ2.2}] 
-            Do input-invariant architectures stabilize performance under
-            team-size changes, sensor dropout, and novel agent compositions?
-            \item[\textbf{RQ2.3}] 
-            What are the computational and implementation costs
-            relative to separate per-type policies?
-        \end{itemize}
+    \begin{itemize}
+        \item[\textbf{RQ2.1}] 
+        How do input-invariant (homogenized) structures affect learning efficiency?
+        \item[\textbf{RQ2.2}] 
+        Do input-invariant architectures stabilize performance under
+        team-size changes, sensor dropout, and novel agent compositions?
+        \item[\textbf{RQ2.3}] 
+        What are the computational and implementation costs
+        relative to separate per-type policies?
+    \end{itemize}
         
-    \note{About 45 seconds — this is a reference slide.}
-    \note[item]{Learning Efficiency}
-    \note[item]{Robustness \& Generalization}
-    \note[item]{Cost vs.\ Benefit}
-    \note{
-        Mention the HAPPO baseline explicitly:
-        ``HAPPO is the strongest existing method that handles intrinsic heterogeneity,
-        so it is the fairest comparison.''\\
-        Move on quickly; the next slides deliver the answers.
-    }
+\note{About 45 seconds — this is a reference slide.}
+\note[item]{Learning Efficiency}
+\note[item]{Robustness \& Generalization}
+\note[item]{Cost vs.\ Benefit}
+\note[note]{Mention the HAPPO baseline explicitly:}
+\note[note]{strong baseline for behavioral heterogeneity}
 \end{frame}
 
 
@@ -107,8 +95,10 @@
     \end{column}
 \end{columns}
 
-    \note{About 2 minutes.\\
-    }
+\note[note]{Explain why new environement}
+\note[note]{more control over parts of the observation space}
+\note[note]{kind of as a coding challenge}
+
 \end{frame}
 
 % #TODO: Expand upon Hypergrid implementation
@@ -135,17 +125,14 @@
                 \input{../Chapters/C2/Figures/rgb_example_open_grid.tex}}
             \caption{An example 2D hypergrid with RGB channels as observation elements.
                 The top layer is ground truth, subsequent layers represent observation elements.}
-                \label{fig:rgb_hypergrid_example2}
+                \label{fig:rgb_hypergrid_example}
         \end{figure}
     \end{column}
 \end{columns}
-\note{About 2 minutes — this is the most important technical slide in the talk.
-    Deliver it in three beats.
-    \textbf{Beat 1 — The idea:} ``Take every observation channel any agent could have
-    and define a shared space over all of them. Each agent fills in what it can see
-    and leaves the rest as zeros. The policy reads the pattern of filled-in channels
-    to figure out what kind of agent it is controlling.''
-    }
+
+\note[note]{Use "Technicolor Hypergrid" to motivate observation elements}
+\note[note]{ground truth is the totality}
+\note[note]{but filters represent subsets of access to info}
 \end{frame}
 
 
@@ -173,13 +160,14 @@
     \begin{column}{0.50\textwidth}
         \begin{figure}
             \centering
-            \resizebox{!}{0.75\linewidth}{%
-                \input{../Chapters/C2/Figures/rgb_example_open_grid.tex}}
-            \caption{An example 2D hypergrid with RGB channels as observation elements.
-                The top layer is ground truth, subsequent layers represent observation elements.}
-            \label{fig:rgb_hypergrid_example}
+            % \resizebox{!}{0.75\linewidth}{%
+            %     \input{../Chapters/C2/Figures/rgb_example_open_grid.tex}}
+            % \caption{An example 2D hypergrid with RGB channels as observation elements.
+            %     The top layer is ground truth, subsequent layers represent observation elements.}
+            % \includegraphics[width=\linewidth]{disjoint_injective.tex}
+            \includegraphics[width=0.75\linewidth]{Figures/disjoint_injective.pdf}
+            \label{fig:injective_disjoint}
         \end{figure}
-        % #TODO: What if we replace this with a sketch for disjoint - injective functions?
     \end{column}
 \end{columns}
 \note{    
@@ -225,13 +213,13 @@
         \end{column}
     \end{columns}
 
-    \note{About 1 minute.
-    ``Both methods use the same network, the same hyperparameters,
-    and the same compute budget.
-    The only difference is how heterogeneity is handled —
-    HAPPO trains a separate policy per agent type,
-    while implicit indication trains one shared policy over
-    the homogenized space.''}
+\note[note]{We compare to HAPPO}
+\note[note]{same parameters as possible}
+\note[note]{Happo results in several policies, ours, one}
+
+\note[note]{\textbf{why not explicit indication?}}
+\note[note]{Explicit cannot represent the novel configs}
+
 \end{frame}
 
 
@@ -266,6 +254,7 @@
             to further reduce variance.
         \item Primary metric: mean episodic return.
     \end{itemize}
+
 
     \note{About 1 minute.
     Frame the eight conditions as a stress test:

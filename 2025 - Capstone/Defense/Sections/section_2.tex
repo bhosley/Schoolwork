@@ -43,16 +43,16 @@
     \end{column}
 \end{columns}
 
-    \note[item]{This isn't a tutorial on MDPs}
-    \note[item]{
-        This slide is provide clarity in \emph{notation}, 
-        primarily drawn from Sutton and Barto / Albrecht and Christianos
-    }
+\note[item]{This isn't a tutorial on topicss}
+\note[item]{
+    This slide is provide clarity in \emph{notation}, 
+    primarily drawn from Sutton and Barto / Albrecht and Christianos
+}
 \end{frame}
 
 
 \begin{frame}[shrink=5]{Multi-Agent RL: The CTDE Paradigm}
-\vspace{1em}
+\vspace{1.5em}
 \begin{columns}
     \begin{column}{0.52\textwidth}
 
@@ -82,14 +82,15 @@
     \end{column}
 \end{columns}
 
-    \note{About 90 seconds.\\
-    The key word to stress is \emph{deployability}.\\
-    The value of the CTDE is better updates from centralization,\\
-    but no need for a centralized controller.
-    }
-    \note[item]{\bfseries{Non-stationarity:} simultaneous updates may be individual
-    optimal, but suboptimal at the group level.
-    }
+\note[note]{Among most important MARL paradigms is CTDE}
+\note[note]{Centralized control over training}
+\note[note]{Deployabel to decentralized agents}
+\note[note]{This is used for all three contributions}
+\note[note]{Here I note MAPPO - typical of CTDE as actor-critic}
+\note[note]{also used throughout}
+\note[item]{\bfseries{Non-stationarity:} simultaneous updates may be individual
+optimal, but suboptimal at the group level.
+}
 \end{frame}
 
 
@@ -127,21 +128,27 @@
     \end{column}
 \end{columns}
 
-    \note{About 90 seconds.
-    This slide sets up the \emph{problem} so the next two slides
-    (CTDE and PPO) can land as \emph{solutions}.
-    Walk through the three consequences quickly.
-    For (1), the analogy is: ``imagine playing chess, but your
-    opponent changes their strategy between every move — that is
-    what each agent sees.''
-    For (2), point out that a team of five agents sharing one scalar
-    reward has a severe signal-to-noise problem.
-    For (3), briefly note that $k^n$ is why naive centralized
-    control is off the table.
-    The italic line at the bottom is the bridge — you can read it
-    aloud and gesture forward:
-    ``The next two slides show the three tools we use to fight
-    these three problems.''}
+\note[note]{Non-stationarity represents a moving target in your optimization}
+\note[note]{Often results from dynamic environments}
+\note[note]{In MARL we almost definitionally have a changing environment}
+\note[note]{
+    changing (other) agent behavior represents an environmental 
+    change relative to the subject
+}
+\note[note]{
+    \emph{The figure} shows the difference between simultaneous and
+    sequential updates, which rep non-stationarity
+}
+\note[note]{
+    \emph{If want example}: like trying to learn to play chess
+    and every few moves you get a new opponent.
+}
+\note[note]{\textbf{Other consequences}}
+\note[note]{Struggles with credit assignment}
+\note[note]{
+    Naive centralized control represents a combinatorial growth
+    as a result of interactione
+}
 \end{frame}
 
 
@@ -243,20 +250,13 @@
     \qquad r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_\text{old}}(a_t|s_t)}$
 \end{block}
 
-    \note{About 90 seconds.
-    Walk through the diagram rather than the equation.
-    A bried call-out to PPO, as it is used for all of these contributions. \\
-    ``PPO behaves like a standard policy gradient inside the clipping region.'' \\
-    ``Outside it, the gradient is zero — the update is capped.'' \\
-
-    The MARL punchline is the last bullet: \\
-    IPPO works surprisingly well not despite PPO's conservatism but \emph{because} of it.
-
-    That conservatism is exactly what damps the instability created by
-    simultaneously updating multiple agents' policies.}
-    \note[item]{It is common}
-    \note[item]{It is stable}
-    \note[item]{It is somewhat resilient to non-stationarity}
+\note[note]{For most of my work I chose to stick with oen optimizer}
+\note[item]{It is common}
+\note[item]{It is stable}
+\note[note]{\textbf{Clipping gives incidental benefits:}}
+\note[item]{some resilience to non-stationarity}
+\note[note]{smoothing on credit assignment}
+\note[note]{more efficient than DDPG}
 \end{frame}
 
 

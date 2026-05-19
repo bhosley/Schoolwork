@@ -9,14 +9,10 @@
                     \textbf{Replicator Initiative:}
                     Calls for the rapid integration of commercial-off-the-shelf (COTS)
                     autonomous systems for scalable deployment. \cite{robertson2023}
-                \note[item]{Deputy Sec.\ Hicks announced replicator in 2023}
-                \note[item]{Replicator: Reps COTS motivation}
-                \note[item]{    Which is both a production economy plus}
                 \item 
                     \textbf{DARPA's OFFSET:}
                     Demonstrated feasibility of swarm-enabled ground and aerial 
                     assets in contested environments. \cite{zotero-2835}
-                \note[item]{OFFSET: Reps combined arms motivation}
             \end{itemize}
         \end{itemize}
     \end{column}
@@ -32,6 +28,13 @@
         \end{figure}
     \end{column}
 \end{columns}
+
+\note[item]{Deputy Sec.\ Hicks announced replicator in 2023}
+\note[item]{
+    Replicator: Shares my COTS motivation\\
+    Which offers MASSIVE materielle and logistics benefits
+}
+\note[item]{OFFSET: Reps motivation for combined arms and mixed platforms}
 \end{frame}
 
 
@@ -56,14 +59,10 @@
             not merely which algorithm we apply.
     \end{itemize}
 
-    \note{This is a transitional slide — keep it brisk (about 1 minute).
-    The key message is that the computational bottleneck is \emph{real and structural},
-    not just a hardware problem that more GPUs will solve.
-    The audience should leave this slide with a clear sense of urgency:
-    training cost is the primary reason MARL has not translated from
-    benchmark wins to operational fielding.
-    The final bullet plants the seed for the representational thesis
-    you will state explicitly on slide 1.5.}
+\note[item]{Computational Bottleneck}
+\note[item]{Contributing factors:}
+\note[item]{teams increase training costs}
+\note[item]{many \textbf{MARL} pipelines don't favor generalization}
 \end{frame}
 
 \begin{frame}{Heterogeneity as the Core Challenge}
@@ -105,22 +104,16 @@
     \end{column}
 \end{columns}
 
-    \note{Spend about 90 seconds here.
-    The behavioral vs.\ intrinsic taxonomy is foundational vocabulary
-    for everything that follows — the committee needs to have it before
-    you get to the contribution slides.\\
-    Emphasize 
-    \emph{Behavioral}: as emergent, learned differences
-    \emph{Intrinsic}: as structural, based on some attribute(s) of the agents}
-    \note[item]{
-        Replicator and OFFSET call to the desire for more than a fleet of identical quadcopters.
-    }
-    \note[item]{
-        Call out the asymmetry: the capability advantage of mixed platforms 
-        comes at a real training cost.
-        But in hardware: a potential for savings,
-        like my kitchen utensils when I move out, cheap and mismatched
-    }
+\note[item]{Much of this work focuses on difficulties caused by Heterogeneity}
+\note[item]{
+    Replicator and OFFSET call to the desire for more than a fleet of identical quadcopters.
+}
+\note[item]{to that end, I refine focus with a taxonomic devision:}
+\note[item]{\emph{Behavioral}: as emergent, learned differences}
+\note[item]{\emph{Intrinsic}: as structural, based on some attribute(s) of the agents}
+\note[item]{Mixed platforms increase training costs, but:}
+\note[item]{in hardware: a potential for savings,}
+\note[item]{like my kitchen utensils when I move out, cheap and mismatched}
 \end{frame}
 
 
@@ -149,23 +142,21 @@
     \end{tabular}
     \end{center}
 
-    \note[item]{MARL typically requires a consistent input (observation) space, and common output (action) space}
-    \note[item]{as a function, the policy has one domain and image, and agents are expected to reflect it}
-
-    \note{
-        We found approaches to  behavioral-HARL to be more common.\\
-        This table highlights the main approaches that we found:
+\note[item]{
+    MARL typically requires a consistent input (observation) space, 
+    and common output (action) space
+}
+\note[item]{
+    as a function, the policy has one domain and image, 
+    and agents are expected to reflect it
+}
+\note[note]{
+    We found approaches to  behavioral-HARL to be more common.\\
+    This table highlights the main approaches that we found:
     }
-    \note[item]{Most straight-forward: give them all policies}
-    \note[item]{Tried to work around this in C1}
-    \note[item]{One-hot (Explicit Encoding): provides a flag to dif agents, great for emergent HARL}
-    \note[item]{GNN: usually as a means of communication between agents, but can be used in HARL\\
-        We found it vulnerable to inductive bias.}
-    \note[item]{Implicit Indication proposed in this work: big limit on emergent/behavioral HARL}
-    
-    \note[item]{In C2 (Diss:Chapter 3) (Def:Section 4) we do II}
-    \note[item]{In C3 (Diss:Chapter 4) (Def:Section 5) we eval against a GNN}
-    \note{\bfseries TIME:}
+\note[item]{(C1) Most straight-forward: give them all policies}
+\note[item]{(C2) One-hot (Explicit Encoding): provides a flag to dif agents, great for emergent HARL}
+\note[item]{(C3) GNN: usually as a means of communication between agents, but can be used in HARL}
 \end{frame}
 
 
@@ -202,10 +193,12 @@
     \bottomrule
 \end{tabular}
 \end{center}
-    \note{Walk through at a high level — the committee has read the prospectus.
-    A good framing: ``Eight research questions, three clusters, one thread.''
-    Gesture down the table by group (about 20 seconds per group) and move on.
-    Total time target: 1 minute.}
+
+\note[note]{Here I present research questions, divided by their cooresponding contribution}
+
+\note[note]{C1 I ask:}
+\note[note]{C2 I ask:}
+\note[note]{C3 I ask:}
 \end{frame}
 
 
@@ -242,11 +235,9 @@
 \end{tabular}
 \end{center}
 
-    \note{Walk through by contribution group — about 15 seconds per group.
-    The committee is checking coverage, not evaluating individual RO wording.
-    A simple framing: ``Fourteen objectives across three contributions.
-    Everything on this slide was executed; the next slide shows the mapping.''
-    Total time target: 1 minute.}
+\note[note]{Here I present the Research Objectives, also from prospectus}
+\note[note]{Objectives aimed at the RQs of the previous slide}
+\note[note]{and mapped to eachother in the next...}
 \end{frame}
 
 
@@ -279,13 +270,9 @@
 \end{tabular}
 \end{center}
 
-    \note{This slide is a navigational reference — the committee is checking coverage.
-    You do not need to read each row.
-    A single sentence works: ``Every RQ maps to one or more objectives,
-    all executed in the corresponding chapter.''
-    Call out the shared objective if it catches their eye:
-    ``RO1.3 appears twice because evaluating across environments
-    answers both the efficiency and the heterogeneity question.''
-    Total time target: 30--45 seconds.}
+\note[note]{
+    Presented here a matrix to map objectives to questions and 
+    to which chapter they are presented in the disseration doc.
+}
 \end{frame}
 
